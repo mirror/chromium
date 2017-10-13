@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78b2c6c9_0778c81a",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadDispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-13T23:11:31Z",
+      "side": 1,
+      "message": "Given that these are both unimplemented and that the code that would usually call into them is as well, maybe leave this to a follow up CL?",
+      "revId": "c604d48b1c8b93e4ca4823ebc18a93ee553c0db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56473d82_21641d6b",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadEffectParameters.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-13T23:11:31Z",
+      "side": 1,
+      "message": "These all probably want defaults set and the [EnforceRange] attribute.\nie: `[EnforceRange] double duration \u003d 0.0;`",
+      "revId": "c604d48b1c8b93e4ca4823ebc18a93ee553c0db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f244360_888bd439",
+        "filename": "third_party/WebKit/Source/modules/gamepad/NavigatorGamepad.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-13T23:11:31Z",
+      "side": 1,
+      "message": "This is the wrong place for this. SampleGamepad happens once per poll, while I would expect the haptics capabilities of a gamepad to be consistent for the lifetime of the device connection. Maybe move it to an initialization point?",
+      "revId": "c604d48b1c8b93e4ca4823ebc18a93ee553c0db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
