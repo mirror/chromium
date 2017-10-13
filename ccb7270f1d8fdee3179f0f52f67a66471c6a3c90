@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a74fe80_46a6615f",
+        "filename": "components/translate/core/browser/translate_ranker_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-10-13T17:50:50Z",
+      "side": 1,
+      "message": "Do people on Android *actually* have different response patterns to translate, compared to desktop? (I\u0027ll take my answer off the air ;)",
+      "range": {
+        "startLine": 80,
+        "startChar": 23,
+        "endLine": 80,
+        "endChar": 62
+      },
+      "revId": "ccb7270f1d8fdee3179f0f52f67a66471c6a3c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
