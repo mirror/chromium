@@ -282,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "c5c2424a_d58c8e71",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-13T22:03:24Z",
+      "side": 1,
+      "message": "My instinct would be to say that if ProtectedMember were properly documented, that would be unlikely to happen. Having several macros means more to memorise when using the protected memory interface. But I think I\u0027d be fine with starting with something like that and seeing if the multiple macros turns out to be a problem in practice.",
+      "parentUuid": "266ba31a_d3c65be2",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5969fb01_9a355eea",
         "filename": "build/config/sanitizers/BUILD.gn",
         "patchSetId": 2
