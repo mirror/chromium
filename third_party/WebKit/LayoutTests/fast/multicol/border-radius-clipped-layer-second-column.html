@@ -8,7 +8,17 @@
     <br>
     <br>
     <br>
-    <div style="position:relative; overflow:hidden; border-radius:3em; border:1em solid black; text-align:center; background:yellow;">
+    <div id=target style="position:relative; overflow:hidden; border-radius:3em; border:1em solid black; text-align:center; background:yellow;">
         PASS
     </div>
 </div>
+<script>
+function changeColor() {
+    target.style.color = 'red';
+}
+function go() {
+    setTimeout(changeColor, 1000);
+}
+onload = go;
+
+</script>
