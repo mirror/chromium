@@ -244,13 +244,19 @@ void GpuChildThread::CreateGpuService(
   // an uninitialized state.
   gpu_service_->Bind(std::move(request));
   gpu::SyncPointManager* sync_point_manager = nullptr;
+  gpu::ProtectedGpuMemoryBufferManager* protected_buffer_manager = nullptr;
   // Note SyncPointManager from ContentGpuClient cannot be owned by this.
-  if (GetContentClient()->gpu())
-    sync_point_manager = GetContentClient()->gpu()->GetSyncPointManager();
+  ContentGpuClient* content_gpu_client = GetContentClient()->gpu();
+  if (content_gpu_client) {
+    sync_point_manager = content_gpu_client->GetSyncPointManager();
+    protected_buffer_manager =
+        content_gpu_client->GetProtectedGpuMemoryBufferManager();
+  }
   gpu_service_->InitializeWithHost(
       std::move(gpu_host),
       gpu::GpuProcessActivityFlags(std::move(activity_flags)),
-      sync_point_manager, ChildProcess::current()->GetShutDownEvent());
+      sync_point_manager, protected_buffer_manager,
+      ChildProcess::current()->GetShutDownEvent());
   CHECK(gpu_service_->media_gpu_channel_manager());
 
   media::AndroidOverlayMojoFactoryCB overlay_factory_cb;

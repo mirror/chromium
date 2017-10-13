@@ -19,11 +19,17 @@
 #if defined(OS_CHROMEOS)
 #include "chrome/gpu/gpu_arc_video_decode_accelerator.h"
 #include "chrome/gpu/gpu_arc_video_encode_accelerator.h"
+#include "chrome/gpu/protected_buffer_manager.h"
+#include "chrome/gpu/protected_buffer_manager_proxy.h"
 #include "content/public/common/service_manager_connection.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #endif
 
-ChromeContentGpuClient::ChromeContentGpuClient() {}
+ChromeContentGpuClient::ChromeContentGpuClient() {
+#if defined(OS_CHROMEOS)
+  protected_buffer_manager_.reset(new chromeos::arc::ProtectedBufferManager());
+#endif
+}
 ChromeContentGpuClient::~ChromeContentGpuClient() {}
 
 void ChromeContentGpuClient::InitializeRegistry(
@@ -35,6 +41,10 @@ void ChromeContentGpuClient::InitializeRegistry(
       base::ThreadTaskRunnerHandle::Get());
   registry->AddInterface(
       base::Bind(&ChromeContentGpuClient::CreateArcVideoEncodeAccelerator,
+                 base::Unretained(this)),
+      base::ThreadTaskRunnerHandle::Get());
+  registry->AddInterface(
+      base::Bind(&ChromeContentGpuClient::CreateProtectedBufferManager,
                  base::Unretained(this)),
       base::ThreadTaskRunnerHandle::Get());
 #endif
@@ -55,12 +65,11 @@ void ChromeContentGpuClient::GpuServiceInitialized(
 }
 
 #if defined(OS_CHROMEOS)
-
 void ChromeContentGpuClient::CreateArcVideoDecodeAccelerator(
     ::arc::mojom::VideoDecodeAcceleratorRequest request) {
   mojo::MakeStrongBinding(
       base::MakeUnique<chromeos::arc::GpuArcVideoDecodeAccelerator>(
-          gpu_preferences_),
+          gpu_preferences_, protected_buffer_manager_.get()),
       std::move(request));
 }
 
@@ -69,6 +78,14 @@ void ChromeContentGpuClient::CreateArcVideoEncodeAccelerator(
   mojo::MakeStrongBinding(
       base::MakeUnique<chromeos::arc::GpuArcVideoEncodeAccelerator>(
           gpu_preferences_),
+      std::move(request));
+}
+
+void ChromeContentGpuClient::CreateProtectedBufferManager(
+    ::arc::mojom::ProtectedBufferManagerRequest request) {
+  mojo::MakeStrongBinding(
+      base::MakeUnique<chromeos::arc::GpuArcProtectedBufferManagerProxy>(
+          protected_buffer_manager_.get()),
       std::move(request));
 }
 #endif

@@ -72,6 +72,16 @@ class ArcVideoDecodeAccelerator {
   struct Config {
     size_t num_input_buffers = 0;
     uint32_t input_pixel_format = 0;
+    // If true, the accelerator operates in a mode, in which both input and
+    // output buffers provided by the client are not used, and protected buffers
+    // that must be allocated beforehand via AllocateProtectedBuffer() are
+    // used instead. These protected buffers are never returned to the client,
+    // which has no access to them.
+    //
+    // BindDmabuf() and BindSharedMemory() are not allowed in secure_mode, and
+    // UseBuffer() will pass previously-allocated protected buffers to the
+    // accelerator instead.
+    bool secure_mode = false;
     // TODO(owenlin): Add output_pixel_format. For now only the native pixel
     //                format of each VDA on Chromium is supported.
   };
@@ -111,10 +121,27 @@ class ArcVideoDecodeAccelerator {
   // returns SUCCESS iff initialization is successful.
   virtual Result Initialize(const Config& config, Client* client) = 0;
 
+  // Allocates a new protected buffer on accelerator side for the given |port|
+  // and |index|, the contents of which will be inaccessible to the client.
+  // The protected buffer will remain valid for at least as long as the resource
+  // backing the passed |handle_fd| is not released (i.e. there is at least one
+  // reference on the file backing |handle_fd|.
+  //
+  // Usable only if the accelerator has been initialized to run in secure mode.
+  // Allocation for input will create a protected buffer of at least |size|;
+  // for output, |size| is ignored, and the currently configured output format
+  // is used instead to determine the required buffer size and format.
+  virtual bool AllocateProtectedBuffer(PortType port,
+                                       uint32_t index,
+                                       base::ScopedFD handle_fd,
+                                       size_t size) = 0;
+
   // Assigns a shared memory to be used for the accelerator at the specified
   // port and index. A buffer must be successfully bound before it can be passed
   // to the accelerator via UseBuffer(). Already bound buffers may be reused
   // multiple times without additional bindings.
+  // Not allowed in secure_mode, where protected buffers have to be allocated
+  // instead.
   virtual void BindSharedMemory(PortType port,
                                 uint32_t index,
                                 base::ScopedFD ashmem_fd,
@@ -125,6 +152,8 @@ class ArcVideoDecodeAccelerator {
   // port and index. A buffer must be successfully bound before it can be
   // passed to the accelerator via UseBuffer(). Already bound buffers may be
   // reused multiple times without additional bindings.
+  // Not allowed in secure_mode, where protected buffers have to be allocated
+  // instead.
   virtual void BindDmabuf(
       PortType port,
       uint32_t index,
@@ -134,6 +163,8 @@ class ArcVideoDecodeAccelerator {
   // Passes a buffer to the accelerator. For input buffer, the accelerator
   // will process it. For output buffer, the accelerator will output content
   // to it.
+  // In secure mode, the previously-allocated protected buffers are passed
+  // to the accelerator.
   virtual void UseBuffer(PortType port,
                          uint32_t index,
                          const BufferMetadata& metadata) = 0;

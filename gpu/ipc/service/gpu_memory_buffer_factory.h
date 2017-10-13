@@ -16,7 +16,6 @@
 #include "ui/gfx/gpu_memory_buffer.h"
 
 namespace gpu {
-
 class ImageFactory;
 
 class GPU_EXPORT GpuMemoryBufferFactory {

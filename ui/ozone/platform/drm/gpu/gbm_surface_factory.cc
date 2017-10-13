@@ -176,7 +176,6 @@ GbmSurfaceFactory::CreateNativePixmapFromHandle(
   }
 
   std::vector<gfx::NativePixmapPlane> planes;
-
   for (const auto& plane : handle.planes) {
     planes.push_back(plane);
   }
@@ -185,7 +184,17 @@ GbmSurfaceFactory::CreateNativePixmapFromHandle(
       widget, size, format, std::move(scoped_fds), planes);
   if (!buffer)
     return nullptr;
-  return base::MakeRefCounted<GbmPixmap>(this, buffer);
+
+  auto pixmap = base::MakeRefCounted<GbmPixmap>(this, buffer);
+  return get_protected_native_pixmap_callback_.is_null()
+             ? pixmap
+             : get_protected_native_pixmap_callback_.Run(pixmap);
+}
+
+void GbmSurfaceFactory::SetGetProtectedNativePixmapDelegate(
+    const GetProtectedNativePixmapCallback&
+        get_protected_native_pixmap_callback) {
+  get_protected_native_pixmap_callback_ = get_protected_native_pixmap_callback;
 }
 
 }  // namespace ui

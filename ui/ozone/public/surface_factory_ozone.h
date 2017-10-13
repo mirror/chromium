@@ -99,6 +99,17 @@ class OZONE_BASE_EXPORT SurfaceFactoryOzone {
       gfx::BufferFormat format,
       const gfx::NativePixmapHandle& handle);
 
+  // Temporary solution that allows protected pixmap management to be
+  // handled outside the Ozone platform.
+  // TODO(posciak): Remove this by moving protected pixmap managment
+  // into the the DRM implementation.
+  using GetProtectedNativePixmapCallback =
+      base::Callback<scoped_refptr<gfx::NativePixmap>(
+          scoped_refptr<gfx::NativePixmap>)>;
+  virtual void SetGetProtectedNativePixmapDelegate(
+      const GetProtectedNativePixmapCallback&
+          get_protected_native_pixmap_callback);
+
  protected:
   SurfaceFactoryOzone();
   virtual ~SurfaceFactoryOzone();

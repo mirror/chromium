@@ -50,6 +50,9 @@ class GbmSurfaceFactory : public SurfaceFactoryOzone {
       gfx::Size size,
       gfx::BufferFormat format,
       const gfx::NativePixmapHandle& handle) override;
+  void SetGetProtectedNativePixmapDelegate(
+      const GetProtectedNativePixmapCallback&
+          get_protected_native_pixmap_callback) override;
 
  private:
   std::unique_ptr<GLOzone> egl_implementation_;
@@ -60,6 +63,8 @@ class GbmSurfaceFactory : public SurfaceFactoryOzone {
   DrmThreadProxy* drm_thread_proxy_;
 
   std::map<gfx::AcceleratedWidget, GbmSurfaceless*> widget_to_surface_map_;
+
+  GetProtectedNativePixmapCallback get_protected_native_pixmap_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(GbmSurfaceFactory);
 };
