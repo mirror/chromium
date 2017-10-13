@@ -16,6 +16,24 @@
       "revId": "aa17e9346b3064fd1f561e7fd60e0cdec31457f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66997e8d_c6b2c2d7",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-13T10:40:29Z",
+      "side": 1,
+      "message": "I think we should strive for as much consistency as we can. Help me understand something here if  we are returning a failure what is the client going to do. Just continue as if nothing happened and possibly skip to sink this item of that type or retry the whole operation. If it retries then maybe this code needs to be further extended to roll-back if not doing as much as we can skipping failures sounds like the best we can do. Certainly DCHECK-ing whatever is not expected is good as it will at least make us aware if our assumptions turn wrong now or in the future.",
+      "parentUuid": "95f77ded_ce1c94eb",
+      "revId": "aa17e9346b3064fd1f561e7fd60e0cdec31457f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

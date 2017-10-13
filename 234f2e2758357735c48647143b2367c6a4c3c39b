@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9da9443b_fd42de09",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-13T10:40:29Z",
+      "side": 1,
+      "message": "for the sake of consistency with the rest of the file and chromium coding style please make single line blocks bare with no braces",
+      "range": {
+        "startLine": 354,
+        "startChar": 14,
+        "endLine": 354,
+        "endChar": 16
+      },
+      "revId": "234f2e2758357735c48647143b2367c6a4c3c39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c1d6547_38287856",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-13T10:40:29Z",
+      "side": 1,
+      "message": "for the sake of consistency with the rest of the file and chromium coding style please make single line blocks bare with no braces.",
+      "range": {
+        "startLine": 596,
+        "startChar": 15,
+        "endLine": 596,
+        "endChar": 17
+      },
+      "revId": "234f2e2758357735c48647143b2367c6a4c3c39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

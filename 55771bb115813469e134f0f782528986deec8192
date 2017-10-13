@@ -16,6 +16,24 @@
       "revId": "55771bb115813469e134f0f782528986deec8192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16b83f22_fd5111bd",
+        "filename": "components/sync/engine_impl/loopback_server/persistent_bookmark_entity.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-13T10:40:29Z",
+      "side": 0,
+      "message": "This is a leftover from the FakeServer code. I thought will be useful for the tests. Not really more context I am afraid.",
+      "parentUuid": "0e642dee_e79b554c",
+      "revId": "55771bb115813469e134f0f782528986deec8192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
