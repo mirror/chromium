@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92b1fdeb_d1961b1d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/shared-renderer/longtask-in-new-window.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-13T16:58:42Z",
+      "side": 1,
+      "message": "Thanks, this LGTM.",
+      "range": {
+        "startLine": 20,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 115
+      },
+      "revId": "9150224bed1a804058dda48840bb9e48fe6ec0ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f00b06_5e21f989",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/shared-renderer/longtask-in-new-window.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-13T16:58:42Z",
+      "side": 1,
+      "message": "Super nitty nit: No reason to use multiline comment.",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 5
+      },
+      "revId": "9150224bed1a804058dda48840bb9e48fe6ec0ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83bd5b94_1643a23b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/shared-renderer/longtask-in-new-window.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-13T16:58:42Z",
+      "side": 1,
+      "message": "Maybe expand on this comment - indicating that this should fire after the long task notification.",
+      "range": {
+        "startLine": 40,
+        "startChar": 29,
+        "endLine": 40,
+        "endChar": 37
+      },
+      "revId": "9150224bed1a804058dda48840bb9e48fe6ec0ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
