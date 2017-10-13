@@ -269,7 +269,9 @@ class SnackbarView {
         }
 
         if (FeatureUtilities.isChromeHomeEnabled()) {
-            ApiCompatibilityUtils.setTextAppearance(mMessageView, R.style.BlackBodyDefault);
+            int textAppearanceRedId = snackbar.getTextAppearance();
+            if (textAppearanceRedId == 0) textAppearanceRedId = R.style.BlackBodyDefault;
+            ApiCompatibilityUtils.setTextAppearance(mMessageView, textAppearanceRedId);
             mActionButtonView.setTextColor(ApiCompatibilityUtils.getColor(
                     mContainerView.getResources(), R.color.blue_when_enabled));
             mShadowView.setVisibility(View.VISIBLE);
