@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "089d69f9_9fec8298",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-13T13:24:35Z",
+      "side": 1,
+      "message": "Why do you think this should not be needed?",
+      "parentUuid": "2a36a9c5_63c8d18d",
+      "revId": "19aaad22117e1bb44c1c3d1a26f23bc01b3475f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea0cdad_b97a1061",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-13T13:24:35Z",
+      "side": 1,
+      "message": "Add std::move(task_runner) ?",
+      "revId": "19aaad22117e1bb44c1c3d1a26f23bc01b3475f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0b628cb_c7d58a49",
         "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.cpp",
         "patchSetId": 5
@@ -30,6 +65,23 @@
       "writtenOn": "2017-10-13T12:18:08Z",
       "side": 1,
       "message": "note: This fix should not be needed.",
+      "revId": "19aaad22117e1bb44c1c3d1a26f23bc01b3475f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92cdd1d7_76f51f27",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-13T13:24:35Z",
+      "side": 1,
+      "message": "Add USING_FAST_MALLOC.",
       "revId": "19aaad22117e1bb44c1c3d1a26f23bc01b3475f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
