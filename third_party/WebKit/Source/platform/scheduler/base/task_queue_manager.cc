@@ -72,11 +72,45 @@ TaskQueueManager::~TaskQueueManager() {
       TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"), "TaskQueueManager",
       this);
 
-  while (!active_queues_.empty()) {
-    internal::TaskQueueImpl* queue = *active_queues_.begin();
+  // Queues supporting async deletion should be unregistered first -
+  // their ownership might belong to a task in a shutdown task queue
+  // and shutdown task queue should be unregistered after them.
+  // TODO(altimin): DCHECK that shutdown task queue does not support
+  // async deletion.
+  std::set<internal::TaskQueueImpl*> active_queues_with_async_deletion_support;
+  std::set<internal::TaskQueueImpl*>
+      active_queues_without_async_deletion_support;
+  for (internal::TaskQueueImpl* queue : active_queues_) {
+    if (queue->supports_async_deletion()) {
+      active_queues_with_async_deletion_support.insert(queue);
+    } else {
+      active_queues_without_async_deletion_support.insert(queue);
+    }
+  }
+
+  for (internal::TaskQueueImpl* queue :
+       active_queues_with_async_deletion_support) {
     selector_.RemoveQueue(queue);
     queue->UnregisterTaskQueue();
-    active_queues_.erase(active_queues_.begin());
+  }
+
+  for (internal::TaskQueueImpl* queue :
+       active_queues_without_async_deletion_support) {
+    selector_.RemoveQueue(queue);
+    queue->UnregisterTaskQueue();
+  }
+
+  active_queues_with_async_deletion_support.clear();
+  active_queues_without_async_deletion_support.clear();
+  active_queues_.clear();
+
+  while (!queues_to_gracefully_shutdown_.empty()) {
+    internal::TaskQueueImpl* queue =
+        queues_to_gracefully_shutdown_.begin()->first;
+    selector_.RemoveQueue(queue);
+    queue->UnregisterTaskQueue();
+    queues_to_gracefully_shutdown_.erase(
+        queues_to_gracefully_shutdown_.begin());
   }
 
   selector_.SetTaskQueueSelectorObserver(nullptr);
@@ -135,6 +169,18 @@ void TaskQueueManager::UnregisterTaskQueueImpl(
   // freed while any of our structures hold hold a raw pointer to it.
   active_queues_.erase(task_queue.get());
   queues_to_delete_[task_queue.get()] = std::move(task_queue);
+}
+
+void TaskQueueManager::GracefullyShutdownTaskQueue(
+    std::unique_ptr<internal::TaskQueueImpl> task_queue) {
+  TRACE_EVENT1("renderer.scheduler",
+               "TaskQueueManager::GracefullyShutdownTaskQueue", "queue_name",
+               task_queue->GetName());
+  DCHECK(main_thread_checker_.CalledOnValidThread());
+
+  DCHECK(active_queues_.find(task_queue.get()) != active_queues_.end());
+  active_queues_.erase(task_queue.get());
+  queues_to_gracefully_shutdown_[task_queue.get()] = std::move(task_queue);
 }
 
 void TaskQueueManager::ReloadEmptyWorkQueues(
@@ -338,6 +384,9 @@ void TaskQueueManager::DoWork(bool delayed) {
     if (is_nested)
       break;
   }
+
+  if (!is_nested)
+    CleanUpQueues();
 
   // TODO(alexclarke): Consider refactoring the above loop to terminate only
   // when there's no more work left to be done, rather than posting a
@@ -620,6 +669,8 @@ size_t TaskQueueManager::GetNumberOfPendingTasks() const {
   size_t task_count = 0;
   for (auto& queue : active_queues_)
     task_count += queue->GetNumberOfPendingTasks();
+  for (const auto& pair : queues_to_gracefully_shutdown_)
+    task_count += pair.first->GetNumberOfPendingTasks();
   return task_count;
 }
 
@@ -634,6 +685,10 @@ TaskQueueManager::AsValueWithSelectorResult(
   state->BeginArray("active_queues");
   for (auto& queue : active_queues_)
     queue->AsValueInto(now, state.get());
+  state->EndArray();
+  state->BeginArray("queues_to_gracefully_shutdown");
+  for (const auto& pair : queues_to_gracefully_shutdown_)
+    pair.first->AsValueInto(now, state.get());
   state->EndArray();
   state->BeginArray("queues_to_delete");
   for (const auto& pair : queues_to_delete_)
@@ -706,9 +761,20 @@ void TaskQueueManager::SweepCanceledDelayedTasks() {
   std::map<TimeDomain*, base::TimeTicks> time_domain_now;
   for (const auto& queue : active_queues_)
     SweepCanceledDelayedTasksInQueue(queue, &time_domain_now);
+  for (const auto& pair : queues_to_gracefully_shutdown_)
+    SweepCanceledDelayedTasksInQueue(pair.first, &time_domain_now);
 }
 
 void TaskQueueManager::CleanUpQueues() {
+  for (auto it = queues_to_gracefully_shutdown_.begin();
+       it != queues_to_gracefully_shutdown_.end();) {
+    if (it->first->IsEmpty()) {
+      UnregisterTaskQueueImpl(std::move(it->second));
+      queues_to_gracefully_shutdown_.erase(it++);
+    } else {
+      ++it;
+    }
+  }
   queues_to_delete_.clear();
 }
 

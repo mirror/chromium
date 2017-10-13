@@ -214,6 +214,8 @@ class PLATFORM_EXPORT TaskQueueImpl {
     return should_report_when_execution_blocked_;
   }
 
+  bool supports_async_deletion() const { return supports_async_deletion_; }
+
   // Enqueues any delayed tasks which should be run now on the
   // |delayed_work_queue|. Returns the subsequent wake-up that is required, if
   // any. Must be called from the main thread.
@@ -416,6 +418,7 @@ class PLATFORM_EXPORT TaskQueueImpl {
   const bool should_monitor_quiescence_;
   const bool should_notify_observers_;
   const bool should_report_when_execution_blocked_;
+  const bool supports_async_deletion_;
 
   DISALLOW_COPY_AND_ASSIGN(TaskQueueImpl);
 };

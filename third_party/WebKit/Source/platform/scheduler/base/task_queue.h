@@ -126,11 +126,18 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
       return *this;
     }
 
+    Spec SetShutdownTaskRunner(
+        scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+      shutdown_task_runner = std::move(task_runner);
+      return *this;
+    }
+
     const char* name;
     bool should_monitor_quiescence;
     TimeDomain* time_domain;
     bool should_notify_observers;
     bool should_report_when_execution_blocked;
+    scoped_refptr<base::SingleThreadTaskRunner> shutdown_task_runner;
   };
 
   // Interface to pass per-task metadata to RendererScheduler.
@@ -257,7 +264,8 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   bool PostTaskWithMetadata(PostedTask task);
 
  protected:
-  explicit TaskQueue(std::unique_ptr<internal::TaskQueueImpl> impl);
+  TaskQueue(std::unique_ptr<internal::TaskQueueImpl> impl,
+            const TaskQueue::Spec& spec);
   ~TaskQueue() override;
 
   internal::TaskQueueImpl* GetTaskQueueImpl() const { return impl_.get(); }
@@ -281,6 +289,11 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   std::unique_ptr<internal::TaskQueueImpl> impl_;
 
   const base::PlatformThreadId thread_id_;
+
+  // A task runner to post a task to schedule TaskQueueImpl for graceful
+  // shutdown.
+  // Present if this task queue supports graceful shutdown.
+  scoped_refptr<base::SingleThreadTaskRunner> shutdown_task_runner_;
 
   base::WeakPtr<TaskQueueManager> task_queue_manager_;
 
