@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5dc1aaed_e3e7d2ea",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-13T03:35:36Z",
+      "side": 1,
+      "message": "I removed the optimizations.",
+      "parentUuid": "b8146b63_63ac5527",
+      "revId": "43c17b34f01f24692453650d1298e51d2a65649c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10b69e8e_62f5b4d7",
         "filename": "ui/message_center/change_queue.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f3c29aab_d92f1971",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-13T03:35:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10b69e8e_62f5b4d7",
+      "revId": "43c17b34f01f24692453650d1298e51d2a65649c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cd6357f_c1ca8581",
         "filename": "ui/message_center/change_queue.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "43c17b34f01f24692453650d1298e51d2a65649c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5768448c_f664e7d1",
+        "filename": "ui/message_center/change_queue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-13T03:35:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cd6357f_c1ca8581",
+      "revId": "43c17b34f01f24692453650d1298e51d2a65649c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
