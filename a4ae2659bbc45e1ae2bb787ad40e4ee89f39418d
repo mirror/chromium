@@ -70,6 +70,30 @@
       "revId": "a4ae2659bbc45e1ae2bb787ad40e4ee89f39418d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4852b78_4e834411",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16565,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-13T17:28:40Z",
+      "side": 1,
+      "message": "Oh ok, in that case done.",
+      "parentUuid": "7f40b6c2_d500ded6",
+      "range": {
+        "startLine": 16565,
+        "startChar": 45,
+        "endLine": 16565,
+        "endChar": 46
+      },
+      "revId": "a4ae2659bbc45e1ae2bb787ad40e4ee89f39418d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
