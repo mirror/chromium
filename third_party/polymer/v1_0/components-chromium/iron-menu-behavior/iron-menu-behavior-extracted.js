@@ -213,7 +213,7 @@
       if (isSelected) {
         item.setAttribute('aria-selected', 'true');
       } else {
-        item.removeAttribute('aria-selected');
+        item.setAttribute('aria-selected', 'false');
       }
       Polymer.IronSelectableBehavior._applySelection.apply(this, arguments);
     },
