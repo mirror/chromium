@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a53b22b_efdecc3c",
+        "filename": "content/browser/download/mhtml_generation_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-13T17:12:23Z",
+      "side": 1,
+      "message": "This fixes the race condition but the extra parts could be omitted if extra_parts_ is valid now, but becomes invalid before CloseFile is run.  Why not just save std::vector\u003cMHTMLExtraDataPart\u003e?  Then you wouldn\u0027t need to mess with weak pointers.",
+      "revId": "5d88e74300e06ba1df3b1d2d22930efb607588ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
