@@ -28,6 +28,7 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
@@ -225,18 +226,18 @@ void ServiceWorkerProviderContext::UnregisterWorkerFetchContext(
 }
 
 void ServiceWorkerProviderContext::SetController(
-    const ServiceWorkerObjectInfo& controller,
+    blink::mojom::ServiceWorkerObjectInfoPtr controller,
     const std::vector<blink::mojom::WebFeature>& used_features,
     bool should_notify_controllerchange) {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
   ControlleeState* state = controllee_state_.get();
   DCHECK(state);
-  DCHECK(!state->controller ||
-         state->controller->handle_id() != kInvalidServiceWorkerHandleId);
+  DCHECK(!state->controller || state->controller->handle_id() !=
+                                   blink::mojom::kInvalidServiceWorkerHandleId);
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
 
-  state->controller = dispatcher->Adopt(controller);
+  state->controller = dispatcher->Adopt(*controller);
 
   // Propagate the controller to workers related to this provider.
   if (state->controller) {
@@ -277,7 +278,7 @@ void ServiceWorkerProviderContext::SetController(
   // the controller from |this| via WebServiceWorkerProviderImpl::SetClient().
   if (state->web_service_worker_provider) {
     state->web_service_worker_provider->SetController(
-        controller, state->used_features, should_notify_controllerchange);
+        *controller, state->used_features, should_notify_controllerchange);
   }
 }
 

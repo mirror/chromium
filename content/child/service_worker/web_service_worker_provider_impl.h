@@ -59,7 +59,7 @@ class CONTENT_EXPORT WebServiceWorkerProviderImpl
 
   // Sets the ServiceWorkerContainer#controller for this provider. It's not
   // used when this WebServiceWorkerProvider is for a service worker context.
-  void SetController(const ServiceWorkerObjectInfo& info,
+  void SetController(const blink::mojom::ServiceWorkerObjectInfo& info,
                      const std::set<uint32_t>& features,
                      bool should_notify_controller_change);
 

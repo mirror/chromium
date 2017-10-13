@@ -103,7 +103,7 @@ class ServiceWorkerDispatcherTest : public testing::Test {
   }
 
   std::unique_ptr<ServiceWorkerHandleReference> Adopt(
-      const ServiceWorkerObjectInfo& info) {
+      const blink::mojom::ServiceWorkerObjectInfo& info) {
     return dispatcher_->Adopt(info);
   }
 
@@ -224,7 +224,8 @@ TEST_F(ServiceWorkerDispatcherTest, GetServiceWorker) {
 
   // Should return nullptr when a given object is invalid.
   scoped_refptr<WebServiceWorkerImpl> invalid_worker =
-      dispatcher()->GetOrCreateServiceWorker(Adopt(ServiceWorkerObjectInfo()));
+      dispatcher()->GetOrCreateServiceWorker(
+          Adopt(blink::mojom::ServiceWorkerObjectInfo()));
   EXPECT_FALSE(invalid_worker);
   EXPECT_EQ(0UL, ipc_sink()->message_count());
 }

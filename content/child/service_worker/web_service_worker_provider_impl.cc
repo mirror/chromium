@@ -196,7 +196,7 @@ bool WebServiceWorkerProviderImpl::ValidateScopeAndScriptURL(
 }
 
 void WebServiceWorkerProviderImpl::SetController(
-    const ServiceWorkerObjectInfo& info,
+    const blink::mojom::ServiceWorkerObjectInfo& info,
     const std::set<uint32_t>& features,
     bool should_notify_controller_change) {
   blink::WebServiceWorkerProviderClient* provider_client =
