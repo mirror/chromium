@@ -288,13 +288,9 @@ void SurfaceAggregator::EmitSurfaceContent(
             surface->GetActiveFrame().size_in_pixels().height()) /
         rect.height();
   } else {
-    fprintf(stderr, ">>>DSF: %f, PDSF: %f\n",
-            surface->GetActiveFrame().device_scale_factor(),
-            parent_device_scale_factor);
-
     layer_to_content_scale_x = layer_to_content_scale_y =
-        surface->GetActiveFrame()
-            .device_scale_factor();  // parent_device_scale_factor;
+        surface->GetActiveFrame().device_scale_factor() /
+        parent_device_scale_factor;
   }
 
   scaled_visible_rect = gfx::ScaleToEnclosingRect(
@@ -307,10 +303,10 @@ void SurfaceAggregator::EmitSurfaceContent(
 
   scaled_quad_to_target_transform.Scale(SK_MScalar1 / layer_to_content_scale_x,
                                         SK_MScalar1 / layer_to_content_scale_y);
-  // gfx::Size scaled_bounds = gfx::ScaleToCeiledSize(
-  //    scaled_quad_layer_rect.size(), layer_to_content_scale_x,
-  //    layer_to_content_scale_y);
-  // scaled_quad_layer_rect.set_size(scaled_bounds);
+  gfx::Size scaled_bounds = gfx::ScaleToCeiledSize(
+      scaled_quad_layer_rect.size(), layer_to_content_scale_x,
+      layer_to_content_scale_y);
+  scaled_quad_layer_rect.set_size(scaled_bounds);
 
   ++uma_stats_.valid_surface;
   const CompositorFrame& frame = surface->GetActiveFrame();

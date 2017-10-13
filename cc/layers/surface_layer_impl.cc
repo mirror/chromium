@@ -79,7 +79,6 @@ void SurfaceLayerImpl::AppendQuads(viz::RenderPass* render_pass,
       fallback_surface_id_.is_valid()
           ? base::Optional<viz::SurfaceId>(fallback_surface_id_)
           : base::nullopt);
-
   // Emitting a fallback viz::SurfaceDrawQuad is unnecessary if the primary and
   // fallback surface Ids match.
   if (primary && fallback_surface_id_ != primary_surface_info_.id()) {
@@ -96,12 +95,16 @@ viz::SurfaceDrawQuad* SurfaceLayerImpl::CreateSurfaceDrawQuad(
   DCHECK(surface_info.is_valid());
 
   float device_scale_factor = layer_tree_impl()->device_scale_factor();
-  gfx::Rect quad_rect(gfx::ScaleToEnclosingRect(gfx::Rect(bounds()), 1, 1));
-  fprintf(stderr, ">>>>SLI DSF: %f\n", device_scale_factor);
 
+  gfx::Rect quad_rect(gfx::ScaleToEnclosingRect(
+      gfx::Rect(bounds()), device_scale_factor, device_scale_factor));
   gfx::Rect visible_quad_rect =
       draw_properties().occlusion_in_content_space.GetUnoccludedContentRect(
           gfx::Rect(bounds()));
+
+  visible_quad_rect = gfx::ScaleToEnclosingRect(
+      visible_quad_rect, device_scale_factor, device_scale_factor);
+  visible_quad_rect = gfx::IntersectRects(quad_rect, visible_quad_rect);
 
   if (visible_quad_rect.IsEmpty())
     return nullptr;
@@ -113,7 +116,8 @@ viz::SurfaceDrawQuad* SurfaceLayerImpl::CreateSurfaceDrawQuad(
   viz::SharedQuadState* shared_quad_state =
     shared_quad_state = render_pass->CreateAndAppendSharedQuadState();
 
-  PopulateSharedQuadState(shared_quad_state, contents_opaque());
+  PopulateScaledSharedQuadState(shared_quad_state, device_scale_factor,
+                                device_scale_factor, contents_opaque());
 
   auto* surface_draw_quad =
       render_pass->CreateAndAppendDrawQuad<viz::SurfaceDrawQuad>();
