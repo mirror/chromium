@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "22479f76_5ab70d19",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-10-13T19:44:17Z",
+      "side": 1,
+      "message": "I did mean \"on the Renderer\u0027s behalf\", for example by hijacking writes to the GPU command buffer.\n\nGiven the additional bugs that have come to light though, it appears ::Initialize() can be called multiple times when the device is rotated, in particular when playing video, which the ClusterFuzz test case was doing. It could just be that the devices running ClusterFuzz are oriented horizontally.",
+      "parentUuid": "b3c48442_932230fc",
+      "revId": "0e7fb2f9e40213ddc37e5ee457399159eec8903a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "264558cc_407dfc1f",
         "filename": "ui/gl/gl_surface_egl.cc",
         "patchSetId": 4
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "I think I was getting \"stack corruption detected\" crashes in http://crbug.com/769415#c8 even without actively tracing, but that may have been a separate issue.\n\nSimilar question to above - if this is triggered via command buffer channel, this may not be the right place for a CHECK if we expect other code to handle sanity checks, and if a compromised Renderer is running this in-process I\u0027m not sure what we\u0027re protecting against, if it can run arbitrary code it could just corrupt its own stack anyway.",
       "parentUuid": "2fec1f48_591b52cd",
+      "revId": "0e7fb2f9e40213ddc37e5ee457399159eec8903a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04da271_36527a21",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-10-13T19:44:17Z",
+      "side": 1,
+      "message": "Hmm. I wonder if the g_trace_swap_enabled.Get().value check isn\u0027t earlying out like I intended to. I\u0027ll double check.\n\nRegarding where to put the sanity check. I\u0027m not sure where to do that at a higher level given that it\u0027s apparently legal for Initialize to be called more than once. The clear()\u0027s added earlier in this file should effectively 1) prevent a CHECK here from ever being hit and 2) make the std::min a no-op. However, that doesn\u0027t protect against future regressions.\n\nI worry about just relying on the DCHECK because all the bugs reported were of the stack crash itself on Release builds. None were reported of the DCHECK being hit.",
+      "parentUuid": "973e763b_1b11dc52",
       "revId": "0e7fb2f9e40213ddc37e5ee457399159eec8903a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
