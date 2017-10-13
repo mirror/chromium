@@ -193,10 +193,7 @@ void AutofillAgent::DidCommitProvisionalLoad(bool is_new_navigation,
     // (crbug/753071).
     std::string group_name =
         base::FieldTrialList::FindFullName("FixDocumentLeakInAutofillAgent");
-    if (base::StartsWith(group_name, "enabled",
-                         base::CompareCase::INSENSITIVE_ASCII)) {
-      element_.Reset();
-    }
+    element_.Reset();
 
     form_cache_.Reset();
     submitted_forms_.clear();

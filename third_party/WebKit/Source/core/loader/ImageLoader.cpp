@@ -503,6 +503,7 @@ void ImageLoader::UpdateFromElement(UpdateFromElementBehavior update_behavior,
   if (pending_task_) {
     pending_task_->ClearLoader();
     pending_task_.reset();
+    delay_until_do_update_from_element_ = nullptr;
   }
 
   KURL url = ImageSourceToKURL(image_source_url);
