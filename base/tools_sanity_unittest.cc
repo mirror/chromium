@@ -9,6 +9,7 @@
 #include <stddef.h>
 
 #include "base/atomicops.h"
+#include "base/cfi_flags.h"
 #include "base/debug/asan_invalid_access.h"
 #include "base/debug/profiler.h"
 #include "base/message_loop/message_loop.h"
@@ -342,11 +343,11 @@ TEST(ToolsSanityTest, AtomicsAreIgnored) {
   EXPECT_EQ(kMagicValue, shared);
 }
 
-#if defined(CFI_ENFORCEMENT_TRAP)
+#if BUILDFLAG(CFI_ENFORCEMENT_TRAP)
 #define CFI_ERROR_MSG "ILL_ILLOPN"
-#elif defined(CFI_ENFORCEMENT_DIAGNOSTIC)
+#elif BUILDFLAG(CFI_ENFORCEMENT_DIAGNOSTIC)
 #define CFI_ERROR_MSG "runtime error: control flow integrity check"
-#endif // CFI_ENFORCEMENT_TRAP || CFI_ENFORCEMENT_DIAGNOSTIC
+#endif  // BUILDFLAG(CFI_ENFORCEMENT_TRAP || CFI_ENFORCEMENT_DIAGNOSTIC)
 
 #if defined(CFI_ERROR_MSG)
 class A {
@@ -392,7 +393,7 @@ TEST(ToolsSanityTest, BadVirtualCallWrongType) {
 }
 
 // TODO(pcc): remove CFI_CAST_CHECK, see https://crbug.com/626794.
-#if defined(CFI_CAST_CHECK)
+#if BUILDFLAG(CFI_CAST_CHECK)
 TEST(ToolsSanityTest, BadDerivedCast) {
   A a;
   EXPECT_DEATH((void)(B*)&a, CFI_ERROR_MSG);
@@ -410,8 +411,8 @@ TEST(ToolsSanityTest, BadUnrelatedCast) {
   A a;
   EXPECT_DEATH((void)(B*)&a, CFI_ERROR_MSG);
 }
-#endif // CFI_CAST_CHECK
+#endif  // BUILDFLAG(CFI_CAST_CHECK)
 
-#endif // CFI_ERROR_MSG
+#endif  // CFI_ERROR_MSG
 
 }  // namespace base
