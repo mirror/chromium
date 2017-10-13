@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c48ee19e_9c0d98d2",
+        "filename": "content/child/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-13T10:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5826abd0_e247d4ff",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "394d179b_cb3d5140",
         "filename": "content/child/service_worker/web_service_worker_registration_impl.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-13T09:36:34Z",
       "side": 1,
       "message": "This method is to return a scoped_refptr, can we use base::MakeRefCounted\u003c\u003e here instead?",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f0ac052_ef8feb0f",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-13T10:44:01Z",
+      "side": 1,
+      "message": "As we have CreateFor* factory methods now so I\u0027ve put the ctor as a private function, thus can\u0027t use MakeRefCounted\u003c\u003e here.",
+      "parentUuid": "394d179b_cb3d5140",
       "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "455037d6_2651d662",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-13T10:44:01Z",
+      "side": 1,
+      "message": "Done and Thanks! I missed this in last update.",
+      "parentUuid": "7124677a_7f42ead0",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "885e446d_1b1941b2",
         "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 10
@@ -84,6 +138,24 @@
       "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fae971_496d14c1",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-13T10:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "885e446d_1b1941b2",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "5a1ef246_b3522700",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-13T10:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cf13266_8f639acd",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec23688f_d14c7a80",
         "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 10
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "ff84629b_a33d7564",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-13T10:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec23688f_d14c7a80",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c64e63f_390ea716",
         "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 10
@@ -135,6 +243,24 @@
       "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d724ed6c_06003d6b",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-13T10:44:01Z",
+      "side": 1,
+      "message": "Done and Thanks!",
+      "parentUuid": "4c64e63f_390ea716",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
