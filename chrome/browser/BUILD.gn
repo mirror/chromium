@@ -2735,6 +2735,9 @@ split_static_library("browser") {
       "//services/ui/public/cpp/input_devices",
       "//services/ui/public/cpp/input_devices:input_device_controller",
       "//ui/ozone",
+      # TODO(penghuang): remove it when we have a separate viz process.
+      # http;//crbug.com/774514
+      "//media/gpu:gpu",
     ]
     public_deps += [
       "//components/metrics/leak_detector:interfaces",

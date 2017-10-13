@@ -176,6 +176,11 @@ include_rules = [
 
   # Only used by X11 (non-ChromeOS) code, which can use X directly.
   "+ui/events/devices/x11",
+
+  # TODO(penghuang): Remove them when we have a separate viz process for mus and mash.
+  # https://crbug.com/774514
+  "+chrome/gpu",
+  "+media/gpu",
 ]
 
 specific_include_rules = {

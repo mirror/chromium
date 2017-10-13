@@ -45,6 +45,7 @@ class GpuHost {
   virtual void Add(mojom::GpuRequest request) = 0;
   virtual void OnAcceleratedWidgetAvailable(gfx::AcceleratedWidget widget) = 0;
   virtual void OnAcceleratedWidgetDestroyed(gfx::AcceleratedWidget widget) = 0;
+  virtual scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner() = 0;
 
   // Requests a viz::mojom::FrameSinkManager interface from mus-gpu.
   virtual void CreateFrameSinkManager(
@@ -70,6 +71,7 @@ class DefaultGpuHost : public GpuHost, public viz::mojom::GpuHost {
   void Add(mojom::GpuRequest request) override;
   void OnAcceleratedWidgetAvailable(gfx::AcceleratedWidget widget) override;
   void OnAcceleratedWidgetDestroyed(gfx::AcceleratedWidget widget) override;
+  scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner() override;
   void CreateFrameSinkManager(
       viz::mojom::FrameSinkManagerRequest request,
       viz::mojom::FrameSinkManagerClientPtr client) override;
