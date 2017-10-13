@@ -396,16 +396,16 @@ abstract class PaymentRequestTestBase extends ChromeActivityTestCaseBase<ChromeT
         mTestCommon.onPaymentRequestReadyForInput(ui);
     }
 
-    public void onPaymentRequestReadyToEdit() {
-        mTestCommon.onPaymentRequestReadyToEdit();
+    public void onEditorReadyToEdit() {
+        mTestCommon.onEditorReadyToEdit();
     }
 
-    public void onPaymentRequestEditorValidationError() {
-        mTestCommon.onPaymentRequestEditorValidationError();
+    public void onEditorValidationError() {
+        mTestCommon.onEditorValidationError();
     }
 
-    public void onPaymentRequestEditorTextUpdate() {
-        mTestCommon.onPaymentRequestEditorTextUpdate();
+    public void onEditorTextUpdate() {
+        mTestCommon.onEditorTextUpdate();
     }
 
     public void onPaymentRequestReadyToPay(PaymentRequestUI ui) {
@@ -420,8 +420,8 @@ abstract class PaymentRequestTestBase extends ChromeActivityTestCaseBase<ChromeT
         mTestCommon.onPaymentRequestResultReady(ui);
     }
 
-    public void onPaymentRequestDismiss() {
-        mTestCommon.onPaymentRequestDismiss();
+    public void onEditorDismiss() {
+        mTestCommon.onEditorDismiss();
     }
 
     public void onPaymentRequestServiceUnableToAbort() {
