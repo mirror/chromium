@@ -16,6 +16,23 @@
       "revId": "4f94bf761aac530f2715dc1418a64521b67048ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5d6301_2dc5f2e7",
+        "filename": "build/config/BUILDCONFIG.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-13T02:19:38Z",
+      "side": 1,
+      "message": "We also try to avoid adding more flags to BUILDCONFIG.gn, so I\u0027d move this to a separate unsafe_build.gni file that contained this declare_args() block and the aforementioned config.\n\nI\u0027d probably even put the file someplace like //base, outside of //build, since this is a pretty chromium-specific concept.",
+      "revId": "4f94bf761aac530f2715dc1418a64521b67048ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
