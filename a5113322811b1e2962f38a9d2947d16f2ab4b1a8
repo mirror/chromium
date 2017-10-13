@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9db3a43d_ac1a051e",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2862,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-13T18:26:48Z",
+      "side": 1,
+      "message": "I think this is missing enable features and params sections?",
+      "range": {
+        "startLine": 2862,
+        "startChar": 29,
+        "endLine": 2862,
+        "endChar": 51
+      },
+      "revId": "a5113322811b1e2962f38a9d2947d16f2ab4b1a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
