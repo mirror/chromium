@@ -164,6 +164,8 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
 
   friend class NotificationViewMDTest;
 
+  class ClickActivator;
+
   void UpdateControlButtonsVisibilityWithNotification(
       const Notification& notification);
 
@@ -184,6 +186,8 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   bool IsExpandable();
   void ToggleExpanded();
   void UpdateViewForExpandedState(bool expanded);
+
+  void Activate();
 
   // View containing close and settings buttons
   std::unique_ptr<NotificationControlButtonsView> control_buttons_view_;
@@ -219,6 +223,8 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   std::vector<ItemView*> item_views_;
   views::ProgressBar* progress_bar_view_ = nullptr;
   CompactTitleMessageView* compact_title_message_view_ = nullptr;
+
+  std::unique_ptr<ClickActivator> click_activator_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationViewMD);
 };
