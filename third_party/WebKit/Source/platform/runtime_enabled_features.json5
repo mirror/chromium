@@ -404,6 +404,10 @@
       status: "experimental"
     },
     {
+      name: "FeaturePolicyJavaScriptInterface",
+      status: "experimental"
+    },
+    {
       name: "FetchRequestCache",
       status: "experimental",
     },
