@@ -16,6 +16,23 @@
       "revId": "71f59539f6b8d9b90518993decc5eaec972b040b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36fd794_a1e7e077",
+        "filename": "third_party/zlib/armv8_crc32.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-10-13T18:38:30Z",
+      "side": 1,
+      "message": "New line each 4x groups.",
+      "revId": "71f59539f6b8d9b90518993decc5eaec972b040b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
