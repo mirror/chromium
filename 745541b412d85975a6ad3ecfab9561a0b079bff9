@@ -140,6 +140,30 @@
       "revId": "745541b412d85975a6ad3ecfab9561a0b079bff9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5576f54d_980ee412",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/shared-renderer/longtask-in-new-window.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-13T13:30:08Z",
+      "side": 1,
+      "message": "D\u0027oh.",
+      "parentUuid": "023c10c9_6c6e56be",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 12
+      },
+      "revId": "745541b412d85975a6ad3ecfab9561a0b079bff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
