@@ -95,6 +95,7 @@ FormData::FormData(HTMLFormElement* form) : encoding_(UTF8Encoding()) {
 
 DEFINE_TRACE(FormData) {
   visitor->Trace(entries_);
+  ScriptWrappable::Trace(visitor);
 }
 
 void FormData::append(const String& name, const String& value) {

@@ -12,8 +12,7 @@
 namespace blink {
 
 class VRDisplayCapabilities final
-    : public GarbageCollected<VRDisplayCapabilities>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -28,8 +27,6 @@ class VRDisplayCapabilities final
   void SetHasExternalDisplay(bool value) { has_external_display_ = value; }
   void SetCanPresent(bool value) { can_present_ = value; }
   void SetMaxLayers(unsigned value) { max_layers_ = value; }
-
-  DECLARE_VIRTUAL_TRACE()
 
  private:
   bool has_position_;

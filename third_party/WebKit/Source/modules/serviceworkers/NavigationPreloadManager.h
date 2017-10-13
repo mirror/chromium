@@ -14,8 +14,7 @@ namespace blink {
 class ServiceWorkerRegistration;
 
 class NavigationPreloadManager final
-    : public GarbageCollected<NavigationPreloadManager>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

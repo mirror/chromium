@@ -13,9 +13,7 @@
 
 namespace blink {
 
-class CORE_EXPORT DOMArrayBufferView
-    : public GarbageCollectedFinalized<DOMArrayBufferView>,
-      public ScriptWrappable {
+class CORE_EXPORT DOMArrayBufferView : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -79,7 +77,10 @@ class CORE_EXPORT DOMArrayBufferView
     return v8::Local<v8::Object>();
   }
 
-  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(dom_array_buffer_); }
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(dom_array_buffer_);
+    ScriptWrappable::Trace(visitor);
+  }
 
  protected:
   explicit DOMArrayBufferView(RefPtr<WTF::ArrayBufferView> buffer_view)

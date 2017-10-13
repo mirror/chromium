@@ -538,6 +538,7 @@ double PerformanceTiming::IntegerMillisecondsToMonotonicTime(
 }
 
 DEFINE_TRACE(PerformanceTiming) {
+  ScriptWrappable::Trace(visitor);
   DOMWindowClient::Trace(visitor);
 }
 
