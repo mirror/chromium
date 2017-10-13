@@ -21,7 +21,7 @@ namespace {
 constexpr int kHistogramBuckets = 13;
 constexpr char kAppListPlayStoreQueryStateHistogram[] =
     "Apps.AppListPlayStoreQueryState";
-constexpr int kAppListPlayStoreQueryStateNum = 3;
+constexpr int kAppListPlayStoreQueryStateNum = 16;
 
 // Skips Play Store apps that have equivalent extensions installed.
 // Do not skip recent instant apps since they should be treated like
