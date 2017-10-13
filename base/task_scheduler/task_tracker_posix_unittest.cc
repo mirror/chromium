@@ -74,7 +74,7 @@ TEST_F(TaskSchedulerTaskTrackerPosixTest, FileDescriptorWatcher) {
       FROM_HERE,
       Bind(IgnoreResult(&FileDescriptorWatcher::WatchReadable), fds[0],
            Bind(&DoNothing)),
-      TaskTraits(), TimeDelta());
+      TaskTraits(MayBlock()), TimeDelta());
   // FileDescriptorWatcher::WatchReadable needs a SequencedTaskRunnerHandle.
   task->sequenced_task_runner_ref = MakeRefCounted<NullTaskRunner>();
 

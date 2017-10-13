@@ -18,6 +18,7 @@
 namespace base {
 
 class SingleThreadTaskRunner;
+class WaitableEvent;
 
 // The FileDescriptorWatcher API allows callbacks to be invoked when file
 // descriptors are readable or writable without blocking.
@@ -82,15 +83,17 @@ class BASE_EXPORT FileDescriptorWatcher {
   // Registers |callback| to be invoked on the current sequence when |fd| is
   // readable or writable without blocking. |callback| is unregistered when the
   // returned Controller is deleted (deletion must happen on the current
-  // sequence). To call these methods, a FileDescriptorWatcher must have been
-  // instantiated on the current thread and SequencedTaskRunnerHandle::IsSet()
-  // must return true.
+  // sequence). |fd| must outlive the returned Controller. To call these
+  // methods, a FileDescriptorWatcher must have been instantiated on the current
+  // thread and SequencedTaskRunnerHandle::IsSet() must return true.
   static std::unique_ptr<Controller> WatchReadable(int fd,
                                                    const Closure& callback);
   static std::unique_ptr<Controller> WatchWritable(int fd,
                                                    const Closure& callback);
 
  private:
+  static void WaitEvent(WaitableEvent* event);
+
   DISALLOW_COPY_AND_ASSIGN(FileDescriptorWatcher);
 };
 
