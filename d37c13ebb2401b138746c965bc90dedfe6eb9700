@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c6de3ce5_285c6436",
+        "filename": "gpu/command_buffer/service/context_group.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-13T23:15:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a8aa51e_4fb2a920",
+      "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fc3e723_38b2d980",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 3
@@ -124,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "79146b5b_b0c975fc",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3363,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-13T23:15:44Z",
+      "side": 1,
+      "message": "Thanks",
+      "parentUuid": "d853a777_83aa7b20",
+      "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ba6e35a_a06dbb2d",
         "filename": "gpu/ipc/service/gpu_command_buffer_stub.cc",
         "patchSetId": 3
@@ -153,6 +189,24 @@
       "side": 1,
       "message": "So, I don\u0027t think CheckContextLost will do what yo want, or even work before we finish initialization. I suspect it won\u0027t help you here, at best it would check state on the context that you couldn\u0027t even create here.\n\nThe only transient case I could think of is if the GLShareGroup is lost (if not empty, we grab a context out of it to share at the GLX/EGL/... level). I think what we would see is different failure modes inside the GLContext* initialization, that we would want to understand and deal with (right now we don\u0027t look at failure reasons).\nOTOH, maybe it\u0027s ok to punt to a TODO, and treat as fatal?.",
       "parentUuid": "0ba6e35a_a06dbb2d",
+      "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3119d3_b8f40d9a",
+        "filename": "gpu/ipc/service/gpu_command_buffer_stub.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-13T23:15:44Z",
+      "side": 1,
+      "message": "OK so recurse into CreateGLContext, the other on in this method is context-\u003eInitialize() and I can try recurse into that too.",
+      "parentUuid": "2025eab2_217a5fc8",
       "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
