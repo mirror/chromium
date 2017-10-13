@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2aa6fcf_e69f9fd3",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-13T14:32:29Z",
+      "side": 1,
+      "message": "For some reason if I move this into vr_test_support I hit https://cs.chromium.org/chromium/src/build/android/pylib/local/device/local_device_gtest_run.py?rcl\u003d708197db129edcea4501ba1d62bdc16f8e4bb660\u0026l\u003d399. Any idea why?",
+      "revId": "85a983dcbc0c212c8e36674d44068f9775cfcb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
