@@ -27,6 +27,8 @@ namespace ui {
 class Gpu : public gpu::GpuChannelHostFactory,
             public gpu::GpuChannelEstablishFactory {
  public:
+  using GpuPtrFactory = base::RepeatingCallback<mojom::GpuPtr(void)>;
+
   ~Gpu() override;
 
   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager() const {
@@ -39,6 +41,9 @@ class Gpu : public gpu::GpuChannelHostFactory,
   static std::unique_ptr<Gpu> Create(
       service_manager::Connector* connector,
       const std::string& service_name,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner = nullptr);
+  static std::unique_ptr<Gpu> Create(
+      GpuPtrFactory factory,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner = nullptr);
 
   scoped_refptr<viz::ContextProvider> CreateContextProvider(
@@ -58,7 +63,6 @@ class Gpu : public gpu::GpuChannelHostFactory,
  private:
   friend class GpuTest;
 
-  using GpuPtrFactory = base::RepeatingCallback<mojom::GpuPtr(void)>;
   Gpu(GpuPtrFactory factory,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
