@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b00ee8f8_02e8032c",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-13T09:30:52Z",
+      "side": 1,
+      "message": "nit: non-const references are at best discouraged in Chromium, so this should probably return a pointer. (Or you could create an AddURL(const GURL\u0026) method.)",
+      "range": {
+        "startLine": 51,
+        "startChar": 55,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "a56d6c90424d68227a927cccac66205bf75adeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183fc2b7_5cda1235",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-13T09:30:52Z",
+      "side": 1,
+      "message": "I think this works out to a plain std::count (not count_if)?",
+      "range": {
+        "startLine": 74,
+        "startChar": 79,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "a56d6c90424d68227a927cccac66205bf75adeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2edf6d_8a4547aa",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-13T09:30:52Z",
+      "side": 1,
+      "message": "I\u0027m having kind of a hard time grokking what exactly the CallbackTester class represents, and the tests have to know a lot of its innards to use it (passing in the quitclosure, and the OnProvideTopSitesComplete callback, and the cancelable_task_tracker).\nHow about moving the RunLoop and the provider-\u003eProvideTopSites call into the class? The usage would look something like this:\n\nTopSitesQuerier top_sites(provider);\ntop_sites.QueryTopSites(10); // Calls provider-\u003eProvideTopSites and increments expected_calls_\ntop_sites.Wait(); // Calls run_loop.Run\n\nEXPECT_THAT(top_sites. ...);\n\nWDYT?",
+      "range": {
+        "startLine": 134,
+        "startChar": 51,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "a56d6c90424d68227a927cccac66205bf75adeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

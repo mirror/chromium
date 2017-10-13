@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "0a619720_c1f6d115",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-13T09:30:52Z",
+      "side": 1,
+      "message": "Yup, std::sets also don\u0027t move their payloads around. Anyway, what you have is fine :)",
+      "parentUuid": "18e82156_0fe97fec",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 11
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9da71ad3_ff80eaf8",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
         "patchSetId": 6
@@ -536,6 +560,24 @@
       "side": 1,
       "message": "I wanted to add some sort of timeout to the querying so that we\u0027d always clean up. But I don\u0027t know what a reasonable value for the timeout is. Thoughts?",
       "parentUuid": "98f55c3c_6bbac838",
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb705531_cce84e87",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-13T09:30:52Z",
+      "side": 1,
+      "message": "I don\u0027t think a timeout is the right thing here. Calls to the history service should always return.",
+      "parentUuid": "c56d86ca_a2a78eb9",
       "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
