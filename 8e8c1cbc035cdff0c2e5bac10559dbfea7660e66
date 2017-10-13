@@ -34,6 +34,24 @@
       "revId": "8e8c1cbc035cdff0c2e5bac10559dbfea7660e66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b01aee_5116f433",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-13T10:09:54Z",
+      "side": 1,
+      "message": "So as discussed offline, indeed, the activity will be killed and I missed it. My point still applies though but because we don\u0027t propagate the state when going fullscreen, it\u0027s probably pointless to require it here. It would be a nice follow-up to propagate the state based on the property of the CVC but not high priority really.",
+      "parentUuid": "3396a4da_5b4539a9",
+      "revId": "8e8c1cbc035cdff0c2e5bac10559dbfea7660e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
