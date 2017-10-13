@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e07e1ba_72cf0d4b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-13T17:04:47Z",
+      "side": 1,
+      "message": "I guess shutdown task queue means a shutdown task runner? Is there a more precise term we could use?\n\nShouldn\u0027t the queues get removed from the correct sets when they get deleted? Should we instead just make sure the loops below don\u0027t break if the respective container is modified during iteration?",
+      "range": {
+        "startLine": 76,
+        "startChar": 49,
+        "endLine": 76,
+        "endChar": 68
+      },
+      "revId": "9e3980730ccb98a1289066e1771ffbb9e783be07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a1117f_5fac25a3",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-13T17:04:47Z",
+      "side": 1,
+      "message": "s/created/create/",
+      "range": {
+        "startLine": 107,
+        "startChar": 48,
+        "endLine": 107,
+        "endChar": 55
+      },
+      "revId": "9e3980730ccb98a1289066e1771ffbb9e783be07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472d7bbb_c61fe785",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3186,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-13T17:04:47Z",
+      "side": 1,
+      "message": "I don\u0027t think I fully follow this explanation but it sounds brittle :) Should we add a test hook to make these gymnastics unnecessary?",
+      "range": {
+        "startLine": 3186,
+        "startChar": 17,
+        "endLine": 3186,
+        "endChar": 19
+      },
+      "revId": "9e3980730ccb98a1289066e1771ffbb9e783be07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "83aa2b9e_e3f0c0a6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-13T17:04:47Z",
+      "side": 1,
+      "message": "Missed this?",
+      "parentUuid": "4438f51c_6808eabe",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 16
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c817652_258d90c8",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 1
@@ -378,6 +402,30 @@
       "side": 1,
       "message": "All per-frame task queues will support graceful shutdown. Per-renderer task queues (especially control one) won\u0027t.",
       "parentUuid": "090bc2c1_34a76632",
+      "range": {
+        "startLine": 166,
+        "startChar": 7,
+        "endLine": 166,
+        "endChar": 34
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd8b693a_f91463a1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-13T17:04:47Z",
+      "side": 1,
+      "message": "Could we instead make UnregisterTaskQueue do the right thing based on how the task queue is configured? It feels weird having two different ways to unregister.",
+      "parentUuid": "9495c243_31e33b43",
       "range": {
         "startLine": 166,
         "startChar": 7,
