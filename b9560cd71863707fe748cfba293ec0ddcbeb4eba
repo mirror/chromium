@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e685a8a_61cab365",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-13T02:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a93ea87b_16c76e6f",
+      "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8198b75_e34e4d38",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479de60f_29a7e558",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-13T02:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8198b75_e34e4d38",
+      "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f3e1e92a_74b89f4a",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-13T02:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cba2df4d_57bab25f",
+      "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "275f952b_fee31baa",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-12T23:17:24Z",
       "side": 1,
       "message": "Nit: Let\u0027s put this above is_descriptor, since it\u0027s the more common case.",
+      "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5db238_ead734bd",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-13T02:43:00Z",
+      "side": 1,
+      "message": "It appears less frequently in this file than is_descriptor. It\u0027s only used for the 7 cases that are descriptors and also not properties, and never appears in the absence of is_descriptor.",
+      "parentUuid": "275f952b_fee31baa",
       "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "841c8772_ad98c764",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-13T02:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0947739a_8114be88",
+      "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "278f52e6_06456abd",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-12T23:17:24Z",
       "side": 1,
       "message": "This comment seems redundant - doesn\u0027t this whole file specify property metadata?",
+      "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a0c91b_756d5d35",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-13T02:43:00Z",
+      "side": 1,
+      "message": "Yeah, basically. I think this comment made sense when they fed directly into CSSPropertyMetadata.",
+      "parentUuid": "278f52e6_06456abd",
       "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
