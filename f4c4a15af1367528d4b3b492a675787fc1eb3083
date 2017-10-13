@@ -146,6 +146,24 @@
       "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54c5845_26aea19c",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-13T21:51:48Z",
+      "side": 1,
+      "message": "\"WRT 2), the PageStateSerializationTest.BackwardsCompat_V26 already deserializes every field from stored bytes and verifies values. I can add a test that does this separately for fields with an external definition, but I\u0027m not sure how much extra value that adds over the existing test.\"\n\nThe thing is, it is not obvious (at least to untrained eyes like mine) that BackwardsCompat_V26 covers exactly every external type. Having minimal test cases (an additional unittest for each external type) is recommended.\n\nIf it is actually easy to verify by skimming the code that every external type is included in that BackwardsCompat_26, and it is easy to figure out when any of them fails to deserialize to expected value, please point me to it. I could be wrong.\n\nSorry for being picky here. Breaking backward compatibility accidentally is usually pretty painful, and I would like to make sure we don\u0027t get into that trouble.",
+      "parentUuid": "38e623a7_ba1b843e",
+      "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
