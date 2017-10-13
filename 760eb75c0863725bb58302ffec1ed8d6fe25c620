@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65644b3c_bd46af61",
+        "filename": "cc/layers/video_frame_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T14:56:42Z",
+      "side": 1,
+      "message": "i didn\u0027t notice any calls to this.  just impls in the two compositor subclasses.\n\nalso, if it\u0027s really supposed to be here, please add some documentation.  since this class talks about threads elsewhere, it\u0027s unclear what task runner this refers to.",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa8c2bd_a0e065ff",
+        "filename": "cc/test/fake_video_frame_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T14:56:42Z",
+      "side": 1,
+      "message": "is this ever different than \"return nullptr\"?",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef0af4a_65ed5879",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T14:56:42Z",
+      "side": 1,
+      "message": "might be better in params.",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "decb023c_898cfb30",
+        "filename": "media/blink/webmediaplayer_params.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T14:56:42Z",
+      "side": 1,
+      "message": "please comment this.  \"vfc\" is not obvious.",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0218588_ee72c185",
+        "filename": "media/blink/webmediaplayer_params.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T14:56:42Z",
+      "side": 1,
+      "message": "the task runner might be better sent in as a parameter, rather than computing it here.  it\u0027s the only bit of nontrivial logic in this class.\n\nplus, it\u0027s nice if the tests don\u0027t have to remember this behavior, since they\u0027ll care about threading.",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1923d339_ee6fef56",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T14:56:42Z",
+      "side": 1,
+      "message": "you might want to have a thread check here, since you\u0027re posting a message on \"whatever thread this happens to be\".  also makes it easier to see what\u0027s intended.",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e8d523_c476a0a8",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T14:56:42Z",
+      "side": 1,
+      "message": "this doesn\u0027t seem to be used anywhere.",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ffb39f_d4a2d46d",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T14:56:42Z",
+      "side": 1,
+      "message": "this used to be ordered after SubmitFrame, now it\u0027s before.  i don\u0027t know if that matters.",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d4ad38_1d28b577",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T14:56:42Z",
+      "side": 1,
+      "message": "unused.",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16bb3a1f_e5d6548e",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T14:56:42Z",
+      "side": 1,
+      "message": "might want to DCHECK that this is run on the proper thread.",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf409af_a8c7086a",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T14:56:42Z",
+      "side": 1,
+      "message": "since this is only called once, you might just inline it.\n\nthe original idea for a helper was to encapsulate (46, 66..71), which could be re-used in StopRendering and DidReceiveFrame.  given the small amount of code, i don\u0027t know if it\u0027s more readable inlined or moved into a helper.",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b21b5f_4cb51ad0",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T14:56:42Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13814144_93ac436d",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T14:56:42Z",
+      "side": 1,
+      "message": "maybe rename as SetResourceProviderForTesting, so nobody uses it accidentally.  plus (handy note) anybody calling it outside of a test will get a presubmit warning.\n\nas an aside, this isn\u0027t my favorite pattern for injecting dependencies.  is there a reason why creating this has to be deferred to StartSubmitting?\n\nmore specifically, could it show up as a constructor arg that WebVideoFrameSubmitter provides in place of the SharedBitmapManager and GpuMemoryBufferManager?  i.e., let WVFS take as input the same things that it does now, and unconditionally construct VideoFrameResourceProvider and send it to the VideoFrameSubmitter via the constructor.  the VideoFrameSubmitter tests could send the mock instead.",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e78521_1927e385",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitterTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T14:56:42Z",
+      "side": 1,
+      "message": "do these constants matter?  is there a way to see that they\u0027re sent properly into the quads?",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
