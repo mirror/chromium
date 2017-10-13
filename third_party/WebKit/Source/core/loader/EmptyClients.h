@@ -374,7 +374,7 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   }
 
   void AnnotatedRegionsChanged() override {}
-  String GetDevToolsFrameToken() override { return String(); };
+  String GetInstrumentationToken() override { return ""; };
 
  protected:
   EmptyLocalFrameClient() {}
