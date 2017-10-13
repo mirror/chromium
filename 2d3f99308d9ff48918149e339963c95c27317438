@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "1b13311b_cea73b7c",
+        "filename": "content/network/network_service_impl.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T18:07:06Z",
+      "side": 1,
+      "message": "One thing to be aware of:  While we currently have NetworkContexts available to all content/ embedders (Though not things that don\u0027t embed content, like on iOS), only chrome/ has an in-process NetworkService when the network service is disabled.\n\nThis may affect converting content classes and components to use this class.  As will the iOS issue.",
+      "range": {
+        "startLine": 62,
+        "startChar": 41,
+        "endLine": 62,
+        "endChar": 48
+      },
+      "revId": "2d3f99308d9ff48918149e339963c95c27317438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac915fb_da7511b1",
+        "filename": "content/public/common/network_connection_tracker.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T18:07:06Z",
+      "side": 1,
+      "message": "DCHECK that there aren\u0027t any observers?  (Basically, if there are any observers during teardown, odds are that they also likely don\u0027t have a way to be sure they aren\u0027t added after NetworkConnectionTracker destruction)",
+      "range": {
+        "startLine": 37,
+        "startChar": 27,
+        "endLine": 37,
+        "endChar": 51
+      },
+      "revId": "2d3f99308d9ff48918149e339963c95c27317438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "525b669d_e81dc0fe",
         "filename": "content/public/common/network_connection_tracker.h",
         "patchSetId": 23
@@ -13,6 +59,24 @@
       "writtenOn": "2017-10-13T17:54:55Z",
       "side": 1,
       "message": "(I am not sure if calling a user callback on a different thread can be a problem.)",
+      "revId": "2d3f99308d9ff48918149e339963c95c27317438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f97549_90476d29",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T18:07:06Z",
+      "side": 1,
+      "message": "I think we want to call it on the same thread we were called on.  We can just grab the current task runner, and wrap a post task to it in the callback.  Could skip that if the current task runner is the one the tracker itself lives on.",
+      "parentUuid": "525b669d_e81dc0fe",
       "revId": "2d3f99308d9ff48918149e339963c95c27317438",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
