@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "95320d89_c0bf0b94",
+        "filename": "content/common/sandbox_init_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-13T21:08:06Z",
+      "side": 1,
+      "message": "Actually, we can avoid all this base::Bind mess if I move the delegate down lower in the layering.  See latest PS, where I\u0027ve stuck this into services/service_manager/sandbox/ which is OK for now but will make sense once some other stuff moves.",
+      "parentUuid": "f184cc7d_c1f5d2ec",
+      "range": {
+        "startLine": 59,
+        "startChar": 17,
+        "endLine": 59,
+        "endChar": 33
+      },
+      "revId": "99c3b998df9b26ce130fcbcc0c0e9dd2d9f29f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d57e2007_4cf8e36a",
         "filename": "content/common/sandbox_win.cc",
         "patchSetId": 31
