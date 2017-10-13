@@ -2,6 +2,155 @@
   "comments": [
     {
       "key": {
+        "uuid": "80e28689_b14f8090",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "It think this may be more readable if arranged like this:\n\n  sources \u003d [\n    \"barcode_detection_impl.cc\",\n    \"barcode_detection_impl.h\",\n    \"barcode_detection_impl_mac.h\",\n    \"barcode_detection_impl_mac.mm\",\n    \"detection_utils_mac.h\",\n    \"detection_utils_mac.mm\",\n    \"detection_utils_win.h\",\n    \"face_detection_impl_mac.h\",\n    \"face_detection_impl_mac.mm\",\n    \"face_detection_impl_win.cc\",\n    \"face_detection_impl_win.h\",\n    \"face_detection_provider_impl.cc\",\n    \"face_detection_provider_impl.h\",\n    \"shape_detection_service.cc\",\n    \"shape_detection_service.h\",\n    \"text_detection_impl.cc\",\n    \"text_detection_impl.h\",\n    \"text_detection_impl_mac.h\",\n    \"text_detection_impl_mac.mm\",\n  ]\n\n  if (is_mac) {\n    # Remove no-op implementations for features supported on macOS.\n    sources -\u003d [\n      \"barcode_detection_impl.cc\",\n      \"face_detection_provider_impl.cc\",\n      \"text_detection_impl.cc\",\n    ]\n\n    libs \u003d [ \"QuartzCore.framework\" ]\n  }\n\n  if (is_win) {\n    # Remove no-op implementations for features supported on Windows.\n    sources -\u003d [\n      \"face_detection_provider_impl.cc\",\n    ]\n\n    libs \u003d [ \"runtimeobject.lib\" ]\n  }",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 3
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296ce89d_3bbc4ff4",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "This, and the sources line above can be merged into one because the source list will automatically be filtered by platform. Just keep the libs sections separate.",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22ca032_632461a7",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "Leftovers?",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 37
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88831e86_c0d4d5ef",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "Newline between copyright header and include guards.",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19bcdc9d_550f65a1",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "AsyncOperate",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 19
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d770ab1e_f026e81d",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "nit: one space",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 23
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6e5d3f_5dc61e2e",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "AsyncCallbackInternal",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 28
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a0f17e2_8adf8db0",
         "filename": "services/shape_detection/detection_utils_win.h",
         "patchSetId": 2
@@ -13,6 +162,92 @@
       "writtenOn": "2017-10-13T19:21:59Z",
       "side": 1,
       "message": "this looks it will cause problems. If you release and in fact is the last reference then it is possible (even likely) for another one to be allocated with that same address and inserted in the set before ln63 gets executed.",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3837429a_3f423433",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "AsyncCallback",
+      "range": {
+        "startLine": 69,
+        "startChar": 15,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e56529_f2cb2ae9",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "Return nullptr here and declare com_ptr before it is used instead of at the top of the function.",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 19
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb221cc1_a065ae84",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "Return nullptr, com_ptr will be freed at the same time.",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640cd3b4_9c413501",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "Since this can cause the face detector to be created but left in an unusable state can we move this into CreateFaceDetection above?",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 48
+      },
       "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +271,23 @@
         "endLine": 222,
         "endChar": 63
       },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1213fdd0_e4976fc0",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "In general we shouldn\u0027t DCHECK on operating system capabilities which could reasonably be missing. Instead put these checks into CreateFaceDetection and only bind |request| to a new FaceDetectionImplWin instance if we are reasonably sure the detector will work.",
       "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -81,6 +333,132 @@
         "startChar": 0,
         "endLine": 264,
         "endChar": 3
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6294a9f3_0b01ec63",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "If we fail to create the detector we probably should close the Mojo connection so that the client observes that face detection is unsupported. This makes me think that this step should be performed as part of CreateFaceDetection() instead of waiting until a face detection request is received.",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3113a5b_dcb08572",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "Depending on the severity of this error either |detect_callback_| should be called or the Mojo connection destroyed entirely.",
+      "range": {
+        "startLine": 351,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 11
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39704a3_390bc11b",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "Return nullptr works here because there is an implicit ScopedComPtr constructor that takes nullptr_t.",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7491df97_c7d51921",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "AsyncDetectSoftwareBitmap",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 32
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088bb158_e6b81240",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "AsyncCreateFaceDetector",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a239061c_e606d598",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T21:59:36Z",
+      "side": 1,
+      "message": "ConvertToSoftwareBitmap",
+      "range": {
+        "startLine": 54,
+        "startChar": 43,
+        "endLine": 54,
+        "endChar": 66
       },
       "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
