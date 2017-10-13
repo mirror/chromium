@@ -2819,8 +2819,9 @@ void CompositedLayerMapping::UpdateImageContents() {
 
   Node* node = image_layout_object.GetNode();
   Image::ImageDecodingMode decode_mode =
-      IsHTMLImageElement(node) ? ToHTMLImageElement(node)->GetDecodingMode()
-                               : Image::kUnspecifiedDecode;
+      IsHTMLImageElement(node)
+          ? ToHTMLImageElement(node)->GetDecodingMode(image->paint_image_id())
+          : Image::kUnspecifiedDecode;
 
   // This is a no-op if the layer doesn't have an inner layer for the image.
   graphics_layer_->SetContentsToImage(
