@@ -240,13 +240,20 @@
           <div class="section-title">$i18n{itemPermissions}</div>
           <div class="section-content">
             <span id="no-permissions"
-                hidden$="[[hasPermissions_(data.permissions.splices)]]">
+                hidden="[[data.permissions.length]]">
               $i18n{itemPermissionsEmpty}
             </span>
             <ul id="permissions-list"
-                hidden$="[[!hasPermissions_(data.permissions.splices)]]">
+                hidden="[[!data.permissions.length]]">
               <template is="dom-repeat" items="[[data.permissions]]">
-                <li>[[item]]</li>
+                <li>
+                  [[item.message]]
+                  <ul hidden="[[!item.submessages.length]]">
+                    <template is="dom-repeat" items="[[item.submessages]]">
+                      <li>[[item]]</li>
+                    </template>
+                  </ul>
+                </li>
               </template>
             </ul>
           </div>

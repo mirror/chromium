@@ -512,8 +512,14 @@ void ExtensionInfoGenerator::CreateExtensionInfoHelper(
       extension.permissions_data()->GetPermissionMessages();
   // TODO(devlin): We need to include retained device/file info. We also need
   // to indicate which can be removed and which can't.
-  for (const PermissionMessage& message : messages)
-    info->permissions.push_back(base::UTF16ToUTF8(message.message()));
+  for (const PermissionMessage& message : messages) {
+    developer::PermissionMessage permission_message;
+    permission_message.message = base::UTF16ToUTF8(message.message());
+    for (auto submessage : message.submessages())
+      permission_message.submessages.push_back(base::UTF16ToUTF8(submessage));
+
+    info->permissions.push_back(std::move(permission_message));
+  }
 
   // Runs on all urls.
   ScriptingPermissionsModifier permissions_modifier(
