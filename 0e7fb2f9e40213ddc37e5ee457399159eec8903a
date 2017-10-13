@@ -141,6 +141,24 @@
       "revId": "0e7fb2f9e40213ddc37e5ee457399159eec8903a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022e6b8f_c94623a2",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-13T21:34:39Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I\u0027m following the logic right. but https://cs.chromium.org/chromium/src/ui/gl/gl_surface_egl.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d155 shows \"const unsigned char* value\". Is it checking for a nonzero pointer (which would always be true) instead of looking at the pointed-to content?\n\nCompare with this other example that uses TRACE_EVENT_CATEGORY_GROUP_ENABLED (no _GET_):\n\nhttps://cs.chromium.org/chromium/src/gpu/command_buffer/service/gles2_cmd_decoder.cc?sq\u003dpackage:chromium\u0026type\u003dcs\u0026l\u003d12033\n  bool is_tracing;\n  TRACE_EVENT_CATEGORY_GROUP_ENABLED(TRACE_DISABLED_BY_DEFAULT(\"gpu.debug\"),\n                                     \u0026is_tracing);\n  if (is_tracing) { ... }",
+      "parentUuid": "b04da271_36527a21",
+      "revId": "0e7fb2f9e40213ddc37e5ee457399159eec8903a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
