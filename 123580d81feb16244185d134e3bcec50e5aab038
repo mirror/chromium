@@ -16,6 +16,24 @@
       "revId": "123580d81feb16244185d134e3bcec50e5aab038",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57451f7_2ed52c18",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-13T03:36:23Z",
+      "side": 1,
+      "message": "Ack, prefer use braces here. Actually, I wanted do that, but I referred to line 804.",
+      "parentUuid": "12afbec8_d739c363",
+      "revId": "123580d81feb16244185d134e3bcec50e5aab038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
