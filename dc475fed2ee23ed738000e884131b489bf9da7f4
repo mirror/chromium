@@ -486,6 +486,30 @@
     },
     {
       "key": {
+        "uuid": "692c5df7_01149b15",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-13T20:30:04Z",
+      "side": 1,
+      "message": "Update: I renamed TaskQueue::UnregisterTaskQueue into TaskQueue::ShutdownTaskQueue. Not having two different UnregisterTaskQueue methods should help with clarity.",
+      "parentUuid": "75eeb82e_ff01ff69",
+      "range": {
+        "startLine": 166,
+        "startChar": 7,
+        "endLine": 166,
+        "endChar": 34
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1ca3f54_f17947b9",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
         "patchSetId": 1
