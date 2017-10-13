@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44c3ed55_1b1ddcdd",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T22:07:14Z",
+      "side": 1,
+      "message": "\"protected\", to give access to subclasses but not others.  here and elsewhere.",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 11
+      },
+      "revId": "fc0de9efa04fdd034130da10d16f15641b364359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc3e378_475c864a",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T22:07:14Z",
+      "side": 1,
+      "message": "why does this need to be subclassed?",
+      "revId": "fc0de9efa04fdd034130da10d16f15641b364359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03ea408_ef9df784",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-13T22:07:14Z",
+      "side": 1,
+      "message": "there\u0027s a lot of duplicated code here.  would it be possible to make the encoder subclass much lighter?\n\nfor example, we might have protected methods to handle just this part, that MediaCodecBridge.dequeueOutputBuffer calls.  the default implementation in MediaCodecBridge would be empty.  something like processConfigFrame(), that\u0027s called right after mMediaCodec.dequeueOutputBuffer if the index \u003e\u003d 0.\n\nthe encoder subclass would do buffer management like it does now, as well.\n\nthen the encoder is a very small class.",
+      "range": {
+        "startLine": 149,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 13
+      },
+      "revId": "fc0de9efa04fdd034130da10d16f15641b364359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
