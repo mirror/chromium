@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a6c50cac_8348dbb3",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T17:04:09Z",
+      "side": 1,
+      "message": "performClick: is in the same category as the methods in the \"Responding to Action Messages\" section of the NSResponder docs:\n\nhttps://developer.apple.com/documentation/appkit/nsresponder?language\u003dobjc\n\n…which are all intended to be implemented by subclasses that want to handle certain kinds of key events. Unfortunately I can\u0027t really find an explicit guarantee that performClick: works this way. The closest I\u0027ve got is the NSControl docs:\n\nhttps://developer.apple.com/documentation/appkit/nscontrol?language\u003dobjc\n\n…which has performClick: listed under \"Activating from the Keyboard\" :/.",
+      "parentUuid": "ef92d926_a64247a3",
+      "revId": "595ef26db2e877222eabff125125486d46f050a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7de23fcf_1110d53c",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Indeed, they don\u0027t. I\u0027m on the fence about whether the tabs should. Safari\u0027s tabs don\u0027t. What do you think?",
       "parentUuid": "7de23fcf_1110d53c",
+      "revId": "595ef26db2e877222eabff125125486d46f050a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "168e542c_c773773d",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T17:04:09Z",
+      "side": 1,
+      "message": "If no AppKit controls respond to return/enter, I would follow that pattern here and just respond to space.",
+      "parentUuid": "8568fb5c_63ed9919",
       "revId": "595ef26db2e877222eabff125125486d46f050a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
