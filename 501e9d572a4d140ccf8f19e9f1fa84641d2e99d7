@@ -16,6 +16,24 @@
       "revId": "501e9d572a4d140ccf8f19e9f1fa84641d2e99d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8379c764_a4dd9496",
+        "filename": "ui/android/java/src/org/chromium/ui/resources/dynamics/ViewResourceAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-13T14:51:05Z",
+      "side": 1,
+      "message": "Done, but out of curiosity, why don\u0027t we want to drop the bitmap if the whole region is dirty? To avoid memory churn?",
+      "parentUuid": "8d664020_d2ce5dca",
+      "revId": "501e9d572a4d140ccf8f19e9f1fa84641d2e99d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
