@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c12a87d7_a7b8d7ad",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 84220,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-13T17:58:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48904cb6_3967f76d",
+      "range": {
+        "startLine": 84220,
+        "startChar": 45,
+        "endLine": 84220,
+        "endChar": 50
+      },
+      "revId": "89d1193ff109455846efe1225aee03e9efa49546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b3b5114_dc50a672",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "89d1193ff109455846efe1225aee03e9efa49546",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b4d426_2034ab86",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 84222,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-13T17:58:58Z",
+      "side": 1,
+      "message": "The session and recording window are the same here. I would just keep |session| here because it is defined, but |recording window| is not defined.",
+      "parentUuid": "5b3b5114_dc50a672",
+      "range": {
+        "startLine": 84222,
+        "startChar": 70,
+        "endLine": 84222,
+        "endChar": 77
+      },
+      "revId": "89d1193ff109455846efe1225aee03e9efa49546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "463c4d40_3075a27a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 84239,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-13T17:58:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c7d41c91_4cba979e",
+      "range": {
+        "startLine": 84239,
+        "startChar": 36,
+        "endLine": 84239,
+        "endChar": 43
+      },
+      "revId": "89d1193ff109455846efe1225aee03e9efa49546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b823754_1fa9be57",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "89d1193ff109455846efe1225aee03e9efa49546",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f7612d_d709c40c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 84250,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-13T17:58:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0b823754_1fa9be57",
+      "range": {
+        "startLine": 84250,
+        "startChar": 60,
+        "endLine": 84250,
+        "endChar": 67
+      },
+      "revId": "89d1193ff109455846efe1225aee03e9efa49546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
