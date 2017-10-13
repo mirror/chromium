@@ -13,6 +13,7 @@
 #include "base/android/jni_string.h"
 #include "base/command_line.h"
 #include "base/format_macros.h"
+#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
@@ -43,7 +44,6 @@
 #include "third_party/libaddressinput/chromium/chrome_metadata_source.h"
 #include "third_party/libaddressinput/chromium/chrome_storage_impl.h"
 #include "ui/base/l10n/l10n_util.h"
-
 namespace autofill {
 namespace {
 
@@ -382,18 +382,22 @@ ScopedJavaLocalRef<jstring> PersonalDataManagerAndroid::SetProfile(
     JNIEnv* env,
     const JavaParamRef<jobject>& unused_obj,
     const JavaParamRef<jobject>& jprofile) {
+  LOG(ERROR) << "Parastoo 82";
   std::string guid = ConvertJavaStringToUTF8(
       env, Java_AutofillProfile_getGUID(env, jprofile).obj());
-
+  LOG(ERROR) << "Parastoo: guid: " << guid;
   AutofillProfile profile;
   PopulateNativeProfileFromJava(jprofile, env, &profile);
 
   if (guid.empty()) {
+    LOG(ERROR) << "Parastoo 83";
     personal_data_manager_->AddProfile(profile);
   } else {
+    LOG(ERROR) << "Parastoo 84";
     profile.set_guid(guid);
     personal_data_manager_->UpdateProfile(profile);
   }
+  LOG(ERROR) << "Parastoo 85" << profile.guid();
 
   return ConvertUTF8ToJavaString(env, profile.guid());
 }

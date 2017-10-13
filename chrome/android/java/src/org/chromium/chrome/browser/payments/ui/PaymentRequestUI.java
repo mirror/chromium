@@ -211,9 +211,9 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
      */
     public interface PaymentRequestObserverForTest {
         /**
-         * Called when clicks on the UI are possible.
+         * Called when an editor field text has changed.
          */
-        void onPaymentRequestReadyForInput(PaymentRequestUI ui);
+        void onPaymentRequestEditorTextUpdate();
 
         /**
          * Called when clicks on the PAY button are possible.
@@ -221,9 +221,9 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         void onPaymentRequestReadyToPay(PaymentRequestUI ui);
 
         /**
-         * Called when the UI has been updated to reflect checking a selected option.
+         * Called when clicks on the UI are possible.
          */
-        void onPaymentRequestSelectionChecked(PaymentRequestUI ui);
+        void onPaymentRequestReadyForInput(PaymentRequestUI ui);
 
         /**
          * Called when edit dialog is showing.
@@ -231,15 +231,15 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         void onPaymentRequestReadyToEdit();
 
         /**
+         * Called when the UI has been updated to reflect checking a selected option.
+         */
+        void onPaymentRequestSelectionChecked(PaymentRequestUI ui);
+
+        /**
          * Called when editor validation completes with error. This can happen, for example, when
          * user enters an invalid email address.
          */
         void onPaymentRequestEditorValidationError();
-
-        /**
-         * Called when an editor field text has changed.
-         */
-        void onPaymentRequestEditorTextUpdate();
 
         /**
          * Called when the result UI is showing.
@@ -434,8 +434,10 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         bottomSheetParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
         mFullContainer.addView(mRequestView, bottomSheetParams);
 
-        mEditorDialog = new EditorDialog(activity, sObserverForTest);
-        mCardEditorDialog = new EditorDialog(activity, sObserverForTest);
+        mEditorDialog = new EditorDialog(activity, sObserverForTest,
+                /*deleteRunnable =*/null);
+        mCardEditorDialog = new EditorDialog(activity, sObserverForTest,
+                /*deleteRunnable =*/null);
 
         // Allow screenshots of the credit card number in Canary, Dev, and developer builds.
         if (ChromeVersionInfo.isBetaBuild() || ChromeVersionInfo.isStableBuild()) {

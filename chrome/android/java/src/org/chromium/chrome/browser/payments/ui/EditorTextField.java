@@ -43,12 +43,16 @@ public class EditorTextField extends FrameLayout implements EditorFieldView, Vie
     private ImageView mValueIcon;
     private int mValueIconId;
     private boolean mHasFocusedAtLeastOnce;
-    @Nullable private PaymentRequestObserverForTest mObserverForTest;
+    @Nullable
+    private PaymentRequestObserverForTest mObserverForTest;
 
     public EditorTextField(Context context, final EditorFieldModel fieldModel,
             OnEditorActionListener actionListener, @Nullable InputFilter filter,
             @Nullable TextWatcher formatter, @Nullable PaymentRequestObserverForTest observer) {
         super(context);
+        System.out.println(
+                "Parastoo creating EditorTextField. observer is null?" + (observer == null));
+
         assert fieldModel.getInputTypeHint() != EditorFieldModel.INPUT_TYPE_HINT_DROPDOWN;
         mEditorFieldModel = fieldModel;
         mEditorActionListener = actionListener;
@@ -115,6 +119,8 @@ public class EditorTextField extends FrameLayout implements EditorFieldView, Vie
                 fieldModel.setValue(s.toString());
                 updateDisplayedError(false);
                 updateFieldValueIcon(false);
+                System.out.println(
+                        "Parastoo mObserverForTest is null?" + (mObserverForTest == null));
                 if (mObserverForTest != null) {
                     mObserverForTest.onPaymentRequestEditorTextUpdate();
                 }

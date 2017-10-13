@@ -650,6 +650,7 @@ public class PersonalDataManager {
                     nativeGetProfileByGUID(mPersonalDataManagerAndroid, profileGUIDs[i]);
             profile.setLabel(profileLabels[i]);
             profiles.add(profile);
+            System.out.println("Parastoo: getProfilesWithLabels: " + profile.getGUID());
         }
 
         return profiles;
@@ -667,6 +668,7 @@ public class PersonalDataManager {
 
     public String setProfile(AutofillProfile profile) {
         ThreadUtils.assertOnUiThread();
+        System.out.println("Parastoo 81");
         return nativeSetProfile(mPersonalDataManagerAndroid, profile);
     }
 
