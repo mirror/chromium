@@ -16,6 +16,24 @@
       "revId": "e808738c67911569f6cddd44faac20f1d0d7f215",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff96a85_25fa1acc",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-10-13T16:31:50Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t understand this comment - are you suggesting having TabView override needsPanelToBecomeKey instead of testing [NSApp isFullKeyboardAccessEnabled] here? From my reading of the docs [NSView needsPanelToBecomeKey] indicates whether an NSView\u0027s containing panel has to become key while the view is first responder so that the view can handle keyboard input, not whether the NSView should be traversable by full keyboard access. It does say \"this property is also used in keyboard navigation\" but not how.",
+      "parentUuid": "39f5ac0f_e5093183",
+      "revId": "e808738c67911569f6cddd44faac20f1d0d7f215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
