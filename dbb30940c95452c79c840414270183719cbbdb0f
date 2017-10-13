@@ -22,6 +22,30 @@
       "revId": "dbb30940c95452c79c840414270183719cbbdb0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7089b5_92d71352",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/element-from-point-parameters.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-10-13T09:13:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "733b9dd6_610828e9",
+      "range": {
+        "startLine": 2,
+        "startChar": 21,
+        "endLine": 2,
+        "endChar": 22
+      },
+      "revId": "dbb30940c95452c79c840414270183719cbbdb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
