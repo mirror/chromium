@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fea593e5_0af1991c",
+        "filename": "base/trace_event/trace_log.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-13T23:47:31Z",
+      "side": 0,
+      "message": "It\u0027s rather confusing that this takes a char* rather than a std::string. As the value is wrapped in a std::string, it doesn\u0027t seem like there is much value in taking a char*.",
+      "range": {
+        "startLine": 311,
+        "startChar": 22,
+        "endLine": 311,
+        "endChar": 46
+      },
+      "revId": "90efb744873acd59517c78a1ebe300668c7079a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
