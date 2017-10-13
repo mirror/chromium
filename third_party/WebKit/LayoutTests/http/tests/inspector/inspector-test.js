@@ -236,24 +236,6 @@ InspectorTest.runWhenPageLoads = function(callback)
     InspectorTest._pageLoadedCallback = InspectorTest.safeWrap(chainedCallback);
 }
 
-InspectorTest.runTestSuite = function(testSuite)
-{
-    var testSuiteTests = testSuite.slice();
-
-    function runner()
-    {
-        if (!testSuiteTests.length) {
-            InspectorTest.completeTest();
-            return;
-        }
-        var nextTest = testSuiteTests.shift();
-        InspectorTest.addResult("");
-        InspectorTest.addResult("Running: " + /function\s([^(]*)/.exec(nextTest)[1]);
-        InspectorTest.safeWrap(nextTest)(runner);
-    }
-    runner();
-}
-
 InspectorTest.wrapListener = function(func)
 {
     function wrapper()
