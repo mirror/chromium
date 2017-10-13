@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a8aa51e_4fb2a920",
+        "filename": "gpu/command_buffer/service/context_group.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-13T00:32:39Z",
+      "side": 1,
+      "message": "Yes, but the context would already be current here, and I believe with virtual contexts, we\u0027ll early out with success and not look for reset status. Maybe instead we can expose CheckResetStatus on GLES2Decoder?",
+      "parentUuid": "8e839b94_da9aff37",
+      "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fc3e723_38b2d980",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-13T00:04:22Z",
       "side": 1,
       "message": "In GLES2DecoderImpl we call CheckResetStatus right?",
+      "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e667f0_1e26b3ce",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3637,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-13T00:32:39Z",
+      "side": 1,
+      "message": "That seems fine.",
+      "parentUuid": "8fc3e723_38b2d980",
       "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9a391ed1_d5cf83cf",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-13T00:32:39Z",
+      "side": 1,
+      "message": "yep",
+      "parentUuid": "7af4aac5_2ab270dd",
+      "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ba6e35a_a06dbb2d",
         "filename": "gpu/ipc/service/gpu_command_buffer_stub.cc",
         "patchSetId": 3
@@ -64,6 +118,41 @@
       "writtenOn": "2017-10-13T00:04:22Z",
       "side": 1,
       "message": "and in GpuCommandBufferStub we CheckContextLost() ?",
+      "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2025eab2_217a5fc8",
+        "filename": "gpu/ipc/service/gpu_command_buffer_stub.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-13T00:32:39Z",
+      "side": 1,
+      "message": "So, I don\u0027t think CheckContextLost will do what yo want, or even work before we finish initialization. I suspect it won\u0027t help you here, at best it would check state on the context that you couldn\u0027t even create here.\n\nThe only transient case I could think of is if the GLShareGroup is lost (if not empty, we grab a context out of it to share at the GLX/EGL/... level). I think what we would see is different failure modes inside the GLContext* initialization, that we would want to understand and deal with (right now we don\u0027t look at failure reasons).\nOTOH, maybe it\u0027s ok to punt to a TODO, and treat as fatal?.",
+      "parentUuid": "0ba6e35a_a06dbb2d",
+      "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ce330c_1c6530bc",
+        "filename": "gpu/ipc/service/gpu_command_buffer_stub.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-13T00:32:39Z",
+      "side": 1,
+      "message": "This is the first make current, so most likely fatal, the only transient reason I can think of is if the share group is lost, like above.",
       "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
