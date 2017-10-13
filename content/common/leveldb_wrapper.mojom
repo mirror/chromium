@@ -72,7 +72,9 @@ interface LevelDBWrapper {
   // Removes all the entries.
   DeleteAll(string source) => (bool success);
 
-  // Returns the value of the |key|.
+  // Only used for testing. Returns the value of the |key| only if values are
+  // stored in the internal in-memory cache. Fails if the |key| does not exist
+  // or if values are not required to be stored in the cache.
   Get(array<uint8> key) => (bool success, array<uint8> value);
 
   // Only used with small databases. Returns all key/value pairs.

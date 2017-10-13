@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
+#include "build/build_config.h"
 #include "components/leveldb/public/cpp/util.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/test/mock_leveldb_database.h"
@@ -61,7 +62,7 @@ class MockDelegate : public LevelDBWrapperImpl::Delegate {
   }
   std::vector<LevelDBWrapperImpl::Change> FixUpData(
       const LevelDBWrapperImpl::ValueMap& data) override {
-    return mock_changes_;
+    return std::move(mock_changes_);
   }
 
   int map_load_count() const { return map_load_count_; }
@@ -114,6 +115,7 @@ class LevelDBWrapperImplTest : public testing::Test,
                           base::TimeDelta::FromSeconds(5),
                           10 * 1024 * 1024 /* max_bytes_per_hour */,
                           60 /* max_commits_per_hour */,
+                          /*store_only_keys_in_cache=*/true,
                           &delegate_),
         observer_binding_(this) {
     set_mock_data(std::string(kTestPrefix) + "def", "defdata");
@@ -149,6 +151,19 @@ class LevelDBWrapperImplTest : public testing::Test,
 
   mojom::LevelDBWrapper* wrapper() { return level_db_wrapper_ptr_.get(); }
   LevelDBWrapperImpl* wrapper_impl() { return &level_db_wrapper_; }
+
+  bool GetAllSync(std::vector<mojom::KeyValuePtr>* data) {
+    leveldb::mojom::DatabaseError status;
+    base::RunLoop run_loop;
+    bool success = false;
+    EXPECT_TRUE(wrapper()->GetAll(
+        GetAllCallback::CreateAndBind(&success, run_loop.QuitClosure()),
+        &status, data));
+    EXPECT_EQ(leveldb::mojom::DatabaseError::OK, status);
+    EXPECT_FALSE(success);
+    run_loop.Run();
+    return success;
+  }
 
   bool GetSync(const std::vector<uint8_t>& key, std::vector<uint8_t>* result) {
     base::RunLoop run_loop;
@@ -237,7 +252,17 @@ class LevelDBWrapperImplTest : public testing::Test,
   std::vector<Observation> observations_;
 };
 
+class LevelDBWrapperImplParamTest : public LevelDBWrapperImplTest,
+                                    public testing::WithParamInterface<bool> {
+ public:
+  LevelDBWrapperImplParamTest() {}
+  ~LevelDBWrapperImplParamTest() override {}
+};
+
+INSTANTIATE_TEST_CASE_P(_, LevelDBWrapperImplParamTest, ::testing::Bool());
+
 TEST_F(LevelDBWrapperImplTest, GetLoadedFromMap) {
+  wrapper_impl()->SetCacheModeForTesting(/*only_keys=*/false);
   std::vector<uint8_t> result;
   EXPECT_TRUE(GetSync(StdStringToUint8Vector("123"), &result));
   EXPECT_EQ(StdStringToUint8Vector("123data"), result);
@@ -246,6 +271,7 @@ TEST_F(LevelDBWrapperImplTest, GetLoadedFromMap) {
 }
 
 TEST_F(LevelDBWrapperImplTest, GetFromPutOverwrite) {
+  wrapper_impl()->SetCacheModeForTesting(/*only_keys=*/false);
   std::vector<uint8_t> key = StdStringToUint8Vector("123");
   std::vector<uint8_t> value = StdStringToUint8Vector("foo");
 
@@ -257,6 +283,7 @@ TEST_F(LevelDBWrapperImplTest, GetFromPutOverwrite) {
 }
 
 TEST_F(LevelDBWrapperImplTest, GetFromPutNewKey) {
+  wrapper_impl()->SetCacheModeForTesting(/*only_keys=*/false);
   std::vector<uint8_t> key = StdStringToUint8Vector("newkey");
   std::vector<uint8_t> value = StdStringToUint8Vector("foo");
 
@@ -267,7 +294,8 @@ TEST_F(LevelDBWrapperImplTest, GetFromPutNewKey) {
   EXPECT_EQ(value, result);
 }
 
-TEST_F(LevelDBWrapperImplTest, GetAll) {
+TEST_P(LevelDBWrapperImplParamTest, GetAll) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   leveldb::mojom::DatabaseError status;
   std::vector<mojom::KeyValuePtr> data;
   base::RunLoop run_loop;
@@ -282,7 +310,8 @@ TEST_F(LevelDBWrapperImplTest, GetAll) {
   EXPECT_TRUE(result);
 }
 
-TEST_F(LevelDBWrapperImplTest, CommitPutToDB) {
+TEST_P(LevelDBWrapperImplParamTest, CommitPutToDB) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   std::string key1 = "123";
   std::string value1 = "foo";
   std::string key2 = "abc";
@@ -306,7 +335,8 @@ TEST_F(LevelDBWrapperImplTest, CommitPutToDB) {
   EXPECT_EQ(value2, get_mock_data(kTestPrefix + key2));
 }
 
-TEST_F(LevelDBWrapperImplTest, PutObservations) {
+TEST_P(LevelDBWrapperImplParamTest, PutObservations) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   std::string key = "new_key";
   std::string value1 = "foo";
   std::string value2 = "data abc";
@@ -337,13 +367,15 @@ TEST_F(LevelDBWrapperImplTest, PutObservations) {
   ASSERT_EQ(2u, observations().size());
 }
 
-TEST_F(LevelDBWrapperImplTest, DeleteNonExistingKey) {
+TEST_P(LevelDBWrapperImplParamTest, DeleteNonExistingKey) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   EXPECT_TRUE(DeleteSync(StdStringToUint8Vector("doesn't exist"),
                          std::vector<uint8_t>()));
   EXPECT_EQ(0u, observations().size());
 }
 
-TEST_F(LevelDBWrapperImplTest, DeleteExistingKey) {
+TEST_P(LevelDBWrapperImplParamTest, DeleteExistingKey) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   std::string key = "newkey";
   std::string value = "foo";
   set_mock_data(kTestPrefix + key, value);
@@ -362,7 +394,8 @@ TEST_F(LevelDBWrapperImplTest, DeleteExistingKey) {
   EXPECT_FALSE(has_mock_data(kTestPrefix + key));
 }
 
-TEST_F(LevelDBWrapperImplTest, DeleteAllWithoutLoadedMap) {
+TEST_P(LevelDBWrapperImplParamTest, DeleteAllWithoutLoadedMap) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   std::string key = "newkey";
   std::string value = "foo";
   std::string dummy_key = "foobar";
@@ -390,7 +423,8 @@ TEST_F(LevelDBWrapperImplTest, DeleteAllWithoutLoadedMap) {
                       std::vector<uint8_t>(), base::nullopt));
 }
 
-TEST_F(LevelDBWrapperImplTest, DeleteAllWithLoadedMap) {
+TEST_P(LevelDBWrapperImplParamTest, DeleteAllWithLoadedMap) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   std::string key = "newkey";
   std::string value = "foo";
   std::string dummy_key = "foobar";
@@ -411,7 +445,8 @@ TEST_F(LevelDBWrapperImplTest, DeleteAllWithLoadedMap) {
   EXPECT_TRUE(has_mock_data(dummy_key));
 }
 
-TEST_F(LevelDBWrapperImplTest, DeleteAllWithPendingMapLoad) {
+TEST_P(LevelDBWrapperImplParamTest, DeleteAllWithPendingMapLoad) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   std::string key = "newkey";
   std::string value = "foo";
   std::string dummy_key = "foobar";
@@ -433,14 +468,16 @@ TEST_F(LevelDBWrapperImplTest, DeleteAllWithPendingMapLoad) {
   EXPECT_TRUE(has_mock_data(dummy_key));
 }
 
-TEST_F(LevelDBWrapperImplTest, DeleteAllWithoutLoadedEmptyMap) {
+TEST_P(LevelDBWrapperImplParamTest, DeleteAllWithoutLoadedEmptyMap) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   clear_mock_data();
 
   EXPECT_TRUE(DeleteAllSync());
   ASSERT_EQ(0u, observations().size());
 }
 
-TEST_F(LevelDBWrapperImplTest, PutOverQuotaLargeValue) {
+TEST_P(LevelDBWrapperImplParamTest, PutOverQuotaLargeValue) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   std::vector<uint8_t> key = StdStringToUint8Vector("newkey");
   std::vector<uint8_t> value(kTestSizeLimit, 4);
 
@@ -450,7 +487,8 @@ TEST_F(LevelDBWrapperImplTest, PutOverQuotaLargeValue) {
   EXPECT_TRUE(PutSync(key, value, base::nullopt));
 }
 
-TEST_F(LevelDBWrapperImplTest, PutOverQuotaLargeKey) {
+TEST_P(LevelDBWrapperImplParamTest, PutOverQuotaLargeKey) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   std::vector<uint8_t> key(kTestSizeLimit, 'a');
   std::vector<uint8_t> value = StdStringToUint8Vector("newvalue");
 
@@ -460,7 +498,8 @@ TEST_F(LevelDBWrapperImplTest, PutOverQuotaLargeKey) {
   EXPECT_TRUE(PutSync(key, value, base::nullopt));
 }
 
-TEST_F(LevelDBWrapperImplTest, PutWhenAlreadyOverQuota) {
+TEST_P(LevelDBWrapperImplParamTest, PutWhenAlreadyOverQuota) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   std::string key = "largedata";
   std::vector<uint8_t> value(kTestSizeLimit, 4);
   std::vector<uint8_t> old_value = value;
@@ -494,7 +533,8 @@ TEST_F(LevelDBWrapperImplTest, PutWhenAlreadyOverQuota) {
   EXPECT_FALSE(PutSync(StdStringToUint8Vector(key), value, old_value));
 }
 
-TEST_F(LevelDBWrapperImplTest, PutWhenAlreadyOverQuotaBecauseOfLargeKey) {
+TEST_P(LevelDBWrapperImplParamTest, PutWhenAlreadyOverQuotaBecauseOfLargeKey) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   std::vector<uint8_t> key(kTestSizeLimit, 'x');
   std::vector<uint8_t> value = StdStringToUint8Vector("value");
   std::vector<uint8_t> old_value = value;
@@ -517,26 +557,27 @@ TEST_F(LevelDBWrapperImplTest, PutWhenAlreadyOverQuotaBecauseOfLargeKey) {
   EXPECT_FALSE(PutSync(key, value, old_value));
 }
 
-TEST_F(LevelDBWrapperImplTest, GetAfterPurgeMemory) {
+TEST_P(LevelDBWrapperImplParamTest, PutAfterPurgeMemory) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   std::vector<uint8_t> result;
-  EXPECT_TRUE(GetSync(StdStringToUint8Vector("123"), &result));
-  EXPECT_EQ(StdStringToUint8Vector("123data"), result);
+  const auto key = StdStringToUint8Vector("123");
+  const auto value = StdStringToUint8Vector("123data");
+  EXPECT_TRUE(PutSync(key, value, value));
   EXPECT_EQ(delegate()->map_load_count(), 1);
 
-  // Reading again doesn't load map again.
-  EXPECT_TRUE(GetSync(StdStringToUint8Vector("123"), &result));
+  // Adding again doesn't load map again.
+  EXPECT_TRUE(PutSync(key, value, value));
   EXPECT_EQ(delegate()->map_load_count(), 1);
 
   wrapper_impl()->PurgeMemory();
 
-  // Now reading should still work, and load map again.
-  result.clear();
-  EXPECT_TRUE(GetSync(StdStringToUint8Vector("123"), &result));
-  EXPECT_EQ(StdStringToUint8Vector("123data"), result);
+  // Now adding should still work, and load map again.
+  EXPECT_TRUE(PutSync(key, value, value));
   EXPECT_EQ(delegate()->map_load_count(), 2);
 }
 
-TEST_F(LevelDBWrapperImplTest, PurgeMemoryWithPendingChanges) {
+TEST_P(LevelDBWrapperImplParamTest, PurgeMemoryWithPendingChanges) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   std::vector<uint8_t> key = StdStringToUint8Vector("123");
   std::vector<uint8_t> value = StdStringToUint8Vector("foo");
   EXPECT_TRUE(PutSync(key, value, StdStringToUint8Vector("123data")));
@@ -546,13 +587,12 @@ TEST_F(LevelDBWrapperImplTest, PurgeMemoryWithPendingChanges) {
   // triggered a load.
   wrapper_impl()->PurgeMemory();
 
-  std::vector<uint8_t> result;
-  EXPECT_TRUE(GetSync(key, &result));
-  EXPECT_EQ(value, result);
+  EXPECT_TRUE(PutSync(key, value, value));
   EXPECT_EQ(delegate()->map_load_count(), 1);
 }
 
-TEST_F(LevelDBWrapperImplTest, FixUpData) {
+TEST_P(LevelDBWrapperImplParamTest, FixUpData) {
+  wrapper_impl()->SetCacheModeForTesting(GetParam());
   std::vector<LevelDBWrapperImpl::Change> changes;
   changes.push_back(std::make_pair(StdStringToUint8Vector("def"),
                                    StdStringToUint8Vector("foo")));
@@ -562,16 +602,154 @@ TEST_F(LevelDBWrapperImplTest, FixUpData) {
                                    StdStringToUint8Vector("bla")));
   delegate()->set_mock_changes(std::move(changes));
 
-  std::vector<uint8_t> result;
-  EXPECT_FALSE(GetSync(StdStringToUint8Vector("123"), &result));
-  EXPECT_TRUE(GetSync(StdStringToUint8Vector("def"), &result));
-  EXPECT_EQ(StdStringToUint8Vector("foo"), result);
-  EXPECT_TRUE(GetSync(StdStringToUint8Vector("abc"), &result));
-  EXPECT_EQ(StdStringToUint8Vector("bla"), result);
+  std::vector<mojom::KeyValuePtr> data;
+  EXPECT_TRUE(GetAllSync(&data));
+  ASSERT_EQ(2u, data.size());
+  EXPECT_EQ("abc", Uint8VectorToStdString(data[0]->key));
+  EXPECT_EQ("bla", Uint8VectorToStdString(data[0]->value));
+  EXPECT_EQ("def", Uint8VectorToStdString(data[1]->key));
+  EXPECT_EQ("foo", Uint8VectorToStdString(data[1]->value));
 
   EXPECT_FALSE(has_mock_data(kTestPrefix + std::string("123")));
   EXPECT_EQ("foo", get_mock_data(kTestPrefix + std::string("def")));
   EXPECT_EQ("bla", get_mock_data(kTestPrefix + std::string("abc")));
+}
+
+TEST_F(LevelDBWrapperImplTest, SetOnlyKeysWithoutDatabase) {
+  std::vector<uint8_t> key = StdStringToUint8Vector("123");
+  std::vector<uint8_t> value = StdStringToUint8Vector("foo");
+  MockDelegate delegate;
+  LevelDBWrapperImpl level_db_wrapper(
+      nullptr, kTestPrefix, kTestSizeLimit, base::TimeDelta::FromSeconds(5),
+      10 * 1024 * 1024 /* max_bytes_per_hour */, 60 /* max_commits_per_hour */,
+      /*store_only_keys_in_cache=*/true, &delegate);
+  mojom::LevelDBWrapperPtr level_db_wrapper_ptr;
+  level_db_wrapper.Bind(mojo::MakeRequest(&level_db_wrapper_ptr));
+  // Setting only keys mode is noop.
+  level_db_wrapper.SetCacheModeForTesting(/*only_keys=*/true);
+  EXPECT_EQ(LevelDBWrapperImpl::LoadState::LOAD_STATE_UNLOADED,
+            level_db_wrapper.CurrentLoadState());
+  EXPECT_EQ(LevelDBWrapperImpl::LoadState::LOAD_STATE_KEYS_AND_VALUES,
+            level_db_wrapper.desired_load_state_);
+  // Put and Get should happen synchornously.
+  level_db_wrapper.Put(
+      key, value, base::nullopt, "source",
+      base::BindOnce([](bool success) { EXPECT_TRUE(success); }));
+  level_db_wrapper.Get(
+      key, base::BindOnce(
+               [](const std::vector<uint8_t>& expected_value, bool success,
+                  const std::vector<uint8_t>& value) {
+                 EXPECT_TRUE(success);
+                 EXPECT_EQ(expected_value, value);
+               },
+               value));
+}
+
+TEST_F(LevelDBWrapperImplTest, SetOnlyKeysWithDatabase) {
+  std::vector<uint8_t> key = StdStringToUint8Vector("123");
+  std::vector<uint8_t> value = StdStringToUint8Vector("foo");
+  std::vector<uint8_t> value2 = StdStringToUint8Vector("foobar");
+
+  EXPECT_EQ(LevelDBWrapperImpl::LoadState::LOAD_STATE_UNLOADED,
+            wrapper_impl()->CurrentLoadState());
+  EXPECT_EQ(LevelDBWrapperImpl::LoadState::LOAD_STATE_KEYS_ONLY,
+            wrapper_impl()->desired_load_state_);
+  ASSERT_TRUE(PutSync(key, value, base::nullopt));
+  ASSERT_TRUE(wrapper_impl()->keys_values_map_);
+  EXPECT_FALSE(wrapper_impl()->keys_only_map_);
+  EXPECT_EQ(2u, wrapper_impl()->keys_values_map_->size());
+  EXPECT_EQ(value, wrapper_impl()->keys_values_map_->find(key)->second);
+  ASSERT_TRUE(wrapper_impl()->commit_batch_);
+  auto* changes = &wrapper_impl()->commit_batch_->changed_values;
+  EXPECT_EQ(1u, changes->size());
+  auto it = changes->find(key);
+  ASSERT_NE(it, changes->end());
+  EXPECT_FALSE(it->second);
+
+  wrapper_impl()->CommitChanges();
+  EXPECT_EQ("foo", get_mock_data(std::string(kTestPrefix) + "123"));
+  EXPECT_EQ(LevelDBWrapperImpl::LoadState::LOAD_STATE_KEYS_ONLY,
+            wrapper_impl()->CurrentLoadState());
+  EXPECT_FALSE(wrapper_impl()->keys_values_map_);
+  ASSERT_TRUE(wrapper_impl()->keys_only_map_);
+  EXPECT_EQ(2u, wrapper_impl()->keys_only_map_->size());
+  ASSERT_TRUE(PutSync(key, value, value));
+  EXPECT_FALSE(wrapper_impl()->commit_batch_);
+  ASSERT_TRUE(PutSync(key, value2, value));
+  EXPECT_EQ(LevelDBWrapperImpl::LoadState::LOAD_STATE_KEYS_ONLY,
+            wrapper_impl()->CurrentLoadState());
+  ASSERT_TRUE(wrapper_impl()->commit_batch_);
+  changes = &wrapper_impl()->commit_batch_->changed_values;
+  EXPECT_EQ(1u, changes->size());
+  it = changes->find(key);
+  ASSERT_NE(it, changes->end());
+  EXPECT_EQ(value2, it->second.value());
+
+  auto get_all_callback = [](const std::vector<uint8_t>& expected_value,
+                             leveldb::mojom::DatabaseError status,
+                             std::vector<mojom::KeyValuePtr> data) {
+    EXPECT_EQ(1u, data.size());
+    EXPECT_EQ(expected_value, data[0]->value);
+    EXPECT_EQ(leveldb::mojom::DatabaseError::OK, status);
+  };
+
+  // GetAll works without values cached.
+  {
+    clear_mock_data();
+    base::RunLoop run_loop;
+    bool result = false;
+    wrapper()->GetAll(
+        GetAllCallback::CreateAndBind(&result, run_loop.QuitClosure()),
+        base::BindOnce(get_all_callback, value2));
+    // This Put should not affect the value returned by GetAll().
+    ASSERT_TRUE(PutSync(key, value, value2));
+    EXPECT_TRUE(result);
+    run_loop.Run();
+    // GetAll should trigger a commit.
+    EXPECT_EQ("foobar", get_mock_data(std::string(kTestPrefix) + "123"));
+  }
+
+  wrapper_impl()->CommitChanges();
+  ASSERT_TRUE(PutSync(key, value2, value));
+  EXPECT_TRUE(wrapper_impl()->commit_batch_);
+  EXPECT_EQ(LevelDBWrapperImpl::LoadState::LOAD_STATE_KEYS_ONLY,
+            wrapper_impl()->CurrentLoadState());
+  wrapper_impl()->SetCacheModeForTesting(/*only_keys=*/false);
+  EXPECT_EQ(LevelDBWrapperImpl::LoadState::LOAD_STATE_KEYS_AND_VALUES,
+            wrapper_impl()->desired_load_state_);
+  // Cache isn't cleared when commit batch exists.
+  ASSERT_TRUE(wrapper_impl()->keys_only_map_);
+  // Add a put task to on load tasks queue.
+  wrapper()->Put(key, value, value2, "source",
+                 base::BindOnce([](bool success) { EXPECT_TRUE(success); }));
+  {
+    base::RunLoop run_loop;
+    bool result = false;
+    wrapper()->GetAll(
+        GetAllCallback::CreateAndBind(&result, run_loop.QuitClosure()),
+        base::BindOnce(get_all_callback, value));
+    // This Put should not affect the value returned by GetAll().
+    wrapper()->Put(key, value2, value, "source",
+                   base::BindOnce([](bool success) { EXPECT_TRUE(success); }));
+    run_loop.Run();
+    EXPECT_TRUE(result);
+  }
+
+  EXPECT_TRUE(wrapper_impl()->commit_batch_);
+  wrapper_impl()->SetCacheModeForTesting(/*only_keys=*/true);
+  EXPECT_EQ(LevelDBWrapperImpl::LoadState::LOAD_STATE_KEYS_AND_VALUES,
+            wrapper_impl()->CurrentLoadState());
+  EXPECT_EQ(LevelDBWrapperImpl::LoadState::LOAD_STATE_KEYS_ONLY,
+            wrapper_impl()->desired_load_state_);
+  EXPECT_TRUE(wrapper_impl()->keys_values_map_);
+  EXPECT_EQ(1u, wrapper_impl()->keys_values_map_->size());
+  wrapper_impl()->CommitChanges();
+  EXPECT_EQ(LevelDBWrapperImpl::LoadState::LOAD_STATE_KEYS_ONLY,
+            wrapper_impl()->CurrentLoadState());
+  EXPECT_EQ(LevelDBWrapperImpl::LoadState::LOAD_STATE_KEYS_ONLY,
+            wrapper_impl()->desired_load_state_);
+  EXPECT_TRUE(wrapper_impl()->keys_only_map_);
+  EXPECT_EQ(1u, wrapper_impl()->keys_only_map_->size());
 }
 
 }  // namespace content

@@ -14,6 +14,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
 #include "base/trace_event/memory_dump_manager.h"
+#include "build/build_config.h"
 #include "components/leveldb/public/cpp/util.h"
 #include "components/leveldb/public/interfaces/leveldb.mojom.h"
 #include "content/browser/dom_storage/dom_storage_area.h"
@@ -178,12 +179,17 @@ class LocalStorageContextMojo::LevelDBWrapperHolder final
     const int kMaxBytesPerHour = kPerStorageAreaQuota;
     const int kMaxCommitsPerHour = 60;
 
+#if defined(OS_ANDROID)
+    bool cache_only_keys_when_posible = true;
+#else
+    bool cache_only_keys_when_posible = false;
+#endif
     level_db_wrapper_ = base::MakeUnique<LevelDBWrapperImpl>(
         context_->database_.get(),
         kDataPrefix + origin_.Serialize() + kOriginSeparator,
         kPerStorageAreaQuota + kPerStorageAreaOverQuotaAllowance,
         base::TimeDelta::FromSeconds(kCommitDefaultDelaySecs), kMaxBytesPerHour,
-        kMaxCommitsPerHour, this);
+        kMaxCommitsPerHour, cache_only_keys_when_posible, this);
     level_db_wrapper_ptr_ = level_db_wrapper_.get();
   }
 
@@ -222,7 +228,7 @@ class LocalStorageContextMojo::LevelDBWrapperHolder final
       item->type = leveldb::mojom::BatchOperationType::PUT_KEY;
       LocalStorageOriginMetaData data;
       data.set_last_modified(base::Time::Now().ToInternalValue());
-      data.set_size_bytes(level_db_wrapper()->bytes_used());
+      data.set_size_bytes(level_db_wrapper()->storage_used());
       item->value = leveldb::StdStringToUint8Vector(data.SerializeAsString());
     }
     operations.push_back(std::move(item));
@@ -981,7 +987,7 @@ void LocalStorageContextMojo::GetStatistics(size_t* total_cache_size,
   *total_cache_size = 0;
   *unused_wrapper_count = 0;
   for (const auto& it : level_db_wrappers_) {
-    *total_cache_size += it.second->level_db_wrapper()->bytes_used();
+    *total_cache_size += it.second->level_db_wrapper()->memory_used();
     if (!it.second->has_bindings())
       (*unused_wrapper_count)++;
   }
