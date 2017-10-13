@@ -1,0 +1,322 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "531d8410_b87ce6e1",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "If the tests don\u0027t require any sort of setup or teardown, please make them TEST not TEST_F and remove this class.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8a53a7_319f6f14",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "I think common practice is to just use EXPECT_TRUE/ASSERT_TRUE for checking if something is not null.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653d155f_bde319f4",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "What is the value of creating multiple CompositorMutatorImpls in this test?",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f6c21a3_55b0f422",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "Nit; my preference would be to:\n\n1. Place these above all TESTs, and\n2. Put them in an anonymous namespace.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa5ebca_ad343227",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "What purpose does this cap serve? It appears that we never expect the number of calls to SetNeedsMutate() to be above 3 (based on tests that call Notifications()), but irregardless of that it doesn\u0027t seem like we need to cap this?",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d4aacf_6c93a739",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "As per https://google.github.io/styleguide/cppguide.html#General_Naming_Rules, please avoid abbreviating; compositor_mutator_client_",
+      "range": {
+        "startLine": 54,
+        "startChar": 21,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9beed0_c2ca4cbc",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "Please use descriptive variable names. Based on this declaration I do not know what \u0027m\u0027 is.\n\nAdditionally, if this is overriding the Mutate function in CompositorAnimator it should be marked \u0027override\u0027",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b56b19b_bea0a034",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "Nit; please remove superfluous comment.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df195f8_f07ae94b",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "Can you provide a more detailed commentary as to why you are \u0027neutering\u0027 GC? I don\u0027t see a harm in using heap allocation for this test.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a396c7_9ad6cf88",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "Nit; double-use of word \"Test\" in title?\n\nNote: it took some time for me to realize that this is actually a test *for* your helper class EmptyLayerMutatorClient. (The double-use of \u0027client\u0027 due to having a CompositorMutatorClient and a cc::LayerTreeMutatorClient is so confusing! :D). A comment may help avoid this for other readers.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31a68f4_11da90af",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "If your test will crash if mutator is null, please change to ASSERT_TRUE(mutator). If you test works whether or not mutator is null, please remove this check.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b662b72_e8011905",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "I\u0027m not clear why this is considered \u0027weird\u0027?\n\nEmptyLayerMutatorClient causes CompositorLayerMutatorClient::SetClient to be called, which the calls SetNeedsMutate. Hence why the notification count is non-zero to start.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb16cff_e631e1b5",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "Yeah, this is pretty strange now that I look at it. We should try to fix up this strange tangle of clients at some point.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75549623_0443ae8e",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "From examining the code, I believe that the parameter passed to Mutate is the current time; please name your variables appropriately so that is clear.",
+      "range": {
+        "startLine": 160,
+        "startChar": 17,
+        "endLine": 160,
+        "endChar": 27
+      },
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d3a2624_d104f75e",
+        "filename": "third_party/WebKit/Source/platform/wtf/WTF.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "Given that the implementation is in WTF.cpp, I would suggest that you place the declaration of this class in WTF.h rather than a new file. It seems an appropriate place to me.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2586a83_ec5695ef",
+        "filename": "third_party/WebKit/Source/platform/wtf/WTFThreadTestHelper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "As per https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Use-Filename_h-as-the-header-include-guard please do not include the leading directory name.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "216b02ba_c1d06bd1",
+        "filename": "third_party/WebKit/Source/platform/wtf/WTFThreadTestHelper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "Please add class-level documentation of what this class is. The name is not descriptive enough for a reader to understand why they would instantiate this object.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d095d7_0114a47c",
+        "filename": "third_party/WebKit/Source/platform/wtf/WTFThreadTestHelper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T18:50:49Z",
+      "side": 1,
+      "message": "Please use a descriptive name for this member variable.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
