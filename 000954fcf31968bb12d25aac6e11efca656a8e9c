@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa3362db_7974328f",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-13T06:41:26Z",
+      "side": 1,
+      "message": "I\u0027m holding off on adding padding to the chosen object stuff because they weren\u0027t included in the original mocks - just using the kComboboxHeight to make it not look weird for now. There\u0027s an outstanding thread where I\u0027ve asked the designer to provide mocks for it, so hopefully I can address this in another patch.",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
