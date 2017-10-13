@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import org.chromium.base.Log;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.browser.WarmupManager;
@@ -82,9 +83,11 @@ public class AutocompleteController {
 
     /**
      * Use cached zero suggest results if there are any available and start caching them
-     * for all zero suggest updates.
+     * for all zero suggest updates. Must be called on UI thread.
      */
     public void startCachedZeroSuggest() {
+        ThreadUtils.assertOnUiThread();
+
         mUseCachedZeroSuggestResults = true;
         List<OmniboxSuggestion> suggestions =
                 OmniboxSuggestion.getCachedOmniboxSuggestionsForZeroSuggest();
