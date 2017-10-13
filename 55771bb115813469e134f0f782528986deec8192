@@ -34,6 +34,24 @@
       "revId": "55771bb115813469e134f0f782528986deec8192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c53d8c6_b1fc197b",
+        "filename": "components/sync/engine_impl/loopback_server/persistent_bookmark_entity.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-13T18:24:13Z",
+      "side": 0,
+      "message": "Awesome, leaving it removed then. Thanks!",
+      "parentUuid": "16b83f22_fd5111bd",
+      "revId": "55771bb115813469e134f0f782528986deec8192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4efe0b52_c9a45194",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-13T18:24:13Z",
+      "side": 1,
+      "message": "Done.\n\nI get this feedback a lot on my reviews (especially from zea!). I haven\u0027t been able to find anywhere that makes this clear! https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md doesn\u0027t mention it, and https://google.github.io/styleguide/cppguide.html#Conditionals seems to make it clear that either braces or no braces is perfectly acceptable. Reading https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/eIEY-0UKQxw seems to indicate it as optinal as well.\n\nIf we had a file, that\u0027s entiry consistent itself, then I would agree with you, ideally we should perpetuate the consistency. However, I can already find places in loopback_server.cc that uses braces for single line conditionals :P\n\nhttps://cs.chromium.org/chromium/src/components/sync/engine_impl/loopback_server/loopback_server.cc?rcl\u003dd1a7f3f12e7748e6eeed536703972f2f79f1570e\u0026l\u003d187\nhttps://cs.chromium.org/chromium/src/components/sync/engine_impl/loopback_server/loopback_server.cc?rcl\u003dd1a7f3f12e7748e6eeed536703972f2f79f1570e\u0026l\u003d324\nhttps://cs.chromium.org/chromium/src/components/sync/engine_impl/loopback_server/loopback_server.cc?rcl\u003dd1a7f3f12e7748e6eeed536703972f2f79f1570e\u0026l\u003d412\nhttps://cs.chromium.org/chromium/src/components/sync/engine_impl/loopback_server/loopback_server.cc?rcl\u003dd1a7f3f12e7748e6eeed536703972f2f79f1570e\u0026l\u003d433\nhttps://cs.chromium.org/chromium/src/components/sync/engine_impl/loopback_server/loopback_server.cc?rcl\u003dd1a7f3f12e7748e6eeed536703972f2f79f1570e\u0026l\u003d439\nhttps://cs.chromium.org/chromium/src/components/sync/engine_impl/loopback_server/loopback_server.cc?rcl\u003dd1a7f3f12e7748e6eeed536703972f2f79f1570e\u0026l\u003d444\nhttps://cs.chromium.org/chromium/src/components/sync/engine_impl/loopback_server/loopback_server.cc?rcl\u003dd1a7f3f12e7748e6eeed536703972f2f79f1570e\u0026l\u003d558\n\nIf, however, there\u0027s some documentation I\u0027ve missed that argues we shouldn\u0027t be using braces here though, I\u0027d love to have to it pointed out!",
+      "parentUuid": "9da9443b_fd42de09",
+      "range": {
+        "startLine": 354,
+        "startChar": 14,
+        "endLine": 354,
+        "endChar": 16
+      },
+      "revId": "234f2e2758357735c48647143b2367c6a4c3c39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c1d6547_38287856",
         "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "234f2e2758357735c48647143b2367c6a4c3c39b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5638bfb_032a7b9b",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-13T18:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c1d6547_38287856",
+      "range": {
+        "startLine": 596,
+        "startChar": 15,
+        "endLine": 596,
+        "endChar": 17
+      },
+      "revId": "234f2e2758357735c48647143b2367c6a4c3c39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

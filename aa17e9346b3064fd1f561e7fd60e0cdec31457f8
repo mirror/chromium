@@ -34,6 +34,24 @@
       "revId": "aa17e9346b3064fd1f561e7fd60e0cdec31457f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5147be3e_a4ecd20d",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-13T18:24:13Z",
+      "side": 1,
+      "message": "I\u0027m a bit worried that we\u0027re setting our selves up for a scenario where the loopback server will silently swallow failures and we\u0027re going to have a lot less insight about what\u0027s going wrong for stable users. Do some LocalSync users have UMA enabled? Or is UMA in general always disabled for enterprise domains that turn on LocalSync? It\u0027d be nice to go through and add a reporting mechanism that tallies failures in like an UMA histogram, and this path is only engaged for real loopback, not fake_server. I\u0027m still a bit hazy how useful DCHECKs are [supposed to be] in detecting failure. My understanding is that they\u0027re predominantly to be used for code readability. But without the CHECK we would have been unaware of 771598 for longer, so clearly there is some usefulness in reporting, even if we\u0027re not _supposed_ to be relying on it.\n\nAs for, what does the client do. I don\u0027t really know, it\u0027s confusing. We have partial and global failures. As far as I can tell, the loopback/fake_server doesn\u0027t use partial failures. A global failure means the client should assume that nothing worked for the commit. Will it retry, well that depends on the type of global failure. And what do we do in this particular scenario of returning nullptr from this method - we DCHECK on crbug.com/774180. It\u0027ll be a non-zero amount of work for me to figure out what we do w/o the DCHECK, but I\u0027m needing to figure this out as I write unittests, I think.\n\nI don\u0027t think rollback is truly necessary for the loopback server. The real server has a problem that some data types are recorded in multiple local, like SESSIONS is written to zipit and Footprints. One of those can succeed and the other could have a transient failure. And even worse, the transient failure may actually fail on the way back from the datastore, in that the write was actually successful, but we\u0027re not guaranteed to know that (2 generals problem).\n\nNow, having an entity stored in model type storage, that needs to be committed, but somehow causes the server to return a retry-able error on every commit, sounds like a bad situation to get into. We should exponentially backoff, but that just breaks everything else, forever. I\u0027ve never seen this happen with the real server, and we should similarly avoid that scenario here. But I think I need to understand things a little better before I know how to ensure this.",
+      "parentUuid": "66997e8d_c6b2c2d7",
+      "revId": "aa17e9346b3064fd1f561e7fd60e0cdec31457f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
