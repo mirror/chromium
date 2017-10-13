@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77cc3887_9cddc31c",
+        "filename": "chrome/browser/resources/chromeos/login/screen_arc_terms_of_service.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-13T19:18:38Z",
+      "side": 1,
+      "message": "Why did it work in the login OOBE before without this?",
+      "range": {
+        "startLine": 113,
+        "startChar": 6,
+        "endLine": 113,
+        "endChar": 48
+      },
+      "revId": "b93e3e562af66653f8c5974c0a2fc02791e447ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
