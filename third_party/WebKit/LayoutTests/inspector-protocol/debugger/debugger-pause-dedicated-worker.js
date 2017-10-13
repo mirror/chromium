@@ -15,11 +15,21 @@
     return workerRequestId++;
   }
 
-  dp.Target.setAutoAttach({autoAttach: true, waitForDebuggerOnStart: false});
+  async function attachToWorker() {
+    var response = await dp.Target.getWorkers({subscribe: true, autoAttach: false, waitForDebuggerOnStart: false});
+    var workerId;
+    if (response.result.workers.length) {
+      workerId = response.result.workers[0].targetId;
+    } else {
+      response = await dp.Target.onceTargetCreated(event => event.params.targetInfo.type === 'worker');
+      workerId = response.params.targetInfo.targetId;
+    }
+    testRunner.log('Worker created');
+    await dp.Target.attachToTarget({targetId: workerId});
+    return workerId;
+  }
 
-  var messageObject = await dp.Target.onceAttachedToTarget();
-  var workerId = messageObject.params.targetInfo.targetId;
-  testRunner.log('Worker created');
+  var workerId = await attachToWorker();
   testRunner.log('didConnectToWorker');
   sendCommandToWorker('Debugger.enable', {});
   sendCommandToWorker('Debugger.pause', {});

@@ -9,7 +9,7 @@
     return workerRequestId++;
   }
 
-  dp.Target.setAutoAttach({autoAttach: true, waitForDebuggerOnStart: true});
+  dp.Target.getWorkers({subscribe: false, autoAttach: true, waitForDebuggerOnStart: true});
   await session.evaluate(`
     window.worker = new Worker('${testRunner.url('resources/dedicated-worker-suspend-setTimeout.js')}');
     window.worker.onmessage = function(event) { };

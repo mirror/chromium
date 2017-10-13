@@ -76,8 +76,7 @@ class TargetHandler : public DevToolsDomainHandler,
   void AutoDetach(DevToolsAgentHost* host);
   Response FindSession(Maybe<std::string> session_id,
                        Maybe<std::string> target_id,
-                       Session** session,
-                       bool fall_through);
+                       Session** session);
 
   // DevToolsAgentHostObserver implementation.
   bool ShouldForceDevToolsAgentHostCreation() override;
@@ -88,6 +87,7 @@ class TargetHandler : public DevToolsDomainHandler,
   void DevToolsAgentHostDetached(DevToolsAgentHost* agent_host) override;
 
   std::unique_ptr<Target::Frontend> frontend_;
+  RenderFrameHostImpl* frame_host_;
   TargetAutoAttacher auto_attacher_;
   bool discover_;
   std::map<std::string, std::unique_ptr<Session>> attached_sessions_;
