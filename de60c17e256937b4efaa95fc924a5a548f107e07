@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "914e72d2_c37026b9",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-13T16:28:55Z",
+      "side": 1,
+      "message": "Could missing things here that I noticed were:\n- SQS with multiple quads/quads not the same size as the SQS.\n- RenderPassDrawQuads - does the quad itself occlude or do the quads in the RenderPass it points to occlude? The bounds of the RPDQ may not be filled by the RenderPass it points to, it could be for example 2 quads in the top-left and bottom-right of the RenderPass bounds, with empty other 2 corners.\n- Other quad types to be sure they behave.",
+      "revId": "de60c17e256937b4efaa95fc924a5a548f107e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ede22c_4e967a94",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-13T16:28:55Z",
+      "side": 1,
+      "message": "if quad3 was a renderpass draw quad would it be removed, and then you\u0027d lose the 2nd renderpass entirely?\n\nthis is where u need to worry about inside vs outside occlusion.\nquads inside the render pass should occlude a RPDQ, quads from the RenderPass it points to shouldn\u0027t, quads from other RenderPass pointed to by other RPDQ can.",
+      "revId": "de60c17e256937b4efaa95fc924a5a548f107e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
