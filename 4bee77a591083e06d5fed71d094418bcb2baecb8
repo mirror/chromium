@@ -46,6 +46,30 @@
       "revId": "4bee77a591083e06d5fed71d094418bcb2baecb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e6fbb64_81e345b8",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-13T18:21:35Z",
+      "side": 0,
+      "message": "in crrev.com/c/706776",
+      "parentUuid": "a0f7f136_13bbacd7",
+      "range": {
+        "startLine": 875,
+        "startChar": 24,
+        "endLine": 875,
+        "endChar": 57
+      },
+      "revId": "4bee77a591083e06d5fed71d094418bcb2baecb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
