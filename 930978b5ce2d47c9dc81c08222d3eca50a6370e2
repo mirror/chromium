@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7695ef09_8980a8fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActionModeCallback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-13T20:10:04Z",
+      "side": 1,
+      "message": "Tommy, Were you worried about getTrackerForProfile returning null if native has not loaded?",
+      "range": {
+        "startLine": 113,
+        "startChar": 20,
+        "endLine": 113,
+        "endChar": 33
+      },
+      "revId": "930978b5ce2d47c9dc81c08222d3eca50a6370e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
