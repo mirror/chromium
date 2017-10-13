@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac5d4ba2_60d8b68a",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1706,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-13T13:29:25Z",
+      "side": 1,
+      "message": "Nit: Would you mind using `url::Origin(url).Serialize()` instead? I\u0027d like not to create more usage of the ill-named `GURL::GetOrigin()`.",
+      "revId": "8a6b882b287c8d8d8d57d40616254d18e28814b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
