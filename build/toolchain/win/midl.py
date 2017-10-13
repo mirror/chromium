@@ -171,6 +171,8 @@ def main(arch, outdir, dynamic_guid, tlb, h, dlldata, iid, proxy, idl, *flags):
   if sys.platform != 'win32':
     return 0
 
+  # NOP change to trigger re-running of build steps.
+
   # On Windows, run midl.exe on the input and check that its outputs are
   # identical to the checked-in outputs (after possibly replacing their main
   # class guid).
