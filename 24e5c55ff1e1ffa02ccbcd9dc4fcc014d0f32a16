@@ -22,6 +22,30 @@
       "revId": "24e5c55ff1e1ffa02ccbcd9dc4fcc014d0f32a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b1912e_8cc0e536",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-13T00:17:33Z",
+      "side": 1,
+      "message": "Thanks. This is for the case that |feature| will become signed in the future.\nPlease see the comments: https://chromium-review.googlesource.com/c/chromium/src/+/648659/12/content/browser/service_worker/service_worker_provider_host.cc#889",
+      "parentUuid": "f0be36bc_c89a1b33",
+      "range": {
+        "startLine": 890,
+        "startChar": 10,
+        "endLine": 890,
+        "endChar": 22
+      },
+      "revId": "24e5c55ff1e1ffa02ccbcd9dc4fcc014d0f32a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
