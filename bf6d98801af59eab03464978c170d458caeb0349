@@ -81,6 +81,30 @@
       "revId": "bf6d98801af59eab03464978c170d458caeb0349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e049ee07_ac4d3916",
+        "filename": "device/u2f/u2f_hid_device.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T19:15:43Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/cppguide.html#Declaration_Order\n\nI read \"group similar declarations together\" to mean that static members should be treated as a group and separated from non-static members.",
+      "parentUuid": "33b1da04_403a0918",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 55
+      },
+      "revId": "bf6d98801af59eab03464978c170d458caeb0349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
