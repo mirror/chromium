@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1187cf86_09e10583",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 23
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T00:37:23Z",
+      "side": 1,
+      "message": "We should call this in detached() too, to ensure that no background work is done by this element once not in the DOM. Elements are often detached between tests and this could be problematic.",
+      "revId": "93af746c8a5303143a46a78bc75c04d668799d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7417b706_c234aadc",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 23
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T00:37:23Z",
+      "side": 1,
+      "message": "This is unnecessary, now that line 110 already clears the list, no?",
+      "revId": "93af746c8a5303143a46a78bc75c04d668799d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca8c5cc_275befc0",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 23
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T00:37:23Z",
+      "side": 1,
+      "message": "Can we remove the \"arbitrary\" comment? Presumably this is not so arbitrary per the explanation and suggestion above.",
+      "revId": "93af746c8a5303143a46a78bc75c04d668799d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f39e9a_f82960aa",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 23
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T00:37:23Z",
+      "side": 1,
+      "message": "listInfo is already in the scope, no need to bind it and pass it as a parameter. Then you can also use the arrow function avoid the call to bind() entirely.",
+      "revId": "93af746c8a5303143a46a78bc75c04d668799d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
