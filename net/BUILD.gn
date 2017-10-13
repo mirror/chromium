@@ -1668,6 +1668,8 @@ component("net") {
       "url_request/network_error_logging_delegate.h",
       "url_request/redirect_info.cc",
       "url_request/redirect_info.h",
+      "url_request/redirect_util.cc",
+      "url_request/redirect_util.h",
       "url_request/report_sender.cc",
       "url_request/report_sender.h",
       "url_request/static_http_user_agent_settings.cc",
