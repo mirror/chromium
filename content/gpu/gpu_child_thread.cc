@@ -245,8 +245,10 @@ void GpuChildThread::CreateGpuService(
   gpu_service_->Bind(std::move(request));
   gpu::SyncPointManager* sync_point_manager = nullptr;
   // Note SyncPointManager from ContentGpuClient cannot be owned by this.
-  if (GetContentClient()->gpu())
-    sync_point_manager = GetContentClient()->gpu()->GetSyncPointManager();
+  ContentGpuClient* content_gpu_client = GetContentClient()->gpu();
+  if (content_gpu_client) {
+    sync_point_manager = content_gpu_client->GetSyncPointManager();
+  }
   gpu_service_->InitializeWithHost(
       std::move(gpu_host),
       gpu::GpuProcessActivityFlags(std::move(activity_flags)),
