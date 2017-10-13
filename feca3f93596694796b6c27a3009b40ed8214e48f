@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22a35f77_83afe68a",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-13T20:15:21Z",
+      "side": 1,
+      "message": "This is always true because we return earlier in the function if profile is not null. This else if should become else and the else clause should go away.",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 24
+      },
+      "revId": "feca3f93596694796b6c27a3009b40ed8214e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4475961_ae39d4f3",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-13T20:15:21Z",
+      "side": 1,
+      "message": "this is also always true.",
+      "range": {
+        "startLine": 186,
+        "startChar": 2,
+        "endLine": 186,
+        "endChar": 16
+      },
+      "revId": "feca3f93596694796b6c27a3009b40ed8214e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43223330_95beb0c6",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-13T20:15:21Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 243,
+        "startChar": 2,
+        "endLine": 243,
+        "endChar": 30
+      },
+      "revId": "feca3f93596694796b6c27a3009b40ed8214e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f85eaa53_7fd56355",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-13T20:15:21Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 288,
+        "startChar": 2,
+        "endLine": 288,
+        "endChar": 24
+      },
+      "revId": "feca3f93596694796b6c27a3009b40ed8214e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
