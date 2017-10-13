@@ -2167,14 +2167,7 @@ TEST_F(AsyncGetProofTest, DispatcherFailedToPickUpVersionForAsyncProof) {
 
   // Complete the ProofSource::GetProof call for v39. This would cause the
   // version mismatch between the CHLO packet and the dispatcher.
-  if (FLAGS_quic_reloadable_flag_quic_set_version_on_async_get_proof_returns) {
-    GetFakeProofSource()->InvokePendingCallback(0);
-  } else {
-    EXPECT_QUIC_BUG(
-        GetFakeProofSource()->InvokePendingCallback(0),
-        "SREJ: Client's version: QUIC_VERSION_39 is different "
-        "from current dispatcher framer's version: QUIC_VERSION_37");
-  }
+  GetFakeProofSource()->InvokePendingCallback(0);
   ASSERT_EQ(GetFakeProofSource()->NumPendingCallbacks(), 1);
 }
 
