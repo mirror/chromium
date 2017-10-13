@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93270e0a_7b5216c7",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-13T20:13:49Z",
+      "side": 1,
+      "message": "Yes some of them should assert. I\u0027ll try to fix the common ones. Sometimes they can\u0027t assert because they are inside a method with a return value. The old code also had the same issue though if dispatched_events wasn\u0027t size 1 it would die horribly.",
+      "parentUuid": "29d97a6b_b8075d74",
+      "range": {
+        "startLine": 1221,
+        "startChar": 2,
+        "endLine": 1221,
+        "endChar": 42
+      },
+      "revId": "dedbbbb9c3b5e41597d38a46f7b9de3431de2a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb4b0fef_217d8230",
         "filename": "content/test/mock_widget_input_handler.h",
         "patchSetId": 3
