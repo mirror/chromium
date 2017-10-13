@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6aa276e_6b2f2534",
+        "filename": "build/config/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-13T18:53:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4368c4d0_b94d7188",
+      "revId": "4f94bf761aac530f2715dc1418a64521b67048ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf5d6301_2dc5f2e7",
         "filename": "build/config/BUILDCONFIG.gn",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "4f94bf761aac530f2715dc1418a64521b67048ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc0c800_513ace63",
+        "filename": "build/config/BUILDCONFIG.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-13T18:53:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf5d6301_2dc5f2e7",
+      "revId": "4f94bf761aac530f2715dc1418a64521b67048ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
