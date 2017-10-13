@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15ec06d0_d04f2d9e",
+        "filename": "pdf/pdf_engine.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-13T19:17:02Z",
+      "side": 1,
+      "message": "please add a default value (or ctor)",
+      "revId": "810095bf701ec2f0c99fc28f609beca6f581a524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
