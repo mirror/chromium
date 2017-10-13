@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f90bf2f8_1a944550",
+        "filename": "base/nix/xdg_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-13T04:32:52Z",
+      "side": 1,
+      "message": "style guide says no else after early return.",
+      "range": {
+        "startLine": 81,
+        "startChar": 6,
+        "endLine": 81,
+        "endChar": 49
+      },
+      "revId": "98fb82e217968efeb2df5b60015611496f524b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
