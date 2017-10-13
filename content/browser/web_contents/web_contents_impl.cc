@@ -1466,6 +1466,8 @@ void WebContentsImpl::OnAudioStateChanged(bool is_audible) {
   // Notification for UI updates in response to the changed audio state.
   NotifyNavigationStateChanged(INVALIDATE_TYPE_TAB);
 
+  was_ever_audible_ = was_ever_audible_ || is_audible;
+
   if (delegate_)
     delegate_->OnAudioStateChanged(is_audible);
 }
@@ -3644,6 +3646,10 @@ bool WebContentsImpl::WasRecentlyAudible() {
           browser_plugin_embedder_->WereAnyGuestsRecentlyAudible());
 }
 
+bool WebContentsImpl::WasEverAudible() {
+  return was_ever_audible_;
+}
+
 void WebContentsImpl::GetManifest(const GetManifestCallback& callback) {
   manifest_manager_host_->GetManifest(callback);
 }
@@ -3747,6 +3753,10 @@ void WebContentsImpl::DidFinishNavigation(NavigationHandle* navigation_handle) {
         manager->NavigationSucceeded();
       }
     }
+
+    if (navigation_handle->IsInMainFrame() &&
+        !navigation_handle->IsSameDocument())
+      was_ever_audible_ = false;
   }
 }
 
