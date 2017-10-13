@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8a6f8410_ef2dd5e5",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-13T16:53:35Z",
+      "side": 1,
+      "message": "Latest patchset doesn\u0027t change this.",
+      "parentUuid": "a0540c91_6d17d0d7",
+      "range": {
+        "startLine": 1324,
+        "startChar": 7,
+        "endLine": 1324,
+        "endChar": 20
+      },
+      "revId": "408360b2720b356522d079233ea175dd08c69c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ac32ea8_fb7d5833",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "There are supposed to be only 2 caches and they are singletons. But, yes it might change in future.",
       "parentUuid": "2ac32ea8_fb7d5833",
+      "range": {
+        "startLine": 1460,
+        "startChar": 4,
+        "endLine": 1460,
+        "endChar": 29
+      },
+      "revId": "408360b2720b356522d079233ea175dd08c69c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa394859_b2f89409",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-13T16:53:35Z",
+      "side": 1,
+      "message": "Yes, I want us to be future proof and do the right thing from the start.\n\n(If we\u0027re sure there will be only 2 caches, maybe remove this map all?)",
+      "parentUuid": "ff4b94b2_4a1469cf",
       "range": {
         "startLine": 1460,
         "startChar": 4,
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "hm doesn\u0027t really work. this has to be in sync with the visitor in the same locked block.\n\nIt would cause a race where the counts are updated in other thread, but the visitor is called in some other thread. OnMemoryDump cannot read the counts without lock. Introducing different lock in MDP also does not work since it would cause variation in count in the dump. It seems cleaner to keep the members accessed under lock in the same place.",
       "parentUuid": "86213c6e_e149c300",
+      "range": {
+        "startLine": 284,
+        "startChar": 39,
+        "endLine": 284,
+        "endChar": 67
+      },
+      "revId": "408360b2720b356522d079233ea175dd08c69c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1486e91b_a55d443b",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-13T16:53:35Z",
+      "side": 1,
+      "message": "Hmm, maybe I missed something. I\u0027m proposing this:\n\n1. Move block_cache_share_counts_ into DBTracker::MemoryDumpProvider\n\n2. Move block_cache_share_counts_ logic from  DBTracker::{DatabaseOpened, DatabaseDestroyed} to DBTracker::MemoryDumpProvider::{DatabaseOpened, DatabaseDestroyed}\n\n3. Call mdp_-\u003e{DatabaseOpened, DatabaseDestroyed} from DBTracker::{DatabaseOpened, DatabaseDestroyed}. Note that those calls will (still) be made while holding database_lock_.\n\n4. In DBTracker::MemoryDumpProvider::DumpAllDatabases() pass block_cache_share_counts_ to db_visitor callback, and use block_cache_share_counts_[db-\u003eblock_cache()] to get share count.\n\nAs far as I can see there are no race conditions here, because db_visitor is called while holding databases_lock_, the same lock that guards calls to DBTracker::MemoryDumpProvider::{DatabaseOpened, DatabaseDestroyed} (which modify block_cache_share_counts_).",
+      "parentUuid": "1cc93282_b33d0160",
       "range": {
         "startLine": 284,
         "startChar": 39,
