@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96a20959_1d82b221",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-13T20:20:11Z",
+      "side": 1,
+      "message": "what creates the tab during reparenting?\n\nI\u0027m wondering if this check belongs in mCreatedTabOnStartup and below (if you look for mDelayedInitialTabBehaviorDuringUiInit null checks above and below, that looks like the same behavior as here).\n\nBut we only need the check below if the tab hasn\u0027t be created yet at this point.\n\nLooking at Tab#detachAndStartReparenting, it looks like we are recreating the activity and sending a VIEW intent that will create a new tab at the same time.  With this, we are ignoring the tab recreate on the restart and likely relying on the VIEW to come through and onNewIntentWithNative is actually what is triggering the new tab creation then?\n\nThis is likely OK for now, but there isn\u0027t really anything that guarantees that the tab to be reparenting will actually be going back to ChromeTabbedActivity (in a completely arbitrary case you could imagine that CTA would be starting up while some other chrome activity sent a tab to reparent).\n\nRegardless of the ramble, let\u0027s try to keep the handling of this as the same as mDelayedInitialTabBehaviorDuringUiInit checks.",
+      "range": {
+        "startLine": 1096,
+        "startChar": 20,
+        "endLine": 1096,
+        "endChar": 41
+      },
+      "revId": "1679a397d243113f327106efff8bdda810b708e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
