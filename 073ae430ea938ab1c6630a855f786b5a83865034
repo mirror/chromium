@@ -140,6 +140,30 @@
       "revId": "073ae430ea938ab1c6630a855f786b5a83865034",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31fe77a2_03440fdf",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-13T06:52:20Z",
+      "side": 1,
+      "message": "I don\u0027t think this has changed.",
+      "parentUuid": "9f6a7e3d_3d268d30",
+      "range": {
+        "startLine": 372,
+        "startChar": 41,
+        "endLine": 372,
+        "endChar": 53
+      },
+      "revId": "073ae430ea938ab1c6630a855f786b5a83865034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
