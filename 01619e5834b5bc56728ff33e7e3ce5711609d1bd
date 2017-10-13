@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d2313bd_4fceaddd",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-13T09:17:17Z",
+      "side": 1,
+      "message": "Seems AdaptCallbackForRepeating can only wrap an OnceCallback\u003cvoid(Args...)\u003e, but GetWebContents() returns a \u0027WebContents*\u0027 rather than \u0027void\u0027, so we can\u0027t use AdaptCallbackForRepeating here..",
+      "parentUuid": "8be9d6e1_29d75fdb",
+      "revId": "01619e5834b5bc56728ff33e7e3ce5711609d1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ee2af0a_d9c986f1",
         "filename": "content/child/service_worker/service_worker_dispatcher.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "01619e5834b5bc56728ff33e7e3ce5711609d1bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f90d90d8_1230cc89",
+        "filename": "content/child/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-13T09:17:17Z",
+      "side": 1,
+      "message": "Done. Yeah agree.",
+      "parentUuid": "5ee2af0a_d9c986f1",
+      "revId": "01619e5834b5bc56728ff33e7e3ce5711609d1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9f249b9d_846ac2aa",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-13T09:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "620f031f_7bcae7f4",
+      "revId": "01619e5834b5bc56728ff33e7e3ce5711609d1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a11dfd2_1d66177f",
         "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6844021a_aa6d50a5",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-13T09:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a11dfd2_1d66177f",
+      "revId": "01619e5834b5bc56728ff33e7e3ce5711609d1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c020c7d7_cdca42c5",
         "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 9
@@ -84,6 +156,24 @@
       "revId": "01619e5834b5bc56728ff33e7e3ce5711609d1bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cee8a28_df439535",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-13T09:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c020c7d7_cdca42c5",
+      "revId": "01619e5834b5bc56728ff33e7e3ce5711609d1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
