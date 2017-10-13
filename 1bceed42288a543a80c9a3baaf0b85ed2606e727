@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f61509e2_e20c7e92",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T21:40:13Z",
+      "side": 1,
+      "message": "nit: I\u0027d like this definition to signal that these are bits that can be orred.",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "1bceed42288a543a80c9a3baaf0b85ed2606e727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5288b2_49447280",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T21:40:13Z",
+      "side": 1,
+      "message": "I think this is a fine API, but in trying to evaluate the API I did a bit of brainstorming about what other APIs would look like, specifically around the backoff/delay that you mention, and I wanted to share that just FYI.\n\nFirst of all, I\u0027m a pretty strong believer in not putting in interface methods unless there\u0027s an identified consumer for them.  I presume the consumers for this are in the space of URLFetcher consumers, but I don\u0027t know that space well.  If that space is covered by max_retries \u0026 retry_mode, feel absolutely free to stop reading now.\n\nIf it isn\u0027t, I find myself wondering about an alternative interface, which is a callback that takes an enum k5XX, kNetworkChanged + number of tries so far, and returns a bool (try again/don\u0027t) and a delay until the trying again should happen.  That interface seems only a bit more complex than this one, but allows for semi-arbitrary backoff/delay semantics.",
+      "range": {
+        "startLine": 166,
+        "startChar": 15,
+        "endLine": 166,
+        "endChar": 30
+      },
+      "revId": "1bceed42288a543a80c9a3baaf0b85ed2606e727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41386cef_947a8635",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T21:40:13Z",
+      "side": 1,
+      "message": "nit: I think \"fiIe\" has an I in place of the l?",
+      "range": {
+        "startLine": 352,
+        "startChar": 10,
+        "endLine": 352,
+        "endChar": 11
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18818e28_4f6efe3c",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T21:40:13Z",
+      "side": 1,
+      "message": "nit, suggestion: file_exists_?  (Just because if it\u0027s created and then destroyed, technically it still *has* been created.)",
+      "range": {
+        "startLine": 516,
+        "startChar": 9,
+        "endLine": 516,
+        "endChar": 22
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec151fc_89d0710f",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T21:40:13Z",
+      "side": 1,
+      "message": "nit, suggestion: StartRequest to more clearly distinguish granularity from the PrepareToStart() method?  If you make this name change you could just change PrepareToStart() over to Start(), which I\u0027d like better because I wouldn\u0027t naively expect the request to have started upon return from a PrepareTo* method.",
+      "range": {
+        "startLine": 602,
+        "startChar": 7,
+        "endLine": 602,
+        "endChar": 20
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4052393_01946db5",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T21:40:13Z",
+      "side": 1,
+      "message": "I don\u0027t see the need for the callback having the ability to delete this to be part of the interface contract (either based on what you\u0027re currently doing or a random guess at future uses; it seems like PrepareToRetry will almost always be followed by retrying).  What drove putting this in?\n\n(To be clear, this is all implementation, and I don\u0027t care a lot about \"Best Possible Interface Contract\" that\u0027s completely contained within an implementation.  But this seems an unneeded complexity for the BodyHandler subclasses to have to be aware of/work around.)",
+      "range": {
+        "startLine": 719,
+        "startChar": 15,
+        "endLine": 719,
+        "endChar": 18
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06680cd_4bccafb6",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T21:40:13Z",
+      "side": 1,
+      "message": "This is probably just a style preference, but to me, since this at least looks like it is setting everything to what it\u0027ll look like upon construction, I\u0027d personally skip calling Initialize() in the constructor and just hoist all of this up into PrepareToRetry().  Up to you.",
+      "range": {
+        "startLine": 846,
+        "startChar": 26,
+        "endLine": 846,
+        "endChar": 36
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be508654_e809afdf",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T21:40:13Z",
+      "side": 1,
+      "message": "Is there a real gain to having this as a separate function rather than just wrapping StartInternal in the callback above?\n\n(If you take this suggestion, I\u0027ll do a followon suggestion of PrepareToRetry-\u003eRetry, for the same reason I\u0027m not ecstatic with the naming of PrepareToStart() above.  All of this up to you.)",
+      "range": {
+        "startLine": 912,
+        "startChar": 5,
+        "endLine": 912,
+        "endChar": 24
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6201a851_9a7508f5",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T21:40:13Z",
+      "side": 1,
+      "message": "Probably worth some verbiage about whether this can be called multiple times and if so what the effect would be?\n\nETA: A comment in the implementation (\"These variables are null if retrying is not enabled\") also implies that there are restrictions on when this function can be called, which should be documented?",
+      "range": {
+        "startLine": 166,
+        "startChar": 10,
+        "endLine": 166,
+        "endChar": 14
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
