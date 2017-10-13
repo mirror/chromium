@@ -293,6 +293,7 @@ void GraphicsLayer::Paint(const IntRect* interest_rect,
             *this, std::move(record), InterestRect());
       }
     }
+    //   GetPaintController().ShowDebugData();
   }
 }
 
