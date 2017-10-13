@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bf74010_af888fd4",
+        "filename": "chrome/common/media_router/media_status.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-13T23:45:08Z",
+      "side": 1,
+      "message": "Intellicast is a fun name but doesn\u0027t relate to the feature it\u0027s controlling, and searching for it won\u0027t turn up related code or documents.\n\nSomething like MediaRemotingPolicy is boring, but is more appropriate IMO.",
+      "revId": "ca798bbcb8f7e23740a495b775a46e1923c08ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be99530a_893e9a75",
+        "filename": "chrome/common/media_router/media_status.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-13T23:45:08Z",
+      "side": 1,
+      "message": "How can we \"always\" activate media remoting - does that mean remote playback for all compatible media elements?",
+      "revId": "ca798bbcb8f7e23740a495b775a46e1923c08ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35666b2_8d19906b",
+        "filename": "chrome/common/media_router/mojo/media_controller.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-13T23:45:08Z",
+      "side": 1,
+      "message": "The pattern for non-generic media controls is to define an interface for them, so this would go into e.g. a MirroringMediaRouteController interface.",
+      "revId": "ca798bbcb8f7e23740a495b775a46e1923c08ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23897559_8df47896",
+        "filename": "chrome/common/media_router/mojo/media_status.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-13T23:45:08Z",
+      "side": 1,
+      "message": "Since we\u0027ve decided to use Mojo to implement the API for all MRPs, I wonder if we need to do enum mapping any more.",
+      "revId": "ca798bbcb8f7e23740a495b775a46e1923c08ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
