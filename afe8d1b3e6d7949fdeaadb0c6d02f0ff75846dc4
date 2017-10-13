@@ -22,6 +22,30 @@
       "revId": "afe8d1b3e6d7949fdeaadb0c6d02f0ff75846dc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85660ef7_41b3a3c5",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_choose_mobile.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-13T23:17:26Z",
+      "side": 1,
+      "message": "Hmm, this should actually be unnecessary / redundant, we already hide the section if this is false:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/internet_page/internet_detail_page.js?q\u003dCellular.SupportNetworkScan\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d1004\n\nI\u0027ll go ahead and eliminate this.",
+      "parentUuid": "c58215e7_023deb06",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 4
+      },
+      "revId": "afe8d1b3e6d7949fdeaadb0c6d02f0ff75846dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
