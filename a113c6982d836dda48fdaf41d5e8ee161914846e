@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cdbea0c4_d4135eac",
+        "filename": "third_party/WebKit/LayoutTests/loader/image-loader-clone-leak.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-13T07:05:35Z",
+      "side": 1,
+      "message": "you can pass resolve directly (i.e., addEventListener(\u0027load\u0027, resolve)).",
+      "range": {
+        "startLine": 8,
+        "startChar": 42,
+        "endLine": 8,
+        "endChar": 49
+      },
+      "revId": "a113c6982d836dda48fdaf41d5e8ee161914846e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "474218d0_7d7195e5",
         "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
         "patchSetId": 6
