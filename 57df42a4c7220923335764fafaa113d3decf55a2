@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3b2465f_cd8f51bb",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-13T23:33:39Z",
+      "side": 1,
+      "message": "CancelDrag uses both. view_model_ and model_ and works in assumption that they are in sync.\n\nHowever item from view model was actually removed only after CancelDrag executed. In some cases, when dragged item was last item on the shelf this did lead to crash. In other cases to incorrect pin set.",
+      "range": {
+        "startLine": 1623,
+        "startChar": 18,
+        "endLine": 1623,
+        "endChar": 28
+      },
+      "revId": "57df42a4c7220923335764fafaa113d3decf55a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
