@@ -3,11 +3,13 @@
 // found in the LICENSE file.
 
 Console.ConsoleSidebar = class extends UI.VBox {
-  constructor() {
+  /**
+   * @param {!ProductRegistry.BadgePool} badgePool
+   */
+  constructor(badgePool) {
     super(true);
     this.setMinimumSize(125, 0);
     this._enabled = Runtime.experiments.isEnabled('logManagement');
-
     this._tree = new UI.TreeOutlineInShadow();
     this._tree.registerRequiredCSS('console/consoleSidebar.css');
     this._tree.addEventListener(UI.TreeOutline.Events.ElementSelected, this._selectionChanged.bind(this));
@@ -23,7 +25,12 @@ Console.ConsoleSidebar = class extends UI.VBox {
       new Console.ConsoleFilter(Levels.Info, [], null, Console.ConsoleFilter.singleLevelMask(Levels.Info)),
       new Console.ConsoleFilter(Levels.Verbose, [], null, Console.ConsoleFilter.singleLevelMask(Levels.Verbose))
     ];
-    this._groups = filters.map(filter => new Console.SidebarLevelByUrlGroup(filter));
+    var icons = [
+      UI.Icon.create('largeicon-navigator-folder'), UI.Icon.create('smallicon-clear-error'),
+      UI.Icon.create('smallicon-clear-warning', 'icon-warning'), UI.Icon.create('smallicon-clear-info'),
+      UI.Icon.create('smallicon-clear-warning')
+    ];
+    this._groups = filters.map((filter, i) => new Console.SidebarLevelByUrlGroup(filter, icons[i], badgePool));
     this._groups.forEach(group => this._tree.appendChild(group));
     this._groups[0].expand();
     this._groups[0].select();
@@ -88,13 +95,21 @@ Console.SidebarItem = class extends UI.TreeElement {
   /**
    * @param {!Console.ConsoleFilter} filter
    * @param {string=} tooltip
+   * @param {!Element=} icon
+   * @param {?Element=} badge
    */
-  constructor(filter, tooltip) {
+  constructor(filter, tooltip, icon, badge) {
     super(filter.name);
     this._filter = filter;
     if (tooltip)
       this.tooltip = tooltip;
-    this._countElement = this.listItemElement.createChild('span');
+    this._countElement = this.listItemElement.createChild('span', 'count');
+    var leadingIcons = [];
+    if (icon)
+      leadingIcons.push(icon);
+    if (badge)
+      leadingIcons.push(badge);
+    this.setLeadingIcons(leadingIcons);
   }
 
   /**
@@ -127,12 +142,15 @@ Console.SidebarItem = class extends UI.TreeElement {
 Console.SidebarLevelByUrlGroup = class extends Console.SidebarItem {
   /**
    * @param {!Console.ConsoleFilter} filter
+   * @param {!Element} icon
+   * @param {!ProductRegistry.BadgePool} badgePool
    */
-  constructor(filter) {
-    super(filter);
+  constructor(filter, icon, badgePool) {
+    super(filter, undefined, icon);
     this.setExpandable(true);
     /** @type {!Map<string, !Console.SidebarItem>} */
     this._urlItems = new Map();
+    this._badgePool = badgePool;
     this._updateCounters();
   }
 
@@ -188,7 +206,13 @@ Console.SidebarLevelByUrlGroup = class extends Console.SidebarItem {
       levelsMask[level] = this._filter.levelsMask[level];
     var parsedURL = url.asParsedURL();
     var filter = new Console.ConsoleFilter(parsedURL ? parsedURL.displayName : url, [parsedFilter], null, levelsMask);
-    var child = new Console.SidebarItem(filter, url);
+    var icon = UI.Icon.create('largeicon-navigator-file');
+    var badge = null;
+    if (parsedURL) {
+      badge = this._badgePool.badgeForURL(parsedURL);
+      badge.classList.add('badge');
+    }
+    var child = new Console.SidebarItem(filter, url, icon, badge);
     this._urlItems.set(url, child);
     this.appendChild(child);
   }
