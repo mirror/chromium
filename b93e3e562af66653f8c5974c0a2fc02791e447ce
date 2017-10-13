@@ -22,6 +22,30 @@
       "revId": "b93e3e562af66653f8c5974c0a2fc02791e447ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c84b8c0e_bc1c7dca",
+        "filename": "chrome/browser/resources/chromeos/login/screen_arc_terms_of_service.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-10-13T20:48:31Z",
+      "side": 1,
+      "message": "Not sure. Maybe because the loading time of the ARC ToS page changes or the logic of determine the size of screens changes. Have looked at all the recent changes about the ARC ToS screen and the display manager. None of them seems related.",
+      "parentUuid": "77cc3887_9cddc31c",
+      "range": {
+        "startLine": 113,
+        "startChar": 6,
+        "endLine": 113,
+        "endChar": 48
+      },
+      "revId": "b93e3e562af66653f8c5974c0a2fc02791e447ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
