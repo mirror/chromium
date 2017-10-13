@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07d88fa9_91aa4b75",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T19:11:59Z",
+      "side": 1,
+      "message": "thanks — fortunately this was unused.",
+      "parentUuid": "67b27107_f0da8210",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 15
+      },
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a37a571_9e43f0d3",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c37240_e4823e38",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T19:11:59Z",
+      "side": 1,
+      "message": "You are totally right, thanks.",
+      "parentUuid": "2a37a571_9e43f0d3",
+      "range": {
+        "startLine": 309,
+        "startChar": 51,
+        "endLine": 309,
+        "endChar": 69
+      },
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f83782d2_7e0928aa",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T19:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "705f273c_e44f4d17",
+      "range": {
+        "startLine": 331,
+        "startChar": 3,
+        "endLine": 331,
+        "endChar": 13
+      },
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad0ada73_3f5434ae",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-13T15:22:26Z",
       "side": 1,
       "message": "What prevents the race condition?",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 44
+      },
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bb31e73_1cb522e8",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T19:11:59Z",
+      "side": 1,
+      "message": "-runAnimations should only be called if an animation is enqueued when animations_ was empty. Could you elaborate on when this would race?",
+      "parentUuid": "ad0ada73_3f5434ae",
       "range": {
         "startLine": 350,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5beb4150_e95b847e",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T19:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "517febcd_b05dbd0d",
+      "range": {
+        "startLine": 370,
+        "startChar": 38,
+        "endLine": 370,
+        "endChar": 42
+      },
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9f1ff4b_016cc287",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 9
@@ -128,6 +248,24 @@
       "writtenOn": "2017-10-13T15:22:26Z",
       "side": 1,
       "message": "+1 Reads much nicer :)",
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1f21779_67dbe50e",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T19:11:59Z",
+      "side": 1,
+      "message": "\\o/",
+      "parentUuid": "c9f1ff4b_016cc287",
       "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -154,6 +292,30 @@
       "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f69073_8e1cfd26",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T19:11:59Z",
+      "side": 1,
+      "message": "If I understand you correctly: the first branch also enqueues an -updateProgressAnimation, but passes `animations` to the state transition instead. This branch just handles the case where progress is changing but not state.",
+      "parentUuid": "4516bf77_c43d9db6",
+      "range": {
+        "startLine": 392,
+        "startChar": 2,
+        "endLine": 392,
+        "endChar": 43
+      },
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
