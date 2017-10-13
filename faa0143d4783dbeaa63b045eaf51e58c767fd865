@@ -16,6 +16,24 @@
       "revId": "faa0143d4783dbeaa63b045eaf51e58c767fd865",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43440a78_f1afc80b",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-10-13T00:23:17Z",
+      "side": 0,
+      "message": "It exists on \"Android Nexus5 Perf\" though. The script used that bot id as a key to find out which tests to run, after using the builder name as a key as well, if that makes any sense.",
+      "parentUuid": "3d7b55a3_a2cc4c07",
+      "revId": "faa0143d4783dbeaa63b045eaf51e58c767fd865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
