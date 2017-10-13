@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40ffc7a7_b8b2e756",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-13T04:13:02Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need the \u0027aura::client::ScreenPositionClient::\u0027 part here I would think?",
+      "revId": "c84a420cc83dc3440b1060e1d1a52dc49b63f382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab6daeb_92dffeb1",
+        "filename": "ash/display/screen_position_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-13T04:13:02Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c84a420cc83dc3440b1060e1d1a52dc49b63f382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dac5c770_787cde56",
+        "filename": "ui/aura/client/screen_position_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-13T04:13:02Z",
+      "side": 1,
+      "message": "TODO(crbug.com/773331):",
+      "revId": "c84a420cc83dc3440b1060e1d1a52dc49b63f382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38ccbe7_eb632a09",
+        "filename": "ui/aura/client/screen_position_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-13T04:13:02Z",
+      "side": 1,
+      "message": "Move the impls into the .cc file.",
+      "revId": "c84a420cc83dc3440b1060e1d1a52dc49b63f382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81dee088_04ef418c",
+        "filename": "ui/compositor/dip_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-13T04:13:02Z",
+      "side": 1,
+      "message": "You don\u0027t need |view_offset_dips|. Just start with |view_offset|",
+      "revId": "c84a420cc83dc3440b1060e1d1a52dc49b63f382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1977a3e2_054b9e70",
+        "filename": "ui/wm/core/default_screen_position_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-13T04:13:02Z",
+      "side": 1,
+      "message": "Shouldn\u0027t need this change?",
+      "revId": "c84a420cc83dc3440b1060e1d1a52dc49b63f382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
