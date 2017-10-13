@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45a0981a_5dd45390",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-13T10:17:45Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think sound should be capitalized here, as we are actually talking about sound, not a feature that happens to go by the name of Sound.\n\nDid this string get reviewed?",
+      "range": {
+        "startLine": 844,
+        "startChar": 14,
+        "endLine": 844,
+        "endChar": 15
+      },
+      "revId": "ef1c493cd3ee70d017148a3003f552a50d546cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35bfcb58_5915e31f",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-13T10:17:45Z",
+      "side": 1,
+      "message": "Are the mocks the ones in https://docs.google.com/presentation/d/1rwEU7POtwRQB24EOSLrxEfz0NcOU9pP7TdMKNjIpV-s/edit#slide\u003did.g21d6fab901_1_125? Note that it says \"Mute sound\" there.",
+      "range": {
+        "startLine": 847,
+        "startChar": 18,
+        "endLine": 847,
+        "endChar": 38
+      },
+      "revId": "ef1c493cd3ee70d017148a3003f552a50d546cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
