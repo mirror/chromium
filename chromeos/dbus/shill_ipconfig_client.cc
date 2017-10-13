@@ -113,7 +113,7 @@ void ShillIPConfigClientImpl::SetProperty(const dbus::ObjectPath& ipconfig_path,
   dbus::MessageWriter writer(&method_call);
   writer.AppendString(name);
   // IPConfig supports writing basic type and string array properties.
-  switch (value.GetType()) {
+  switch (value.type()) {
     case base::Value::Type::LIST: {
       const base::ListValue* list_value = NULL;
       value.GetAsList(&list_value);
@@ -125,7 +125,7 @@ void ShillIPConfigClientImpl::SetProperty(const dbus::ObjectPath& ipconfig_path,
            it != list_value->end();
            ++it) {
         DLOG_IF(ERROR, it->GetType() != base::Value::Type::STRING)
-            << "Unexpected type " << it->GetType();
+            << "Unexpected type " << it->type();
         std::string str;
         it->GetAsString(&str);
         array_writer.AppendString(str);
@@ -140,7 +140,7 @@ void ShillIPConfigClientImpl::SetProperty(const dbus::ObjectPath& ipconfig_path,
       dbus::AppendBasicTypeValueDataAsVariant(&writer, value);
       break;
     default:
-      DLOG(ERROR) << "Unexpected type " << value.GetType();
+      DLOG(ERROR) << "Unexpected type " << value.type();
   }
   GetHelper(ipconfig_path)->CallVoidMethod(&method_call, std::move(callback));
 }
