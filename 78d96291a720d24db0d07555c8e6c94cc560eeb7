@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "9503b37f_0f7cb8ea",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T22:59:06Z",
+      "side": 1,
+      "message": "I see what you mean. In that case, it is better to move this to a teardown() function, as follows, instead of doing it here.\n\nteardown(function() {\n  cupsPrintersBrowserProxy.reset();\n});",
+      "parentUuid": "998b7858_c43921b7",
+      "revId": "78d96291a720d24db0d07555c8e6c94cc560eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69d057fc_63969d9f",
         "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
         "patchSetId": 22
