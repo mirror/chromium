@@ -121,6 +121,7 @@ void TargetHandler::Wire(UberDispatcher* dispatcher) {
 void TargetHandler::SetRenderer(RenderProcessHost* process_host,
                                 RenderFrameHostImpl* frame_host) {
   auto_attacher_.SetRenderFrameHost(frame_host);
+  frame_host_ = frame_host;
 }
 
 Response TargetHandler::Disable() {
@@ -154,8 +155,9 @@ void TargetHandler::AutoDetach(DevToolsAgentHost* host) {
 
 Response TargetHandler::FindSession(Maybe<std::string> session_id,
                                     Maybe<std::string> target_id,
-                                    Session** session,
-                                    bool fall_through) {
+                                    Session** session) {
+  // Renderer might have a worker session, let's fall through to it.
+  bool fall_through = !!frame_host_;
   *session = nullptr;
   if (session_id.isJust()) {
     auto it = attached_sessions_.find(session_id.fromJust());
@@ -205,7 +207,7 @@ Response TargetHandler::SetDiscoverTargets(bool discover) {
 Response TargetHandler::SetAutoAttach(
     bool auto_attach, bool wait_for_debugger_on_start) {
   auto_attacher_.SetAutoAttach(auto_attach, wait_for_debugger_on_start);
-  return Response::FallThrough();
+  return Response::OK();
 }
 
 Response TargetHandler::SetAttachToFrames(bool value) {
@@ -223,8 +225,11 @@ Response TargetHandler::AttachToTarget(const std::string& target_id,
   // TODO(dgozman): only allow reported hosts.
   scoped_refptr<DevToolsAgentHost> agent_host =
       DevToolsAgentHost::GetForId(target_id);
-  if (!agent_host)
+  if (!agent_host) {
+    if (frame_host_)
+      return Response::FallThrough();
     return Response::InvalidParams("No target with given id found");
+  }
   *out_session_id = Session::Attach(this, agent_host.get(), false);
   return Response::OK();
 }
@@ -233,7 +238,7 @@ Response TargetHandler::DetachFromTarget(Maybe<std::string> session_id,
                                          Maybe<std::string> target_id) {
   Session* session = nullptr;
   Response response =
-      FindSession(std::move(session_id), std::move(target_id), &session, false);
+      FindSession(std::move(session_id), std::move(target_id), &session);
   if (!response.isSuccess())
     return response;
   session->Detach(false);
@@ -245,7 +250,7 @@ Response TargetHandler::SendMessageToTarget(const std::string& message,
                                             Maybe<std::string> target_id) {
   Session* session = nullptr;
   Response response =
-      FindSession(std::move(session_id), std::move(target_id), &session, true);
+      FindSession(std::move(session_id), std::move(target_id), &session);
   if (!response.isSuccess())
     return response;
   session->SendMessageToAgentHost(message);

@@ -43,9 +43,25 @@ using protocol::Response;
 
 namespace WorkerAgentState {
 static const char kAutoAttach[] = "autoAttach";
+static const char kSubscribe[] = "subscribe";
 static const char kWaitForDebuggerOnStart[] = "waitForDebuggerOnStart";
 static const char kAttachedSessionIds[] = "attachedSessionIds";
 };
+
+namespace {
+
+std::unique_ptr<protocol::Target::TargetInfo> CreateInfo(
+    WorkerInspectorProxy* proxy) {
+  return protocol::Target::TargetInfo::create()
+      .setTargetId(proxy->InspectorId())
+      .setType("worker")
+      .setTitle(proxy->Url())
+      .setUrl(proxy->Url())
+      .setAttached(proxy->HasConnectedInspector())
+      .build();
+}
+
+}  // namespace
 
 int InspectorWorkerAgent::s_last_connection_ = 0;
 
@@ -55,41 +71,64 @@ InspectorWorkerAgent::InspectorWorkerAgent(InspectedFrames* inspected_frames)
 InspectorWorkerAgent::~InspectorWorkerAgent() {}
 
 void InspectorWorkerAgent::Restore() {
-  if (!AutoAttachEnabled())
-    return;
-  instrumenting_agents_->addInspectorWorkerAgent(this);
   protocol::DictionaryValue* attached = AttachedSessionIds();
   for (size_t i = 0; i < attached->size(); ++i)
     GetFrontend()->detachedFromTarget(attached->at(i).first);
   state_->remove(WorkerAgentState::kAttachedSessionIds);
-  ConnectToAllProxies();
+
+  InstrumentIfNeeded();
+  if (!instrumenting_)
+    return;
+  for (WorkerInspectorProxy* proxy : WorkerInspectorProxy::AllProxies()) {
+    // For now we assume this is document. TODO(kinuko): Fix this.
+    DCHECK(proxy->GetExecutionContext()->IsDocument());
+    Document* document = ToDocument(proxy->GetExecutionContext());
+    if (!document->GetFrame() ||
+        !inspected_frames_->Contains(document->GetFrame())) {
+      continue;
+    }
+
+    if (SubscriptionEnabled())
+      GetFrontend()->targetCreated(CreateInfo(proxy));
+    if (AutoAttachEnabled())
+      Connect(proxy, false);
+  }
 }
 
 Response InspectorWorkerAgent::disable() {
-  if (AutoAttachEnabled()) {
-    DisconnectFromAllProxies(false);
+  DisconnectFromProxy(nullptr, false);
+  if (instrumenting_) {
     instrumenting_agents_->removeInspectorWorkerAgent(this);
+    instrumenting_ = false;
   }
+  state_->setBoolean(WorkerAgentState::kSubscribe, false);
   state_->setBoolean(WorkerAgentState::kAutoAttach, false);
   state_->setBoolean(WorkerAgentState::kWaitForDebuggerOnStart, false);
   state_->remove(WorkerAgentState::kAttachedSessionIds);
   return Response::OK();
 }
 
-Response InspectorWorkerAgent::setAutoAttach(bool auto_attach,
-                                             bool wait_for_debugger_on_start) {
+Response InspectorWorkerAgent::getWorkers(
+    bool subscribe,
+    bool auto_attach,
+    bool wait_for_debugger_on_start,
+    std::unique_ptr<protocol::Array<protocol::Target::TargetInfo>>* workers) {
+  state_->setBoolean(WorkerAgentState::kSubscribe, subscribe);
+  state_->setBoolean(WorkerAgentState::kAutoAttach, auto_attach);
   state_->setBoolean(WorkerAgentState::kWaitForDebuggerOnStart,
                      wait_for_debugger_on_start);
+  InstrumentIfNeeded();
 
-  if (auto_attach == AutoAttachEnabled())
-    return Response::OK();
-  state_->setBoolean(WorkerAgentState::kAutoAttach, auto_attach);
-  if (auto_attach) {
-    instrumenting_agents_->addInspectorWorkerAgent(this);
-    ConnectToAllProxies();
-  } else {
-    DisconnectFromAllProxies(true);
-    instrumenting_agents_->removeInspectorWorkerAgent(this);
+  *workers = protocol::Array<protocol::Target::TargetInfo>::create();
+  for (WorkerInspectorProxy* proxy : WorkerInspectorProxy::AllProxies()) {
+    // For now we assume this is document. TODO(kinuko): Fix this.
+    DCHECK(proxy->GetExecutionContext()->IsDocument());
+    Document* document = ToDocument(proxy->GetExecutionContext());
+    if (!document->GetFrame() ||
+        !inspected_frames_->Contains(document->GetFrame())) {
+      continue;
+    }
+    (*workers)->addItem(CreateInfo(proxy));
   }
   return Response::OK();
 }
@@ -98,37 +137,52 @@ Response InspectorWorkerAgent::setAttachToFrames(bool attach) {
   return Response::OK();
 }
 
+Response InspectorWorkerAgent::setAutoAttach(bool auto_attach,
+                                             bool wait_for_debugger_on_start) {
+  return Response::OK();
+}
+
 bool InspectorWorkerAgent::AutoAttachEnabled() {
   return state_->booleanProperty(WorkerAgentState::kAutoAttach, false);
+}
+
+bool InspectorWorkerAgent::SubscriptionEnabled() {
+  return state_->booleanProperty(WorkerAgentState::kSubscribe, false);
 }
 
 Response InspectorWorkerAgent::sendMessageToTarget(const String& message,
                                                    Maybe<String> session_id,
                                                    Maybe<String> target_id) {
-  if (session_id.isJust()) {
-    auto it = session_id_to_connection_.find(session_id.fromJust());
-    if (it == session_id_to_connection_.end())
-      return Response::Error("No session with given id");
-    WorkerInspectorProxy* proxy = connected_proxies_.at(it->value);
-    proxy->SendMessageToInspector(it->value, message);
-    return Response::OK();
-  }
-  if (target_id.isJust()) {
-    int connection = 0;
-    for (auto& it : connected_proxies_) {
-      if (it.value->InspectorId() == target_id.fromJust()) {
-        if (connection)
-          return Response::Error("Multiple sessions attached, specify id");
-        connection = it.key;
-      }
+  int connection_id;
+  Response response = FindConnection(std::move(session_id),
+                                     std::move(target_id), &connection_id);
+  if (!response.isSuccess())
+    return response;
+  WorkerInspectorProxy* proxy = connected_proxies_.at(connection_id);
+  proxy->SendMessageToInspector(connection_id, message);
+  return Response::OK();
+}
+
+Response InspectorWorkerAgent::attachToTarget(const String& target_id,
+                                              String* out_session_id) {
+  for (WorkerInspectorProxy* proxy : WorkerInspectorProxy::AllProxies()) {
+    if (proxy->InspectorId() == target_id) {
+      *out_session_id = Connect(proxy, false);
+      return Response::OK();
     }
-    if (!connection)
-      return Response::Error("No target with given id");
-    WorkerInspectorProxy* proxy = connected_proxies_.at(connection);
-    proxy->SendMessageToInspector(connection, message);
-    return Response::OK();
   }
-  return Response::Error("Session id must be specified");
+  return Response::Error("No target with given id");
+}
+
+Response InspectorWorkerAgent::detachFromTarget(Maybe<String> session_id,
+                                                Maybe<String> target_id) {
+  int connection_id;
+  Response response = FindConnection(std::move(session_id),
+                                     std::move(target_id), &connection_id);
+  if (!response.isSuccess())
+    return response;
+  Disconnect(connection_id, true);
+  return Response::OK();
 }
 
 void InspectorWorkerAgent::SetHostId(const String& host_id) {
@@ -152,54 +206,30 @@ void InspectorWorkerAgent::ShouldWaitForDebuggerOnWorkerStart(bool* result) {
 
 void InspectorWorkerAgent::DidStartWorker(WorkerInspectorProxy* proxy,
                                           bool waiting_for_debugger) {
-  DCHECK(GetFrontend() && AutoAttachEnabled());
-  ConnectToProxy(proxy, waiting_for_debugger);
-  if (!tracing_session_id_.IsEmpty())
-    proxy->WriteTimelineStartedEvent(tracing_session_id_);
+  if (SubscriptionEnabled())
+    GetFrontend()->targetCreated(CreateInfo(proxy));
+  if (AutoAttachEnabled()) {
+    Connect(proxy, waiting_for_debugger);
+    if (!tracing_session_id_.IsEmpty())
+      proxy->WriteTimelineStartedEvent(tracing_session_id_);
+  }
 }
 
 void InspectorWorkerAgent::WorkerTerminated(WorkerInspectorProxy* proxy) {
-  DCHECK(GetFrontend() && AutoAttachEnabled());
-  Vector<String> session_ids;
-  for (auto& it : session_id_to_connection_) {
-    if (connected_proxies_.at(it.value) == proxy)
-      session_ids.push_back(it.key);
-  }
-  for (const String& session_id : session_ids) {
-    AttachedSessionIds()->remove(session_id);
-    GetFrontend()->detachedFromTarget(session_id, proxy->InspectorId());
-    int connection = session_id_to_connection_.at(session_id);
-    proxy->DisconnectFromInspector(connection, this);
-    connected_proxies_.erase(connection);
-    connection_to_session_id_.erase(connection);
-    session_id_to_connection_.erase(session_id);
-  }
+  DisconnectFromProxy(proxy, true);
+  if (SubscriptionEnabled())
+    GetFrontend()->targetDestroyed(proxy->InspectorId());
 }
 
-void InspectorWorkerAgent::ConnectToAllProxies() {
-  for (WorkerInspectorProxy* proxy : WorkerInspectorProxy::AllProxies()) {
-    // For now we assume this is document. TODO(kinuko): Fix this.
-    DCHECK(proxy->GetExecutionContext()->IsDocument());
-    Document* document = ToDocument(proxy->GetExecutionContext());
-    if (document->GetFrame() &&
-        inspected_frames_->Contains(document->GetFrame())) {
-      ConnectToProxy(proxy, false);
-    }
+void InspectorWorkerAgent::DisconnectFromProxy(WorkerInspectorProxy* proxy,
+                                               bool report_to_frontend) {
+  Vector<int> connection_ids;
+  for (auto& it : connected_proxies_) {
+    if (!proxy || it.value == proxy)
+      connection_ids.push_back(it.key);
   }
-}
-
-void InspectorWorkerAgent::DisconnectFromAllProxies(bool report_to_frontend) {
-  for (auto& it : session_id_to_connection_) {
-    WorkerInspectorProxy* proxy = connected_proxies_.at(it.value);
-    if (report_to_frontend) {
-      AttachedSessionIds()->remove(it.key);
-      GetFrontend()->detachedFromTarget(it.key, proxy->InspectorId());
-    }
-    proxy->DisconnectFromInspector(it.value, this);
-  }
-  connection_to_session_id_.clear();
-  session_id_to_connection_.clear();
-  connected_proxies_.clear();
+  for (int connection_id : connection_ids)
+    Disconnect(connection_id, true);
 }
 
 void InspectorWorkerAgent::DidCommitLoadForLocalFrame(LocalFrame* frame) {
@@ -209,7 +239,33 @@ void InspectorWorkerAgent::DidCommitLoadForLocalFrame(LocalFrame* frame) {
   // During navigation workers from old page may die after a while.
   // Usually, it's fine to report them terminated later, but some tests
   // expect strict set of workers, and we reuse renderer between tests.
-  DisconnectFromAllProxies(true);
+  DisconnectFromProxy(nullptr, true);
+}
+
+Response InspectorWorkerAgent::FindConnection(Maybe<String> session_id,
+                                              Maybe<String> target_id,
+                                              int* connection_id) {
+  if (session_id.isJust()) {
+    auto it = session_id_to_connection_.find(session_id.fromJust());
+    if (it == session_id_to_connection_.end())
+      return Response::Error("No session with given id");
+    *connection_id = it->value;
+    return Response::OK();
+  }
+  if (target_id.isJust()) {
+    *connection_id = 0;
+    for (auto& it : connected_proxies_) {
+      if (it.value->InspectorId() == target_id.fromJust()) {
+        if (*connection_id)
+          return Response::Error("Multiple sessions attached, specify id");
+        *connection_id = it.key;
+      }
+    }
+    if (!*connection_id)
+      return Response::Error("No target with given id");
+    return Response::OK();
+  }
+  return Response::Error("Session id must be specified");
 }
 
 protocol::DictionaryValue* InspectorWorkerAgent::AttachedSessionIds() {
@@ -225,8 +281,17 @@ protocol::DictionaryValue* InspectorWorkerAgent::AttachedSessionIds() {
   return ids;
 }
 
-void InspectorWorkerAgent::ConnectToProxy(WorkerInspectorProxy* proxy,
-                                          bool waiting_for_debugger) {
+void InspectorWorkerAgent::InstrumentIfNeeded() {
+  bool need_instrumentation = AutoAttachEnabled() || SubscriptionEnabled();
+  if (need_instrumentation && !instrumenting_)
+    instrumenting_agents_->addInspectorWorkerAgent(this);
+  else if (!need_instrumentation && instrumenting_)
+    instrumenting_agents_->removeInspectorWorkerAgent(this);
+  instrumenting_ = need_instrumentation;
+}
+
+String InspectorWorkerAgent::Connect(WorkerInspectorProxy* proxy,
+                                     bool waiting_for_debugger) {
   int connection = ++s_last_connection_;
   connected_proxies_.Set(connection, proxy);
 
@@ -237,15 +302,23 @@ void InspectorWorkerAgent::ConnectToProxy(WorkerInspectorProxy* proxy,
   proxy->ConnectToInspector(connection, host_id_, this);
   DCHECK(GetFrontend());
   AttachedSessionIds()->setBoolean(session_id, true);
-  GetFrontend()->attachedToTarget(session_id,
-                                  protocol::Target::TargetInfo::create()
-                                      .setTargetId(proxy->InspectorId())
-                                      .setType("worker")
-                                      .setTitle(proxy->Url())
-                                      .setUrl(proxy->Url())
-                                      .setAttached(true)
-                                      .build(),
+  GetFrontend()->attachedToTarget(session_id, CreateInfo(proxy),
                                   waiting_for_debugger);
+  return session_id;
+}
+
+void InspectorWorkerAgent::Disconnect(int connection_id,
+                                      bool report_to_frontend) {
+  String session_id = connection_to_session_id_.at(connection_id);
+  WorkerInspectorProxy* proxy = connected_proxies_.at(connection_id);
+  if (report_to_frontend) {
+    AttachedSessionIds()->remove(session_id);
+    GetFrontend()->detachedFromTarget(session_id, proxy->InspectorId());
+  }
+  proxy->DisconnectFromInspector(connection_id, this);
+  connection_to_session_id_.erase(connection_id);
+  session_id_to_connection_.erase(session_id);
+  connected_proxies_.erase(connection_id);
 }
 
 void InspectorWorkerAgent::DispatchMessageFromWorker(

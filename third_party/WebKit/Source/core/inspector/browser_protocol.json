@@ -3849,6 +3849,18 @@
         ],
         "commands": [
             {
+                "name": "getWorkers",
+                "description": "Returns existing child web worker targets.",
+                "parameters": [
+                    { "name": "subscribe", "type": "boolean", "description": "Whether to notify about child web worker changes via <code>targetCreated/targetInfoChanged/targetDestroyed</code> events. Pass <code>false</code> to stop notifications." },
+                    { "name": "autoAttach", "type": "boolean", "description": "Whether to automatically attach to new child web workers. Does not automatically attach to existing ones, or detach when turned off." },
+                    { "name": "waitForDebuggerOnStart", "type": "boolean", "description": "Whether to pause new workers when auto-attaching to them. Use <code>Runtime.runIfWaitingForDebugger</code> to run paused workers." }
+                ],
+                "returns": [
+                    { "name": "workers", "type": "array", "items": { "$ref": "TargetInfo" }, "description": "The list of existing web workers." }
+                ]
+            },
+            {
                 "name": "setDiscoverTargets",
                 "description": "Controls whether to discover available targets and notify via <code>targetCreated/targetInfoChanged/targetDestroyed</code> events.",
                 "parameters": [

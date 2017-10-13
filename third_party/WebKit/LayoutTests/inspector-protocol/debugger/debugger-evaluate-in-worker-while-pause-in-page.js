@@ -15,16 +15,26 @@
     return workerRequestId++;
   }
 
+  async function attachToWorker() {
+    var response = await dp.Target.getWorkers({subscribe: true, autoAttach: false, waitForDebuggerOnStart: false});
+    var workerId;
+    if (response.result.workers.length) {
+      workerId = response.result.workers[0].targetId;
+    } else {
+      response = await dp.Target.onceTargetCreated(event => event.params.targetInfo.type === 'worker');
+      workerId = response.params.targetInfo.targetId;
+    }
+    testRunner.log('Worker created');
+    await dp.Target.attachToTarget({targetId: workerId});
+    return workerId;
+  }
+
   dp.Debugger.enable();
   dp.Runtime.evaluate({expression: 'debugger;' });
   await dp.Debugger.oncePaused();
   testRunner.log(`Paused on 'debugger;'`);
 
-  dp.Target.setAutoAttach({autoAttach: true, waitForDebuggerOnStart: false});
-
-  var messageObject = await dp.Target.onceAttachedToTarget();
-  var workerId = messageObject.params.targetInfo.targetId;
-  testRunner.log('Worker created');
+  var workerId = await attachToWorker();
   testRunner.log('didConnectToWorker');
 
   var savedWorkerRequestId = sendCommandToWorker('Runtime.evaluate', {expression: '1+1'});

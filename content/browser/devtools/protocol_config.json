@@ -80,7 +80,8 @@
                 "async": ["getInfo"]
             },
             {
-                "domain": "Target"
+                "domain": "Target",
+                "exclude": ["getWorkers"]
             },
             {
                 "domain": "Tethering",

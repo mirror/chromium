@@ -110,6 +110,10 @@ static void ConnectToWorkerGlobalScopeInspectorTask(WorkerThread* worker_thread,
   }
 }
 
+bool WorkerInspectorProxy::HasConnectedInspector() {
+  return !page_inspectors_.IsEmpty();
+}
+
 void WorkerInspectorProxy::ConnectToInspector(
     int session_id,
     const String& host_id,

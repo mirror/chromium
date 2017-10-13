@@ -406,6 +406,13 @@ SDK.ChildTargetManager = class {
     this._childConnections = new Map();
 
     parentTarget.registerTargetDispatcher(this);
+    this._targetAgent.invoke_getWorkers({subscribe: false, autoAttach: true, waitForDebuggerOnStart: true})
+        .then(response => {
+          if (!response.workers)
+            return;
+          for (var worker of response.workers)
+            this._targetAgent.attachToTarget(worker.targetId);
+        });
     this._targetAgent.invoke_setAutoAttach({autoAttach: true, waitForDebuggerOnStart: true});
     if (Runtime.experiments.isEnabled('autoAttachToCrossProcessSubframes'))
       this._targetAgent.setAttachToFrames(true);
@@ -441,14 +448,16 @@ SDK.ChildTargetManager = class {
    * @return {!Promise}
    */
   suspend() {
-    return this._targetAgent.invoke_setAutoAttach({autoAttach: true, waitForDebuggerOnStart: false});
+    this._targetAgent.invoke_setAutoAttach({autoAttach: true, waitForDebuggerOnStart: false});
+    return this._targetAgent.invoke_getWorkers({subscribe: false, autoAttach: true, waitForDebuggerOnStart: false});
   }
 
   /**
    * @return {!Promise}
    */
   resume() {
-    return this._targetAgent.invoke_setAutoAttach({autoAttach: true, waitForDebuggerOnStart: true});
+    this._targetAgent.invoke_setAutoAttach({autoAttach: true, waitForDebuggerOnStart: true});
+    return this._targetAgent.invoke_getWorkers({subscribe: false, autoAttach: true, waitForDebuggerOnStart: true});
   }
 
   dispose() {

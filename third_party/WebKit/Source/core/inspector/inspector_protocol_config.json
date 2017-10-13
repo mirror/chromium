@@ -101,8 +101,8 @@
             },
             {
                 "domain": "Target",
-                "include": ["setAutoAttach", "sendMessageToTarget", "setAttachToFrames"],
-                "include_events": ["attachedToTarget", "detachedFromTarget", "receivedMessageFromTarget"]
+                "include": ["getWorkers", "sendMessageToTarget", "setAutoAttach", "setAttachToFrames", "attachToTarget", "detachFromTarget"],
+                "include_events": ["attachedToTarget", "detachedFromTarget", "receivedMessageFromTarget", "targetCreated", "targetDestroyed"]
             }
         ]
     },

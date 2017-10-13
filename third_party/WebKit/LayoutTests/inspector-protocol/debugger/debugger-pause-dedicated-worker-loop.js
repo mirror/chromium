@@ -20,7 +20,19 @@
     return workerRequestId++;
   }
 
-  dp.Target.setAutoAttach({autoAttach: true, waitForDebuggerOnStart: false});
+  async function attachToWorker() {
+    var response = await dp.Target.getWorkers({subscribe: true, autoAttach: false, waitForDebuggerOnStart: false});
+    var workerId;
+    if (response.result.workers.length) {
+      workerId = response.result.workers[0].targetId;
+    } else {
+      response = await dp.Target.onceTargetCreated(event => event.params.targetInfo.type === 'worker');
+      workerId = response.params.targetInfo.targetId;
+    }
+    testRunner.log('Worker created');
+    await dp.Target.attachToTarget({targetId: workerId});
+    return workerId;
+  }
 
   var debuggerEnableRequestId = -1;
   var evaluateRequestId = -1;
@@ -43,8 +55,7 @@
     }
   });
 
-  workerId = (await dp.Target.onceAttachedToTarget()).params.targetInfo.targetId;
-  testRunner.log('Worker created');
+  workerId = await attachToWorker();
   testRunner.log('didConnectToWorker');
   // Enable debugger so that V8 can interrupt and handle inspector commands while there is a script running in a tight loop.
   debuggerEnableRequestId = sendCommandToWorker('Debugger.enable', {});

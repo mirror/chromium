@@ -39,7 +39,7 @@
   }
   dp.Target.onDetachedFromTarget(onDetached);
 
-  await dp.Target.setAutoAttach({autoAttach: true, waitForDebuggerOnStart: false});
+  await dp.Target.getWorkers({subscribe: false, autoAttach: true, waitForDebuggerOnStart: false});
   session.evaluate(`
     window.worker1 = new Worker('${testRunner.url('../resources/worker-with-throw.js')}');
     window.worker1.onerror = function(e) {

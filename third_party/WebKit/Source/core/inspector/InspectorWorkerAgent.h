@@ -62,11 +62,22 @@ class CORE_EXPORT InspectorWorkerAgent final
   void WorkerTerminated(WorkerInspectorProxy*);
 
   // Called from Dispatcher
+  protocol::Response getWorkers(
+      bool subscribe,
+      bool auto_attach,
+      bool wait_for_debugger_on_start,
+      std::unique_ptr<protocol::Array<protocol::Target::TargetInfo>>* workers)
+      override;
+  protocol::Response setAttachToFrames(bool) override;
   protocol::Response setAutoAttach(bool auto_attach,
                                    bool wait_for_debugger_on_start) override;
-  protocol::Response setAttachToFrames(bool attach) override;
   protocol::Response sendMessageToTarget(
       const String& message,
+      protocol::Maybe<String> session_id,
+      protocol::Maybe<String> target_id) override;
+  protocol::Response attachToTarget(const String& target_id,
+                                    String* out_session_id) override;
+  protocol::Response detachFromTarget(
       protocol::Maybe<String> session_id,
       protocol::Maybe<String> target_id) override;
 
@@ -75,10 +86,16 @@ class CORE_EXPORT InspectorWorkerAgent final
 
  private:
   bool AutoAttachEnabled();
-  void ConnectToAllProxies();
-  void DisconnectFromAllProxies(bool report_to_frontend);
-  void ConnectToProxy(WorkerInspectorProxy*, bool waiting_for_debugger);
+  bool SubscriptionEnabled();
   protocol::DictionaryValue* AttachedSessionIds();
+  void InstrumentIfNeeded();
+
+  String Connect(WorkerInspectorProxy*, bool waiting_for_debugger);
+  void Disconnect(int connection_id, bool report_to_frontend);
+  void DisconnectFromProxy(WorkerInspectorProxy*, bool report_to_frontend);
+  protocol::Response FindConnection(protocol::Maybe<String> session_id,
+                                    protocol::Maybe<String> target_id,
+                                    int* connection_id);
 
   // WorkerInspectorProxy::PageInspector implementation.
   void DispatchMessageFromWorker(WorkerInspectorProxy*,
@@ -91,6 +108,7 @@ class CORE_EXPORT InspectorWorkerAgent final
   HashMap<String, int> session_id_to_connection_;
   String host_id_;
   String tracing_session_id_;
+  bool instrumenting_ = false;
   static int s_last_connection_;
 };
 

@@ -141,9 +141,12 @@
       logInWorker('message1', next);
     },
 
-    function enable1(next) {
+    async function enable1(next) {
       testRunner.log('Starting autoattach');
-      dp.Target.setAutoAttach({autoAttach: true, waitForDebuggerOnStart: false}).then(next);
+      var response = await dp.Target.getWorkers({subscribe: true, autoAttach: true, waitForDebuggerOnStart: false});
+      if (response.result.workers.length)
+        await dp.Target.attachToTarget({targetId: response.result.workers[0].targetId});
+      next();
     },
 
     function consoleEnable1(next) {
@@ -166,7 +169,8 @@
 
     function disable1(next) {
       testRunner.log('Stopping autoattach');
-      dp.Target.setAutoAttach({autoAttach: false, waitForDebuggerOnStart: false}).then(next);
+      dp.Target.getWorkers({subscribe: false, autoAttach: false, waitForDebuggerOnStart: false});
+      dp.Target.detachFromTarget({targetId: workerId}).then(next);
     },
 
     function log3(next) {
@@ -180,7 +184,7 @@
 
     function enable2(next) {
       testRunner.log('Starting autoattach');
-      dp.Target.setAutoAttach({autoAttach: true, waitForDebuggerOnStart: false}).then(next);
+      dp.Target.getWorkers({subscribe: false, autoAttach: true, waitForDebuggerOnStart: false}).then(next);
     },
 
     function start2(next) {
@@ -227,7 +231,8 @@
 
     function disable2(next) {
       testRunner.log('Stopping autoattach');
-      dp.Target.setAutoAttach({autoAttach: false, waitForDebuggerOnStart: false}).then(next);
+      dp.Target.getWorkers({subscribe: false, autoAttach: false, waitForDebuggerOnStart: false});
+      dp.Target.detachFromTarget({targetId: workerId}).then(next);
     }
   ];
 
