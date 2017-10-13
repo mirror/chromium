@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df1b9779_16ca8803",
+        "filename": "chrome/android/static_initializers.gni",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-13T17:42:44Z",
+      "side": 1,
+      "message": "I verified locally that the roll does indeed make the aarch64 count go from 6 to 4, and the arm count is not affected.",
+      "revId": "1332164155e24afc7dca5bc68d9c0ee9588beae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
