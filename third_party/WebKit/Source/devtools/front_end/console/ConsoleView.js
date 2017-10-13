@@ -52,6 +52,10 @@ Console.ConsoleView = class extends UI.VBox {
       this._splitWidget.hideSidebar();
       this._splitWidget.show(this.element);
       toolbar.appendToolbarItem(this._splitWidget.createShowHideSidebarButton('console sidebar'));
+      this._splitWidget.addEventListener(UI.SplitWidget.Events.ShowModeChanged, () => {
+        this._filter._levelMenuButton.element.classList.toggle('hidden');
+        this._filter._levelMenuButtonArrow.element.classList.toggle('hidden');
+      });
     } else {
       this._searchableView.show(this.element);
     }
@@ -368,7 +372,6 @@ Console.ConsoleView = class extends UI.VBox {
       this._updateMessageList();
       delete this._needsFullUpdate;
     } else {
-      this._sidebar.refresh();
       this._viewport.invalidate();
     }
     return Promise.resolve();
@@ -662,7 +665,7 @@ Console.ConsoleView = class extends UI.VBox {
     this._currentGroup = this._topGroup;
     this._regexMatchRanges = [];
     this._hiddenByFilterCount = 0;
-    this._sidebar.resetItemCounters();
+    this._sidebar.resetCounters();
     for (var i = 0; i < this._visibleViewMessages.length; ++i) {
       this._visibleViewMessages[i].resetCloseGroupDecorationCount();
       this._visibleViewMessages[i].resetIncrementRepeatCount();
@@ -672,7 +675,6 @@ Console.ConsoleView = class extends UI.VBox {
       this._appendMessageToEnd(this._consoleMessages[i]);
     this._updateFilterStatus();
     this._searchableView.updateSearchMatchesCount(this._regexMatchRanges.length);
-    this._sidebar.refresh();
     this._viewport.invalidate();
   }
 
