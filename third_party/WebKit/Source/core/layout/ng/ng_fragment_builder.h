@@ -112,6 +112,13 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
     return *this;
   }
 
+  // This will mark the fragment created as inline blocks which is important
+  // as paint order is different for inline-blocks vs regular blocks.
+  NGFragmentBuilder& SetIsInlineBlock() {
+    is_inline_block_ = true;
+    return *this;
+  }
+
   NGFragmentBuilder& SetEndMarginStrut(const NGMarginStrut& from) {
     end_margin_strut_ = from;
     return *this;
@@ -145,6 +152,7 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   }
 
   bool DidBreak() const { return did_break_; }
+  bool IsInlineBlock() const { return is_inline_block_; }
 
   NGFragmentBuilder& SetBorderEdges(NGBorderEdges border_edges) {
     border_edges_ = border_edges;
@@ -192,6 +200,7 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   Vector<NGLogicalOffset> offsets_;
 
   bool did_break_;
+  bool is_inline_block_;
   LayoutUnit used_block_size_;
 
   Vector<RefPtr<NGBreakToken>> child_break_tokens_;
