@@ -1254,9 +1254,6 @@ extern const char kUseAndroidMidiApiDescription[];
 extern const char kThirdPartyDoodlesName[];
 extern const char kThirdPartyDoodlesDescription[];
 
-extern const char kXGEOVisibleNetworksName[];
-extern const char kXGEOVisibleNetworksDescription[];
-
 // Non-Android ----------------------------------------------------------------
 
 #else  // !defined(OS_ANDROID)
