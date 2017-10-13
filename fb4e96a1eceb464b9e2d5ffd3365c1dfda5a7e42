@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9e24fb2a_3405e935",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkTransferableMessageStructTraits.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T21:16:29Z",
+      "side": 1,
+      "message": "OK, thanks for explaining.\n\nI guess I would say that ideally, both ports() and Read() should be in agreement over whether they use WTF::Vector or std::vector: I\u0027d prefer WTF::Vector if possible, since it seems like we managed to avoid std::vector for ports(), but I\u0027ll defer to you.",
+      "parentUuid": "f4d52d4e_4c4f145b",
+      "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "368532d9_fd686252",
         "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.cc",
         "patchSetId": 18
@@ -124,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "372f6cca_6ef37cf9",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T21:16:29Z",
+      "side": 1,
+      "message": "I could go either way. I guess this is fine.",
+      "parentUuid": "78c1b1c0_ecdedec5",
+      "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ccd5535_8505fc58",
         "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.cc",
         "patchSetId": 18
@@ -153,6 +189,24 @@
       "side": 1,
       "message": "Hmm? out-\u003eports is a different type (std::vector\u003cblink::MessagePortChannel\u003e). To deserialize directly into that I\u0027d need some kind of mojo::internal::Deserialize version that doesn\u0027t currently exist.",
       "parentUuid": "1ccd5535_8505fc58",
+      "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ad6c1ed_c7e1a54e",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T21:16:29Z",
+      "side": 1,
+      "message": "Oh, reading fail... meh.",
+      "parentUuid": "10afc0e3_6af8e0f2",
       "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
