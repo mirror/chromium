@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3ea62b0_1c3901f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T21:15:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28de357f_d8a48d6f",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5af004b6_db7928a5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDialog.java",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a268af_397b9f6f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDialog.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T21:15:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5af004b6_db7928a5",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aa0da250_6336c3c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragment.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T21:15:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8358558e_af18a318",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74199757_b019dfcf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragment.java",
         "patchSetId": 20
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-13T18:44:44Z",
       "side": 1,
       "message": "Hmm, is this pattern used elsewhere, to set a static?",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e13414f_30fb0c67",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragment.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T21:15:44Z",
+      "side": 1,
+      "message": "Yes, in PaymentRequestUI.\nhttps://codesearch.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/payments/ui/PaymentRequestUI.java?type\u003dcs\u0026q\u003dpaymentrequestui+file:java\u0026sq\u003dpackage:chromium\u0026l\u003d1359",
+      "parentUuid": "74199757_b019dfcf",
       "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4fc51130_93858e43",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragmentTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T21:15:44Z",
+      "side": 1,
+      "message": "Yes. The tests are independent, but they depend on setUp. What\u0027s confusing about it?",
+      "parentUuid": "87c7a99a_2e5cc4ae",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f8e94e1_5e5aee7e",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragmentTest.java",
         "patchSetId": 20
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-13T18:44:44Z",
       "side": 1,
       "message": "Can we test the validation? Entering incomplete data and trying to save. Also, I\u0027m thinking email/phone should probably be optional in the Autofill editor, what do you think? Feel free to do as a follow-up",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43314c54_013bc508",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragmentTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T21:15:44Z",
+      "side": 1,
+      "message": "Email is optional now, phone is not (because the AddressEditor is shared between PR and autofill.)",
+      "parentUuid": "0f8e94e1_5e5aee7e",
       "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "df69e009_037c6979",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragmentTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T21:15:44Z",
+      "side": 1,
+      "message": "I was trying to make them less confusing!",
+      "parentUuid": "4fd6220e_a1ae26b1",
+      "range": {
+        "startLine": 78,
+        "startChar": 43,
+        "endLine": 78,
+        "endChar": 56
+      },
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60d64ce3_6b3d5a20",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillTestRule.java",
         "patchSetId": 20
@@ -141,6 +273,24 @@
       "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9cd173_d2c5b09b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillTestRule.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T21:15:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60d64ce3_6b3d5a20",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +314,30 @@
       "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5304879_90fae5cc",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillTestRule.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T21:15:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6abb056f_46125163",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 39
+      },
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
