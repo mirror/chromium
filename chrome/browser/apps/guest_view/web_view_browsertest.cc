@@ -2595,7 +2595,7 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, DownloadPermission) {
                 "web_view/download");
   ASSERT_TRUE(guest_web_contents);
 
-  base::ThreadRestrictions::ScopedAllowIO allow_io;
+  base::ScopedAllowBlockingForTesting allow_blocking;
   base::ScopedTempDir temporary_download_dir;
   ASSERT_TRUE(temporary_download_dir.CreateUniqueTempDir());
   DownloadPrefs::FromBrowserContext(guest_web_contents->GetBrowserContext())
@@ -2753,7 +2753,7 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, DownloadCookieIsolation) {
   content::WebContents* web_contents = GetFirstAppWindowWebContents();
   ASSERT_TRUE(web_contents);
 
-  base::ThreadRestrictions::ScopedAllowIO allow_io;
+  base::ScopedAllowBlockingForTesting allow_blocking;
   base::ScopedTempDir temporary_download_dir;
   ASSERT_TRUE(temporary_download_dir.CreateUniqueTempDir());
   DownloadPrefs::FromBrowserContext(web_contents->GetBrowserContext())
@@ -2839,7 +2839,7 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, PRE_DownloadCookieIsolation_CrossSession) {
   content::WebContents* web_contents = GetFirstAppWindowWebContents();
   ASSERT_TRUE(web_contents);
 
-  base::ThreadRestrictions::ScopedAllowIO allow_io;
+  base::ScopedAllowBlockingForTesting allow_blocking;
   base::ScopedTempDir temporary_download_dir;
   ASSERT_TRUE(temporary_download_dir.CreateUniqueTempDir());
   DownloadPrefs::FromBrowserContext(web_contents->GetBrowserContext())
@@ -2898,7 +2898,7 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, DownloadCookieIsolation_CrossSession) {
   DownloadHistoryWaiter history_waiter(browser_context);
   history_waiter.WaitForHistoryLoad();
 
-  base::ThreadRestrictions::ScopedAllowIO allow_io;
+  base::ScopedAllowBlockingForTesting allow_blocking;
   base::ScopedTempDir temporary_download_dir;
   ASSERT_TRUE(temporary_download_dir.Set(
       DownloadPrefs::FromBrowserContext(browser_context)->DownloadPath()));

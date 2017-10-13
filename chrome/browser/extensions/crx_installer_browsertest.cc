@@ -219,7 +219,7 @@ class ExtensionCrxInstallerTest : public ExtensionBrowserTest {
       bool strict_manifest_checks) {
     std::unique_ptr<WebstoreInstaller::Approval> result;
 
-    base::ThreadRestrictions::ScopedAllowIO allow_io;
+    base::ScopedAllowBlockingForTesting allow_blocking;
     base::FilePath ext_path = test_data_dir_.AppendASCII(manifest_dir);
     std::string error;
     std::unique_ptr<base::DictionaryValue> parsed_manifest(
@@ -344,7 +344,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTestWithExperimentalApis,
 IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, BlockedFileTypes) {
   const Extension* extension =
       InstallExtension(test_data_dir_.AppendASCII("blocked_file_types.crx"), 1);
-  base::ThreadRestrictions::ScopedAllowIO allow_io;
+  base::ScopedAllowBlockingForTesting allow_blocking;
   EXPECT_TRUE(base::PathExists(extension->path().AppendASCII("test.html")));
   EXPECT_TRUE(base::PathExists(extension->path().AppendASCII("test.nexe")));
   EXPECT_FALSE(base::PathExists(extension->path().AppendASCII("test1.EXE")));
@@ -356,7 +356,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, AllowedThemeFileTypes) {
       test_data_dir_.AppendASCII("theme_with_extension.crx"), 1);
   ASSERT_TRUE(extension);
   const base::FilePath& path = extension->path();
-  base::ThreadRestrictions::ScopedAllowIO allow_io;
+  base::ScopedAllowBlockingForTesting allow_blocking;
   EXPECT_TRUE(
       base::PathExists(path.AppendASCII("images/theme_frame_camo.PNG")));
   EXPECT_TRUE(
@@ -607,7 +607,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, InstallToSharedLocation) {
       crx_path, 1, extensions::Manifest::EXTERNAL_PREF);
   base::FilePath extension_path = extension->path();
   EXPECT_TRUE(cache_dir.GetPath().IsParent(extension_path));
-  base::ThreadRestrictions::ScopedAllowIO allow_io;
+  base::ScopedAllowBlockingForTesting allow_blocking;
   EXPECT_TRUE(base::PathExists(extension_path));
 
   std::string extension_id = extension->id();
