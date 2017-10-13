@@ -147,7 +147,9 @@ FileBrowserHandlerList FindFileBrowserHandlersForURL(
           (!base::CommandLine::ForCurrentProcess()->HasSwitch(
                chromeos::switches::kDisableNewZIPUnpacker) ||
            base::CommandLine::ForCurrentProcess()->HasSwitch(
-               chromeos::switches::kEnableZipArchiverOnFileManager))) {
+               chromeos::switches::kEnableZipArchiverPacker) ||
+           base::CommandLine::ForCurrentProcess()->HasSwitch(
+               chromeos::switches::kEnableZipArchiverUnpacker))) {
         continue;
       }
       results.push_back(handler);
