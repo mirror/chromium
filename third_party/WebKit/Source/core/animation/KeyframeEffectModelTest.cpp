@@ -39,6 +39,7 @@
 
 namespace blink {
 
+/*
 const double kDuration = 1.0;
 
 RefPtr<AnimatableValue> UnknownAnimatableValue(double n) {
@@ -606,5 +607,6 @@ TEST_F(KeyframeEffectModelTest, EvenlyDistributed3) {
   EXPECT_DOUBLE_EQ(0.95, result[10]->Offset());
   EXPECT_DOUBLE_EQ(1.0, result[11]->Offset());
 }
+*/
 
 }  // namespace blink

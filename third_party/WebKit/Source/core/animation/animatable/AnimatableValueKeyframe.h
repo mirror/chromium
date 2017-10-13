@@ -16,9 +16,9 @@ namespace blink {
 // replaced it.
 class CORE_EXPORT AnimatableValueKeyframe : public Keyframe {
  public:
-  static RefPtr<AnimatableValueKeyframe> Create() {
-    return WTF::AdoptRef(new AnimatableValueKeyframe);
-  }
+  // static RefPtr<AnimatableValueKeyframe> Create() {
+  //  return WTF::AdoptRef(new AnimatableValueKeyframe);
+  //}
   void SetPropertyValue(CSSPropertyID property, RefPtr<AnimatableValue> value) {
     property_values_.Set(property, std::move(value));
   }
