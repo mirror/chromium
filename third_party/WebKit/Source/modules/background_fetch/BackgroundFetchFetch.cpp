@@ -17,6 +17,7 @@ Request* BackgroundFetchFetch::request() const {
 
 DEFINE_TRACE(BackgroundFetchFetch) {
   visitor->Trace(request_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

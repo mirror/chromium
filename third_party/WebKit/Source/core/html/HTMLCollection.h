@@ -66,8 +66,7 @@ class HTMLCollectionIterator {
 
 // blink::HTMLCollection implements HTMLCollection IDL interface.
 class CORE_EXPORT HTMLCollection
-    : public GarbageCollectedFinalized<HTMLCollection>,
-      public ScriptWrappable,
+    : public ScriptWrappable,
       public LiveNodeListBase {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(HTMLCollection);

@@ -78,6 +78,7 @@ CSSStyleSheet* StyleSheetList::AnonymousNamedGetter(const AtomicString& name) {
 
 DEFINE_TRACE(StyleSheetList) {
   visitor->Trace(tree_scope_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

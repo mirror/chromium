@@ -42,8 +42,7 @@ enum ColorSpaceInfoUpdate {
 };
 
 class CORE_EXPORT ImageBitmap final
-    : public GarbageCollectedFinalized<ImageBitmap>,
-      public ScriptWrappable,
+    : public ScriptWrappable,
       public CanvasImageSource,
       public ImageBitmapSource {
   DEFINE_WRAPPERTYPEINFO();
@@ -146,8 +145,6 @@ class CORE_EXPORT ImageBitmap final
     SkFilterQuality resize_quality = kLow_SkFilterQuality;
     CanvasColorParams color_params;
   };
-
-  DECLARE_VIRTUAL_TRACE();
 
  private:
   ImageBitmap(ImageElementBase*,

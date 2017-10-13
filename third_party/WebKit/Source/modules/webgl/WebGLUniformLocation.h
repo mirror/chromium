@@ -33,8 +33,7 @@
 namespace blink {
 
 class WebGLUniformLocation final
-    : public GarbageCollected<WebGLUniformLocation>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

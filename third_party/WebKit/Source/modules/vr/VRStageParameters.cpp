@@ -25,6 +25,7 @@ void VRStageParameters::Update(
 
 DEFINE_TRACE(VRStageParameters) {
   visitor->Trace(standing_transform_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

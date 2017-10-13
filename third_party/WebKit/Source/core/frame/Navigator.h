@@ -35,12 +35,11 @@ namespace blink {
 
 class LocalFrame;
 
-class CORE_EXPORT Navigator final : public GarbageCollected<Navigator>,
+class CORE_EXPORT Navigator final : public ScriptWrappable,
                                     public NavigatorConcurrentHardware,
                                     public NavigatorID,
                                     public NavigatorLanguage,
                                     public NavigatorOnLine,
-                                    public ScriptWrappable,
                                     public DOMWindowClient,
                                     public Supplementable<Navigator> {
   DEFINE_WRAPPERTYPEINFO();

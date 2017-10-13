@@ -34,8 +34,7 @@
 namespace blink {
 
 class WebGLShaderPrecisionFormat final
-    : public GarbageCollected<WebGLShaderPrecisionFormat>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -46,8 +45,6 @@ class WebGLShaderPrecisionFormat final
   GLint rangeMin() const;
   GLint rangeMax() const;
   GLint precision() const;
-
-  DEFINE_INLINE_TRACE() {}
 
  private:
   WebGLShaderPrecisionFormat(GLint range_min, GLint range_max, GLint precision);

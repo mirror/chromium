@@ -34,8 +34,7 @@ class HTMLStyleElement;
 class StyleSheet;
 
 class CORE_EXPORT StyleSheetList final
-    : public GarbageCollected<StyleSheetList>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
