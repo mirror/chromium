@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0832a603_ce2d9a61",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/compiled_resources2.gyp",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-13T17:38:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6b2f529_382db5b2",
+      "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89b0b61c_bef86ced",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194f3bd6_7a113b27",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-13T17:38:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89b0b61c_bef86ced",
+      "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f4e18a1d_39d5c989",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-13T17:38:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17f430ef_43994db6",
+      "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e429e0b_6cee851a",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4f7feb_c5f1e638",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-13T17:38:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e429e0b_6cee851a",
+      "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "17b28623_376aab7d",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-13T17:38:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3720de8c_5af388d0",
+      "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ea37aec_c0a38470",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-13T16:33:36Z",
       "side": 1,
       "message": "Do you think it would work to create an abstraction called\nNodeGroup which can hold either a single node or a paragraph?\n\nThat way rather than iterating over both nodes and paragraphs,\nyou could just iterate over NodeGroups - some of which are\nindividual nodes and some are paragraphs, and not have two\ncases to consider.",
+      "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8089f8d3_fee57c7c",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-13T17:38:08Z",
+      "side": 1,
+      "message": "I can actually just use this Paragraph thing for that nearly as-is. I\u0027ve renamed Paragraph to NodeGroup to be more general as you suggest.\n\nBecause I increment the index into the nodes during this outer loop (line 444 in patch set 3, incremented at 453), we are basically going to be iterating over NodeGroups.",
+      "parentUuid": "9ea37aec_c0a38470",
       "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
