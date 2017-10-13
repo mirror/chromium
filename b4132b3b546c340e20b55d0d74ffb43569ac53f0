@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a555aba_105ae806",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-13T18:05:00Z",
+      "side": 1,
+      "message": "\"which will perform a volume down operation\". Seems we cannot test it under my new test setup.\nTwo thoughts:\n(1) install a TestVolumeController, however, I also have problem for this (1) if volume controller will see volume key event, it can flush mojo call, (2) if volume controller is not expected to see volume key event, flushing mojo call may cause program forever waiting and time out. I don\u0027t know the reason here.\n\n(2) or it is trivial enough, we don\u0027t need to test it?",
+      "revId": "b4132b3b546c340e20b55d0d74ffb43569ac53f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
