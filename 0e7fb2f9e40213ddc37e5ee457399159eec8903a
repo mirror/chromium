@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b3c48442_932230fc",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-13T16:59:38Z",
+      "side": 1,
+      "message": "\u003e i.e. it could be called twice by a compromised Renderer\n\nI\u0027m confused, normally a Renderer wouldn\u0027t be calling ui/gl/ methods directly since it\u0027s supposed to delegate drawing to the GPU process. Did you mean there\u0027s a way to get the GPU process to call Initialize() twice on the Renderer\u0027s behalf?\n\nIf not, and the Renderer is calling it directly, I\u0027m not sure what benefit extra sanity checks would bring since a compromised Renderer could potentially execute the same code without sanity checks.",
+      "parentUuid": "d80e2ff7_1dd058b3",
+      "revId": "0e7fb2f9e40213ddc37e5ee457399159eec8903a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "264558cc_407dfc1f",
         "filename": "ui/gl/gl_surface_egl.cc",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Give the security implications, I am inclined to upgrade to a CHECK. CHECK overhead can sometimes be a concern, but this code path is only taken when tracing is enabled - so we should b okay.",
       "parentUuid": "264558cc_407dfc1f",
+      "revId": "0e7fb2f9e40213ddc37e5ee457399159eec8903a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973e763b_1b11dc52",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-13T16:59:38Z",
+      "side": 1,
+      "message": "I think I was getting \"stack corruption detected\" crashes in http://crbug.com/769415#c8 even without actively tracing, but that may have been a separate issue.\n\nSimilar question to above - if this is triggered via command buffer channel, this may not be the right place for a CHECK if we expect other code to handle sanity checks, and if a compromised Renderer is running this in-process I\u0027m not sure what we\u0027re protecting against, if it can run arbitrary code it could just corrupt its own stack anyway.",
+      "parentUuid": "2fec1f48_591b52cd",
       "revId": "0e7fb2f9e40213ddc37e5ee457399159eec8903a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
