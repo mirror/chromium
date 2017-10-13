@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a5c3171_3f9443a5",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkCloneableMessage.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-13T18:44:17Z",
+      "side": 1,
+      "message": "not necessarily in this CL, but we might consider moving MessagePort and all its related classes into its own directory; core/dom is getting kinda crowded.",
+      "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
