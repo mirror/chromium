@@ -34,6 +34,24 @@
       "revId": "90fc7970b89223a0de5cd5449119e9710ffd0a84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81081194_65ce0251",
+        "filename": "components/offline_pages/core/prefetch/import_cleanup_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-13T00:18:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94345e34_b83e17da",
+      "revId": "90fc7970b89223a0de5cd5449119e9710ffd0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
