@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f3e2fe3_4fe5f2f4",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-13T20:09:18Z",
+      "side": 1,
+      "message": "And some other not-yet-landed fixes. This will be removed before landing this change.",
+      "parentUuid": "f3bac251_de17de2a",
+      "revId": "16f4dfd72f2dd8f9db83bd3be740ecab0346b446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db1dff21_0b8adaca",
         "filename": "build/win/message_compiler.py",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-13T19:47:52Z",
       "side": 1,
       "message": "Have you seen my comment on the bug about this? https://bugs.chromium.org/p/chromium/issues/detail?id\u003d773476#c12",
+      "revId": "16f4dfd72f2dd8f9db83bd3be740ecab0346b446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3182932f_81f14c29",
+        "filename": "build/win/message_compiler.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-13T20:09:18Z",
+      "side": 1,
+      "message": "Yes. I can still reproduce it locally and I\u0027m trying to understand what is different - try jobs running elsewhere.",
+      "parentUuid": "db1dff21_0b8adaca",
       "revId": "16f4dfd72f2dd8f9db83bd3be740ecab0346b446",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
