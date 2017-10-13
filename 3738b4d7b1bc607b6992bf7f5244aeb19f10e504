@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38d3f701_12e63690",
+        "filename": "ash/wm/lock_action_handler_layout_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T15:40:07Z",
+      "side": 1,
+      "message": "nit: needed?",
+      "revId": "3738b4d7b1bc607b6992bf7f5244aeb19f10e504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
