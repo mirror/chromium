@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "03a33122_c115fdae",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T20:24:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ee79fa95_12a67928",
+      "revId": "4d477166fec35f1db7a1209d5282a3d52552d27a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47b12925_b4b8205b",
         "filename": "components/omnibox/browser/url_index_private_data.cc",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I\u0027m a bit surprised to hear this. Let\u0027s make sure we understand how they work. They both go through both sets linearly in lock-step, identifying the elements which are in both lists. So far, their behavior should be identical, and O(n) in time.\n\nThe difference is that base::STL functions construct an entirely new container (and we destroy the old in the caller), while in-place functions simply remove elements from the target container that aren\u0027t in the intersection.\n\nIn the case of intersecting 2 identical containers, the former would construct an entirely new identical container (and destroy the old perfectly good container), while the latter just says, \"They\u0027re equal. Check!\"\n\nSo you can see why I\u0027m at a loss why the former would ever be faster. i.e. There should be no cases whatsoever where it is faster, although a null-set would have identical timings.\n\nRegarding changing the global implementation: I would be happy to add an in-place implementation (although I imagine there is generally more debate about adding something to \u0027base::\u0027) but we can\u0027t change the existing one because some people are doing:\n\nC \u003d A intersect B\n\nand need A and B to remain after the operation. We don\u0027t, which is why we can take advantage of the optimization.\n\nHaving said this, yes, we could look around Chrome - using a simple search for the function name - and identify operations which could benefit from in-place. I think the general audience will appreciate us verifying it here first.",
       "parentUuid": "47b12925_b4b8205b",
+      "revId": "4d477166fec35f1db7a1209d5282a3d52552d27a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09dcb4a8_50d7b690",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T20:24:02Z",
+      "side": 1,
+      "message": "\u003e I\u0027m a bit surprised to hear this. Let\u0027s make sure we understand how they work. They both go through both sets linearly in lock-step, identifying the elements which are in both lists. So far, their behavior should be identical, and O(n) in time.\n\u003e \n\u003e The difference is that base::STL functions construct an entirely new container (and we destroy the old in the caller), while in-place functions simply remove elements from the target container that aren\u0027t in the intersection.\n\u003e \n\u003e In the case of intersecting 2 identical containers, the former would construct an entirely new identical container (and destroy the old perfectly good container), while the latter just says, \"They\u0027re equal. Check!\"\n\u003e \n\u003e So you can see why I\u0027m at a loss why the former would ever be faster. i.e. There should be no cases whatsoever where it is faster, although a null-set would have identical timings.\n\nMy thought would be that EraseIf, if it triggers often, would involve a lot repeated copying of elements when the underlying structure is a vector (such as a flat_set).  (Maybe each erase causes every element to shift to the left.  With multiple erases, if implemented improperly, each element will get moved multiple times.)  I thought it would swamp the cases of copying to a new structure, where each element will be copied at most once.\n\n\u003e Regarding changing the global implementation: I would be happy to add an in-place implementation (although I imagine there is generally more debate about adding something to \u0027base::\u0027) but we can\u0027t change the existing one because some people are doing:\n\u003e \n\u003e C \u003d A intersect B\n\u003e \n\u003e and need A and B to remain after the operation. We don\u0027t, which is why we can take advantage of the optimization.\n\nAh, good point.  Being in-place is an important distinction.\n\n\u003e Having said this, yes, we could look around Chrome - using a simple search for the function name - and identify operations which could benefit from in-place. I think the general audience will appreciate us verifying it here first.\n\nYes, I suggest doing a search to see if there is anything else in Chrome that uses STLSetIntersection in-place.",
+      "parentUuid": "ca5fbd0d_de444d1a",
       "revId": "4d477166fec35f1db7a1209d5282a3d52552d27a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "721d2485_c0ae6833",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T20:24:02Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 489,
+        "startChar": 6,
+        "endLine": 489,
+        "endChar": 13
+      },
+      "revId": "1f3d94a152f1c6bcabfd2aa9b37c17a0f253cdfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9200e788_57df94bd",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T20:24:02Z",
+      "side": 1,
+      "message": "optional nit: consider adding:\n, and true for items that are not found.",
+      "range": {
+        "startLine": 489,
+        "startChar": 69,
+        "endLine": 489,
+        "endChar": 70
+      },
+      "revId": "1f3d94a152f1c6bcabfd2aa9b37c17a0f253cdfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe427f4_62b3f797",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T20:24:02Z",
+      "side": 1,
+      "message": "This comment should clarify that it only works for single-entry containers, not, say, multisets.",
+      "revId": "1f3d94a152f1c6bcabfd2aa9b37c17a0f253cdfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a4ee80d_1a723f12",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T20:24:02Z",
+      "side": 1,
+      "message": "optional suggestion (not sure if it\u0027s better):\nis_not_in",
+      "range": {
+        "startLine": 491,
+        "startChar": 6,
+        "endLine": 491,
+        "endChar": 22
+      },
+      "revId": "1f3d94a152f1c6bcabfd2aa9b37c17a0f253cdfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dedf1434_cb123f39",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T20:24:02Z",
+      "side": 1,
+      "message": "optional suggestion: keep end() around, not the container itself.  (You don\u0027t need it.)\n\n(Also, might be faster; I\u0027m not sure if the container_.end() calls will be cached throughout this loop.)",
+      "range": {
+        "startLine": 493,
+        "startChar": 41,
+        "endLine": 493,
+        "endChar": 51
+      },
+      "revId": "1f3d94a152f1c6bcabfd2aa9b37c17a0f253cdfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
