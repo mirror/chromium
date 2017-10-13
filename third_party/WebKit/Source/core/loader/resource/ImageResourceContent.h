@@ -72,6 +72,14 @@ class CORE_EXPORT ImageResourceContent final
   float DevicePixelRatioHeaderValue() const;
   bool HasDevicePixelRatioHeaderValue() const;
 
+  // Returns the dimensions of the image, or an size of 0x0 if no image
+  // exists. If the image is a BitmapImage, then this will return the physical
+  // pixel dimensions (intrinsic size) of the image. If the image is an
+  // SVGImage, then a concrete object size (resolved using a default object size
+  // of 300x150) will be returned.
+  IntSize NaturalSize(
+      RespectImageOrientationEnum should_respect_image_orientation);
+
   // This method takes a zoom multiplier that can be used to increase the
   // natural size of the image by the zoom.
   LayoutSize ImageSize(

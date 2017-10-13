@@ -452,10 +452,8 @@ unsigned HTMLImageElement::width() {
     if (GetImageLoader().GetImage()) {
       return GetImageLoader()
           .GetImage()
-          ->ImageSize(LayoutObject::ShouldRespectImageOrientation(nullptr),
-                      1.0f)
-          .Width()
-          .ToUnsigned();
+          ->NaturalSize(LayoutObject::ShouldRespectImageOrientation(nullptr))
+          .Width();
     }
   }
 
@@ -476,10 +474,8 @@ unsigned HTMLImageElement::height() {
     if (GetImageLoader().GetImage()) {
       return GetImageLoader()
           .GetImage()
-          ->ImageSize(LayoutObject::ShouldRespectImageOrientation(nullptr),
-                      1.0f)
-          .Height()
-          .ToUnsigned();
+          ->NaturalSize(LayoutObject::ShouldRespectImageOrientation(nullptr))
+          .Height();
     }
   }
 
@@ -497,8 +493,8 @@ LayoutSize HTMLImageElement::DensityCorrectedIntrinsicDimensions() const {
 
   RespectImageOrientationEnum respect_image_orientation =
       LayoutObject::ShouldRespectImageOrientation(GetLayoutObject());
-  LayoutSize natural_size =
-      image_resource->ImageSize(respect_image_orientation, 1);
+  LayoutSize natural_size(
+      image_resource->NaturalSize(respect_image_orientation));
   natural_size.Scale(pixel_density);
   return natural_size;
 }
@@ -654,9 +650,8 @@ FloatSize HTMLImageElement::DefaultDestinationSize(
     return ToSVGImage(CachedImage()->GetImage())
         ->ConcreteObjectSize(default_object_size);
 
-  LayoutSize size;
-  size = image->ImageSize(
-      LayoutObject::ShouldRespectImageOrientation(GetLayoutObject()), 1.0f);
+  LayoutSize size(image->NaturalSize(
+      LayoutObject::ShouldRespectImageOrientation(GetLayoutObject())));
   if (GetLayoutObject() && GetLayoutObject()->IsLayoutImage() &&
       image->GetImage() && !image->GetImage()->HasRelativeSize())
     size.Scale(ToLayoutImage(GetLayoutObject())->ImageDevicePixelRatio());
