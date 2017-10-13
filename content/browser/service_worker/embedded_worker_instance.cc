@@ -178,6 +178,18 @@ bool HasSentStartWorker(EmbeddedWorkerInstance::StartingPhase phase) {
   return false;
 }
 
+void GetInterfaceImpl(const std::string& interface_name,
+                      mojo::ScopedMessagePipeHandle interface_pipe,
+                      const url::Origin& origin,
+                      int process_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  auto* process = RenderProcessHost::FromID(process_id);
+  if (!process)
+    return;
+
+  // TODO(sammc): Dispatch interface requests.
+}
+
 }  // namespace
 
 // Created on UI thread and moved to IO thread. Proxies notifications to
@@ -589,6 +601,7 @@ EmbeddedWorkerInstance::EmbeddedWorkerInstance(
       instance_host_binding_(this),
       devtools_attached_(false),
       network_accessed_for_script_(false),
+      interface_provider_binding_(this),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 }
@@ -652,10 +665,14 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
   inflight_start_task_->set_start_worker_sent_time(base::TimeTicks::Now());
   mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info =
       std::move(provider_info_getter_).Run(process_id());
+  service_manager::mojom::InterfaceProviderPtr interface_provider;
+  interface_provider_binding_.Bind(mojo::MakeRequest(&interface_provider));
+  origin_ = url::Origin(params->script_url);
   client_->StartWorker(*params, std::move(pending_dispatcher_request_),
                        std::move(pending_installed_scripts_info_),
                        std::move(host_ptr_info), std::move(provider_info),
-                       std::move(content_settings_proxy_ptr_info));
+                       std::move(content_settings_proxy_ptr_info),
+                       std::move(interface_provider));
   registry_->BindWorkerToProcess(process_id(), embedded_worker_id());
   OnStartWorkerMessageSent(is_script_streaming);
   return SERVICE_WORKER_OK;
@@ -905,6 +922,8 @@ void EmbeddedWorkerInstance::ReleaseProcess() {
   status_ = EmbeddedWorkerStatus::STOPPED;
   starting_phase_ = NOT_STARTING;
   thread_id_ = kInvalidEmbeddedWorkerThreadId;
+  interface_provider_binding_.Close();
+  origin_ = {};
 }
 
 void EmbeddedWorkerInstance::OnStartFailed(StatusCallback callback,
@@ -982,6 +1001,16 @@ std::string EmbeddedWorkerInstance::StartingPhaseToString(StartingPhase phase) {
   }
   NOTREACHED() << phase;
   return std::string();
+}
+
+void EmbeddedWorkerInstance::GetInterface(
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&GetInterfaceImpl, interface_name,
+                     std::move(interface_pipe), origin_, process_id()));
 }
 
 }  // namespace content

@@ -27,6 +27,7 @@
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "url/gurl.h"
 
 // Windows headers will redefine SendMessage.
@@ -51,7 +52,8 @@ class ServiceWorkerContextCore;
 //
 // Owned by ServiceWorkerVersion. Lives on the IO thread.
 class CONTENT_EXPORT EmbeddedWorkerInstance
-    : public mojom::EmbeddedWorkerInstanceHost {
+    : public mojom::EmbeddedWorkerInstanceHost,
+      public service_manager::mojom::InterfaceProvider {
  public:
   class DevToolsProxy;
   using StatusCallback = base::OnceCallback<void(ServiceWorkerStatusCode)>;
@@ -297,6 +299,10 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   // to the current time.
   base::TimeDelta UpdateStepTime();
 
+  // service_manager::mojom::InterfaceProvider:
+  void GetInterface(const std::string& interface_name,
+                    mojo::ScopedMessagePipeHandle interface_pipe) override;
+
   base::WeakPtr<ServiceWorkerContextCore> context_;
   scoped_refptr<EmbeddedWorkerRegistry> registry_;
 
@@ -350,6 +356,11 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   base::TimeTicks step_time_;
 
   std::unique_ptr<ServiceWorkerContentSettingsProxyImpl> content_settings_;
+
+  url::Origin origin_;
+  mojo::Binding<service_manager::mojom::InterfaceProvider>
+      interface_provider_binding_;
+
   base::WeakPtrFactory<EmbeddedWorkerInstance> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(EmbeddedWorkerInstance);

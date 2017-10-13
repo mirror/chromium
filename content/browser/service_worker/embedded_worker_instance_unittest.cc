@@ -829,13 +829,15 @@ class FailEmbeddedWorkerInstanceClientImpl
       : EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient(helper) {}
 
  private:
-  void StartWorker(const EmbeddedWorkerStartParams&,
-                   mojom::ServiceWorkerEventDispatcherRequest,
-                   mojom::ServiceWorkerInstalledScriptsInfoPtr /* unused */,
-                   mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo,
-                   mojom::ServiceWorkerProviderInfoForStartWorkerPtr,
-                   blink::mojom::WorkerContentSettingsProxyPtr
-                       content_settings_proxy) override {
+  void StartWorker(
+      const EmbeddedWorkerStartParams&,
+      mojom::ServiceWorkerEventDispatcherRequest,
+      mojom::ServiceWorkerInstalledScriptsInfoPtr /* unused */,
+      mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo,
+      mojom::ServiceWorkerProviderInfoForStartWorkerPtr,
+      blink::mojom::WorkerContentSettingsProxyPtr content_settings_proxy,
+      service_manager::mojom::InterfaceProviderPtr interface_provider)
+      override {
     helper_->mock_instance_clients()->clear();
   }
 };
