@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "297f2919_73f52990",
+        "filename": "components/domain_reliability/service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T21:31:31Z",
+      "side": 1,
+      "message": "drive-by nit: We should not be passing origins with GURL, we have url::Origin for that. If it is not an origin, it should probably be named differently.",
+      "revId": "a15cbbe3a8b66d313d51f52d6cd8eba6de853983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
