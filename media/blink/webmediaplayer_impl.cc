@@ -178,6 +178,7 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
     WebMediaPlayerDelegate* delegate,
     std::unique_ptr<RendererFactorySelector> renderer_factory_selector,
     UrlIndex* url_index,
+    std::unique_ptr<VideoFrameCompositor> compositor,
     std::unique_ptr<WebMediaPlayerParams> params)
     : frame_(frame),
       delegate_state_(DelegateState::GONE),
@@ -229,6 +230,7 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
           tick_clock_.get()),
       url_index_(url_index),
       context_provider_(params->context_provider()),
+      compositor_(std::move(compositor)),
 #if defined(OS_ANDROID)  // WMPI_CAST
       cast_impl_(this, client_, params->context_provider()),
 #endif
@@ -265,16 +267,12 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
   if (surface_layer_for_video_enabled_) {
     bridge_ = params->create_bridge_callback().Run(this);
     // TODO(lethalantidote): Use a seperate task_runner. https://crbug/753605.
-    vfc_task_runner_ = media_task_runner_;
-  } else {
-    // Threaded compositing isn't enabled universally yet.
-    vfc_task_runner_ = params->compositor_task_runner()
-                           ? params->compositor_task_runner()
-                           : base::ThreadTaskRunnerHandle::Get();
   }
 
-  compositor_ = base::MakeUnique<VideoFrameCompositor>(
-      vfc_task_runner_, params->context_provider_callback());
+  // Threaded compositing isn't enabled universally yet.
+  vfc_task_runner_ = params->vfc_task_runner()
+                         ? params->vfc_task_runner()
+                         : base::ThreadTaskRunnerHandle::Get();
 
   if (surface_layer_for_video_enabled_) {
     vfc_task_runner_->PostTask(
@@ -1594,7 +1592,6 @@ void WebMediaPlayerImpl::OnBufferingStateChange(BufferingState state) {
       "pipeline_buffering_state", state));
 
   if (state == BUFFERING_HAVE_ENOUGH) {
-    TRACE_EVENT0("media", "WebMediaPlayerImpl::BufferingHaveEnough");
     SetReadyState(CanPlayThrough() ? WebMediaPlayer::kReadyStateHaveEnoughData
                                    : WebMediaPlayer::kReadyStateHaveFutureData);
 
