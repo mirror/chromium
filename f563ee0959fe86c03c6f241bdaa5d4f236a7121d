@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "d3e3f988_449218ec",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-13T21:09:20Z",
+      "side": 1,
+      "message": "That contract\u0027s not enforced though! Nothing preventing someone else (or future you after you forget this detail) from putting a call to it somewhere else.\n\nWon\u0027t block you on this, but I would consider at the least documenting this contract or enforcing it if it\u0027s possible.",
+      "parentUuid": "0bb31e73_1cb522e8",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 44
+      },
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "517febcd_b05dbd0d",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 9
