@@ -6,6 +6,7 @@
 
 #include "base/atomic_sequence_num.h"
 #include "base/callback.h"
+#include "base/optional.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/child/service_worker/controller_service_worker_connector.h"
 #include "content/common/service_worker/service_worker_loader_helpers.h"
@@ -13,11 +14,42 @@
 #include "content/public/child/child_url_loader_factory_getter.h"
 #include "content/public/common/content_features.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "net/url_request/redirect_info.h"
+#include "net/url_request/redirect_util.h"
 #include "ui/base/page_transition_types.h"
 
 namespace content {
 
 namespace {
+
+// Max number of http redirects to follow.  Same number as the net library.
+const int kMaxRedirects = 20;
+
+base::Optional<net::RedirectInfo> ComputeRedirectInfo(
+    const ResourceRequest& original_request,
+    const ResourceResponseHead& response_head) {
+  std::string new_location;
+  if (!response_head.headers->IsRedirect(&new_location))
+    return base::nullopt;
+
+  std::string referrer_string;
+  net::URLRequest::ReferrerPolicy referrer_policy;
+  Referrer::ComputeReferrerInfo(
+      &referrer_string, &referrer_policy,
+      Referrer(original_request.referrer, original_request.referrer_policy));
+
+  // The request must not be a MAIN_FRAME request. So the first-party URL must
+  // not be updated on redirects.
+  const net::URLRequest::FirstPartyURLPolicy first_party_url_policy =
+      net::URLRequest::NEVER_CHANGE_FIRST_PARTY_URL;
+  return net::RedirectInfo::ComputeRedirectInfo(
+      original_request.method, original_request.url,
+      original_request.site_for_cookies, first_party_url_policy,
+      referrer_policy, referrer_string, response_head.headers.get(),
+      response_head.headers->response_code(),
+      original_request.url.Resolve(new_location),
+      false /* token_binding_negotiated */);
+}
 
 ResourceResponseHead RewriteServiceWorkerTime(
     base::TimeTicks service_worker_start_time,
@@ -142,7 +174,8 @@ ServiceWorkerSubresourceLoader::ServiceWorkerSubresourceLoader(
     const GURL& controller_origin,
     scoped_refptr<base::RefCountedData<storage::mojom::BlobRegistryPtr>>
         blob_registry)
-    : url_loader_client_(std::move(client)),
+    : redirect_limit_(kMaxRedirects),
+      url_loader_client_(std::move(client)),
       url_loader_binding_(this, std::move(request)),
       response_callback_binding_(this),
       controller_connector_(std::move(controller_connector)),
@@ -297,6 +330,20 @@ void ServiceWorkerSubresourceLoader::StartResponse(
   response_head_.response_start = base::TimeTicks::Now();
   response_head_.load_timing.receive_headers_end = base::TimeTicks::Now();
 
+  // Handle a redirect response. ComputeRedirectInfo returns non-null redirect
+  // info if the given response is a redirect.
+  redirect_info_ = ComputeRedirectInfo(resource_request_, response_head_);
+  if (redirect_info_) {
+    if (redirect_limit_-- == 0) {
+      CommitCompleted(net::ERR_TOO_MANY_REDIRECTS);
+      return;
+    }
+    response_head_.encoded_data_length = 0;
+    url_loader_client_->OnReceiveRedirect(*redirect_info_, response_head_);
+    status_ = Status::kCompleted;
+    return;
+  }
+
   // Handle a stream response body.
   if (!body_as_stream.is_null() && body_as_stream->stream.is_valid()) {
     CommitResponseHeaders();
@@ -360,9 +407,27 @@ void ServiceWorkerSubresourceLoader::CommitCompleted(int error_code) {
 // ServiceWorkerSubresourceLoader: URLLoader implementation -----------------
 
 void ServiceWorkerSubresourceLoader::FollowRedirect() {
-  // TODO(kinuko): Need to implement for the cases where a redirect is returned
-  // by a ServiceWorker and the page determined to follow the redirect.
-  NOTIMPLEMENTED();
+  DCHECK(redirect_info_);
+
+  bool clear_body = false;
+  net::RedirectUtil::UpdateHttpRequest(
+      resource_request_.url, resource_request_.method, *redirect_info_,
+      &resource_request_.headers, &clear_body);
+  if (clear_body)
+    resource_request_.request_body = nullptr;
+
+  resource_request_.url = redirect_info_->new_url;
+  resource_request_.method = redirect_info_->new_method;
+  resource_request_.site_for_cookies = redirect_info_->new_site_for_cookies;
+  resource_request_.referrer = GURL(redirect_info_->new_referrer);
+  resource_request_.referrer_policy =
+      Referrer::NetReferrerPolicyToBlinkReferrerPolicy(
+          redirect_info_->new_referrer_policy);
+
+  // Restart the request.
+  status_ = Status::kNotStarted;
+  response_callback_binding_.Close();
+  StartRequest(resource_request_);
 }
 
 void ServiceWorkerSubresourceLoader::SetPriority(net::RequestPriority priority,
