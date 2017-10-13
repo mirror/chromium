@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dc87735e_b46cba9c",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-13T20:02:54Z",
+      "side": 1,
+      "message": "Ah, so when the report is regenerated and currentPromise is reset to null, we reject (with no value), and if we don\u0027t have this line here, then we\u0027d get an \"uncaught rejection\" error on the console?",
+      "parentUuid": "6a1305a4_cf3c81c8",
+      "revId": "a87ae06a2bd92b44a41d5e88f6d5ff2a1a8ef498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd714f5b_ac358ebe",
         "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "I like explicit timeouts.",
       "parentUuid": "0da767e1_695df7be",
+      "revId": "a87ae06a2bd92b44a41d5e88f6d5ff2a1a8ef498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcb90c8b_f597f518",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-13T20:02:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "73601760_508f42a3",
       "revId": "a87ae06a2bd92b44a41d5e88f6d5ff2a1a8ef498",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
