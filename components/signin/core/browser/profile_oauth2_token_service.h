@@ -14,6 +14,8 @@
 #include "google_apis/gaia/oauth2_token_service_delegate.h"
 #include "net/base/backoff_entry.h"
 
+class AccountTrackerService;
+
 namespace user_prefs {
 class PrefRegistrySyncable;
 }
@@ -37,7 +39,8 @@ class ProfileOAuth2TokenService : public OAuth2TokenService,
                                   public KeyedService {
  public:
   ProfileOAuth2TokenService(
-      std::unique_ptr<OAuth2TokenServiceDelegate> delegate);
+      std::unique_ptr<OAuth2TokenServiceDelegate> delegate,
+      AccountTrackerService* account_tracker);
   ~ProfileOAuth2TokenService() override;
 
   // Registers per-profile prefs.
@@ -59,6 +62,9 @@ class ProfileOAuth2TokenService : public OAuth2TokenService,
 
   // Updates a |refresh_token| for an |account_id|. Credentials are persisted,
   // and available through |LoadCredentials| after service is restarted.
+  //
+  // The account must have been seeded in the AccountTrackerService before its
+  // credentials may be updated.
   virtual void UpdateCredentials(const std::string& account_id,
                                  const std::string& refresh_token);
 
@@ -77,8 +83,11 @@ class ProfileOAuth2TokenService : public OAuth2TokenService,
   void OnRefreshTokenRevoked(const std::string& account_id) override;
   void OnRefreshTokensLoaded() override;
 
+  // Weak reference to the account tracker service.
+  AccountTrackerService* account_tracker_;
+
   // Whether all credentials have been loaded.
-  bool all_credentials_loaded_;
+  bool all_credentials_loaded_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ProfileOAuth2TokenService);
 };

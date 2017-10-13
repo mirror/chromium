@@ -239,7 +239,7 @@ std::string AccountReconcilorTest::ConnectProfileToAccount(
 std::string AccountReconcilorTest::PickAccountIdForAccount(
     const std::string& gaia_id,
     const std::string& username) {
-  return account_tracker()->PickAccountIdForAccount(gaia_id, username);
+  return account_tracker()->SeedAccountInfo(gaia_id, username);
 }
 
 void AccountReconcilorTest::SimulateAddAccountToCookieCompleted(
@@ -548,8 +548,9 @@ TEST_P(AccountReconcilorTestDice, TableRowTest) {
   std::vector<Token> tokens_before_reconcile =
       ParseTokenString(GetParam().tokens);
   for (const Token& token : tokens_before_reconcile) {
-    std::string account_id =
-        PickAccountIdForAccount(token.gaia_id, token.email);
+    std::string account_id = account_tracker()->SeedAccountInfo(token.gaia_id, token.email);
+    LOG(ERROR) << "account_id: " << account_id;
+    account_tracker()->SeedAccountInfo(token.gaia_id, token.email);
     if (token.is_authenticated)
       ConnectProfileToAccount(token.gaia_id, token.email);
     else

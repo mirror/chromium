@@ -6,14 +6,16 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
+#include "chrome/browser/profiles/profile.h"
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
+#include "chrome/browser/signin/account_tracker_service_factory.h"
 
 // TODO(blundell): Should these be namespaced?
 std::unique_ptr<KeyedService> BuildFakeProfileOAuth2TokenService(
     content::BrowserContext* context) {
-  std::unique_ptr<FakeProfileOAuth2TokenService> service(
-      new FakeProfileOAuth2TokenService());
-  return std::move(service);
+   Profile* profile = static_cast<Profile*>(context);
+  return base::MakeUnique<FakeProfileOAuth2TokenService>(AccountTrackerServiceFactory::GetForProfile(profile));
 }
 
 std::unique_ptr<KeyedService> BuildAutoIssuingFakeProfileOAuth2TokenService(

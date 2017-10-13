@@ -19,12 +19,16 @@ FakeProfileOAuth2TokenService::PendingRequest::PendingRequest(
 FakeProfileOAuth2TokenService::PendingRequest::~PendingRequest() {}
 
 FakeProfileOAuth2TokenService::FakeProfileOAuth2TokenService()
-    : FakeProfileOAuth2TokenService(
-          base::MakeUnique<FakeOAuth2TokenServiceDelegate>(nullptr)) {}
+    : FakeProfileOAuth2TokenService(nullptr) {}
 
 FakeProfileOAuth2TokenService::FakeProfileOAuth2TokenService(
-    std::unique_ptr<OAuth2TokenServiceDelegate> delegate)
-    : ProfileOAuth2TokenService(std::move(delegate)),
+    AccountTrackerService* account_tracker)
+    : FakeProfileOAuth2TokenService(base::MakeUnique<FakeOAuth2TokenServiceDelegate>(nullptr), account_tracker) {}
+
+FakeProfileOAuth2TokenService::FakeProfileOAuth2TokenService(
+    std::unique_ptr<OAuth2TokenServiceDelegate> delegate,
+    AccountTrackerService* account_tracker)
+    : ProfileOAuth2TokenService(std::move(delegate), account_tracker),
       auto_post_fetch_response_on_message_loop_(false),
       weak_ptr_factory_(this) {}
 
