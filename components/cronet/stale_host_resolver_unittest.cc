@@ -158,7 +158,7 @@ class StaleHostResolverTest : public testing::Test {
     base::TimeDelta ttl(base::TimeDelta::FromSeconds(kCacheEntryTTLSec));
     net::HostCache::Key key(kHostname, net::ADDRESS_FAMILY_IPV4, 0);
     net::HostCache::Entry entry(
-        error,
+        net::HostCache::Entry::SOURCE_UNKNOWN, error,
         error == net::OK ? MakeAddressList(kCacheAddress) : net::AddressList(),
         ttl);
     base::TimeDelta age = base::TimeDelta::FromSeconds(age_sec);
