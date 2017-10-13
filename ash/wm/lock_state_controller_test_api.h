@@ -5,11 +5,7 @@
 #ifndef ASH_WM_LOCK_STATE_CONTROLLER_TEST_API_H_
 #define ASH_WM_LOCK_STATE_CONTROLLER_TEST_API_H_
 
-#include <memory>
-
 #include "ash/wm/lock_state_controller.h"
-#include "base/timer/elapsed_timer.h"
-#include "base/timer/timer.h"
 
 namespace ash {
 
