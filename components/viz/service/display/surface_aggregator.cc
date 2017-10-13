@@ -433,7 +433,6 @@ void SurfaceAggregator::EmitSurfaceContent(
                     parent_device_scale_factor, child_to_parent_map,
                     surface_transform, quads_clip, dest_pass, surface_id);
   } else {
-    fprintf(stderr, ">>>New RenderPass\n");
     RenderPassId remapped_pass_id = RemapPassId(last_pass.id, surface_id);
 
     // TODO(fsamuel): It seems like we can reduce the clip rect here as well
