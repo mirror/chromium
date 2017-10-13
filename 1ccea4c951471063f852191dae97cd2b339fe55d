@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d4bac7c_ab439ec8",
+        "filename": "components/domain_reliability/context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-13T18:33:25Z",
+      "side": 1,
+      "message": "The scheduler can delay for up to five minutes, during which time the user could toggle the permission, so I think it\u0027s best to check right before the upload is sent.\n\nI assume the UploadAllowedCallback takes a short amount of time; the min and max delays are one and five minutes, so they should dwarf the callback latency.",
+      "parentUuid": "6bddcc5e_981ef515",
+      "revId": "1ccea4c951471063f852191dae97cd2b339fe55d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "344df493_96b5c602",
         "filename": "components/domain_reliability/context.h",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "62293688_75be6d90",
+        "filename": "components/domain_reliability/context.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-13T18:33:25Z",
+      "side": 1,
+      "message": "Yes. The actual call that executes on the UI thread is synchronous, so the only real delay is the two thread hops.",
+      "parentUuid": "344df493_96b5c602",
+      "revId": "1ccea4c951471063f852191dae97cd2b339fe55d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a93e43cd_6066471e",
         "filename": "components/domain_reliability/service.cc",
         "patchSetId": 12
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-13T18:07:36Z",
       "side": 1,
       "message": "Are these types correct?",
+      "revId": "1ccea4c951471063f852191dae97cd2b339fe55d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b3feef_ccf95af0",
+        "filename": "components/domain_reliability/service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-13T18:33:25Z",
+      "side": 1,
+      "message": "They seem to be! What makes you think they\u0027re wrong?",
+      "parentUuid": "a93e43cd_6066471e",
       "revId": "1ccea4c951471063f852191dae97cd2b339fe55d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
