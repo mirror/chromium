@@ -16,6 +16,24 @@
       "revId": "0f4e83e4aab2b0592fb8c6a6f4d19ce29eb3eb1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9426a427_edac2de2",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-list-and-stitch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-10-13T04:26:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "81ea27f3_e1cec34f",
+      "revId": "0f4e83e4aab2b0592fb8c6a6f4d19ce29eb3eb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
