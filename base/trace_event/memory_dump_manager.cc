@@ -182,7 +182,8 @@ MemoryDumpManager::CreateInstanceForTesting() {
 }
 
 MemoryDumpManager::MemoryDumpManager()
-    : is_coordinator_(false),
+    : process_token_(UnguessableToken::Create()),
+      is_coordinator_(false),
       tracing_process_id_(kInvalidTracingProcessId),
       dumper_registrations_ignored_for_testing_(false),
       heap_profiling_mode_(kHeapProfilingModeDisabled) {}
@@ -558,7 +559,8 @@ void MemoryDumpManager::CreateProcessDump(
     }
 
     pmd_async_state.reset(new ProcessMemoryDumpAsyncState(
-        args, dump_providers_, heap_profiler_serialization_state_, callback,
+        process_token_, args, dump_providers_,
+        heap_profiler_serialization_state_, callback,
         GetOrCreateBgTaskRunnerLocked()));
 
     // If enabled, holds back the peak detector resetting its estimation window.
@@ -913,6 +915,7 @@ void MemoryDumpManager::NotifyHeapProfilingEnabledLocked(
 }
 
 MemoryDumpManager::ProcessMemoryDumpAsyncState::ProcessMemoryDumpAsyncState(
+    UnguessableToken process_token,
     MemoryDumpRequestArgs req_args,
     const MemoryDumpProviderInfo::OrderedSet& dump_providers,
     scoped_refptr<HeapProfilerSerializationState>
@@ -928,8 +931,8 @@ MemoryDumpManager::ProcessMemoryDumpAsyncState::ProcessMemoryDumpAsyncState(
   pending_dump_providers.reserve(dump_providers.size());
   pending_dump_providers.assign(dump_providers.rbegin(), dump_providers.rend());
   MemoryDumpArgs args = {req_args.level_of_detail, req_args.dump_guid};
-  process_memory_dump =
-      MakeUnique<ProcessMemoryDump>(heap_profiler_serialization_state, args);
+  process_memory_dump = MakeUnique<ProcessMemoryDump>(
+      heap_profiler_serialization_state, args, process_token);
 }
 
 MemoryDumpManager::ProcessMemoryDumpAsyncState::~ProcessMemoryDumpAsyncState() {

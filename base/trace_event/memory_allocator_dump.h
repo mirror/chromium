@@ -19,6 +19,7 @@
 #include "base/trace_event/memory_allocator_dump_guid.h"
 #include "base/trace_event/memory_dump_request_args.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "base/unguessable_token.h"
 #include "base/values.h"
 
 namespace base {
@@ -68,16 +69,19 @@ class BASE_EXPORT MemoryAllocatorDump {
     DISALLOW_COPY_AND_ASSIGN(Entry);
   };
 
-  // Returns the Guid of the dump for the given |absolute_name| for the
-  // current process.
-  static MemoryAllocatorDumpGuid GetDumpIdFromName(
+  // Returns the Guid of the dump for the given |absolute_name| for
+  // for the given process' token. |process_token| is used to disambiguate GUIDs
+  // derived from the same name under different processes.
+  static MemoryAllocatorDumpGuid GetDumpId(
+      const UnguessableToken& process_token,
       const std::string& absolute_name);
 
   MemoryAllocatorDump(const std::string& absolute_name,
                       MemoryDumpLevelOfDetail,
                       const MemoryAllocatorDumpGuid&);
   MemoryAllocatorDump(const std::string& absolute_name,
-                      MemoryDumpLevelOfDetail);
+                      MemoryDumpLevelOfDetail,
+                      const UnguessableToken& process_token);
   ~MemoryAllocatorDump();
 
   // Standard attribute |name|s for the AddScalar and AddString() methods.

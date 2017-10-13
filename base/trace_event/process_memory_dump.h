@@ -18,6 +18,7 @@
 #include "base/trace_event/memory_allocator_dump.h"
 #include "base/trace_event/memory_allocator_dump_guid.h"
 #include "base/trace_event/memory_dump_request_args.h"
+#include "base/unguessable_token.h"
 #include "build/build_config.h"
 
 // Define COUNT_RESIDENT_BYTES_SUPPORTED if platform supports counting of the
@@ -80,6 +81,10 @@ class BASE_EXPORT ProcessMemoryDump {
       const SharedMemory& shared_memory);
 #endif
 
+  ProcessMemoryDump(scoped_refptr<HeapProfilerSerializationState>
+                        heap_profiler_serialization_state,
+                    const MemoryDumpArgs& dump_args,
+                    UnguessableToken process_token);
   ProcessMemoryDump(scoped_refptr<HeapProfilerSerializationState>
                         heap_profiler_serialization_state,
                     const MemoryDumpArgs& dump_args);
@@ -235,9 +240,12 @@ class BASE_EXPORT ProcessMemoryDump {
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ProcessMemoryDumpTest, BackgroundModeTest);
+  FRIEND_TEST_ALL_PREFIXES(ProcessMemoryDumpTest, SharedMemoryOwnershipTest);
 
   MemoryAllocatorDump* AddAllocatorDumpInternal(
       std::unique_ptr<MemoryAllocatorDump> mad);
+
+  const UnguessableToken& process_token() const { return process_token_; }
 
   void CreateSharedMemoryOwnershipEdgeInternal(
       const MemoryAllocatorDumpGuid& client_local_dump_guid,
@@ -247,6 +255,7 @@ class BASE_EXPORT ProcessMemoryDump {
 
   MemoryAllocatorDump* GetBlackHoleMad();
 
+  UnguessableToken process_token_;
   AllocatorDumpsMap allocator_dumps_;
   HeapDumpsMap heap_dumps_;
 
