@@ -830,6 +830,9 @@ void VrShellGl::UpdateSamples() {
 }
 
 void VrShellGl::DrawFrame(int16_t frame_index) {
+  if (frame_)
+    return;
+
   TRACE_EVENT1("gpu", "VrShellGl::DrawFrame", "frame", frame_index);
 
   base::TimeTicks current_time = base::TimeTicks::Now();
