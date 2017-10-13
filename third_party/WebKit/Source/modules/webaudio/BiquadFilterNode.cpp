@@ -133,12 +133,8 @@ void BiquadFilterNode::setType(const String& type) {
 
   if (type == "lowpass") {
     setType(BiquadProcessor::kLowPass);
-    q_->SetParamType(kParamTypeBiquadFilterQLowpass);
-    q_->setInitialValue(q_->value());
   } else if (type == "highpass") {
     setType(BiquadProcessor::kHighPass);
-    q_->SetParamType(kParamTypeBiquadFilterQHighpass);
-    q_->setInitialValue(q_->value());
   } else if (type == "bandpass") {
     setType(BiquadProcessor::kBandPass);
   } else if (type == "lowshelf") {
