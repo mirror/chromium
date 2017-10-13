@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "263cb188_803a6be8",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-13T16:57:24Z",
+      "side": 1,
+      "message": "unused in this file?",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 47
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091c722b_e8ce3a7e",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-13T16:57:24Z",
+      "side": 1,
+      "message": "return FAILED(hr) ? hr : S_OK;",
+      "range": {
+        "startLine": 72,
+        "startChar": 1,
+        "endLine": 75,
+        "endChar": 14
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e02572c_ce16963c",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-13T16:57:24Z",
+      "side": 1,
+      "message": "s/propogation/propagation/",
+      "range": {
+        "startLine": 29,
+        "startChar": 22,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd3f6517_1a60c259",
         "filename": "base/win/core_winrt_util.h",
         "patchSetId": 5
@@ -22,6 +91,75 @@
       "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62525cf2_56ff623f",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-13T16:57:24Z",
+      "side": 1,
+      "message": "Usually we don\u0027t make PODs const in method signatures.",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 9
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f86875c7_0787829e",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-13T16:57:24Z",
+      "side": 1,
+      "message": "return FAILED(HR)? nullptr : com_ptr;\n\n?",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 17
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62655e0_4239cef3",
+        "filename": "base/win/core_winrt_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-13T16:57:24Z",
+      "side": 1,
+      "message": "unused in this file?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 47
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
