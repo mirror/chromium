@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b9ff3b9_0a71339c",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-13T17:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dba8f89e_ad587b70",
+      "range": {
+        "startLine": 6,
+        "startChar": 2,
+        "endLine": 6,
+        "endChar": 15
+      },
+      "revId": "0166a0b15163e10ebe94226f18df1ca7888e8819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f705b03_1cd6303c",
         "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "708dc7d2_69839c2d",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-13T17:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f705b03_1cd6303c",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 17
+      },
+      "revId": "0166a0b15163e10ebe94226f18df1ca7888e8819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfece300_7ea6d171",
         "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
         "patchSetId": 12
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-13T16:32:29Z",
       "side": 1,
       "message": "What thread do this code run on?",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "0166a0b15163e10ebe94226f18df1ca7888e8819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03df1339_77697002",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-13T17:46:00Z",
+      "side": 1,
+      "message": "On UI thread. Looks like it is not necessary to bind interfaces on IO thread for mus. \nDone and bind interfaces on UI thread directly for mus.",
+      "parentUuid": "dfece300_7ea6d171",
       "range": {
         "startLine": 71,
         "startChar": 6,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "ae063fc9_7d459687",
+        "filename": "chrome/browser/embedded_ui_service_info_factory.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-13T17:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "674b37d1_6ca35a5e",
+      "revId": "0166a0b15163e10ebe94226f18df1ca7888e8819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f503943_6255ae4b",
         "filename": "chrome/browser/embedded_ui_service_info_factory.cc",
         "patchSetId": 12
@@ -108,6 +198,30 @@
       "revId": "0166a0b15163e10ebe94226f18df1ca7888e8819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a90a1b_f86d5b31",
+        "filename": "chrome/browser/embedded_ui_service_info_factory.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-13T17:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f503943_6255ae4b",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 16
+      },
+      "revId": "0166a0b15163e10ebe94226f18df1ca7888e8819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "9aababf1_84d8c4b1",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-13T17:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6c9a534_e1d97280",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 31
+      },
+      "revId": "0166a0b15163e10ebe94226f18df1ca7888e8819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e36c916_b6c6ef45",
         "filename": "services/ui/manifest.json",
         "patchSetId": 12
@@ -154,6 +292,30 @@
       "revId": "0166a0b15163e10ebe94226f18df1ca7888e8819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8164732a_802ea31e",
+        "filename": "services/ui/manifest.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-13T17:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e36c916_b6c6ef45",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 47
+      },
+      "revId": "0166a0b15163e10ebe94226f18df1ca7888e8819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
