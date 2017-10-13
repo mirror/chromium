@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffe2d460_720967b7",
+        "filename": "chrome/browser/resources/print_preview/data/document_info.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T02:15:49Z",
+      "side": 1,
+      "message": "Nit (optional): Use shorthand\n@private {boolean}",
+      "revId": "8dd056e0df0a52531fb049e5451a1cc8930b0000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c72366_ea9c17b5",
+        "filename": "chrome/browser/resources/print_preview/data/invitation_store.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T02:15:49Z",
+      "side": 1,
+      "message": "I think the automatic conversion tools fails in converting getters. Shouldn\u0027t this be as follows? \n\nget invitationInProgress() {\n  ...\n}",
+      "revId": "8dd056e0df0a52531fb049e5451a1cc8930b0000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e01bf3b_aa41f6aa",
+        "filename": "chrome/browser/resources/print_preview/data/measurement_system.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T02:15:49Z",
+      "side": 1,
+      "message": "Is Precision_ only used in this scope? If so, do we need to place it under MeasurementSystem at all? Can it be local\n\nvar Precision \u003d {};\n\nSame for DecimalPlaces_",
+      "revId": "8dd056e0df0a52531fb049e5451a1cc8930b0000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
