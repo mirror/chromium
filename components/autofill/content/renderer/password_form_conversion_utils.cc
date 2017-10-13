@@ -576,10 +576,8 @@ bool GetPasswordForm(
       }
     }
 
-    if (!all_possible_passwords.empty()) {
-      password_form->all_possible_passwords = std::move(all_possible_passwords);
-      password_form->form_has_autofilled_value = form_has_autofilled_value;
-    }
+    password_form->all_possible_passwords = std::move(all_possible_passwords);
+    password_form->form_has_autofilled_value = form_has_autofilled_value;
   }
 
   // Base heuristic for username detection.
