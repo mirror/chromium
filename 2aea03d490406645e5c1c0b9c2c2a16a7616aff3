@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "563bf13d_02dd1a37",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "overrides don\u0027t need comment blocks. case in point: they have already gotten out of sync with the .h version.",
+      "range": {
+        "startLine": 331,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 15
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "236ae46e_a4bcfca6",
         "filename": "chromeos/dbus/power_manager_client.cc",
         "patchSetId": 1
@@ -133,6 +156,190 @@
     },
     {
       "key": {
+        "uuid": "938e85fa_b83dcd98",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "s/ARC\\+\\+/ARC/ throughout the whole change.",
+      "range": {
+        "startLine": 258,
+        "startChar": 59,
+        "endLine": 258,
+        "endChar": 64
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056dbaa4_26e4f212",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "ARC_TIMER_RESULT_SUCCESS",
+      "range": {
+        "startLine": 265,
+        "startChar": 32,
+        "endLine": 265,
+        "endChar": 33
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5562858f_2e8d11d7",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "ARC_TIMER_RESULT_FAILURE",
+      "range": {
+        "startLine": 265,
+        "startChar": 69,
+        "endLine": 265,
+        "endChar": 72
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6785648f_08a8f134",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "Can this be an enum class?",
+      "range": {
+        "startLine": 267,
+        "startChar": 27,
+        "endLine": 267,
+        "endChar": 43
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503dc26c_fd2571a3",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "Can this be a Request instead of an Arg?",
+      "range": {
+        "startLine": 15,
+        "startChar": 15,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed1f6f3_e1846c7f",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "Please use an enum.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131f8ea5_5fb27ffd",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "Isn\u0027t this going to be read by the instance? Also mention that powerd will own this.",
+      "range": {
+        "startLine": 20,
+        "startChar": 60,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6390b8d8_f7ad957c",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "use the same terminology that\u0027s used in the manpages: expiration_fd",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85e09d57_88cc2822",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 1
@@ -149,6 +356,52 @@
         "startChar": 19,
         "endLine": 25,
         "endChar": 20
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de81e668_eacff40f",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "Update all the return values in this file.",
+      "range": {
+        "startLine": 27,
+        "startChar": 54,
+        "endLine": 27,
+        "endChar": 57
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5fc8ae4_450a44db",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "Can you expand a bit on the semantics? If a previous request has already been \"set\", does it replace it or is it appended? If you intend to match the semantics of timerfd_settime(2), please explicitly mention that.",
+      "range": {
+        "startLine": 31,
+        "startChar": 5,
+        "endLine": 31,
+        "endChar": 74
       },
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -202,6 +455,29 @@
     },
     {
       "key": {
+        "uuid": "4b190775_b7c31414",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "Can you expand a bit as to why this is important? Wouldn\u0027t the death of powerd just close all open handles, so the instance knows it needs to reconnect?",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 58
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80a2304b_af60f821",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 1
@@ -236,6 +512,52 @@
     },
     {
       "key": {
+        "uuid": "427be229_9d70c4e9",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "Can you implement a pretty-printer?\n\n std::ostream\u0026 operator\u003c\u003c(std::ostream\u0026, power_manager::ArcTimerResult);",
+      "range": {
+        "startLine": 82,
+        "startChar": 13,
+        "endLine": 82,
+        "endChar": 41
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1895706_f5444e3d",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "DVLOG throughout the file.",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 6
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fb23f4c_75800980",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 1
@@ -247,6 +569,29 @@
       "writtenOn": "2017-10-13T04:06:31Z",
       "side": 1,
       "message": "Please use BindOnce here, too. Ditto for below.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f068e7_36f1a701",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "You cannot assume this here.\n\n if (!instance)\n   return;",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 19
+      },
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -269,6 +614,29 @@
         "startChar": 6,
         "endLine": 45,
         "endChar": 33
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db2059cf_25e7d95b",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "Members should go after methods.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 43
       },
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -299,6 +667,29 @@
     },
     {
       "key": {
+        "uuid": "6b2fb7d2_c97353fd",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "This should return a base::ScopedFD.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 3
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "284c85e1_73002638",
         "filename": "components/arc/timer/arc_timer_traits.cc",
         "patchSetId": 1
@@ -310,6 +701,30 @@
       "writtenOn": "2017-10-13T04:06:31Z",
       "side": 1,
       "message": "close(2) is still called at the end of ScopedFD you created below, if FD is not -1.",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0746cb6f_6e37f183",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "expanding on that: negative errno is only used in the kernel. you are returning a file descriptor (although you should be returning a ScopedFD), and -22 is not considered to be a \"bad\" fd by base::ScopedFD, so it will attempt to close(2) it, erroring out.",
+      "parentUuid": "284c85e1_73002638",
       "range": {
         "startLine": 19,
         "startChar": 11,
@@ -362,6 +777,24 @@
     },
     {
       "key": {
+        "uuid": "32a67fc6_5a3e375d",
+        "filename": "components/arc/timer/arc_timer_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "You _can_ move this constant to the struct. But please add constexpr.",
+      "parentUuid": "53e23725_324996b5",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92ae7582_46a06478",
         "filename": "components/arc/timer/arc_timer_traits.h",
         "patchSetId": 1
@@ -373,6 +806,52 @@
       "writtenOn": "2017-10-13T04:06:31Z",
       "side": 1,
       "message": "constexpr is missing.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad8a46f_11041d17",
+        "filename": "components/arc/timer/arc_timer_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "This should be inside the definition.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fed2f7c_f273c54e",
+        "filename": "components/arc/timer/arc_timer_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-13T16:11:54Z",
+      "side": 1,
+      "message": "You have a .cc. Can you move the two inline definitions there?",
+      "range": {
+        "startLine": 23,
+        "startChar": 71,
+        "endLine": 25,
+        "endChar": 3
+      },
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
