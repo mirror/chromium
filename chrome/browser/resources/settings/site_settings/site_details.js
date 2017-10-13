@@ -51,6 +51,14 @@ Polymer({
     },
 
     /** @private */
+    enableSafeBrowsingSubresourceFilter_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('enableSafeBrowsingSubresourceFilter');
+      },
+    },
+
+    /** @private */
     enableSoundContentSetting_: {
       type: Boolean,
       value: function() {

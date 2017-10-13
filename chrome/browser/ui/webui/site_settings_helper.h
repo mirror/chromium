@@ -61,6 +61,7 @@ enum class SiteSettingSource {
   kKillSwitch,
   kPolicy,
   kPreference,
+  kSubresourceFilterBlacklist,
   kNumSources,
 };
 
