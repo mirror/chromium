@@ -162,9 +162,6 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
 
   float IntrinsicValue() const { return NoBarrierLoad(&intrinsic_value_); }
 
-  // Update any histograms with the given value.
-  void UpdateHistograms(float new_value);
-
  private:
   AudioParamHandler(BaseAudioContext&,
                     AudioParamType,
@@ -187,6 +184,9 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
   // node it belongs to.  Mostly for informational purposes and doesn't affect
   // implementation.
   AudioParamType param_type_;
+
+  // For AudioWorkletNodes, store the user-defined name of the AudioParam here.
+  String param_name_;
 
   // Intrinsic value
   float intrinsic_value_;

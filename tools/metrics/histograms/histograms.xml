@@ -90617,6 +90617,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="WebAudio.BiquadFilter.Q.Highpass">
+  <obsolete>
+    Removed in Issue 774526; statistics aren't needed anymore.
+  </obsolete>
   <owner>rtoy@chromium.org</owner>
   <owner>hongchan@chromium.org</owner>
   <summary>
@@ -90628,6 +90631,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="WebAudio.BiquadFilter.Q.Lowpass">
+  <obsolete>
+    Removed in Issue 774526; statistics aren't needed anymore.
+  </obsolete>
   <owner>rtoy@chromium.org</owner>
   <owner>hongchan@chromium.org</owner>
   <summary>
