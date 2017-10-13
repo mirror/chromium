@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "afbb4b69_e415c1e2",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-13T02:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b280081_3a2fa54d",
+      "revId": "92691eb601ca5dc85583e70e1991c099cc55fcca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "695bb6d0_3ccc048e",
         "filename": "content/browser/shared_worker/shared_worker_host.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "92691eb601ca5dc85583e70e1991c099cc55fcca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592cb1c3_9f8ef27c",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-13T02:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "695bb6d0_3ccc048e",
+      "revId": "92691eb601ca5dc85583e70e1991c099cc55fcca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "39148fad_4e6676f4",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-13T02:37:25Z",
+      "side": 1,
+      "message": "We are indeed. Inlined GetInterfaceImpl().",
+      "parentUuid": "a89255c4_0a79031f",
+      "revId": "92691eb601ca5dc85583e70e1991c099cc55fcca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7bee934_ef5f7879",
         "filename": "third_party/WebKit/public/web/WebSharedWorker.h",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "92691eb601ca5dc85583e70e1991c099cc55fcca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da76889_f1673f94",
+        "filename": "third_party/WebKit/public/web/WebSharedWorker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-13T02:37:25Z",
+      "side": 1,
+      "message": "Added a TODO to the mojom.",
+      "parentUuid": "c7bee934_ef5f7879",
+      "revId": "92691eb601ca5dc85583e70e1991c099cc55fcca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
