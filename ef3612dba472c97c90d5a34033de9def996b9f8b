@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ee63ef1_1a54a3c1",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T22:09:02Z",
+      "side": 1,
+      "message": "I think it would be clearer if you renamed this to |consume_volume_down_| or similar, since it means you will consume it in the future. (It took me a little while to understand this, even with the comment below.)",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454e2626_f271a3f1",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T22:09:02Z",
+      "side": 1,
+      "message": "I think it would be clearer to set |consume_volume_down_| true here, rather than in the utility function.",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e6d556b_63df6aed",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T22:09:02Z",
+      "side": 1,
+      "message": "Just double-checking: This also consumes volume up key events? And that\u0027s expected?",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c1fc8a_11b3d971",
+        "filename": "ash/system/power/power_button_screenshot_controller_test_api.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T22:09:02Z",
+      "side": 1,
+      "message": "optional super-nit: In a world where owned objects are stored in unique_ptr\u003c\u003e I don\u0027t think it\u0027s useful to comment \"not owned\" any more.",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84dd03c0_7a12017d",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T22:09:02Z",
+      "side": 1,
+      "message": "nit: no blank line",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378367d1_f68b1210",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T22:09:02Z",
+      "side": 1,
+      "message": "Nice idea.",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01e4b1c_b89a8946",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T22:09:02Z",
+      "side": 1,
+      "message": "nit: either DCHECK(list_key_event_) or do nothing and crash on null, but don\u0027t log in tests.",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a8a455_1a1105b9",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T22:09:02Z",
+      "side": 1,
+      "message": "alternately, can this just be ui::KeyEvent and not a unique_ptr\u003c\u003e?",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

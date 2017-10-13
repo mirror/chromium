@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d372c560_56dcc54c",
+        "filename": "ash/system/power/power_button_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T22:09:02Z",
+      "side": 1,
+      "message": "Much better. I\u0027m not very familiar with our locking behavior, so I wasn\u0027t familiar with all the modes for the buttons.",
+      "parentUuid": "d2dac37b_81f61c78",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9e82c28_9f39dca6",
         "filename": "ash/system/power/power_button_controller.h",
         "patchSetId": 7
@@ -504,6 +522,24 @@
       "side": 1,
       "message": "Initialize() also deals with LoginStatus::GUEST [1]. I didn\u0027t see there is a mapping from SessionState.\n\nTwo thoughts:\n(1) add a parameter, like Initialize(ButtonType, LoginStatus, bool guest) ? I didn\u0027t like it, seems guest only makes sense in active session.\n(2) add a new entry in SessionState to do mapping from LoginStatus::GUEST.\n\n+@xiyuan for thoughts. Looks like https://bugs.chromium.org/p/chromium/issues/detail?id\u003d701193 is WIP. If (2) is preferred, I am happy to take a look if it is not started.\n\n[1] https://cs.chromium.org/chromium/src/ash/system/power/power_button_test_base.cc?dr\u003dCSs\u0026l\u003d146",
       "parentUuid": "284043fa_f3771c05",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc1bb68_5cbebcb8",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T22:09:02Z",
+      "side": 1,
+      "message": "I\u0027ll defer to xiyuan on this. Initialize(ButtonType, SessionState, bool can_lock_screen) would be OK with me too.",
+      "parentUuid": "171a0184_ab7c1513",
       "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
