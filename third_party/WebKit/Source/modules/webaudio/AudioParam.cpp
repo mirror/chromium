@@ -141,11 +141,17 @@ String AudioParamHandler::GetParamName() const {
     // TODO(hongchan): We can try to return the actual parameter name here if
     // possible.
     case kParamTypeAudioWorklet:
-      return "AudioWorklet.customParameter";
+      return worket_audioparam_name_;
   };
 
   NOTREACHED();
   return "UnknownNode.unknownAudioParam";
+}
+
+void AudioParamHandler::SetWorkletAudioParamName(String worklet_name,
+                                                 String param_name) {
+  DCHECK_EQ(param_type_, kParamTypeAudioWorklet);
+  worket_audioparam_name_ = "AudioWorklet(" + worklet_name + ")." + param_name;
 }
 
 float AudioParamHandler::Value() {
