@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4fdeb3ad_14a5e7fe",
+        "filename": "components/offline_pages/core/prefetch/import_completed_task_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-13T23:46:27Z",
+      "side": 1,
+      "message": "I am going to do it in a separate patch since it is hard to test it here. Rather I will add it to PrefetchDownloadFlowTest which tests against the real store and dispatcher.",
+      "parentUuid": "a685c900_a86a9723",
+      "revId": "84bfd405cbd5b4d0721fbe43c5af4f8679671547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81693575_03c69fcd",
         "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "84bfd405cbd5b4d0721fbe43c5af4f8679671547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99260a7_a5feda95",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-13T23:46:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81693575_03c69fcd",
+      "revId": "84bfd405cbd5b4d0721fbe43c5af4f8679671547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
