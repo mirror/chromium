@@ -16,6 +16,24 @@
       "revId": "99d297a99123f068d5989796a564ab2b21ed33a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64684f70_040cf833",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-10-13T23:47:24Z",
+      "side": 1,
+      "message": "The spec explicitly says \"the conversion from the receivers set to the sequence is user agent defined and the order does not have to be stable between calls\". Of course, it\u0027s possible some apps would still depend on the ordering, but I wouldn\u0027t worry about it.",
+      "parentUuid": "a7947d72_6d8808bd",
+      "revId": "99d297a99123f068d5989796a564ab2b21ed33a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
