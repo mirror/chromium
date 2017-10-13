@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <utility>
 
+#include "base/guid.h"
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_piece.h"
@@ -25,6 +26,7 @@ class PendingChildFrameAdapter : public UniqueNameHelper::FrameAdapter {
 
   // FrameAdapter overrides:
   bool IsMainFrame() const override { return false; }
+  bool IsDynamicFrame() const override { return false; }
   bool IsCandidateUnique(base::StringPiece name) const override {
     return parent_->IsCandidateUnique(name);
   }
@@ -189,7 +191,11 @@ UniqueNameHelper::UniqueNameHelper(FrameAdapter* frame) : frame_(frame) {}
 UniqueNameHelper::~UniqueNameHelper() {}
 
 std::string UniqueNameHelper::GenerateNameForNewChildFrame(
-    const std::string& name) const {
+    const std::string& name,
+    bool is_new_subframe_dynamic) const {
+  if (is_new_subframe_dynamic) {
+    return std::string("Dynamic :") + base::GenerateGUID();
+  }
   PendingChildFrameAdapter adapter(frame_);
   return CalculateNewName(&adapter, name);
 }
@@ -198,6 +204,12 @@ void UniqueNameHelper::UpdateName(const std::string& name) {
   // The unique name of the main frame is always the empty string.
   if (frame_->IsMainFrame())
     return;
+
+  // The unique name of a dynamic frame never changes while the frame
+  // is alive (and is a random, fresh GUID every time the frame is recreated).
+  if (frame_->IsDynamicFrame())
+    return;
+
   // It's important to clear this before calculating a new name, as the
   // calculation checks for collisions with existing unique names.
   unique_name_.clear();
