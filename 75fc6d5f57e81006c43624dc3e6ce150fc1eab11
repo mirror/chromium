@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab830172_f3afdce2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationUmaHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-13T18:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "361f8c49_e3f6ec36",
+      "range": {
+        "startLine": 115,
+        "startChar": 41,
+        "endLine": 115,
+        "endChar": 64
+      },
+      "revId": "75fc6d5f57e81006c43624dc3e6ce150fc1eab11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bfdb1f8_5635f627",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "75fc6d5f57e81006c43624dc3e6ce150fc1eab11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1846bbeb_2457c958",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-13T18:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bfdb1f8_5635f627",
+      "revId": "75fc6d5f57e81006c43624dc3e6ce150fc1eab11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "3a7e1720_bd01096e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-13T18:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e9ad28e_2b9e5cdc",
+      "revId": "75fc6d5f57e81006c43624dc3e6ce150fc1eab11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c443157f_30ed9a1a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "b6a42f22_ce202493",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-13T18:44:12Z",
+      "side": 1,
+      "message": "Hmm I\u0027ll change the wording! I meant that the expected stops should give us something to compare the unexpected stops with.",
+      "parentUuid": "c443157f_30ed9a1a",
+      "revId": "75fc6d5f57e81006c43624dc3e6ce150fc1eab11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a329dd0c_68861f2b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -90,6 +168,24 @@
       "revId": "75fc6d5f57e81006c43624dc3e6ce150fc1eab11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af42c4f8_a7b460c0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-13T18:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a329dd0c_68861f2b",
+      "revId": "75fc6d5f57e81006c43624dc3e6ce150fc1eab11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
