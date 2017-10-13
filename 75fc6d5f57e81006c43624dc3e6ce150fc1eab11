@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "361f8c49_e3f6ec36",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationUmaHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-13T18:10:46Z",
+      "side": 1,
+      "message": "is this name correct? I think you want to remove Count",
+      "range": {
+        "startLine": 115,
+        "startChar": 41,
+        "endLine": 115,
+        "endChar": 64
+      },
+      "revId": "75fc6d5f57e81006c43624dc3e6ce150fc1eab11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bfdb1f8_5635f627",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-13T18:10:46Z",
+      "side": 1,
+      "message": "units - maybe just \"notifications\"",
+      "revId": "75fc6d5f57e81006c43624dc3e6ce150fc1eab11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9ad28e_2b9e5cdc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-13T18:10:46Z",
+      "side": 1,
+      "message": "we don\u0027t usually have dots in enum names, prefer CamelCase",
+      "revId": "75fc6d5f57e81006c43624dc3e6ce150fc1eab11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c443157f_30ed9a1a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-13T18:10:46Z",
+      "side": 1,
+      "message": "what do you mean here by expected stops as a denominator?",
+      "revId": "75fc6d5f57e81006c43624dc3e6ce150fc1eab11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a329dd0c_68861f2b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-13T18:10:46Z",
+      "side": 1,
+      "message": "naming isn\u0027t consistant since the previous one is DownloadNotification",
+      "revId": "75fc6d5f57e81006c43624dc3e6ce150fc1eab11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
