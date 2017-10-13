@@ -8,6 +8,7 @@
 
 #include "ash/accessibility/accessibility_delegate.h"
 #include "ash/message_center/message_center_bubble.h"
+#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
@@ -22,6 +23,8 @@
 #include "ash/system/tray/tray_container.h"
 #include "ash/system/tray/tray_utils.h"
 #include "ash/system/web_notification/ash_popup_alignment_delegate.h"
+#include "ash/wm/container_finder.h"
+#include "ash/wm/widget_finder.h"
 #include "base/auto_reset.h"
 #include "base/i18n/number_formatting.h"
 #include "base/i18n/rtl.h"
@@ -41,6 +44,9 @@
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/menu/menu_runner.h"
 #include "ui/views/layout/fill_layout.h"
+#include "ui/wm/core/window_util.h"
+#include "ui/wm/public/activation_change_observer.h"
+#include "ui/wm/public/activation_client.h"
 
 namespace ash {
 namespace {
@@ -70,13 +76,14 @@ bool disable_animations_for_test = false;
 
 // Class to initialize and manage the WebNotificationBubble and
 // TrayBubbleWrapper instances for a bubble.
-class WebNotificationBubbleWrapper {
+class WebNotificationBubbleWrapper : public ::wm::ActivationChangeObserver {
  public:
   // Takes ownership of |bubble| and creates |bubble_wrapper_|.
   WebNotificationBubbleWrapper(WebNotificationTray* tray,
                                TrayBackgroundView* anchor_tray,
                                MessageCenterBubble* bubble,
-                               bool show_by_click) {
+                               bool show_by_click)
+      : tray_(tray) {
     bubble_.reset(bubble);
     views::TrayBubbleView::InitParams init_params;
     init_params.delegate = tray;
@@ -95,6 +102,41 @@ class WebNotificationBubbleWrapper {
     bubble_view->set_anchor_view_insets(anchor_tray->GetBubbleAnchorInsets());
     bubble_wrapper_.reset(new TrayBubbleWrapper(tray, bubble_view));
     bubble->InitializeContents(bubble_view);
+
+    Shell::Get()->activation_client()->AddObserver(this);
+  }
+
+  ~WebNotificationBubbleWrapper() override {
+    Shell::Get()->activation_client()->RemoveObserver(this);
+  }
+
+  // Overridden from ::wm::ActivationChangeObserver.
+  void OnWindowActivated(ActivationReason reason,
+                         aura::Window* gained_active,
+                         aura::Window* lost_active) override {
+    if (!gained_active)
+      return;
+
+    int container_id = wm::GetContainerForWindow(gained_active)->id();
+
+    // Don't close the bubble if a popup notification is activated.
+    if (container_id == kShellWindowId_StatusContainer ||
+        container_id == kShellWindowId_SettingBubbleContainer) {
+      return;
+    }
+
+    views::Widget* bubble_widget = bubble_view()->GetWidget();
+    // Don't close the bubble if a transient child is gaining or losing
+    // activation.
+    if (bubble_widget == GetInternalWidgetForWindow(gained_active) ||
+        ::wm::HasTransientAncestor(gained_active,
+                                   bubble_widget->GetNativeWindow()) ||
+        (lost_active && ::wm::HasTransientAncestor(
+                            lost_active, bubble_widget->GetNativeWindow()))) {
+      return;
+    }
+
+    tray_->CloseBubble();
   }
 
   MessageCenterBubble* bubble() const { return bubble_.get(); }
@@ -105,6 +147,8 @@ class WebNotificationBubbleWrapper {
  private:
   std::unique_ptr<MessageCenterBubble> bubble_;
   std::unique_ptr<TrayBubbleWrapper> bubble_wrapper_;
+
+  WebNotificationTray* tray_;
 
   DISALLOW_COPY_AND_ASSIGN(WebNotificationBubbleWrapper);
 };
