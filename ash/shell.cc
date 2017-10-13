@@ -344,13 +344,14 @@ void Shell::RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
 // static
 void Shell::RegisterProfilePrefs(PrefRegistrySimple* registry, bool for_test) {
   AccessibilityController::RegisterProfilePrefs(registry, for_test);
-  LogoutButtonTray::RegisterProfilePrefs(registry);
-  NightLightController::RegisterProfilePrefs(registry);
-  ShelfController::RegisterProfilePrefs(registry);
-  TrayCapsLock::RegisterProfilePrefs(registry, for_test);
   BluetoothPowerController::RegisterProfilePrefs(registry);
   LockScreenController::RegisterProfilePrefs(registry, for_test);
+  LogoutButtonTray::RegisterProfilePrefs(registry);
+  NightLightController::RegisterProfilePrefs(registry);
+  PaletteTray::RegisterProfilePrefs(registry);
+  ShelfController::RegisterProfilePrefs(registry);
   TouchDevicesController::RegisterProfilePrefs(registry);
+  TrayCapsLock::RegisterProfilePrefs(registry, for_test);
 }
 
 views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
