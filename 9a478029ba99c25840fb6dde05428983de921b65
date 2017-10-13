@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43595b5d_56d608ba",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-13T22:21:39Z",
+      "side": 1,
+      "message": "These three arguments represent pseudo-duplicated state. That\u0027s fine, since we don\u0027t want to waste CPU cycles doing the look-up to get the WebContents instance when the caller already knew that information. However, since it is code in another module calling this here, we should state the assumption with an appropriate DCHECK, like:\n\n  DCHECK_EQ(RenderFrameHost::FromID(process_id, routing_id)-\u003edelegate()-\u003eAsWebContents(), web_contents);",
+      "range": {
+        "startLine": 35,
+        "startChar": 41,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399c7198_13c817a9",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-13T22:21:39Z",
+      "side": 1,
+      "message": "If this subclassed WebContentsObserver, you could just add the WebContentsObserver(web_contents) ctor call here in the initializer list, and then you don\u0027t need to ever again worry about registering or deregistering the MediaPlayerRenderer: No extra Add/RemoveMediaPlayerRenderer() mechanisms or separate observer classes or flat_sets listing players. Note that WebContentsObservers remove themselves at destruction time *and* WebContentsObservers (i.e., this subclass too) are notified when a WebContents is destroyed.",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 5
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ea9fe2_cc5afca4",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-13T22:21:39Z",
+      "side": 1,
+      "message": "1. Should the player be muted if there is no WebContents instance?\n\n2. Is it possible for |web_contents| to ever be null? If not, just put this in the initializer list and remove the guards. Maybe add a DCHECK(web_contents) as a statement of this assumption.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 21
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888a79bb_c829c90a",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-13T22:21:39Z",
+      "side": 1,
+      "message": "Should this call OnUpdateAudioMutingState(false)? Meaning, when the WebContents is gone, there shouldn\u0027t be any audio coming from this player, right? In fact, maybe the whole player should be force-stopped and as many resources freed as possible?",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 35
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdbf27c0_7ae80352",
+        "filename": "content/browser/media/android/media_player_renderer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-13T22:21:39Z",
+      "side": 1,
+      "message": "Suggest making this subclass WebContentsObserver instead of having the separate observer class. See other comments for more discussion.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 75
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b35bdf_8263ce55",
+        "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-13T22:21:39Z",
+      "side": 1,
+      "message": "Unless I\u0027m misunderstanding something key, we don\u0027t need this class at all, right? In other words, why isn\u0027t MediaPlayerRenderer just subclassing WebContentsObserver itself?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 74
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
