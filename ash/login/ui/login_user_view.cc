@@ -22,6 +22,7 @@
 #include "ui/compositor/layer_animation_sequence.h"
 #include "ui/compositor/layer_animator.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
+#include "ui/gfx/interpolated_transform.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/label.h"
@@ -283,20 +284,25 @@ LoginUserView::LoginUserView(LoginDisplayStyle style,
       break;
   }
 
-  // Layer rendering is needed for animation. We apply animations to child views
+  // Layer rendering is needed for animation. We apply animations to views
   // separately to reduce overdraw.
   auto setup_layer = [](views::View* view) {
     view->SetPaintToLayer();
     view->layer()->SetFillsBoundsOpaquely(false);
-    view->layer()->SetOpacity(kTransparentUserViewOpacity);
     view->layer()->GetAnimator()->set_preemption_strategy(
         ui::LayerAnimator::PreemptionStrategy::
             IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
   };
+  setup_layer(this);
   setup_layer(user_image_);
   setup_layer(user_label_);
   if (user_dropdown_)
     setup_layer(user_dropdown_);
+
+  user_image_->layer()->SetOpacity(kTransparentUserViewOpacity);
+  user_label_->layer()->SetOpacity(kTransparentUserViewOpacity);
+  if (user_dropdown_)
+    user_dropdown_->layer()->SetOpacity(kTransparentUserViewOpacity);
 
   AddPreTargetHandler(opacity_input_handler_.get());
   SetFocusBehavior(FocusBehavior::ALWAYS);
@@ -363,6 +369,34 @@ void LoginUserView::UpdateForUser(const mojom::LoginUserInfoPtr& user,
 void LoginUserView::SetForceOpaque(bool force_opaque) {
   force_opaque_ = force_opaque;
   UpdateOpacity();
+}
+
+void LoginUserView::CaptureStateForAnimationPreLayout() {
+  cached_start_y_coordinate_ = GetBoundsInScreen().y();
+  waiting_for_animation_ = true;
+}
+
+void LoginUserView::ApplyAnimationPostLayout() {
+  // The animation of large style user view is handled by |LoginAuthUserView|.
+  DCHECK(display_style_ != LoginDisplayStyle::kLarge);
+  DCHECK(waiting_for_animation_);
+  waiting_for_animation_ = false;
+
+  layer()->GetAnimator()->AbortAllAnimations();
+
+  // Animate the user view up or down the screen.
+  int end_y_coordinate_ = GetBoundsInScreen().y();
+  auto move_to_center = std::make_unique<ui::InterpolatedTranslation>(
+      gfx::PointF(0, cached_start_y_coordinate_ - end_y_coordinate_),
+      gfx::PointF());
+  auto transition =
+      ui::LayerAnimationElement::CreateInterpolatedTransformElement(
+          std::move(move_to_center),
+          base::TimeDelta::FromMilliseconds(
+              login_constants::kChangeUserAnimationDurationMs));
+  transition->set_tween_type(gfx::Tween::Type::FAST_OUT_SLOW_IN);
+  auto* sequence = new ui::LayerAnimationSequence(std::move(transition));
+  layer()->GetAnimator()->StartAnimation(sequence);
 }
 
 const char* LoginUserView::GetClassName() const {

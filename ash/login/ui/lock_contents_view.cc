@@ -169,12 +169,18 @@ LockContentsView::LockContentsView(
     LoginDataDispatcher* data_dispatcher)
     : NonAccessibleView(kLockContentsViewName),
       data_dispatcher_(data_dispatcher),
-      display_observer_(this) {
+      display_observer_(this),
+      keyboard_controller_observer_(this) {
   data_dispatcher_->AddObserver(this);
   display_observer_.Add(display::Screen::GetScreen());
   Shell::Get()->lock_screen_controller()->AddLockScreenAppsFocusObserver(this);
   Shell::Get()->system_tray_notifier()->AddSystemTrayFocusObserver(this);
-  error_bubble_ = std::make_unique<LoginBubble>();
+  Shell::Get()->AddShellObserver(this);
+  // TODO(crbug.com/648733): Virtual keyboard is not supported in mash.
+  if (keyboard::KeyboardController::GetInstance()) {
+    keyboard_controller_observer_.Add(
+        keyboard::KeyboardController::GetInstance());
+  }
 
   // We reuse the focusable state on this view as a signal that focus should
   // switch to the system tray. LockContentsView should otherwise not be
@@ -190,6 +196,8 @@ LockContentsView::LockContentsView(
       new NoteActionLaunchButton(initial_note_action_state, data_dispatcher_);
   AddChildView(note_action_);
 
+  error_bubble_ = std::make_unique<LoginBubble>();
+
   OnLockScreenNoteStateChanged(initial_note_action_state);
 }
 
@@ -198,6 +206,7 @@ LockContentsView::~LockContentsView() {
   Shell::Get()->lock_screen_controller()->RemoveLockScreenAppsFocusObserver(
       this);
   Shell::Get()->system_tray_notifier()->RemoveSystemTrayFocusObserver(this);
+  Shell::Get()->RemoveShellObserver(this);
 }
 
 void LockContentsView::Layout() {
@@ -282,7 +291,8 @@ void LockContentsView::OnUsersChanged(
   else if (users.size() >= 7)
     CreateHighDensityLayout(users);
 
-  LayoutAuth(primary_auth_, opt_secondary_auth_, false /*animate*/);
+  LayoutAuth(primary_auth_, opt_secondary_auth_, false /*animate*/,
+             false /*is_updating_virtual_keyboard*/);
 
   // Auth user may be the same if we already built lock screen.
   OnAuthUserChanged();
@@ -307,13 +317,15 @@ void LockContentsView::OnPinEnabledForUserChanged(const AccountId& user,
   if (primary_auth_->current_user()->basic_user_info->account_id ==
           state->account_id &&
       primary_auth_->auth_methods() != LoginAuthUserView::AUTH_NONE) {
-    LayoutAuth(primary_auth_, nullptr, true /*animate*/);
+    LayoutAuth(primary_auth_, nullptr, true /*animate*/,
+               false /*is_updating_virtual_keyboard*/);
   } else if (opt_secondary_auth_ &&
              opt_secondary_auth_->current_user()->basic_user_info->account_id ==
                  state->account_id &&
              opt_secondary_auth_->auth_methods() !=
                  LoginAuthUserView::AUTH_NONE) {
-    LayoutAuth(opt_secondary_auth_, nullptr, true /*animate*/);
+    LayoutAuth(opt_secondary_auth_, nullptr, true /*animate*/,
+               false /*is_updating_virtual_keyboard*/);
   }
 }
 
@@ -358,6 +370,44 @@ void LockContentsView::OnDisplayMetricsChanged(const display::Display& display,
     return;
 
   DoLayout();
+}
+
+void LockContentsView::OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) {
+  if (keyboard_bounds_ == new_bounds)
+    return;
+  // Ensure user views start with the old position (before virtual keyboard
+  // bounds change) so that we can animate the move to the new position.
+  DoLayout();
+
+  keyboard_bounds_ = new_bounds;
+  if (user_views_.size() >= 5) {
+    // TODO: Handle 6+ user case.
+    return;
+  }
+
+  if (primary_auth_->auth_methods() != LoginAuthUserView::AUTH_NONE) {
+    // When there're: 1) one user, 2) two users with activated primary auth,
+    // 3) more than two users.
+    LayoutAuth(primary_auth_, opt_secondary_auth_, true /*animate*/,
+               true /*is_updating_virtual_keyboard*/);
+  } else if (opt_secondary_auth_ && opt_secondary_auth_->auth_methods() !=
+                                        LoginAuthUserView::AUTH_NONE) {
+    // When there're two users and the secondary auth is activated.
+    LayoutAuth(opt_secondary_auth_, primary_auth_, true /*animate*/,
+               true /*is_updating_virtual_keyboard*/);
+  } else {
+    NOTREACHED();
+  }
+}
+
+void LockContentsView::OnKeyboardClosed() {
+  keyboard_controller_observer_.Remove(
+      keyboard::KeyboardController::GetInstance());
+}
+
+void LockContentsView::OnKeyboardControllerCreated() {
+  keyboard_controller_observer_.Add(
+      keyboard::KeyboardController::GetInstance());
 }
 
 void LockContentsView::FocusNextWidget(bool reverse) {
@@ -497,7 +547,9 @@ void LockContentsView::DoLayout() {
   const display::Display& display =
       display::Screen::GetScreen()->GetDisplayNearestWindow(
           GetWidget()->GetNativeWindow());
-  SetPreferredSize(display.size());
+  SetPreferredSize(
+      gfx::Size(display.size().width(),
+                display.size().height() - keyboard_bounds_.height()));
   SizeToPreferredSize();
   Layout();
 }
@@ -519,12 +571,14 @@ void LockContentsView::AddRotationAction(const OnRotate& on_rotate) {
 void LockContentsView::SwapPrimaryAndSecondaryAuth(bool is_primary) {
   if (is_primary &&
       primary_auth_->auth_methods() == LoginAuthUserView::AUTH_NONE) {
-    LayoutAuth(primary_auth_, opt_secondary_auth_, true /*animate*/);
+    LayoutAuth(primary_auth_, opt_secondary_auth_, true /*animate*/,
+               false /*is_updating_virtual_keyboard*/);
     OnAuthUserChanged();
   } else if (!is_primary && opt_secondary_auth_ &&
              opt_secondary_auth_->auth_methods() ==
                  LoginAuthUserView::AUTH_NONE) {
-    LayoutAuth(opt_secondary_auth_, primary_auth_, true /*animate*/);
+    LayoutAuth(opt_secondary_auth_, primary_auth_, true /*animate*/,
+               false /*is_updating_virtual_keyboard*/);
     OnAuthUserChanged();
   }
 }
@@ -551,30 +605,47 @@ LockContentsView::UserState* LockContentsView::FindStateForUser(
 
 void LockContentsView::LayoutAuth(LoginAuthUserView* to_update,
                                   LoginAuthUserView* opt_to_hide,
-                                  bool animate) {
-  // Capture animation metadata before we changing state.
+                                  bool animate,
+                                  bool is_updating_virtual_keyboard) {
+  // Capture animation metadata before changing state.
   if (animate) {
     to_update->CaptureStateForAnimationPreLayout();
     if (opt_to_hide)
       opt_to_hide->CaptureStateForAnimationPreLayout();
+    // The user views (in small or extra small style) needs animation when
+    // virtual keyboard is being shown/hidden.
+    if (is_updating_virtual_keyboard) {
+      for (LoginUserView* const user_view : user_views_)
+        user_view->CaptureStateForAnimationPreLayout();
+    }
   }
 
   // Update auth methods for |to_update|. Disable auth on |opt_to_hide|.
   uint32_t to_update_auth = LoginAuthUserView::AUTH_PASSWORD;
   if (FindStateForUser(to_update->current_user()->basic_user_info->account_id)
-          ->show_pin)
+          ->show_pin &&
+      keyboard_bounds_.IsEmpty()) {
+    // The PIN keyboard and the virtual keyboard should not be shown together.
     to_update_auth |= LoginAuthUserView::AUTH_PIN;
+  }
   to_update->SetAuthMethods(to_update_auth);
   if (opt_to_hide)
     opt_to_hide->SetAuthMethods(LoginAuthUserView::AUTH_NONE);
 
-  Layout();
+  if (is_updating_virtual_keyboard)
+    DoLayout();
+  else
+    Layout();
 
   // Apply animations.
   if (animate) {
     to_update->ApplyAnimationPostLayout();
     if (opt_to_hide)
       opt_to_hide->ApplyAnimationPostLayout();
+    if (is_updating_virtual_keyboard) {
+      for (LoginUserView* const user_view : user_views_)
+        user_view->ApplyAnimationPostLayout();
+    }
   }
 }
 
@@ -586,7 +657,8 @@ void LockContentsView::SwapToAuthUser(int user_index) {
 
   view->UpdateForUser(previous_auth_user, true /*animate*/);
   primary_auth_->UpdateForUser(new_auth_user);
-  LayoutAuth(primary_auth_, nullptr, true /*animate*/);
+  LayoutAuth(primary_auth_, nullptr, true /*animate*/,
+             false /*is_updating_virtual_keyboard*/);
   OnAuthUserChanged();
 }
 
