@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aae5873_b90cdc95",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-13T16:41:41Z",
+      "side": 1,
+      "message": "This is redundant with text below, and is also not following the convention for the first line of commit message. Please delete it and the empty lines below it.",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "4fb2955f87725803d68f1f5c6a65d51a5458a4ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779caaf0_b7ad1d85",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-13T16:41:41Z",
+      "side": 1,
+      "message": "A flaky test means a test that succeeds sometimes and fails sometimes, like issue 2076. This test has been failing in all builds since 36688, so it should be called a failing test instead of a flaky test.",
+      "range": {
+        "startLine": 10,
+        "startChar": 25,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "4fb2955f87725803d68f1f5c6a65d51a5458a4ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "168aac47_ce5caa5c",
+        "filename": "chrome/test/chromedriver/test/test_expectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-13T16:41:41Z",
+      "side": 1,
+      "message": "This change has already be merged. Please fetch the latest code from repository (see https://companydoc.corp.google.com/company/teams/chrome/linux_build_instructions.md?cl\u003dhead#update-your-checkout for instructions) and re-do this commit. Otherwise there will be merge conflicts.\n\nIn general, it\u0027s easiest to start each new work item from a new git branch.",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 0
+      },
+      "revId": "4fb2955f87725803d68f1f5c6a65d51a5458a4ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a184a3bd_1f3aee1d",
+        "filename": "chrome/test/chromedriver/test/test_expectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-13T16:41:41Z",
+      "side": 1,
+      "message": "You need to add a comma at the end of the previous line. To make future changes easier, it would be a good idea to add a comma to the end of the new item as well.",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 0
+      },
+      "revId": "4fb2955f87725803d68f1f5c6a65d51a5458a4ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
