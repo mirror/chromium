@@ -34,6 +34,24 @@
       "revId": "3eb9ed9d0b753862361b71fa16aad906960f50fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7772a6a2_95d62a85",
+        "filename": "mojo/public/cpp/system/platform_handle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-13T17:09:02Z",
+      "side": 1,
+      "message": "I was seeing this CHECK hit with MOJO_PLATFORM_HANDLE_TYPE_INVALID.",
+      "parentUuid": "876e615e_5e9f8991",
+      "revId": "3eb9ed9d0b753862361b71fa16aad906960f50fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
