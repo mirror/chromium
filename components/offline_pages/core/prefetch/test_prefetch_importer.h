@@ -12,10 +12,12 @@ namespace offline_pages {
 // Testing prefetch importer that does nothing.
 class TestPrefetchImporter : public PrefetchImporter {
  public:
-  TestPrefetchImporter() : PrefetchImporter(nullptr) {}
-  ~TestPrefetchImporter() override = default;
+  TestPrefetchImporter();
+  ~TestPrefetchImporter() override;
 
-  void ImportArchive(const PrefetchArchiveInfo& archive) override {}
+  void ImportArchive(const PrefetchArchiveInfo& archive) override;
+  void MarkImportCompleted(int64_t offline_id) override;
+  std::set<int64_t> GetOutstandingImports() const override;
 };
 
 }  // namespace offline_pages

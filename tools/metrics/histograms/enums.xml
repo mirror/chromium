@@ -28777,6 +28777,10 @@ from previous Chrome versions.
   <int value="1500" label="MAXIMUM_CLOCK_BACKWARD_SKEW_EXCEEDED">
     The clock was set backwards too far in time.
   </int>
+  <int value="1600" label="IMPORT_ABORTED">
+    The importing was cancelled because it was not completed in time, probably
+    due to that Chrome was killed before it was done.
+  </int>
 </enum>
 
 <enum name="OfflinePrefetchItemState">
