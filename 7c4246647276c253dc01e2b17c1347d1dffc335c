@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9b44dfc_629d86e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-13T22:43:38Z",
+      "side": 1,
+      "message": "Yep, this returns what the default is set to",
+      "parentUuid": "8d6aeade_efc6e2f2",
+      "range": {
+        "startLine": 341,
+        "startChar": 20,
+        "endLine": 341,
+        "endChar": 40
+      },
+      "revId": "7c4246647276c253dc01e2b17c1347d1dffc335c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7f6be26_0e462363",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-13T22:16:53Z",
       "side": 1,
       "message": "Assuming #isSoundEnabled is a global setting, is the idea here that we\u0027re showing a list of sites that are blocked if sound is globally enabled or a list of sites that allowed if sound is globally disabled?",
+      "range": {
+        "startLine": 592,
+        "startChar": 79,
+        "endLine": 592,
+        "endChar": 94
+      },
+      "revId": "7c4246647276c253dc01e2b17c1347d1dffc335c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9284d3_f1e8e8b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-13T22:43:38Z",
+      "side": 1,
+      "message": "Yep. This is called when the users adds a site as an exception to the current default, so if the default is allow, we set the site to block and vice versa",
+      "parentUuid": "c7f6be26_0e462363",
       "range": {
         "startLine": 592,
         "startChar": 79,
