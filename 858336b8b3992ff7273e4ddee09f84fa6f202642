@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26523749_3d1bc747",
+        "filename": "content/browser/devtools/protocol/network_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T23:51:15Z",
+      "side": 1,
+      "message": "Why not an array of pairs? Much more efficient, and also preserves the order which client wanted.",
+      "revId": "858336b8b3992ff7273e4ddee09f84fa6f202642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32c86b7_e4b7e898",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T23:51:15Z",
+      "side": 1,
+      "message": "This might add two throttling headers. Are we ready to remove them all in DevToolsNetworkTransaction?",
+      "revId": "858336b8b3992ff7273e4ddee09f84fa6f202642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
