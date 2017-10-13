@@ -144,6 +144,10 @@ void Env::SetWindowTreeClient(WindowTreeClient* window_tree_client) {
   window_tree_client_ = window_tree_client;
 }
 
+ui::Gpu* Env::GetGpu() {
+  return window_tree_client_->gpu();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Env, private:
 

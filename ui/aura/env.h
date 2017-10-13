@@ -28,6 +28,7 @@ class ClientNativePixmapFactory;
 namespace ui {
 class ContextFactory;
 class ContextFactoryPrivate;
+class Gpu;
 class PlatformEventSource;
 }
 namespace aura {
@@ -113,6 +114,8 @@ class AURA_EXPORT Env : public ui::EventTarget,
   // See CreateInstance() for description.
   void SetWindowTreeClient(WindowTreeClient* window_tree_client);
   bool HasWindowTreeClient() const { return window_tree_client_ != nullptr; }
+
+  ui::Gpu* GetGpu();
 
  private:
   friend class test::EnvTestHelper;
