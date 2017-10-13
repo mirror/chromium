@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c58215e7_023deb06",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_choose_mobile.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-10-13T23:14:36Z",
+      "side": 1,
+      "message": "Q: without the scan button, should the entire \u0027mobile data network\u0027 section be hidden?",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 4
+      },
+      "revId": "afe8d1b3e6d7949fdeaadb0c6d02f0ff75846dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
