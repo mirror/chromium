@@ -11,6 +11,8 @@
 #include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
 
+#include "core/layout/LayoutObject.h"
+
 namespace blink {
 
 NGFragmentBuilder::NGFragmentBuilder(NGLayoutInputNode node,
@@ -20,7 +22,8 @@ NGFragmentBuilder::NGFragmentBuilder(NGLayoutInputNode node,
     : NGBaseFragmentBuilder(style, writing_mode, direction),
       node_(node),
       layout_object_(node.GetLayoutObject()),
-      did_break_(false) {}
+      did_break_(false),
+      is_inline_block_(false) {}
 
 NGFragmentBuilder::NGFragmentBuilder(LayoutObject* layout_object,
                                      RefPtr<const ComputedStyle> style,
@@ -29,7 +32,8 @@ NGFragmentBuilder::NGFragmentBuilder(LayoutObject* layout_object,
     : NGBaseFragmentBuilder(style, writing_mode, direction),
       node_(nullptr),
       layout_object_(layout_object),
-      did_break_(false) {}
+      did_break_(false),
+      is_inline_block_(false) {}
 
 NGFragmentBuilder::~NGFragmentBuilder() {}
 
@@ -257,11 +261,16 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
     }
   }
 
+  // TODO(layout-dev): is_inline_block_ isn't being set correctly for atomic
+  // inlines yet. Enable this DCHECK when it is.
+  // DCHECK(!layout_object_ || !layout_object_->IsInlineBlockOrInlineTable() ||
+  //        is_inline_block_);
+
   RefPtr<NGPhysicalBoxFragment> fragment =
       WTF::AdoptRef(new NGPhysicalBoxFragment(
           layout_object_, Style(), physical_size, contents_visual_rect,
           children_, baselines_, border_edges_.ToPhysical(WritingMode()),
-          std::move(break_token)));
+          is_inline_block_, std::move(break_token)));
 
   return WTF::AdoptRef(new NGLayoutResult(
       std::move(fragment), oof_positioned_descendants_, unpositioned_floats_,

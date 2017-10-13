@@ -59,6 +59,10 @@ class CORE_EXPORT NGPhysicalFragment
   bool IsText() const { return Type() == NGFragmentType::kFragmentText; }
   bool IsLineBox() const { return Type() == NGFragmentType::kFragmentLineBox; }
 
+  // An inline block is represented as a kFragmentBox.
+  // TODO(eae): This isn't true for replaces elements at the moment.
+  bool IsInlineBlock() const { return is_inline_block_; }
+
   // The accessors in this class shouldn't be used by layout code directly,
   // instead should be accessed by the NGFragmentBase classes. These accessors
   // exist for paint, hit-testing, etc.
@@ -134,6 +138,7 @@ class CORE_EXPORT NGPhysicalFragment
   unsigned type_ : 2;  // NGFragmentType
   unsigned is_placed_ : 1;
   unsigned border_edge_ : 4;  // NGBorderEdges::Physical
+  unsigned is_inline_block_ : 1;
 
  private:
   friend struct NGPhysicalFragmentTraits;
