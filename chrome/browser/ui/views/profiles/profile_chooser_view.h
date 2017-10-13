@@ -27,7 +27,6 @@
 namespace views {
 class GridLayout;
 class ImageButton;
-class Link;
 class LabelButton;
 }
 
@@ -38,8 +37,6 @@ class Browser;
 class ProfileChooserView : public content::WebContentsDelegate,
                            public views::BubbleDialogDelegateView,
                            public views::ButtonListener,
-                           public views::LinkListener,
-                           public views::StyledLabelListener,
                            public AvatarMenuObserver,
                            public OAuth2TokenService::Observer {
  public:
@@ -89,14 +86,6 @@ class ProfileChooserView : public content::WebContentsDelegate,
   // views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
-  // views::LinkListener:
-  void LinkClicked(views::Link* sender, int event_flags) override;
-
-  // views::StyledLabelListener:
-  void StyledLabelLinkClicked(views::StyledLabel* label,
-                              const gfx::Range& range,
-                              int event_flags) override;
-
   // AvatarMenuObserver:
   void OnAvatarMenuChanged(AvatarMenu* avatar_menu) override;
 
@@ -143,12 +132,6 @@ class ProfileChooserView : public content::WebContentsDelegate,
                            bool reauth_required,
                            int width);
 
-  // Creates a view to confirm account removal for |account_id_to_remove_|.
-  views::View* CreateAccountRemovalView();
-
-  // Removes the currently selected account and attempts to restart Chrome.
-  void RemoveAccount();
-
   // Creates a header for signin and sync error surfacing for the user menu.
   views::View* CreateSyncErrorViewIfNeeded();
 
@@ -163,10 +146,6 @@ class ProfileChooserView : public content::WebContentsDelegate,
   // Other profiles used in the "fast profile switcher" view.
   ButtonIndexes open_other_profile_indexes_map_;
 
-  // Buttons associated with the current profile.
-  AccountButtonIndexes delete_account_button_map_;
-  AccountButtonIndexes reauth_account_button_map_;
-
   // Buttons in the signin/sync error header on top of the desktop user menu.
   views::LabelButton* sync_error_signin_button_;
   views::LabelButton* sync_error_passphrase_button_;
@@ -176,8 +155,6 @@ class ProfileChooserView : public content::WebContentsDelegate,
   views::LabelButton* sync_error_settings_unconfirmed_button_;
 
   // Links and buttons displayed in the active profile card.
-  views::Link* manage_accounts_link_;
-  views::LabelButton* manage_accounts_button_;
   views::LabelButton* signin_current_profile_button_;
 
   // For material design user menu, the active profile card owns the profile
@@ -191,17 +168,9 @@ class ProfileChooserView : public content::WebContentsDelegate,
   views::LabelButton* go_incognito_button_;
   views::LabelButton* lock_button_;
   views::LabelButton* close_all_windows_button_;
-  views::Link* add_account_link_;
 
   // Buttons displayed in the gaia signin view.
   views::ImageButton* gaia_signin_cancel_button_;
-
-  // Links and buttons displayed in the account removal view.
-  views::LabelButton* remove_account_button_;
-  views::ImageButton* account_removal_cancel_button_;
-
-  // Records the account id to remove.
-  std::string account_id_to_remove_;
 
   // Active view mode.
   profiles::BubbleViewMode view_mode_;
