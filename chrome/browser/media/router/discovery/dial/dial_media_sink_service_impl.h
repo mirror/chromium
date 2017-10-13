@@ -44,11 +44,12 @@ class DialMediaSinkServiceImpl : public MediaSinkServiceBase,
   void SetObserver(DialMediaSinkServiceObserver* observer);
 
   // Sets |observer_| to nullptr.
-  void ClearObserver(DialMediaSinkServiceObserver* observer);
+  void ClearObserver();
 
   // MediaSinkService implementation
   void Start() override;
   void Stop() override;
+  void OnUserGesture() override;
 
  protected:
   // Returns instance of device description service. Create a new one if none
@@ -67,8 +68,10 @@ class DialMediaSinkServiceImpl : public MediaSinkServiceBase,
   FRIEND_TEST_ALL_PREFIXES(DialMediaSinkServiceImplTest,
                            TestOnDeviceDescriptionAvailable);
   FRIEND_TEST_ALL_PREFIXES(DialMediaSinkServiceImplTest, TestRestartAfterStop);
+  FRIEND_TEST_ALL_PREFIXES(DialMediaSinkServiceImplTest,
+                           OnDialSinkAddedCalledOnUserGesture);
 
-  // api::dial::DialRegistry::Observer implementation
+  // DialRegistry::Observer implementation
   void OnDialDeviceEvent(const DialRegistry::DeviceList& devices) override;
   void OnDialError(DialRegistry::DialErrorCode type) override;
 
