@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6b2f529_382db5b2",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/compiled_resources2.gyp",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-13T16:33:36Z",
+      "side": 1,
+      "message": "This doesn\u0027t match indentation, it looks like the original file\nhad some tabs. Could you just replace all tabs with spaces?",
+      "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b0b61c_bef86ced",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-13T16:33:36Z",
+      "side": 1,
+      "message": "nit: 2017",
+      "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f430ef_43994db6",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-13T16:33:36Z",
+      "side": 1,
+      "message": "@param {AutomationNode} node docString",
+      "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e429e0b_6cee851a",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-13T16:33:36Z",
+      "side": 1,
+      "message": "@param {AutomationNode} first docString\n@param {AutomationNode} second docString\n\nSince you\u0027re allowing undefined, you could use {AutomationNode\u003d} opt_first, etc.\nbut since the arguments aren\u0027t really optional semantically, maybe\n{AutomationNode|undefined} would be more clear?",
+      "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3720de8c_5af388d0",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-13T16:33:36Z",
+      "side": 1,
+      "message": "I think you can use console.debug() instead, it doesn\u0027t show up by default\nbut you can enable it in the JavaScript console at any time by selecting\n\"verbose\".",
+      "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea37aec_c0a38470",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-13T16:33:36Z",
+      "side": 1,
+      "message": "Do you think it would work to create an abstraction called\nNodeGroup which can hold either a single node or a paragraph?\n\nThat way rather than iterating over both nodes and paragraphs,\nyou could just iterate over NodeGroups - some of which are\nindividual nodes and some are paragraphs, and not have two\ncases to consider.",
+      "revId": "d8d029dd3d0d9bb06a9c5e1492f03597d5115b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
