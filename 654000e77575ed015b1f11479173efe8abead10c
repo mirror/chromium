@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d37b1d20_e76b99c4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/shadow/inspect-slot-not-in-shadow-tree.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-13T08:36:12Z",
+      "side": 1,
+      "message": "nit: please remove blank lines (line 16-17 as well).",
+      "revId": "654000e77575ed015b1f11479173efe8abead10c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13406e5e_8074fb0c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/shadow/inspect-slot-not-in-shadow-tree.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-13T08:36:12Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with tests in this directory, so I\u0027d defer the rest of review to\ndgozman@.",
+      "revId": "654000e77575ed015b1f11479173efe8abead10c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d2afd7_e0451622",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/shadow/inspect-slot-not-in-shadow-tree.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-13T08:36:12Z",
+      "side": 1,
+      "message": "Looks like other tests (not all, though) use \u003cp id\u003d\"description\"\u003e style, so it may\nbe better follow the style.",
+      "revId": "654000e77575ed015b1f11479173efe8abead10c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
