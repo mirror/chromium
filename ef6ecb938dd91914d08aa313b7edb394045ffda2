@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68348abd_148d9c8f",
+        "filename": "content/common/sandbox_init_gpu_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-13T18:39:19Z",
+      "side": 1,
+      "message": "Great idea, much cleaner that way.\n\nDone.",
+      "parentUuid": "cdf61eef_fa413eec",
+      "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cf2ce40_c9a03136",
         "filename": "content/common/sandbox_init_gpu_linux.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98cd2dff_6d3ee9ad",
+        "filename": "content/common/sandbox_init_gpu_linux.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-13T18:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cf2ce40_c9a03136",
+      "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "80c6442d_ba214159",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-13T18:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c9be34e_8995b883",
+      "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "857b64f5_f9325b2e",
         "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5361e69_c6340738",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-13T18:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "857b64f5_f9325b2e",
+      "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c2ce1590_c35c54ae",
+        "filename": "content/common/sandbox_linux/bpf_cros_arm_gpu_policy_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-13T18:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b09b4f15_ad806675",
+      "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14c532a3_27c5d6b1",
         "filename": "content/common/sandbox_linux/bpf_cros_arm_gpu_policy_linux.cc",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "60e489be_76d6725c",
+        "filename": "content/common/sandbox_linux/bpf_cros_arm_gpu_policy_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-13T18:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14c532a3_27c5d6b1",
+      "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b02aa544_8411c4f4",
         "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.h",
         "patchSetId": 4
@@ -118,6 +226,24 @@
       "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f820be4_94d91122",
+        "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-13T18:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b02aa544_8411c4f4",
+      "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
