@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "616dc8d7_7885badf",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T19:48:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfd9a2ea_52a9b962",
+      "range": {
+        "startLine": 209,
+        "startChar": 20,
+        "endLine": 209,
+        "endChar": 33
+      },
+      "revId": "a4bc3a9deb764eef7655607c62ce491245637e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f0dffce_8d7c1d28",
         "filename": "third_party/WebKit/Source/core/dom/Policy.idl",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "a4bc3a9deb764eef7655607c62ce491245637e0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7638e35_6d6863f2",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T19:48:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f0dffce_8d7c1d28",
+      "revId": "a4bc3a9deb764eef7655607c62ce491245637e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "bf3c1325_c89a16fe",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T19:48:24Z",
+      "side": 1,
+      "message": "yeah.\nIt is a bit messy cause the security context of an iframe may or may not always exist. \nI took the Policy out of HTMLIFrameElement for now.\n\nThanks for pointing that out.",
+      "parentUuid": "66d77189_eeb34df8",
+      "revId": "a4bc3a9deb764eef7655607c62ce491245637e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19862874_80cfeaef",
         "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.idl",
         "patchSetId": 11
@@ -73,6 +133,24 @@
       "revId": "a4bc3a9deb764eef7655607c62ce491245637e0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e8aaa9_9e2a702d",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T19:48:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19862874_80cfeaef",
+      "revId": "a4bc3a9deb764eef7655607c62ce491245637e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

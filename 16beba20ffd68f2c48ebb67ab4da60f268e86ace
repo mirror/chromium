@@ -347,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "befdcc7b_b2ec07f0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy.php",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T19:48:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e6ca7ca_a7171dfa",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bde7309e_ac951a31",
         "filename": "third_party/WebKit/Source/core/dom/Document.idl",
         "patchSetId": 6
@@ -453,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "c30ff811_5bfbdb1f",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T19:48:24Z",
+      "side": 1,
+      "message": "My bad.\nDone.\nThanks",
+      "parentUuid": "acdb6e0c_95a0d07f",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 75
+      },
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51bea409_aef7e057",
         "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
         "patchSetId": 6
@@ -512,6 +554,30 @@
       "side": 1,
       "message": "Thanks -- I still think we should just have the message say \"Invalid origin: \", and not mention the feature here at all. (It\u0027s not the case that the origin would become valid if the user picked a different feature)",
       "parentUuid": "5e198213_d5380521",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 5
+      },
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e922f5_41f4342f",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T19:48:24Z",
+      "side": 1,
+      "message": "Makes sense. I changed the logic. Thanks",
+      "parentUuid": "4cc36114_2983f00e",
       "range": {
         "startLine": 26,
         "startChar": 0,
