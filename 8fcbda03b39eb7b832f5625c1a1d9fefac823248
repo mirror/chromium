@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5342c922_2445617b",
+        "filename": "chrome/test/data/webui/extensions/extension_item_list_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T19:35:39Z",
+      "side": 1,
+      "message": "|exts| is not really an established abbreviation like apps is, I think. I tend to follow that rule, even though is from the C++ styleguide see https://google.github.io/styleguide/cppguide.html#General_Naming_Rules.",
+      "revId": "8fcbda03b39eb7b832f5625c1a1d9fefac823248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba552ed1_c33e5efc",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T19:35:39Z",
+      "side": 1,
+      "message": "Nit (optional)\n\nvar list \u003d manager.$[\u0027items-list\u0027];\nvar listHasItemWithName \u003d (name) \u003d\u003e list.extensions.find(el \u003d\u003e el.name \u003d\u003d name);",
+      "revId": "8fcbda03b39eb7b832f5625c1a1d9fefac823248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea12d251_a761f368",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T19:35:39Z",
+      "side": 1,
+      "message": "Nit: Remove blank line.",
+      "revId": "8fcbda03b39eb7b832f5625c1a1d9fefac823248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1840d6_ac040e4f",
+        "filename": "chrome/test/data/webui/extensions/extension_sidebar_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T19:35:39Z",
+      "side": 1,
+      "message": "Nit: Remove blank line.",
+      "revId": "8fcbda03b39eb7b832f5625c1a1d9fefac823248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
