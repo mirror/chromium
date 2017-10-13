@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ada9a27b_0e4d3be4",
+        "filename": "content/public/network/ignore_errors_cert_verifier.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-13T16:30:29Z",
+      "side": 1,
+      "message": "Usually a method comment needs to summary what it does before talking about individual parameters.\n\nBesides, the sentence on line 36 is ambiguous:\n\nIf the |user_data_dir_switch| is passed in as a valid pointer but\n(--user-data-dir flag is missing or --ignore-certificate-errors-spki-list flag is missing)\n\nIf (the |user_data_dir_switch| is passed in as a valid pointer but\n--user-data-dir flag is missing) or --ignore-certificate-errors-spki-list flag is missing\n \nPlease rephrase to make it unambiguous.",
+      "revId": "a060e3c1576d734f1959d359854b05d7c7a73cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
