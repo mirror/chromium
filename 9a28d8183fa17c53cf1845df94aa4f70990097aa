@@ -34,6 +34,24 @@
       "revId": "9a28d8183fa17c53cf1845df94aa4f70990097aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf0e281_1f2097d9",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-13T15:52:06Z",
+      "side": 1,
+      "message": "\u003e I think runOnUiThread does this? See https://cs.chromium.org/chromium/src/base/android/java/src/org/chromium/base/ThreadUtils.java?q\u003drunonuithread+f:threadutils.java\u0026sq\u003dpackage:chromium\u0026l\u003d127\n\nGood point. But I forgot something else. You need to check UI thread has been initialized. Essentially all those \"checkNeedPost()\" calls everywhere in glue layer",
+      "parentUuid": "02ea90d2_b7010cd9",
+      "revId": "9a28d8183fa17c53cf1845df94aa4f70990097aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
