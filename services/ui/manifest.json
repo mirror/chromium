@@ -16,7 +16,11 @@
           "ui::mojom::Gpu",
           "ui::mojom::IMEDriver",
           "ui::mojom::InputDeviceServer",
-          "ui::mojom::WindowTreeFactory"
+          "ui::mojom::WindowTreeFactory",
+          // TODO(penghuang): remove below interfaces when we have a separate viz process.
+          // https://crbug.com/774514
+          "arc::mojom::VideoDecodeAccelerator",
+          "arc::mojom::VideoEncodeAccelerator"
         ],
         // Interfaces provided by mus-gpu for mus-ws.
         "ozone": [
