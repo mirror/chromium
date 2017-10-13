@@ -429,12 +429,10 @@ class QuicFramerTest : public QuicTestWithParam<QuicTransportVersion> {
   void CheckCalculatePacketNumber(QuicPacketNumber expected_packet_number,
                                   QuicPacketNumber last_packet_number) {
     QuicPacketNumber wire_packet_number = expected_packet_number & kMask;
-    QuicFramerPeer::SetLastPacketNumber(&framer_, last_packet_number);
-    EXPECT_EQ(
-        expected_packet_number,
-        QuicFramerPeer::CalculatePacketNumberFromWire(
-            &framer_, PACKET_6BYTE_PACKET_NUMBER,
-            QuicFramerPeer::GetLastPacketNumber(&framer_), wire_packet_number))
+    EXPECT_EQ(expected_packet_number,
+              QuicFramerPeer::CalculatePacketNumberFromWire(
+                  &framer_, PACKET_6BYTE_PACKET_NUMBER, last_packet_number,
+                  wire_packet_number))
         << "last_packet_number: " << last_packet_number
         << " wire_packet_number: " << wire_packet_number;
   }

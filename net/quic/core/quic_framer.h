@@ -419,10 +419,6 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
                       size_t buffer_length,
                       size_t* decrypted_length);
 
-  // Sets last_packet_number_. This can only be called after the packet is
-  // successfully decrypted.
-  void SetLastPacketNumber(const QuicPacketHeader& header);
-
   // Returns the full packet number from the truncated
   // wire format version and the last seen packet number.
   QuicPacketNumber CalculatePacketNumberFromWire(
@@ -503,8 +499,6 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
   std::string detailed_error_;
   QuicFramerVisitorInterface* visitor_;
   QuicErrorCode error_;
-  // Updated by ProcessPacketHeader when it succeeds.
-  QuicPacketNumber last_packet_number_;
   // Updated by ProcessPacketHeader when it succeeds decrypting a larger packet.
   QuicPacketNumber largest_packet_number_;
   // Updated by WritePacketHeader.
