@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84834bf0_246a28db",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-14T01:07:34Z",
+      "side": 1,
+      "message": "Add STACK_ALLOCATED.",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32af4a3_3bf9d96f",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-14T01:07:34Z",
+      "side": 1,
+      "message": "Would you help me understand why this needs to be TraceWrapperMember?",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4585b687_fb5c21e5",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-14T01:07:34Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d33dcfd_4bd96f80",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/Animator.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-14T01:07:34Z",
+      "side": 1,
+      "message": "2 -\u003e WTF_ARRAY_LENGTH(argv)",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c6cd65_32412524",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/EffectProxy.idl",
+        "patchSetId": 28
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-14T01:07:34Z",
+      "side": 1,
+      "message": "Add a link to the spec.",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df58ced_f5be3ba7",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorAnimatorsState.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-14T01:07:34Z",
+      "side": 1,
+      "message": "2017",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d001b93d_3aa7ddd7",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorAnimatorsState.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-14T01:07:34Z",
+      "side": 1,
+      "message": "Is there any issue in directly using cc:: in other files?",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
