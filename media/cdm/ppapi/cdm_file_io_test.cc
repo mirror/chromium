@@ -159,58 +159,6 @@ void FileIOTestRunner::AddTests() {
     EXPECT_FILE_READ(kSuccess, kData, kDataSize)
   END_TEST_CASE
 
-  START_TEST_CASE("ReadDuringPendingRead")
-    OPEN_FILE
-    EXPECT_FILE_OPENED(kSuccess)
-    WRITE_FILE(kData, kDataSize)
-    EXPECT_FILE_WRITTEN(kSuccess)
-    READ_FILE
-    READ_FILE
-    EXPECT_FILE_READ(kInUse, NULL, 0)
-    EXPECT_FILE_READ(kSuccess, kData, kDataSize)
-    // Read again.
-    READ_FILE
-    EXPECT_FILE_READ(kSuccess, kData, kDataSize)
-  END_TEST_CASE
-
-  START_TEST_CASE("ReadDuringPendingWrite")
-    OPEN_FILE
-    EXPECT_FILE_OPENED(kSuccess)
-    WRITE_FILE(kData, kDataSize)
-    READ_FILE
-    EXPECT_FILE_READ(kInUse, NULL, 0)
-    EXPECT_FILE_WRITTEN(kSuccess)
-    // Read again.
-    READ_FILE
-    EXPECT_FILE_READ(kSuccess, kData, kDataSize)
-  END_TEST_CASE
-
-  START_TEST_CASE("WriteDuringPendingRead")
-    OPEN_FILE
-    EXPECT_FILE_OPENED(kSuccess)
-    READ_FILE
-    WRITE_FILE(kData, kDataSize)
-    EXPECT_FILE_WRITTEN(kInUse)
-    EXPECT_FILE_READ(kSuccess, NULL, 0)
-    // We can still do normal operations.
-    WRITE_FILE(kData, kDataSize)
-    EXPECT_FILE_WRITTEN(kSuccess)
-    READ_FILE
-    EXPECT_FILE_READ(kSuccess, kData, kDataSize)
-  END_TEST_CASE
-
-  START_TEST_CASE("WriteDuringPendingWrite")
-    OPEN_FILE
-    EXPECT_FILE_OPENED(kSuccess)
-    WRITE_FILE(kData, kDataSize)
-    WRITE_FILE(kBigData, kBigDataSize)
-    EXPECT_FILE_WRITTEN(kInUse)
-    EXPECT_FILE_WRITTEN(kSuccess)
-    // Read to make sure original data (kData) is written.
-    READ_FILE
-    EXPECT_FILE_READ(kSuccess, kData, kDataSize)
-  END_TEST_CASE
-
   START_TEST_CASE("ReadFileThatDoesNotExist")
     OPEN_FILE
     EXPECT_FILE_OPENED(kSuccess)
@@ -611,6 +559,7 @@ void FileIOTest::OnTestComplete(bool success) {
     file_io_stack_.pop();
   }
   FILE_IO_DVLOG(3) << test_name_ << (success ? " PASSED" : " FAILED");
+  DLOG_IF(WARNING, !success) << test_name_ << " FAILED";
   base::ResetAndReturn(&completion_cb_).Run(success);
 }
 
