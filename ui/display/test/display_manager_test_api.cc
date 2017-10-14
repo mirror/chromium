@@ -40,19 +40,18 @@ DisplayInfoList CreateDisplayInfoListFromString(
   return display_info_list;
 }
 
-scoped_refptr<ManagedDisplayMode> GetDisplayModeForUIScale(
+const ManagedDisplayMode* GetDisplayModeForUIScale(
     const ManagedDisplayInfo& info,
     float ui_scale) {
   const ManagedDisplayInfo::ManagedDisplayModeList& modes =
       info.display_modes();
-  auto iter =
-      std::find_if(modes.begin(), modes.end(),
-                   [ui_scale](const scoped_refptr<ManagedDisplayMode>& mode) {
-                     return mode->ui_scale() == ui_scale;
-                   });
+  auto iter = std::find_if(modes.begin(), modes.end(),
+                           [ui_scale](const ManagedDisplayMode& mode) {
+                             return mode.ui_scale() == ui_scale;
+                           });
   if (iter == modes.end())
-    return scoped_refptr<ManagedDisplayMode>();
-  return *iter;
+    return nullptr;
+  return &(*iter);
 }
 
 }  // namespace
@@ -126,11 +125,10 @@ bool DisplayManagerTestApi::SetDisplayUIScale(int64_t id, float ui_scale) {
   }
   const ManagedDisplayInfo& info = display_manager_->GetDisplayInfo(id);
 
-  scoped_refptr<ManagedDisplayMode> mode =
-      GetDisplayModeForUIScale(info, ui_scale);
+  const ManagedDisplayMode* mode = GetDisplayModeForUIScale(info, ui_scale);
   if (!mode)
     return false;
-  return display_manager_->SetDisplayMode(id, mode);
+  return display_manager_->SetDisplayMode(id, *mode);
 }
 
 void DisplayManagerTestApi::SetTouchSupport(
@@ -154,11 +152,11 @@ bool SetDisplayResolution(DisplayManager* display_manager,
                           int64_t display_id,
                           const gfx::Size& resolution) {
   const ManagedDisplayInfo& info = display_manager->GetDisplayInfo(display_id);
-  scoped_refptr<ManagedDisplayMode> mode =
+  const ManagedDisplayMode* mode =
       GetDisplayModeForResolution(info, resolution);
   if (!mode)
     return false;
-  return display_manager->SetDisplayMode(display_id, mode);
+  return display_manager->SetDisplayMode(display_id, *mode);
 }
 
 std::unique_ptr<DisplayLayout> CreateDisplayLayout(
