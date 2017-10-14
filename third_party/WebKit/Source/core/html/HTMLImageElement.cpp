@@ -260,7 +260,19 @@ void HTMLImageElement::ParseAttribute(
       if (text && text->textContent() != params.new_value)
         text->setTextContent(AltText());
     }
-  } else if (name == srcAttr || name == srcsetAttr || name == sizesAttr) {
+  } else if (name == srcAttr) {
+    // https://html.spec.whatwg.org/multipage/images.html#relevant-mutations
+    if (params.old_value != params.new_value) {
+      // The element's src ... attributes are set, changed, or removed.
+      SelectSourceURL(ImageLoader::kUpdateIgnorePreviousError);
+    } else {
+      // The element's src attribute is set to the same value as the previous
+      // value. This must set the restart animation flag for the update the
+      // image data algorithm.
+      SelectSourceURL(ImageLoader::kUpdateIgnorePreviousError,
+                      ImageLoader::kShouldRestartAnimation);
+    }
+  } else if (name == srcsetAttr || name == sizesAttr) {
     SelectSourceURL(ImageLoader::kUpdateIgnorePreviousError);
   } else if (name == usemapAttr) {
     SetIsLink(!params.new_value.IsNull());
@@ -416,6 +428,7 @@ Node::InsertionNotificationRequest HTMLImageElement::InsertedInto(
   if ((insertion_point->isConnected() && !GetImageLoader().GetImage()) ||
       image_was_modified)
     GetImageLoader().UpdateFromElement(ImageLoader::kUpdateNormal,
+                                       ImageLoader::kDoNotRestartAnimation,
                                        referrer_policy_);
 
   return HTMLElement::InsertedInto(insertion_point);
@@ -695,11 +708,13 @@ float HTMLImageElement::SourceSize(Element& element) {
 
 void HTMLImageElement::ForceReload() const {
   GetImageLoader().UpdateFromElement(ImageLoader::kUpdateForcedReload,
+                                     ImageLoader::kDoNotRestartAnimation,
                                      referrer_policy_);
 }
 
 void HTMLImageElement::SelectSourceURL(
-    ImageLoader::UpdateFromElementBehavior behavior) {
+    ImageLoader::UpdateFromElementBehavior behavior,
+    ImageLoader::RestartAnimationBehavior restart_animation) {
   if (!GetDocument().IsActive())
     return;
 
@@ -718,7 +733,8 @@ void HTMLImageElement::SelectSourceURL(
     SetBestFitURLAndDPRFromImageCandidate(candidate);
   }
 
-  GetImageLoader().UpdateFromElement(behavior, referrer_policy_);
+  GetImageLoader().UpdateFromElement(behavior, restart_animation,
+                                     referrer_policy_);
 
   // Images such as data: uri's can return immediately and may already have
   // errored out.

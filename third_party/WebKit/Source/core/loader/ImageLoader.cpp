@@ -78,18 +78,23 @@ static ImageLoader::BypassMainWorldBehavior ShouldBypassMainWorldCSP(
 
 class ImageLoader::Task {
  public:
-  static std::unique_ptr<Task> Create(ImageLoader* loader,
-                                      UpdateFromElementBehavior update_behavior,
-                                      ReferrerPolicy referrer_policy) {
-    return WTF::MakeUnique<Task>(loader, update_behavior, referrer_policy);
+  static std::unique_ptr<Task> Create(
+      ImageLoader* loader,
+      UpdateFromElementBehavior update_behavior,
+      RestartAnimationBehavior restart_animation,
+      ReferrerPolicy referrer_policy) {
+    return WTF::MakeUnique<Task>(loader, update_behavior, restart_animation,
+                                 referrer_policy);
   }
 
   Task(ImageLoader* loader,
        UpdateFromElementBehavior update_behavior,
+       RestartAnimationBehavior restart_animation,
        ReferrerPolicy referrer_policy)
       : loader_(loader),
         should_bypass_main_world_csp_(ShouldBypassMainWorldCSP(loader)),
         update_behavior_(update_behavior),
+        restart_animation_(restart_animation),
         weak_factory_(this),
         referrer_policy_(referrer_policy) {
     ExecutionContext& context = loader_->GetElement()->GetDocument();
@@ -117,12 +122,12 @@ class ImageLoader::Task {
     if (script_state_->ContextIsValid()) {
       ScriptState::Scope scope(script_state_.get());
       loader_->DoUpdateFromElement(should_bypass_main_world_csp_,
-                                   update_behavior_, request_url_,
-                                   referrer_policy_);
+                                   update_behavior_, restart_animation_,
+                                   request_url_, referrer_policy_);
     } else {
       loader_->DoUpdateFromElement(should_bypass_main_world_csp_,
-                                   update_behavior_, request_url_,
-                                   referrer_policy_);
+                                   update_behavior_, restart_animation_,
+                                   request_url_, referrer_policy_);
     }
   }
 
@@ -137,6 +142,7 @@ class ImageLoader::Task {
   WeakPersistent<ImageLoader> loader_;
   BypassMainWorldBehavior should_bypass_main_world_csp_;
   UpdateFromElementBehavior update_behavior_;
+  RestartAnimationBehavior restart_animation_;
   RefPtr<ScriptState> script_state_;
   WeakPtrFactory<Task> weak_factory_;
   ReferrerPolicy referrer_policy_;
@@ -337,9 +343,10 @@ inline void ImageLoader::ClearFailedLoadURL() {
 
 inline void ImageLoader::EnqueueImageLoadingMicroTask(
     UpdateFromElementBehavior update_behavior,
+    RestartAnimationBehavior restart_animation,
     ReferrerPolicy referrer_policy) {
   std::unique_ptr<Task> task =
-      Task::Create(this, update_behavior, referrer_policy);
+      Task::Create(this, update_behavior, restart_animation, referrer_policy);
   pending_task_ = task->CreateWeakPtr();
   Microtask::EnqueueMicrotask(
       WTF::Bind(&Task::Run, WTF::Passed(std::move(task))));
@@ -358,11 +365,13 @@ void ImageLoader::UpdateImageState(ImageResourceContent* new_image) {
   delay_until_image_notify_finished_ = nullptr;
 }
 
-void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
-                                      UpdateFromElementBehavior update_behavior,
-                                      const KURL& url,
-                                      ReferrerPolicy referrer_policy,
-                                      UpdateType update_type) {
+void ImageLoader::DoUpdateFromElement(
+    BypassMainWorldBehavior bypass_behavior,
+    UpdateFromElementBehavior update_behavior,
+    RestartAnimationBehavior restart_animation,
+    const KURL& url,
+    ReferrerPolicy referrer_policy,
+    UpdateType update_type) {
   // FIXME: According to
   // http://www.whatwg.org/specs/web-apps/current-work/multipage/embedded-content.html#the-img-element:the-img-element-55
   // When "update image" is called due to environment changes and the load
@@ -459,11 +468,27 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
     }
   }
 
-  if (LayoutImageResource* image_resource = GetLayoutImageResource())
-    image_resource->ResetAnimation();
+  // https://html.spec.whatwg.org/multipage/images.html#update-the-image-data
+  // Step 5.3. If the list of available images contains an entry for key, then:
+  //
+  // The list of available images is implemented by MemoryCache and thus
+  // it is possible that we don't hit MemoryCache even we set img.src to the
+  // same value.
+  // If |image_complete_| is false here, then the loading is done asynchronously
+  // and thus we consider the image was not in the list of available images.
+  // TODO(hiroshige): Cleaner implementation?
+  if (new_image && image_complete_) {
+    // Step 5.3.7. Queue a task to restart the animation if restart animation is
+    // set ...
+    if (restart_animation == kShouldRestartAnimation) {
+      if (LayoutImageResource* image_resource = GetLayoutImageResource())
+        image_resource->ResetAnimation();
+    }
+  }
 }
 
 void ImageLoader::UpdateFromElement(UpdateFromElementBehavior update_behavior,
+                                    RestartAnimationBehavior restart_animation,
                                     ReferrerPolicy referrer_policy) {
   AtomicString image_source_url = element_->ImageSourceURL();
   suppress_error_events_ = (update_behavior == kUpdateSizeChanged);
@@ -507,8 +532,9 @@ void ImageLoader::UpdateFromElement(UpdateFromElementBehavior update_behavior,
 
   KURL url = ImageSourceToKURL(image_source_url);
   if (ShouldLoadImmediately(url)) {
-    DoUpdateFromElement(kDoNotBypassMainWorldCSP, update_behavior, url,
-                        referrer_policy, UpdateType::kSync);
+    DoUpdateFromElement(kDoNotBypassMainWorldCSP, update_behavior,
+                        restart_animation, url, referrer_policy,
+                        UpdateType::kSync);
     return;
   }
   // Allow the idiom "img.src=''; img.src='.." to clear down the image before an
@@ -526,8 +552,10 @@ void ImageLoader::UpdateFromElement(UpdateFromElementBehavior update_behavior,
   // Don't load images for inactive documents. We don't want to slow down the
   // raw HTML parsing case by loading images we don't intend to display.
   Document& document = element_->GetDocument();
-  if (document.IsActive())
-    EnqueueImageLoadingMicroTask(update_behavior, referrer_policy);
+  if (document.IsActive()) {
+    EnqueueImageLoadingMicroTask(update_behavior, restart_animation,
+                                 referrer_policy);
+  }
 }
 
 KURL ImageLoader::ImageSourceToKURL(AtomicString image_source_url) const {

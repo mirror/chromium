@@ -124,7 +124,9 @@ class CORE_EXPORT HTMLImageElement final
   FloatSize DefaultDestinationSize(const FloatSize&) const override;
 
   // public so that HTMLPictureElement can call this as well.
-  void SelectSourceURL(ImageLoader::UpdateFromElementBehavior);
+  void SelectSourceURL(ImageLoader::UpdateFromElementBehavior,
+                       ImageLoader::RestartAnimationBehavior =
+                           ImageLoader::kDoNotRestartAnimation);
 
   void SetIsFallbackImage() { is_fallback_image_ = true; }
 
