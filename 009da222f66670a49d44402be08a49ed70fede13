@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af683a5f_5430b250",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-10-14T18:56:30Z",
+      "side": 1,
+      "message": "The order didn\u0027t. The mock was hiding the true expectation on the PC.\n\nNow fixed.",
+      "parentUuid": "c989476e_b32db9b0",
+      "revId": "009da222f66670a49d44402be08a49ed70fede13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4625e7e_e0032851",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f02c37d4_a96dea62",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-10-14T18:56:30Z",
+      "side": 1,
+      "message": "This is deliberate, in order to make sure we\u0027re not confusing local variables with differently-scoped variables (another change in this CL fixes one such error).\nMatter of style?",
+      "parentUuid": "b4625e7e_e0032851",
+      "revId": "009da222f66670a49d44402be08a49ed70fede13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3efdfd40_a3b4e00c",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-13T17:37:13Z",
       "side": 1,
       "message": "Chaining the events like this obscures what we want to test, which is the order between SRD resolving and the events firing. Even if each operation would immediately resolve, each then() will occur in the next event loop. Creating an answer and setting remote description with the answer makes connect_pcs() resolve much later.\n\nWe only care about setting the remote description of pc_b, this test does not require answering. I think this should be:\n\npc_a create offer\npc_a setLocalDescription\npc_b setRemoteDescription\n\nSetting the local description is enough to make adding and removing of remote tracks/streams possible and the IDs to be retained between create offers.\nThere is no need to answer.",
+      "revId": "009da222f66670a49d44402be08a49ed70fede13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "110488f7_38661544",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-10-14T18:56:30Z",
+      "side": 1,
+      "message": "It turned out that neither the onicecandidate handlers nor the pc_a.setLocalDescription were needed. Now reduced to the bare minimum, and commented accordingly.",
+      "parentUuid": "3efdfd40_a3b4e00c",
       "revId": "009da222f66670a49d44402be08a49ed70fede13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
