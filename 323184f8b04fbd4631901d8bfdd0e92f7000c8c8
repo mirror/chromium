@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46367fd0_42d23ab9",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-14T00:45:40Z",
+      "side": 1,
+      "message": "I\u0027d recommend instead of using heuristics in this comment, you refer to CheckerImageTracker and specifically what it may or may not do? I guess my main quarrel is that \"heuristics\" is pretty ambiguous and so unspecified and content transition sync comments read pretty similar.",
+      "range": {
+        "startLine": 79,
+        "startChar": 11,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "323184f8b04fbd4631901d8bfdd0e92f7000c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003a209a_e86e20d3",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-14T00:45:40Z",
+      "side": 1,
+      "message": "itym images.",
+      "range": {
+        "startLine": 82,
+        "startChar": 41,
+        "endLine": 82,
+        "endChar": 48
+      },
+      "revId": "323184f8b04fbd4631901d8bfdd0e92f7000c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59601d9a_41084522",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-14T00:45:40Z",
+      "side": 1,
+      "message": "I don\u0027t think this is true. There are cases where we can still use heuristics as long as it\u0027s indistinguishable from sync",
+      "revId": "323184f8b04fbd4631901d8bfdd0e92f7000c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4628b9_07aea951",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-14T00:45:40Z",
+      "side": 1,
+      "message": "This comment is incorrect. We can\u0027t ignore heuristics when async is specified (otherwise a lot of content will flicker or we will waste a lot of work if images are small)",
+      "revId": "323184f8b04fbd4631901d8bfdd0e92f7000c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96fb04df_98cf186f",
+        "filename": "third_party/WebKit/Source/core/html/canvas/ImageElementBase.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-14T00:45:40Z",
+      "side": 1,
+      "message": "This needs comments",
+      "revId": "323184f8b04fbd4631901d8bfdd0e92f7000c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6f9abf_32e6f479",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-14T00:45:40Z",
+      "side": 1,
+      "message": "To be consistent, add comments here as well please.",
+      "revId": "323184f8b04fbd4631901d8bfdd0e92f7000c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
