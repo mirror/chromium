@@ -105,6 +105,24 @@
       "revId": "4d477166fec35f1db7a1209d5282a3d52552d27a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba36439_93f94847",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-14T15:44:26Z",
+      "side": 1,
+      "message": "\u003e \n\u003e My thought would be that EraseIf, if it triggers often, would involve a lot repeated copying of elements when the underlying structure is a vector (such as a flat_set).  (Maybe each erase causes every element to shift to the left.  With multiple erases, if implemented improperly, each element will get moved multiple times.)  I thought it would swamp the cases of copying to a new structure, where each element will be copied at most once.\n\nYes, this was behind my comment \"Something I learned: flat_set\u0027s are actually vector\u0027s, and so erase() is very expensive.\" Fortunately (I also learned that) all the containers have a custom EraseIf(). This is what I meant by \"the standard they rally behind\".",
+      "parentUuid": "09dcb4a8_50d7b690",
+      "revId": "4d477166fec35f1db7a1209d5282a3d52552d27a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

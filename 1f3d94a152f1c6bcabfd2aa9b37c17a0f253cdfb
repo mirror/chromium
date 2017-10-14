@@ -65,6 +65,72 @@
     },
     {
       "key": {
+        "uuid": "555cc9ff_74caeb8f",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-14T15:44:26Z",
+      "side": 1,
+      "message": "I explicitly decided that the reader could figure that out, but I did make it more readable",
+      "parentUuid": "9200e788_57df94bd",
+      "range": {
+        "startLine": 489,
+        "startChar": 69,
+        "endLine": 489,
+        "endChar": 70
+      },
+      "revId": "1f3d94a152f1c6bcabfd2aa9b37c17a0f253cdfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "032cb219_cc525038",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-14T15:44:26Z",
+      "side": 1,
+      "message": "A comment is not necessary since it (intentionally) behaves identically to STL\u0027s set-intersection.",
+      "parentUuid": "dfe427f4_62b3f797",
+      "revId": "1f3d94a152f1c6bcabfd2aa9b37c17a0f253cdfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c82088b_b8ea3b41",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-14T15:44:26Z",
+      "side": 1,
+      "message": "No, y\u0027all just spell it wrong. Done.",
+      "parentUuid": "721d2485_c0ae6833",
+      "range": {
+        "startLine": 489,
+        "startChar": 6,
+        "endLine": 489,
+        "endChar": 13
+      },
+      "revId": "1f3d94a152f1c6bcabfd2aa9b37c17a0f253cdfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a4ee80d_1a723f12",
         "filename": "components/omnibox/browser/url_index_private_data.cc",
         "patchSetId": 4
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "7cd7b0b9_cfd9f321",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-14T15:44:26Z",
+      "side": 1,
+      "message": "Ya, it pairs with erase-if better.",
+      "parentUuid": "4a4ee80d_1a723f12",
+      "range": {
+        "startLine": 491,
+        "startChar": 6,
+        "endLine": 491,
+        "endChar": 22
+      },
+      "revId": "1f3d94a152f1c6bcabfd2aa9b37c17a0f253cdfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dedf1434_cb123f39",
         "filename": "components/omnibox/browser/url_index_private_data.cc",
         "patchSetId": 4
@@ -108,6 +198,30 @@
       "revId": "1f3d94a152f1c6bcabfd2aa9b37c17a0f253cdfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d775f8_447849f9",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-14T15:44:26Z",
+      "side": 1,
+      "message": "I have high confidence that our compiler won\u0027t re-evaluate it, but I do like the idea of someday adding a range constructor.",
+      "parentUuid": "dedf1434_cb123f39",
+      "range": {
+        "startLine": 493,
+        "startChar": 41,
+        "endLine": 493,
+        "endChar": 51
+      },
+      "revId": "1f3d94a152f1c6bcabfd2aa9b37c17a0f253cdfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
