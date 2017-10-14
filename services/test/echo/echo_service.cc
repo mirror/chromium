@@ -13,13 +13,16 @@ std::unique_ptr<service_manager::Service> CreateEchoService() {
 }
 
 EchoService::EchoService() {
+  LOG(ERROR) << "JAMES new EchoService";
   registry_.AddInterface<mojom::Echo>(
       base::Bind(&EchoService::BindEchoRequest, base::Unretained(this)));
 }
 
 EchoService::~EchoService() {}
 
-void EchoService::OnStart() {}
+void EchoService::OnStart() {
+  LOG(ERROR) << "JAMES OnStart";
+}
 
 void EchoService::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
@@ -29,12 +32,18 @@ void EchoService::OnBindInterface(
 }
 
 void EchoService::BindEchoRequest(mojom::EchoRequest request) {
+  LOG(ERROR) << "JAMES BindEchoRequest";
   bindings_.AddBinding(this, std::move(request));
 }
 
 void EchoService::EchoString(const std::string& input,
                              EchoStringCallback callback) {
   std::move(callback).Run(input);
+}
+
+void EchoService::Quit() {
+  LOG(ERROR) << "JAMES Quit";
+  context()->RequestQuit();
 }
 
 }  // namespace echo
