@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b3cacdc_22ef6ee4",
+        "filename": "gpu/ipc/common/gpu_preferences_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-14T02:58:40Z",
+      "side": 1,
+      "message": "This way is a bit unsafe too \u003d)\nIf you want to do this, I would assert that GpuPreferences is a POD. I think the alignas method was probably simpler fwiw.",
+      "revId": "91513aa2499fe948da8b82c1aa6b8d9de5fa0660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
