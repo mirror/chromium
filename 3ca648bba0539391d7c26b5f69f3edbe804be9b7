@@ -16,6 +16,24 @@
       "revId": "3ca648bba0539391d7c26b5f69f3edbe804be9b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15f7ce4_6357bd26",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-14T01:21:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "173121bf_b92b08c1",
+      "revId": "3ca648bba0539391d7c26b5f69f3edbe804be9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
