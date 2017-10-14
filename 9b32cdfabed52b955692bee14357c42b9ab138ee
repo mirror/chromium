@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d4b2d3f_74fe804d",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-14T00:44:22Z",
+      "side": 1,
+      "message": "You can move this to the #enable-section span as the default color, so you\u0027ll only need to toggle between \"disabled-text\":\"\"",
+      "revId": "9b32cdfabed52b955692bee14357c42b9ab138ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9614992_8788718f",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-14T00:44:22Z",
+      "side": 1,
+      "message": "I think semantically it makes more sense for this to be class than id. ID usually functionally identifies a thing. classes are more commonly used for toggling styles.",
+      "revId": "9b32cdfabed52b955692bee14357c42b9ab138ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399b4316_8bd0c1cc",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-14T00:44:22Z",
+      "side": 1,
+      "message": "see above comment regarding using just one class.",
+      "revId": "9b32cdfabed52b955692bee14357c42b9ab138ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
