@@ -51,6 +51,24 @@
       "revId": "22f918b4d02d158959b544416c1c45a1c82b6603",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a991034_326b64e3",
+        "filename": "chrome/browser/extensions/api/automation_internal/automation_internal_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-14T00:33:37Z",
+      "side": 1,
+      "message": "Good catch!  Didn\u0027t change the code, so didn\u0027t notice.  Fixed!",
+      "parentUuid": "f26a89b0_c18b0632",
+      "revId": "22f918b4d02d158959b544416c1c45a1c82b6603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
