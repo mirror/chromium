@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "afeeb378_bdb8614e",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-14T02:26:12Z",
+      "side": 1,
+      "message": "This looks good.",
+      "parentUuid": "4e36500d_8f5a29d0",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e6d556b_63df6aed",
         "filename": "ash/system/power/power_button_screenshot_controller.cc",
         "patchSetId": 9
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "hmm, I think you mean volume down kept pressed and pressing volume up key?\n\nLogically, it can happen, if volume down pressed and then volume up pressed and they are all within 150ms. However, this doesn\u0027t hurt UX much considering 150ms is very short. If you think we need to do, I can add volume up key condition to if-condition and add test coverage.",
       "parentUuid": "7e6d556b_63df6aed",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f94697_c37e99d5",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-14T02:26:12Z",
+      "side": 1,
+      "message": "It sounds OK to eat volume up, I would leave as-is.",
+      "parentUuid": "0e54105c_49f6e161",
       "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -258,6 +294,24 @@
       "side": 1,
       "message": "hmm... if ui::KeyEvent, how would we initialize it by using which ctor?",
       "parentUuid": "44a8a455_1a1105b9",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353a0a84_69f2f1a8",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-14T02:26:12Z",
+      "side": 1,
+      "message": "Ah, right. This is also fine as-is.",
+      "parentUuid": "3387c582_a9df0395",
       "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
