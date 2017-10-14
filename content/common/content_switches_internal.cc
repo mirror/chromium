@@ -42,7 +42,7 @@ const base::Feature kUseZoomForDsfEnabledByDefault {
 
 bool IsUseZoomForDSFEnabledByDefault() {
 #if defined(OS_LINUX)
-  return false;
+  return true;
 #elif defined(OS_WIN)
   return base::FeatureList::IsEnabled(kUseZoomForDsfEnabledByDefault);
 #else

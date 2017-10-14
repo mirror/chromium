@@ -1136,7 +1136,6 @@ CompositorFrame SurfaceAggregator::Aggregate(const SurfaceId& surface_id) {
   PropagateCopyRequestPasses();
   has_copy_requests_ = !copy_request_passes_.empty();
   frame.metadata.may_contain_video = prewalk_result.may_contain_video;
-  frame.metadata.device_scale_factor = root_surface_frame.device_scale_factor();
 
   CopyUndrawnSurfaces(&prewalk_result);
   referenced_surfaces_.insert(surface_id);
