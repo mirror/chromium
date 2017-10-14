@@ -11,6 +11,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
 #include "base/strings/string16.h"
+#include "content/browser/loader/url_loader_request_handler.h"
 #include "content/common/content_export.h"
 #include "net/http/http_byte_range.h"
 #include "url/gurl.h"
@@ -31,16 +32,13 @@ class AppCacheResponseInfo;
 class AppCacheResponseReader;
 class AppCacheStorage;
 class AppCacheURLLoaderJob;
-class URLLoaderFactoryGetter;
-class URLRequestJob;
-struct SubresourceLoadInfo;
 
 // Interface for an AppCache job. This is used to send data stored in the
 // AppCache to networking consumers.
 // Subclasses implement this interface to wrap custom job objects like
 // URLRequestJob, URLLoaderJob, etc to ensure that these dependencies stay out
 // of the AppCache code.
-class CONTENT_EXPORT AppCacheJob : public base::SupportsWeakPtr<AppCacheJob> {
+class CONTENT_EXPORT AppCacheJob {
  public:
   enum DeliveryType {
     AWAITING_DELIVERY_ORDERS,
@@ -67,8 +65,7 @@ class CONTENT_EXPORT AppCacheJob : public base::SupportsWeakPtr<AppCacheJob> {
       AppCacheRequest* request,
       net::NetworkDelegate* network_delegate,
       OnPrepareToRestartCallback restart_callback,
-      std::unique_ptr<SubresourceLoadInfo> subresource_load_info,
-      URLLoaderFactoryGetter* loader_factory_getter);
+      LoaderCallback loader_callback);
 
   virtual ~AppCacheJob();
 
@@ -109,7 +106,7 @@ class CONTENT_EXPORT AppCacheJob : public base::SupportsWeakPtr<AppCacheJob> {
   virtual void DeliverErrorResponse() = 0;
 
   // Returns a weak pointer reference to the job.
-  virtual base::WeakPtr<AppCacheJob> GetWeakPtr();
+  virtual base::WeakPtr<AppCacheJob> GetWeakPtr() = 0;
 
   // Returns the underlying URLRequestJob if any. This only applies to
   // AppCaches loaded via the URLLoader mechanism.
@@ -149,8 +146,6 @@ class CONTENT_EXPORT AppCacheJob : public base::SupportsWeakPtr<AppCacheJob> {
 
   // Used to read the cache.
   std::unique_ptr<AppCacheResponseReader> reader_;
-
-  base::WeakPtrFactory<AppCacheJob> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(AppCacheJob);
 };
