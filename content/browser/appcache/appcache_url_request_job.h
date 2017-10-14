@@ -28,9 +28,9 @@ class AppCacheURLRequestJobTest;
 
 // A net::URLRequestJob derivative that knows how to return a response stored
 // in the appcache.
-class CONTENT_EXPORT AppCacheURLRequestJob : public net::URLRequestJob,
+class CONTENT_EXPORT AppCacheURLRequestJob : public AppCacheJob,
                                              public AppCacheStorage::Delegate,
-                                             public AppCacheJob {
+                                             public net::URLRequestJob {
  public:
   // Callback that will be invoked before the request is restarted. The caller
   // can use this opportunity to grab state from the AppCacheURLRequestJob to
@@ -49,6 +49,8 @@ class CONTENT_EXPORT AppCacheURLRequestJob : public net::URLRequestJob,
   void DeliverNetworkResponse() override;
   void DeliverErrorResponse() override;
   net::URLRequestJob* AsURLRequestJob() override;
+  base::WeakPtr<AppCacheJob> GetWeakPtr() override;
+  base::WeakPtr<AppCacheURLRequestJob> GetDerivedWeakPtr();
 
   // Accessors for the info about the appcached response, if any,
   // that this job has been instructed to deliver. These are only
@@ -133,6 +135,8 @@ class CONTENT_EXPORT AppCacheURLRequestJob : public net::URLRequestJob,
   scoped_refptr<AppCache> cache_;
   scoped_refptr<AppCacheGroup> group_;
   OnPrepareToRestartCallback on_prepare_to_restart_callback_;
+  base::WeakPtrFactory<AppCacheURLRequestJob> weak_factory_;
+  DISALLOW_COPY_AND_ASSIGN(AppCacheURLRequestJob);
 };
 
 }  // namespace content

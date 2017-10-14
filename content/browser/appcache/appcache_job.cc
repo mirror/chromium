@@ -23,13 +23,12 @@ std::unique_ptr<AppCacheJob> AppCacheJob::Create(
     AppCacheRequest* request,
     net::NetworkDelegate* network_delegate,
     OnPrepareToRestartCallback restart_callback,
-    std::unique_ptr<SubresourceLoadInfo> subresource_load_info,
-    URLLoaderFactoryGetter* loader_factory_getter) {
+    LoaderCallback loader_callback) {
   std::unique_ptr<AppCacheJob> job;
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    job.reset(new AppCacheURLLoaderJob(
-        *(request->GetResourceRequest()), request->AsURLLoaderRequest(),
-        storage, std::move(subresource_load_info), loader_factory_getter));
+    job.reset(new AppCacheURLLoaderJob(*(request->GetResourceRequest()),
+                                       request->AsURLLoaderRequest(), storage,
+                                       std::move(loader_callback)));
   } else {
     job.reset(new AppCacheURLRequestJob(
         request->GetURLRequest(), network_delegate, storage, host,
@@ -62,10 +61,6 @@ bool AppCacheJob::IsCacheEntryNotFound() const {
   return cache_entry_not_found_;
 }
 
-base::WeakPtr<AppCacheJob> AppCacheJob::GetWeakPtr() {
-  return weak_factory_.GetWeakPtr();
-}
-
 net::URLRequestJob* AppCacheJob::AsURLRequestJob() {
   return nullptr;
 }
@@ -75,9 +70,7 @@ AppCacheURLLoaderJob* AppCacheJob::AsURLLoaderJob() {
 }
 
 AppCacheJob::AppCacheJob()
-    : cache_entry_not_found_(false),
-      delivery_type_(AWAITING_DELIVERY_ORDERS),
-      weak_factory_(this) {}
+    : cache_entry_not_found_(false), delivery_type_(AWAITING_DELIVERY_ORDERS) {}
 
 void AppCacheJob::InitializeRangeRequestInfo(
     const net::HttpRequestHeaders& headers) {
