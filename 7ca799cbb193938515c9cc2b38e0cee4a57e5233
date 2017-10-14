@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b6b0e39_7f72f639",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-14T01:10:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6adc1ee2_608dbc49",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 39
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8365f140_f6aacd44",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b7f280_dca09e89",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-14T01:10:43Z",
+      "side": 1,
+      "message": "Let\u0027s use PrefObserver then :)",
+      "parentUuid": "8365f140_f6aacd44",
+      "range": {
+        "startLine": 25,
+        "startChar": 21,
+        "endLine": 25,
+        "endChar": 48
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "76aa3e48_d3637238",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-14T01:10:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30ceab64_d59fe4a4",
+      "range": {
+        "startLine": 30,
+        "startChar": 53,
+        "endLine": 30,
+        "endChar": 64
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cd71679_1b6661ff",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bdd9d48_b06320ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-14T01:10:43Z",
+      "side": 1,
+      "message": "Done, and yes the native side is also one observer per pref.",
+      "parentUuid": "4cd71679_1b6661ff",
+      "range": {
+        "startLine": 45,
+        "startChar": 19,
+        "endLine": 45,
+        "endChar": 22
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "69740dad_ede2a9c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-14T01:10:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d916bd3_68e1d8cd",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 48
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8174d42d_dc503f72",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "7a2df901_66dd34a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-14T01:10:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8174d42d_dc503f72",
+      "range": {
+        "startLine": 69,
+        "startChar": 19,
+        "endLine": 69,
+        "endChar": 29
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af4764bd_313708b3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
         "patchSetId": 1
@@ -151,6 +295,30 @@
       "writtenOn": "2017-10-12T12:15:42Z",
       "side": 1,
       "message": "Can you\n1) add to the comment where exactly the pref names are coming from (i.e. pref_names.{cc,h})?\n2) add a TODO to automatically generate them?\n\nIf we start doing this at scale, we should maybe also think about whether we even want to represent the pref names as strings in Java, because that could add a lot of overhead (both to APK size and memory use). Maybe on the Java side they could just be ints, with methods to get the pref names if necessary (which should only be for debugging or so).",
+      "range": {
+        "startLine": 59,
+        "startChar": 67,
+        "endLine": 59,
+        "endChar": 78
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f95b978e_d8fd289e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-14T01:10:43Z",
+      "side": 1,
+      "message": "Yes overhead can be an issue. I agree that having them as int would save a lot. We could add an array of preferences exposed to Java in PrefServiceBridge like ChromeFeatureList, and use int representation in the same order for those preferences in Java.",
+      "parentUuid": "af4764bd_313708b3",
       "range": {
         "startLine": 59,
         "startChar": 67,
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "aff27f15_8489ba7c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-14T01:10:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4265d5c_35bcfebd",
+      "range": {
+        "startLine": 708,
+        "startChar": 60,
+        "endLine": 710,
+        "endChar": 50
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49d0a13b_735e17d1",
         "filename": "chrome/browser/android/preferences/pref_change_registrar_android.cc",
         "patchSetId": 1
@@ -229,6 +421,30 @@
       "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3eeafba_eed2e86f",
+        "filename": "chrome/browser/android/preferences/pref_change_registrar_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-14T01:10:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49d0a13b_735e17d1",
+      "range": {
+        "startLine": 44,
+        "startChar": 50,
+        "endLine": 44,
+        "endChar": 61
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "036f936f_d0c08211",
+        "filename": "chrome/browser/android/preferences/pref_change_registrar_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-14T01:10:43Z",
+      "side": 1,
+      "message": "I see.",
+      "parentUuid": "7bb29f72_77c998a5",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99eeccc5_0e7a22a3",
         "filename": "chrome/browser/android/preferences/pref_change_registrar_android.h",
         "patchSetId": 1
@@ -278,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "f1de8574_148a8789",
+        "filename": "chrome/browser/android/preferences/pref_change_registrar_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-14T01:10:43Z",
+      "side": 1,
+      "message": "Yes this can be private.",
+      "parentUuid": "99eeccc5_0e7a22a3",
+      "range": {
+        "startLine": 28,
+        "startChar": 26,
+        "endLine": 28,
+        "endChar": 37
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19d5df68_8536fd31",
         "filename": "chrome/browser/android/preferences/pref_change_registrar_android.h",
         "patchSetId": 1
@@ -289,6 +553,30 @@
       "writtenOn": "2017-10-12T12:15:42Z",
       "side": 1,
       "message": "I think you could just make this a direct member.",
+      "range": {
+        "startLine": 32,
+        "startChar": 39,
+        "endLine": 32,
+        "endChar": 61
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d473f0_6aeba39b",
+        "filename": "chrome/browser/android/preferences/pref_change_registrar_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-14T01:10:43Z",
+      "side": 1,
+      "message": "Do you mean making PrefChangeRegistrarAndroid subclass of PrefChangeRegistrar? PrefChangeRegistrar is set to final class though...",
+      "parentUuid": "19d5df68_8536fd31",
       "range": {
         "startLine": 32,
         "startChar": 39,
