@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "408738f5_75822090",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-14T00:34:54Z",
+      "side": 1,
+      "message": "fixed locally",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
