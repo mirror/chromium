@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd6c8a06_339edb14",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:14:14Z",
+      "side": 1,
+      "message": "nit: I believe that \"constexpr char[]\" is preferred when possible.",
+      "range": {
+        "startLine": 58,
+        "startChar": 11,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a750103b_f948bd45",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:14:14Z",
+      "side": 1,
+      "message": "Do you really need to expose these in the header?  I\u0027m actually not sure what the currently preferred style is, but this looks odd to me.  I sent a message on chromium-dev to see what the community preference is.",
+      "range": {
+        "startLine": 58,
+        "startChar": 1,
+        "endLine": 66,
+        "endChar": 61
+      },
+      "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fcbcd7f_d684db75",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:14:14Z",
+      "side": 1,
+      "message": "Is this an enum?  Could it be defined as one, if so?",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8858665e_b2f283e1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:14:14Z",
+      "side": 1,
+      "message": "nit: In general, \"default\" is discouraged vs. explicitly listing all of the enum values.  I\u0027m not sure whether that applies here, given that you\u0027re folding quite a lot of cases into the \"other\" type.",
+      "range": {
+        "startLine": 1975,
+        "startChar": 4,
+        "endLine": 1975,
+        "endChar": 11
+      },
+      "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c293acd_1068ff57",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2042,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:14:14Z",
+      "side": 1,
+      "message": "nit: \"EQT\" is not an acronym that\u0027s obvious to most Chromium developers... or at least, it\u0027s not an acronym that\u0027s obvious to me.  Please spell out the acronym (or use a briefer, but equivalent, phrasing).",
+      "range": {
+        "startLine": 2042,
+        "startChar": 41,
+        "endLine": 2042,
+        "endChar": 44
+      },
+      "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "964d6132_f3768ef7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:14:14Z",
+      "side": 1,
+      "message": "It\u0027s not safe to use the UMA_HISTOGRAM_* macros with runtime-variable strings.  Instead, please use the function base::UmaHistogramTimes(), which is slightly less optimized, but does support runtime-variable strings.",
+      "range": {
+        "startLine": 2045,
+        "startChar": 2,
+        "endLine": 2046,
+        "endChar": 66
+      },
+      "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289e42dc_6d2fb534",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 67021,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:14:14Z",
+      "side": 1,
+      "message": "Please use histogram_suffixes to reduce the amount of repetition introduced for these histograms.",
+      "range": {
+        "startLine": 67021,
+        "startChar": 72,
+        "endLine": 67021,
+        "endChar": 0
+      },
+      "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
