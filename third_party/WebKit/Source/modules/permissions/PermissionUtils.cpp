@@ -4,6 +4,8 @@
 
 #include "modules/permissions/PermissionUtils.h"
 
+#include <utility>
+
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalFrame.h"
@@ -18,6 +20,7 @@ namespace blink {
 using MojoPermissionDescriptor = mojom::blink::PermissionDescriptor;
 using mojom::blink::PermissionDescriptorPtr;
 using mojom::blink::PermissionName;
+using mojom::blink::ClipboardAccess;
 
 bool ConnectToPermissionService(
     ExecutionContext* execution_context,
@@ -49,6 +52,19 @@ PermissionDescriptorPtr CreateMidiPermissionDescriptor(bool sysex) {
   midi_extension->sysex = sysex;
   descriptor->extension = mojom::blink::PermissionDescriptorExtension::New();
   descriptor->extension->set_midi(std::move(midi_extension));
+  return descriptor;
+}
+
+PermissionDescriptorPtr CreateClipboardPermissionDescriptor(
+    ClipboardAccess access,
+    bool requireGesture) {
+  auto descriptor =
+      CreatePermissionDescriptor(mojom::blink::PermissionName::CLIPBOARD);
+  auto clipboard_extension = mojom::blink::ClipboardPermissionDescriptor::New();
+  clipboard_extension->access = access;
+  clipboard_extension->requireGesture = requireGesture;
+  descriptor->extension = mojom::blink::PermissionDescriptorExtension::New();
+  descriptor->extension->set_clipboard(std::move(clipboard_extension));
   return descriptor;
 }
 
