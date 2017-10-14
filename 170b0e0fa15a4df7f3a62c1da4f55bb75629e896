@@ -39,6 +39,30 @@
       "revId": "170b0e0fa15a4df7f3a62c1da4f55bb75629e896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de894e2_cc1752aa",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-14T04:08:51Z",
+      "side": 1,
+      "message": "I think it may make more sense to look into getting rid of DevToolsNetworkConditions.\n\nMore generally, what\u0027s the motivation for that?  StructTraits code is pretty hideous, requires a lot more code, and requires both directions be implemented, even when only one is actually needed, and dead code always seems like a bad idea to me.  It does allow for unit testing, which is certainly nice.",
+      "parentUuid": "39cc0fff_1b75927c",
+      "range": {
+        "startLine": 1219,
+        "startChar": 0,
+        "endLine": 1226,
+        "endChar": 3
+      },
+      "revId": "170b0e0fa15a4df7f3a62c1da4f55bb75629e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
