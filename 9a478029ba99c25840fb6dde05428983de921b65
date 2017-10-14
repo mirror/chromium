@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "043e9ee7_b3a892ef",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-14T01:24:38Z",
+      "side": 1,
+      "message": "Since this is internal-to-libcontent code, we are allowed to cast-to-RenderFrameHostImpl:\n\n  DCHECK_EQ(static_cast\u003cRenderFrameHostImpl*\u003e(RenderFrameHost::FromID(process_id, routing_id))-\u003edelegate()-\u003eAsWebContents(), web_contents);",
+      "parentUuid": "0a14731a_f6abbef2",
+      "range": {
+        "startLine": 35,
+        "startChar": 41,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "399c7198_13c817a9",
         "filename": "content/browser/media/android/media_player_renderer.cc",
         "patchSetId": 6
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "I had experimented with this here: crrev.com/c/713758, but after some discussion it was determined that we don\u0027t want to create n WCOs for n MPRs",
       "parentUuid": "cdbf27c0_7ae80352",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 75
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c15b8d1_589f9a8f",
+        "filename": "content/browser/media/android/media_player_renderer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-14T01:24:38Z",
+      "side": 1,
+      "message": "Hmm...There is something I\u0027m misunderstanding here. I took a look at the design doc, and the comments don\u0027t seem to explain *why* we are afraid of N WebContentsObservers; just that we are. If we are going with this approach, then the rationale should be documented in the MediaPlayerRendererWebContentsObserver class comments.\n\nFrom what I can see on the surface, this solution feels over-engineered: We are adding about 4X the LOC, having WebContents own its own observer (a little weird), and managing an extra set of raw pointers.\n\nIs this a performance consideration, w.r.t. WebContents\u0027s observer list growing too large? If so, consider: How many MPR\u0027s are there ever going to be for one WebContents instance? Typically 1 to 2, right? Maybe up to 5 at most in extreme cases? More than that, and I bet the Android device is already so slowed to a crawl that we don\u0027t really care how large the WCO list is.",
+      "parentUuid": "4e55eafa_45fd0cf6",
       "range": {
         "startLine": 41,
         "startChar": 0,
