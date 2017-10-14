@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fc019580_9f66b8ce",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-14T00:38:36Z",
+      "side": 1,
+      "message": "The wonders of Python using indentation as part of the syntax; I doubt that git cl format _can_ safely do anything in general.",
+      "parentUuid": "81d75510_43bb62e9",
+      "revId": "c96e9729ae8d58141bb5b778992bfb06f6451c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7532856_6a7624fe",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 1
@@ -118,6 +136,24 @@
       "side": 1,
       "message": "Ah, the --tftp booth method (current default) is flaky on some configs, like connecting an edge router to an ACER.  --netboot works around this for now.  Hopefully we\u0027ll have the default path reliable again soon.",
       "parentUuid": "5e351979_8765fda7",
+      "revId": "c96e9729ae8d58141bb5b778992bfb06f6451c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637ee1c2_6bd03fec",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-14T00:38:36Z",
+      "side": 1,
+      "message": "Can we add a TODO to mention that?",
+      "parentUuid": "6e0f812b_2d436fcd",
       "revId": "c96e9729ae8d58141bb5b778992bfb06f6451c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
