@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64c806f3_2291683d",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-14T02:19:33Z",
+      "side": 1,
+      "message": "nit: Could you write a detailed comment, either here or above InitLocalPref() that explains what this feature is and why it works the way it does? Given the amount of trouble I\u0027ve had in our in-person discussions figuring out the intended goal, it would be nice to write it down.",
+      "revId": "b209da4ace025c48a43621272bc865c9f793d638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
