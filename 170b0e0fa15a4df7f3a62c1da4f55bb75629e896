@@ -63,6 +63,30 @@
       "revId": "170b0e0fa15a4df7f3a62c1da4f55bb75629e896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e4d885_b1bbe7ae",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-14T04:12:38Z",
+      "side": 1,
+      "message": "1) For security reviews, we prefer to centralize serialization and deserialization in one place, because it can be security sensitive. It\u0027s true that this struct is simple enough that it doesn\u0027t (currently) matter, but we\u0027d prefer to be consistent.\n\n2) It\u0027s more efficient, because you don\u0027t have to create an intermediate type that then gets serialized out to the wire. Instead, the mapped type can just be serialized directly.",
+      "parentUuid": "7de894e2_cc1752aa",
+      "range": {
+        "startLine": 1219,
+        "startChar": 0,
+        "endLine": 1226,
+        "endChar": 3
+      },
+      "revId": "170b0e0fa15a4df7f3a62c1da4f55bb75629e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
