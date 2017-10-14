@@ -41,12 +41,10 @@ class CHROMEOS_EXPORT CrasAudioHandler : public CrasAudioClient::Observer,
   typedef std::vector<uint64_t> NodeIdList;
 
   // Volume change reasons that are not user-initiated.
+  // TODO(warx): remove AutomatedVolumeChangeReason enum.
   enum AutomatedVolumeChangeReason {
     // Indicates it is from initializing audio state.
     VOLUME_CHANGE_INITIALIZING_AUDIO_STATE,
-
-    // Indicates it is from restoring volume in maximimize mode screenshot.
-    VOLUME_CHANGE_MAXIMIZE_MODE_SCREENSHOT,
   };
 
   class AudioObserver {
