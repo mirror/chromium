@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "43cffb8f_8168cfc3",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:22:01Z",
+      "side": 1,
+      "message": "Please document that these values are persisted to logs, and should therefore never be renumbered nor reused.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4983e3_de42640a",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:22:01Z",
+      "side": 1,
+      "message": "nit: enum class?",
+      "range": {
+        "startLine": 30,
+        "startChar": 26,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66de7e32_1cf40b05",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:22:01Z",
+      "side": 1,
+      "message": "nit: I\u0027d recommend using \"COUNT\" rather than \"MAX\" here, as \"MAX\" is typically used as an alias for the last entry in an enum, whereas \"COUNT\" is more typically used to count the number of entries in the enum.",
+      "range": {
+        "startLine": 32,
+        "startChar": 25,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb70258_29fd1761",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:22:01Z",
+      "side": 1,
+      "message": "nit: No need for the +1 here, assuming you never log MAX itself.",
+      "range": {
+        "startLine": 37,
+        "startChar": 54,
+        "endLine": 37,
+        "endChar": 58
+      },
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64f1a04a_9d001ddd",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
         "patchSetId": 10
@@ -914,6 +1000,29 @@
       "writtenOn": "2017-10-13T18:04:44Z",
       "side": 1,
       "message": "Should be by-value, but since the surrounding code is still const\u0026 this one is fine.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b87be60_ae1db280",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 38965,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:22:01Z",
+      "side": 1,
+      "message": "It\u0027s rather odd to record a single-bucket histogram.  How do you plan to interpret this data?  I\u0027d recommend including a bucket for success as well.  (I do see that there\u0027s already a parallel histogram that doesn\u0027t do so... has the data from that histogram been clear and easy to work with?)",
+      "range": {
+        "startLine": 38963,
+        "startChar": 0,
+        "endLine": 38965,
+        "endChar": 7
+      },
       "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
