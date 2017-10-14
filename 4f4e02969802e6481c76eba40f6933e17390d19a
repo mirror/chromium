@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e806d9f_9dfbbcbb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-14T04:07:14Z",
+      "side": 1,
+      "message": "This isn\u0027t hot code, but maybe a console.assert() here instead of closure casting it?",
+      "revId": "4f4e02969802e6481c76eba40f6933e17390d19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
