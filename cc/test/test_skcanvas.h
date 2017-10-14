@@ -5,13 +5,14 @@
 #ifndef CC_TEST_TEST_SKCANVAS_H_
 #define CC_TEST_TEST_SKCANVAS_H_
 
+#include "cc/paint/paint_export.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/utils/SkNoDrawCanvas.h"
 
 namespace cc {
 
-class SaveCountingCanvas : public SkNoDrawCanvas {
+class CC_PAINT_EXPORT SaveCountingCanvas : public SkNoDrawCanvas {
  public:
   SaveCountingCanvas();
 
@@ -28,7 +29,7 @@ class SaveCountingCanvas : public SkNoDrawCanvas {
   SkPaint paint_;
 };
 
-class MockCanvas : public SkNoDrawCanvas {
+class CC_PAINT_EXPORT MockCanvas : public SkNoDrawCanvas {
  public:
   MockCanvas();
   ~MockCanvas();
@@ -58,6 +59,8 @@ class MockCanvas : public SkNoDrawCanvas {
                     const SkRect&,
                     const SkPaint*,
                     SrcRectConstraint));
+  MOCK_METHOD5(onDrawArc,
+               void(const SkRect&, SkScalar, SkScalar, bool, const SkPaint&));
   MOCK_METHOD1(didConcat, void(const SkMatrix&));
   MOCK_METHOD2(onDrawOval, void(const SkRect&, const SkPaint&));
 };
