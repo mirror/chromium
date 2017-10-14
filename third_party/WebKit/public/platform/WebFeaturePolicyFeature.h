@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef WebFeaturePolicyFeature_h
-#define WebFeaturePolicyFeature_h
+#ifndef THIRD_PARTY_WEBKIT_PUBLIC_PLATFORM_WEBFEATUREPOLICYFEATURE_H_
+#define THIRD_PARTY_WEBKIT_PUBLIC_PLATFORM_WEBFEATUREPOLICYFEATURE_H_
 
 namespace blink {
 
@@ -49,9 +49,11 @@ enum class WebFeaturePolicyFeature {
   kAccessibilityEvents,
   // Controls use of WebVR API.
   kWebVr,
+  // Controls access to the system clipboard.
+  kClipboard,
   LAST_FEATURE = kWebVr
 };
 
 }  // namespace blink
 
-#endif  // WebFeaturePolicyFeature_h
+#endif  // THIRD_PARTY_WEBKIT_PUBLIC_PLATFORM_WEBFEATUREPOLICYFEATURE_H_

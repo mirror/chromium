@@ -4,8 +4,12 @@
 
 #include "chrome/browser/permissions/permission_manager.h"
 
+#include <algorithm>
+#include <list>
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
