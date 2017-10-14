@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0022be4f_a0caa240",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-14T03:11:12Z",
+      "side": 1,
+      "message": "Salomonic solution: for this CL, we\u0027ll return a !IsValid()\ngfx::ColorSpace if either the gamma or the primaries\nextraction fails.  We have the strong suspicion that either\nboth are presented or none.",
+      "parentUuid": "82de127b_797acdb7",
+      "revId": "e7d6445f8b36e1236e47c50b90f5de11f1ee7b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1a7d9ad_1a2b9261",
         "filename": "ui/ozone/platform/drm/common/drm_util_unittest.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-13T23:35:44Z",
       "side": 1,
       "message": "we should also test that XYZ -\u003e RGB is working",
+      "revId": "e7d6445f8b36e1236e47c50b90f5de11f1ee7b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38c2cc3d_c56dd95b",
+        "filename": "ui/ozone/platform/drm/common/drm_util_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-14T03:11:12Z",
+      "side": 1,
+      "message": "It\u0027s a skia function, it\u0027s tested in \nhttps://cs.chromium.org/chromium/src/third_party/skia/tests/ColorSpaceTest.cpp",
+      "parentUuid": "a1a7d9ad_1a2b9261",
       "revId": "e7d6445f8b36e1236e47c50b90f5de11f1ee7b1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
