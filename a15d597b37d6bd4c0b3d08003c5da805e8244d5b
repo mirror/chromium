@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "fd6983c0_3af13373",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-14T00:50:19Z",
+      "side": 1,
+      "message": "I don\u0027t know if there\u0027s any difference, OnTaskRunnerDeleter seems to be calling DeleteSoon...",
+      "range": {
+        "startLine": 42,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f5d2d08_b2a46ae7",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
         "patchSetId": 5
@@ -41,6 +64,139 @@
         "startChar": 5,
         "endLine": 44,
         "endChar": 13
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deee7c5f_8ac882d1",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-14T00:50:19Z",
+      "side": 1,
+      "message": "re unmapped:\nI\u0027d think so, b/c if CloseHandle wasn\u0027t ever called, there\u0027s no explicit unmapping in place. I don\u0027t know of any code where we would implicitly close everything, or the OS closes them on your behalf when program shuts down. Maybe a question for MemoryMappedFile OWNER.\n\nre: \"If this task fails\" -\u003e I presume you want a sequence with BLOCK_SHUTDOWN that will ensure the task is run.",
+      "parentUuid": "0f5d2d08_b2a46ae7",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d82854b_dc544d31",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-14T00:50:19Z",
+      "side": 1,
+      "message": "Q/clarification: Is this required because you\u0027d want IO allowed while destroying |ruleset|?",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 31
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f96b4476_99078133",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-14T00:50:19Z",
+      "side": 1,
+      "message": "If you\u0027re not implementing this method in this CL, then would it be better to not define this method all?",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 19
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "925ba4d4_4be0c5cc",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-14T00:50:19Z",
+      "side": 1,
+      "message": "kLoadSuccess style names are preferred now.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 21
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76892d6d_6fa5fd11",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-14T00:50:19Z",
+      "side": 1,
+      "message": "remove unused members: this and extension_metadata_, introduce them when you\u0027re using them.",
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edec92eb_3889b25a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 21463,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-14T00:50:19Z",
+      "side": 1,
+      "message": "q: is it ok to change a histogram name?",
+      "range": {
+        "startLine": 21463,
+        "startChar": 50,
+        "endLine": 21463,
+        "endChar": 76
       },
       "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
