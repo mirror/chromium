@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "82de127b_797acdb7",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-14T00:24:31Z",
+      "side": 1,
+      "message": "Maybe let\u0027s just return an invalid color space if we can\u0027t parse gamma value?\nIt would also be nice to track when that happens.",
+      "revId": "e7d6445f8b36e1236e47c50b90f5de11f1ee7b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1a7d9ad_1a2b9261",
         "filename": "ui/ozone/platform/drm/common/drm_util_unittest.cc",
         "patchSetId": 12
