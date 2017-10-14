@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15dfddae_810941f7",
+        "filename": "components/arc/arc_session_runner.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:28:46Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think there\u0027s any benefit to specifying \"int\" as the backing type for this enum.",
+      "range": {
+        "startLine": 27,
+        "startChar": 36,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "fb277fb5144bbfd9494d186f82a867942ce4f75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6184983e_d6b9d03f",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:28:46Z",
+      "side": 1,
+      "message": "nit: It\u0027s fine to omit this summary.",
+      "range": {
+        "startLine": 1298,
+        "startChar": 58,
+        "endLine": 1298,
+        "endChar": 0
+      },
+      "revId": "fb277fb5144bbfd9494d186f82a867942ce4f75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5663ed_854fa2f1",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:28:46Z",
+      "side": 1,
+      "message": "Optional: I\"d omit the shared \"Container \" prefix.",
+      "range": {
+        "startLine": 1299,
+        "startChar": 24,
+        "endLine": 1299,
+        "endChar": 34
+      },
+      "revId": "fb277fb5144bbfd9494d186f82a867942ce4f75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc3a53f3_90e4ad82",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 2154,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-14T01:28:46Z",
+      "side": 1,
+      "message": "nit: \"session, which\"",
+      "range": {
+        "startLine": 2154,
+        "startChar": 8,
+        "endLine": 2154,
+        "endChar": 21
+      },
+      "revId": "fb277fb5144bbfd9494d186f82a867942ce4f75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
