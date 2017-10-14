@@ -544,39 +544,30 @@ void GraphicsContext::DrawLine(const IntPoint& point1, const IntPoint& point2) {
   int length = SkScalarRoundToInt(disp.Width() + disp.Height());
   PaintFlags flags(ImmutableState()->StrokeFlags(length));
 
-  if (StrokeData::StrokeIsDashed(width, GetStrokeStyle())) {
-    // Do a rect fill of our endpoints.  This ensures we always have the
-    // appearance of being a border. We then draw the actual dotted/dashed
-    // line.
-    SkRect r1, r2;
-    r1.set(p1.X(), p1.Y(), p1.X() + width, p1.Y() + width);
-    r2.set(p2.X(), p2.Y(), p2.X() + width, p2.Y() + width);
-
-    if (is_vertical_line) {
-      r1.offset(-width / 2, 0);
-      r2.offset(-width / 2, -width);
+  if (pen_style == kDottedStroke) {
+    if (StrokeData::StrokeIsDashed(width, pen_style)) {
+      // We draw thin dotted lines as dashes and gaps that are always
+      // exactly the size of the width. When the length of the line is
+      // an odd multiple of the width, things work well because we get
+      // dots at each end of the line, but if the length is anything else,
+      // we get gaps or partial dots at the end of the line. Fix that by
+      // explicitly enforcing full dots at the ends of lines.
+      EnforceDotsAtEndpoints(p1, p2, length, width, flags, is_vertical_line);
     } else {
-      r1.offset(0, -width / 2);
-      r2.offset(-width, -width / 2);
-    }
-    PaintFlags fill_flags;
-    fill_flags.setColor(flags.getColor());
-    DrawRect(r1, fill_flags);
-    DrawRect(r2, fill_flags);
-  } else if (GetStrokeStyle() == kDottedStroke) {
-    // We draw thick dotted lines with 0 length dash strokes and round endcaps,
-    // producing circles. The endcaps extend beyond the line's endpoints,
-    // so move the start and end in.
-    if (is_vertical_line) {
-      p1.SetY(p1.Y() + width / 2.f);
-      p2.SetY(p2.Y() - width / 2.f);
-    } else {
-      p1.SetX(p1.X() + width / 2.f);
-      p2.SetX(p2.X() - width / 2.f);
+      // We draw thick dotted lines with 0 length dash strokes and round
+      // endcaps, producing circles. The endcaps extend beyond the line's
+      // endpoints, so move the start and end in.
+      if (is_vertical_line) {
+        p1.SetY(p1.Y() + width / 2.f);
+        p2.SetY(p2.Y() - width / 2.f);
+      } else {
+        p1.SetX(p1.X() + width / 2.f);
+        p2.SetX(p2.X() - width / 2.f);
+      }
     }
   }
 
-  AdjustLineToPixelBoundaries(p1, p2, width, pen_style);
+  AdjustLineToPixelBoundaries(p1, p2, width);
   canvas_->drawLine(p1.X(), p1.Y(), p2.X(), p2.Y(),
                     ApplyHighContrastFilter(&flags));
 }
@@ -1281,25 +1272,202 @@ void GraphicsContext::FillRectWithRoundedHole(
   canvas_->drawDRRect(SkRRect::MakeRect(rect), rounded_hole_rect, flags);
 }
 
+void GraphicsContext::EnforceDotsAtEndpoints(FloatPoint& p1,
+                                             FloatPoint& p2,
+                                             const int path_length,
+                                             const int width,
+                                             const PaintFlags& flags,
+                                             const bool is_vertical_line) {
+  // For narrow lines, we always want integral dot and dash sizes, and start
+  // and end points, to prevent anti-aliasing from erasing the dot effect.
+  // For 1-pixel wide lines, we must make one end a dash. Otherwise we have
+  // a little more scope to distribute the error. But we never want to reduce
+  // the size of the end dots because doing so makes corners of all-dotted
+  // paths look odd.
+  DCHECK_LE(width, 3);  // Width is max 3 according to StrokeIsDashed
+  if (width == 1 && path_length % 2 == 0) {
+    // One pixel wide and gap at the end. Make the start a short dash and
+    // move the line start over one dot width.
+    SkRect r1;
+    r1.set(p1.X(), p1.Y(), p1.X() + 1, p1.Y() + 1);
+    PaintFlags fill_flags;
+    fill_flags.setColor(flags.getColor());
+    DrawRect(r1, fill_flags);
+    if (is_vertical_line) {
+      p1.SetY(p1.Y() + 1);
+    } else {
+      p1.SetX(p1.X() + 1);
+    }
+  } else if (width == 2) {
+    int mod_4 = path_length % 4;
+    // mod_4 == 2 do nothing, exact spacing already
+    if (mod_4 == 0) {
+      // A 2 pixel long gap at the end. Want to drop 1 pixel of gap
+      // at the start and 1 pixel gap at the end to make the end dot
+      // complete.
+      SkRect r1, r2;
+      r1.set(p1.X(), p1.Y(), p1.X() + 2, p1.Y() + 2);
+      r2.set(p2.X(), p2.Y(), p2.X() + 2, p2.Y() + 2);
+      if (is_vertical_line) {
+        r1.offset(-1, 0);
+        r2.offset(-1, -2);
+        p1.SetY(p1.Y() + 3);
+        p2.SetY(p2.Y() - 3);
+      } else {
+        r1.offset(0, -1);
+        r2.offset(-2, -1);
+        p1.SetX(p1.X() + 3);
+        p2.SetX(p2.X() - 3);
+      }
+      PaintFlags fill_flags;
+      fill_flags.setColor(flags.getColor());
+      DrawRect(r1, fill_flags);
+      DrawRect(r2, fill_flags);
+    } else if (mod_4 == 1) {
+      // A 1 pixel long, 2 pixel wide dash at the end. Want to
+      // drop 1 pixel of gap at the start to make the end dot
+      // complete
+      SkRect r1;
+      r1.set(p1.X(), p1.Y(), p1.X() + 2, p1.Y() + 2);
+      if (is_vertical_line) {
+        r1.offset(-1, 0);
+        p1.SetY(p1.Y() + 3);
+      } else {
+        r1.offset(0, -1);
+        p1.SetX(p1.X() + 3);
+      }
+      PaintFlags fill_flags;
+      fill_flags.setColor(flags.getColor());
+      DrawRect(r1, fill_flags);
+    } else if (mod_4 == 3) {
+      // A 1 pixel long, 2 pixel wide gap at the end. Want to
+      // add 1 pixel of gap at the end to move the end dot
+      // to the end of the line
+      SkRect r2;
+      r2.set(p2.X(), p2.Y(), p2.X() + 2, p2.Y() + 2);
+      if (is_vertical_line) {
+        r2.offset(-1, -2);
+        p2.SetY(p2.Y() - 5);
+      } else {
+        r2.offset(-2, -1);
+        p2.SetX(p2.X() - 5);
+      }
+      PaintFlags fill_flags;
+      fill_flags.setColor(flags.getColor());
+      DrawRect(r2, fill_flags);
+    }
+  } else if (width == 3) {
+    int mod_6 = path_length % 6;
+    // mod_6 == 3 do nothing, exact spacing already
+    if (mod_6 == 0) {
+      // A 3 pixel long gap at the end. Want to add 1 pixel of gap
+      // at the start and add 1 pixel to the start and end dots.
+      SkRect r1, r2;
+      if (is_vertical_line) {
+        r1.set(p1.X(), p1.Y(), p1.X() + 3, p1.Y() + 4);
+        r2.set(p2.X(), p2.Y(), p2.X() + 3, p2.Y() + 4);
+        r1.offset(-1, 0);
+        r2.offset(-1, -3);
+        p1.SetY(p1.Y() + 8);
+        p2.SetY(p2.Y() - 6);
+      } else {
+        r1.set(p1.X(), p1.Y(), p1.X() + 4, p1.Y() + 3);
+        r2.set(p2.X(), p2.Y(), p2.X() + 4, p2.Y() + 3);
+        r1.offset(0, -1);
+        r2.offset(-3, -1);
+        p1.SetX(p1.X() + 8);
+        p2.SetX(p2.X() - 6);
+      }
+      PaintFlags fill_flags;
+      fill_flags.setColor(flags.getColor());
+      DrawRect(r1, fill_flags);
+      DrawRect(r2, fill_flags);
+    } else if (mod_6 == 1) {
+      // A 1 pixel long dash at the end. Want to drop 1
+      // pixel from the start and end gaps.
+      SkRect r1, r2;
+      r1.set(p1.X(), p1.Y(), p1.X() + 3, p1.Y() + 3);
+      r2.set(p2.X(), p2.Y(), p2.X() + 3, p2.Y() + 3);
+      if (is_vertical_line) {
+        r1.offset(-1, 0);
+        r2.offset(-1, -3);
+        p1.SetY(p1.Y() + 5);
+        p2.SetY(p2.Y() - 5);
+      } else {
+        r1.offset(0, -1);
+        r2.offset(-3, -1);
+        p1.SetX(p1.X() + 5);
+        p2.SetX(p2.X() - 5);
+      }
+      PaintFlags fill_flags;
+      fill_flags.setColor(flags.getColor());
+      DrawRect(r1, fill_flags);
+      DrawRect(r2, fill_flags);
+    } else if (mod_6 == 2) {
+      // A 2 pixel long dash at the end. Want to drop 1 pixel
+      // from the start gap
+      SkRect r1;
+      r1.set(p1.X(), p1.Y(), p1.X() + 3, p1.Y() + 3);
+      if (is_vertical_line) {
+        r1.offset(-1, 0);
+        p1.SetY(p1.Y() + 5);
+      } else {
+        r1.offset(0, -1);
+        p1.SetX(p1.X() + 5);
+      }
+      PaintFlags fill_flags;
+      fill_flags.setColor(flags.getColor());
+      DrawRect(r1, fill_flags);
+    } else if (mod_6 == 4) {
+      // A 1 pixel long gap at the end. Want to add 1
+      // pixel to the start gap.
+      // A 2 pixel long dash at the end. Want to drop 1 pixel
+      // from the start gap
+      SkRect r1;
+      r1.set(p1.X(), p1.Y(), p1.X() + 3, p1.Y() + 3);
+      if (is_vertical_line) {
+        r1.offset(-1, 0);
+        p1.SetY(p1.Y() + 7);
+      } else {
+        r1.offset(0, -1);
+        p1.SetX(p1.X() + 7);
+      }
+      PaintFlags fill_flags;
+      fill_flags.setColor(flags.getColor());
+      DrawRect(r1, fill_flags);
+    } else if (mod_6 == 5) {
+      // A 2 pixel long dash at the end. Want to add 1
+      // pixel to the start and end gaps.
+      SkRect r1, r2;
+      r1.set(p1.X(), p1.Y(), p1.X() + 3, p1.Y() + 3);
+      r2.set(p2.X(), p2.Y(), p2.X() + 3, p2.Y() + 3);
+      if (is_vertical_line) {
+        r1.offset(-1, 0);
+        r2.offset(-1, -3);
+        p1.SetY(p1.Y() + 7);
+        p2.SetY(p2.Y() - 7);
+      } else {
+        r1.offset(0, -1);
+        r2.offset(-3, -1);
+        p1.SetX(p1.X() + 7);
+        p2.SetX(p2.X() - 7);
+      }
+      PaintFlags fill_flags;
+      fill_flags.setColor(flags.getColor());
+      DrawRect(r1, fill_flags);
+      DrawRect(r2, fill_flags);
+    }
+  }
+}
+
 void GraphicsContext::AdjustLineToPixelBoundaries(FloatPoint& p1,
                                                   FloatPoint& p2,
-                                                  float stroke_width,
-                                                  StrokeStyle pen_style) {
+                                                  float stroke_width) {
   // For odd widths, we add in 0.5 to the appropriate x/y so that the float
-  // arithmetic works out.  For example, with a border width of 3, WebKit will
+  // arithmetic works out.  For example, with a border width of 3, painting will
   // pass us (y1+y2)/2, e.g., (50+53)/2 = 103/2 = 51 when we want 51.5.  It is
   // always true that an even width gave us a perfect position, but an odd width
   // gave us a position that is off by exactly 0.5.
-  if (StrokeData::StrokeIsDashed(stroke_width, pen_style)) {
-    if (p1.X() == p2.X()) {
-      p1.SetY(p1.Y() + stroke_width);
-      p2.SetY(p2.Y() - stroke_width);
-    } else {
-      p1.SetX(p1.X() + stroke_width);
-      p2.SetX(p2.X() - stroke_width);
-    }
-  }
-
   if (static_cast<int>(stroke_width) % 2) {  // odd
     if (p1.X() == p2.X()) {
       // We're a vertical line.  Adjust our x.

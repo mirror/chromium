@@ -161,14 +161,16 @@ class PLATFORM_EXPORT GraphicsContext {
   void SetColorFilter(ColorFilter);
   // ---------- End state management methods -----------------
 
-  // These draw methods will do both stroking and filling.
-  // FIXME: ...except drawRect(), which fills properly but always strokes
-  // using a 1-pixel stroke inset from the rect borders (of the correct
-  // stroke color).
+  // DrawRect() fills and always strokes using a 1-pixel stroke inset from
+  // the rect borders (of the pre-set stroke color).
   void DrawRect(const IntRect&);
+
+  // DrawLine() only operates on horizontal or vertical lines and uses the
+  // current stroke settings.
   void DrawLine(const IntPoint&, const IntPoint&);
 
   void FillPath(const Path&);
+
   // The length parameter is only used when the path has a dashed or dotted
   // stroke style, with the default dash/dot path effect. If a non-zero length
   // is provided the number of dashes/dots on a dashed/dotted
@@ -379,8 +381,7 @@ class PLATFORM_EXPORT GraphicsContext {
 
   static void AdjustLineToPixelBoundaries(FloatPoint& p1,
                                           FloatPoint& p2,
-                                          float stroke_width,
-                                          StrokeStyle);
+                                          float stroke_width);
 
   static int FocusRingOutsetExtent(int offset, int width);
 
@@ -454,6 +455,13 @@ class PLATFORM_EXPORT GraphicsContext {
                                const Color&);
 
   const SkMetaData& MetaData() const { return meta_data_; }
+
+  void EnforceDotsAtEndpoints(FloatPoint& p1,
+                              FloatPoint& p2,
+                              const int path_length,
+                              const int width,
+                              const PaintFlags&,
+                              const bool is_vertical_line);
 
   bool ShouldApplyHighContrastFilterToImage(Image&);
   Color ApplyHighContrastFilter(const Color& input) const;
