@@ -142,11 +142,17 @@ CounterNode* CounterNode::PreviousInPreOrder() const {
 }
 
 int CounterNode::ComputeCountInParent() const {
+  // According to the spec, if an increment would overflow or underflow the
+  // counter, we are allowed to ignore the increment.
+  // https://drafts.csswg.org/css-lists-3/#valdef-counter-reset-custom-ident-integer
   int increment = ActsAsReset() ? 0 : value_;
-  if (previous_sibling_)
-    return previous_sibling_->count_in_parent_ + increment;
+  if (previous_sibling_) {
+    return WTF::CheckAdd(previous_sibling_->count_in_parent_, increment)
+        .ValueOrDefault(previous_sibling_->count_in_parent_);
+  }
   DCHECK_EQ(parent_->first_child_, this);
-  return parent_->value_ + increment;
+  return WTF::CheckAdd(parent_->value_, increment)
+      .ValueOrDefault(parent_->value_);
 }
 
 void CounterNode::AddLayoutObject(LayoutCounter* value) {

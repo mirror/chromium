@@ -22,6 +22,7 @@
 #ifndef CounterNode_h
 #define CounterNode_h
 
+#include "platform/wtf/CheckedNumeric.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/RefCounted.h"
