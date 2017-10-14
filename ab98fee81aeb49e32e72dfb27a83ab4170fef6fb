@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d5093f6d_2009bff7",
+        "filename": "gpu/ipc/common/gpu_preferences_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-14T02:19:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9faa5d0_f717818d",
+      "revId": "ab98fee81aeb49e32e72dfb27a83ab4170fef6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c92ae8c_a3657055",
         "filename": "gpu/ipc/common/gpu_preferences_util_unittest.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "ab98fee81aeb49e32e72dfb27a83ab4170fef6fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee61f69b_40f51d30",
+        "filename": "gpu/ipc/common/gpu_preferences_util_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-14T02:19:59Z",
+      "side": 1,
+      "message": "Actually I have a better idea.",
+      "parentUuid": "3c92ae8c_a3657055",
+      "revId": "ab98fee81aeb49e32e72dfb27a83ab4170fef6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
