@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20c38515_e03c5fa2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-14T00:15:12Z",
+      "side": 1,
+      "message": "s/build/built",
+      "revId": "c96e9729ae8d58141bb5b778992bfb06f6451c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa985a0a_25fd9960",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-14T00:15:12Z",
+      "side": 1,
+      "message": "nit: 2-space indent, plz.",
+      "revId": "c96e9729ae8d58141bb5b778992bfb06f6451c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7532856_6a7624fe",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-14T00:15:12Z",
+      "side": 1,
+      "message": "Rather than hack up the |args| like this, can you just check whether bootdata is set, and set it to _TargetCpuToSdkBinPath+bootdata.bin instead?  You can keep the args \u003d [] and RunAndCheck (..., args) separate, though, if you like, since that seems a little more readable.\n\nAlso, can you remove the TODO I forgot to remove, plz? :D",
+      "revId": "c96e9729ae8d58141bb5b778992bfb06f6451c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e351979_8765fda7",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-14T00:15:12Z",
+      "side": 1,
+      "message": "What is the extra --netboot about?",
+      "revId": "c96e9729ae8d58141bb5b778992bfb06f6451c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
