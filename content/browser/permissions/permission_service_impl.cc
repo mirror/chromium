@@ -58,6 +58,9 @@ PermissionType PermissionDescriptorToPermissionType(
       return PermissionType::SENSORS;
     case PermissionName::ACCESSIBILITY_EVENTS:
       return PermissionType::ACCESSIBILITY_EVENTS;
+    case PermissionName::CLIPBOARD:
+      NOTIMPLEMENTED();
+      break;
   }
 
   NOTREACHED();
@@ -118,7 +121,7 @@ void PermissionRequestResponseCallbackWrapper(
   std::move(callback).Run(vector[0]);
 }
 
-} // anonymous namespace
+}  // anonymous namespace
 
 class PermissionServiceImpl::PendingRequest {
  public:
