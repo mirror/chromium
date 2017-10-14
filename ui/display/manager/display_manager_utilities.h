@@ -24,30 +24,30 @@ class ManagedDisplayMode;
 // Creates the display mode list for internal display
 // based on |native_mode|.
 DISPLAY_MANAGER_EXPORT ManagedDisplayInfo::ManagedDisplayModeList
-CreateInternalManagedDisplayModeList(
-    const scoped_refptr<ManagedDisplayMode>& native_mode);
+CreateInternalManagedDisplayModeList(const ManagedDisplayMode& native_mode);
 
 // Creates the display mode list for unified display
 // based on |native_mode| and |scales|.
 DISPLAY_MANAGER_EXPORT ManagedDisplayInfo::ManagedDisplayModeList
 CreateUnifiedManagedDisplayModeList(
-    const scoped_refptr<ManagedDisplayMode>& native_mode,
+    const ManagedDisplayMode& native_mode,
     const std::set<std::pair<float, float>>& dsf_scale_list);
 
 // Gets the display mode for |resolution|. Returns false if no display
 // mode matches the resolution, or the display is an internal display.
-DISPLAY_MANAGER_EXPORT scoped_refptr<ManagedDisplayMode>
-GetDisplayModeForResolution(const ManagedDisplayInfo& info,
-                            const gfx::Size& resolution);
+DISPLAY_MANAGER_EXPORT const ManagedDisplayMode* GetDisplayModeForResolution(
+    const ManagedDisplayInfo& info,
+    const gfx::Size& resolution);
 
 // Gets the display mode for the next valid UI scale. Returns false
 // if the display is not an internal display.
-DISPLAY_MANAGER_EXPORT scoped_refptr<ManagedDisplayMode>
-GetDisplayModeForNextUIScale(const ManagedDisplayInfo& info, bool up);
+DISPLAY_MANAGER_EXPORT const ManagedDisplayMode* GetDisplayModeForNextUIScale(
+    const ManagedDisplayInfo& info,
+    bool up);
 
 // Gets the display mode for the next valid resolution. Returns false
 // if the display is an internal display.
-DISPLAY_MANAGER_EXPORT scoped_refptr<ManagedDisplayMode>
+DISPLAY_MANAGER_EXPORT const ManagedDisplayMode*
 GetDisplayModeForNextResolution(const ManagedDisplayInfo& info, bool up);
 
 // Tests if the |info| has display mode that matches |ui_scale|.
