@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include "ash/keyboard/keyboard_ui.h"
+#include "ash/login/lock_screen_controller.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
@@ -68,6 +69,12 @@ void VirtualKeyboardTray::HideBubbleWithView(
 void VirtualKeyboardTray::ClickedOutsideBubble() {}
 
 bool VirtualKeyboardTray::PerformAction(const ui::Event& event) {
+  Shell::Get()
+      ->lock_screen_controller()
+      ->metrics()
+      ->RecordUserClickEventOnLockScreen(
+          LoginMetricsRecorder::LockScreenUserClickTarget::
+              kVirtualKeyboardTray);
   const int64_t display_id = display::Screen::GetScreen()
                                  ->GetDisplayNearestWindow(shelf_->GetWindow())
                                  .id();

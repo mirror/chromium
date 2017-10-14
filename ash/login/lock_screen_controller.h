@@ -6,6 +6,7 @@
 #define ASH_LOGIN_LOCK_SCREEN_CONTROLLER_H_
 
 #include "ash/ash_export.h"
+#include "ash/login/login_metrics_recorder.h"
 #include "ash/public/interfaces/lock_screen.mojom.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
@@ -90,6 +91,8 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
     force_fail_auth_for_debug_overlay_ = force_fail;
   }
 
+  LoginMetricsRecorder* metrics() { return login_metrics_recorder_.get(); }
+
  private:
   using PendingAuthenticateUserCall =
       base::OnceCallback<void(const std::string& system_salt)>;
@@ -120,6 +123,8 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
 
   // If set to false, all auth requests will forcibly fail.
   bool force_fail_auth_for_debug_overlay_ = false;
+
+  std::unique_ptr<LoginMetricsRecorder> login_metrics_recorder_;
 
   DISALLOW_COPY_AND_ASSIGN(LockScreenController);
 };

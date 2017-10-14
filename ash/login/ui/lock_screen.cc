@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "ash/login/lock_screen_controller.h"
 #include "ash/login/ui/lock_contents_view.h"
 #include "ash/login/ui/lock_debug_view.h"
 #include "ash/login/ui/lock_window.h"
@@ -125,6 +126,7 @@ void LockScreen::OnLockScreenNoteStateChanged(mojom::TrayActionState state) {
 void LockScreen::OnLockStateChanged(bool locked) {
   if (!locked)
     Destroy();
+  Shell::Get()->lock_screen_controller()->metrics()->OnLockStateChanged();
 }
 
 }  // namespace ash
