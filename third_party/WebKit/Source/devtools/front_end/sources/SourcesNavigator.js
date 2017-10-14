@@ -148,6 +148,19 @@ Sources.FilesNavigatorView = class extends Sources.NavigatorView {
         UI.ToolbarButton.Events.Click, () => Persistence.isolatedFileSystemManager.addFileSystem());
     toolbar.appendToolbarItem(addButton);
     this.contentElement.insertBefore(toolbar.element, this.contentElement.firstChild);
+
+    Workspace.workspace.projects().forEach(this._projectAdded.bind(this));
+    this._workspace.addEventListener(
+        Workspace.Workspace.Events.ProjectAdded, event => this._projectAdded(event.data), this);
+  }
+
+  /**
+   * @param {!Workspace.Project} project
+   */
+  _projectAdded(project) {
+    if (project.type() !== Workspace.projectTypes.FileSystem)
+      return;
+    this.fileSystemRootFolder(project);
   }
 
   /**
