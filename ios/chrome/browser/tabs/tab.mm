@@ -746,9 +746,10 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   self.navigationManager->GoToIndex(index);
 }
 
-- (BOOL)openExternalURL:(const GURL&)url
+- (void)openExternalURL:(const GURL&)url
               sourceURL:(const GURL&)sourceURL
-            linkClicked:(BOOL)linkClicked {
+            linkClicked:(BOOL)linkClicked
+             completion:(void (^)(BOOL) _Nullable)completionHandler {
   if (!_externalAppLauncher)
     _externalAppLauncher = [[ExternalAppLauncher alloc] init];
 
@@ -758,12 +759,12 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   // Check if it's a direct FIDO U2F x-callback call. If so, do not open it, to
   // prevent pages from spoofing requests with different origins.
   if (finalURL.SchemeIs("u2f-x-callback"))
-    return NO;
+    return;
 
   // Block attempts to open this application's settings in the native system
   // settings application.
   if (finalURL.SchemeIs("app-settings"))
-    return NO;
+    return;
 
   // Check if it's a FIDO U2F call.
   if (finalURL.SchemeIs("u2f")) {
@@ -783,28 +784,33 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
                                                    tabID:self.tabId];
 
     if (!finalURL.is_valid())
-      return NO;
+      return;
   }
 
-  if ([_externalAppLauncher openURL:finalURL linkClicked:linkClicked]) {
-    // Clears pending navigation history after successfully launching the
-    // external app.
-    DCHECK([self navigationManager]);
-    [self navigationManager]->DiscardNonCommittedItems();
-    // Ensure the UI reflects the current entry, not the just-discarded pending
-    // entry.
-    [_parentTabModel notifyTabChanged:self];
-
-    if (sourceURL.is_valid()) {
-      ReadingListModel* model =
-          ReadingListModelFactory::GetForBrowserState(_browserState);
-      if (model && model->loaded())
-        model->SetReadStatus(sourceURL, true);
-    }
-
-    return YES;
-  }
-  return NO;
+  __weak Tab* weakSelf = self;
+  [_externalAppLauncher
+          openURL:finalURL
+      linkClicked:linkClicked
+       completion:^(BOOL success) {
+         Tab* strongSelf = weakSelf;
+         if (success && strongSelf) {
+           // Clears pending navigation history after successfully launching the
+           // external app.
+           DCHECK([strongSelf navigationManager]);
+           [strongSelf navigationManager]->DiscardNonCommittedItems();
+           // Ensure the UI reflects the current entry, not the just-discarded
+           // pending entry.
+           [strongSelf->_parentTabModel notifyTabChanged:strongSelf];
+           if (sourceURL.is_valid()) {
+             ReadingListModel* model =
+                 ReadingListModelFactory::GetForBrowserState(_browserState);
+             if (model && model->loaded())
+               model->SetReadStatus(sourceURL, true);
+           }
+         }
+         if (completionHandler)
+           completionHandler(success);
+       }];
 }
 
 - (void)webState:(web::WebState*)webState
@@ -1173,8 +1179,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
 - (BOOL)webController:(CRWWebController*)webController
         shouldOpenURL:(const GURL&)url
-      mainDocumentURL:(const GURL&)mainDocumentURL
-          linkClicked:(BOOL)linkClicked {
+      mainDocumentURL:(const GURL&)mainDocumentURL {
   // chrome:// URLs are only allowed if the mainDocumentURL is also a chrome://
   // URL.
   if (url.SchemeIs(kChromeUIScheme) &&
@@ -1194,8 +1199,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     [[NSNotificationCenter defaultCenter]
         postNotificationName:kTabUrlMayStartLoadingNotificationForCrashReporting
                       object:self
-                    userInfo:[NSDictionary dictionaryWithObject:urlString
-                                                         forKey:kTabUrlKey]];
+                    userInfo:@{kTabUrlKey : urlString}];
   }
 
   return YES;
