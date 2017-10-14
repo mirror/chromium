@@ -1,0 +1,344 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ae19cf9_6bad3644",
+        "filename": "BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Does this comment need a period at the end?",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13a715b_93893887",
+        "filename": "BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Should this go in its own block rather than in the Win + Mac \"if\" block?",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24887758_fac9d82e",
+        "filename": "content/browser/accessibility/accessibility_event_recorder_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "The word magic doesn\u0027t explain anything. Could you say something like \"Ensures that COM services are initialized when standalone dump tree tool is used\".",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "222b4504_2a23ea57",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Could we use a lambda to capture this variable?",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "412c1fad_1b395d13",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "HWND target_hwnd;\nauto enum_windows_proc \u003d [\u0026target_hwnd](HWND hwnd, LPARAM lparam) {...];\n\nEnumWindows(enum_windows_proc, pid);",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516309e5_065a4981",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Better to move this class definition into its own header file, wouldn\u0027t you agree? For another patch of course.",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a0c5dbf_d4d58e7f",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Magic doesn\u0027t explain the real purpose.",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8678aa21_28a386bf",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "reinterpret_cast has been the source of errors.\nCould we try replacing the last two arguments with this?\n__uuidof(start.GetAddressOf()) or __uuidof(\u0026start)?",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee113ed_4c56eebd",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we use make_unique here?",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2abae9_04cbf4a8",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Why do we need the unique_ptr here?\nDoesn\u0027t a simple Variant[] array suffice?",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19de0079_e97967d9",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "How about using the bool operator?\nif (dispatch)",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd209f3d_befcb19c",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Yes, but shouldn\u0027t we make sure the IDispatch we got indeed extends IAccessible?\nYou can use the \"As\" method to cast to another interface.",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d080c942_c6b537e8",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "ScopedComPtr\u003cIAccessible\u003e iaccessible;\nif (SUCCEEDED(dispatch.As(\u0026iaccessible)))\n\nhttps://msdn.microsoft.com/en-us/library/br230426.aspx",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0859f3bc_14294b25",
+        "filename": "tools/accessibility/inspect/ax_dump_events.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Something wrong with this comment?",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4c76b1_19ea0841",
+        "filename": "tools/accessibility/inspect/ax_dump_events.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Should we check the length first?Also allow both small and capital x.",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce183e3_3860e800",
+        "filename": "tools/accessibility/inspect/ax_dump_tree.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Something wrong with this comment?",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2d1035_3b779cb3",
+        "filename": "tools/accessibility/inspect/ax_dump_tree.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Check string length and also allow both small and capital x.",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dcc8bf5_048e7d20",
+        "filename": "tools/accessibility/inspect/ax_tree_server.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Doesn\u0027t this include stdio.h?",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd73ab9c_5a390922",
+        "filename": "tools/accessibility/inspect/ax_tree_server.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Are we allowed to use cout? Then, no need to change to c_str.Please check style guide for use of cout.",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef05ae4a_3f7e3f09",
+        "filename": "tools/accessibility/inspect/ax_tree_server.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-14T22:46:52Z",
+      "side": 1,
+      "message": "Either final or virtual destructor.\nhttp://www.gotw.ca/publications/mill18.htm",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
