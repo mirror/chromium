@@ -77,7 +77,15 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
     kDoNotBypassMainWorldCSP
   };
 
+  // The restart animations flag in
+  // https://html.spec.whatwg.org/multipage/images.html#update-the-image-data
+  enum RestartAnimationBehavior {
+    kDoNotRestartAnimation,
+    kShouldRestartAnimation
+  };
+
   void UpdateFromElement(UpdateFromElementBehavior = kUpdateNormal,
+                         RestartAnimationBehavior = kDoNotRestartAnimation,
                          ReferrerPolicy = kReferrerPolicyDefault);
 
   void ElementDidMoveToNewDocument();
@@ -132,6 +140,7 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
   // Called from the task or from updateFromElement to initiate the load.
   void DoUpdateFromElement(BypassMainWorldBehavior,
                            UpdateFromElementBehavior,
+                           RestartAnimationBehavior,
                            const KURL&,
                            ReferrerPolicy = kReferrerPolicyDefault,
                            UpdateType = UpdateType::kAsync);
@@ -157,7 +166,9 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
   void ClearFailedLoadURL();
   void DispatchErrorEvent();
   void CrossSiteOrCSPViolationOccurred(AtomicString);
-  void EnqueueImageLoadingMicroTask(UpdateFromElementBehavior, ReferrerPolicy);
+  void EnqueueImageLoadingMicroTask(UpdateFromElementBehavior,
+                                    RestartAnimationBehavior,
+                                    ReferrerPolicy);
 
   KURL ImageSourceToKURL(AtomicString) const;
 
