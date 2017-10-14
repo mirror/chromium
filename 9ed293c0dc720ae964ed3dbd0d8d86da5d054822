@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88e65e05_0faac59f",
+        "filename": "url/url_canon_etc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-14T15:21:07Z",
+      "side": 1,
+      "message": "Is this table overkill? We could just add a few more ifs down below to handle 0x00-0x1F, the five special characters, and \u003e\u003d0x80?",
+      "revId": "9ed293c0dc720ae964ed3dbd0d8d86da5d054822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
