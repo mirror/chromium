@@ -27,12 +27,9 @@ class MessagePortChannel;
 }
 
 namespace content {
-
 class SharedWorkerInstance;
-class SharedWorkerHost;
-class ResourceContext;
+class SharedWorkerHostMap;
 class WorkerServiceObserver;
-class WorkerStoragePartitionId;
 
 // The implementation of WorkerService. We try to place workers in an existing
 // renderer process when possible.
@@ -43,50 +40,44 @@ class CONTENT_EXPORT SharedWorkerServiceImpl : public WorkerService {
 
   // WorkerService implementation:
   bool TerminateWorker(int process_id, int route_id) override;
-  void TerminateAllWorkersForTesting(base::OnceClosure callback) override;
+  void TerminateAllWorkersForTesting(StoragePartition* storage_partition,
+                                     base::OnceClosure callback) override;
   std::vector<WorkerInfo> GetWorkers() override;
   void AddObserver(WorkerServiceObserver* observer) override;
   void RemoveObserver(WorkerServiceObserver* observer) override;
 
   // Creates the worker if necessary or connects to an already existing worker.
   void ConnectToWorker(
-      int process_id,
-      int frame_id,
+      int from_process_id,
+      int from_frame_id,
       mojom::SharedWorkerInfoPtr info,
       mojom::SharedWorkerClientPtr client,
       blink::mojom::SharedWorkerCreationContextType creation_context_type,
-      const blink::MessagePortChannel& port,
-      ResourceContext* resource_context,
-      const WorkerStoragePartitionId& partition_id);
+      const blink::MessagePortChannel& port);
 
   void DestroyHost(int process_id, int route_id);
+
+  void RegisterHostMap(SharedWorkerHostMap* host_map);
+  void UnregisterHostMap(SharedWorkerHostMap* host_map);
 
  private:
   friend struct base::DefaultSingletonTraits<SharedWorkerServiceImpl>;
   friend class SharedWorkerServiceImplTest;
-
-  using WorkerID = std::pair<int /* process_id */, int /* route_id */>;
-  using WorkerHostMap = std::map<WorkerID, std::unique_ptr<SharedWorkerHost>>;
 
   SharedWorkerServiceImpl();
   ~SharedWorkerServiceImpl() override;
 
   void ResetForTesting();
 
-  void CreateWorker(std::unique_ptr<SharedWorkerInstance> instance,
+  void CreateWorker(SharedWorkerHostMap* host_map,
+                    std::unique_ptr<SharedWorkerInstance> instance,
                     mojom::SharedWorkerClientPtr client,
                     int process_id,
                     int frame_id,
                     const blink::MessagePortChannel& message_port);
 
-  // Returns nullptr if there is no such host.
-  SharedWorkerHost* FindSharedWorkerHost(int process_id, int route_id);
-  SharedWorkerHost* FindAvailableSharedWorkerHost(
-      const SharedWorkerInstance& instance);
-
-  WorkerHostMap worker_hosts_;
+  std::set<SharedWorkerHostMap*> host_maps_;
   base::ObserverList<WorkerServiceObserver> observers_;
-  base::OnceClosure terminate_all_workers_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(SharedWorkerServiceImpl);
 };

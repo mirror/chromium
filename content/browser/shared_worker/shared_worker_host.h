@@ -29,7 +29,7 @@ class MessagePortChannel;
 }
 
 namespace content {
-
+class ResourceContext;
 class SharedWorkerContentSettingsProxyImpl;
 class SharedWorkerInstance;
 
@@ -65,7 +65,7 @@ class SharedWorkerHost : public mojom::SharedWorkerHost,
   // Returns true if any clients live in a different process from this worker.
   bool ServesExternalClient();
 
-  SharedWorkerInstance* instance() { return instance_.get(); }
+  const SharedWorkerInstance* instance() const { return instance_.get(); }
   int process_id() const { return process_id_; }
   int route_id() const { return route_id_; }
   bool IsAvailable() const;
@@ -93,6 +93,8 @@ class SharedWorkerHost : public mojom::SharedWorkerHost,
   void OnScriptLoadFailed() override;
   void OnFeatureUsed(blink::mojom::WebFeature feature) override;
 
+  ResourceContext* GetResourceContext();
+
   // Return a vector of all the render process/render frame IDs.
   std::vector<std::pair<int, int>> GetRenderFrameIDsForWorker();
 
@@ -106,7 +108,7 @@ class SharedWorkerHost : public mojom::SharedWorkerHost,
                     mojo::ScopedMessagePipeHandle interface_pipe) override;
 
   mojo::Binding<mojom::SharedWorkerHost> binding_;
-  std::unique_ptr<SharedWorkerInstance> instance_;
+  const std::unique_ptr<SharedWorkerInstance> instance_;
   ClientList clients_;
 
   mojom::SharedWorkerPtr worker_;

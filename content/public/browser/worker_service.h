@@ -12,7 +12,7 @@
 #include "url/gurl.h"
 
 namespace content {
-
+class StoragePartition;
 class WorkerServiceObserver;
 
 // A singleton for managing HTML5 shared web workers. These may be run in a
@@ -32,7 +32,8 @@ class CONTENT_EXPORT WorkerService {
   // Terminates all workers and notifies when complete. This is used for
   // testing when it is important to make sure that all shared worker activity
   // has stopped.
-  virtual void TerminateAllWorkersForTesting(base::OnceClosure callback) = 0;
+  virtual void TerminateAllWorkersForTesting(StoragePartition* partition,
+                                             base::OnceClosure callback) = 0;
 
   struct WorkerInfo {
     GURL url;

@@ -11,6 +11,7 @@
 #include "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h"
 #include "content/browser/shared_worker/shared_worker_instance.h"
 #include "content/browser/shared_worker/shared_worker_service_impl.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_process_host.h"
@@ -105,8 +106,7 @@ void SharedWorkerHost::AllowFileSystem(
     base::OnceCallback<void(bool)> callback) {
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&AllowFileSystemOnIOThread, url,
-                     instance_->resource_context(),
+      base::BindOnce(&AllowFileSystemOnIOThread, url, GetResourceContext(),
                      GetRenderFrameIDsForWorker(), std::move(callback)));
 }
 
@@ -115,8 +115,7 @@ void SharedWorkerHost::AllowIndexedDB(const GURL& url,
                                       base::OnceCallback<void(bool)> callback) {
   BrowserThread::PostTaskAndReplyWithResult(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&AllowIndexedDBOnIOThread, url, name,
-                     instance_->resource_context(),
+      base::BindOnce(&AllowIndexedDBOnIOThread, url, name, GetResourceContext(),
                      GetRenderFrameIDsForWorker()),
       std::move(callback));
 }
@@ -143,8 +142,6 @@ SharedWorkerHost::ClientInfo::ClientInfo(mojom::SharedWorkerClientPtr client,
 SharedWorkerHost::ClientInfo::~ClientInfo() {}
 
 void SharedWorkerHost::OnConnected(int connection_request_id) {
-  if (!instance_)
-    return;
   for (const ClientInfo& info : clients_) {
     if (info.connection_request_id != connection_request_id)
       continue;
@@ -189,6 +186,12 @@ void SharedWorkerHost::OnFeatureUsed(blink::mojom::WebFeature feature) {
     return;
   for (const ClientInfo& info : clients_)
     info.client->OnFeatureUsed(feature);
+}
+
+ResourceContext* SharedWorkerHost::GetResourceContext() {
+  return RenderProcessHost::FromID(process_id_)
+      ->GetBrowserContext()
+      ->GetResourceContext();
 }
 
 std::vector<std::pair<int, int>>

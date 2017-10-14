@@ -7,30 +7,22 @@
 
 #include <string>
 
-#include "content/browser/shared_worker/worker_storage_partition.h"
 #include "content/common/content_export.h"
+#include "content/common/shared_worker/shared_worker_info.mojom.h"
 #include "third_party/WebKit/public/platform/WebAddressSpace.h"
 #include "third_party/WebKit/public/platform/WebContentSecurityPolicy.h"
 #include "third_party/WebKit/public/web/shared_worker_creation_context_type.mojom.h"
 #include "url/gurl.h"
 
 namespace content {
-class ResourceContext;
 
 // SharedWorkerInstance is copyable value-type data type. It could be passed to
 // the UI thread and be used for comparison in SharedWorkerDevToolsManager.
 class CONTENT_EXPORT SharedWorkerInstance {
  public:
   SharedWorkerInstance(
-      const GURL& url,
-      const std::string& name,
-      const std::string& content_security_policy,
-      blink::WebContentSecurityPolicyType content_security_policy_type,
-      blink::WebAddressSpace creation_address_space,
-      ResourceContext* resource_context,
-      const WorkerStoragePartitionId& partition_id,
-      blink::mojom::SharedWorkerCreationContextType creation_context_type,
-      bool data_saver_enabled);
+      mojom::SharedWorkerInfoPtr info,
+      blink::mojom::SharedWorkerCreationContextType creation_context_type);
   SharedWorkerInstance(const SharedWorkerInstance& other);
   ~SharedWorkerInstance();
 
@@ -40,10 +32,7 @@ class CONTENT_EXPORT SharedWorkerInstance {
   // a) the names are non-empty and equal.
   // -or-
   // b) the names are both empty, and the urls are equal.
-  bool Matches(const GURL& url,
-               const std::string& name,
-               const WorkerStoragePartitionId& partition,
-               ResourceContext* resource_context) const;
+  bool Matches(const GURL& url, const std::string& name) const;
   bool Matches(const SharedWorkerInstance& other) const;
 
   // Accessors.
@@ -58,10 +47,6 @@ class CONTENT_EXPORT SharedWorkerInstance {
   blink::WebAddressSpace creation_address_space() const {
     return creation_address_space_;
   }
-  ResourceContext* resource_context() const {
-    return resource_context_;
-  }
-  const WorkerStoragePartitionId& partition_id() const { return partition_id_; }
   blink::mojom::SharedWorkerCreationContextType creation_context_type() const {
     return creation_context_type_;
   }
@@ -73,8 +58,6 @@ class CONTENT_EXPORT SharedWorkerInstance {
   const std::string content_security_policy_;
   const blink::WebContentSecurityPolicyType content_security_policy_type_;
   const blink::WebAddressSpace creation_address_space_;
-  ResourceContext* const resource_context_;
-  const WorkerStoragePartitionId partition_id_;
   const blink::mojom::SharedWorkerCreationContextType creation_context_type_;
   const bool data_saver_enabled_;
 };

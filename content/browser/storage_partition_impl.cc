@@ -695,6 +695,12 @@ BlobRegistryWrapper* StoragePartitionImpl::GetBlobRegistry() {
   return blob_registry_.get();
 }
 
+SharedWorkerHostMap* StoragePartitionImpl::GetSharedWorkerHostMap() {
+  if (!shared_worker_host_map_)
+    shared_worker_host_map_ = std::make_unique<SharedWorkerHostMap>();
+  return shared_worker_host_map_.get();
+}
+
 void StoragePartitionImpl::OpenLocalStorage(
     const url::Origin& origin,
     mojo::InterfaceRequest<mojom::LevelDBWrapper> request) {

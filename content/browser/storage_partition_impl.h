@@ -28,6 +28,7 @@
 #include "content/browser/payments/payment_app_context_impl.h"
 #include "content/browser/push_messaging/push_messaging_context.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
+#include "content/browser/shared_worker/shared_worker_host_map.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/common/content_export.h"
 #include "content/common/storage_partition_service.mojom.h"
@@ -125,6 +126,7 @@ class CONTENT_EXPORT StoragePartitionImpl
   BluetoothAllowedDevicesMap* GetBluetoothAllowedDevicesMap();
   BlobURLLoaderFactory* GetBlobURLLoaderFactory();
   BlobRegistryWrapper* GetBlobRegistry();
+  SharedWorkerHostMap* GetSharedWorkerHostMap();
 
   // mojom::StoragePartitionService interface.
   void OpenLocalStorage(
@@ -261,6 +263,7 @@ class CONTENT_EXPORT StoragePartitionImpl
   scoped_refptr<BluetoothAllowedDevicesMap> bluetooth_allowed_devices_map_;
   scoped_refptr<BlobURLLoaderFactory> blob_url_loader_factory_;
   scoped_refptr<BlobRegistryWrapper> blob_registry_;
+  std::unique_ptr<SharedWorkerHostMap> shared_worker_host_map_;
 
   // BindingSet for StoragePartitionService, using the process id as the
   // binding context type. The process id can subsequently be used during

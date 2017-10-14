@@ -20,7 +20,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/lock.h"
 #include "content/browser/shared_worker/shared_worker_connector_impl.h"
-#include "content/browser/shared_worker/worker_storage_partition.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/test_browser_context.h"

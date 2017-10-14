@@ -784,6 +784,8 @@ void BlinkTestController::OnTestFinished() {
 
 void BlinkTestController::OnAllServiceWorkersCleared() {
   WorkerService::GetInstance()->TerminateAllWorkersForTesting(
+      BrowserContext::GetStoragePartition(
+          ShellContentBrowserClient::Get()->browser_context(), nullptr),
       base::BindOnce(&BlinkTestController::OnAllSharedWorkersDestroyed,
                      base::Unretained(this)));
 }
