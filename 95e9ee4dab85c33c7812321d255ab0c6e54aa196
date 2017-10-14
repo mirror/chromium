@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "338a3473_5f2662b6",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-14T02:06:52Z",
+      "side": 1,
+      "message": "Just to make sure I understand: this also includes the sandbox flags from the iframe element, because the renderer sends us all the sandbox flags (CSP+parent+iframe) it ends up applying to this frame from InitSecurityContext?  Might be worth mentioning how this works in the comment on active_sandbox_flags().\n\nI wonder if it makes sense now to also enforce that the renderer doesn\u0027t lie about its sandbox flags.  Presumably, what it sends to us here should be a subset of the parent sandbox flags combined with frame policy sandbox flags (subset due to flags set from CSP).  Right?  And if that\u0027s not the case, we can kill the renderer.  (This is fine to leave to a separate followup CL, or at least file a bug for me to follow up, since this isn\u0027t a new problem and this CL isn\u0027t making it worse.)",
+      "revId": "95e9ee4dab85c33c7812321d255ab0c6e54aa196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51dfad0c_bba700d2",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2188,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-14T02:06:52Z",
+      "side": 1,
+      "message": "I wonder if storing the active these on FrameTreeNode might subject us to a race with pending delete RFHs.  Suppose we have A-embed-B, B defines CSP sandbox flags, and A navigates the subframe to C.  Could the following happen?\n- DidCommit for B\n- DidCommit for C, B becomes a pending-delete RFH executing unload()\n- DidSetFramePolicyHeaders for B arrives, setting the (stale) sandbox flags on the FTN in which C is now active.\n\nA few thoughts:\n- maybe we should be sending these as part of DidCommitProvisionalLoad?\n- or, checking is_active() here, to avoid overwriting FTN\u0027s flags from a frame that\u0027s no longer current?\n- would we ever need to query sandbox flags on a pending delete RFH?  There wouldn\u0027t be a way to do that unless we store active_sandbox_flags on RFHI.",
+      "revId": "95e9ee4dab85c33c7812321d255ab0c6e54aa196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b730e3dc_2b577636",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-14T02:06:52Z",
+      "side": 1,
+      "message": "Does this need to include the sandbox flags set in the iframe element?",
+      "revId": "95e9ee4dab85c33c7812321d255ab0c6e54aa196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089874dc_44732daf",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 5961,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-14T02:06:52Z",
+      "side": 1,
+      "message": "This works because Document::SetFeaturePolicy is always called before we\u0027ve applied any CSP (or other) sandbox flags in Document::InitSecurityContext, right?  However, I see calls to SetFeaturePolicy from InitSecurityContext with g_empty_string -- seems like those would now send this IPC, along with another call from InstallNewDocument.  Is that right, and is there a way to avoid sending two of these IPCs per (new) document?\n\nRelated: do we need to send this IPC at all for the default sandbox flags and feature policy?",
+      "revId": "95e9ee4dab85c33c7812321d255ab0c6e54aa196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
