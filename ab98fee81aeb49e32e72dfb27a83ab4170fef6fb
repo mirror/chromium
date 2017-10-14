@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9faa5d0_f717818d",
+        "filename": "gpu/ipc/common/gpu_preferences_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-14T01:36:12Z",
+      "side": 1,
+      "message": "I would be explicit about naming this GpuPreferencesToSwitchValue, et cetera, so no one gets the temptation to use this to pass gpu preferences across something like IPC. Same comment below.",
+      "revId": "ab98fee81aeb49e32e72dfb27a83ab4170fef6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c92ae8c_a3657055",
+        "filename": "gpu/ipc/common/gpu_preferences_util_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-14T01:36:12Z",
+      "side": 1,
+      "message": "In general, this is unsafe: in this case, it happens to work out because the alignment requirements happen to be satisfied.\n\nPlease use alignas(GpuPreference) to guarantee the correct alignment here.",
+      "revId": "ab98fee81aeb49e32e72dfb27a83ab4170fef6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
