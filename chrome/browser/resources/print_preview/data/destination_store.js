@@ -1111,6 +1111,10 @@ cr.define('print_preview', function() {
       if (origin !== print_preview.DestinationOrigin.PRIVET) {
         var key = this.getDestinationKey_(origin, id, '');
         dest = this.destinationMap_[key];
+        if (dest && origin === print_preview.DestinationOrigin.LOCAL &&
+            dest.capabilities) {
+          return;
+        }
       }
       if (!dest) {
         // Ignore unrecognized extension printers
