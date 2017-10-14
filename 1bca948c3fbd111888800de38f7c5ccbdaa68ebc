@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97b2b8d5_691e697d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-14T00:49:26Z",
+      "side": 1,
+      "message": "Got my CL messages confused.",
+      "parentUuid": "264c314a_9747df23",
+      "revId": "1bca948c3fbd111888800de38f7c5ccbdaa68ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddb7b47d_6e0c1c7a",
         "filename": "tools/cfi/blacklist.txt",
         "patchSetId": 3
