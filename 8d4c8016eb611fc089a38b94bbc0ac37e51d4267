@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4da5ab88_9c44e14b",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-14T04:37:39Z",
+      "side": 1,
+      "message": "There are test failures, because this is called from the destructor from ::Create if ::Initialize fails, in which case channel_ is null. So maybe we want to keep the early exit for the !channel_ case?",
+      "revId": "8d4c8016eb611fc089a38b94bbc0ac37e51d4267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
