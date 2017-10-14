@@ -13,7 +13,8 @@
 
 namespace syncer {
 
-MockModelTypeProcessor::MockModelTypeProcessor() : is_synchronous_(true) {}
+MockModelTypeProcessor::MockModelTypeProcessor()
+    : is_synchronous_(true) {}
 
 MockModelTypeProcessor::~MockModelTypeProcessor() {}
 
@@ -31,7 +32,10 @@ void MockModelTypeProcessor::DisconnectSync() {
 void MockModelTypeProcessor::GetLocalChanges(
     size_t max_entries,
     const GetLocalChangesCallback& callback) {
-  callback.Run(CommitRequestDataList());
+  DCHECK_LE(commit_request_.size(), max_entries);
+  get_local_changes_call_count_++;
+  callback.Run(std::move(commit_request_));
+  commit_request_.clear();
 }
 
 void MockModelTypeProcessor::OnCommitCompleted(
@@ -194,6 +198,15 @@ CommitResponseData MockModelTypeProcessor::GetCommitResponse(
 void MockModelTypeProcessor::SetDisconnectCallback(
     const DisconnectCallback& callback) {
   disconnect_callback_ = callback;
+}
+
+void MockModelTypeProcessor::SetCommitRequest(
+    const CommitRequestDataList& commit_request) {
+  commit_request_ = commit_request;
+}
+
+int MockModelTypeProcessor::GetLocalChangesCallCount() const {
+  return get_local_changes_call_count_;
 }
 
 void MockModelTypeProcessor::OnCommitCompletedImpl(

@@ -37,6 +37,8 @@ class MockModelTypeWorker : public CommitQueue {
   void EnqueueForCommit(const CommitRequestDataList& list) override;
   void NudgeForCommit() override;
 
+  void PullLocalChanges();
+
   // Getters to inspect the requests sent to this object.
   size_t GetNumPendingCommits() const;
   CommitRequestDataList GetNthPendingCommit(size_t n) const;
@@ -107,6 +109,10 @@ class MockModelTypeWorker : public CommitQueue {
   void UpdateWithGarbageConllection(
       const sync_pb::GarbageCollectionDirective& gcd);
 
+  size_t nudge_for_commit_call_count() const {
+    return nudge_for_commit_call_count_;
+  }
+
  private:
   // Generate an ID string.
   static std::string GenerateId(const std::string& tag_hash);
@@ -132,6 +138,8 @@ class MockModelTypeWorker : public CommitQueue {
   // Map of versions by client tag hash.
   // This is an essential part of the mocked server state.
   std::map<const std::string, int64_t> server_versions_;
+
+  size_t nudge_for_commit_call_count_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(MockModelTypeWorker);
 };

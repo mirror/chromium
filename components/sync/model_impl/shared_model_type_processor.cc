@@ -292,7 +292,6 @@ void SharedModelTypeProcessor::UntrackEntity(const EntityData& entity_data) {
 }
 
 void SharedModelTypeProcessor::FlushPendingCommitRequests() {
-  CommitRequestDataList commit_requests;
 
   // Don't bother sending anything if there's no one to send to.
   if (!IsConnected())
@@ -303,31 +302,51 @@ void SharedModelTypeProcessor::FlushPendingCommitRequests() {
     return;
 
   // TODO(rlarocque): Do something smarter than iterate here.
+  bool has_local_changes = false;
+  for (const auto& kv : entities_) {
+    ProcessorEntityTracker* entity = kv.second.get();
+    if (entity->RequiresCommitRequest() && !entity->RequiresCommitData()) {
+      has_local_changes = true;
+      break;
+    }
+  }
+
+  if (has_local_changes)
+    worker_->NudgeForCommit();
+}
+
+void SharedModelTypeProcessor::GetLocalChanges(
+    size_t max_entries,
+    const GetLocalChangesCallback& callback) {
+  DVLOG_IF(0, type_ == AUTOFILL) << __FUNCTION__ << "{PAV}";
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_GT(max_entries, 0U);
+
+  CommitRequestDataList commit_requests;
+  // TODO(rlarocque): Do something smarter than iterate here.
   for (const auto& kv : entities_) {
     ProcessorEntityTracker* entity = kv.second.get();
     if (entity->RequiresCommitRequest() && !entity->RequiresCommitData()) {
       CommitRequestData request;
       entity->InitializeCommitRequestData(&request);
       commit_requests.push_back(request);
+      if (commit_requests.size() >= max_entries) {
+        DVLOG(0) << __FUNCTION__ << "{PAV}: Batch full";
+        break;
+      }
     }
   }
+  DVLOG_IF(0, !commit_requests.empty()) << __FUNCTION__ << "{PAV}";
 
-  if (!commit_requests.empty())
-    worker_->EnqueueForCommit(commit_requests);
-}
-
-void SharedModelTypeProcessor::GetLocalChanges(
-    size_t max_entries,
-    const GetLocalChangesCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK_GT(max_entries, 0U);
-  callback.Run(CommitRequestDataList());
+  callback.Run(std::move(commit_requests));
 }
 
 void SharedModelTypeProcessor::OnCommitCompleted(
     const sync_pb::ModelTypeState& type_state,
     const CommitResponseDataList& response_list) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DVLOG_IF(0, type_ == AUTOFILL && !response_list.empty()) <<
+      __FUNCTION__ << "{PAV}";
   std::unique_ptr<MetadataChangeList> metadata_change_list =
       bridge_->CreateMetadataChangeList();
   EntityChangeList entity_change_list;
@@ -367,6 +386,13 @@ void SharedModelTypeProcessor::OnCommitCompleted(
       metadata_change_list->UpdateMetadata(entity->storage_key(),
                                            entity->metadata());
     }
+  }
+
+  // Entities not mentioned in response_list weren't committed. We should reset
+  // their commit_requested_sequence_number so they are committed again on next
+  // sync cycle.
+  for (auto& entity_kv : entities_) {
+    entity_kv.second->ClearTransientSyncState();
   }
 
   base::Optional<ModelError> error = bridge_->ApplySyncChanges(

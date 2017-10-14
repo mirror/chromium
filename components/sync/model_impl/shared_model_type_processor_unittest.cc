@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+
+
+// {PAV} Audit GetNumPendingCommits
 #include "components/sync/model_impl/shared_model_type_processor.h"
 
 #include <stddef.h>
@@ -12,6 +15,7 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/debug/stack_trace.h"
 #include "base/message_loop/message_loop.h"
 #include "base/rand_util.h"
 #include "base/run_loop.h"
@@ -332,7 +336,7 @@ TEST_F(SharedModelTypeProcessorTest, InitialSync) {
   EXPECT_EQ(1U, db().data_count());
   EXPECT_EQ(0U, db().metadata_count());
   EXPECT_EQ(0U, ProcessorEntityCount());
-  EXPECT_EQ(0U, worker()->GetNumPendingCommits());
+  EXPECT_EQ(0U, worker()->nudge_for_commit_call_count());
 
   EXPECT_EQ(0, bridge()->merge_call_count());
   // Initial sync with one server item.
@@ -346,6 +350,7 @@ TEST_F(SharedModelTypeProcessorTest, InitialSync) {
   EXPECT_EQ(2U, ProcessorEntityCount());
   EXPECT_EQ(1, db().GetMetadata(kKey1).sequence_number());
   EXPECT_EQ(0, db().GetMetadata(kKey2).sequence_number());
+  EXPECT_EQ(1U, worker()->nudge_for_commit_call_count());
   worker()->VerifyPendingCommits({kHash1});
 }
 

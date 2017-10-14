@@ -135,12 +135,6 @@ class ModelTypeWorker : public UpdateHandler,
   // generating client-assigned ID, encrypting data, etc.
   void AdjustCommitProto(sync_pb::SyncEntity* commit_entity);
 
-  // Attempts to decrypt encrypted updates stored in the EntityMap. If
-  // successful, will remove the update from the its tracker and forward
-  // it to the processor for application. Will forward any new encryption
-  // keys to the processor to trigger re-encryption if necessary.
-  void OnCryptographerUpdated();
-
   // Updates the encryption key name stored in |model_type_state_| if it differs
   // from the default encryption key name in |cryptographer_|. Returns whether
   // an update occurred.
@@ -169,10 +163,12 @@ class ModelTypeWorker : public UpdateHandler,
 
   // Creates an entity tracker in the map using the given |data| and returns a
   // pointer to it. Requires that one doesn't exist for data.client_tag_hash.
-  WorkerEntityTracker* CreateEntityTracker(const EntityData& data);
+  WorkerEntityTracker* CreateEntityTracker(const std::string& tag_hash);
 
   // Gets the entity tracker for |data| or creates one if it doesn't exist.
-  WorkerEntityTracker* GetOrCreateEntityTracker(const EntityData& data);
+  WorkerEntityTracker* GetOrCreateEntityTracker(const std::string& tag_hash);
+
+  void NudgeIfReady();
 
   ModelType type_;
   DataTypeDebugInfoEmitter* debug_info_emitter_;
@@ -208,6 +204,8 @@ class ModelTypeWorker : public UpdateHandler,
 
   // Whether there are outstanding encrypted updates in |entities_|.
   bool has_encrypted_updates_ = false;
+
+  bool has_local_changes_ = false;
 
   // Cancellation signal is used to cancel blocking operation on engine
   // shutdown.

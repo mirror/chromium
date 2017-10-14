@@ -25,15 +25,31 @@ MockModelTypeWorker::MockModelTypeWorker(
 MockModelTypeWorker::~MockModelTypeWorker() {}
 
 void MockModelTypeWorker::EnqueueForCommit(const CommitRequestDataList& list) {
+  NOTREACHED();
+}
+
+void MockModelTypeWorker::NudgeForCommit() {
+  nudge_for_commit_call_count_++;
+  PullLocalChanges();
+}
+
+void CaptureCommitRequest(CommitRequestDataList* dst,
+                          CommitRequestDataList&& commit_request) {
+  *dst = std::move(commit_request);
+}
+
+void MockModelTypeWorker::PullLocalChanges() {
+  CommitRequestDataList commit_request;
+  processor_->GetLocalChanges(
+      INT_MAX, base::Bind(&CaptureCommitRequest, &commit_request));
   // Verify that all request entities have valid id, version combinations.
-  for (const CommitRequestData& commit_request_data : list) {
+  for (const CommitRequestData& commit_request_data : commit_request) {
     EXPECT_TRUE(commit_request_data.base_version == -1 ||
                 !commit_request_data.entity->id.empty());
   }
-  pending_commits_.push_back(list);
-}
+  pending_commits_.push_back(commit_request);
 
-void MockModelTypeWorker::NudgeForCommit() {}
+}
 
 size_t MockModelTypeWorker::GetNumPendingCommits() const {
   return pending_commits_.size();
@@ -197,6 +213,7 @@ void MockModelTypeWorker::AckOnePendingCommit() {
 
 void MockModelTypeWorker::AckOnePendingCommit(int64_t version_offset) {
   CommitResponseDataList list;
+  EXPECT_FALSE(pending_commits_.empty());
   for (const CommitRequestData& data : pending_commits_.front()) {
     list.push_back(SuccessfulCommitResponse(data, version_offset));
   }
