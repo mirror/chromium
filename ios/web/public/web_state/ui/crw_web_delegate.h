@@ -25,13 +25,14 @@ class GURL;
 // TODO(crbug.com/674991): Remove this protocol.
 @protocol CRWWebDelegate<NSObject>
 
-// Called when an external app needs to be opened, it also passes |linkClicked|
-// to track if this call was a result of user action or not. Returns YES iff
-// |URL| is launched in an external app.
-// |sourceURL| is the original URL that triggered the navigation to |URL|.
-- (BOOL)openExternalURL:(const GURL&)URL
+// Called when an external app needs to be opened. |sourceURL| is the original
+// URL that triggered the navigation to |URL|. |linkClicked| indicates if this
+// call was a result of user action or not. |completionHandler| is called with
+// a status of YES if an external app has been launched for |URL|.
+- (void)openExternalURL:(const GURL&)URL
               sourceURL:(const GURL&)sourceURL
-            linkClicked:(BOOL)linkClicked;
+            linkClicked:(BOOL)linkClicked
+             completion:(void (^)(BOOL) _Nullable)completionHandler;
 
 // This method is invoked whenever the system believes the URL is about to
 // change, or immediately after any unexpected change of the URL, prior to
@@ -56,11 +57,10 @@ class GURL;
 
 // Called to ask CRWWebDelegate if |CRWWebController| should open the given URL.
 // CRWWebDelegate can intercept the request by returning NO and processing URL
-// in own way.
+// in its own way.
 - (BOOL)webController:(CRWWebController*)webController
         shouldOpenURL:(const GURL&)url
-      mainDocumentURL:(const GURL&)mainDocumentURL
-          linkClicked:(BOOL)linkClicked;
+      mainDocumentURL:(const GURL&)mainDocumentURL;
 
 // Called to ask if external URL should be opened. External URL is one that
 // cannot be presented by CRWWebController.
