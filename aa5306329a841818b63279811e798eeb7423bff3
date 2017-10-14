@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43718c9d_bf683ecf",
+        "filename": "extensions/renderer/content_watcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-14T00:22:20Z",
+      "side": 0,
+      "message": "I\u0027m not 100% sure if that\u0027s what it\u0027s referring to, but I think maybe so.  In either case, I think this shouldn\u0027t be problem with a frame-based approach.",
+      "parentUuid": "028ce5ad_1e6c80ec",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 60
+      },
+      "revId": "aa5306329a841818b63279811e798eeb7423bff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0ef40f1_4bee7ecd",
         "filename": "extensions/renderer/content_watcher.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "aa5306329a841818b63279811e798eeb7423bff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be1f272_b6de1f86",
+        "filename": "extensions/renderer/content_watcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-14T00:22:20Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c0ef40f1_4bee7ecd",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 33
+      },
+      "revId": "aa5306329a841818b63279811e798eeb7423bff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
