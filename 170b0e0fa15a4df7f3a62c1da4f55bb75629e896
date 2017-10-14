@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f89fab4b_f145a688",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-14T03:02:58Z",
+      "side": 1,
+      "message": "Not for this CL, but in a followup, I would just suggest changing this to pass const base::Optional\u003cDevToolsNetworkConditions\u003e\u0026 here rather than indirecting through the heap.",
+      "revId": "170b0e0fa15a4df7f3a62c1da4f55bb75629e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39cc0fff_1b75927c",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-14T03:02:58Z",
+      "side": 1,
+      "message": "Please typemap mojom::NetworkConditions to DevToolsNetworkConditions, so the marshalling code is centralized in StructTraits.\n\n(https://chromium.googlesource.com/chromium/src/+/master/mojo/public/cpp/bindings#Type-Mapping is the documentation, but feel free to ask me any questions)",
+      "range": {
+        "startLine": 1219,
+        "startChar": 0,
+        "endLine": 1226,
+        "endChar": 3
+      },
+      "revId": "170b0e0fa15a4df7f3a62c1da4f55bb75629e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
