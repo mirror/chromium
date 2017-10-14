@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "edcbaff7_2e6d3d4f",
+        "filename": "content/browser/devtools/protocol/network_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-14T00:03:51Z",
+      "side": 1,
+      "message": "Fair point, changed to std::vector\u003cstd::pair\u003c\u003e\u003e",
+      "parentUuid": "26523749_3d1bc747",
+      "revId": "858336b8b3992ff7273e4ddee09f84fa6f202642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c32c86b7_e4b7e898",
         "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-13T23:51:15Z",
       "side": 1,
       "message": "This might add two throttling headers. Are we ready to remove them all in DevToolsNetworkTransaction?",
+      "revId": "858336b8b3992ff7273e4ddee09f84fa6f202642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63fe770_206bf2de",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-14T00:03:51Z",
+      "side": 1,
+      "message": "There won\u0027t be two, net::HttpRequestHeaders will take care of that.",
+      "parentUuid": "c32c86b7_e4b7e898",
       "revId": "858336b8b3992ff7273e4ddee09f84fa6f202642",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
