@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "3fa4b3ce_8f2fcf49",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavaScriptDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-14T00:15:19Z",
+      "side": 1,
+      "message": "prepare conceptually could do:\n\nUiUtils.removeViewFromParent(layout.findViewById(R.id.js_modal_dialog_prompt));\n\nBy doing the findViewById first before prepare, you could be holding onto a view unknowing that it was in fact removed from the hierarchy and that could cause oddness later on.",
+      "parentUuid": "1a12d0b3_bd25f6b4",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "361d4a70_04c0745e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavaScriptDialog.java",
         "patchSetId": 1
@@ -426,6 +450,30 @@
     },
     {
       "key": {
+        "uuid": "c397753b_52a39629",
+        "filename": "chrome/browser/ui/android/javascript_dialog_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-14T00:15:19Z",
+      "side": 1,
+      "message": "ah, isolating the weak_factory exposure seems like a good thing.  I just glossed over that.",
+      "parentUuid": "796090b4_59bb1a85",
+      "range": {
+        "startLine": 79,
+        "startChar": 39,
+        "endLine": 79,
+        "endChar": 62
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40d947a8_9a7ca2f2",
         "filename": "chrome/browser/ui/android/javascript_dialog_android.cc",
         "patchSetId": 1
@@ -649,6 +697,30 @@
       "side": 1,
       "message": "This is very strange. The BUILD file is configured to exclude this header file, but I found that ProfileManager can also include this header file successfully. I wonder why...\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/profiles/profile_manager.h",
       "parentUuid": "a84a9261_cf2d5b63",
+      "range": {
+        "startLine": 34,
+        "startChar": 21,
+        "endLine": 34,
+        "endChar": 40
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28dfa159_378dbf38",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-14T00:15:19Z",
+      "side": 1,
+      "message": "A lot of this is because of the tool chain being smart and preventing crashing by removing blocks that are never needed, but in general, I think we try to not rely on that and be more explicit around includes and definitions.\n\nI think it is better to make the code self documenting then to rely on a build failure to require someone to infer that it wasn\u0027t included in a .gn file somewhere.",
+      "parentUuid": "5ff011f6_876ddd57",
       "range": {
         "startLine": 34,
         "startChar": 21,

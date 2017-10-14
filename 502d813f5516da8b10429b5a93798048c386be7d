@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe957687_7a06da2c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-14T00:15:19Z",
+      "side": 1,
+      "message": "should probably change the name here too?",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "502d813f5516da8b10429b5a93798048c386be7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e61ecb_55714fea",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-14T00:15:19Z",
+      "side": 1,
+      "message": "Needs to be resorted w/ the name change.  Might want to include Javascript in there as well.",
+      "range": {
+        "startLine": 899,
+        "startChar": 38,
+        "endLine": 899,
+        "endChar": 59
+      },
+      "revId": "502d813f5516da8b10429b5a93798048c386be7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632eeed5_101c1942",
+        "filename": "chrome/browser/ui/android/javascript_dialog_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-14T00:15:19Z",
+      "side": 1,
+      "message": "the ordering doesn\u0027t seem to match yet.\n\nshould be:\n\ndestructor\nJavaScriptDialogAndroid::Create\nCloseDialogWi..\nGetUserInput \n\nas that is the order from the header file.",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "502d813f5516da8b10429b5a93798048c386be7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
