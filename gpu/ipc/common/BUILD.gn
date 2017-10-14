@@ -182,3 +182,16 @@ source_set("struct_traits") {
     "//mojo/public/cpp/bindings:bindings",
   ]
 }
+
+source_set("gpu_preferences_util") {
+  # TODO(zmo): find a way to avoid these sources being duplicated in multiple
+  # components.
+  sources = [
+    "gpu_preferences_util.cc",
+    "gpu_preferences_util.h",
+  ]
+  configs += [ "//gpu:gpu_implementation" ]
+  deps = [
+    ":interfaces",
+  ]
+}
