@@ -54493,6 +54493,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PageLoad.Experimental.NavigationToFMPConsistentlyInteractive"
+    units="ms">
+  <owner>dproy@chromium.org</owner>
+  <owner>tdresser@chromium.org</owner>
+  <summary>
+    Measures the time between Navigation Start and Consistently Interactive,
+    lower bound by FMP. See https://goo.gl/veegmW definition of Consistently
+    Interactive.
+  </summary>
+</histogram>
+
 <histogram name="PageLoad.Experimental.PageTiming.FirstPaintToFirstBackground"
     units="ms">
   <obsolete>
