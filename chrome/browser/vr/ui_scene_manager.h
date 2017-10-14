@@ -80,6 +80,14 @@ struct UiInitialState;
 //       kSplashScreenTransientParent
 //         kSplashScreenText
 //           kSplashScreenBackground
+//       kWebVrTimeoutSpinner
+//         kWebVrTimeoutSpinnerBackground
+//       kWebVrTimeoutMessage
+//         kWebVrTimeoutMessageLayout
+//           kWebVrTimeoutMessageIcon
+//           kWebVrTimeoutMessageText
+//           kWebVrTimeoutExitButton
+//             kWebVrTimeoutExitButtonText
 //
 // TODO(vollick): The above hierarchy is complex, brittle, and would be easier
 // to manage if it were specified in a declarative format.
@@ -130,7 +138,7 @@ class UiSceneManager {
   void CreateWebVRExitWarning();
   void CreateSystemIndicators();
   void CreateContentQuad(ContentInputDelegate* delegate);
-  void CreateSplashScreen();
+  void CreateSplashScreen(Model* model);
   void CreateUnderDevelopmentNotice();
   void CreateBackground();
   void CreateViewportAwareRoot();
@@ -188,6 +196,7 @@ class UiSceneManager {
   bool web_vr_mode_;
   bool web_vr_show_toast_ = false;
   bool started_for_autopresentation_ = false;
+  bool web_vr_frame_available_ = false;
   // Flag to indicate that we're waiting for the first WebVR frame to show up
   // before we hide the splash screen. This is used in the case of WebVR
   // auto-presentation.

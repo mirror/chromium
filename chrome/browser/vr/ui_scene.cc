@@ -166,4 +166,15 @@ void UiScene::OnGlInitialized() {
     element.Initialize();
 }
 
+bool UiScene::ControllerWouldBeVisibleInTheSceneGraph() const {
+  if (GetUiElementByName(kWebVrTimeoutMessageButton)->IsVisible())
+    return true;
+
+  bool browsing_mode = GetUiElementByName(k2dBrowsingRoot)->IsVisible();
+  bool transitioning_to_webvr =
+      GetUiElementByName(kWebVrTimeoutSpinnerBackground)->IsVisible();
+
+  return browsing_mode && !transitioning_to_webvr;
+}
+
 }  // namespace vr

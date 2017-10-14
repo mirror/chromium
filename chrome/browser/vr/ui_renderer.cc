@@ -66,7 +66,10 @@ void UiRenderer::Draw2dBrowsing(const RenderInfo& render_info,
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
     glClear(GL_DEPTH_BUFFER_BIT);
-    DrawUiView(render_info, controller_info, elements, kReticleVisible);
+    DrawUiView(render_info, controller_info, elements,
+               scene_->ControllerWouldBeVisibleInTheSceneGraph()
+                   ? kReticleVisible
+                   : kReticleHidden);
   }
 
   if (elements_overlay.empty())
@@ -95,7 +98,12 @@ void UiRenderer::DrawSplashScreen(const RenderInfo& render_info,
   glDisable(GL_CULL_FACE);
   glDisable(GL_DEPTH_TEST);
   glDepthMask(GL_FALSE);
-  DrawUiView(render_info, controller_info, elements, kReticleHidden);
+
+  DrawUiView(render_info, controller_info, elements,
+             scene_->ControllerWouldBeVisibleInTheSceneGraph()
+                 ? kReticleVisible
+                 : kReticleHidden);
+
   // NB: we do not draw the viewport aware objects here. They get put into
   // another buffer that is size optimized.
 }
@@ -183,20 +191,12 @@ std::vector<const UiElement*> UiRenderer::GetElementsInDrawOrder(
   std::vector<const UiElement*> sorted_elements = elements;
 
   // Sort elements primarily based on their draw phase (lower draw phase first)
-  // and secondarily based on their z-axis distance (more distant first).
-  // TODO(mthiesse, crbug.com/721356): This will not work well for elements not
-  // directly in front of the user, but works well enough for our initial
-  // release, and provides a consistent ordering that we can easily design
-  // around.
-  std::sort(sorted_elements.begin(), sorted_elements.end(),
-            [](const UiElement* first, const UiElement* second) {
-              if (first->draw_phase() != second->draw_phase()) {
-                return first->draw_phase() < second->draw_phase();
-              } else {
-                return first->world_space_transform().matrix().get(2, 3) <
-                       second->world_space_transform().matrix().get(2, 3);
-              }
-            });
+  // and secondarily based on their tree order (as specified by the sorted
+  // elemetns).
+  std::stable_sort(sorted_elements.begin(), sorted_elements.end(),
+                   [](const UiElement* first, const UiElement* second) {
+                     return first->draw_phase() < second->draw_phase();
+                   });
 
   return sorted_elements;
 }
