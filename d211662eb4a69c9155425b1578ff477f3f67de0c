@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34f72498_e785fa19",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-14T00:36:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bf59cba_77d533e7",
+      "revId": "d211662eb4a69c9155425b1578ff477f3f67de0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4003a1d0_3b830f34",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-13T00:34:51Z",
       "side": 1,
       "message": "can this happen? DCHEC if it shouldn\u0027t happen.",
+      "revId": "d211662eb4a69c9155425b1578ff477f3f67de0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64cf238_6c66682f",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-14T00:36:04Z",
+      "side": 1,
+      "message": "Yes, theoretically it should not happen from user action. But the developer might accidentally pass in an unsnappable window to the function. I think you\u0027re right, DCHECK should be enough here. Change it back to DCHECK.",
+      "parentUuid": "4003a1d0_3b830f34",
       "revId": "d211662eb4a69c9155425b1578ff477f3f67de0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
