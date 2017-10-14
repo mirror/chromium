@@ -48,8 +48,20 @@ class CC_EXPORT ImageAnimationController {
    public:
     virtual ~AnimationDriver() {}
 
-    // Returns true if the image should be animated.
-    virtual bool ShouldAnimate(PaintImage::Id paint_image_id) const = 0;
+    enum class UpdateType {
+      // Animate this image but no immediate invalidation is necessary.
+      kAnimate,
+
+      // Animate and also perform an immediate invalidation. In cases where
+      // multiple instances of the same image exist but only some of them are
+      // visible, the driver may defer the update. If this was done, we need an
+      // immediate invalidation to display the current frame for that region.
+      kAnimateAndInvalidate,
+
+      // Don't animate the image.
+      kDontAnimate
+    };
+    virtual UpdateType ShouldAnimate(PaintImage::Id paint_image_id) const = 0;
   };
 
   // |invalidation_callback| is the callback to trigger an invalidation and
@@ -116,7 +128,7 @@ class CC_EXPORT ImageAnimationController {
 
     void AddDriver(AnimationDriver* driver);
     void RemoveDriver(AnimationDriver* driver);
-    void UpdateStateFromDrivers();
+    void UpdateStateFromDrivers(PaintImageIdFlatSet* deferred_images);
 
     size_t pending_index() const { return pending_index_; }
     size_t active_index() const { return active_index_; }
@@ -228,6 +240,11 @@ class CC_EXPORT ImageAnimationController {
 
   // The set of images that were animated and invalidated on the last sync tree.
   PaintImageIdFlatSet images_animated_on_sync_tree_;
+
+  // The set of images which were advanced on the last sync tree but were not
+  // invalidated. Since these images are displaying stale content, they need to
+  // be invalidated on the next tree.
+  PaintImageIdFlatSet images_for_deferred_update_;
 
   DelayedNotifier notifier_;
 };

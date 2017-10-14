@@ -543,8 +543,8 @@ class CC_EXPORT LayerTreeImpl {
   void BuildLayerListForTesting();
   void HandleScrollbarShowRequestsFromMain();
 
-  void InvalidateRegionForImages(
-      const PaintImageIdFlatSet& images_to_invalidate);
+  void InvalidateRegionForImages(const PaintImageIdFlatSet& checkered_images,
+                                 const PaintImageIdFlatSet& animated_images);
 
   LayerTreeLifecycle& lifecycle() { return lifecycle_; }
 
