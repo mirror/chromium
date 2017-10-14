@@ -11,7 +11,6 @@
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/permissions/permissions_data.h"
 #include "extensions/common/url_pattern_set.h"
-#include "extensions/renderer/api/automation/automation_api_helper.h"
 #include "extensions/renderer/dispatcher.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
@@ -24,8 +23,6 @@ ExtensionHelper::ExtensionHelper(content::RenderView* render_view,
                                  Dispatcher* dispatcher)
     : content::RenderViewObserver(render_view),
       dispatcher_(dispatcher) {
-  // Lifecycle managed by RenderViewObserver.
-  new AutomationApiHelper(render_view);
 }
 
 ExtensionHelper::~ExtensionHelper() {
