@@ -861,9 +861,7 @@ void PaintLayer::UpdateLayerPosition() {
 
 bool PaintLayer::UpdateSize() {
   IntSize old_size = size_;
-  if (IsRootLayer() && RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
-    size_ = GetLayoutObject().GetDocument().View()->Size();
-  } else if (GetLayoutObject().IsInline() &&
+  if (GetLayoutObject().IsInline() &&
              GetLayoutObject().IsLayoutInline()) {
     LayoutInline& inline_flow = ToLayoutInline(GetLayoutObject());
     IntRect line_box = EnclosingIntRect(inline_flow.LinesBoundingBox());
