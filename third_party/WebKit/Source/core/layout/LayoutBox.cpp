@@ -5326,8 +5326,9 @@ LayoutUnit LayoutBox::BaselinePosition(
 PaintLayer* LayoutBox::EnclosingFloatPaintingLayer() const {
   const LayoutObject* curr = this;
   while (curr) {
-    PaintLayer* layer =
-        curr->HasLayer() && curr->IsBox() ? ToLayoutBox(curr)->Layer() : 0;
+    PaintLayer* layer = curr->HasLayer() && curr->IsBox()
+                            ? ToLayoutBox(curr)->Layer()
+                            : nullptr;
     if (layer && layer->IsSelfPaintingLayer())
       return layer;
     curr = curr->Parent();
@@ -5563,7 +5564,7 @@ LayoutObject* LayoutBox::SplitAnonymousBoxesAroundChild(
       MarkBoxForRelayoutAfterSplit(parent_box);
       parent_box->VirtualChildren()->InsertChildNode(
           parent_box, post_box, box_to_split->NextSibling());
-      box_to_split->MoveChildrenTo(post_box, before_child, 0, true);
+      box_to_split->MoveChildrenTo(post_box, before_child, nullptr, true);
 
       LayoutObject* child = post_box->SlowFirstChild();
       DCHECK(child);

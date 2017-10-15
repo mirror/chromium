@@ -1301,7 +1301,7 @@ void PaintLayerCompositor::DetachRootLayer() {
       Page* page = frame.GetPage();
       if (!page)
         return;
-      page->GetChromeClient().AttachRootGraphicsLayer(0, &frame);
+      page->GetChromeClient().AttachRootGraphicsLayer(nullptr, &frame);
       break;
     }
     case kRootLayerPendingAttachViaChromeClient:

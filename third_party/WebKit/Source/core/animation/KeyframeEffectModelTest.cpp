@@ -91,7 +91,7 @@ Interpolation* FindValue(Vector<RefPtr<Interpolation>>& values,
     if (ToLegacyStyleInterpolation(value.get())->Id() == id)
       return value.get();
   }
-  return 0;
+  return nullptr;
 }
 
 TEST(AnimationKeyframeEffectModel, BasicOperation) {

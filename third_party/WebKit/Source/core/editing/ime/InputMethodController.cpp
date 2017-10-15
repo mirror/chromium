@@ -170,7 +170,7 @@ void InsertTextDuringCompositionWithEvents(
       // TODO(chongz): Use TypingCommand::insertText after TextEvent was
       // removed. (Removed from spec since 2012)
       // See TextEvent.idl.
-      frame.GetEventHandler().HandleTextInputEvent(text, 0,
+      frame.GetEventHandler().HandleTextInputEvent(text, nullptr,
                                                    kTextEventInputComposition);
       break;
     default:
@@ -584,7 +584,7 @@ bool InputMethodController::InsertText(const String& text) {
   if (DispatchBeforeInputInsertText(GetDocument().FocusedElement(), text) !=
       DispatchEventResult::kNotCanceled)
     return false;
-  GetEditor().InsertText(text, 0);
+  GetEditor().InsertText(text, nullptr);
   return true;
 }
 

@@ -216,7 +216,7 @@ class DateTimeChooserWebViewClient
     return chooser_completion_;
   }
 
-  void ClearChooserCompletion() { chooser_completion_ = 0; }
+  void ClearChooserCompletion() { chooser_completion_ = nullptr; }
 
   // WebViewClient methods
   bool OpenDateTimeChooser(
@@ -3233,7 +3233,7 @@ TEST_P(WebViewTest, LosingFocusDoesNotTriggerAutofillTextChange) {
   web_view->SetFocus(false);
   EXPECT_EQ(0, client.TextChanges());
 
-  frame->SetAutofillClient(0);
+  frame->SetAutofillClient(nullptr);
 }
 
 static void VerifySelectionAndComposition(WebViewImpl* web_view,
@@ -3293,7 +3293,7 @@ TEST_P(WebViewTest, CompositionNotCancelledByBackspace) {
     web_view->AdvanceFocus(false);
   }
 
-  frame->SetAutofillClient(0);
+  frame->SetAutofillClient(nullptr);
 }
 
 TEST_P(WebViewTest, FinishComposingTextDoesntTriggerAutofillTextChange) {
@@ -3334,7 +3334,7 @@ TEST_P(WebViewTest, FinishComposingTextDoesntTriggerAutofillTextChange) {
 
   EXPECT_TRUE(form->IsAutofilled());
 
-  frame->SetAutofillClient(0);
+  frame->SetAutofillClient(nullptr);
 }
 
 TEST_P(WebViewTest,
@@ -3364,7 +3364,7 @@ TEST_P(WebViewTest,
   EXPECT_EQ(WebString::FromUTF8("none"),
             document.GetElementById("inputEvent").FirstChild().NodeValue());
 
-  frame->SetAutofillClient(0);
+  frame->SetAutofillClient(nullptr);
 }
 
 class ViewCreatingWebViewClient : public FrameTestHelpers::TestWebViewClient {
@@ -3426,7 +3426,8 @@ TEST_P(WebViewTest, FocusExistingFrameOnNavigate) {
 
   // Make a request that will open a new window
   WebURLRequest web_url_request;
-  FrameLoadRequest request(0, web_url_request.ToResourceRequest(), "_blank");
+  FrameLoadRequest request(nullptr, web_url_request.ToResourceRequest(),
+                           "_blank");
   ToLocalFrame(web_view_impl->GetPage()->MainFrame())->Loader().Load(request);
   ASSERT_TRUE(client.CreatedWebView());
   EXPECT_FALSE(client.DidFocusCalled());
@@ -3435,7 +3436,7 @@ TEST_P(WebViewTest, FocusExistingFrameOnNavigate) {
   // The original window should be focused.
   WebURLRequest web_url_request_with_target_start;
   FrameLoadRequest request_with_target_start(
-      0, web_url_request_with_target_start.ToResourceRequest(), "_start");
+      nullptr, web_url_request_with_target_start.ToResourceRequest(), "_start");
   ToLocalFrame(static_cast<WebViewImpl*>(client.CreatedWebView())
                    ->GetPage()
                    ->MainFrame())
@@ -4044,7 +4045,7 @@ TEST_P(WebViewTest, FirstUserGestureObservedKeyEvent) {
   web_view->HandleInputEvent(WebCoalescedInputEvent(key_event));
 
   EXPECT_EQ(2, client.GetUserGestureNotificationsCount());
-  frame->SetAutofillClient(0);
+  frame->SetAutofillClient(nullptr);
 }
 
 TEST_P(WebViewTest, FirstUserGestureObservedMouseEvent) {
@@ -4069,7 +4070,7 @@ TEST_P(WebViewTest, FirstUserGestureObservedMouseEvent) {
   web_view->HandleInputEvent(WebCoalescedInputEvent(mouse_event));
 
   EXPECT_EQ(1, client.GetUserGestureNotificationsCount());
-  frame->SetAutofillClient(0);
+  frame->SetAutofillClient(nullptr);
 }
 
 TEST_P(WebViewTest, CompositionIsUserGesture) {
@@ -4089,7 +4090,7 @@ TEST_P(WebViewTest, CompositionIsUserGesture) {
   EXPECT_FALSE(UserGestureIndicator::ProcessingUserGesture());
   EXPECT_TRUE(frame->HasMarkedText());
 
-  frame->SetAutofillClient(0);
+  frame->SetAutofillClient(nullptr);
 }
 
 TEST_P(WebViewTest, CompareSelectAllToContentAsText) {
@@ -4493,7 +4494,7 @@ TEST_P(WebViewTest, PasswordFieldEditingIsUserGesture) {
           empty_ime_text_spans, WebRange(), 0));
   EXPECT_EQ(1, client.TextChangesFromUserGesture());
   EXPECT_FALSE(UserGestureIndicator::ProcessingUserGesture());
-  frame->SetAutofillClient(0);
+  frame->SetAutofillClient(nullptr);
 }
 
 // Verify that a WebView created with a ScopedPageSuspender already on the

@@ -48,7 +48,7 @@ void PrepareReferenceData(char* buffer, size_t size) {
 
 RefPtr<SegmentReader> CopyToROBufferSegmentReader(RefPtr<SegmentReader> input) {
   SkRWBuffer rw_buffer;
-  const char* segment = 0;
+  const char* segment = nullptr;
   size_t position = 0;
   while (size_t length = input->GetSomeData(segment, position)) {
     rw_buffer.append(segment, length);

@@ -1022,7 +1022,7 @@ String StylePropertySerializer::BackgroundRepeatPropertyValue() const {
   const CSSValue& repeat_y =
       *property_set_.GetPropertyCSSValue(CSSPropertyBackgroundRepeatY);
 
-  const CSSValueList* repeat_x_list = 0;
+  const CSSValueList* repeat_x_list = nullptr;
   int repeat_x_length = 1;
   if (repeat_x.IsValueList()) {
     repeat_x_list = &ToCSSValueList(repeat_x);
@@ -1031,7 +1031,7 @@ String StylePropertySerializer::BackgroundRepeatPropertyValue() const {
     return String();
   }
 
-  const CSSValueList* repeat_y_list = 0;
+  const CSSValueList* repeat_y_list = nullptr;
   int repeat_y_length = 1;
   if (repeat_y.IsValueList()) {
     repeat_y_list = &ToCSSValueList(repeat_y);

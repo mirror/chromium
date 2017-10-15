@@ -99,11 +99,11 @@ GraphicsLayer::GraphicsLayer(GraphicsLayerClient* client)
       has_clip_parent_(false),
       painted_(false),
       painting_phase_(kGraphicsLayerPaintAllWithOverflowClip),
-      parent_(0),
-      mask_layer_(0),
-      contents_clipping_mask_layer_(0),
+      parent_(nullptr),
+      mask_layer_(nullptr),
+      contents_clipping_mask_layer_(nullptr),
       paint_count_(0),
-      contents_layer_(0),
+      contents_layer_(nullptr),
       contents_layer_id_(0),
       scrollable_area_(nullptr),
       rendering_context3d_(0) {
@@ -243,7 +243,7 @@ void GraphicsLayer::RemoveFromParent() {
   if (parent_) {
     // We use reverseFind so that removeAllChildren() isn't n^2.
     parent_->children_.EraseAt(parent_->children_.ReverseFind(this));
-    SetParent(0);
+    SetParent(nullptr);
   }
 
   PlatformLayer()->RemoveFromParent();
@@ -419,7 +419,7 @@ void GraphicsLayer::SetContentsTo(WebLayer* layer) {
       children_changed = true;
 
       // The old contents layer will be removed via updateChildList.
-      contents_layer_ = 0;
+      contents_layer_ = nullptr;
       contents_layer_id_ = 0;
     }
   }
@@ -448,7 +448,7 @@ void GraphicsLayer::SetupContentsLayer(WebLayer* contents_layer) {
   WebLayer* border_web_layer =
       contents_clipping_mask_layer_
           ? contents_clipping_mask_layer_->PlatformLayer()
-          : 0;
+          : nullptr;
   contents_layer_->SetMaskLayer(border_web_layer);
 
   contents_layer_->SetRenderingContext(rendering_context3d_);
@@ -459,7 +459,7 @@ void GraphicsLayer::ClearContentsLayerIfUnregistered() {
       g_registered_layer_set->Contains(contents_layer_id_))
     return;
 
-  contents_layer_ = 0;
+  contents_layer_ = nullptr;
   contents_layer_id_ = 0;
 }
 
@@ -996,7 +996,8 @@ void GraphicsLayer::SetMaskLayer(GraphicsLayer* mask_layer) {
     return;
 
   mask_layer_ = mask_layer;
-  WebLayer* mask_web_layer = mask_layer_ ? mask_layer_->PlatformLayer() : 0;
+  WebLayer* mask_web_layer =
+      mask_layer_ ? mask_layer_->PlatformLayer() : nullptr;
   layer_->Layer()->SetMaskLayer(mask_web_layer);
 }
 
@@ -1012,7 +1013,7 @@ void GraphicsLayer::SetContentsClippingMaskLayer(
   WebLayer* contents_clipping_mask_web_layer =
       contents_clipping_mask_layer_
           ? contents_clipping_mask_layer_->PlatformLayer()
-          : 0;
+          : nullptr;
   contents_layer->SetMaskLayer(contents_clipping_mask_web_layer);
   UpdateContentsRect();
 }
@@ -1133,7 +1134,7 @@ void GraphicsLayer::SetContentsToImage(
     image_layer_.reset();
   }
 
-  SetContentsTo(image_layer_ ? image_layer_->Layer() : 0);
+  SetContentsTo(image_layer_ ? image_layer_->Layer() : nullptr);
 }
 
 WebLayer* GraphicsLayer::PlatformLayer() const {
