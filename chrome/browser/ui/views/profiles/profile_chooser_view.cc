@@ -1323,7 +1323,7 @@ views::View* ProfileChooserView::CreateOptionsView(bool display_lock,
           browser_->profile()->GetOriginalProfile())
         num_browsers++;
     }
-    if (num_browsers > 1) {
+    if (num_browsers >= 1) {
       close_all_windows_button_ = new BackgroundColorHoverButton(
           this,
           l10n_util::GetStringUTF16(IDS_PROFILES_CLOSE_ALL_WINDOWS_BUTTON),
