@@ -234,6 +234,7 @@ class ServiceManagerContext::InProcessServiceManagerContext
   void Start(
       service_manager::mojom::ServicePtrInfo packaged_services_service_info,
       std::unique_ptr<BuiltinManifestProvider> manifest_provider) {
+    LOG(ERROR) << "JAMES start";
     BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)
         ->PostTask(
             FROM_HERE,
@@ -269,6 +270,7 @@ class ServiceManagerContext::InProcessServiceManagerContext
         service_manager::Identity(mojom::kPackagedServicesServiceName,
                                   service_manager::mojom::kRootUserID),
         std::move(packaged_services_service), nullptr);
+    LOG(ERROR) << "JAMES SetInstanceQuitCallback";
     service_manager_->SetInstanceQuitCallback(
         base::Bind(&OnInstanceQuitOnIOThread));
   }

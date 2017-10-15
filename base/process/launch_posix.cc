@@ -660,6 +660,7 @@ bool GetAppOutputAndError(const CommandLine& cl, std::string* output) {
   int exit_code;
   bool result =
       GetAppOutputInternal(cl.argv(), nullptr, true, output, true, &exit_code);
+  LOG(ERROR) << "JAMES result " << result << " exit " << exit_code;
   return result && exit_code == EXIT_SUCCESS;
 }
 
