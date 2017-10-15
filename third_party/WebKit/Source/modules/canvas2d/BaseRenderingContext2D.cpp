@@ -748,7 +748,7 @@ void BaseRenderingContext2D::ClipInternal(const Path& path,
   c->clipPath(sk_path, SkClipOp::kIntersect,
               clip_antialiasing_ == kAntiAliased);
   if (CanvasHeuristicParameters::kComplexClipsAreExpensive &&
-      !sk_path.isRect(0) && HasImageBuffer()) {
+      !sk_path.isRect(nullptr) && HasImageBuffer()) {
     GetImageBuffer()->SetHasExpensiveOp();
   }
 }
@@ -1341,7 +1341,7 @@ void BaseRenderingContext2D::drawImage(ScriptState* script_state,
 
 void BaseRenderingContext2D::ClearCanvas() {
   FloatRect canvas_rect(0, 0, Width(), Height());
-  CheckOverdraw(canvas_rect, 0, CanvasRenderingContext2DState::kNoImage,
+  CheckOverdraw(canvas_rect, nullptr, CanvasRenderingContext2DState::kNoImage,
                 kClipFill);
   PaintCanvas* c = DrawingCanvas();
   if (c)
@@ -1727,7 +1727,7 @@ void BaseRenderingContext2D::putImageData(ImageData* data,
   IntRect source_rect(dest_rect);
   source_rect.Move(-dest_offset);
 
-  CheckOverdraw(dest_rect, 0, CanvasRenderingContext2DState::kNoImage,
+  CheckOverdraw(dest_rect, nullptr, CanvasRenderingContext2DState::kNoImage,
                 kUntransformedUnclippedFill);
 
   // Color / format convert ImageData to canvas settings if needed
