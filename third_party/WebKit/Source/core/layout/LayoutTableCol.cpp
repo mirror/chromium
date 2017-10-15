@@ -98,7 +98,7 @@ void LayoutTableCol::WillBeRemovedFromTree() {
 
 bool LayoutTableCol::IsChildAllowed(LayoutObject* child,
                                     const ComputedStyle& style) const {
-  // We cannot use isTableColumn here as style() may return 0.
+  // We cannot use IsTableColumn here as style() may return 0.
   return child->IsLayoutTableCol() && style.Display() == EDisplay::kTableColumn;
 }
 
@@ -153,6 +153,20 @@ LayoutTableCol* LayoutTableCol::EnclosingColumnGroup() const {
   return parent_column_group;
 }
 
+LayoutTableCol* LayoutTableCol::LastColumnInGroup() const {
+  DCHECK(this->IsTableColumnGroupWithColumnChildren());
+  LayoutTableCol* end_col = nullptr;
+  LayoutTableCol* current_col = this->NextColumn();
+  // If column has children, traverse the children to find last.
+  if (this->FirstChild()) {
+    while (current_col && current_col->EnclosingColumnGroup() == this) {
+      end_col = current_col;
+      current_col = current_col->NextColumn();
+    }
+  }
+  return end_col;
+}
+
 LayoutTableCol* LayoutTableCol::NextColumn() const {
   // If |this| is a column-group, the next column is the colgroup's first child
   // column.
@@ -164,13 +178,63 @@ LayoutTableCol* LayoutTableCol::NextColumn() const {
 
   // Failing that, the child is the last column in a column-group, so the next
   // column is the next column/column-group after its column-group.
-  if (!next && Parent()->IsLayoutTableCol())
-    next = Parent()->NextSibling();
+  auto p = Parent();
+  if (!next && p && p->IsLayoutTableCol())
+    next = p->NextSibling();
 
   for (; next && !next->IsLayoutTableCol(); next = next->NextSibling()) {
   }
 
   return ToLayoutTableCol(next);
+}
+
+Vector<unsigned> LayoutTableCol::GetEffectiveColumnIndexes() const {
+  LayoutTable* table = this->Table();
+  Vector<unsigned> indexes;
+  if (!table)
+    return indexes;
+  unsigned last_effective_column = table->LastEffectiveColumnIndex();
+  if (IsTableColumn()) {
+    unsigned idx = table->ColElementToAbsoluteColumn(this);
+    auto span = this->Span();
+    unsigned last_seen_column = 0xFFFFFFFF;
+    while (span--) {
+      unsigned effective_column = table->AbsoluteColumnToEffectiveColumn(idx++);
+      if (effective_column != last_seen_column &&
+          effective_column <= last_effective_column) {
+        indexes.push_back(effective_column);
+        last_seen_column = effective_column;
+      }
+    }
+  } else {  // IsTableColumnGroup
+    if (IsTableColumnGroupWithColumnChildren()) {
+      LayoutTableCol* current_col = nullptr;
+      auto last_col = LastColumnInGroup();
+      do {
+        current_col = current_col ? current_col->NextColumn() : NextColumn();
+        if (current_col) {
+          auto colIndexes = current_col->GetEffectiveColumnIndexes();
+          for (auto c = colIndexes.begin(); c != colIndexes.end(); c++)
+            indexes.push_back(*c);
+        }
+      } while (current_col && current_col != last_col);
+    } else {  // tableColumnGroup with no children
+      // its covers span columns
+      unsigned idx = table->ColElementToAbsoluteColumn(this);
+      auto span = this->Span();
+      unsigned last_seen_column = 0xFFFFFFFF;
+      while (span--) {
+        unsigned effective_column =
+            table->AbsoluteColumnToEffectiveColumn(idx++);
+        if (effective_column != last_seen_column &&
+            effective_column <= last_effective_column) {
+          indexes.push_back(effective_column);
+          last_seen_column = effective_column;
+        }
+      }
+    }
+  }
+  return indexes;
 }
 
 }  // namespace blink

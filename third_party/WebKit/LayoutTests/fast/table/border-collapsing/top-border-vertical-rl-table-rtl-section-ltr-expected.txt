@@ -1,0 +1,25 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x204
+  LayoutBlockFlow {HTML} at (0,0) size 800x204
+    LayoutBlockFlow {BODY} at (8,16) size 784x180
+      LayoutBlockFlow {P} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 80x19
+          text run at (0,0) width 80: "Test for bug "
+        LayoutInline {A} at (0,0) size 41x19 [color=#0000EE]
+          LayoutText {#text} at (79,0) size 41x19
+            text run at (79,0) width 41: "87900"
+        LayoutText {#text} at (119,0) size 444x19
+          text run at (119,0) width 444: ": Add support for direction on table row group with collapsing borders"
+      LayoutBlockFlow {P} at (0,36) size 784x40
+        LayoutText {#text} at (0,0) size 747x39
+          text run at (0,0) width 747: "This test checks that a rtl table with a vertical writing mode and a ltr row group properly compute its collapsing borders"
+          text run at (0,20) width 216: "when the top borders are disabled."
+      LayoutBlockFlow {P} at (0,92) size 784x20
+        LayoutText {#text} at (0,0) size 618x19
+          text run at (0,0) width 618: "For this test to pass, there should be only green borders on the cells and no top border on the table."
+      LayoutTable {TABLE} at (0,128) size 132x52 [border: none]
+        LayoutTableSection {TBODY} at (3,0) size 126x49
+          LayoutTableRow {TR} at (0,0) size 126x49
+            LayoutTableCell {TD} at (0,83) size 126x-94 [border: (3px none #000000) (3px solid #008000)] [r=0 c=0 rs=1 cs=1]
+            LayoutTableCell {TD} at (0,60) size 126x-97 [border: none (3px solid #008000)] [r=0 c=1 rs=1 cs=1]

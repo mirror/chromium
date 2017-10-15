@@ -12,6 +12,7 @@
 #include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/ObjectPainter.h"
 #include "core/paint/PaintInfo.h"
+#include "core/paint/TableCollapsedBorderPainter.h"
 #include "core/paint/TableSectionPainter.h"
 
 namespace blink {
@@ -100,12 +101,13 @@ void TablePainter::PaintCollapsedBorders(const PaintInfo& paint_info,
   }
   // Otherwise each rows will create its own recorder.
 
+  TableCollapsedBorderPainter old_painter(layout_table_.BottomSection());
   for (LayoutTableSection* section = layout_table_.BottomSection(); section;
        section = layout_table_.SectionAbove(section)) {
     LayoutPoint child_point =
         layout_table_.FlipForWritingModeForChild(section, paint_offset);
-    TableSectionPainter(*section).PaintCollapsedBorders(paint_info,
-                                                        child_point);
+    TableSectionPainter(*section).PaintCollapsedBorders(paint_info, child_point,
+                                                        old_painter);
   }
 }
 

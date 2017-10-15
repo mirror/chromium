@@ -1,0 +1,238 @@
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+old eff_start_col: 1, eff_end_col: 2
+eff_start_col: 0, eff_end_col: 1
+MergeVisibleEdges, edges now: 
+old eff_start_col: 0, eff_end_col: 1
+eff_start_col: 1, eff_end_col: 2
+MergeVisibleEdges, edges now: 
+old eff_start_col: 1, eff_end_col: 2
+eff_start_col: 0, eff_end_col: 1
+MergeVisibleEdges, edges now: 
+old eff_start_col: 0, eff_end_col: 1
+eff_start_col: 1, eff_end_col: 2
+MergeVisibleEdges, edges now: 
+old eff_start_col: 1, eff_end_col: 2
+eff_start_col: 0, eff_end_col: 1
+MergeVisibleEdges, edges now: 
+old eff_start_col: 0, eff_end_col: 1
+eff_start_col: 1, eff_end_col: 2
+MergeVisibleEdges, edges now: 
+old eff_start_col: 1, eff_end_col: 2
+eff_start_col: 0, eff_end_col: 1
+MergeVisibleEdges, edges now: 
+old eff_start_col: 0, eff_end_col: 1
+eff_start_col: 1, eff_end_col: 2
+MergeVisibleEdges, edges now: 
+PAINTING EDGE at 11,144 103x3
+PAINTING EDGE at 8,144 3x107
+PAINTING EDGE at 114,144 101x3
+PAINTING EDGE at 215,144 3x107
+PAINTING EDGE at 8,251 3x102
+PAINTING EDGE at 215,251 3x102
+PAINTING EDGE at 8,353 3x102
+PAINTING EDGE at 215,353 3x102
+PAINTING EDGE at 8,455 3x103
+PAINTING EDGE at 215,455 3x103
+PAINTING EDGE at 11,555 103x3
+PAINTING EDGE at 114,555 101x3
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+PAINTING EDGE at 8,124 25x1
+PAINTING EDGE at 8,125 1x22
+PAINTING EDGE at 33,124 22x1
+PAINTING EDGE at 54,125 1x24
+PAINTING EDGE at 8,147 24x2
+PAINTING EDGE at 8,149 1x23
+PAINTING EDGE at 32,148 22x1
+PAINTING EDGE at 31,149 1x22
+PAINTING EDGE at 54,149 1x23
+PAINTING EDGE at 9,171 23x1
+PAINTING EDGE at 32,171 22x1
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+PAINTING EDGE at 8,172 25x1
+PAINTING EDGE at 8,173 1x22
+PAINTING EDGE at 33,172 22x1
+PAINTING EDGE at 54,173 1x23
+PAINTING EDGE at 8,195 24x2
+PAINTING EDGE at 8,197 1x23
+PAINTING EDGE at 32,196 23x1
+PAINTING EDGE at 31,197 1x22
+PAINTING EDGE at 54,197 1x23
+PAINTING EDGE at 9,219 23x1
+PAINTING EDGE at 32,219 22x1
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+PAINTING EDGE at 8,292 25x1
+PAINTING EDGE at 8,293 1x22
+PAINTING EDGE at 33,292 22x1
+PAINTING EDGE at 54,293 1x22
+PAINTING EDGE at 8,315 24x1
+PAINTING EDGE at 8,316 1x23
+PAINTING EDGE at 32,315 23x1
+PAINTING EDGE at 31,316 1x22
+PAINTING EDGE at 54,316 1x23
+PAINTING EDGE at 9,338 23x1
+PAINTING EDGE at 32,338 22x1
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+PAINTING EDGE at 8,339 25x1
+PAINTING EDGE at 8,340 1x22
+PAINTING EDGE at 33,339 22x1
+PAINTING EDGE at 54,340 1x22
+PAINTING EDGE at 8,362 24x2
+PAINTING EDGE at 8,364 1x23
+PAINTING EDGE at 32,362 23x2
+PAINTING EDGE at 31,364 1x22
+PAINTING EDGE at 54,364 1x23
+PAINTING EDGE at 9,386 23x1
+PAINTING EDGE at 32,386 22x1
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges now: 
+MergeVisibleEdges, edges noContent-Type: text/plain
+layer at (0,0) size 800x600 clip at (0,0) size 785x600 scrollHeight 874
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x874 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow {HTML} at (0,0) size 785x874
+    LayoutBlockFlow {BODY} at (8,16) size 769x850
+      LayoutBlockFlow {P} at (0,0) size 769x20
+        LayoutText {#text} at (0,0) size 109x19
+          text run at (0,0) width 109: "Test for Bugzilla "
+        LayoutInline {A} at (0,0) size 64x19 [color=#0000EE]
+          LayoutText {#text} at (108,0) size 64x19
+            text run at (108,0) width 64: "Bug 5515"
+        LayoutText {#text} at (171,0) size 342x19
+          text run at (171,0) width 9: ": "
+          text run at (179,0) width 334: "Border collapse problem with rowspan/colspan cells."
+      LayoutBlockFlow {P} at (0,36) size 769x20
+        LayoutText {#text} at (0,0) size 493x19
+          text run at (0,0) width 493: "The following tests verify the border-collapse behavior on tables with colspan."
+      LayoutBlockFlow {P} at (0,72) size 769x20
+        LayoutText {#text} at (0,0) size 473x19
+          text run at (0,0) width 473: "No continuous red border should be displayed for the following two tables."
+      LayoutTable {TABLE} at (0,108) size 47x48 [border: none]
+        LayoutTableSection {TBODY} at (0,0) size 46x47
+          LayoutTableRow {TR} at (0,0) size 46x24
+            LayoutTableCell {TD} at (0,10) size 46x4 [border: (1px inset #808080)] [r=0 c=0 rs=1 cs=2]
+          LayoutTableRow {TR} at (0,24) size 46x23
+            LayoutTableCell {TD} at (0,34) size 23x3 [border: (1px solid #FF0000) none] [r=1 c=0 rs=1 cs=1]
+            LayoutTableCell {TD} at (23,34) size 23x3 [border: (1px inset #808080)] [r=1 c=1 rs=1 cs=1]
+      LayoutTable {TABLE} at (0,156) size 47x48 [border: none]
+        LayoutTableSection {TBODY} at (0,0) size 46x47
+          LayoutTableRow {TR} at (0,0) size 46x24
+            LayoutTableCell {TD} at (0,10) size 46x4 [border: (1px inset #808080) (1px solid #0000FF) (1px inset #808080)] [r=0 c=0 rs=1 cs=2]
+          LayoutTableRow {TR} at (0,24) size 46x23
+            LayoutTableCell {TD} at (0,34) size 23x3 [border: (1px solid #FF0000) none] [r=1 c=0 rs=1 cs=1]
+            LayoutTableCell {TD} at (23,34) size 23x3 [border: (1px inset #808080)] [r=1 c=1 rs=1 cs=1]
+      LayoutBlockFlow (anonymous) at (0,204) size 769x20
+        LayoutBR {BR} at (0,0) size 0x19
+      LayoutBlockFlow {P} at (0,240) size 769x20
+        LayoutText {#text} at (0,0) size 574x19
+          text run at (0,0) width 574: "Tests for verifying the existing behavior. Blue border should be displayed for both the cells."
+      LayoutTable {TABLE} at (0,276) size 47x47 [border: none]
+        LayoutTableSection {TBODY} at (0,0) size 46x46
+          LayoutTableRow {TR} at (0,0) size 46x23
+            LayoutTableCell {TD} at (0,10) size 46x3 [border: (1px inset #808080) none (1px inset #808080)] [r=0 c=0 rs=1 cs=2]
+          LayoutTableRow {TR} at (0,23) size 46x23
+            LayoutTableCell {TD} at (0,33) size 23x3 [border: (1px solid #FF0000) none] [r=1 c=0 rs=1 cs=1]
+            LayoutTableCell {TD} at (23,33) size 23x3 [border: (1px inset #808080)] [r=1 c=1 rs=1 cs=1]
+      LayoutTable {TABLE} at (0,323) size 47x48 [border: none]
+        LayoutTableSection {TBODY} at (0,0) size 46x47
+          LayoutTableRow {TR} at (0,0) size 46x24
+            LayoutTableCell {TD} at (0,10) size 46x4 [border: (1px inset #808080) (1px solid #0000FF) (1px inset #808080)] [r=0 c=0 rs=1 cs=2]
+          LayoutTableRow {TR} at (0,24) size 46x23
+            LayoutTableCell {TD} at (0,34) size 23x3 [border: (1px solid #FF0000) none] [r=1 c=0 rs=1 cs=1]
+            LayoutTableCell {TD} at (23,34) size 23x3 [border: (1px inset #808080)] [r=1 c=1 rs=1 cs=1]
+      LayoutBlockFlow (anonymous) at (0,371) size 769x20
+        LayoutBR {BR} at (0,0) size 0x19
+      LayoutBlockFlow {P} at (0,407) size 769x20
+        LayoutText {#text} at (0,0) size 412x19
+          text run at (0,0) width 412: "Red, green and blue colored borders should be displayed per cell."
+      LayoutTable {TABLE} at (0,443) size 70x48 [border: none]
+        LayoutTableSection {TBODY} at (0,0) size 69x47
+          LayoutTableRow {TR} at (0,0) size 69x24
+            LayoutTableCell {TD} at (0,10) size 34x4 [border: (1px inset #808080)] [r=0 c=0 rs=1 cs=2]
+            LayoutTableCell {TD} at (34,10) size 35x4 [border: (1px inset #808080)] [r=0 c=2 rs=1 cs=2]
+          LayoutTableRow {TR} at (0,24) size 69x23
+            LayoutTableCell {TD} at (0,34) size 23x3 [border: (1px solid #FF0000) none] [r=1 c=0 rs=1 cs=1]
+            LayoutTableCell {TD} at (23,34) size 23x3 [border: (1px solid #008000) none] [r=1 c=1 rs=1 cs=2]
+            LayoutTableCell {TD} at (46,34) size 23x3 [border: (1px solid #0000FF) none] [r=1 c=3 rs=1 cs=1]
+      LayoutBlockFlow (anonymous) at (0,491) size 769x20
+        LayoutBR {BR} at (0,0) size 0x19
+      LayoutBlockFlow {P} at (0,527) size 769x20
+        LayoutText {#text} at (0,0) size 630x19
+          text run at (0,0) width 630: "A red border and a green border should be displayed, each covering the span of one and a half cells."
+      LayoutTable {TABLE} at (0,563) size 70x48 [border: none]
+        LayoutTableSection {TBODY} at (0,0) size 69x47
+          LayoutTableRow {TR} at (0,0) size 69x24
+            LayoutTableCell {TD} at (0,10) size 23x4 [border: (1px inset #808080)] [r=0 c=0 rs=1 cs=1]
+            LayoutTableCell {TD} at (23,10) size 23x4 [border: (1px inset #808080)] [r=0 c=1 rs=1 cs=2]
+            LayoutTableCell {TD} at (46,10) size 23x4 [border: (1px inset #808080)] [r=0 c=3 rs=1 cs=1]
+          LayoutTableRow {TR} at (0,24) size 69x23
+            LayoutTableCell {TD} at (0,34) size 34x3 [border: (1px solid #FF0000) none] [r=1 c=0 rs=1 cs=2]
+            LayoutTableCell {TD} at (34,34) size 35x3 [border: (1px solid #008000) none] [r=1 c=2 rs=1 cs=2]
+      LayoutBlockFlow (anonymous) at (0,611) size 769x20
+        LayoutBR {BR} at (0,0) size 0x19
+      LayoutBlockFlow {P} at (0,647) size 769x20
+        LayoutText {#text} at (0,0) size 364x19
+          text run at (0,0) width 364: "There should not be any red border in the following table."
+      LayoutTable {TABLE} at (0,683) size 47x46 [border: none]
+        LayoutTableSection {TBODY} at (0,0) size 46x45
+          LayoutTableRow {TR} at (0,0) size 46x23
+            LayoutTableCell {TD} at (0,10) size 46x3 [border: (1px inset #808080) none (1px inset #808080)] [r=0 c=0 rs=1 cs=3]
+          LayoutTableRow {TR} at (0,23) size 46x22
+            LayoutTableCell {TD} at (0,33) size 23x2 [border: none none] [r=1 c=0 rs=1 cs=2]
+            LayoutTableCell {TD} at (23,33) size 23x2 [border: none] [r=1 c=2 rs=1 cs=1]
+      LayoutBlockFlow (anonymous) at (0,729) size 769x20
+        LayoutBR {BR} at (0,0) size 0x19
+      LayoutBlockFlow {P} at (0,765) size 769x20
+        LayoutText {#text} at (0,0) size 364x19
+          text run at (0,0) width 364: "There should not be any red border in the following table."
+      LayoutTable {TABLE} at (0,801) size 24x49 [border: none]
+        LayoutTableSection {TBODY} at (0,0) size 23x48
+          LayoutTableRow {TR} at (0,0) size 23x24
+            LayoutTableCell {TD} at (0,10) size 23x4 [border: (1px inset #808080) (1px solid #FF0000) (1px inset #808080)] [r=0 c=0 rs=1 cs=2]
+          LayoutTableRow {TR} at (0,24) size 23x24
+            LayoutTableCell {TD} at (0,34) size 23x4 [border: (2px solid #008000) none] [r=1 c=0 rs=1 cs=2]
