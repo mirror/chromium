@@ -46,6 +46,7 @@ import org.chromium.content.browser.input.PastePopupMenu;
 import org.chromium.content.browser.input.PastePopupMenu.PastePopupMenuDelegate;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
 import org.chromium.content_public.browser.SelectionClient;
+import org.chromium.content_public.browser.SelectionMetricsLogger;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.base.WindowAndroid;
@@ -133,9 +134,14 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private PastePopupMenu mPastePopupMenu;
     private boolean mWasPastePopupShowingOnInsertionDragStart;
 
-    /** The {@link SelectionClient} that processes textual selection, or {@code null} if none
-     * exists. */
+    /**
+     * The {@link SelectionClient} that processes textual selection, or {@code null} if none
+     * exists.
+     */
     private SelectionClient mSelectionClient;
+
+    // SelectionMetricsLogger, could be null.
+    private SelectionMetricsLogger mSelectionMetricsLogger;
 
     // The classificaton result of the selected text if the selection exists and
     // SelectionClient was able to classify it, otherwise null.
@@ -259,8 +265,9 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     @VisibleForTesting
     @CalledByNative
     public void showSelectionMenu(int left, int top, int right, int bottom, boolean isEditable,
-            boolean isPasswordType, String selectionText, boolean canSelectAll,
-            boolean canRichlyEdit, boolean shouldSuggest, boolean fromSelectionAdjustment) {
+            boolean isPasswordType, String selectionText, int selectionOffset, boolean canSelectAll,
+            boolean canRichlyEdit, boolean shouldSuggest, boolean fromSelectionReset,
+            boolean fromSelectionAdjustment) {
         mSelectionRect.set(left, top, right, bottom);
         mEditable = isEditable;
         mLastSelectedText = selectionText;
@@ -269,7 +276,18 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         mCanSelectAllForPastePopup = canSelectAll;
         mCanEditRichly = canRichlyEdit;
         mUnselectAllOnDismiss = true;
+
         if (hasSelection()) {
+            if (mSelectionMetricsLogger != null) {
+                android.util.Log.w("chromium", "mSelectionMetricsLogger != null");
+                if (fromSelectionAdjustment || fromSelectionReset) {
+                    mSelectionMetricsLogger.logSelectionModified(
+                            selectionText, selectionOffset, mClassificationResult);
+                } else {
+                    mSelectionMetricsLogger.logSelectionStarted(
+                            selectionText, selectionOffset, isEditable);
+                }
+            }
             // From selection adjustment, show menu directly.
             if (fromSelectionAdjustment) {
                 showActionModeOrClearOnFailure();
@@ -1108,6 +1126,9 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      */
     void setSelectionClient(@Nullable SelectionClient selectionClient) {
         mSelectionClient = selectionClient;
+        if (mSelectionClient != null) {
+            mSelectionMetricsLogger = mSelectionClient.getSelectionMetricsLogger();
+        }
 
         mClassificationResult = null;
 
