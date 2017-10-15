@@ -181,6 +181,24 @@
       "revId": "89035fe64f5572578ecd47c2c3ac391a01167e6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5e4c45_45ae0408",
+        "filename": "net/cert/ev_root_ca_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-15T17:42:50Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "6cdd8fa8_0d7ddc71",
+      "revId": "89035fe64f5572578ecd47c2c3ac391a01167e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
