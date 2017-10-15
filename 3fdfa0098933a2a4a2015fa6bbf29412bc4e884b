@@ -16,6 +16,24 @@
       "revId": "3fdfa0098933a2a4a2015fa6bbf29412bc4e884b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809a21a9_0d1caa48",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-15T22:29:58Z",
+      "side": 0,
+      "message": "Good question.\nThis is something I keep rediscovering but neglect to follow up:\n\nBasically, I think we can remove the return value of LocationProvider::StartProvider. It\u0027s essentially unused.\n\nReasons:\n\n1. No-one (apart from test code) examines the result of a call to LocationProvider::StartProvider, except LocationArbitrator which \u0026\u0026s several of them together in order to produce its own result of ::StartProvider.\n\n2. After this CL, the only case of any impl of StartProvider returning false is: LocationArbitrator if for some reason //content is modified to not call device::geolocation::SetRequestContextProducer during startup. As per point (1.) above, such a result would be ignored anyway (by GeolocationProvider, LocationArbitrator\u0027s only caller).\n\nEither of the above seems like a good reason to change the return type of LocationProvider::StartProvider to void. That can be done in a follow-up CL.\n\nWDYT?\n\n\nMeanwhile:\n\nQ. What is LocationArbitrator\u0027s \"Sorry, I don\u0027t seem to have any providers\" response?\n\nA. LocationArbitrator::DoStartProviders() produces an \"Error\" Geoposition if it gets called but the LocationArbitrator has an empty list of |providers_|:\nhttps://cs.chromium.org/chromium/src/device/geolocation/location_arbitrator.cc?l\u003d76\u0026rcl\u003d32e700ad69f4120a6663ee50e2b6c3d1373f78af\nAs you mentioned, before this CL, this could occur if AccessTokenStore returns null (and there\u0027s no system provider). After this CL, if a null URLRequestContextGetter gets produced, this will still happen, via LocationArbitrator::OnRequestContextResponse.\n\nI\u0027ll expand the // comment on DoStartProviders a little to explain this role it plays.\n\n\nRecording some more details for posterity:\n\nThere are 4 impls of LocationProvider::StartProvider:\n\n* LocationProviderAndroid, always returns true via here: https://cs.chromium.org/chromium/src/device/geolocation/android/java/src/org/chromium/device/geolocation/LocationProviderAdapter.java?l\u003d47\u0026rcl\u003d7360486c5ff6b2659fd13eef5d366c1e4e86dc98\n\n* FakeLocationProvider, always returns true here: https://cs.chromium.org/chromium/src/device/geolocation/fake_location_provider.cc?l\u003d46\u0026rcl\u003d32e700ad69f4120a6663ee50e2b6c3d1373f78af\n\n* NetworkLocationProvider, always returns true here: https://cs.chromium.org/chromium/src/device/geolocation/network_location_provider.cc?l\u003d160\u0026rcl\u003d32e700ad69f4120a6663ee50e2b6c3d1373f78af\n\n* LocationArbitrator, always returns true, unless someone modifies //content to no longer call device::geolocation::SetRequestContextProducer during startup:\nhttps://cs.chromium.org/chromium/src/device/geolocation/location_arbitrator.cc?l\u003d69\u0026rcl\u003d32e700ad69f4120a6663ee50e2b6c3d1373f78af",
+      "parentUuid": "6d151417_9670bff4",
+      "revId": "3fdfa0098933a2a4a2015fa6bbf29412bc4e884b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
