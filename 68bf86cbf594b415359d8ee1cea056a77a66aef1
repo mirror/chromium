@@ -34,6 +34,24 @@
       "revId": "68bf86cbf594b415359d8ee1cea056a77a66aef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e06d9983_c5007318",
+        "filename": "build/config/coverage/coverage.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-15T19:20:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffe3e461_54a6cca9",
+      "revId": "68bf86cbf594b415359d8ee1cea056a77a66aef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
