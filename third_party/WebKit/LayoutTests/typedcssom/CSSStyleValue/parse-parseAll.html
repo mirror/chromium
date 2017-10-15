@@ -1,0 +1,69 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>CSSStyleValue.parse and CSSStyleValue.parseAll tests</title>
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#dom-cssstylevalue-parse">
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#dom-cssstylevalue-parseall">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+for (const parseMethod of ['parse', 'parseAll']) {
+  // Error handling behaviour may change: https://github.com/w3c/css-houdini-drafts/issues/305
+  test(() => {
+    assert_throws(new TypeError(), () => CSSStyleValue[parseMethod]('', 'foo'));
+  }, 'CSSStyleValue.' + parseMethod + ' throws TypeError when the property is an empty string');
+
+  test(() => {
+    assert_throws(new TypeError(), () => CSSStyleValue[parseMethod]('lemon', 'ade'));
+  }, 'CSSStyleValue.' + parseMethod + ' throws TypeError when given an unsupported CSS property');
+
+  test(() => {
+    assert_throws(new TypeError(), () => CSSStyleValue[parseMethod]('background', 'red'));
+  }, 'cssstylevalue.' + parseMethod + ' throws TypeError when given a CSS shorthand');
+
+  test(() => {
+    assert_throws(new SyntaxError(), () => CSSStyleValue[parseMethod]('width', '10deg'));
+  }, 'CSSStyleValue.' + parseMethod + ' throws SyntaxError when cssText is invalid for the given property');
+
+  test(() => {
+    const result = CSSStyleValue[parseMethod]('width', '10px');
+    assert_not_equals(result, null);
+    assert_equals(result.constructor.name, CSSUnitValue.name);
+    assert_equals(result.value, 10);
+    assert_equals(result.unit, 'px');
+  }, 'CSSStyleValue.' + parseMethod + ' returns a valid CSSStyleValue when cssText is valid for the given property');
+
+  test(() => {
+    const result = CSSStyleValue[parseMethod]('wIdTh', '10px');
+    assert_not_equals(result, null);
+    assert_equals(result.constructor.name, CSSUnitValue.name);
+    assert_equals(result.value, 10);
+    assert_equals(result.unit, 'px');
+  }, 'CSSStyleValue.' + parseMethod + ' returns a valid CSSStyleValue even when property is not lowercase');
+
+  test(() => {
+    const result = CSSStyleValue[parseMethod]('--foo', '10%');
+    assert_not_equals(result, null);
+    assert_equals(result.constructor.name, CSSUnitValue.name);
+    assert_equals(result.value, 10);
+    assert_equals(result.unit, 'percent');
+  }, 'CSSStyleValue.' + parseMethod + ' returns a valid CSSStyleValue for custom properties');
+}
+
+test(() => {
+  const result = CSSStyleValue.parse('background-image', 'url("a"), url("b"), url("c")');
+  assert_not_equals(result, null);
+  assert_equals(result.constructor.name, CSSURLImageValue.name);
+}, 'CSSStyleValue.parse returns first list value when given a list-valued property');
+
+test(() => {
+  const result = CSSStyleValue.parse('background-image', 'url("a"), url("b"), url("c")');
+  assert_not_equals(result, null);
+  assert_equals(result.length, 3);
+  for (let i = 0; i < result.length; i++) {
+    assert_equals(result.constructor.name, CSSURLImageValue.name);
+  }
+}, 'CSSStyleValue.parseAll returns sequence of values when given a list-valued property');
+
+</script>
