@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table { border-collapse: collapse; }
+td {
+    border: solid 10px purple;
+    width: 200px;
+    font-family: ahem;
+    font-size: 10px;
+    -webkit-font-smoothing: none;
+}
+td.noBorderBottom { border-bottom: 0; }
+td.noBorderTop { border-top: 0; }
+td.withBorder { background-color: green; }
+</style>
+</head>
+<body>
+<!-- The cell with the green background should be circled with a (purple) border. Other cells should have outline the table with borders. -->
+<table><tr>
+<td class="noBorderBottom" colspan="2">&nbsp;</td>
+</tr><tr>
+<td class="noBorderTop">&nbsp;</td>
+<td class="withBorder">&nbsp;</td>
+</tr></table>
+<br>
+<table><tr>
+<td class="noBorderBottom" colspan="2">&nbsp;</td>
+</tr><tr>
+<td class="withBorder">&nbsp;</td>
+<td class="noBorderTop">&nbsp;</td>
+</tr></table>
+<br>
+
+<table><tr>
+<td class="noBorderBottom">&nbsp;</td>
+<td class="withBorder">&nbsp;</td>
+</tr><tr>
+<td class="noBorderTop" colspan="2">&nbsp;</td>
+</tr></table>
+
+<table><tr>
+<td class="withBorder">&nbsp;</td>
+<td class="noBorderBottom">&nbsp;</td>
+</tr><tr>
+<td class="noBorderTop" colspan="2">&nbsp;</td>
+</tr></table>
+<br>
+
+<table><tr>
+<td class="noBorderBottom" colspan="3">&nbsp;</td>
+</tr><tr>
+<td class="noBorderTop noBorderBottom">&nbsp;</td>
+<td class="withBorder">&nbsp;</td>
+<td class="noBorderTop noBorderBottom">&nbsp;</td>
+</tr><tr>
+<td class="noBorderTop" colspan="3">&nbsp;</td>
+</tr></table>
+
+</body>
+</html>

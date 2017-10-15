@@ -66,7 +66,7 @@ class LayoutTableCol final : public LayoutTableBoxComponent {
   // For CSS table columns or colgroups, this is always 1.
   unsigned Span() const { return span_; }
 
-  bool IsTableColumnGroupWithColumnChildren() { return FirstChild(); }
+  bool IsTableColumnGroupWithColumnChildren() const { return FirstChild(); }
   bool IsTableColumn() const {
     return Style()->Display() == EDisplay::kTableColumn;
   }
@@ -75,11 +75,18 @@ class LayoutTableCol final : public LayoutTableBoxComponent {
   }
 
   LayoutTableCol* EnclosingColumnGroup() const;
+  LayoutTableCol* LastColumnInGroup() const;
 
   // Returns the next column or column-group.
   LayoutTableCol* NextColumn() const;
 
   const char* GetName() const override { return "LayoutTableCol"; }
+
+  // Return indexes to all columns inside this element.
+  // Can return vector with size 0 if LayoutTableCol is out of range.
+  // <col> element can return size() > 2 if it spans multiple columns
+  // <colgroup> element can return any size.
+  Vector<unsigned> GetEffectiveColumnIndexes() const;
 
  private:
   bool IsOfType(LayoutObjectType type) const override {

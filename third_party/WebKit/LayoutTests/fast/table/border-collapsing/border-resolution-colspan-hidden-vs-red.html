@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    td { width: 50px; height: 50px; }
+</style>
+</head>
+<body>
+    <table style="border-collapse: collapse">
+        <tr><td style="border-bottom: hidden;" colspan="2"></td></tr>
+        <!-- There should not be any red border in the output. -->
+        <tr><td style="border-top: 10px solid red; border-left: 10px solid green;" colspan="2"></td></tr>
+    </table>
+</body>
+</html>
