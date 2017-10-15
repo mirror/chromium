@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6760d96_2cb01c35",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/CSSStyleValue/parse-parseAll.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-10-15T23:54:36Z",
+      "side": 1,
+      "message": "parseAll?",
+      "revId": "85db960afcb6ed1aab8d153f4e475a4e6e206109",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
