@@ -32457,21 +32457,6 @@ from previous Chrome versions.
   <int value="1" label="Deleted a profile"/>
 </enum>
 
-<enum name="ProfileNewAvatarMenuNotYou">
-  <int value="0" label="View 'Not You?' Bubble">
-    User views the 'Not You?' bubble.
-  </int>
-  <int value="1" label="Back">
-    User selects back from within the 'Not You?' bubble.
-  </int>
-  <int value="2" label="Add Person">
-    User adds a person from within the 'Not You?' bubble.
-  </int>
-  <int value="3" label="Disconnect">
-    User chooses to disconnect (sign out) from within the 'Not You?' bubble.
-  </int>
-</enum>
-
 <enum name="ProfileNewAvatarMenuSignin">
   <int value="0" label="View Signin Bubble">
     User viewed the signin bubble after successfully using the inline signin.
@@ -32481,19 +32466,6 @@ from previous Chrome versions.
   </int>
   <int value="2" label="Settings">
     User opened the settings from the signin bubble.
-  </int>
-</enum>
-
-<enum name="ProfileNewAvatarMenuUpgrade">
-  <int value="0" label="View Upgrade Bubble">
-    User views the upgrade bubble.
-  </int>
-  <int value="1" label="Dismiss">User dismissed the upgrade bubble.</int>
-  <int value="2" label="What's New">
-    User selects 'What's New' in the upgrade bubble.
-  </int>
-  <int value="3" label="Not You?">
-    User selects 'Not You?' in the upgrade bubble.
   </int>
 </enum>
 
