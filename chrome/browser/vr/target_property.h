@@ -15,6 +15,9 @@ enum TargetProperty {
   BACKGROUND_COLOR,
   FOREGROUND_COLOR,
   GRID_COLOR,
+
+  // This must be last.
+  LAST_TARGET_PROPERTY = GRID_COLOR,
 };
 
 }  // namespace vr

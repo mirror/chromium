@@ -105,6 +105,7 @@ static_library("vr_common") {
     "service/vr_display_host.h",
     "service/vr_service_impl.cc",
     "service/vr_service_impl.h",
+    "target_property.cc",
     "target_property.h",
     "toolbar_helper.cc",
     "toolbar_helper.h",
