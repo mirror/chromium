@@ -257,7 +257,7 @@ const IDNTestCase idn_cases[] = {
      L"abc.jp",
      false},
 
-    // The following three are detected by |dangerous_pattern| regex, but
+    // The following are detected by |dangerous_pattern| regex, but
     // can be regarded as an extension of blocking repeated diacritic marks.
     // i followed by U+0307 (combining dot above)
     {"xn--pixel-8fd.com", L"pi\x0307xel.com", false},
@@ -267,6 +267,18 @@ const IDNTestCase idn_cases[] = {
     {"xn--jack-qwc.com", L"j\x0307" L"ack.com", false},
     // l followed by U+0307
     {"xn--lace-qwc.com", L"l\x0307" L"ace.com", false},
+
+    // This is also detected by the |dangerous_pattern| regex:
+    // dotless i (U+0131) followed by any accent above would be visually
+    // indistinguishable from a "normal" accented i.
+    // U+0131 (dotless i) followed by U+0308 (dieresis above)
+    {"xn--nave-mza04z.com", L"na\x0131\x0308ve.com", false},
+    // In contrast, U+00EF (i-dieresis) is acceptable
+    {"xn--nave-6pa.com", L"na\x00efve.com", true},
+    // U+0131 followed by U+0302 (circumflex accent)
+    {"xn--dner-lza40z.com", L"d\x0131\x0302ner.com", false},
+    // Precomposed equivalent: U+00EE (i-circumflex)
+    {"xn--dner-0pa.com", L"d\x00eener.com", true},
 
     // Mixed script confusable
     // google with Armenian Small Letter Oh(U+0585)

@@ -228,7 +228,7 @@ bool IDNSpoofChecker::SafeToDisplayAsUnicode(base::StringPiece16 label,
     // TODO(jshin): adjust the pattern once the above ICU bug is fixed.
     // - Disallow U+30FB (Katakana Middle Dot) and U+30FC (Hiragana-Katakana
     //   Prolonged Sound) used out-of-context.
-    // - Dislallow U+30FD/E (Katakana iteration mark/voiced iteration mark)
+    // - Disallow U+30FD/E (Katakana iteration mark/voiced iteration mark)
     //   unless they're preceded by a Katakana.
     // - Disallow three Hiragana letters (U+307[8-A]) or Katakana letters
     //   (U+30D[8-A]) that look exactly like each other when they're used in a
@@ -238,8 +238,11 @@ bool IDNSpoofChecker::SafeToDisplayAsUnicode(base::StringPiece16 label,
     // - Disallow combining diacritical mark (U+0300-U+0339) after a non-LGC
     //   character. Other combining diacritical marks are not in the allowed
     //   character set.
-    // - Disallow U+0307 (dot above) after 'i', 'j', 'l' or dotless i (U+0131).
-    //   Dotless j (U+0237) is not in the allowed set to begin with.
+    // - Disallow combining marks above (U+0300-U+0314, U+031a) after dotless-i,
+    //   because the result would be indistinguishable from an accented i.
+    // - Disallow U+0307 (dot above) after 'i', 'j', 'l'.
+    //   Dotless i (U+0131) is already matched (preceding pattern alternative),
+    //   and dotless j (U+0237) is not in the allowed set to begin with.
     dangerous_pattern = new icu::RegexMatcher(
         icu::UnicodeString(
             R"([^\p{scx=kana}\p{scx=hira}\p{scx=hani}])"
@@ -251,7 +254,8 @@ bool IDNSpoofChecker::SafeToDisplayAsUnicode(base::StringPiece16 label,
             R"(^[\p{scx=hira}]+[\u30d8-\u30da][\p{scx=hira}]+$|)"
             R"([a-z]\u30fb|\u30fb[a-z]|)"
             R"([^\p{scx=latn}\p{scx=grek}\p{scx=cyrl}][\u0300-\u0339]|)"
-            R"([ijl\u0131]\u0307)",
+            R"(\u0131[\u0300-\u0314\u031a]|)"
+            R"([ijl]\u0307)",
             -1, US_INV),
         0, status);
     tls_index.Set(dangerous_pattern);
