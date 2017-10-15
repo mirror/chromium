@@ -744,7 +744,7 @@ by a child template that "extends" this file.
             {% if use_order_profiling is defined %}
             android:isolatedProcess="false"
             {% else %}
-            android:isolatedProcess="true"
+            android:isolatedProcess="{{ isolatedProcess }}"
             {% endif %}
             android:process=":decoder_service" />
 
@@ -997,7 +997,7 @@ by a child template that "extends" this file.
             {% if use_order_profiling is defined %}
             android:isolatedProcess="false"
             {% else %}
-            android:isolatedProcess="true"
+            android:isolatedProcess="{{ isolatedProcess }}"
             {% endif %}
             android:exported="{{sandboxed_service_exported|default(false)}}"
             {% if (sandboxed_service_exported|default(false)) == 'true' %}

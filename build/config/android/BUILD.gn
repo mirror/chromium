@@ -7,6 +7,10 @@ import("//build/config/sanitizers/sanitizers.gni")
 
 assert(is_android)
 
+declare_args() {
+  gbiv_pgo_everything = false
+}
+
 # This is included by reference in the //build/config/compiler config that
 # is applied to all targets. It is here to separate out the logic that is
 # Android-only.
@@ -14,7 +18,14 @@ config("compiler") {
   cflags = [
     "-ffunction-sections",
     "-fno-short-enums",
+    "-gline-tables-only",
+    "-fdebug-info-for-profiling",
   ]
+
+  if (gbiv_pgo_everything) {
+    cflags += [ "-fprofile-generate", "-DGBIV_IS_PROFILING=1" ]
+  }
+
   defines = [
     "ANDROID",
 
@@ -52,6 +63,7 @@ config("compiler") {
     # http://crbug.com/448386
     "-Wl,--exclude-libs=libvpx_assembly_arm.a",
   ]
+
 
   if (is_clang) {
     if (current_cpu == "arm") {
@@ -157,6 +169,11 @@ config("runtime_library") {
   if (!is_clang || (current_cpu == "arm" && arm_version == 6)) {
     libs += [ "atomic" ]
   }
+
+  if (gbiv_pgo_everything) {
+    libs += [ "profile_rt" ]
+  }
+
 
   if (is_clang) {
     # Work around incompatibilities between bionic and clang headers.
