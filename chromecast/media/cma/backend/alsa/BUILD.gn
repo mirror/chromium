@@ -44,6 +44,8 @@ source_set("alsa_cma_backend") {
     "alsa_wrapper.h",
     "audio_decoder_alsa.cc",
     "audio_decoder_alsa.h",
+    "audio_output_stream_alsa.cc",
+    "audio_output_stream_alsa.h",
     "filter_group.cc",
     "filter_group.h",
     "media_pipeline_backend_alsa.cc",
