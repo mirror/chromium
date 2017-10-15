@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "454211c7_97ba4832",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T06:22:32Z",
+      "side": 1,
+      "message": "Delete it with prefixing to interface.",
+      "parentUuid": "89bbf27c_730fc84c",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 47
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b99acdc_46fb3272",
         "filename": "base/win/core_winrt_util.cc",
         "patchSetId": 5
@@ -728,6 +752,30 @@
       "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe764a98_84373e0b",
+        "filename": "base/win/core_winrt_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T06:22:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "247cac28_13976d0c",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 47
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
