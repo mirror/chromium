@@ -5,12 +5,11 @@
 #ifndef CC_TREES_TARGET_PROPERTY_H_
 #define CC_TREES_TARGET_PROPERTY_H_
 
-#include <bitset>
-
 namespace cc {
 
 namespace TargetProperty {
 
+// Must be zero-based as this will be stored in a bitset.
 enum Type {
   TRANSFORM = 0,
   OPACITY,
@@ -24,9 +23,6 @@ enum Type {
 };
 
 }  // namespace TargetProperty
-
-// A set of target properties. TargetProperty must be 0-based enum.
-using TargetProperties = std::bitset<TargetProperty::LAST_TARGET_PROPERTY + 1>;
 
 }  // namespace cc
 
