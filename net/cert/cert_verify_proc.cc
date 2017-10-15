@@ -32,6 +32,10 @@
 #include "net/der/encode_values.h"
 #include "url/url_canon.h"
 
+#if defined(OS_LINUX)
+#include "net/cert/cert_verify_proc_builtin.h"
+#endif
+
 #if defined(USE_NSS_CERTS)
 #include "net/cert/cert_verify_proc_nss.h"
 #elif defined(OS_ANDROID)
@@ -421,7 +425,10 @@ WARN_UNUSED_RESULT bool InspectSignatureAlgorithmsInChain(
 
 // static
 scoped_refptr<CertVerifyProc> CertVerifyProc::CreateDefault() {
-#if defined(USE_NSS_CERTS)
+#if defined(OS_LINUX)
+  // TODO(eroman): Temporary hack for testing.
+  return CreateCertVerifyProcBuiltin();
+#elif defined(USE_NSS_CERTS)
   return new CertVerifyProcNSS();
 #elif defined(OS_ANDROID)
   return new CertVerifyProcAndroid();
