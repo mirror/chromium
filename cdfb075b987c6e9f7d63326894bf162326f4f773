@@ -22,6 +22,30 @@
       "revId": "cdfb075b987c6e9f7d63326894bf162326f4f773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6970b1d8_5d907a8f",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-15T05:42:52Z",
+      "side": 0,
+      "message": "Oops, this change is not intended. We need an external reference table with |startup_data|.\nReverted. Thank you for pointing this.",
+      "parentUuid": "14af8565_c9fb7586",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 21
+      },
+      "revId": "cdfb075b987c6e9f7d63326894bf162326f4f773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

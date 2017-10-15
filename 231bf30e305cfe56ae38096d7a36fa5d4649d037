@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81e358cf_fe6addd4",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThread.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-15T05:42:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aef33f3a_451a4e60",
+      "revId": "231bf30e305cfe56ae38096d7a36fa5d4649d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5402e838_bddbbf17",
         "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "15092115_58b9d3df",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-15T05:42:52Z",
+      "side": 1,
+      "message": "Ack.\nThis CL removes the case to pass nullptr here, so it became an option to keep |startup_data| in isolate holder. I\u0027ll try to do it.",
+      "parentUuid": "5402e838_bddbbf17",
+      "range": {
+        "startLine": 72,
+        "startChar": 11,
+        "endLine": 72,
+        "endChar": 24
+      },
+      "revId": "231bf30e305cfe56ae38096d7a36fa5d4649d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "430bde54_ecc629da",
         "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "231bf30e305cfe56ae38096d7a36fa5d4649d037",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d72e03_5857d06f",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-15T05:42:52Z",
+      "side": 1,
+      "message": "Ack.\nWill do in another CL.",
+      "parentUuid": "430bde54_ecc629da",
+      "revId": "231bf30e305cfe56ae38096d7a36fa5d4649d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
