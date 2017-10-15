@@ -96,7 +96,7 @@ DEFINE_TRACE(LayoutScrollbar) {
 LayoutBox* LayoutScrollbar::StyleSource() const {
   return style_source_ && style_source_->GetLayoutObject()
              ? style_source_->GetLayoutObject()->EnclosingBox()
-             : 0;
+             : nullptr;
 }
 
 void LayoutScrollbar::DisconnectFromScrollableArea() {

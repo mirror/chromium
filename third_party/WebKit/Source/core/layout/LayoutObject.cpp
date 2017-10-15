@@ -565,7 +565,7 @@ PaintLayer* LayoutObject::FindNextLayer(PaintLayer* parent_layer,
   // Error check the parent layer passed in. If it's null, we can't find
   // anything.
   if (!parent_layer)
-    return 0;
+    return nullptr;
 
   // Step 1: If our layer is a child of the desired parent, then return our
   // layer.
@@ -1961,9 +1961,10 @@ void LayoutObject::UpdateImage(StyleImage* old_image, StyleImage* new_image) {
 
 void LayoutObject::UpdateShapeImage(const ShapeValue* old_shape_value,
                                     const ShapeValue* new_shape_value) {
-  if (old_shape_value || new_shape_value)
-    UpdateImage(old_shape_value ? old_shape_value->GetImage() : 0,
-                new_shape_value ? new_shape_value->GetImage() : 0);
+  if (old_shape_value || new_shape_value) {
+    UpdateImage(old_shape_value ? old_shape_value->GetImage() : nullptr,
+                new_shape_value ? new_shape_value->GetImage() : nullptr);
+  }
 }
 
 void LayoutObject::CheckCounterChanges(const ComputedStyle* old_style,
@@ -1988,7 +1989,7 @@ FloatPoint LayoutObject::LocalToAbsolute(const FloatPoint& local_point,
                                          MapCoordinatesFlags mode) const {
   TransformState transform_state(TransformState::kApplyTransformDirection,
                                  local_point);
-  MapLocalToAncestor(0, transform_state, mode | kApplyContainerFlip);
+  MapLocalToAncestor(nullptr, transform_state, mode | kApplyContainerFlip);
   transform_state.Flatten();
 
   return transform_state.LastPlanarPoint();
@@ -2190,7 +2191,8 @@ void LayoutObject::GetTransformFromContainer(
     const LayoutSize& offset_in_container,
     TransformationMatrix& transform) const {
   transform.MakeIdentity();
-  PaintLayer* layer = HasLayer() ? ToLayoutBoxModelObject(this)->Layer() : 0;
+  PaintLayer* layer =
+      HasLayer() ? ToLayoutBoxModelObject(this)->Layer() : nullptr;
   if (layer && layer->Transform())
     transform.Multiply(layer->CurrentTransform());
 
