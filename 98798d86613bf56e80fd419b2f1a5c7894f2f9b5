@@ -82,6 +82,80 @@
     },
     {
       "key": {
+        "uuid": "a2f7fbd3_fadae289",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/cppguide.html#Namespaces \"Do not use Namespace aliases at namespace scope in header files except in explicitly marked internal-only namespaces\"",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06fbd0e_be79ccb7",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "please add a doc comment -- what does this template class do? what are the requirements on |RuntimeType| and |T|?",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9225af45_c1c31394",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "nit: does \"Template\" need to be a part of the class name?",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34670d99_12d16f2a",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "if this is a generic template for handling any kind of IAsyncOperation, should |detection_impl| have a more generic name?",
+      "range": {
+        "startLine": 16,
+        "startChar": 37,
+        "endLine": 16,
+        "endChar": 51
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19bcdc9d_550f65a1",
         "filename": "services/shape_detection/detection_utils_win.h",
         "patchSetId": 2
@@ -105,6 +179,40 @@
     },
     {
       "key": {
+        "uuid": "82de8c5c_9724ce43",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "please follow the guidelines in https://google.github.io/styleguide/cppguide.html#Comments for documenting classes and functions.",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca8ca27_c190e649",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "should this not check that status \u003d\u003d AsyncStatus::Completed rather than Canceled or Error?",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d770ab1e_f026e81d",
         "filename": "services/shape_detection/detection_utils_win.h",
         "patchSetId": 2
@@ -122,6 +230,46 @@
         "endLine": 32,
         "endChar": 23
       },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c42012_97be3438",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "nit: std::move(weak_ptr) to avoid refcount bump?",
+      "range": {
+        "startLine": 36,
+        "startChar": 25,
+        "endLine": 36,
+        "endChar": 33
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c528401_cbcb35ec",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "protected data members are not allowed; https://google.github.io/styleguide/cppguide.html#Access_Control",
       "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -168,6 +316,40 @@
     },
     {
       "key": {
+        "uuid": "628f7e84_3690520e",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "nit: blank line before comment",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57bcef6d_05374b80",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "can the factory be moved from each derived class into this template class, thereby removing the need for this function? if not, why?",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3837429a_3f423433",
         "filename": "services/shape_detection/detection_utils_win.h",
         "patchSetId": 2
@@ -185,6 +367,131 @@
         "endLine": 69,
         "endChar": 28
       },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a7dab0_8f045fea",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "can you not do away with virtual dispatch for this method by having the template take the derived class as a template parameter? then line 57 above becomes something like:\n  static_cast\u003cImpl*\u003e(this)-\u003eAsyncCallback(async_op);\n\nsee https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern for more.",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9646b10b_96131dab",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "why are raw pointers used? why not have the ops_ container hold a ref to the object?",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 31
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3866a6_123a4f20",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src/+/4bd0cd567ddcdbcae606504a5fbb2c023eb9b4a2/base/containers/README.md#base_containers-library-map-and-set-selection-usage-advice \"Generally avoid std::unordered_set...\"",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58b9d074_1472f2da",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "\"You may not use a using-directive to make all names from a namespace available.\" (https://google.github.io/styleguide/cppguide.html#Namespaces)",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1553dd02_6e153bce",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "please use base/win/core_winrt_util.h",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eebfb6bc_bff214df",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "please use base/win/scoped_hstring.h",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc38d4ba_8ea6a274",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "VLOG should almost never be used, as it adds weight to production builds for often no benefit. please choose one of: a) provide justification for each VLOG, b) convert each into DLOG, c) remove each entirely.",
       "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -231,6 +538,23 @@
     },
     {
       "key": {
+        "uuid": "c9d013f4_877ac188",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "is this needed? who will see it? if it was only a development aid, please remove it.",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "640cd3b4_9c413501",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 2
@@ -265,6 +589,30 @@
       "writtenOn": "2017-10-10T17:02:40Z",
       "side": 1,
       "message": "IIUC We can use the family of DPLOG macros in this \nand similar cases throughout the file to append the\nlast system error in string format.\n\n[1] https://cs.chromium.org/chromium/src/base/logging.h?type\u003dcs\u0026q\u003dDPLOG\u0026sq\u003dpackage:chromium\u0026l\u003d127",
+      "range": {
+        "startLine": 222,
+        "startChar": 16,
+        "endLine": 222,
+        "endChar": 63
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8386b115_b0590bf3",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "yes, please use the *PLOG family rather than using GetLastError(). remember to omit punctuation at the end of the message since logging machinery will append a human-readable message about the error.",
+      "parentUuid": "561822e9_2217bedc",
       "range": {
         "startLine": 222,
         "startChar": 16,
@@ -340,6 +688,23 @@
     },
     {
       "key": {
+        "uuid": "8421855a_1103790d",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "nit: use a smart ptr here",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6294a9f3_0b01ec63",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 2
@@ -397,6 +762,29 @@
     },
     {
       "key": {
+        "uuid": "9c5b4a9f_fd8493d8",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "nit: omit \"shape_detection::\" everywhere within the namespace like this",
+      "range": {
+        "startLine": 27,
+        "startChar": 36,
+        "endLine": 27,
+        "endChar": 53
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7491df97_c7d51921",
         "filename": "services/shape_detection/face_detection_impl_win.h",
         "patchSetId": 2
@@ -414,6 +802,23 @@
         "endLine": 38,
         "endChar": 32
       },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b692bfe3_b827342b",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-15T19:54:21Z",
+      "side": 1,
+      "message": "please follow the declaration order described here: https://google.github.io/styleguide/cppguide.html#Declaration_Order",
       "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
