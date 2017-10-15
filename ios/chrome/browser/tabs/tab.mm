@@ -390,11 +390,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
                               callback:callback];
 }
 
-- (const GURL&)lastCommittedURL {
-  web::NavigationItem* item = self.navigationManager->GetLastCommittedItem();
-  return item ? item->GetVirtualURL() : GURL::EmptyGURL();
-}
-
 - (const GURL&)visibleURL {
   web::NavigationItem* item = self.navigationManager->GetVisibleItem();
   return item ? item->GetVirtualURL() : GURL::EmptyGURL();
@@ -779,11 +774,11 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
         [self navigationManager]->GetLastCommittedItem()->GetURL().GetOrigin();
 
     // Compose u2f-x-callback URL and update urlToOpen.
-    finalURL =
-        [_secondFactorController XCallbackFromRequestURL:finalURL
-                                               originURL:origin
-                                                  tabURL:self.lastCommittedURL
-                                                   tabID:self.tabId];
+    finalURL = [_secondFactorController
+        XCallbackFromRequestURL:finalURL
+                      originURL:origin
+                         tabURL:self.webState->GetLastCommittedURL()
+                          tabID:self.tabId];
 
     if (!finalURL.is_valid())
       return NO;
@@ -865,28 +860,28 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
       postNotificationName:kTabIsShowingExportableNotificationForCrashReporting
                     object:self];
   // Try to generate a filename by first looking at |content_disposition_|, then
-  // at the last component of |lastCommittedURL| and if both of these fail use
-  // the default filename "document".
+  // at the last component of WebState's last committed URL and if both of these
+  // fail use the default filename "document".
   std::string contentDisposition;
   if (headers)
     headers->GetNormalizedHeader("content-disposition", &contentDisposition);
   std::string defaultFilename =
       l10n_util::GetStringUTF8(IDS_IOS_OPEN_IN_FILE_DEFAULT_TITLE);
-  const GURL& committedURL = self.lastCommittedURL;
+  const GURL& lastCommittedUrl = self.webState->GetLastCommittedURL();
   base::string16 filename =
-      net::GetSuggestedFilename(committedURL, contentDisposition,
+      net::GetSuggestedFilename(lastCommittedUrl, contentDisposition,
                                 "",                 // referrer-charset
                                 "",                 // suggested-name
                                 "application/pdf",  // mime-type
                                 defaultFilename);
   [[self openInController]
-      enableWithDocumentURL:committedURL
+      enableWithDocumentURL:lastCommittedUrl
           suggestedFilename:base::SysUTF16ToNSString(filename)];
 }
 
 - (void)countMainFrameLoad {
   if ([self isPrerenderTab] ||
-      self.lastCommittedURL.SchemeIs(kChromeUIScheme)) {
+      self.webState->GetLastCommittedURL().SchemeIs(kChromeUIScheme)) {
     return;
   }
   base::RecordAction(base::UserMetricsAction("MobilePageLoaded"));
@@ -1002,7 +997,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   // and when the URL changes (to avoid counting page resurrection).
   if (isUserNavigationEvent && !_isPrerenderTab &&
       ![self navigationManager]->GetPendingItem() &&
-      url != self.lastCommittedURL) {
+      url != self.webState->GetLastCommittedURL()) {
     if ([_parentTabModel tabUsageRecorder])
       [_parentTabModel tabUsageRecorder]->RecordPageLoadStart(self.webState);
   }
@@ -1036,7 +1031,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   // TODO(crbug.com/381201): Move this call there once that bug is fixed so that
   // |disableFullScreen| is called only from one place.
   [_fullScreenController disableFullScreen];
-  GURL lastCommittedURL = webState->GetLastCommittedURL();
+  GURL lastCommittedUrl = webState->GetLastCommittedURL();
 
   if (_parentTabModel) {
     [[NSNotificationCenter defaultCenter]
@@ -1063,7 +1058,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   // Sending a notification about the url change for crash reporting.
   // TODO(crbug.com/661675): Consider using the navigation entry committed
   // notification now that it's in the right place.
-  NSString* URLSpec = base::SysUTF8ToNSString(lastCommittedURL.spec());
+  NSString* URLSpec = base::SysUTF8ToNSString(lastCommittedUrl.spec());
   if (URLSpec.length) {
     [[NSNotificationCenter defaultCenter]
         postNotificationName:kTabUrlStartedLoadingNotificationForCrashReporting
@@ -1084,19 +1079,19 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   }
 
   bool wasPost = false;
-  GURL lastCommittedURL;
+  GURL lastCommittedUrl;
   web::NavigationItem* lastCommittedItem =
       [self navigationManager]->GetLastCommittedItem();
   if (lastCommittedItem) {
     wasPost = lastCommittedItem->HasPostData();
-    lastCommittedURL = lastCommittedItem->GetVirtualURL();
+    lastCommittedUrl = lastCommittedItem->GetVirtualURL();
   }
   [_webControllerSnapshotHelper setSnapshotCoalescingEnabled:YES];
   if (!loadSuccess)
     [_fullScreenController disableFullScreen];
   [self recordInterfaceOrientation];
   navigation_metrics::RecordMainFrameNavigation(
-      lastCommittedURL, true, self.browserState->IsOffTheRecord());
+      lastCommittedUrl, true, self.browserState->IsOffTheRecord());
 
   if (loadSuccess) {
     scoped_refptr<net::HttpResponseHeaders> headers =
