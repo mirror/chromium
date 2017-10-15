@@ -225,7 +225,10 @@ class CORE_EXPORT PaintLayerScrollableArea final
   ~PaintLayerScrollableArea() override;
   void Dispose();
 
-  void ForceVerticalScrollbarForFirstLayout() { SetHasVerticalScrollbar(true); }
+  void ForceVerticalScrollbarForFirstLayout() {
+    SetHasVerticalScrollbar(true);
+    layout_has_forced_initial_vertical_scrollbar_ = true;
+  }
   bool HasHorizontalScrollbar() const { return HorizontalScrollbar(); }
   bool HasVerticalScrollbar() const { return VerticalScrollbar(); }
 
@@ -557,6 +560,11 @@ class CORE_EXPORT PaintLayerScrollableArea final
   unsigned scrolls_overflow_ : 1;
 
   unsigned in_overflow_relayout_ : 1;
+
+  // True if a vertical scrollbar was forced for the first layout. This is an
+  // optimization for LayoutView with root layer scrolling because most
+  // documents scroll vertically. This should be reset in |UpdateAfterLayout|.
+  unsigned layout_has_forced_initial_vertical_scrollbar_ : 1;
 
   // FIXME: once cc can handle composited scrolling with clip paths, we will
   // no longer need this bit.

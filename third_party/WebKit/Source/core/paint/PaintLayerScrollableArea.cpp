@@ -121,6 +121,7 @@ PaintLayerScrollableArea::PaintLayerScrollableArea(PaintLayer& layer)
       in_resize_mode_(false),
       scrolls_overflow_(false),
       in_overflow_relayout_(false),
+      layout_has_forced_initial_vertical_scrollbar_(false),
       needs_composited_scrolling_(false),
       rebuild_horizontal_scrollbar_layer_(false),
       rebuild_vertical_scrollbar_layer_(false),
@@ -830,9 +831,21 @@ void PaintLayerScrollableArea::SetScrollOffsetUnconditionally(
 }
 
 void PaintLayerScrollableArea::UpdateAfterLayout() {
+  bool scrollbars_frozen_for_final_relayout = in_overflow_relayout_;
+
+  // Allow one additional scrollbar layout if the vertical scrollbar was forced
+  // for the first layout. This is an optimization for LayoutView with root
+  // layer scrolling because most documents scroll vertically. In cases when
+  // this scrollbar heuristic is incorrect, an additional layout is needed.
+  if (scrollbars_frozen_for_final_relayout &&
+      layout_has_forced_initial_vertical_scrollbar_) {
+    scrollbars_frozen_for_final_relayout = false;
+    layout_has_forced_initial_vertical_scrollbar_ = false;
+  }
+
   bool relayout_is_prevented = PreventRelayoutScope::RelayoutIsPrevented();
-  bool scrollbars_are_frozen =
-      in_overflow_relayout_ || FreezeScrollbarsScope::ScrollbarsAreFrozen();
+  bool scrollbars_are_frozen = scrollbars_frozen_for_final_relayout ||
+                               FreezeScrollbarsScope::ScrollbarsAreFrozen();
 
   if (NeedsScrollbarReconstruction()) {
     SetHasHorizontalScrollbar(false);
@@ -935,6 +948,8 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
 
   DisableCompositingQueryAsserts disabler;
   PositionOverflowControls();
+
+  layout_has_forced_initial_vertical_scrollbar_ = false;
 }
 
 void PaintLayerScrollableArea::ClampScrollOffsetAfterOverflowChange() {
@@ -1344,8 +1359,9 @@ void PaintLayerScrollableArea::ComputeScrollbarExistence(
         ScrollWidth() <= visible_size_with_scrollbars.Width() &&
         ScrollHeight() <= visible_size_with_scrollbars.Height() &&
         h_mode == kScrollbarAuto && v_mode == kScrollbarAuto;
-    if (attempt_to_remove_scrollbars)
+    if (attempt_to_remove_scrollbars) {
       needs_horizontal_scrollbar = needs_vertical_scrollbar = false;
+    }
 
     // Look for the scrollbarModes and reset the needs Horizontal & vertical
     // Scrollbar values based on scrollbarModes, as during force style change
