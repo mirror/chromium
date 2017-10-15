@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba014d5f_fbe2ae6a",
+        "filename": "components/content_settings/core/browser/website_settings_registry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-15T22:52:40Z",
+      "side": 1,
+      "message": "Good point, it\u0027s probably good not to sync for now to avoid unexpected behavior.",
+      "parentUuid": "809f2d11_97b35feb",
+      "revId": "7399d83918cbc9c9b0bf53b236d6183de9a4ebeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "094014a7_d41103a8",
         "filename": "components/content_settings/core/browser/website_settings_registry.h",
         "patchSetId": 2
