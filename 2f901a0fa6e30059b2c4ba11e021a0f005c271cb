@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91b4a1f2_ef0ffc41",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-15T21:02:13Z",
+      "side": 1,
+      "message": "nit: Maybe this one should be |invalid_color_space|, since you use it only to return an invalid color space.",
+      "revId": "2f901a0fa6e30059b2c4ba11e021a0f005c271cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b85cc64_4709d6ff",
+        "filename": "ui/ozone/platform/drm/common/drm_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-15T21:02:13Z",
+      "side": 1,
+      "message": "nit:const std::vector\u003cuint8_t\u003e empty_edid;\nNo need for the empty initializer list.",
+      "revId": "2f901a0fa6e30059b2c4ba11e021a0f005c271cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
