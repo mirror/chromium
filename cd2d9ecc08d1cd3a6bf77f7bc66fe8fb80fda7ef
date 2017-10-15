@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4f0b467_ec9de7af",
+        "filename": "net/http/transport_security_state_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3104,
+      "author": {
+        "id": 1001532
+      },
+      "writtenOn": "2017-10-15T10:57:04Z",
+      "side": 1,
+      "message": "Looks like this is consistent with other test - but wondering if we should test at 2 labels down? Like foo.www.youtube.com",
+      "revId": "cd2d9ecc08d1cd3a6bf77f7bc66fe8fb80fda7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
