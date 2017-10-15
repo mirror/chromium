@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89bbf27c_730fc84c",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T02:56:49Z",
+      "side": 1,
+      "message": "IBuffer and IBufferFactory interface need it.",
+      "parentUuid": "263cb188_803a6be8",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 47
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b99acdc_46fb3272",
         "filename": "base/win/core_winrt_util.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "af1ba360_16ef3701",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T02:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b99acdc_46fb3272",
+      "range": {
+        "startLine": 63,
+        "startChar": 58,
+        "endLine": 63,
+        "endChar": 61
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5123ca55_3787ea5f",
         "filename": "base/win/core_winrt_util.cc",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0b09aa_0963f808",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T02:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5123ca55_3787ea5f",
+      "range": {
+        "startLine": 64,
+        "startChar": 80,
+        "endLine": 66,
+        "endChar": 2
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "19f10ec6_4a735f8b",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T02:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac3e378e_79583c73",
+      "range": {
+        "startLine": 72,
+        "startChar": 1,
+        "endLine": 75,
+        "endChar": 14
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f628304_568d7af7",
         "filename": "base/win/core_winrt_util.cc",
         "patchSetId": 5
@@ -138,6 +234,30 @@
       "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b52f304_2e07c59e",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T02:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f628304_568d7af7",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 18
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "5782fd54_65857aa1",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T02:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aada4d7_713772b0",
+      "range": {
+        "startLine": 95,
+        "startChar": 24,
+        "endLine": 95,
+        "endChar": 34
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bee4861a_c22cc7a3",
         "filename": "base/win/core_winrt_util.h",
         "patchSetId": 5
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "4a6235e5_69ee4783",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T02:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bee4861a_c22cc7a3",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 36
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e02572c_ce16963c",
         "filename": "base/win/core_winrt_util.h",
         "patchSetId": 5
@@ -207,6 +375,30 @@
       "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8085e689_b064362a",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T02:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e02572c_ce16963c",
+      "range": {
+        "startLine": 29,
+        "startChar": 22,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "cf6c6142_33ddca3e",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T02:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62525cf2_56ff623f",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 9
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0819176_98cebbc2",
         "filename": "base/win/core_winrt_util.h",
         "patchSetId": 5
@@ -276,6 +492,30 @@
       "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b47e8f_66179632",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T02:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0819176_98cebbc2",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 65
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -322,6 +562,54 @@
       "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e9f09e_9e2802c8",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T02:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb31f37d_c5546a20",
+      "range": {
+        "startLine": 50,
+        "startChar": 28,
+        "endLine": 50,
+        "endChar": 45
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84303ee4_b28d0dee",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T02:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "581ea797_9a7b55bb",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -372,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "732d76eb_8f8ca340",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T02:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be560814_8b94fb07",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 17
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f62655e0_4239cef3",
         "filename": "base/win/core_winrt_util_unittest.cc",
         "patchSetId": 5
@@ -383,6 +695,30 @@
       "writtenOn": "2017-10-13T16:57:24Z",
       "side": 1,
       "message": "unused in this file?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 47
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247cac28_13976d0c",
+        "filename": "base/win/core_winrt_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-15T02:56:49Z",
+      "side": 1,
+      "message": "IBuffer and IBufferFactory interface need it.",
+      "parentUuid": "f62655e0_4239cef3",
       "range": {
         "startLine": 20,
         "startChar": 0,
