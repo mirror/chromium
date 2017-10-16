@@ -1,0 +1,83 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x600
+  LayoutBlockFlow {HTML} at (0,0) size 800x600
+    LayoutBlockFlow {BODY} at (8,8) size 784x584
+      LayoutTable {TABLE} at (0,0) size 434x49 [border: (5px none #808080)]
+        LayoutTableSection {TBODY} at (5,5) size 424x39
+          LayoutTableRow {TR} at (0,0) size 424x17
+            LayoutTableCell {TD} at (0,0) size 424x17 [border: (5px solid #800080) none (5px solid #800080)] [r=0 c=0 rs=1 cs=2]
+              LayoutText {#text} at (6,6) size 10x10
+                text run at (6,6) width 10: " "
+          LayoutTableRow {TR} at (0,17) size 424x22
+            LayoutTableCell {TD} at (0,19) size 212x17 [border: none (5px solid #800080)] [r=1 c=0 rs=1 cs=1]
+              LayoutText {#text} at (6,1) size 10x10
+                text run at (6,1) width 10: " "
+            LayoutTableCell {TD} at (212,17) size 212x22 [bgcolor=#008000] [border: (5px solid #800080)] [r=1 c=1 rs=1 cs=1]
+              LayoutText {#text} at (6,6) size 10x10
+                text run at (6,6) width 10: " "
+      LayoutBlockFlow (anonymous) at (0,49) size 784x20
+        LayoutBR {BR} at (0,0) size 0x19
+      LayoutTable {TABLE} at (0,69) size 434x54 [border: (5px none #808080)]
+        LayoutTableSection {TBODY} at (5,5) size 424x44
+          LayoutTableRow {TR} at (0,0) size 424x22
+            LayoutTableCell {TD} at (0,0) size 424x22 [border: (5px solid #800080) (5px none #000000) (5px solid #800080)] [r=0 c=0 rs=1 cs=2]
+              LayoutText {#text} at (6,6) size 10x10
+                text run at (6,6) width 10: " "
+          LayoutTableRow {TR} at (0,22) size 424x22
+            LayoutTableCell {TD} at (0,22) size 212x22 [bgcolor=#008000] [border: (5px solid #800080)] [r=1 c=0 rs=1 cs=1]
+              LayoutText {#text} at (6,6) size 10x10
+                text run at (6,6) width 10: " "
+            LayoutTableCell {TD} at (212,24) size 212x17 [border: none (5px solid #800080)] [r=1 c=1 rs=1 cs=1]
+              LayoutText {#text} at (6,1) size 10x10
+                text run at (6,1) width 10: " "
+      LayoutBlockFlow (anonymous) at (0,123) size 784x20
+        LayoutBR {BR} at (0,0) size 0x19
+      LayoutTable {TABLE} at (0,143) size 434x49 [border: (5px none #808080)]
+        LayoutTableSection {TBODY} at (5,5) size 424x39
+          LayoutTableRow {TR} at (0,0) size 424x22
+            LayoutTableCell {TD} at (0,2) size 212x17 [border: (5px solid #800080) none (5px solid #800080)] [r=0 c=0 rs=1 cs=1]
+              LayoutText {#text} at (6,6) size 10x10
+                text run at (6,6) width 10: " "
+            LayoutTableCell {TD} at (212,0) size 212x22 [bgcolor=#008000] [border: (5px solid #800080)] [r=0 c=1 rs=1 cs=1]
+              LayoutText {#text} at (6,6) size 10x10
+                text run at (6,6) width 10: " "
+          LayoutTableRow {TR} at (0,22) size 424x17
+            LayoutTableCell {TD} at (0,22) size 424x17 [border: none (5px solid #800080)] [r=1 c=0 rs=1 cs=2]
+              LayoutText {#text} at (6,1) size 10x10
+                text run at (6,1) width 10: " "
+      LayoutTable {TABLE} at (0,192) size 434x54 [border: (5px none #808080)]
+        LayoutTableSection {TBODY} at (5,5) size 424x44
+          LayoutTableRow {TR} at (0,0) size 424x22
+            LayoutTableCell {TD} at (0,0) size 212x22 [bgcolor=#008000] [border: (5px solid #800080)] [r=0 c=0 rs=1 cs=1]
+              LayoutText {#text} at (6,6) size 10x10
+                text run at (6,6) width 10: " "
+            LayoutTableCell {TD} at (212,2) size 212x17 [border: (5px solid #800080) none (5px solid #800080)] [r=0 c=1 rs=1 cs=1]
+              LayoutText {#text} at (6,6) size 10x10
+                text run at (6,6) width 10: " "
+          LayoutTableRow {TR} at (0,22) size 424x22
+            LayoutTableCell {TD} at (0,22) size 424x22 [border: (5px none #000000) (5px solid #800080)] [r=1 c=0 rs=1 cs=2]
+              LayoutText {#text} at (6,6) size 10x10
+                text run at (6,6) width 10: " "
+      LayoutBlockFlow (anonymous) at (0,246) size 784x20
+        LayoutBR {BR} at (0,0) size 0x19
+      LayoutTable {TABLE} at (0,266) size 646x66 [border: (5px none #808080)]
+        LayoutTableSection {TBODY} at (5,5) size 636x56
+          LayoutTableRow {TR} at (0,0) size 636x17
+            LayoutTableCell {TD} at (0,0) size 636x17 [border: (5px solid #800080) none (5px solid #800080)] [r=0 c=0 rs=1 cs=3]
+              LayoutText {#text} at (6,6) size 10x10
+                text run at (6,6) width 10: " "
+          LayoutTableRow {TR} at (0,17) size 636x22
+            LayoutTableCell {TD} at (0,22) size 212x12 [border: none (5px solid #800080) none (5px solid #800080)] [r=1 c=0 rs=1 cs=1]
+              LayoutText {#text} at (6,1) size 10x10
+                text run at (6,1) width 10: " "
+            LayoutTableCell {TD} at (212,17) size 212x22 [bgcolor=#008000] [border: (5px solid #800080)] [r=1 c=1 rs=1 cs=1]
+              LayoutText {#text} at (6,6) size 10x10
+                text run at (6,6) width 10: " "
+            LayoutTableCell {TD} at (424,22) size 212x12 [border: none (5px solid #800080) none (5px solid #800080)] [r=1 c=2 rs=1 cs=1]
+              LayoutText {#text} at (6,1) size 10x10
+                text run at (6,1) width 10: " "
+          LayoutTableRow {TR} at (0,39) size 636x17
+            LayoutTableCell {TD} at (0,39) size 636x17 [border: none (5px solid #800080)] [r=2 c=0 rs=1 cs=3]
+              LayoutText {#text} at (6,1) size 10x10
+                text run at (6,1) width 10: " "

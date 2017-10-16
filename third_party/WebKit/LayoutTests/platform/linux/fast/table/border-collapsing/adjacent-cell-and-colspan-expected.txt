@@ -1,0 +1,21 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x165
+  LayoutBlockFlow {HTML} at (0,0) size 800x165
+    LayoutBlockFlow {BODY} at (8,8) size 784x149
+      LayoutTable {TABLE} at (0,0) size 70x70
+        LayoutTableSection {TBODY} at (0,0) size 70x70
+          LayoutTableRow {TR} at (0,2) size 70x32
+            LayoutTableCell {TD} at (2,12) size 32x12 [bgcolor=#C0C0C0] [border: (5px solid #000000) (5px solid #FF0000) (5px solid #000000)] [r=0 c=0 rs=1 cs=1]
+            LayoutTableCell {TD} at (36,12) size 32x12 [bgcolor=#C0C0C0] [border: (5px solid #000000)] [r=0 c=1 rs=1 cs=1]
+          LayoutTableRow {TR} at (0,36) size 70x32
+            LayoutTableCell {TD} at (2,46) size 66x12 [bgcolor=#C0C0C0] [border: (5px solid #000000)] [r=1 c=0 rs=1 cs=2]
+      LayoutBlockFlow (anonymous) at (0,70) size 784x20
+        LayoutBR {BR} at (0,0) size 0x19
+      LayoutTable {TABLE} at (0,90) size 59x59 [border: (2px none #808080)]
+        LayoutTableSection {TBODY} at (2,2) size 54x54
+          LayoutTableRow {TR} at (0,0) size 54x27
+            LayoutTableCell {TD} at (0,10) size 27x7 [bgcolor=#C0C0C0] [border: (3px solid #000000) (2px solid #FF0000) (3px solid #000000)] [r=0 c=0 rs=1 cs=1]
+            LayoutTableCell {TD} at (27,10) size 27x7 [bgcolor=#C0C0C0] [border: (3px solid #000000)] [r=0 c=1 rs=1 cs=1]
+          LayoutTableRow {TR} at (0,27) size 54x27
+            LayoutTableCell {TD} at (0,37) size 54x7 [bgcolor=#C0C0C0] [border: (3px solid #000000)] [r=1 c=0 rs=1 cs=2]

@@ -1,0 +1,44 @@
+<html>
+<head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 50%;
+        height: 50%;
+    }
+
+    td.split {
+        width: 33%;
+    }
+
+    td.border {
+        border: solid black 1pt;
+    }
+
+    td.noBorder {
+        border: none;
+        width: 33%;
+    }
+</style>
+</head>
+<body>
+<table border="0" cellpadding="0" cellspacing="0">
+    <!-- There should be 2 cells fully circled with borders in the output -->
+    <tr><td colspan="3" class="noBorder"></td></tr>
+    <tr>
+        <td class="border split"></td>
+        <td class="border split"></td>
+        <!-- This cell should not have a border -->
+        <td class="noBorder"></td>
+    </tr>
+    <tr><td colspan="3" class="noBorder"></td></tr>
+    <tr>
+        <td class="border split"></td>
+        <td class="border split"></td>
+        <!-- This cell should not have a border -->
+        <td class="noBorder"></td>
+    </tr>
+    <tr><td colspan="3" style="border:none;"></td></tr>
+</table>
+</body>
+</html>

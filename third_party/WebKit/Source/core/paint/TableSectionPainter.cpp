@@ -16,6 +16,7 @@
 #include "core/paint/ObjectPainter.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/TableCellPainter.h"
+#include "core/paint/TableCollapsedBorderPainter.h"
 #include "core/paint/TableRowPainter.h"
 
 namespace blink {
@@ -23,6 +24,7 @@ namespace blink {
 void TableSectionPainter::PaintRepeatingHeaderGroup(
     const PaintInfo& paint_info,
     const LayoutPoint& paint_offset,
+    TableCollapsedBorderPainter& previous_painter,
     ItemToPaint item_to_paint) {
   if (!layout_table_section_.IsRepeatingHeaderGroup())
     return;
@@ -73,7 +75,7 @@ void TableSectionPainter::PaintRepeatingHeaderGroup(
         layout_table_section_.LogicalHeight() + strut_on_first_row;
     nested_offset.Move(LayoutUnit(), height_of_previous_headers);
     if (item_to_paint == kPaintCollapsedBorders) {
-      PaintCollapsedSectionBorders(paint_info, nested_offset);
+      PaintCollapsedSectionBorders(paint_info, nested_offset, previous_painter);
     } else {
       PaintSection(paint_info, nested_offset);
     }
@@ -84,6 +86,7 @@ void TableSectionPainter::PaintRepeatingHeaderGroup(
 void TableSectionPainter::PaintRepeatingFooterGroup(
     const PaintInfo& paint_info,
     const LayoutPoint& paint_offset,
+    TableCollapsedBorderPainter& previous_painter,
     ItemToPaint item_to_paint) {
   if (!layout_table_section_.IsRepeatingFooterGroup())
     return;
@@ -145,7 +148,7 @@ void TableSectionPainter::PaintRepeatingFooterGroup(
     LayoutPoint nested_offset = pagination_offset;
     nested_offset.Move(LayoutUnit(), offset_for_footer);
     if (item_to_paint == kPaintCollapsedBorders) {
-      PaintCollapsedSectionBorders(paint_info, nested_offset);
+      PaintCollapsedSectionBorders(paint_info, nested_offset, previous_painter);
     } else {
       PaintSection(paint_info, nested_offset);
     }
@@ -159,10 +162,13 @@ void TableSectionPainter::Paint(const PaintInfo& paint_info,
       .CheckPaintOffset(paint_info, paint_offset);
   PaintSection(paint_info, paint_offset);
   LayoutTable* table = layout_table_section_.Table();
+  TableCollapsedBorderPainter old_painter;
   if (table->Header() == layout_table_section_) {
-    PaintRepeatingHeaderGroup(paint_info, paint_offset, kPaintSection);
+    PaintRepeatingHeaderGroup(paint_info, paint_offset, old_painter,
+                              kPaintSection);
   } else if (table->Footer() == layout_table_section_) {
-    PaintRepeatingFooterGroup(paint_info, paint_offset, kPaintSection);
+    PaintRepeatingFooterGroup(paint_info, paint_offset, old_painter,
+                              kPaintSection);
   }
 }
 
@@ -197,34 +203,36 @@ void TableSectionPainter::PaintSection(const PaintInfo& paint_info,
 
 void TableSectionPainter::PaintCollapsedBorders(
     const PaintInfo& paint_info,
-    const LayoutPoint& paint_offset) {
-  PaintCollapsedSectionBorders(paint_info, paint_offset);
+    const LayoutPoint& paint_offset,
+    TableCollapsedBorderPainter& previous_painter) {
+  PaintCollapsedSectionBorders(paint_info, paint_offset, previous_painter);
   LayoutTable* table = layout_table_section_.Table();
   if (table->Header() == layout_table_section_) {
-    PaintRepeatingHeaderGroup(paint_info, paint_offset, kPaintCollapsedBorders);
+    PaintRepeatingHeaderGroup(paint_info, paint_offset, previous_painter,
+                              kPaintCollapsedBorders);
   } else if (table->Footer() == layout_table_section_) {
-    PaintRepeatingFooterGroup(paint_info, paint_offset, kPaintCollapsedBorders);
+    PaintRepeatingFooterGroup(paint_info, paint_offset, previous_painter,
+                              kPaintCollapsedBorders);
   }
 }
 
 void TableSectionPainter::PaintCollapsedSectionBorders(
     const PaintInfo& paint_info,
-    const LayoutPoint& paint_offset) {
+    const LayoutPoint& paint_offset,
+    TableCollapsedBorderPainter& previous_painter) {
   if (!layout_table_section_.NumRows() ||
       !layout_table_section_.Table()->EffectiveColumns().size())
     return;
-
   LayoutPoint adjusted_paint_offset =
       paint_offset + layout_table_section_.Location();
-  BoxClipper box_clipper(layout_table_section_, paint_info,
-                         adjusted_paint_offset, kForceContentsClip);
-
-  LayoutRect local_visual_rect = LayoutRect(paint_info.GetCullRect().rect_);
-  local_visual_rect.MoveBy(-adjusted_paint_offset);
-
+  BoxClipper boxClipper(layout_table_section_, paint_info,
+                        adjusted_paint_offset, kForceContentsClip);
+  LayoutRect local_paint_invalidation_rect =
+      LayoutRect(paint_info.GetCullRect().rect_);
+  local_paint_invalidation_rect.MoveBy(-adjusted_paint_offset);
   LayoutRect table_aligned_rect =
       layout_table_section_.LogicalRectForWritingModeAndDirection(
-          local_visual_rect);
+          local_paint_invalidation_rect);
 
   CellSpan dirtied_rows;
   CellSpan dirtied_columns;
@@ -238,17 +246,10 @@ void TableSectionPainter::PaintCollapsedSectionBorders(
         table_aligned_rect, dirtied_rows, dirtied_columns);
   }
 
-  if (dirtied_columns.Start() >= dirtied_columns.End())
-    return;
-
-  // Collapsed borders are painted from the bottom right to the top left so that
-  // precedence due to cell position is respected.
-  for (unsigned r = dirtied_rows.End(); r > dirtied_rows.Start(); r--) {
-    if (const auto* row = layout_table_section_.RowLayoutObjectAt(r - 1)) {
-      TableRowPainter(*row).PaintCollapsedBorders(
-          paint_info, adjusted_paint_offset, dirtied_columns);
-    }
-  }
+  TableCollapsedBorderPainter painter(&layout_table_section_);
+  painter.PaintBorders(paint_info, paint_offset, dirtied_rows, dirtied_columns,
+                       previous_painter);
+  previous_painter = painter;
 }
 
 void TableSectionPainter::PaintObject(const PaintInfo& paint_info,

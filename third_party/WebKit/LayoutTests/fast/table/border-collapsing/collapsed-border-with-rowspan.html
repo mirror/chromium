@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<style>
+td { width: 20px; height: 20px;}
+</style>
+<body>
+<p>Test for Bugzilla <a href="https://bugs.webkit.org/show_bug.cgi?id=5515">Bug 5515</a>:  Border collapse problem with rowspan/colspan cells.</p>
+<p>The following tests verify the border-collapse behavior on tables with rowspan.</p>
+
+<p> No continuous red border should be displayed for the following two tables. </p>
+<table border="1" style="border-collapse : collapse;">
+    <tr>
+        <td rowspan="2"></td>
+        <td style="border-left: 1px solid red"></td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+</table>
+<table border="1" style="border-collapse : collapse;">
+    <tr>
+        <td rowspan="2" style="border-right: 1px solid blue"></td>
+        <td style="border-left: 2px solid red"></td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+</table>
+<br/>
+<p> Tests for verifying the existing behavior. Blue border should be displayed for both the cells. </p> 
+<table border="1" style="border-collapse : collapse;">
+    <tr>
+        <td rowspan="2" style="border-right: 1px solid blue"></td>
+        <td style="border-left: 1px solid red"></td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+</table>
+<table border="1" style="border-collapse : collapse;">
+    <tr>
+        <td rowspan="2" style="border-right: 2px solid blue"></td>
+        <td style="border-left: 1px solid red"></td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+</table>
+<br/>
+<p> Red, green and blue colored borders should be displayed per cell. </p>
+<table border="1" style="border-collapse : collapse;">
+    <tr>
+        <td rowspan="3"></td>
+        <td style="border-left: 2px solid red"></td>
+    </tr>
+    <tr>
+        <td style="border-left: 2px solid green"></td>
+    </tr>
+    <tr>
+        <td style="border-left: 2px solid blue"></td>
+    </tr>
+</table>
+<br/>
+<p> There should not be any red border in the following table. </p>
+<table border="1" style="border-collapse : collapse;">
+    <tr>
+        <td rowspan="3" style="border-right: hidden;"></td>
+        <td style="border-left: 2px solid red;"></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td rowspan="2" style="border-left: 2px solid red;"></td>
+        <td></td>
+    </tr> 
+    <tr>
+        <td></td>
+    </tr>      
+</table>
+<br/>
+<p> There should not be any red border in the following table. </p>
+<table border="1" style="border-collapse : collapse;">
+    <tr>
+        <td style="border-right: 2px solid red;" rowspan="2"></td>
+        <td style="border-left: 3px solid green;" rowspan="2"></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+</table>
+</body>
+</html>
