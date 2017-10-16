@@ -22,6 +22,30 @@
       "revId": "0e3ede5e009319ea19a6a1199666f41efd0fbc69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "277949ef_9c309f0d",
+        "filename": "content/browser/net/network_errors_listing_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-10-16T21:04:24Z",
+      "side": 1,
+      "message": "Sadly it has no effect on jumbo collisions. The only thing that protects files from each others is to wrap things in a custom namespace, but that means you have one more thing to keep track on when you try to use the constants unless you wrap everything in the namespace, and then things end up in the wrong namespace. That method works fine for tests though.",
+      "parentUuid": "89de63c1_708eab15",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 50
+      },
+      "revId": "0e3ede5e009319ea19a6a1199666f41efd0fbc69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
