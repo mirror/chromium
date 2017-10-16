@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "4792cdaf_d32f7625",
+        "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-16T20:34:19Z",
+      "side": 1,
+      "message": "optional: early return above might improve readability, not sure, use your judgement :-)",
+      "revId": "9d3aa8dcf2aa461fefe4415922ffa97dfbeb6cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1328a7_d105374d",
+        "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-16T20:34:19Z",
+      "side": 1,
+      "message": "nit: document this can be overridden for testing",
+      "revId": "9d3aa8dcf2aa461fefe4415922ffa97dfbeb6cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a8ad0c6_cd596fd0",
         "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
         "patchSetId": 1
@@ -66,6 +100,23 @@
       "side": 1,
       "message": "Thanks! I learned something today!",
       "parentUuid": "7c9a3175_ab024025",
+      "revId": "9d3aa8dcf2aa461fefe4415922ffa97dfbeb6cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eac6c42_3b90c039",
+        "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-16T20:34:19Z",
+      "side": 1,
+      "message": "What is this case testing? I don\u0027t think profile can become null in production. Either document or remove.",
       "revId": "9d3aa8dcf2aa461fefe4415922ffa97dfbeb6cf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
