@@ -352,6 +352,7 @@ TestNetworkDelegate::TestNetworkDelegate()
       experimental_cookie_features_enabled_(false),
       cancel_request_with_policy_violating_referrer_(false),
       will_be_intercepted_on_next_error_(false),
+      will_be_restarted_after_bytes_sent_(false),
       before_start_transaction_fails_(false) {}
 
 TestNetworkDelegate::~TestNetworkDelegate() {
@@ -414,8 +415,22 @@ int TestNetworkDelegate::OnBeforeStartTransaction(
   int req_id = request->identifier();
   InitRequestStatesIfNew(req_id);
   event_order_[req_id] += "OnBeforeStartTransaction\n";
-  EXPECT_TRUE(next_states_[req_id] & kStageBeforeStartTransaction)
-      << event_order_[req_id];
+  if (!will_be_restarted_after_bytes_sent_) {
+    EXPECT_TRUE(next_states_[req_id] & kStageBeforeStartTransaction)
+        << event_order_[req_id] << " " << next_states_[req_id];
+  } else {
+    if (!(next_states_[req_id] & kStageBeforeStartTransaction)) {
+      // This is the restart of the request.
+      will_be_restarted_after_bytes_sent_ = false;
+      EXPECT_FALSE(next_states_[req_id] & kStageResponseStarted)
+          << event_order_[req_id] << " " << next_states_[req_id];
+      EXPECT_LT(0, total_network_bytes_sent_);
+    } else {
+      // This is the first start of the transaction.
+      EXPECT_TRUE(next_states_[req_id] & kStageBeforeStartTransaction)
+          << event_order_[req_id] << " " << next_states_[req_id];
+    }
+  }
   next_states_[req_id] = kStageStartTransaction |
                          kStageCompletedError;  // request canceled by delegate
   before_start_transaction_count_++;

@@ -69,7 +69,7 @@ class EmbeddedTestServerAndroid {
     ~ConnectionListener() override;
 
     void AcceptedSocket(const StreamSocket& socket) override;
-    void ReadFromSocket(const StreamSocket& socket, int rv) override;
+    void ReadFromSocket(const StreamSocket& socket, int* rv) override;
 
    private:
     EmbeddedTestServerAndroid* test_server_android_;
