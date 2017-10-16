@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "349d2572_07cc637f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/service-workers/service-workers-test.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-16T19:04:17Z",
+      "side": 1,
+      "message": "This file should be a small wrapper around our new test module which is at: \nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/application_test_runner/ServiceWorkersTestRunner.js?q\u003dserviceworkerstestrunner\u0026sq\u003dpackage:chromium",
+      "revId": "e5c4d7d89054621fca8c910a3da6abd5e4baaed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f8a4fc_88c45887",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/service-workers/service-workers-test.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-16T19:04:17Z",
+      "side": 1,
+      "message": "I have a patch so you can use TestRunner.addIframe(url, {id: \u0027id\u0027}).\n\nIf I haven\u0027t landed it yet, feel free to just copy it into this CL.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/721724",
+      "revId": "e5c4d7d89054621fca8c910a3da6abd5e4baaed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c9aad8_81b5ae5d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/service-workers/service-workers-test.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-16T19:04:17Z",
+      "side": 1,
+      "message": "Looks like this is only used once, so let\u0027s just inline it like this:\n\nawait TestRunner.evaluateInPagePromise(`document.getElementById(\u0027${frame_id}\u0027).remove();`);",
+      "revId": "e5c4d7d89054621fca8c910a3da6abd5e4baaed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097ffab9_d9638a1a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/service-workers/service-workers-test.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-16T19:04:17Z",
+      "side": 1,
+      "message": "Move this to our TestRunner.initAsync block here:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/application_test_runner/ServiceWorkersTestRunner.js?q\u003dserviceworkerstestrunner\u0026sq\u003dpackage:chromium\u0026l\u003d60",
+      "revId": "e5c4d7d89054621fca8c910a3da6abd5e4baaed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
