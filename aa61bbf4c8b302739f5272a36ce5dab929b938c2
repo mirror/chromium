@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bee9c444_649a1b7c",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwViewAndroidDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-10-16T06:41:25Z",
+      "side": 1,
+      "message": "Noticed the TODO, and addressed by doing just that. Manually tested to verify the offset from container view works as expected.",
+      "parentUuid": "89a6290b_5d1ba323",
+      "revId": "aa61bbf4c8b302739f5272a36ce5dab929b938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0dca8451_d42ad132",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "aa61bbf4c8b302739f5272a36ce5dab929b938c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b8c875_708a9b5e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-10-16T06:41:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dca8451_d42ad132",
+      "revId": "aa61bbf4c8b302739f5272a36ce5dab929b938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
