@@ -42,6 +42,7 @@ class LifecycleObserver : public GarbageCollectedMixin {
   Context* LifecycleContext() const { return lifecycle_context_; }
 
   void ClearContext() { SetContext(nullptr); }
+  LifecycleObserver() = default;
 
  protected:
   explicit LifecycleObserver(Context* context) : lifecycle_context_(nullptr) {

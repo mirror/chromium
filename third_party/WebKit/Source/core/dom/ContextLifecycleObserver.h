@@ -77,6 +77,7 @@ class CORE_EXPORT ContextLifecycleObserver
   };
 
   Type ObserverType() const { return observer_type_; }
+  ContextLifecycleObserver() = default;
 
  protected:
   explicit ContextLifecycleObserver(ExecutionContext* execution_context,
