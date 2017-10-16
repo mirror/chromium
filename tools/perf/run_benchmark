@@ -10,9 +10,9 @@ from core import trybot_command
 sys.path.insert(1, path_util.GetTelemetryDir())
 
 from telemetry import benchmark_runner
+from dependency_manager import manager
 
 from chrome_telemetry_build import chromium_config
-
 
 def main():
   config = chromium_config.ChromiumConfig(

@@ -100,6 +100,10 @@ declare_args() {
 
   # Strip the debug info of symbols file in lib.unstripped to reduce size.
   strip_debug_info = false
+
+  gbiv_use_root_afdo_traces = true
+  gbiv_afdo_profile_location = ""
+  gbiv_afdo_good_profile = false
 }
 
 declare_args() {
@@ -195,6 +199,25 @@ config("compiler") {
     # Common GCC compiler flags setup.
     # --------------------------------
     cflags += [ "-fno-strict-aliasing" ]  # See http://crbug.com/32204
+
+    if (gbiv_afdo_profile_location == "") {
+      if (gbiv_use_root_afdo_traces) {
+        _gbiv_afdo_profile = rebase_path("//afdo.prof", root_build_dir)
+      } else {
+        _gbiv_afdo_profile = ""
+      }
+    } else {
+      _gbiv_afdo_profile = gbiv_afdo_profile_location
+    }
+
+    if (_gbiv_afdo_profile != "") {
+      _gbiv_add_flags = [ "-fprofile-sample-use=$_gbiv_afdo_profile" ]
+      if (gbiv_afdo_good_profile) {
+         _gbiv_add_flags += [ "-fprofile-sample-accurate" ]
+      }
+      cflags += _gbiv_add_flags
+      ldflags += _gbiv_add_flags
+    }
 
     # Stack protection.
     if (is_mac) {
@@ -1798,6 +1821,7 @@ config("afdo") {
     cflags = [ "-fauto-profile=${auto_profile_path}" ]
   }
 }
+
 
 # Symbols ----------------------------------------------------------------------
 

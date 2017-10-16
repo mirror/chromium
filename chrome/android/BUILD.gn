@@ -24,6 +24,7 @@ manifest_package = "org.chromium.chrome"
 
 chrome_public_jinja_variables = default_chrome_public_jinja_variables +
                                 [ "manifest_package=$manifest_package" ]
+
 chrome_public_android_manifest =
     "$target_gen_dir/chrome_public_apk/AndroidManifest.xml"
 chrome_modern_public_android_manifest =
@@ -73,7 +74,10 @@ jinja_template("monochrome_public_android_manifest") {
   output = monochrome_public_android_manifest
   variables = chrome_public_jinja_variables +
               monochrome_android_manifest_jinja_variables +
-              [ "target_sdk_version=$android_sdk_version" ]
+              [
+                "target_sdk_version=$android_sdk_version",
+                gbiv_isolated_process,
+              ]
 }
 
 jinja_template("chrome_sync_shell_android_manifest") {
