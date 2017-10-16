@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e2f0aa2c_c239dfa6",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-16T19:20:45Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the be fixed when clang is made the default on Windows? Also, isn\u0027t there an FYI bot for clang already - so I would have thought we would see that fail as well (unless they disable that warning).",
+      "parentUuid": "2505180b_4fe241fe",
+      "range": {
+        "startLine": 374,
+        "startChar": 12,
+        "endLine": 374,
+        "endChar": 0
+      },
+      "revId": "18d961a6ac31b0c48d4bebded871e9f116503d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a8deda6_0a7b408a",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
         "patchSetId": 2
