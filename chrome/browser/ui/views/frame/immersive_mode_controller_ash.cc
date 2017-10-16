@@ -122,6 +122,10 @@ void ImmersiveModeControllerAsh::Init(BrowserView* browser_view) {
       browser_view_->top_container());
 }
 
+bool ImmersiveModeControllerAsh::IsInitialized() const {
+  return browser_view_ != nullptr;
+}
+
 void ImmersiveModeControllerAsh::SetEnabled(bool enabled) {
   if (controller_->IsEnabled() == enabled)
     return;

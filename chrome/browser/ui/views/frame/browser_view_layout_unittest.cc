@@ -86,6 +86,7 @@ class MockImmersiveModeController : public ImmersiveModeController {
 
   // ImmersiveModeController overrides:
   void Init(BrowserView* browser_view) override {}
+  bool IsInitialized() const override { return false; }
   void SetEnabled(bool enabled) override {}
   bool IsEnabled() const override { return false; }
   bool ShouldHideTopViews() const override { return false; }

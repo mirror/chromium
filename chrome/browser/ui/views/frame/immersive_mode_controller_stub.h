@@ -19,6 +19,7 @@ class ImmersiveModeControllerStub : public ImmersiveModeController {
 
   // ImmersiveModeController overrides:
   void Init(BrowserView* browser_view) override;
+  bool IsInitialized() const override;
   void SetEnabled(bool enabled) override;
   bool IsEnabled() const override;
   bool ShouldHideTopViews() const override;

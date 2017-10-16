@@ -142,6 +142,27 @@ IN_PROC_BROWSER_TEST_F(ImmersiveModeControllerAshHostedAppBrowserTest, Layout) {
   EXPECT_EQ(header_height, GetBoundsInWidget(contents_web_view).y());
 }
 
+// Verify that immersive mode is enabled if an app is opened in tablet mode.
+IN_PROC_BROWSER_TEST_F(ImmersiveModeControllerAshHostedAppBrowserTest,
+                       AppOpenedInTabletMode) {
+  ash::TabletModeController* tablet_mode_controller =
+      ash::Shell::Get()->tablet_mode_controller();
+  tablet_mode_controller->EnableTabletModeWindowManager(true);
+  tablet_mode_controller->FlushForTesting();
+
+  Browser::CreateParams params = Browser::CreateParams::CreateForApp(
+      "test_browser_app", true /* trusted_source */, gfx::Rect(),
+      InProcessBrowserTest::browser()->profile(), true);
+  Browser* new_app = new Browser(params);
+  ImmersiveModeController* controller =
+      BrowserView::GetBrowserViewForBrowser(new_app)
+          ->immersive_mode_controller();
+  new_app->window()->Show();
+
+  EXPECT_TRUE(controller->IsInitialized());
+  EXPECT_TRUE(controller->IsEnabled());
+}
+
 // Verify the immersive mode status is as expected in tablet mode (titlebars are
 // autohidden in tablet mode).
 IN_PROC_BROWSER_TEST_F(ImmersiveModeControllerAshHostedAppBrowserTest,
