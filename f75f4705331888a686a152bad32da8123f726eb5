@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "778c63c3_5bc0197c",
+        "filename": "ash/fast_ink/fast_ink_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-16T16:34:27Z",
+      "side": 1,
+      "message": "Is the value of 100 expected to prevent any problems once and for all, or is it just high enough to make artifacts highly improbable? It would be nice to comment on that.",
+      "range": {
+        "startLine": 40,
+        "startChar": 36,
+        "endLine": 40,
+        "endChar": 39
+      },
+      "revId": "f75f4705331888a686a152bad32da8123f726eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
