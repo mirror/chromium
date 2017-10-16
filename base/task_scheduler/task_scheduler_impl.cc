@@ -171,12 +171,12 @@ void TaskSchedulerImpl::JoinForTesting() {
 #if DCHECK_IS_ON()
   DCHECK(!join_for_testing_returned_.IsSet());
 #endif
+  service_thread_.Stop();
   single_thread_task_runner_manager_.JoinForTesting();
   for (const auto& worker_pool : worker_pools_)
     worker_pool->DisallowWorkerCleanupForTesting();
   for (const auto& worker_pool : worker_pools_)
     worker_pool->JoinForTesting();
-  service_thread_.Stop();
 #if DCHECK_IS_ON()
   join_for_testing_returned_.Set();
 #endif
