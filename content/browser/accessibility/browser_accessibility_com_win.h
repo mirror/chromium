@@ -26,6 +26,7 @@
 #include "third_party/isimpledom/ISimpleDOMText.h"
 #include "ui/accessibility/platform/ax_platform_node_delegate.h"
 #include "ui/accessibility/platform/ax_platform_node_win.h"
+#include "ui/accessibility/platform/ax_platform_position.h"
 
 namespace ui {
 enum TextBoundaryDirection;
@@ -413,8 +414,12 @@ class __declspec(uuid("562072fe-3390-43b1-9e2c-dd4118f5ac79"))
 
   // |offset| could either be a text character or a child index in case of
   // non-text objects.
-  BrowserAccessibilityPosition::AXPositionInstance CreatePositionForSelectionAt(
-      int offset) const;
+  ui::AXPlatformPosition::AXPositionInstance CreatePositionForSelectionAt(
+      int offset);
+
+  ui::AXPlatformPosition::AXPositionInstance CreatePositionAt(
+      int offset,
+      ui::AXTextAffinity affinity = ui::AX_TEXT_AFFINITY_DOWNSTREAM);
 
   // Public accessors (these do not have COM accessible accessors)
   const base::string16& role_name() const { return win_attributes_->role_name; }

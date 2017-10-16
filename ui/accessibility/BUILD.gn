@@ -55,6 +55,8 @@ component("accessibility") {
     "platform/ax_android_constants.h",
     "platform/ax_platform_node.cc",
     "platform/ax_platform_node.h",
+    "platform/ax_platform_position.cc",
+    "platform/ax_platform_position.h",
     "platform/ax_platform_unique_id.cc",
     "platform/ax_platform_unique_id.h",
     "platform/ax_snapshot_node_android_platform.cc",

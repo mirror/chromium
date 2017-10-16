@@ -262,6 +262,15 @@ bool AXPlatformNodeBase::IsTextOnlyObject() const {
          GetData().role == AX_ROLE_INLINE_TEXT_BOX;
 }
 
+bool AXPlatformNodeBase::IsLineBreakObject() {
+  gfx::NativeViewAccessible parent_accessible = GetParent();
+  AXPlatformNodeBase* parent = FromNativeViewAccessible(parent_accessible);
+
+  return GetData().role == ui::AX_ROLE_LINE_BREAK ||
+         (IsTextOnlyObject() && parent &&
+          parent->GetData().role == ui::AX_ROLE_LINE_BREAK);
+}
+
 bool AXPlatformNodeBase::IsNativeTextControl() const {
   const std::string& html_tag = GetStringAttribute(AX_ATTR_HTML_TAG);
   if (html_tag == "input") {

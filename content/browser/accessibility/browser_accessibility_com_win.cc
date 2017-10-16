@@ -28,6 +28,7 @@
 #include "ui/accessibility/ax_modes.h"
 #include "ui/accessibility/ax_role_properties.h"
 #include "ui/accessibility/ax_text_utils.h"
+#include "ui/accessibility/platform/ax_platform_position.h"
 #include "ui/base/win/accessibility_ids_win.h"
 #include "ui/base/win/accessibility_misc_utils.h"
 #include "ui/base/win/atl_module.h"
@@ -40,10 +41,8 @@ const uint32_t kScreenReaderAndHTMLAccessibilityModes =
 
 namespace content {
 
-using BrowserAccessibilityPositionInstance =
-    BrowserAccessibilityPosition::AXPositionInstance;
-using AXPlatformRange =
-    ui::AXRange<BrowserAccessibilityPositionInstance::element_type>;
+using AXPlatformPositionInstance = ui::AXPlatformPosition::AXPositionInstance;
+using AXPlatformRange = ui::AXRange<AXPlatformPositionInstance::element_type>;
 
 // These nonstandard GUIDs are taken directly from the Mozilla sources
 // (accessible/src/msaa/nsAccessNodeWrap.cpp); some documentation is here:
@@ -1779,15 +1778,28 @@ void BrowserAccessibilityComWin::ComputeStylesIfNeeded() {
 // tree positions.
 // TODO(nektar): Remove this function once selection fixes in Blink are
 // thoroughly tested and convert to tree positions.
-BrowserAccessibilityPosition::AXPositionInstance
-BrowserAccessibilityComWin::CreatePositionForSelectionAt(int offset) const {
-  BrowserAccessibilityPositionInstance position =
-      owner()->CreatePositionAt(offset)->AsLeafTextPosition();
-  if (position->GetAnchor() &&
-      position->GetAnchor()->GetRole() == ui::AX_ROLE_INLINE_TEXT_BOX) {
+ui::AXPlatformPosition::AXPositionInstance
+BrowserAccessibilityComWin::CreatePositionForSelectionAt(int offset) {
+  AXPlatformPositionInstance position =
+      CreatePositionAt(offset)->AsLeafTextPosition();
+  AXPlatformNodeWin* node =
+      static_cast<AXPlatformNodeWin*>(position->GetAnchor());
+  if (node && node->GetData().role == ui::AX_ROLE_INLINE_TEXT_BOX) {
     return position->CreateParentPosition();
     }
     return position;
+}
+
+ui::AXPlatformPosition::AXPositionInstance
+BrowserAccessibilityComWin::CreatePositionAt(int offset,
+                                             ui::AXTextAffinity affinity) {
+  auto* platform = new ui::AXPlatformPosition();
+  auto* platform_node = static_cast<ui::AXPlatformNodeWin*>(this);
+  platform->SetAXPlatformNode(platform_node, Manager()->ax_tree_id(), offset,
+                              affinity);
+
+  ui::AXPlatformPosition::AXPositionInstance instance(platform);
+  return instance;
 }
 
 //
@@ -2232,9 +2244,9 @@ void BrowserAccessibilityComWin::SetIA2HypertextSelection(LONG start_offset,
                                                           LONG end_offset) {
   HandleSpecialTextOffset(&start_offset);
   HandleSpecialTextOffset(&end_offset);
-  BrowserAccessibilityPositionInstance start_position =
+  AXPlatformPositionInstance start_position =
       CreatePositionForSelectionAt(static_cast<int>(start_offset));
-  BrowserAccessibilityPositionInstance end_position =
+  AXPlatformPositionInstance end_position =
       CreatePositionForSelectionAt(static_cast<int>(end_offset));
   Manager()->SetSelection(
       AXPlatformRange(std::move(start_position), std::move(end_position)));
@@ -2255,17 +2267,17 @@ LONG BrowserAccessibilityComWin::FindBoundary(
   if (ia2_boundary == IA2_TEXT_BOUNDARY_WORD) {
     switch (direction) {
       case ui::FORWARDS_DIRECTION: {
-        BrowserAccessibilityPositionInstance position =
-            owner()->CreatePositionAt(static_cast<int>(start_offset), affinity);
-        BrowserAccessibilityPositionInstance next_word =
+        AXPlatformPositionInstance position =
+            CreatePositionAt(static_cast<int>(start_offset), affinity);
+        AXPlatformPositionInstance next_word =
             position->CreateNextWordStartPosition(
                 ui::AXBoundaryBehavior::StopAtAnchorBoundary);
         return next_word->text_offset();
       }
       case ui::BACKWARDS_DIRECTION: {
-        BrowserAccessibilityPositionInstance position =
-            owner()->CreatePositionAt(static_cast<int>(start_offset), affinity);
-        BrowserAccessibilityPositionInstance previous_word =
+        AXPlatformPositionInstance position =
+            CreatePositionAt(static_cast<int>(start_offset), affinity);
+        AXPlatformPositionInstance previous_word =
             position->CreatePreviousWordStartPosition(
                 ui::AXBoundaryBehavior::StopIfAlreadyAtBoundary);
         return previous_word->text_offset();
@@ -2276,17 +2288,17 @@ LONG BrowserAccessibilityComWin::FindBoundary(
   if (ia2_boundary == IA2_TEXT_BOUNDARY_LINE) {
     switch (direction) {
       case ui::FORWARDS_DIRECTION: {
-        BrowserAccessibilityPositionInstance position =
-            owner()->CreatePositionAt(static_cast<int>(start_offset), affinity);
-        BrowserAccessibilityPositionInstance next_line =
+        AXPlatformPositionInstance position =
+            CreatePositionAt(static_cast<int>(start_offset), affinity);
+        AXPlatformPositionInstance next_line =
             position->CreateNextLineStartPosition(
                 ui::AXBoundaryBehavior::StopAtAnchorBoundary);
         return next_line->text_offset();
       }
       case ui::BACKWARDS_DIRECTION: {
-        BrowserAccessibilityPositionInstance position =
-            owner()->CreatePositionAt(static_cast<int>(start_offset), affinity);
-        BrowserAccessibilityPositionInstance previous_line =
+        AXPlatformPositionInstance position =
+            CreatePositionAt(static_cast<int>(start_offset), affinity);
+        AXPlatformPositionInstance previous_line =
             position->CreatePreviousLineStartPosition(
                 ui::AXBoundaryBehavior::StopIfAlreadyAtBoundary);
         return previous_line->text_offset();

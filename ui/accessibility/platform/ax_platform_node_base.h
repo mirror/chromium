@@ -137,6 +137,12 @@ class AX_EXPORT AXPlatformNodeBase : public AXPlatformNode {
 
   virtual base::string16 GetValue();
 
+  bool IsLineBreakObject();
+  bool IsTextOnlyObject() const;
+  bool IsNativeTextControl() const;
+  bool IsSimpleTextControl() const;
+  bool IsRichTextControl();
+  bool IsRangeValueSupported() const;
   //
   // Delegate.  This is a weak reference which owns |this|.
   //
@@ -145,12 +151,6 @@ class AX_EXPORT AXPlatformNodeBase : public AXPlatformNode {
  protected:
   AXPlatformNodeBase();
   ~AXPlatformNodeBase() override;
-
-  bool IsTextOnlyObject() const;
-  bool IsNativeTextControl() const;
-  bool IsSimpleTextControl() const;
-  bool IsRichTextControl();
-  bool IsRangeValueSupported() const;
 
   // Get the range value text, which might come from aria-valuetext or
   // a floating-point value. This is different from the value string

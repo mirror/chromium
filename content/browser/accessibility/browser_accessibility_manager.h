@@ -26,6 +26,7 @@
 #include "ui/accessibility/ax_serializable_tree.h"
 #include "ui/accessibility/ax_tree_id_registry.h"
 #include "ui/accessibility/ax_tree_update.h"
+#include "ui/accessibility/platform/ax_platform_position.h"
 #include "ui/gfx/native_widget_types.h"
 
 struct AccessibilityHostMsg_LocationChangeParams;
@@ -215,6 +216,9 @@ class CONTENT_EXPORT BrowserAccessibilityManager : public ui::AXTreeDelegate {
       ui::AXRange<
           BrowserAccessibilityPosition::AXPositionInstance::element_type>
           range);
+  void SetSelection(
+      ui::AXRange<ui::AXPlatformPosition::AXPositionInstance::element_type>
+          range);
   void ShowContextMenu(const BrowserAccessibility& node);
 
   // Retrieve the bounds of the parent View in screen coordinates.
@@ -394,8 +398,11 @@ class CONTENT_EXPORT BrowserAccessibilityManager : public ui::AXTreeDelegate {
  protected:
   using BrowserAccessibilityPositionInstance =
       BrowserAccessibilityPosition::AXPositionInstance;
-  using AXPlatformRange =
+  using BrowserAccessibilityRange =
       ui::AXRange<BrowserAccessibilityPositionInstance::element_type>;
+
+  using AXPlatformPositionInstance = ui::AXPlatformPosition::AXPositionInstance;
+  using AXPlatformRange = ui::AXRange<AXPlatformPositionInstance::element_type>;
 
   BrowserAccessibilityManager(
       BrowserAccessibilityDelegate* delegate,
