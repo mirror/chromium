@@ -16,6 +16,24 @@
       "revId": "301ce027adbc5555dec9ac7e449af1732ce3a5f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7ee59a_3ad5c80d",
+        "filename": "build/config/coverage/coverage.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-16T20:00:49Z",
+      "side": 1,
+      "message": "I wanted to give users different messages since each assert is meant to catch a certain kind of mistake.\n\nThe first one is meant to warn users that they need is_component_build\u003dfalse if they are not specifying is_debug\u003dfalse.\n\nThe second one is meant to warn users that they cannot set is_component_build\u003dtrue.\n\nI thought having two messages would be most helpful.",
+      "parentUuid": "65d4cea0_a50c6da9",
+      "revId": "301ce027adbc5555dec9ac7e449af1732ce3a5f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

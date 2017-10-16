@@ -70,6 +70,24 @@
       "revId": "68bf86cbf594b415359d8ee1cea056a77a66aef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df81f12d_e64871e3",
+        "filename": "build/config/coverage/coverage.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-16T20:00:49Z",
+      "side": 1,
+      "message": "Dirk, sorry for not clarifying earlier, but when I checked again, I found that the toolchain check wasn\u0027t actually doing anything. \nThe issue I thought it was solving was actually solved by adding is_debug\u003dfalse to my GN args. \nIt\u0027s not running into the same issue that is_clang was running into.",
+      "parentUuid": "6dc5822b_6b52777e",
+      "revId": "68bf86cbf594b415359d8ee1cea056a77a66aef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
