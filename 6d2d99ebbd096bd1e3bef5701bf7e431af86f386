@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "464660a8_c04df847",
+        "filename": "chrome/browser/safe_browsing/v4_get_hash_interceptor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-16T21:47:13Z",
+      "side": 1,
+      "message": "Not clear why this must be called on the UI thread.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 41
+      },
+      "revId": "6d2d99ebbd096bd1e3bef5701bf7e431af86f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b69ed5d_61ce779d",
+        "filename": "chrome/browser/safe_browsing/v4_get_hash_interceptor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-16T21:47:13Z",
+      "side": 1,
+      "message": "HashPrefix",
+      "range": {
+        "startLine": 105,
+        "startChar": 13,
+        "endLine": 105,
+        "endChar": 21
+      },
+      "revId": "6d2d99ebbd096bd1e3bef5701bf7e431af86f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c29ea44_2fec5be0",
+        "filename": "chrome/browser/safe_browsing/v4_get_hash_interceptor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-16T21:47:13Z",
+      "side": 1,
+      "message": "It might be more useful to have this in components/ safe_browsing_db next to the code it is helping to test.\n\nEdit: Probably because of v4_test_utils but we should probably move that too.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 63
+      },
+      "revId": "6d2d99ebbd096bd1e3bef5701bf7e431af86f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c631aea5_52599a9e",
+        "filename": "chrome/browser/safe_browsing/v4_get_hash_interceptor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-16T21:47:13Z",
+      "side": 1,
+      "message": "Can you add a comment about what this map holds?",
+      "range": {
+        "startLine": 52,
+        "startChar": 14,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "6d2d99ebbd096bd1e3bef5701bf7e431af86f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
