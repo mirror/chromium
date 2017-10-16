@@ -16,6 +16,24 @@
       "revId": "4bbdffc0bf9f6dd33483a93048665e86c8d270ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6d4a6b_258783f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-16T21:53:50Z",
+      "side": 1,
+      "message": "Oh, didn\u0027t realize Trusty xz didn\u0027t have multithreading.  It works on Debian Testing at least",
+      "parentUuid": "4fc12217_3b714de6",
+      "revId": "4bbdffc0bf9f6dd33483a93048665e86c8d270ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
