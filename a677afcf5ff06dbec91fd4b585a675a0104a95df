@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "af33a720_b099f1dc",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-16T19:31:05Z",
+      "side": 1,
+      "message": "Understood. That should be what happens here.\nNote that the RevocationPolicy is a \"per-chain\" policy used by the path building delegate.\n\nThe case you mentioned is handled as follows:\n\nFirst, path building is run to try and build an EV path.\nPath building requests all the candidate EV policy OIDs.\nFor each built chain, the path building delegate then checks that EVRootCAMetadata checks out, and checks revocation according to the policy above (hard-fail, where missing revocation URLs is considered failure). If we find a conforming path from this path building attempt, then it gets returned and marked as IS_EV.\n\nOtherwise if we fail to find an EV path, a second attempt is made at path building. This time around though the path is not required to have an EV policy OID, and revocation is applied according to the DV policy.",
+      "parentUuid": "c2782074_ba1c383e",
+      "revId": "a677afcf5ff06dbec91fd4b585a675a0104a95df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35e5a194_77f372c9",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 1
