@@ -97,3 +97,46 @@ IN_PROC_BROWSER_TEST_F(TabUnderBlockerBrowserTest,
   tab_under_observer.Wait();
   EXPECT_TRUE(tab_under_observer.last_navigation_succeeded());
 }
+
+IN_PROC_BROWSER_TEST_F(TabUnderBlockerBrowserTest,
+                       PopupAfterNavigation_IsBlocked) {
+  ui_test_utils::NavigateToURL(browser(),
+                               embedded_test_server()->GetURL("/title1.html"));
+
+  content::WebContents* opener =
+      browser()->tab_strip_model()->GetActiveWebContents();
+
+  // Normally, a popup should be allowed.
+  bool opened = false;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      opener,
+      "window.domAutomationController.send(!!window.open('/title1.html'))",
+      &opened));
+  EXPECT_TRUE(opened);
+
+  // Navigate cross site, then open a popup before the navigation commits. It
+  // should be blocked.
+  const GURL url = embedded_test_server()->GetURL("a.com", "/title1.html");
+
+  content::TestNavigationManager manager(opener, url);
+  chrome::NavigateParams params(browser(), url, ui::PAGE_TRANSITION_LINK);
+  params.source_contents = opener;
+  chrome::Navigate(&params);
+  EXPECT_TRUE(manager.WaitForRequestStart());
+
+  opened = false;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      opener,
+      "window.domAutomationController.send(!!window.open('/title1.html'))",
+      &opened));
+  EXPECT_FALSE(opened);
+
+  // However, if the contents gets a gesture, popups are allowed.
+  content::SimulateMouseClick(opener, 0, blink::WebMouseEvent::Button::kLeft);
+  opened = false;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      opener,
+      "window.domAutomationController.send(!!window.open('/title1.html'))",
+      &opened));
+  EXPECT_TRUE(opened);
+}

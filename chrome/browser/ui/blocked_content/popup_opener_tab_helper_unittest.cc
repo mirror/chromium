@@ -17,10 +17,13 @@
 #include "base/test/simple_test_tick_clock.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/infobars/infobar_service.h"
+#include "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h"
 #include "chrome/browser/ui/blocked_content/popup_tracker.h"
 #include "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
+#include "chrome/test/base/testing_profile.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_utils.h"
@@ -311,6 +314,8 @@ class BlockTabUnderTest : public PopupOpenerTabHelperTest {
     scoped_feature_list_ = base::MakeUnique<base::test::ScopedFeatureList>();
     scoped_feature_list_->InitAndEnableFeature(
         TabUnderNavigationThrottle::kBlockTabUnders);
+    PopupBlockerTabHelper::CreateForWebContents(web_contents());
+    TabSpecificContentSettings::CreateForWebContents(web_contents());
   }
 
   InfoBarAndroid* GetInfoBar() {
@@ -333,12 +338,6 @@ class BlockTabUnderTest : public PopupOpenerTabHelperTest {
 #endif  // defined(OS_ANDROID)
   }
 
-  // content::WebContentsDelegate:
-  void OnDidBlockFramebust(content::WebContents* web_contents,
-                           const GURL& url) {
-    blocked_urls_.push_back(url);
-  }
-
   void DisableFeature() {
     scoped_feature_list_ = base::MakeUnique<base::test::ScopedFeatureList>();
     scoped_feature_list_->InitAndDisableFeature(
@@ -346,7 +345,6 @@ class BlockTabUnderTest : public PopupOpenerTabHelperTest {
   }
 
  private:
-  std::vector<GURL> blocked_urls_;
   std::unique_ptr<base::test::ScopedFeatureList> scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(BlockTabUnderTest);
@@ -516,4 +514,56 @@ TEST_F(BlockTabUnderTest,
       kTabUnderAction,
       static_cast<int>(TabUnderNavigationThrottle::Action::kDidTabUnder), 3);
   histogram_tester()->ExpectTotalCount(kTabUnderAction, 10);
+}
+
+TEST_F(BlockTabUnderTest, BlockPopupsAfterNavigation) {
+  const GURL first_url("https://first.test/");
+  NavigateAndCommit(first_url);
+
+  // Normally a popup with a gesture should open fine.
+  chrome::NavigateParams params(profile(), first_url, ui::PAGE_TRANSITION_LINK);
+  params.user_gesture = true;
+  EXPECT_FALSE(PopupBlockerTabHelper::MaybeBlockPopup(
+      web_contents(), base::Optional<GURL>(), params,
+      nullptr /* open_url_params */, blink::mojom::WindowFeatures()));
+
+  // Start a navigation cross process. Popups opened before a user gesture is
+  // processed will be blocked now.
+  const GURL url("https://example.test/");
+  std::unique_ptr<content::NavigationSimulator> simulator =
+      content::NavigationSimulator::CreateRendererInitiated(url, main_rfh());
+  simulator->Start();
+
+  EXPECT_TRUE(PopupBlockerTabHelper::MaybeBlockPopup(
+      web_contents(), base::Optional<GURL>(), params,
+      nullptr /* open_url_params */, blink::mojom::WindowFeatures()));
+}
+
+TEST_F(BlockTabUnderTest, BlockPopupsAfterRedirect) {
+  const GURL first_url("https://first.test/");
+  NavigateAndCommit(first_url);
+
+  // Normally a popup with a gesture should open fine.
+  chrome::NavigateParams params(profile(), first_url, ui::PAGE_TRANSITION_LINK);
+  params.user_gesture = true;
+  EXPECT_FALSE(PopupBlockerTabHelper::MaybeBlockPopup(
+      web_contents(), base::Optional<GURL>(), params,
+      nullptr /* open_url_params */, blink::mojom::WindowFeatures()));
+
+  // Start a navigation that redirects cross process. Popups opened before a
+  // user gesture is processed will be blocked now.
+  const GURL url("https://example.test/");
+  std::unique_ptr<content::NavigationSimulator> simulator =
+      content::NavigationSimulator::CreateRendererInitiated(first_url,
+                                                            main_rfh());
+
+  simulator->Start();
+  EXPECT_FALSE(PopupBlockerTabHelper::MaybeBlockPopup(
+      web_contents(), base::Optional<GURL>(), params,
+      nullptr /* open_url_params */, blink::mojom::WindowFeatures()));
+
+  simulator->Redirect(url);
+  EXPECT_TRUE(PopupBlockerTabHelper::MaybeBlockPopup(
+      web_contents(), base::Optional<GURL>(), params,
+      nullptr /* open_url_params */, blink::mojom::WindowFeatures()));
 }

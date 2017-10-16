@@ -109,8 +109,13 @@ class PopupBlockerTabHelper
   PopupIdMap GetBlockedPopupRequests();
 
   // content::WebContentsObserver overrides:
+  void DidStartNavigation(
+      content::NavigationHandle* navigation_handle) override;
+  void DidRedirectNavigation(
+      content::NavigationHandle* navigation_handle) override;
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
+  void DidGetUserInteraction(const blink::WebInputEvent::Type type) override;
 
  private:
   struct BlockedRequest;
@@ -124,6 +129,12 @@ class PopupBlockerTabHelper
   // Called when the blocked popup notification is shown or hidden.
   void PopupNotificationVisibilityChanged(bool visible);
 
+  // A number of features hook into the popup blocker for stronger blocking.
+  // These are checked only if the popup is associated with a user gesture,
+  // since otherwise we block by default.
+  bool ShouldBlockWithGesture(
+      const content::OpenURLParams* open_url_params) const;
+
   PopupPosition GetPopupPosition(int32_t id) const;
 
   static void LogAction(Action action);
@@ -135,6 +146,8 @@ class PopupBlockerTabHelper
   base::ObserverList<Observer> observers_;
 
   int32_t next_id_ = 0;
+
+  bool did_start_cross_origin_nav_since_last_gesture_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(PopupBlockerTabHelper);
 };

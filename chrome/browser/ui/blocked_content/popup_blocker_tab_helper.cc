@@ -15,6 +15,7 @@
 #include "chrome/browser/subresource_filter/chrome_subresource_filter_client.h"
 #include "chrome/browser/ui/blocked_content/blocked_window_params.h"
 #include "chrome/browser/ui/blocked_content/popup_tracker.h"
+#include "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h"
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/common/chrome_render_frame.mojom.h"
@@ -37,7 +38,18 @@
 #include "chrome/browser/ui/android/tab_model/tab_model_list.h"
 #endif
 
+namespace {
+
 const size_t kMaximumNumberOfPopups = 25;
+
+bool IsCrossOriginNavigation(content::NavigationHandle* handle) {
+  DCHECK(!handle->HasCommitted());
+  return handle->IsInMainFrame() &&
+         !url::Origin(handle->GetWebContents()->GetLastCommittedURL())
+              .IsSameOriginWith(url::Origin(handle->GetURL()));
+}
+
+}  // namespace
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(PopupBlockerTabHelper);
 
@@ -75,6 +87,18 @@ bool PopupBlockerTabHelper::ConsiderForPopupBlocking(
          disposition == WindowOpenDisposition::NEW_WINDOW;
 }
 
+void PopupBlockerTabHelper::DidStartNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (IsCrossOriginNavigation(navigation_handle))
+    did_start_cross_origin_nav_since_last_gesture_ = true;
+}
+
+void PopupBlockerTabHelper::DidRedirectNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (IsCrossOriginNavigation(navigation_handle))
+    did_start_cross_origin_nav_since_last_gesture_ = true;
+}
+
 void PopupBlockerTabHelper::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   // Clear all page actions, blocked content notifications and browser actions
@@ -86,11 +110,20 @@ void PopupBlockerTabHelper::DidFinishNavigation(
     return;
   }
 
+  // Only care about opening popups between nav start -> nav commit. After
+  // commit, reset this bit.
+  did_start_cross_origin_nav_since_last_gesture_ = false;
+
   // Close blocked popups.
   if (!blocked_popups_.empty()) {
     blocked_popups_.clear();
     PopupNotificationVisibilityChanged(false);
   }
+}
+
+void PopupBlockerTabHelper::DidGetUserInteraction(
+    const blink::WebInputEvent::Type type) {
+  did_start_cross_origin_nav_since_last_gesture_ = false;
 }
 
 void PopupBlockerTabHelper::PopupNotificationVisibilityChanged(
@@ -144,17 +177,8 @@ bool PopupBlockerTabHelper::MaybeBlockPopup(
     return false;
   }
 
-  // The subresource_filter triggers an extra aggressive popup blocker on
-  // pages where ads are being blocked, even if there is a user gesture.
-  if (user_gesture) {
-    auto* driver_factory = subresource_filter::
-        ContentSubresourceFilterDriverFactory::FromWebContents(web_contents);
-    if (!driver_factory ||
-        !driver_factory->ShouldDisallowNewWindow(open_url_params)) {
-      return false;
-    }
-    ChromeSubresourceFilterClient::LogAction(kActionPopupBlocked);
-  }
+  if (user_gesture && !popup_blocker->ShouldBlockWithGesture(open_url_params))
+    return false;
 
   popup_blocker->AddBlockedPopup(params, window_features);
   return true;
@@ -230,6 +254,29 @@ PopupBlockerTabHelper::PopupIdMap
     result[it.first] = it.second->params.url;
   }
   return result;
+}
+
+bool PopupBlockerTabHelper::ShouldBlockWithGesture(
+    const content::OpenURLParams* open_url_params) const {
+  // The subresource_filter triggers an extra aggressive popup blocker on
+  // pages where ads are being blocked, even if there is a user gesture.
+  auto* driver_factory = subresource_filter::
+      ContentSubresourceFilterDriverFactory::FromWebContents(web_contents());
+  if (driver_factory &&
+      driver_factory->ShouldDisallowNewWindow(open_url_params)) {
+    ChromeSubresourceFilterClient::LogAction(kActionPopupBlocked);
+    return true;
+  }
+
+  // If blocking tab-unders is enabled, additionally block popups that are
+  // requested if a new user gesture was not seen since the last cross origin
+  // navigation has started or redirected to.
+  if (base::FeatureList::IsEnabled(
+          TabUnderNavigationThrottle::kBlockTabUnders) &&
+      did_start_cross_origin_nav_since_last_gesture_) {
+    return true;
+  }
+  return false;
 }
 
 PopupBlockerTabHelper::PopupPosition PopupBlockerTabHelper::GetPopupPosition(
