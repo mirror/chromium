@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "9725a49f_0d5542c8",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-16T18:45:18Z",
+      "side": 1,
+      "message": "Turns out this case is not handled correctly (And it wouldn\u0027t have deleted synchronously in this case, anyways).  There\u0027s enough ugliness here that I think this needs to be worked out in another CL, and I may have to significantly refactor tests in that CL (The way I spin the loop in my mock URLLoaderFactory, in particular, may be problematic).",
+      "parentUuid": "9479013b_882d3c13",
+      "range": {
+        "startLine": 719,
+        "startChar": 15,
+        "endLine": 719,
+        "endChar": 18
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b06680cd_4bccafb6",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 8
@@ -306,6 +330,30 @@
       "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9fe78ea_6777515c",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-16T18:45:18Z",
+      "side": 1,
+      "message": "I\u0027ve done this.  I\u0027m not convinced it\u0027s an improvement.  I\u0027ve made the state a unique_ptr, because it contains a unique_ptr to ResponseInfo, and I\u0027m not sure how to re-create a struct with a unique_ptr memory in-place.",
+      "parentUuid": "8f93eecf_eba8d0f0",
+      "range": {
+        "startLine": 846,
+        "startChar": 26,
+        "endLine": 846,
+        "endChar": 36
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

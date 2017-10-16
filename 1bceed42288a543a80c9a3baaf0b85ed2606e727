@@ -93,6 +93,30 @@
       "revId": "1bceed42288a543a80c9a3baaf0b85ed2606e727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174b552c_26f5d9b6",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-16T18:45:18Z",
+      "side": 1,
+      "message": "This CL is big enough that I don\u0027t want to make it any more complicated.  I\u0027m concerned about backoff APIs in that what consumers enable how many retries in what cases already seems completely random.  Allowing them more power results in even more completely random bifurcation of settings (If these were informed, I\u0027d have less concern here, but I don\u0027t think the consumers that use 3 vs 5 vs 1 retry, for one reason of the other, are at all informed).\n\nI think we should just implement sane default behavior, and if the consumer wants something else, they can implement it themselves.  This allows us to support retry-after (And *only* retry after) on 5xx, and maybe implement some sort of semi-principled delay on network changes (Though we could probably do best there if we had access to the network change monitoring stuff, not sure if hooking up to that is worth the effort).\n\nWDYT?",
+      "parentUuid": "5fce6c24_ee27d8b4",
+      "range": {
+        "startLine": 166,
+        "startChar": 15,
+        "endLine": 166,
+        "endChar": 30
+      },
+      "revId": "1bceed42288a543a80c9a3baaf0b85ed2606e727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
