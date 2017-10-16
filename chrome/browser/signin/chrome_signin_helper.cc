@@ -112,7 +112,7 @@ class DiceURLRequestUserData : public base::SupportsUserData::Data {
   // Attaches a DiceURLRequestUserData to the request if it needs to block the
   // AccountReconcilor.
   static void AttachToRequest(net::URLRequest* request) {
-    if (!IsAccountConsistencyDiceEnabled())
+    if (!IsAccountConsistencyDiceAvailable())
       return;
 
     const content::ResourceRequestInfo* info =
