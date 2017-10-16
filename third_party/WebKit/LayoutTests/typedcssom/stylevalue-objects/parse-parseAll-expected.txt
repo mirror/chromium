@@ -1,0 +1,19 @@
+This is a testharness.js-based test.
+PASS CSSStyleValue.parse throws TypeError when the property is an empty string
+PASS CSSStyleValue.parse throws TypeError when given an unsupported CSS property
+PASS cssstylevalue.parse throws TypeError when given a CSS shorthand
+FAIL CSSStyleValue.parse throws SyntaxError when cssText is invalid for the given property assert_throws: function "() => CSSStyleValue[parseMethod]('width', '10deg')" did not throw
+PASS CSSStyleValue.parse returns a valid CSSStyleValue when cssText is valid for the given property
+PASS CSSStyleValue.parse returns a valid CSSStyleValue even when property is not lowercase
+FAIL CSSStyleValue.parse returns a valid CSSStyleValue for custom properties Failed to execute 'parse' on 'CSSStyleValue': Invalid property name
+PASS CSSStyleValue.parseAll throws TypeError when the property is an empty string
+PASS CSSStyleValue.parseAll throws TypeError when given an unsupported CSS property
+PASS cssstylevalue.parseAll throws TypeError when given a CSS shorthand
+FAIL CSSStyleValue.parseAll throws SyntaxError when cssText is invalid for the given property assert_throws: function "() => CSSStyleValue[parseMethod]('width', '10deg')" threw object "TypeError: CSSStyleValue[parseMethod] is not a function" ("TypeError") expected object "SyntaxError" ("SyntaxError")
+FAIL CSSStyleValue.parseAll returns a valid CSSStyleValue when cssText is valid for the given property CSSStyleValue[parseMethod] is not a function
+FAIL CSSStyleValue.parseAll returns a valid CSSStyleValue even when property is not lowercase CSSStyleValue[parseMethod] is not a function
+FAIL CSSStyleValue.parseAll returns a valid CSSStyleValue for custom properties CSSStyleValue[parseMethod] is not a function
+FAIL CSSStyleValue.parse returns first list value when given a list-valued property assert_not_equals: got disallowed value null
+FAIL CSSStyleValue.parseAll returns sequence of values when given a list-valued property CSSStyleValue.parseAll is not a function
+Harness: the test ran to completion.
+
