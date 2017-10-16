@@ -21,6 +21,7 @@
 #include "components/translate/core/browser/translate_manager.h"
 #include "components/translate/core/common/language_detection_details.h"
 #include "content/public/browser/notification_details.h"
+#include "ui/base/models/simple_combobox_model.h"
 
 class TranslateBubbleViewBrowserTest : public InProcessBrowserTest {
  public:
@@ -123,4 +124,23 @@ IN_PROC_BROWSER_TEST_F(TranslateBubbleViewBrowserTest,
   chrome::CloseWebContents(browser(),
                            browser()->tab_strip_model()->GetActiveWebContents(),
                            false);
+}
+
+IN_PROC_BROWSER_TEST_F(TranslateBubbleViewBrowserTest,
+                       CheckNeverTranslateThisSiteBlacklist) {
+  EXPECT_FALSE(TranslateBubbleView::GetCurrentBubble());
+
+  // Show a French page and wait until the bubble is shown.
+  GURL french_url = ui_test_utils::GetTestUrl(
+      base::FilePath(), base::FilePath(FILE_PATH_LITERAL("french_page.html")));
+  NavigateAndWaitForLanguageDetection(french_url, "fr");
+  const TranslateBubbleView* const bubble =
+      TranslateBubbleView::GetCurrentBubble();
+  EXPECT_TRUE(bubble);
+
+  // Since this is a file:/// URL, we should not be able to blacklist.
+  EXPECT_FALSE(bubble->model_->CanBlacklistSite());
+
+  chrome::CloseWindow(browser());
+  EXPECT_FALSE(TranslateBubbleView::GetCurrentBubble());
 }

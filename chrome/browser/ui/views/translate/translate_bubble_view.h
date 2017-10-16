@@ -175,6 +175,8 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
                            CancelButtonReturningAfterTranslate);
   FRIEND_TEST_ALL_PREFIXES(TranslateBubbleViewTest, CancelButtonReturningError);
   FRIEND_TEST_ALL_PREFIXES(TranslateLanguageBrowserTest, TranslateAndRevert);
+  FRIEND_TEST_ALL_PREFIXES(TranslateBubbleViewBrowserTest,
+                           CheckNeverTranslateThisSiteBlacklist);
 
   TranslateBubbleView(views::View* anchor_view,
                       const gfx::Point& anchor_point,
