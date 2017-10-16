@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fd4f7c8_74741161",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-bypass-for-network-cors.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T05:23:38Z",
+      "side": 1,
+      "message": "can we do like service-workers-force-update-on-page-load.html, i.e. let L99 to take the frame as the fulfillment callback argument?",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc6b2ea_17561c09",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-bypass-for-network-cors.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T05:23:38Z",
+      "side": 1,
+      "message": "can we share these utility functions with the other test cases in service-workers? Or it\u0027s hard due to the inspector test\u0027s constraints?",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a41ba5_da092a08",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-bypass-for-network-cors.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T05:23:38Z",
+      "side": 1,
+      "message": "how about placing these definitions close to testCorsRequests()?",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
