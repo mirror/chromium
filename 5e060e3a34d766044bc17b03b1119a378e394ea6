@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "676e9118_fe688665",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-10-16T11:00:28Z",
+      "side": 1,
+      "message": "Optionally we can put crbug URL in the parenthesis of TODO(): notation like\nTODO(crbug.com/774890):\ninstead of the contact person\u0027s username.\nhttps://cs.chromium.org/search/?q\u003dTODO%5C(crbug\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nAlso it\u0027d be better to write the accessible URL of the crbug[.com].",
+      "revId": "5e060e3a34d766044bc17b03b1119a378e394ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
