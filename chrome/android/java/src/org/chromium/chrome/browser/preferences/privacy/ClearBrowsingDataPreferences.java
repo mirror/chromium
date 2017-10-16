@@ -536,7 +536,8 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
 
             // It is possible to disable the deletion of browsing history.
             if (options[i] == DialogOption.CLEAR_HISTORY
-                    && !PrefServiceBridge.getInstance().canDeleteBrowsingHistory()) {
+                    && !PrefServiceBridge.getInstance().getBoolean(
+                               PrefServiceBridge.ALLOW_DELETING_BROWSER_HISTORY)) {
                 enabled = false;
                 PrefServiceBridge.getInstance().setBrowsingDataDeletionPreference(
                         DialogOption.CLEAR_HISTORY.getDataType(), ClearBrowsingDataTab.BASIC,
