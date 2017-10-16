@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3857c644_04738732",
+        "filename": "content/public/network/ignore_errors_cert_verifier.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-16T19:28:28Z",
+      "side": 1,
+      "message": "if this is used by both content/browser and content/network, it would normally go into content/common.\n\nIs the intention is that this is in content/network because we will be moving this code to services/network, and that\u0027s where it could be shared from at that point?",
+      "revId": "02832ab0e278ccd38d30558de21e2a30436bca61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
