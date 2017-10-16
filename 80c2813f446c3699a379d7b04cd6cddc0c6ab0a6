@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25d3dd37_a9fece94",
+        "filename": "chrome/android/java/res/layout/bottom_sheet_bottom_nav.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "Removed it, it does nothing.",
+      "parentUuid": "62a678be_543059b0",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7dfb1ad_b40207f9",
         "filename": "chrome/android/java/res/layout/bottom_sheet_nav_menu_item.xml",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93315a21_138f2784",
+        "filename": "chrome/android/java/res/layout/bottom_sheet_nav_menu_item.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7dfb1ad_b40207f9",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "41679123_3c50c8fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c127dc7_d6e49b20",
+      "range": {
+        "startLine": 536,
+        "startChar": 8,
+        "endLine": 539,
+        "endChar": 73
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1df08e7_8a97ea2d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "931714fd_7a5a9b3e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1df08e7_8a97ea2d",
+      "range": {
+        "startLine": 551,
+        "startChar": 9,
+        "endLine": 551,
+        "endChar": 48
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "07a0ef63_768837dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a496ae3_3d824687",
+      "range": {
+        "startLine": 288,
+        "startChar": 8,
+        "endLine": 288,
+        "endChar": 14
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa1a6a02_67ece6d0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 3
@@ -131,6 +251,24 @@
       "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8fe142_be9e46d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "Oops, done.",
+      "parentUuid": "aa1a6a02_67ece6d0",
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -154,6 +292,30 @@
       "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "142d3607_daa2ac64",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9e2d1ec_f971d8c2",
+      "range": {
+        "startLine": 519,
+        "startChar": 7,
+        "endLine": 521,
+        "endChar": 24
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -204,6 +366,30 @@
     },
     {
       "key": {
+        "uuid": "79535372_7c081cc7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "Got rid of the other two, modified the bottom_sheet_nav_menu_item XML to avoid the infinite inflation loop it caused.",
+      "parentUuid": "c5eaf4b9_fa795899",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 53
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12064090_690fd76c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationItemView.java",
         "patchSetId": 3
@@ -215,6 +401,30 @@
       "writtenOn": "2017-10-13T16:46:08Z",
       "side": 1,
       "message": "Does this work if you use TintedDrawable#constructTintedDrawable() instead?",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 56
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73cc34b_111d9324",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not quite sure I understand how that would work here.",
+      "parentUuid": "12064090_690fd76c",
       "range": {
         "startLine": 56,
         "startChar": 12,
@@ -250,6 +460,30 @@
     },
     {
       "key": {
+        "uuid": "4f71e0d2_36b11e28",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationMenuView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc668e4c_0961cfac",
+      "range": {
+        "startLine": 14,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 30
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88a3dae5_01ecdead",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationMenuView.java",
         "patchSetId": 3
@@ -270,6 +504,30 @@
       "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe14a6d_4397c0b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationMenuView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "Yep.",
+      "parentUuid": "88a3dae5_01ecdead",
+      "range": {
+        "startLine": 40,
+        "startChar": 16,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -296,6 +554,30 @@
     },
     {
       "key": {
+        "uuid": "e7d5ef6a_9ca6d07c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "This and the method above.",
+      "parentUuid": "d9a80b20_cb3827a3",
+      "range": {
+        "startLine": 34,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 5
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41793fcc_7f370a2d",
         "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
         "patchSetId": 3
@@ -316,6 +598,30 @@
       "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502ee127_50206d52",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "Yes, done.",
+      "parentUuid": "41793fcc_7f370a2d",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 8
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -342,6 +648,30 @@
     },
     {
       "key": {
+        "uuid": "066fa263_29bc5824",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "I could just revert a good chunk of the deletion of this code and pare down what I can.",
+      "parentUuid": "4580454f_c499c6d9",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 15
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d16a33eb_fd93af1a",
         "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
         "patchSetId": 3
@@ -365,6 +695,30 @@
     },
     {
       "key": {
+        "uuid": "595a57d9_60250471",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d16a33eb_fd93af1a",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 53
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f9642c7_0ff21155",
         "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
         "patchSetId": 3
@@ -376,6 +730,30 @@
       "writtenOn": "2017-10-13T16:46:08Z",
       "side": 1,
       "message": "nit: add a description for this\n\n\nInstead of making this abstract, could it have a default implementation so that this class doesn\u0027t have to be abstract?",
+      "range": {
+        "startLine": 207,
+        "startChar": 4,
+        "endLine": 207,
+        "endChar": 73
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22aaa413_5d299e85",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-16T18:19:28Z",
+      "side": 1,
+      "message": "Yes, that would just rely on making the base implementation of BottomNavigationItemView useful again. If we decide to go that route and leave it mostly intact, then this can have a default implementation again. I was just trying to avoid the situation where this class gets used and the menu items are totally useless.",
+      "parentUuid": "0f9642c7_0ff21155",
       "range": {
         "startLine": 207,
         "startChar": 4,
