@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d52cb4f7_b84a2753",
+        "filename": "chrome/browser/resources/print_preview/data/measurement_system.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-16T20:26:36Z",
+      "side": 1,
+      "message": "Let\u0027s add the missing types here\n@private {string}\n\nSimilarly for decimalDelimeter_ and unitType_.",
+      "revId": "dc168dc07d0848f72d3b5fefeacfaea3287f8aad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cfa5b26_3c434a4d",
+        "filename": "chrome/browser/resources/print_preview/data/measurement_system.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-16T20:26:36Z",
+      "side": 1,
+      "message": "FWIW (in a separate CL) we could compact/clean-up as follows\n\nvar meausermentSystemPrefs \u003d new Map([\n  [print_preview.MeasurementSystemUnitType.METRIC, {precision: 0.5, decimalPlaces: 1}],\n  [print_preview.MeasurementSystemUnitType.IMPERIAL, {precision: 0.01, decimalPlaces: 2}],\n]);\n\nThen we update the places using it, for example line 77 would become\n\nreturn +roundedValue.toFixed(measurmentSystemPrefs.get(this.unitType_).decimalPlaces);",
+      "revId": "dc168dc07d0848f72d3b5fefeacfaea3287f8aad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
