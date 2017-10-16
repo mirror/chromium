@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e49911c4_5f9d5feb",
+        "filename": "cc/trees/target_property.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T14:39:42Z",
+      "side": 1,
+      "message": "Since the goal of max target property index seems to be to set how much memory we use and limit the properties to that perhaps we should also assert that it is a multiple of sizeof(uint32_t) since it can\u0027t use less memory than the next multiple of 32 bits?",
+      "revId": "6da1c120d2d9dfc4e01a1ad4c2a4fe4a6910d1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b11e150f_8cfa805c",
+        "filename": "cc/trees/target_property.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T14:39:42Z",
+      "side": 1,
+      "message": "nit: Property",
+      "range": {
+        "startLine": 12,
+        "startChar": 34,
+        "endLine": 12,
+        "endChar": 41
+      },
+      "revId": "6da1c120d2d9dfc4e01a1ad4c2a4fe4a6910d1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
