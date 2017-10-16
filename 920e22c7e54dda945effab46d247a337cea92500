@@ -16,6 +16,24 @@
       "revId": "920e22c7e54dda945effab46d247a337cea92500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42303496_9dbd0f4b",
+        "filename": "ui/gl/test/gl_image_test_template.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-16T23:24:03Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "bb50f0c2_3aba9aa5",
+      "revId": "920e22c7e54dda945effab46d247a337cea92500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

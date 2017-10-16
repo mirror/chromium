@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4965934f_f652db8f",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-16T23:24:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1adefdf2_9af1266c",
+      "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b03bfe5b_cc1418dc",
         "filename": "ui/gl/gl_image_dxgi.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc430a9a_46e57a27",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-16T23:24:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b03bfe5b_cc1418dc",
+      "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "8a8d9314_56712533",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-16T23:24:03Z",
+      "side": 1,
+      "message": "Changed to just DCHECK - the consuming code should ensure this constraint is satisfied, but binding errors are suppressed at the command buffer level, and it would be weird for them to bubble up.  I do want to think through how things are kept in sync if we fail to take the mutex (it should self-correct after a frame), but a todo in the code here won\u0027t help that.",
+      "parentUuid": "0008e76f_111b163f",
+      "range": {
+        "startLine": 385,
+        "startChar": 14,
+        "endLine": 386,
+        "endChar": 52
+      },
+      "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c61b0dbe_d26896aa",
         "filename": "ui/gl/gl_image_dxgi.cc",
         "patchSetId": 13
@@ -73,6 +133,24 @@
       "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fd54c8_6bf3e473",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-16T23:24:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c61b0dbe_d26896aa",
+      "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ffb6f8e_01fd1f04",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-16T23:24:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4798f235_7027a507",
+      "range": {
+        "startLine": 119,
+        "startChar": 35,
+        "endLine": 119,
+        "endChar": 72
+      },
+      "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
