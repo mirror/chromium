@@ -82,6 +82,7 @@ AccountReconcilor::AccountReconcilor(
       is_reconcile_started_(false),
       first_execution_(true),
       error_during_last_reconcile_(false),
+      reconcile_is_noop_(true),
       chrome_accounts_changed_(false),
       account_reconcilor_lock_count_(0),
       reconcile_on_unblock_(false) {
@@ -265,10 +266,11 @@ void AccountReconcilor::GoogleSignedOut(const std::string& account_id,
 
 bool AccountReconcilor::IsAccountConsistencyEnabled() {
   return signin::IsAccountConsistencyMirrorEnabled() ||
-         signin::IsAccountConsistencyDiceAvailable();
+         signin::IsAccountConsistencyDiceEnabledForProfile(client_->GetPrefs());
 }
 
 void AccountReconcilor::PerformMergeAction(const std::string& account_id) {
+  reconcile_is_noop_ = false;
   if (!IsAccountConsistencyEnabled()) {
     MarkAccountAsAddedToCookie(account_id);
     return;
@@ -278,6 +280,7 @@ void AccountReconcilor::PerformMergeAction(const std::string& account_id) {
 }
 
 void AccountReconcilor::PerformLogoutAllAccountsAction() {
+  reconcile_is_noop_ = false;
   if (!IsAccountConsistencyEnabled())
     return;
   VLOG(1) << "AccountReconcilor::PerformLogoutAllAccountsAction";
@@ -330,6 +333,7 @@ void AccountReconcilor::StartReconcile() {
 
   is_reconcile_started_ = true;
   error_during_last_reconcile_ = false;
+  reconcile_is_noop_ = true;
 
   // ListAccounts() also gets signed out accounts but this class doesn't use
   // them.
@@ -578,8 +582,14 @@ void AccountReconcilor::FinishReconcile() {
       !first_account_mismatch, first_execution_, number_gaia_accounts);
   first_execution_ = false;
   CalculateIfReconcileIsDone();
-  if (!is_reconcile_started_)
+  if (!is_reconcile_started_) {
     last_known_first_account_ = first_account;
+    if (reconcile_is_noop_ && signin::IsAccountConsistencyDiceAvailable() &&
+        !signin::IsAccountConsistencyDiceEnabledForProfile(
+            client_->GetPrefs())) {
+      // TODO
+    }
+  }
   ScheduleStartReconcileIfChromeAccountsChanged();
 }
 
@@ -619,8 +629,11 @@ void AccountReconcilor::ScheduleStartReconcileIfChromeAccountsChanged() {
 void AccountReconcilor::RevokeAllSecondaryTokens() {
   for (const std::string& account : chrome_accounts_) {
     if (account != primary_account_) {
-      VLOG(1) << "Revoking token for " << account;
-      token_service_->RevokeCredentials(account);
+      reconcile_is_noop_ = false;
+      if (IsAccountConsistencyEnabled()) {
+        VLOG(1) << "Revoking token for " << account;
+        token_service_->RevokeCredentials(account);
+      }
     }
   }
 }
