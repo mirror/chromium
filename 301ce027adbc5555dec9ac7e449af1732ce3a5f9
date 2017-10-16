@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65d4cea0_a50c6da9",
+        "filename": "build/config/coverage/coverage.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-16T19:44:04Z",
+      "side": 1,
+      "message": "Why did you add both asserts? One is a subset of the other, and having both seems unnecessary.",
+      "revId": "301ce027adbc5555dec9ac7e449af1732ce3a5f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
