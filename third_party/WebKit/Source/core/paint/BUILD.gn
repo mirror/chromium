@@ -190,6 +190,8 @@ blink_core_sources("paint") {
     "TableCellPaintInvalidator.h",
     "TableCellPainter.cpp",
     "TableCellPainter.h",
+    "TableCollapsedBorderPainter.cpp",
+    "TableCollapsedBorderPainter.h",
     "TablePaintInvalidator.cpp",
     "TablePaintInvalidator.h",
     "TablePainter.cpp",

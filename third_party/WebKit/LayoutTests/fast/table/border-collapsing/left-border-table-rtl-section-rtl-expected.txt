@@ -1,0 +1,25 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x184
+  LayoutBlockFlow {HTML} at (0,0) size 800x184
+    LayoutBlockFlow {BODY} at (8,16) size 784x160
+      LayoutBlockFlow {P} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 80x19
+          text run at (0,0) width 80: "Test for bug "
+        LayoutInline {A} at (0,0) size 41x19 [color=#0000EE]
+          LayoutText {#text} at (79,0) size 41x19
+            text run at (79,0) width 41: "87900"
+        LayoutText {#text} at (119,0) size 444x19
+          text run at (119,0) width 444: ": Add support for direction on table row group with collapsing borders"
+      LayoutBlockFlow {P} at (0,36) size 784x40
+        LayoutText {#text} at (0,0) size 731x39
+          text run at (0,0) width 731: "This test checks that a rtl table with a rtl row group properly compute its collapsing borders when the left borders are"
+          text run at (0,20) width 56: "disabled."
+      LayoutBlockFlow {P} at (0,92) size 784x20
+        LayoutText {#text} at (0,0) size 618x19
+          text run at (0,0) width 618: "For this test to pass, there should be only green borders on the cells and no left border on the table."
+      LayoutTable {TABLE} at (0,128) size 252x32 [border: (3px none #808080)]
+        LayoutTableSection {TBODY} at (0,3) size 249x26
+          LayoutTableRow {TR} at (0,0) size 249x26
+            LayoutTableCell {TD} at (123,10) size 126x6 [border: (3px solid #008000) (3px none #000000)] [r=0 c=0 rs=1 cs=1]
+            LayoutTableCell {TD} at (0,10) size 123x6 [border: (3px solid #008000) none] [r=0 c=1 rs=1 cs=1]

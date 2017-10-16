@@ -2065,13 +2065,39 @@ bool LayoutTableSection::MapToVisualRectInAncestorSpaceInternal(
       ancestor, transform_state, flags);
 }
 
-bool LayoutTableSection::PaintedOutputOfObjectHasNoEffectRegardlessOfSize()
-    const {
-  // LayoutTableSection paints background from columns.
-  if (Table()->HasColElements())
-    return false;
-  return LayoutTableBoxComponent::
-      PaintedOutputOfObjectHasNoEffectRegardlessOfSize();
+LayoutRect LayoutTableSection::GetCellPosition(
+    unsigned row,
+    unsigned effective_column) const {
+  LayoutTable* table = this->Table();
+  LayoutUnit left =
+      LayoutUnit(table->EffectiveColumnPositions()[effective_column]);
+  LayoutUnit top = LayoutUnit(row_pos_[row]);
+  unsigned rightCol = std::min<unsigned>(
+      table->EffectiveColumnPositions().size() - 1, effective_column + 1);
+  unsigned bottom_row = std::min<unsigned>(row_pos_.size() - 1, row + 1);
+  LayoutUnit right = LayoutUnit(table->EffectiveColumnPositions()[rightCol]);
+  LayoutUnit bottom = LayoutUnit(row_pos_[bottom_row]);
+  left += LayoutUnit(table->HBorderSpacing());
+  return LayoutRect(left, top, right - left, bottom - top);
+}
+
+LayoutRect LayoutTableSection::GetCellPhysicalPosition(
+    unsigned row,
+    unsigned effective_column) const {
+  return TransformLogicalToPhysicalPosition(
+      GetCellPosition(row, effective_column));
+}
+
+LayoutRect LayoutTableSection::TransformLogicalToPhysicalPosition(
+    const LayoutRect& position) const {
+  WritingMode writingMode = Table()->Style()->GetWritingMode();
+  LayoutRect transformed_position = position;
+  if (!blink::IsHorizontalWritingMode(writingMode)) {
+    transformed_position = transformed_position.TransposedRect();
+    if (blink::IsFlippedBlocksWritingMode(writingMode))
+      transformed_position.SetX(Size().Width() - transformed_position.MaxX());
+  }
+  return transformed_position;
 }
 
 }  // namespace blink

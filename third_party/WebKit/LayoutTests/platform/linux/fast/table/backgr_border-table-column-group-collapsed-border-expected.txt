@@ -6,17 +6,17 @@ layer at (0,0) size 785x663 backgroundClip at (0,0) size 785x600 clip at (0,0) s
       LayoutBlockFlow {H3} at (0,0) size 769x17
         LayoutText {#text} at (0,0) size 459x17
           text run at (0,0) width 459: "crbug.com/35679: Background on 'table-column-group'"
-      LayoutTable {TABLE} at (0,32.20) size 591x437 [color=#FFFFFF] [border: (6px dotted #FFFFFF)]
-        LayoutBlockFlow {CAPTION} at (0,0) size 591x23
-          LayoutText {#text} at (150,0) size 291x22
-            text run at (150,0) width 291: "With 'border-collapse: collapse'"
+      LayoutTable {TABLE} at (0,32.20) size 592x437 [color=#FFFFFF] [border: (6px dotted #FFFFFF)]
+        LayoutBlockFlow {CAPTION} at (0,0) size 592x23
+          LayoutText {#text} at (151,0) size 290x22
+            text run at (151,0) width 290: "With 'border-collapse: collapse'"
         LayoutTableCol {COLGROUP} at (0,0) size 0x0 [bgcolor=#000000] [border: (5px dashed #FFFFFF)]
           LayoutTableCol {COL} at (0,0) size 0x0
           LayoutTableCol {COL} at (0,0) size 0x0
           LayoutTableCol {COL} at (0,0) size 0x0 [border: (9px dashed #FFFFFF)]
         LayoutTableCol {COLGROUP} at (0,0) size 0x0 [bgcolor=#000000]
           LayoutTableCol {COL} at (0,0) size 0x0
-        LayoutTableSection {THEAD} at (1,29) size 588x100
+        LayoutTableSection {THEAD} at (2,29) size 588x100
           LayoutTableRow {TR} at (0,0) size 588x100
             LayoutTableCell {TH} at (0,33) size 137x34 [border: (3px dotted #FFFFFF)] [r=0 c=0 rs=1 cs=1]
               LayoutText {#text} at (44,4) size 46x22
@@ -30,7 +30,7 @@ layer at (0,0) size 785x663 backgroundClip at (0,0) size 785x600 clip at (0,0) s
             LayoutTableCell {TH} at (471,36) size 117x27 [border: (2px dotted #FFFFFF)] [r=0 c=3 rs=1 cs=1]
               LayoutText {#text} at (38,3) size 45x22
                 text run at (38,3) width 45: "TH D"
-        LayoutTableSection {TFOOT} at (1,319) size 588x115
+        LayoutTableSection {TFOOT} at (2,319) size 588x115
           LayoutTableRow {TR} at (0,0) size 588x115
             LayoutTableCell {TD} at (0,40) size 471x34 [border: (7px dashed #FFFFFF)] [r=0 c=0 rs=1 cs=3]
               LayoutText {#text} at (4,8) size 47x22
@@ -38,7 +38,7 @@ layer at (0,0) size 785x663 backgroundClip at (0,0) size 785x600 clip at (0,0) s
             LayoutTableCell {TD} at (471,44) size 117x27 [border: (1px dotted #FFFFFF)] [r=0 c=3 rs=1 cs=1]
               LayoutText {#text} at (6,2) size 44x22
                 text run at (6,2) width 44: "TD P"
-        LayoutTableSection {TBODY} at (1,129) size 588x190
+        LayoutTableSection {TBODY} at (2,129) size 588x190
           LayoutTableRow {TR} at (0,0) size 588x107
             LayoutTableCell {TD} at (0,76) size 137x38 [border: (7px dotted #FFFFFF)] [r=0 c=0 rs=2 cs=1]
               LayoutText {#text} at (8,8) size 44x22

@@ -257,6 +257,12 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
     return false;
   }
 
+  // Returns cell's position before any transformations are applied.
+  LayoutRect GetCellPosition(unsigned row, unsigned effective_column) const;
+  // Returns cell's position after transforms.
+  LayoutRect GetCellPhysicalPosition(unsigned row,
+                                     unsigned effective_column) const;
+
   int PaginationStrutForRow(LayoutTableRow*, LayoutUnit logical_offset) const;
 
   bool MapToVisualRectInAncestorSpaceInternal(
@@ -289,6 +295,11 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
   // are spanning any collapsed columns.
   void UpdateLogicalWidthForCollapsedCells(
       const Vector<int>& col_collapsed_width);
+
+  // Collapsed borders are painted by the section
+  bool PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const override {
+    return false;
+  }
 
  protected:
   void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
@@ -381,7 +392,8 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
   // avoid any repeating headers in its table or ancestor tables.
   int OffsetForRepeatedHeader() const;
 
-  bool PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const override;
+  LayoutRect TransformLogicalToPhysicalPosition(
+      const LayoutRect& position) const;
 
   bool HeaderGroupShouldRepeat() const {
     return Table()->Header() == this && GroupShouldRepeat();
