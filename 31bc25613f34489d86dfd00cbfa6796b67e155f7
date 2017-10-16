@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "651bffa3_55a29d18",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T23:16:39Z",
+      "side": 1,
+      "message": "It\u0027s frequency + recency AFAIK, hence frecency?",
+      "parentUuid": "debddc80_b15d9aba",
+      "range": {
+        "startLine": 11,
+        "startChar": 19,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "31bc25613f34489d86dfd00cbfa6796b67e155f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94d7d3ac_81642100",
         "filename": "/COMMIT_MSG",
         "patchSetId": 10
@@ -62,6 +86,24 @@
       "revId": "31bc25613f34489d86dfd00cbfa6796b67e155f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6b230e_91ad8201",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T23:16:39Z",
+      "side": 1,
+      "message": "There are currently no plans to componentize site engagement. If this experiment is successful it will provide some more motivation to componentize and extend it to iOS.",
+      "parentUuid": "b1963fd5_79e731fe",
+      "revId": "31bc25613f34489d86dfd00cbfa6796b67e155f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

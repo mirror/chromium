@@ -355,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "7b295102_2b821287",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T23:16:39Z",
+      "side": 1,
+      "message": "Doing it this way crashes when we get no URLs from site engagement, because no queries to the history service are issued and we run the callback synchronously (i.e. before Wait() is called and the barrier closure initialized).",
+      "parentUuid": "ce078836_3a49c92a",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b2422dd_b4408edd",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
         "patchSetId": 9
