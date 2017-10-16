@@ -32,7 +32,7 @@ const char kFeaturePolicyBlockedMessage[] =
     "Access to the feature \"vr\" is disallowed by feature policy.";
 
 const char kIframeBlockedOnUserGestureMessage[] =
-    "Access to the method is blocked on a user gesture in cross-origin "
+    "Access to navigator.getVRDisplays requires a user gesture in cross-origin "
     "embedded frames.";
 
 const char kNotAssociatedWithDocumentMessage[] =
