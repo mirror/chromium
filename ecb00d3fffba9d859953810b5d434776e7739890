@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4167d687_6e9917a4",
+        "filename": "ios/chrome/app/application_delegate/metrics_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "Is there guarantee that |webState| is not null. Would it be better so have the following check?:\nif (currentTab.webState \u0026\u0026 currentTab.webState-\u003eGetLastCommittedURL() \u003d\u003d kChromeUINewTabURL)",
+      "range": {
+        "startLine": 149,
+        "startChar": 19,
+        "endLine": 149,
+        "endChar": 27
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6720b2b2_c033fdf4",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "lastCommittedURL\n\nFrom Objective-C Style Guide: \"Any class, category, method, function, or variable name should use all capitals for acronyms and initialisms within the name.\"",
+      "range": {
+        "startLine": 870,
+        "startChar": 14,
+        "endLine": 870,
+        "endChar": 30
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34c9363_cc9fa855",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "Is there guarantee that webState is not nil?",
+      "range": {
+        "startLine": 870,
+        "startChar": 33,
+        "endLine": 870,
+        "endChar": 37
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641a63ed_80549a9d",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "nit: Old name was correct",
+      "range": {
+        "startLine": 1034,
+        "startChar": 7,
+        "endLine": 1034,
+        "endChar": 23
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b58dafb_bd1ad24e",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1082,
+        "startChar": 7,
+        "endLine": 1082,
+        "endChar": 23
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77a62ec_c74bbd81",
+        "filename": "ios/chrome/browser/tabs/tab_model.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "Is there guarantee that webState is not null?",
+      "range": {
+        "startLine": 542,
+        "startChar": 39,
+        "endLine": 542,
+        "endChar": 47
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba26fe0_66ab88f5",
+        "filename": "ios/chrome/browser/tabs/tab_model.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "nit: lastCommittedURL",
+      "range": {
+        "startLine": 542,
+        "startChar": 16,
+        "endLine": 542,
+        "endChar": 32
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "219d05c7_bc0e7380",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "This is called from async block, and maybe needs |if tab.webState| check.",
+      "range": {
+        "startLine": 125,
+        "startChar": 23,
+        "endLine": 125,
+        "endChar": 24
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249b1d46_28e2e01a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "nit: Old name was correct",
+      "range": {
+        "startLine": 1174,
+        "startChar": 14,
+        "endLine": 1174,
+        "endChar": 17
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c32a2b_ad83e953",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2848,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "nit: Old name was correct",
+      "range": {
+        "startLine": 2848,
+        "startChar": 14,
+        "endLine": 2848,
+        "endChar": 30
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5956b033_e8d622fc",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2849,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "nit: s/[_model currentTab].webState/webState",
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5de344_941d0748",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 3435,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "nit: s/currentTab.webState/webState",
+      "range": {
+        "startLine": 3435,
+        "startChar": 21,
+        "endLine": 3435,
+        "endChar": 40
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df42a15_304049df",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4673,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "Is there a guarantee that currentTab.webState is not null?",
+      "range": {
+        "startLine": 4673,
+        "startChar": 37,
+        "endLine": 4673,
+        "endChar": 38
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dca28ce_6dfc365d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4981,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 4981,
+        "startChar": 40,
+        "endLine": 4981,
+        "endChar": 41
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe42eb69_0f9aa0d6",
+        "filename": "ios/chrome/browser/ui/side_swipe/card_side_swipe_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T15:22:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 233,
+        "startChar": 20,
+        "endLine": 233,
+        "endChar": 39
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
