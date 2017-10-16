@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "704ec616_1a9707c2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-16T18:41:34Z",
+      "side": 1,
+      "message": "I would expect this to end up in the Sources.FilesNavigatorView only, is that possible?",
+      "revId": "4f4e02969802e6481c76eba40f6933e17390d19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274d5cff_b5707dfa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-16T18:41:34Z",
+      "side": 1,
+      "message": "... and then this would stay as is...",
+      "revId": "4f4e02969802e6481c76eba40f6933e17390d19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e806d9f_9dfbbcbb",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
         "patchSetId": 3
@@ -13,6 +47,24 @@
       "writtenOn": "2017-10-14T04:07:14Z",
       "side": 1,
       "message": "This isn\u0027t hot code, but maybe a console.assert() here instead of closure casting it?",
+      "revId": "4f4e02969802e6481c76eba40f6933e17390d19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b49dde_5f9f8d13",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-16T18:41:34Z",
+      "side": 1,
+      "message": "We seem to know what it is, so why not to cast?",
+      "parentUuid": "6e806d9f_9dfbbcbb",
       "revId": "4f4e02969802e6481c76eba40f6933e17390d19a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
