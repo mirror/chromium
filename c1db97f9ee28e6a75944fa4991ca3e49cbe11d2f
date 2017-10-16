@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bf63467_fea365a8",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-16T21:42:38Z",
+      "side": 1,
+      "message": "nit: Bring the next line on this one, there is enough white space to hold it.",
+      "revId": "c1db97f9ee28e6a75944fa4991ca3e49cbe11d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6cfcc1_354c6b2a",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-16T21:42:38Z",
+      "side": 1,
+      "message": "Why do we need to pause the navigation and resume it? Cant we skip this part and wait go directly to response.WaitForRequest?",
+      "revId": "c1db97f9ee28e6a75944fa4991ca3e49cbe11d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
