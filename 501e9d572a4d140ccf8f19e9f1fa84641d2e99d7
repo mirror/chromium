@@ -52,6 +52,24 @@
       "revId": "501e9d572a4d140ccf8f19e9f1fa84641d2e99d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a9b0714_dc8a5da4",
+        "filename": "ui/android/java/src/org/chromium/ui/resources/dynamics/ViewResourceAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-16T15:28:57Z",
+      "side": 1,
+      "message": "AFAIK, a garbage collection will be run after the memory signal has been processed (so that dropping references is actually effective in freeing up memory), so assuming that that happens every time, we would at least not accumulate memory for that long (and only if the resource is requested again before the GC happens).",
+      "parentUuid": "4e1b5cb6_8d48301c",
+      "revId": "501e9d572a4d140ccf8f19e9f1fa84641d2e99d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

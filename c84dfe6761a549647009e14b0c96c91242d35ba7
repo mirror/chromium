@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a94d8450_3358ba64",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2269,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-16T15:28:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9d74efe_341e21b5",
+      "range": {
+        "startLine": 2269,
+        "startChar": 17,
+        "endLine": 2269,
+        "endChar": 42
+      },
+      "revId": "c84dfe6761a549647009e14b0c96c91242d35ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b3acb81_e65a8e82",
         "filename": "ui/android/java/src/org/chromium/ui/resources/dynamics/ViewResourceAdapter.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "c84dfe6761a549647009e14b0c96c91242d35ba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e212e03c_d2d78bec",
+        "filename": "ui/android/java/src/org/chromium/ui/resources/dynamics/ViewResourceAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-16T15:28:57Z",
+      "side": 1,
+      "message": "I don\u0027t think that would actually make much of a difference -- if there is no garbage collection, the memory won\u0027t be reclaimed, and if there is one, it should collect the Bitmap too.",
+      "parentUuid": "3b3acb81_e65a8e82",
+      "range": {
+        "startLine": 124,
+        "startChar": 17,
+        "endLine": 124,
+        "endChar": 18
+      },
+      "revId": "c84dfe6761a549647009e14b0c96c91242d35ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
