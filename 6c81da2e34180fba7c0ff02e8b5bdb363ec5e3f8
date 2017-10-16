@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34c3d3be_135e8f99",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-16T18:41:36Z",
+      "side": 1,
+      "message": "nit: divider -\u003e divisor",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b352fbe7_8c18adb0",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-16T18:41:36Z",
+      "side": 1,
+      "message": "none-background -\u003e non-background, or just \"foreground\"",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea40819a_7a2485d1",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-16T18:41:36Z",
+      "side": 1,
+      "message": "Make 10 here a constant also, and then 100 can be a constant\nbased on that one.",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f789850_250fb0ee",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-16T18:41:36Z",
+      "side": 1,
+      "message": "This won\u0027t work very well for very small images,\nI think we should add some code that always inverts\nimages smaller than a certain size, maybe 16 or 24.\n\nEven for large images, won\u0027t this possibly generate an\ninconsistent number of blocks depending on how things\nround?\n\nEven if not, I wonder if it might be more robust to loop\nfrom 0 to (num_blocks), and compute the start and end index\nof each block. That\u0027d be more \"fair\".",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e43e93f_3160583b",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-16T18:41:36Z",
+      "side": 1,
+      "message": "This comment explains *what* the code is doing. Can you change\nit to explain *why*?",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fdd3a74_416974ed",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-16T18:41:36Z",
+      "side": 1,
+      "message": "maybe \"unused\" instead of temp.",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92042d7b_586d99a4",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-16T18:41:36Z",
+      "side": 1,
+      "message": "Retruns -\u003e Returns",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0650b9e5_7d4e2f25",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-16T18:41:36Z",
+      "side": 1,
+      "message": "Similar to the comment above, I think it\u0027d be more\nfair to compute the block boundaries a different way.\nThis way always creates smaller blocks on the right\nand bottom edges unless things happen to divide\nevenly.",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb91bf2f_a62c49d7",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-16T18:41:36Z",
+      "side": 1,
+      "message": "While it\u0027s less predictable, I think randomly sampling\nwould be better. Otherwise I\u0027ll bet lots of bitmaps with\nstipple patterns will give us wildly wrong results.\n\nFor unit tests you can reset the random seed at the top to\nguarantee it will work the same way each time.",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2317dbe7_5ed109ed",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-16T18:41:36Z",
+      "side": 1,
+      "message": "comment says 80%, this looks like 75%?",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a9fd31_3c2676f3",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-16T18:41:36Z",
+      "side": 1,
+      "message": "why 128?",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
