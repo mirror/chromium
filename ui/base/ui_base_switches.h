@@ -39,6 +39,7 @@ UI_BASE_EXPORT extern const char kDisableDwmComposition[];
 UI_BASE_EXPORT extern const char kDisableNewVirtualKeyboardBehavior[];
 UI_BASE_EXPORT extern const char kDisableTouchAdjustment[];
 UI_BASE_EXPORT extern const char kDisableTouchDragDrop[];
+UI_BASE_EXPORT extern const char kEnableDrawOcclusion[];
 UI_BASE_EXPORT extern const char kEnableTouchDragDrop[];
 UI_BASE_EXPORT extern const char kExtendMdToSecondaryUi[];
 UI_BASE_EXPORT extern const char kGlCompositedOverlayCandidateQuadBorder[];
