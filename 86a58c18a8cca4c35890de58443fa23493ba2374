@@ -50,6 +50,24 @@
       "revId": "86a58c18a8cca4c35890de58443fa23493ba2374",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e72794_363d5985",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-10-16T20:11:34Z",
+      "side": 1,
+      "message": "Umm, what I meant is that this method doesn\u0027t make sense for kForColumns direction, does it ? You are using LogicalHeight in any case, so unless we are dealing with some orthogonal flow, which I don\u0027t think it applies here, we are always providing the free space in kForRows direction.\n\nSo, I was thinking on something like this:\n\n  DCHECK((Direction() \u003d\u003d kForRows)",
+      "parentUuid": "04419ea7_b220bb3b",
+      "revId": "86a58c18a8cca4c35890de58443fa23493ba2374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
