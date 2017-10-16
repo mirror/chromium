@@ -107,7 +107,11 @@ void AccessibilityController::OnSigninScreenPrefServiceInitialized(
 
 void AccessibilityController::OnActiveUserPrefServiceChanged(
     PrefService* prefs) {
-  ObservePrefs(prefs);
+  // Ignore notifications for pref service changes if there is a test
+  // PrefService injected (SetPrefServiceForTest already sets up the
+  // PrefObservers).
+  if (!pref_service_for_test_)
+    ObservePrefs(prefs);
 }
 
 void AccessibilityController::SetPrefServiceForTest(PrefService* prefs) {
@@ -116,6 +120,7 @@ void AccessibilityController::SetPrefServiceForTest(PrefService* prefs) {
 }
 
 void AccessibilityController::ObservePrefs(PrefService* prefs) {
+  DCHECK(!pref_service_for_test_ || prefs == pref_service_for_test_);
   // Watch for pref updates from webui settings and policy.
   pref_change_registrar_ = std::make_unique<PrefChangeRegistrar>();
   pref_change_registrar_->Init(prefs);

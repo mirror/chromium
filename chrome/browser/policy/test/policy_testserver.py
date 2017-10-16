@@ -1053,6 +1053,9 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       error = 401
     else:
       token_info = self.server.LookupToken(dmtoken)
+      print "DMToken: %s" % dmtoken;
+      print "token_info: %s" % token_info;
+      print "request_device_id: %s" % request_device_id;
       if (not token_info or
           not request_device_id or
           token_info['device_id'] != request_device_id):

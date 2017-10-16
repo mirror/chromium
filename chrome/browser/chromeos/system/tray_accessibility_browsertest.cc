@@ -104,6 +104,11 @@ class TrayAccessibilityTest
     command_line->AppendSwitch(switches::kLoginManager);
     command_line->AppendSwitchASCII(switches::kLoginProfile,
                                     TestingProfile::kTestUserProfileDir);
+    // Don't require policy for our sessions - this is required because
+    // this test uses the synchronously-loaded startup profile to run its
+    // tests, so we need to let the policy code know whether to expect cached
+    // policy.
+    command_line->AppendSwitchASCII(switches::kProfileRequiresPolicy, "false");
   }
 
   void SetUpOnMainThread() override {

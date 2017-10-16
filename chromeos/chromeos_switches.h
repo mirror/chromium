@@ -133,6 +133,7 @@ CHROMEOS_EXPORT extern const char kOobeForceShowScreen[];
 CHROMEOS_EXPORT extern const char kOobeGuestSession[];
 CHROMEOS_EXPORT extern const char kOobeSkipPostLogin[];
 CHROMEOS_EXPORT extern const char kOobeTimerInterval[];
+CHROMEOS_EXPORT extern const char kProfileRequiresPolicy[];
 CHROMEOS_EXPORT extern const char kShillStub[];
 CHROMEOS_EXPORT extern const char kShowLoginDevOverlay[];
 CHROMEOS_EXPORT extern const char kShowNonMdLogin[];

@@ -452,6 +452,10 @@ const char kOobeSkipPostLogin[] = "oobe-skip-postlogin";
 // Interval at which we check for total time on OOBE.
 const char kOobeTimerInterval[] = "oobe-timer-interval";
 
+// If set to "true", the profile requires policy during restart (policy load
+// must succeed, otherwise session restart should fail).
+const char kProfileRequiresPolicy[] = "profile-requires-policy";
+
 // Overrides network stub behavior. By default, ethernet, wifi and vpn are
 // enabled, and transitions occur instantaneously. Multiple options can be
 // comma separated (no spaces). Note: all options are in the format 'foo=x'.
