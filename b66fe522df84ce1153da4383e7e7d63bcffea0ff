@@ -142,6 +142,23 @@
     },
     {
       "key": {
+        "uuid": "ba3ffd96_693a93c4",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-16T17:51:11Z",
+      "side": 1,
+      "message": "After advice from a more experienced engineer, lambdas won\u0027t work because:\nA) STDCALL calling convension.\nB) Callbacks won\u0027t work when some variables are captured.\n\nPlease use a struct:\nstruct HwndWithProcessID {\nHwndWithProcessID(const id) : pid(id), hwnd(nullptr)  {}\nconst pid;\nHWND hwnd;\n};\n\nThis will be thread safe. Initialize the struct before calling EnumWindows and pass the struct in LPARAM.",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "412c1fad_1b395d13",
         "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
         "patchSetId": 18
