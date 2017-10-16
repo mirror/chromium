@@ -29,12 +29,27 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
 
   NGLogicalSize Size() const final;
 
+  NGLineBoxFragmentBuilder& AddChild(RefPtr<NGLayoutResult>,
+                                               const NGLogicalOffset&) override;
+  NGLineBoxFragmentBuilder& AddChild(RefPtr<NGPhysicalFragment>,
+                                               const NGLogicalOffset&) override;
+  // TODO(layout-dev): Explain why we have this.
+  NGLineBoxFragmentBuilder& AddChild(std::nullptr_t, const NGLogicalOffset&);
+
+  void SetChildInlineOffset(unsigned, LayoutUnit);
   void MoveChildrenInBlockDirection(LayoutUnit);
   void MoveChildrenInBlockDirection(LayoutUnit, unsigned start, unsigned end);
 
-  Vector<RefPtr<NGPhysicalFragment>>& MutableChildren() { return children_; }
-  const Vector<NGLogicalOffset>& Offsets() const { return offsets_; }
-  Vector<NGLogicalOffset>& MutableOffsets() { return offsets_; }
+  struct Child {
+    RefPtr<NGLayoutResult> layout_result;
+    RefPtr<NGPhysicalFragment> fragment;
+    NGLogicalOffset offset;
+
+    const NGPhysicalFragment* PhysicalFragment() const;
+  };
+  const Vector<Child>& Children() const { return children_; }
+  Vector<Child>& MutableChildren() { return children_; }
+  const NGPhysicalFragment* ChildFragment(unsigned) const;
 
   void SetMetrics(const NGLineHeightMetrics&);
   const NGLineHeightMetrics& Metrics() const { return metrics_; }
@@ -48,6 +63,8 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
 
  private:
   NGInlineNode node_;
+
+  Vector<Child> children_;
 
   NGLineHeightMetrics metrics_;
 
