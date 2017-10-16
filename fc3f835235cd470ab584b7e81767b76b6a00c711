@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "60639982_f94e7fb9",
+        "filename": "third_party/WebKit/Source/core/dom/WorkletModulatorImpl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-16T05:12:36Z",
+      "side": 1,
+      "message": "Renaming:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/720595",
+      "parentUuid": "9a49dc5a_63d0aa77",
+      "range": {
+        "startLine": 26,
+        "startChar": 47,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "fc3f835235cd470ab584b7e81767b76b6a00c711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0293f9f4_ed9952ee",
         "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
         "patchSetId": 9
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "cf843fa8_e3dd94bf",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-16T05:12:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0293f9f4_ed9952ee",
+      "range": {
+        "startLine": 72,
+        "startChar": 18,
+        "endLine": 72,
+        "endChar": 19
+      },
+      "revId": "fc3f835235cd470ab584b7e81767b76b6a00c711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d0e83d2_cb44272e",
         "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
         "patchSetId": 9
@@ -83,6 +131,30 @@
       "writtenOn": "2017-10-16T03:29:30Z",
       "side": 1,
       "message": "Would you mind adding a spec text ref for why this transfer is needed?",
+      "range": {
+        "startLine": 77,
+        "startChar": 17,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "fc3f835235cd470ab584b7e81767b76b6a00c711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeecddac_150b5fee",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-16T05:12:36Z",
+      "side": 1,
+      "message": "TransferPriviledgesFrom() transfers following privileges[1]:\n\n  - Grant universal access (\"Explicitly grant the ability to access every other SecurityOrigin\")\n  - Grant loading of local resources.\n  - Use path-based file:// origins.\n\nI think these are not defined in the HTML (WebWorker) spec (I might be missing something though)\n\n[1] https://chromium.googlesource.com/chromium/src/+/2fd21983b7830d27a518676232f9ea8659b2ffb0/third_party/WebKit/Source/platform/weborigin/SecurityOrigin.h#251",
+      "parentUuid": "5d0e83d2_cb44272e",
       "range": {
         "startLine": 77,
         "startChar": 17,
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "154a54ab_0b109d27",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-16T05:12:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4c87025_1cb52d5d",
+      "range": {
+        "startLine": 79,
+        "startChar": 24,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "fc3f835235cd470ab584b7e81767b76b6a00c711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55238062_a1c05ce6",
         "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.h",
         "patchSetId": 9
@@ -129,6 +225,24 @@
       "writtenOn": "2017-10-16T04:30:51Z",
       "side": 1,
       "message": "Is the parent always Document? (I think I\u0027ve overheard some conversation about this, but haven\u0027t really made sure this...)",
+      "revId": "fc3f835235cd470ab584b7e81767b76b6a00c711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1eb219_44b5d414",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-16T05:12:36Z",
+      "side": 1,
+      "message": "Yes, it\u0027s always Document. Worklets cannot create nested worklets.",
+      "parentUuid": "55238062_a1c05ce6",
       "revId": "fc3f835235cd470ab584b7e81767b76b6a00c711",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
