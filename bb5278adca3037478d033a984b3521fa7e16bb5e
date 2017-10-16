@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9742ba6c_856b07e8",
+        "filename": "remoting/ios/domain/host_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-10-16T15:39:27Z",
+      "side": 1,
+      "message": "It was for testing, to make the UI work with static json files before the API was working.",
+      "revId": "bb5278adca3037478d033a984b3521fa7e16bb5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
