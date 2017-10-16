@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81fd66b4_00f1c831",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-16T20:42:13Z",
+      "side": 1,
+      "message": "This still seems to be generating file names in the test code. My suggestion is to test the production version of the file name generation code.",
+      "range": {
+        "startLine": 24,
+        "startChar": 46,
+        "endLine": 24,
+        "endChar": 57
+      },
+      "revId": "e7a3811f8802e4be7fc360a9e13e3941af235b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
