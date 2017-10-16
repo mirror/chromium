@@ -26,6 +26,7 @@
 #include "content/browser/bluetooth/web_bluetooth_service_impl.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/child_process_security_policy_impl.h"
+#include "content/browser/dedicated_worker/dedicated_worker_host.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
 #include "content/browser/dom_storage/dom_storage_context_wrapper.h"
 #include "content/browser/download/mhtml_generation_manager.h"
@@ -3458,6 +3459,9 @@ void RenderFrameHostImpl::SetUpMojoIfNeeded() {
   };
   static_cast<blink::AssociatedInterfaceRegistry*>(associated_registry_.get())
       ->AddInterface(base::Bind(make_binding, base::Unretained(this)));
+  static_cast<blink::AssociatedInterfaceRegistry*>(associated_registry_.get())
+      ->AddInterface(base::Bind(&CreateDedicatedWorkerHostFactory,
+                                GetProcess()->GetID(), this));
 
   RegisterMojoInterfaces();
   mojom::FrameFactoryPtr frame_factory;
