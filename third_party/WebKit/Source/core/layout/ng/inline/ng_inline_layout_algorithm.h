@@ -39,6 +39,8 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
                           const NGConstraintSpace&,
                           NGInlineBreakToken* = nullptr);
 
+  ~NGInlineLayoutAlgorithm() override;
+
   // Create a line.
   // @return false if the line does not fit in the constraint space in block
   //         direction.
