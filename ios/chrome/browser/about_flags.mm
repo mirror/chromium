@@ -39,6 +39,7 @@
 #include "ios/chrome/browser/drag_and_drop/drag_and_drop_flag.h"
 #include "ios/chrome/browser/ios_chrome_flag_descriptions.h"
 #include "ios/chrome/browser/ssl/captive_portal_features.h"
+#include "ios/chrome/browser/ui/gr_search/features.h"
 #include "ios/chrome/browser/ui/main/main_feature_flags.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller_base_feature.h"
 #include "ios/chrome/browser/web/features.h"
@@ -193,7 +194,11 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
     {"safe_area_compatible_toolbar",
      flag_descriptions::kSafeAreaCompatibleToolbarName,
      flag_descriptions::kSafeAreaCompatibleToolbarDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(kSafeAreaCompatibleToolbar)}};
+     FEATURE_VALUE_TYPE(kSafeAreaCompatibleToolbar)},
+    {"gr-search", flag_descriptions::kGRSearchName,
+     flag_descriptions::kGRSearchDescription, flags_ui::kOsIos,
+     FEATURE_VALUE_TYPE(gr_search::features::kGRSearch)},
+};
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {

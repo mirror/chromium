@@ -75,6 +75,10 @@ extern const char kTabSwitcherPresentsBVCDescription[];
 extern const char kUseDdljsonApiName[];
 extern const char kUseDdljsonApiDescription[];
 
+// Title and description for the flag to enable GR Search.
+extern const char kGRSearchName[];
+extern const char kGRSearchDescription[];
+
 // Title and description for the flag to enable Web Payments.
 extern const char kWebPaymentsName[];
 extern const char kWebPaymentsDescription[];
