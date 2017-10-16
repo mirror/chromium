@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "fef9c62d_ad91175e",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-16T23:19:29Z",
+      "side": 1,
+      "message": "I\u0027m a bit surprised this CHECK got in your way, since you only call FrameTreeNode::CommitPendingFramePolicy from WebContentsImpl::CreateWithOpener, and this is RenderFrameHostManager::CommitPendingFramePolicy.  Can you share more about how you were hitting this CHECK?",
+      "range": {
+        "startLine": 547,
+        "startChar": 0,
+        "endLine": 548,
+        "endChar": 11
+      },
+      "revId": "5af182814a98bc73ef990cefeb1c126fad8b5d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03773e6f_73c0d745",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-16T23:19:29Z",
+      "side": 1,
+      "message": "What do you think about naming the new flag |starting_sandbox_flags| and making it a blink::WebSandboxFlags?   Then we can unify these two blocks, and only do the SetPendingSandboxFlags()/CommitPendingFramePolicy() once using that flag.  I.e., would the following work?\n\n1. Move the opener/inherit_flag logic to WebContentsImpl::CreateNewWindow, and use it to set |starting_sandbox_flags| when we create the CreateParams there.  \n\n2. OffscreenTab::Start would just set |starting_sandbox_flags| directly on its CreateParams.\n\n3. Also, it\u0027d be nice to not check kForcePresentationReceiverForTesting here if it\u0027s a layout-test-only flag (is it?).  Perhaps that can be done by setting starting_sandbox_flags, if needed, in CreateParams in Shell::CreateNewWindow?  Or does the use you care about not go through that?\n\n4. We just always do new_root-\u003eSetPendingSandboxFlags(params.starting_sandbox_flags); new_root-\u003eCommitPendingFramePolicy() here.",
+      "range": {
+        "startLine": 693,
+        "startChar": 1,
+        "endLine": 711,
+        "endChar": 3
+      },
+      "revId": "5af182814a98bc73ef990cefeb1c126fad8b5d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca831e21_8d94cf82",
+        "filename": "content/public/browser/web_contents.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-16T23:19:29Z",
+      "side": 1,
+      "message": "I think it might be useful to name this more generically, so that other features that might want to create a sandboxed tab can use it down the line.  It also will sound less out of place with the other params already here.  (More concrete proposal above.)",
+      "range": {
+        "startLine": 177,
+        "startChar": 9,
+        "endLine": 177,
+        "endChar": 33
+      },
+      "revId": "5af182814a98bc73ef990cefeb1c126fad8b5d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbc3b7ff_e25307fe",
         "filename": "third_party/WebKit/public/web/WebSandboxFlags.h",
         "patchSetId": 16
