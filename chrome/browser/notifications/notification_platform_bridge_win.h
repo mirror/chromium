@@ -10,6 +10,8 @@
 #include "base/macros.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
 
+class NotificationPlatformBridgeWinImpl;
+
 // Implementation of the NotificationPlatformBridge for Windows 10 Anniversary
 // Edition and beyond, delegating display of notifications to the Action Center.
 class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
@@ -33,8 +35,7 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
   void SetReadyCallback(NotificationBridgeReadyCallback callback) override;
 
  private:
-  // Whether the required functions from combase.dll have been loaded.
-  bool com_functions_initialized_;
+  scoped_refptr<NotificationPlatformBridgeWinImpl> impl_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationPlatformBridgeWin);
 };
