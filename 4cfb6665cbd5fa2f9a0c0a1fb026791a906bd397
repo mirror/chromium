@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ca2b812_b189112b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-16T21:19:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85d2911d_948c9aa2",
+      "revId": "4cfb6665cbd5fa2f9a0c0a1fb026791a906bd397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3924a78c_1666f64d",
         "filename": "gpu/command_buffer/tests/fuzzer_main.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-13T21:41:50Z",
       "side": 1,
       "message": "nit: Did you mean to commit this at the same time?",
+      "revId": "4cfb6665cbd5fa2f9a0c0a1fb026791a906bd397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be2613c_d667de39",
+        "filename": "gpu/command_buffer/tests/fuzzer_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-16T21:19:20Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "3924a78c_1666f64d",
       "revId": "4cfb6665cbd5fa2f9a0c0a1fb026791a906bd397",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
