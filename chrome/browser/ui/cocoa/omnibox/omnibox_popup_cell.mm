@@ -12,7 +12,7 @@
 #include "base/feature_list.h"
 #include "base/i18n/rtl.h"
 #include "base/mac/foundation_util.h"
-#include "base/mac/objc_property_releaser.h"
+#include "base/mac/objc_release_properties.h"
 #include "base/mac/scoped_nsobject.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/strings/string_number_conversions.h"
@@ -441,6 +441,11 @@ NSAttributedString* CreateClassifiedAttributedString(
                                                 [OmniboxPopupCellData class]);
   }
   return self;
+}
+
+- (void)dealloc {
+  base::mac::ReleaseProperties(self);
+  [super dealloc];
 }
 
 - (instancetype)copyWithZone:(NSZone*)zone {
