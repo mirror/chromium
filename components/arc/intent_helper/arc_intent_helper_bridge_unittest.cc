@@ -7,9 +7,18 @@
 #include <memory>
 #include <utility>
 
+#include "ash/shell.h"
+#include "ash/shell_init_params.h"
+#include "ash/test/ash_test_base.h"
+#include "ash/test/ash_test_environment.h"
+#include "ash/test/ash_test_helper.h"
+#include "ash/test_shell_delegate.h"
+#include "base/test/test_simple_task_runner.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/common/intent_helper.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/message_center/message_center.h"
 
 namespace arc {
 
@@ -28,19 +37,36 @@ class ArcIntentHelperTest : public testing::Test {
 
  protected:
   std::unique_ptr<ArcBridgeService> arc_bridge_service_;
+  std::unique_ptr<ash::TestShellDelegate> test_shell_delegate_;
   std::unique_ptr<ArcIntentHelperBridge> instance_;
 
  private:
   void SetUp() override {
+    message_center::MessageCenter::Initialize();
+    chromeos::DBusThreadManager::Initialize();
     arc_bridge_service_ = std::make_unique<ArcBridgeService>();
     instance_ = std::make_unique<ArcIntentHelperBridge>(
         nullptr /* context */, arc_bridge_service_.get());
+    test_task_runner_ = base::MakeRefCounted<base::TestSimpleTaskRunner>();
+
+    test_shell_delegate_ = std::make_unique<ash::TestShellDelegate>();
+    ash::ShellInitParams init_params;
+    init_params.delegate = test_shell_delegate_.get();
+    ash::Shell::CreateInstance(init_params);
+    // ash_test_helper()->set_test_shell_delegate(test_shell_delegate_.get());
   }
 
   void TearDown() override {
     instance_.reset();
     arc_bridge_service_.reset();
+    chromeos::DBusThreadManager::Shutdown();
+    // Ash Shell can't just live on its own without a browser process, we need
+    // to also shut down the message center.
+    message_center::MessageCenter::Shutdown();
+    ash::Shell::DeleteInstance();
   }
+
+  scoped_refptr<base::TestSimpleTaskRunner> test_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcIntentHelperTest);
 };
@@ -250,6 +276,13 @@ TEST_F(ArcIntentHelperTest, TestMultipleUpdate) {
       instance_->ShouldChromeHandleUrl(GURL("http://www.android.com")));
   EXPECT_FALSE(
       instance_->ShouldChromeHandleUrl(GURL("https://www.android.com")));
+}
+
+// Tests that OnOpenUrl opens the URL in Chrome browser.
+TEST_F(ArcIntentHelperTest, TestOnOpenUrl) {
+  instance_->OnOpenUrl("https://google.com");
+  EXPECT_EQ(GURL("https://google.com"),
+            test_shell_delegate_->GetLastOpenedUrlFromArc());
 }
 
 }  // namespace arc
