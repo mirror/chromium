@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "534f4464_e3f01dc8",
+        "filename": "third_party/minizip/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-16T02:14:31Z",
+      "side": 1,
+      "message": "Those options should be available on both x86 and x64. How about (target_cpu \u003d \"x86\" || target_cpu \u003d \"x64\")?",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 39
+      },
+      "revId": "ed97fa7c5714d9b8c4349fae906101fdd1797d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
