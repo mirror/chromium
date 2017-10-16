@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eb0f1f9_38adf36d",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-16T19:40:41Z",
+      "side": 1,
+      "message": "I tried \u003ciron-icon icon\u003d\"info\"\u003e and it\u0027s an icon is an \"i\" mark instead of a \"?\" png that it originally was. Not sure if this is an issue, since the mocks doesn\u0027t have a \"info\" warning state.",
+      "revId": "da8feef67c6c98156f5400d752457d0aa0c26a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
