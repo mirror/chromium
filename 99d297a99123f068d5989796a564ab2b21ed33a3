@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd6ec0c0_44ec7843",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-16T23:13:41Z",
+      "side": 1,
+      "message": "Note to reviewers: I\u0027ll fix this and add a test for it before asking to PTAL this CL.",
+      "parentUuid": "34df1c35_c09da89c",
+      "revId": "99d297a99123f068d5989796a564ab2b21ed33a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7947d72_6d8808bd",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
         "patchSetId": 1
