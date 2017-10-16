@@ -8,7 +8,9 @@
 
 #include "base/auto_reset.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/time/time.h"
 #include "base/timer/timer.h"
+#include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
@@ -32,9 +34,17 @@
 #include "components/password_manager/core/common/credential_manager_types.h"
 #include "content/public/browser/navigation_handle.h"
 
+#if defined(OS_WIN)
+#include "chrome/browser/password_manager/password_manager_util_win.h"
+#elif defined(OS_MACOSX)
+#include "chrome/browser/password_manager/password_manager_util_mac.h"
+#endif
+
 using password_manager::PasswordFormManager;
 
 int ManagePasswordsUIController::save_fallback_timeout_in_seconds_ = 90;
+
+int ManagePasswordsUIController::passwords_view_timeout_in_seconds_ = 90;
 
 namespace {
 
@@ -459,6 +469,26 @@ void ManagePasswordsUIController::OnDialogHidden() {
     passwords_data_.TransitionToState(password_manager::ui::MANAGE_STATE);
     UpdateBubbleAndIconVisibility();
   }
+}
+
+bool ManagePasswordsUIController::IsUserAuthenticated() {
+#if !defined(OS_WIN) && !defined(OS_MACOSX)
+  return true;
+#else
+  if (base::TimeTicks::Now() - passwords_view_reauth_time_ >
+      base::TimeDelta::FromSeconds(passwords_view_timeout_in_seconds_))
+    return true;
+  LOG(ERROR) << "authenticate";
+#if defined(OS_WIN)
+  bool authenticated =
+      password_manager_util_win::AuthenticateUser(parent_->parent_window());
+#elif defined(OS_MACOSX)
+  bool authenticated = password_manager_util_mac::AuthenticateUser();
+#endif
+  if (authenticated)
+    passwords_view_reauth_time_ = base::TimeTicks::Now();
+  return authenticated;
+#endif
 }
 
 void ManagePasswordsUIController::SavePasswordInternal() {

@@ -294,7 +294,7 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
         interaction_stats.dismissal_count = stats->dismissal_count;
       }
     }
-    hide_eye_icon_ = delegate_->BubbleIsManualFallbackForSaving()
+    lock_eye_icon_ = delegate_->BubbleIsManualFallbackForSaving()
                          ? pending_password_.form_has_autofilled_value
                          : display_reason == USER_ACTION;
     UpdatePendingStateTitle();
@@ -544,6 +544,10 @@ bool ManagePasswordsBubbleModel::ReplaceToShowPromotionIfNeeded() {
 void ManagePasswordsBubbleModel::SetClockForTesting(
     std::unique_ptr<base::Clock> clock) {
   interaction_keeper_->SetClockForTesting(std::move(clock));
+}
+
+bool ManagePasswordsBubbleModel::IsUserAuthenticated() const {
+  return delegate_ && delegate_->IsUserAuthenticated();
 }
 
 void ManagePasswordsBubbleModel::UpdatePendingStateTitle() {
