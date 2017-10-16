@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5d12125_7b47ba75",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorOptions.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-10-16T13:10:47Z",
+      "side": 1,
+      "message": "Personally I\u0027d land this separately (is there a test for this change?), but it\u0027s up to you :-)",
+      "revId": "f044d5641584888eabfa5591d9dea165fb6320c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
