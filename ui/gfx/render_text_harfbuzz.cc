@@ -740,8 +740,10 @@ RangeF TextRunHarfBuzz::GetGraphemeBounds(RenderTextHarfBuzz* render_text,
   // graphemes. In order to place the cursor at a grapheme boundary inside the
   // cluster, we simply divide the cluster width by the number of graphemes.
   // Note: The first call to GetGraphemeIterator() can be expensive, so avoid
-  // doing it unless it's actually needed (when length > 1).
-  if (chars.length() > 1 && render_text->GetGraphemeIterator()) {
+  // doing it unless it's actually needed (when grapheme count > 1).
+  ptrdiff_t code_point_count = UTF16IndexToOffset(render_text->GetDisplayText(),
+                                                  chars.start(), chars.end());
+  if (code_point_count > 1 && render_text->GetGraphemeIterator()) {
     int before = 0;
     int total = 0;
     base::i18n::BreakIterator* grapheme_iterator =
@@ -785,8 +787,11 @@ RangeF TextRunHarfBuzz::GetGraphemeSpanForCharRange(
 
   DCHECK(!char_range.is_reversed());
   DCHECK(range.Contains(char_range));
-  size_t left_index = is_rtl ? char_range.end() - 1 : char_range.start();
-  size_t right_index = is_rtl ? char_range.start() : char_range.end() - 1;
+  size_t left_index = char_range.start();
+  size_t right_index = gfx::UTF16OffsetToIndex(render_text->GetDisplayText(),
+                                               char_range.end(), -1);
+  if (is_rtl)
+    std::swap(left_index, right_index);
   return RangeF(GetGraphemeBounds(render_text, left_index).GetMin(),
                 GetGraphemeBounds(render_text, right_index).GetMax());
 }
@@ -998,21 +1003,29 @@ std::vector<RenderText::FontSpan> RenderTextHarfBuzz::GetFontSpansForTesting() {
   return spans;
 }
 
-Range RenderTextHarfBuzz::GetGlyphBounds(size_t index) {
+Range RenderTextHarfBuzz::GetCursorSpan(const Range& text_range_query) {
   EnsureLayout();
+  Range text_range =
+      text_range_query.is_reversed()
+          ? Range(text_range_query.end(), text_range_query.start())
+          : text_range_query;
+  const size_t query_index = text_range.start();
   const size_t run_index =
-      GetRunContainingCaret(SelectionModel(index, CURSOR_FORWARD));
+      GetRunContainingCaret(SelectionModel(text_range.start(), CURSOR_FORWARD));
   internal::TextRunList* run_list = GetRunList();
   // Return edge bounds if the index is invalid or beyond the layout text size.
   if (run_index >= run_list->size())
     return Range(GetStringSize().width());
-  const size_t layout_index = TextIndexToDisplayIndex(index);
+
   internal::TextRunHarfBuzz* run = run_list->runs()[run_index].get();
-  RangeF bounds = run->GetGraphemeBounds(this, layout_index);
+
+  const Range display_range(TextIndexToDisplayIndex(text_range.start()),
+                            TextIndexToDisplayIndex(text_range.end()));
+  RangeF bounds = run->GetGraphemeSpanForCharRange(this, display_range);
   // If cursor is enabled, extend the last glyph up to the rightmost cursor
   // position since clients expect them to be contiguous.
   if (cursor_enabled() && run_index == run_list->size() - 1 &&
-      index == (run->is_rtl ? run->range.start() : run->range.end() - 1))
+      query_index == (run->is_rtl ? run->range.start() : run->range.end() - 1))
     bounds.set_end(std::ceil(bounds.end()));
   return run->is_rtl ? RangeF(bounds.end(), bounds.start()).Round()
                      : bounds.Round();
@@ -1179,7 +1192,7 @@ std::vector<Rect> RenderTextHarfBuzz::GetSubstringBounds(const Range& range) {
         const internal::TextRunHarfBuzz& run = *run_list->runs()[segment.run];
         RangeF selected_span =
             run.GetGraphemeSpanForCharRange(this, intersection);
-        // Note "ceil" here matches what's done in GetGlyphBounds().
+        // Note "ceil" here matches what's done in GetCursorSpan().
         int start_x = std::ceil(selected_span.start() - line_start_x);
         int end_x = std::ceil(selected_span.end() - line_start_x);
         gfx::Rect rect(start_x, 0, end_x - start_x, line.size.height());
