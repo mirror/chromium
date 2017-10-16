@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "0188a136_af1058ac",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T08:40:07Z",
+      "side": 1,
+      "message": "Optional: would it make sense to own the task tracker within this object? In the end the weakptr below has an overlapping goal. I\u0027m not sure how expensive it can be to construct and destruct these trackers.",
+      "range": {
+        "startLine": 27,
+        "startChar": 1,
+        "endLine": 27,
+        "endChar": 2
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec70195a_74141adf",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T08:40:07Z",
+      "side": 1,
+      "message": "What\u0027s the reason for two-step initialization? Can\u0027t you make this a private function and call it from the constructor?",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3431530c_3056fd43",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
         "patchSetId": 9
@@ -25,6 +71,52 @@
     },
     {
       "key": {
+        "uuid": "9da3609c_07710e35",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T08:40:07Z",
+      "side": 1,
+      "message": "Unused?",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3336fa_e75ac467",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T08:40:07Z",
+      "side": 1,
+      "message": "Optional: it seems to me that the main purpose of this class is to wait. Hence, and analogously to other test classes, I\u0027d name it xxxWaiter, possibly TopSitesProviderWaiter.",
+      "range": {
+        "startLine": 33,
+        "startChar": 21,
+        "endLine": 33,
+        "endChar": 22
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f12f4fee_c1048e2d",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
         "patchSetId": 9
@@ -41,6 +133,144 @@
         "startChar": 22,
         "endLine": 36,
         "endChar": 36
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc29f10_83507b4c",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T08:40:07Z",
+      "side": 1,
+      "message": "Is this parameter really needed, or is it always the number of calls to this-\u003eQueryTopSites() from the test? Also, if it\u0027s the latter, consider using BarrierClosure within Wait(), together with QuitClosure.",
+      "range": {
+        "startLine": 36,
+        "startChar": 37,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2422dd_b4408edd",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T08:40:07Z",
+      "side": 1,
+      "message": "How about exposing a vector of MostVisitedURL? You can always use custom matchers like https://cs.chromium.org/chromium/src/components/ntp_tiles/most_visited_sites_unittest.cc?q\u003dmost_visited_sites_unittest.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d90",
+      "range": {
+        "startLine": 53,
+        "startChar": 63,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31cfaf90_e6eca60d",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T08:40:07Z",
+      "side": 1,
+      "message": "Is there any test that doesn\u0027t call this exactly once? If no, please remove function and initialize member variable in constructor.",
+      "range": {
+        "startLine": 124,
+        "startChar": 68,
+        "endLine": 124,
+        "endChar": 0
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253ae485_a67d4bee",
+        "filename": "chrome/browser/history/top_sites_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T08:40:07Z",
+      "side": 1,
+      "message": "Can you please add a comment referencing the experimental feature? I might be useful in case there\u0027s cleanup work in the future.",
+      "range": {
+        "startLine": 139,
+        "startChar": 57,
+        "endLine": 139,
+        "endChar": 0
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdcccfab_794c3217",
+        "filename": "components/history/core/browser/history_types.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T08:40:07Z",
+      "side": 1,
+      "message": "Nit: s/url/URL/. Similar occurrences exist.",
+      "range": {
+        "startLine": 207,
+        "startChar": 54,
+        "endLine": 207,
+        "endChar": 0
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9950299_c6a79489",
+        "filename": "components/history/core/browser/history_types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T08:40:07Z",
+      "side": 1,
+      "message": "Please add documentation and move up before the member variables as per style guide.\n\nOptionally, I suggest renaming s/redirects_from/preceding_redirects/ or simply |redirects|, because the concept \u0027from\u0027 is IMO a bit misleading (and used in other History APIs in a different context and purpose).",
+      "range": {
+        "startLine": 317,
+        "startChar": 57,
+        "endLine": 317,
+        "endChar": 0
       },
       "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
