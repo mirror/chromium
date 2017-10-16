@@ -106,11 +106,12 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
 
   static RefPtr<AudioParamHandler> Create(BaseAudioContext& context,
                                           AudioParamType param_type,
+                                          String param_name,
                                           double default_value,
                                           float min_value,
                                           float max_value) {
     return WTF::AdoptRef(new AudioParamHandler(
-        context, param_type, default_value, min_value, max_value));
+        context, param_type, param_name, default_value, min_value, max_value));
   }
 
   // This should be used only in audio rendering thread.
@@ -168,6 +169,7 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
  private:
   AudioParamHandler(BaseAudioContext&,
                     AudioParamType,
+                    String param_name,
                     double default_value,
                     float min,
                     float max);
@@ -187,6 +189,9 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
   // node it belongs to.  Mostly for informational purposes and doesn't affect
   // implementation.
   AudioParamType param_type_;
+  // Name of the AudioParam. This is only used for printing out more
+  // informative warnings, and is otherwise arbitrary.
+  String param_name_;
 
   // Intrinsic value
   float intrinsic_value_;
@@ -211,14 +216,13 @@ class AudioParam final : public GarbageCollectedFinalized<AudioParam>,
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static AudioParam* Create(BaseAudioContext&,
-                            AudioParamType,
-                            double default_value);
-  static AudioParam* Create(BaseAudioContext&,
-                            AudioParamType,
-                            double default_value,
-                            float min_value,
-                            float max_value);
+  static AudioParam* Create(
+      BaseAudioContext&,
+      AudioParamType,
+      String param_name,
+      double default_value,
+      float min_value = -std::numeric_limits<float>::max(),
+      float max_value = std::numeric_limits<float>::max());
 
   DECLARE_TRACE();
   // |handler| always returns a valid object.
@@ -265,6 +269,7 @@ class AudioParam final : public GarbageCollectedFinalized<AudioParam>,
  private:
   AudioParam(BaseAudioContext&,
              AudioParamType,
+             String param_name,
              double default_value,
              float min,
              float max);
