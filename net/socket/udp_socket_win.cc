@@ -10,6 +10,7 @@
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
@@ -299,8 +300,10 @@ void UDPSocketWin::Close() {
   if (socket_ == INVALID_SOCKET)
     return;
 
-  if (qos_handle_)
-    QwaveAPI::Get().CloseHandle(qos_handle_);
+  if (qos_handle_) {
+    GetQwaveAPI().CloseHandle(qos_handle_);
+    dscp_manager_.reset();
+  }
 
   // Zero out any pending read/write callback state.
   read_callback_.Reset();
@@ -415,6 +418,14 @@ int UDPSocketWin::SendTo(IOBuffer* buf,
                          int buf_len,
                          const IPEndPoint& address,
                          const CompletionCallback& callback) {
+  if (dscp_manager_) {
+    // A set was deferred from SetDiffServCodePoint because the
+    // remote address wasn't known.
+    auto res = dscp_manager_->PrepareForSend(address);
+    if (res != OK) {
+      LOG(WARNING) << "Deferred DSCP set failed with " << ErrorToString(res);
+    }
+  }
   return SendToOrWrite(buf, buf_len, &address, callback);
 }
 
@@ -1005,6 +1016,10 @@ int UDPSocketWin::RandomBind(const IPAddress& address) {
   return DoBind(IPEndPoint(address, 0));
 }
 
+QwaveAPI& UDPSocketWin::GetQwaveAPI() {
+  return QwaveAPI::Get();
+}
+
 int UDPSocketWin::JoinGroup(const IPAddress& group_address) const {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (!is_connected())
@@ -1122,7 +1137,7 @@ int UDPSocketWin::SetDiffServCodePoint(DiffServCodePoint dscp) {
   if (!is_connected())
     return ERR_SOCKET_NOT_CONNECTED;
 
-  QwaveAPI& qos(QwaveAPI::Get());
+  QwaveAPI& qos(GetQwaveAPI());
 
   if (!qos.qwave_supported())
     return ERROR_NOT_SUPPORTED;
@@ -1175,6 +1190,15 @@ int UDPSocketWin::SetDiffServCodePoint(DiffServCodePoint dscp) {
       NOTREACHED();
       break;
   }
+  if (!remote_address_) {
+    if (dscp_manager_ == nullptr) {
+      dscp_manager_ = base::MakeUnique<DscpManager>(qos, socket_, qos_handle_);
+    }
+    // We don't know where we are sending to yet - defer the set.
+    dscp_manager_->Set(dscp, traffic_type);
+    return OK;
+  }
+
   if (qos_flow_id_ != 0) {
     qos.RemoveSocketFromFlow(qos_handle_, NULL, qos_flow_id_, 0);
     qos_flow_id_ = 0;
@@ -1214,6 +1238,76 @@ void UDPSocketWin::DetachFromThread() {
 void UDPSocketWin::UseNonBlockingIO() {
   DCHECK(!core_);
   use_non_blocking_io_ = true;
+}
+
+DscpManager::DscpManager(QwaveAPI& qos, SOCKET socket, HANDLE qos_handle)
+    : qos_(qos), socket_(socket), qos_handle_(qos_handle) {}
+
+DscpManager::~DscpManager() {
+  if (flow_id_ != 0) {
+    qos_.RemoveSocketFromFlow(qos_handle_, NULL, flow_id_, 0);
+  }
+}
+
+void DscpManager::Set(DiffServCodePoint dscp, QOS_TRAFFIC_TYPE traffic_type) {
+  if (dscp == DSCP_NO_CHANGE || dscp == dscp_value_) {
+    return;
+  }
+
+  dscp_value_ = dscp;
+  traffic_type_ = traffic_type;
+  // TODO(zstein): We could reuse the flow when the value changes
+  // by calling QOSSetFlow with the new traffic type and dscp value.
+  if (flow_id_ != 0) {
+    qos_.RemoveSocketFromFlow(qos_handle_, NULL, flow_id_, 0);
+    configured_.clear();
+    flow_id_ = 0;
+  }
+}
+
+int DscpManager::PrepareForSend(const IPEndPoint& remote_address) {
+  if (dscp_value_ == DSCP_NO_CHANGE) {
+    // No DSCP value has been set.
+    return OK;
+  }
+
+  if (configured_.find(remote_address) != configured_.end()) {
+    return OK;
+  }
+
+  SockaddrStorage storage;
+  if (!remote_address.ToSockAddr(storage.addr, &storage.addr_len)) {
+    LOG(WARNING) << "invalid remote_address " << remote_address.ToString();
+    return ERR_ADDRESS_INVALID;
+  }
+
+  // We won't try again if we get an error.
+  configured_.emplace(remote_address);
+
+  // We don't need to call SetFlow if we already have a qos flow.
+  bool new_flow = flow_id_ == 0;
+
+  if (!qos_.AddSocketToFlow(qos_handle_, socket_, storage.addr, traffic_type_,
+                            QOS_NON_ADAPTIVE_FLOW, &flow_id_)) {
+    DWORD err = GetLastError();
+    if (err == ERROR_DEVICE_REINITIALIZATION_NEEDED) {
+      qos_.CloseHandle(qos_handle_);
+      flow_id_ = 0;
+      qos_handle_ = 0;
+      dscp_value_ = DSCP_NO_CHANGE;
+    }
+    return MapSystemError(err);
+  }
+
+  if (new_flow) {
+    DWORD buf = dscp_value_;
+    // This requires admin rights, and may fail, if so we ignore it
+    // as AddSocketToFlow should still do *approximately* the right thing.
+    qos_.SetFlow(qos_handle_, flow_id_, QOSSetOutgoingDSCPValue, sizeof(buf),
+                 &buf, 0, NULL);
+  }
+
+  return OK;
 }
 
 }  // namespace net

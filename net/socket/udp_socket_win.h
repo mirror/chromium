@@ -35,6 +35,108 @@ class IPAddress;
 class NetLog;
 struct NetLogSource;
 
+// QWAVE (Quality Windows Audio/Video Experience) is the latest windows
+// library for setting packet priorities (and other things). Unfortunately,
+// Microsoft has decided that setting the DSCP bits with setsockopt() no
+// longer works, so we have to use this API instead.
+// This class is meant to be used as a singleton. It exposes a few dynamically
+// loaded functions and a bool called "qwave_supported".
+class NET_EXPORT QwaveAPI {
+  typedef BOOL(WINAPI* CreateHandleFn)(PQOS_VERSION, PHANDLE);
+  typedef BOOL(WINAPI* CloseHandleFn)(HANDLE);
+  typedef BOOL(WINAPI* AddSocketToFlowFn)(HANDLE,
+                                          SOCKET,
+                                          PSOCKADDR,
+                                          QOS_TRAFFIC_TYPE,
+                                          DWORD,
+                                          PQOS_FLOWID);
+  typedef BOOL(WINAPI* RemoveSocketFromFlowFn)(HANDLE,
+                                               SOCKET,
+                                               QOS_FLOWID,
+                                               DWORD);
+  typedef BOOL(WINAPI* SetFlowFn)(HANDLE,
+                                  QOS_FLOWID,
+                                  QOS_SET_FLOW,
+                                  ULONG,
+                                  PVOID,
+                                  DWORD,
+                                  LPOVERLAPPED);
+
+ public:
+  QwaveAPI();
+
+  static QwaveAPI& Get();
+
+  bool qwave_supported() const;
+  virtual BOOL CreateHandle(PQOS_VERSION version, PHANDLE handle);
+  BOOL CloseHandle(HANDLE handle);
+  virtual BOOL AddSocketToFlow(HANDLE handle,
+                               SOCKET socket,
+                               PSOCKADDR addr,
+                               QOS_TRAFFIC_TYPE traffic_type,
+                               DWORD flags,
+                               PQOS_FLOWID flow_id);
+  virtual BOOL RemoveSocketFromFlow(HANDLE handle,
+                                    SOCKET socket,
+                                    QOS_FLOWID flow_id,
+                                    DWORD reserved);
+  virtual BOOL SetFlow(HANDLE handle,
+                       QOS_FLOWID flow_id,
+                       QOS_SET_FLOW op,
+                       ULONG size,
+                       PVOID data,
+                       DWORD reserved,
+                       LPOVERLAPPED overlapped);
+
+ private:
+  bool qwave_supported_;
+  CreateHandleFn create_handle_func_;
+  CloseHandleFn close_handle_func_;
+  AddSocketToFlowFn add_socket_to_flow_func_;
+  RemoveSocketFromFlowFn remove_socket_from_flow_func_;
+  SetFlowFn set_flow_func_;
+
+  DISALLOW_COPY_AND_ASSIGN(QwaveAPI);
+};
+
+//-----------------------------------------------------------------------------
+
+// TODO(zstein): DscpManager test cases:
+// Preparing multiple addresses for sending.
+// Mixed IPv4 and IPv6 addresses.
+
+// Hides the fact that DSCP values are set per-remote endpoint instead of just
+// per-socket on Windows. The implementation uses a single qos flow
+class NET_EXPORT DscpManager {
+ public:
+  DscpManager(QwaveAPI& qos, SOCKET socket, HANDLE qos_handle);
+  ~DscpManager();
+
+  // Remembers the latest |dscp| and |traffic_type| so PrepareToSend can
+  // add remote addresses to the qos flow. Destroys the old flow if it exists
+  // and |dscp| changes.
+  void Set(DiffServCodePoint dscp, QOS_TRAFFIC_TYPE traffic_type);
+
+  // Constructs a qos flow for the latest set DSCP value if we don't already
+  // have one. Adds |remote_address| to the qos flow if it hasn't been added
+  // already. Does nothing if no DSCP value has been Set.
+  int PrepareForSend(const IPEndPoint& remote_address);
+
+ private:
+  QwaveAPI& qos_;
+  SOCKET socket_;
+  HANDLE qos_handle_;
+
+  DiffServCodePoint dscp_value_ = DSCP_NO_CHANGE;
+  QOS_TRAFFIC_TYPE traffic_type_;
+  // The remote addresses currently in the flow.
+  std::set<IPEndPoint> configured_;
+  // 0 means no flow has been constructed.
+  QOS_FLOWID flow_id_ = 0;
+};
+
+//-----------------------------------------------------------------------------
+
 class NET_EXPORT UDPSocketWin : public base::win::ObjectWatcher::Delegate {
  public:
   UDPSocketWin(DatagramSocket::BindType bind_type,
@@ -258,6 +360,11 @@ class NET_EXPORT UDPSocketWin : public base::win::ObjectWatcher::Delegate {
   // Binds to a random port on |address|.
   int RandomBind(const IPAddress& address);
 
+  // This is provided to allow QwaveAPI mocking in tests. |UDPSocketWin| method
+  // implementations should call |GetQwaveAPI()| instead of |QwaveAPI::Get()|
+  // directly.
+  virtual QwaveAPI& GetQwaveAPI();
+
   SOCKET socket_;
   int addr_family_;
   bool is_connected_;
@@ -322,7 +429,10 @@ class NET_EXPORT UDPSocketWin : public base::win::ObjectWatcher::Delegate {
 
   // QWAVE data. Used to set DSCP bits on outgoing packets.
   HANDLE qos_handle_;
+  // Used for connected sockets.
   QOS_FLOWID qos_flow_id_;
+  // Used for unconnected sockets.
+  std::unique_ptr<DscpManager> dscp_manager_;
 
   THREAD_CHECKER(thread_checker_);
 
@@ -332,64 +442,6 @@ class NET_EXPORT UDPSocketWin : public base::win::ObjectWatcher::Delegate {
 
   DISALLOW_COPY_AND_ASSIGN(UDPSocketWin);
 };
-
-//-----------------------------------------------------------------------------
-
-// QWAVE (Quality Windows Audio/Video Experience) is the latest windows
-// library for setting packet priorities (and other things). Unfortunately,
-// Microsoft has decided that setting the DSCP bits with setsockopt() no
-// longer works, so we have to use this API instead.
-// This class is meant to be used as a singleton. It exposes a few dynamically
-// loaded functions and a bool called "qwave_supported".
-class NET_EXPORT QwaveAPI {
-  typedef BOOL (WINAPI *CreateHandleFn)(PQOS_VERSION, PHANDLE);
-  typedef BOOL (WINAPI *CloseHandleFn)(HANDLE);
-  typedef BOOL (WINAPI *AddSocketToFlowFn)(
-      HANDLE, SOCKET, PSOCKADDR, QOS_TRAFFIC_TYPE, DWORD, PQOS_FLOWID);
-  typedef BOOL (WINAPI *RemoveSocketFromFlowFn)(
-      HANDLE, SOCKET, QOS_FLOWID, DWORD);
-  typedef BOOL (WINAPI *SetFlowFn)(
-      HANDLE, QOS_FLOWID, QOS_SET_FLOW, ULONG, PVOID, DWORD, LPOVERLAPPED);
-
- public:
-  QwaveAPI();
-
-  static QwaveAPI& Get();
-
-  bool qwave_supported() const;
-  BOOL CreateHandle(PQOS_VERSION version, PHANDLE handle);
-  BOOL CloseHandle(HANDLE handle);
-  BOOL AddSocketToFlow(HANDLE handle,
-                       SOCKET socket,
-                       PSOCKADDR addr,
-                       QOS_TRAFFIC_TYPE traffic_type,
-                       DWORD flags,
-                       PQOS_FLOWID flow_id);
-  BOOL RemoveSocketFromFlow(HANDLE handle,
-                            SOCKET socket,
-                            QOS_FLOWID flow_id,
-                            DWORD reserved);
-  BOOL SetFlow(HANDLE handle,
-               QOS_FLOWID flow_id,
-               QOS_SET_FLOW op,
-               ULONG size,
-               PVOID data,
-               DWORD reserved,
-               LPOVERLAPPED overlapped);
-
- private:
-  FRIEND_TEST_ALL_PREFIXES(UDPSocketTest, SetDSCPFake);
-
-  bool qwave_supported_;
-  CreateHandleFn create_handle_func_;
-  CloseHandleFn close_handle_func_;
-  AddSocketToFlowFn add_socket_to_flow_func_;
-  RemoveSocketFromFlowFn remove_socket_from_flow_func_;
-  SetFlowFn set_flow_func_;
-
-  DISALLOW_COPY_AND_ASSIGN(QwaveAPI);
-};
-
 
 }  // namespace net
 
