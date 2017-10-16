@@ -510,7 +510,7 @@
     },
     {
       name: "JSImageDecode",
-      status: "test",
+      status: "stable",
     },
     {
       name: "KeyboardLock",
