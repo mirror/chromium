@@ -153,15 +153,15 @@ source_set("client_support") {
   public_configs = [ ":client_support_config" ]
 }
 
-executable("wayland_rects_client") {
+source_set("rects") {
   sources = [
     "clients/rects.cc",
+    "clients/rects.h",
   ]
 
   deps = [
     ":client_support",
     "//base",
-    "//build/config:exe_and_shlib_deps",
     "//skia",
     "//third_party/wayland:wayland_client",
     "//third_party/wayland-protocols:linux_dmabuf_protocol",
@@ -203,6 +203,18 @@ source_set("simple") {
       "//ui/gl:gl_config",
     ]
   }
+}
+
+executable("wayland_rects_client") {
+  sources = [
+    "clients/rects_main.cc",
+  ]
+  deps = [
+    ":client_support",
+    ":rects",
+    "//base",
+    "//build/config:exe_and_shlib_deps",
+  ]
 }
 
 executable("wayland_simple_client") {
@@ -256,6 +268,7 @@ test("wayland_client_perftests") {
 
   deps = [
     ":client_support",
+    ":rects",
     ":simple",
     ":wayland",
     "//ash:test_support_without_content",

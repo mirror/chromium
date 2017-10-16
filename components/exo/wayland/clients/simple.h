@@ -11,11 +11,11 @@ namespace exo {
 namespace wayland {
 namespace clients {
 
-class Simple : public wayland::clients::ClientBase {
+class Simple : public ClientBase {
  public:
   Simple();
 
-  void Run(int frames);
+  void Run(size_t frames);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Simple);

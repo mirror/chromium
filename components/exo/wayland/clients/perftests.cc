@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/command_line.h"
+#include "components/exo/wayland/clients/rects.h"
 #include "components/exo/wayland/clients/simple.h"
 #include "components/exo/wayland/clients/test/wayland_client_test.h"
 #include "testing/perf/perf_test.h"
@@ -12,8 +13,8 @@ namespace {
 using WaylandClientPerfTests = exo::WaylandClientTest;
 
 TEST_F(WaylandClientPerfTests, Simple) {
-  const int kWarmUpFrames = 20;
-  const int kTestFrames = 600;
+  const size_t kWarmUpFrames = 20;
+  const size_t kTestFrames = 600;
 
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   exo::wayland::clients::ClientBase::InitParams params;
@@ -30,6 +31,39 @@ TEST_F(WaylandClientPerfTests, Simple) {
   float fps = kTestFrames / time_delta.InSecondsF();
   perf_test::PrintResult("WaylandClientPerfTests", "", "Simple", fps,
                          "frames/s", true);
+}
+
+TEST_F(WaylandClientPerfTests, Rects) {
+  const size_t kWarmUpFrames = 20;
+  const size_t kTestFrames = 600;
+  const size_t kMaxFramesPending = 0;
+  const size_t kNumRects = 600;
+  const size_t kNumBenchmarkRuns = 0;
+  const size_t kBenchmarkIntervalMs = 5000;
+  const bool kShowFpsCounter = false;
+
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  exo::wayland::clients::ClientBase::InitParams params;
+  EXPECT_TRUE(params.FromCommandLine(*command_line));
+
+  exo::wayland::clients::Rects client;
+  EXPECT_TRUE(client.Init(params));
+
+  bool result = client.Run(
+      kWarmUpFrames, kMaxFramesPending, kNumRects, kNumBenchmarkRuns,
+      base::TimeDelta::FromMilliseconds(kBenchmarkIntervalMs), kShowFpsCounter);
+  EXPECT_TRUE(result);
+
+  auto start_time = base::Time::Now();
+  result = client.Run(
+      kTestFrames, kMaxFramesPending, kNumRects, kNumBenchmarkRuns,
+      base::TimeDelta::FromMilliseconds(kBenchmarkIntervalMs), kShowFpsCounter);
+  EXPECT_TRUE(result);
+
+  auto time_delta = base::Time::Now() - start_time;
+  float fps = kTestFrames / time_delta.InSecondsF();
+  perf_test::PrintResult("WaylandClientPerfTests", "", "Rects", fps, "frames/s",
+                         true);
 }
 
 }  // namespace

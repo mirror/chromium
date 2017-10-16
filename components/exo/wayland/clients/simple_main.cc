@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
   if (!client.Init(params))
     return 1;
 
-  client.Run(std::numeric_limits<int>::max());
+  client.Run(std::numeric_limits<size_t>::max());
 
   return 0;
 }
