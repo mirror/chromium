@@ -165,6 +165,9 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
   // Update any histograms with the given value.
   void UpdateHistograms(float new_value);
 
+  // TODO(crbug.com/764396)
+  void WarnSetterOverlapsEvent(int event_index, BaseAudioContext&) const;
+
  private:
   AudioParamHandler(BaseAudioContext&,
                     AudioParamType,
@@ -273,6 +276,9 @@ class AudioParam final : public GarbageCollectedFinalized<AudioParam>,
 
   RefPtr<AudioParamHandler> handler_;
   Member<BaseAudioContext> context_;
+
+  void WarnIfSetterOverlapsEvent();
+  static bool value_setter_warning_done_;
 };
 
 }  // namespace blink

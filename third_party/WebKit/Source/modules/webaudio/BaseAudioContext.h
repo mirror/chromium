@@ -338,6 +338,9 @@ class MODULES_EXPORT BaseAudioContext
   AudioWorkletMessagingProxy* WorkletMessagingProxy();
   bool HasWorkletMessagingProxy() const;
 
+  // TODO(crbug.com/764396)
+  void CountValueSetterConflict(bool does_conflict);
+
  protected:
   enum ContextType { kRealtimeContext, kOfflineContext };
 
@@ -516,6 +519,10 @@ class MODULES_EXPORT BaseAudioContext
 
   bool has_worklet_messaging_proxy_ = false;
   Member<AudioWorkletMessagingProxy> worklet_messaging_proxy_;
+
+  // TODO(crbug.com/764396)
+  unsigned count_value_setter_calls_;
+  unsigned count_value_setter_conflicts_;
 };
 
 }  // namespace blink
