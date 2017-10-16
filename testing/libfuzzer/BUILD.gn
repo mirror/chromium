@@ -31,6 +31,7 @@ config("fuzzer_test_config") {
     ldflags = [
       "-Wl,-U,_LLVMFuzzerCustomMutator",
       "-Wl,-U,_LLVMFuzzerInitialize",
+      "-Wl,-exported_symbol,_LLVMFuzzerInitialize",
     ]
   }
 }
