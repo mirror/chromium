@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "715c9a35_50d1b54b",
+        "filename": "content/renderer/media/rtc_peer_connection_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-10-16T21:01:13Z",
+      "side": 1,
+      "message": "Same comment as on other CL; I think it\u0027s best to avoid \"ForTesting\" methods when possible, testing through the public interface.",
+      "revId": "77cf4be7deabea0214b95161e8bc11cd42bbc1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
