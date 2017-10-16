@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06003377_ddf96ac3",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkTransferableMessageStructTraits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-16T18:20:23Z",
+      "side": 1,
+      "message": "hopefully it\u0027s not confusing that this actually implicitly calls the (explicit) constructor of blink::MessagePortChannel for each pipe?",
+      "revId": "fdd8fe8c5c316b4f5275b9118c08367234c96e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
