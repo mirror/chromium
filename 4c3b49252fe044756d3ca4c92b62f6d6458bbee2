@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3431530c_3056fd43",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-16T08:02:14Z",
+      "side": 1,
+      "message": "nitty nit: NumURLs, to match the capitalization of AddURL",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 13
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12f4fee_c1048e2d",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-16T08:02:14Z",
+      "side": 1,
+      "message": "I think expected_calls is always equal to the number of calls to QueryTopSites, right? Then it doesn\u0027t need to be passed in. Just initialize to 0, and increment it in QueryTopSites. Or am I missing something?",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
