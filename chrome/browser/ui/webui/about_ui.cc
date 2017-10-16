@@ -468,9 +468,9 @@ std::string BuildAboutDiscardsRunPage() {
 }
 
 std::vector<std::string> GetHtmlTabDescriptorsForDiscardPage() {
-  resource_coordinator::TabManager* tab_manager =
-      g_browser_process->GetTabManager();
-  resource_coordinator::TabStatsList stats = tab_manager->GetTabStats();
+ /* resource_coordinator::TabManager* tab_manager =
+      g_browser_process->GetTabManager();*/
+  resource_coordinator::TabStatsList stats; /* = tab_manager->GetTabStats(); */
   std::vector<std::string> titles;
   titles.reserve(stats.size());
   for (resource_coordinator::TabStatsList::iterator it = stats.begin();

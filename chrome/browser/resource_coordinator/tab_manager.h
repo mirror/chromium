@@ -13,6 +13,7 @@
 
 #include "base/callback.h"
 #include "base/compiler_specific.h"
+#include "base/containers/flat_map.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/memory_pressure_listener.h"
@@ -29,6 +30,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "content/public/browser/navigation_throttle.h"
 #include "ui/gfx/native_widget_types.h"
+#include "chrome/browser/resource_coordinator/system_condition.h"
 
 class BrowserList;
 class GURL;
@@ -46,6 +48,7 @@ class WebContents;
 namespace resource_coordinator {
 
 class BackgroundTabNavigationThrottle;
+class DiscardableUnit;
 
 #if defined(OS_CHROMEOS)
 class TabManagerDelegate;
@@ -59,6 +62,8 @@ struct BrowserInfo {
   bool window_is_minimized = false;
   bool browser_is_app = false;
 };
+
+using DiscardableUnits = std::vector<DiscardableUnit*>;
 
 // The TabManager periodically updates (see
 // |kAdjustmentIntervalSeconds| in the source) the status of renderers
@@ -98,39 +103,16 @@ class TabManager : public TabStripModelObserver,
   // See member comment.
   bool recent_tab_discard() const { return recent_tab_discard_; }
 
-  // Start/Stop the Tab Manager.
+  // Starts the Tab Manager.
   void Start();
-  void Stop();
 
-  // Returns the list of the stats for all renderers. Must be called on the UI
-  // thread. The returned list is sorted by reversed importance.
-  TabStatsList GetTabStats() const;
+  // Returns a list of DiscardableUnits sorted by reversed importance.
+  DiscardableUnits GetDiscardableUnits() const;
 
-  // Returns true if |contents| is currently discarded.
-  bool IsTabDiscarded(content::WebContents* contents) const;
-
-  // Goes through a list of checks to see if a tab is allowed to be discarded by
-  // the automatic tab discarding mechanism. Note that this is not used when
-  // discarding a particular tab from about:discards.
-  bool CanDiscardTab(const TabStats& tab_stats) const;
-
-  // Indicates the criticality of the situation when attempting to discard a
-  // tab.
-  enum DiscardTabCondition { kProactiveShutdown, kUrgentShutdown };
-
-  // Discards a tab to free the memory occupied by its renderer. The tab still
-  // exists in the tab-strip; clicking on it will reload it. If the |condition|
-  // is urgent, an aggressive fast-kill will be attempted if the sudden
-  // termination disablers are allowed to be ignored (e.g. On ChromeOS, we can
-  // ignore an unload handler and fast-kill the tab regardless).
-  void DiscardTab(DiscardTabCondition condition);
-
-  // Discards a tab with the given unique ID. The tab still exists in the
-  // tab-strip; clicking on it will reload it. Returns null if the tab cannot
-  // be found or cannot be discarded. Otherwise returns the new web_contents
-  // of the discarded tab.
-  content::WebContents* DiscardTabById(int64_t target_web_contents_id,
-                                       DiscardTabCondition condition);
+  void OnDiscardableUnitCreated(DiscardableUnit* discardable_unit);
+  void OnDiscardableUnitDestroyed(DiscardableUnit* discardable_unit);
+  void OnDiscardableUnitFocused(DiscardableUnit* discardable_unit);
+  void OnDiscardableUnitVisibilityChanged(DiscardableUnit* discardable_unit, bool is_visible);
 
   // Method used by the extensions API to discard tabs. If |contents| is null,
   // discards the least important tab using DiscardTab(). Otherwise discards
@@ -138,44 +120,9 @@ class TabManager : public TabStripModelObserver,
   // was discarded.
   content::WebContents* DiscardTabByExtension(content::WebContents* contents);
 
-  // Log memory statistics for the running processes, then discards a tab.
-  // Tab discard happens sometime later, as collecting the statistics touches
-  // multiple threads and takes time.
-  void LogMemoryAndDiscardTab(DiscardTabCondition condition);
-
-  // Log memory statistics for the running processes, then call the callback.
-  void LogMemory(const std::string& title, const base::Closure& callback);
-
-  // Used to set the test TickClock, which then gets used by NowTicks(). See
-  // |test_tick_clock_| for more details.
-  void set_test_tick_clock(base::TickClock* test_tick_clock);
-
-  // Returns TabStats for all tabs in the current Chrome instance. The tabs are
-  // sorted first by most recently used to least recently used Browser and
-  // second by index in the Browser. |windows_sorted_by_z_index| is a list of
-  // Browser windows sorted by z-index, from topmost to bottommost. If left
-  // empty, no window occlusion checks will be performed. Must be called on the
-  // UI thread.
-  TabStatsList GetUnsortedTabStats(
-      const std::vector<gfx::NativeWindow>& windows_sorted_by_z_index =
-          std::vector<gfx::NativeWindow>()) const;
-
-  void AddObserver(TabManagerObserver* observer);
-  void RemoveObserver(TabManagerObserver* observer);
-
   // Used in tests to change the protection time of the tabs.
   void set_minimum_protection_time_for_tests(
       base::TimeDelta minimum_protection_time);
-
-  // Returns the auto-discardable state of the tab. When true, the tab is
-  // eligible to be automatically discarded when critical memory pressure hits,
-  // otherwise the tab is ignored and will never be automatically discarded.
-  // Note that this property doesn't block the discarding of the tab via other
-  // methods (about:discards for instance).
-  bool IsTabAutoDiscardable(content::WebContents* contents) const;
-
-  // Sets/clears the auto-discardable state of the tab.
-  void SetTabAutoDiscardableState(content::WebContents* contents, bool state);
 
   // Returns true when a given renderer can be purged if the specified
   // renderer is eligible for purging.
@@ -206,10 +153,6 @@ class TabManager : public TabStripModelObserver,
   // Notifies TabManager that one tab WebContents has been destroyed. TabManager
   // needs to clean up data related to that tab.
   void OnWebContentsDestroyed(content::WebContents* contents);
-
-  // Returns true if |first| is considered less desirable to be killed than
-  // |second|.
-  static bool CompareTabStats(const TabStats& first, const TabStats& second);
 
   // Returns a unique ID for a WebContents. Do not cast back to a pointer, as
   // the WebContents could be deleted if the user closed the tab.
@@ -305,6 +248,14 @@ class TabManager : public TabStripModelObserver,
   // min time to purge times this value.
   const int kDefaultMinMaxTimeToPurgeRatio = 4;
 
+  // Log memory statistics for the running processes, then discards a tab.
+  // Tab discard happens sometime later, as collecting the statistics touches
+  // multiple threads and takes time.
+  void LogMemoryAndDiscardTab(SystemCondition condition);
+
+  // Log memory statistics for the running processes, then call the callback.
+  void LogMemory(const std::string& title, const base::Closure& callback);
+
   // Finds TabStripModel which has a WebContents whose id is the given
   // web_contents_id, and returns the WebContents index and the TabStripModel.
   int FindTabStripModelById(int64_t target_web_contents_id,
@@ -320,7 +271,7 @@ class TabManager : public TabStripModelObserver,
   void OnAutoDiscardableStateChange(content::WebContents* contents,
                                     bool is_auto_discardable);
 
-  static void PurgeMemoryAndDiscardTab(DiscardTabCondition condition);
+  static void PurgeMemoryAndDiscardTab(SystemCondition condition);
 
   // Returns true if the |url| represents an internal Chrome web UI page that
   // can be easily reloaded and hence makes a good choice to discard.
@@ -379,7 +330,7 @@ class TabManager : public TabStripModelObserver,
   // the operation fails (return value used only in testing).
   content::WebContents* DiscardWebContentsAt(int index,
                                              TabStripModel* model,
-                                             DiscardTabCondition condition);
+                                             SystemCondition condition);
 
   // Pause or resume background tab opening according to memory pressure change
   // if there are pending background tabs.
@@ -421,7 +372,7 @@ class TabManager : public TabStripModelObserver,
 
   // Implementation of DiscardTab. Returns null if no tab was discarded.
   // Otherwise returns the new web_contents of the discarded tab.
-  content::WebContents* DiscardTabImpl(DiscardTabCondition condition);
+  content::WebContents* DiscardTabImpl(SystemCondition condition);
 
   // Returns true if tabs can be discarded only once.
   bool CanOnlyDiscardOnce() const;
@@ -500,6 +451,25 @@ class TabManager : public TabStripModelObserver,
   }
 
   TabManagerStatsCollector* stats_collector() { return stats_collector_.get(); }
+
+  struct DiscardableUnitData {
+    DiscardableUnitData(DiscardableUnit* discardable_unit);
+
+    // The DiscardableUnit.
+    DiscardableUnit* discardable_unit;
+
+    // The last time at which this DiscardableUnit was focused, or
+    // TimeTicks::Max() if the DiscardableUnit is currently focused.
+    base::TimeTicks last_focused_time;
+
+    // The last time at which this DiscardableUnit was visible to the user, or
+    // TimeTicks::Max() if the DiscardableUnit is currently visible to the user.
+    base::TimeTicks last_visible_time;
+  };
+
+  base::flat_map<DiscardableUnit*, DiscardableUnitData> discardable_units_;
+
+  DiscardableUnit* focused_discardable_unit_ = nullptr;
 
   // Timer to periodically update the stats of the renderers.
   base::RepeatingTimer update_timer_;

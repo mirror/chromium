@@ -244,9 +244,7 @@ TabManager::TabManager()
   stats_collector_.reset(new TabManagerStatsCollector());
 }
 
-TabManager::~TabManager() {
-  Stop();
-}
+TabManager::~TabManager() = default;
 
 void TabManager::Start() {
   background_tab_loading_mode_ = BackgroundTabLoadingMode::kStaggered;
@@ -334,11 +332,43 @@ void TabManager::Start() {
     max_time_to_purge_ = base::TimeDelta::FromSeconds(max_time_to_purge_sec);
 }
 
-void TabManager::Stop() {
-  update_timer_.Stop();
-  recent_tab_discard_timer_.Stop();
-  force_load_timer_->Stop();
-  memory_pressure_listener_.reset();
+DiscardableUnits GetDiscardableUnits() const {
+  return DiscardableUnits(); // fot extensions
+}
+
+void TabManager::OnDiscardableUnitCreated(DiscardableUnit* discardable_unit) {
+  discardable_units_.insert(
+      std::make_pair(discardable_unit, DiscardableUnitData(discardable_unit)));
+}
+
+void TabManager::OnDiscardableUnitDestroyed(DiscardableUnit* discardable_unit) {
+  if (focused_discardable_unit_ == discardable_unit)
+    focused_discardable_unit_ = nullptr;
+  discardable_units_.erase(discardable_unit);
+}
+
+void TabManager::OnDiscardableUnitFocused(DiscardableUnit* discardable_unit) {
+  if (focused_discardable_unit_) {
+    auto previously_focused_discardable_unit_it =
+        discardable_units_.find(focused_discardable_unit_);
+    DCHECK(previously_focused_discardable_unit_it != discardable_units_.end());
+    DCHECK_EQ(previously_focused_discardable_unit_it->second.last_focused_time,
+              base::TimeTicks::Max());
+    previously_focused_discardable_unit_it->second.last_focused_time =
+        base::TimeTicks::Now();
+  }
+  focused_discardable_unit_ = discardable_unit;
+  auto focused_discardable_unit_it = discardable_units_.find(discardable_unit);
+  DCHECK(focused_discardable_unit_it != discardable_units_.end());
+  focused_discardable_unit_it->second.last_focused_time =
+      base::TimeTicks::Max();
+}
+
+void TabManager::OnDiscardableUnitVisibilityChanged(
+    DiscardableUnit* discardable_unit, bool is_visible) {
+  auto it = discardable_units_.find(discardable_unit);
+  DCHECK(it != discardable_units_.end());
+  it->second.last_visible_time = is_visible ? base::TimeTicks::Max() : base::TimeTicks::Now();
 }
 
 int TabManager::FindTabStripModelById(int64_t target_web_contents_id,
@@ -357,116 +387,16 @@ int TabManager::FindTabStripModelById(int64_t target_web_contents_id,
   return -1;
 }
 
-TabStatsList TabManager::GetTabStats() const {
-  TabStatsList stats_list(GetUnsortedTabStats());
-
-  // Sort the collected data so that least desirable to be killed is first, most
-  // desirable is last.
-  std::sort(stats_list.begin(), stats_list.end(), CompareTabStats);
-
-  return stats_list;
-}
-
-bool TabManager::IsTabDiscarded(content::WebContents* contents) const {
-  return GetWebContentsData(contents)->IsDiscarded();
-}
-
-bool TabManager::CanDiscardTab(const TabStats& tab_stats) const {
-#if defined(OS_CHROMEOS)
-  if (tab_stats.is_active && tab_stats.is_in_visible_window)
-    return false;
-#else
-  if (tab_stats.is_active)
-    return false;
-#endif  // defined(OS_CHROMEOS)
-
-  TabStripModel* model;
-  const int idx = FindTabStripModelById(tab_stats.tab_contents_id, &model);
-
-  if (idx == -1)
-    return false;
-
-  WebContents* web_contents = model->GetWebContentsAt(idx);
-
-  // Do not discard tabs that don't have a valid URL (most probably they have
-  // just been opened and dicarding them would lose the URL).
-  // TODO(georgesak): Look into a workaround to be able to kill the tab without
-  // losing the pending navigation.
-  if (!web_contents->GetLastCommittedURL().is_valid() ||
-      web_contents->GetLastCommittedURL().is_empty()) {
-    return false;
-  }
-
-  // Do not discard tabs in which the user has entered text in a form, lest that
-  // state gets lost.
-  if (web_contents->GetPageImportanceSignals().had_form_interaction)
-    return false;
-
-  // Do not discard tabs that are playing either playing audio or accessing the
-  // microphone or camera as it's too distruptive to the user experience. Note
-  // that tabs that have recently stopped playing audio by at least
-  // |kAudioProtectionTimeSeconds| seconds are protected as well.
-  if (IsMediaTab(web_contents))
-    return false;
-
-  // Do not discard PDFs as they might contain entry that is not saved and they
-  // don't remember their scrolling positions. See crbug.com/547286 and
-  // crbug.com/65244.
-  // TODO(georgesak): Remove this workaround when the bugs are fixed.
-  if (web_contents->GetContentsMimeType() == "application/pdf")
-    return false;
-
-  // Do not discard a previously discarded tab if that's the desired behavior.
-  if (discard_once_ && GetWebContentsData(web_contents)->DiscardCount() > 0)
-    return false;
-
-  // Do not discard a recently used tab.
-  if (minimum_protection_time_.InSeconds() > 0) {
-    auto delta =
-        NowTicks() - GetWebContentsData(web_contents)->LastInactiveTime();
-    if (delta < minimum_protection_time_)
-      return false;
-  }
-
-  // Do not discard a tab that was explicitly disallowed to.
-  if (!IsTabAutoDiscardable(web_contents))
-    return false;
-
-  return true;
-}
-
-void TabManager::DiscardTab(DiscardTabCondition condition) {
-#if defined(OS_CHROMEOS)
-  // Call Chrome OS specific low memory handling process.
-  if (base::FeatureList::IsEnabled(features::kArcMemoryManagement)) {
-    delegate_->LowMemoryKill(condition);
-    return;
-  }
-#endif
-  DiscardTabImpl(condition);
-}
-
-WebContents* TabManager::DiscardTabById(int64_t target_web_contents_id,
-                                        DiscardTabCondition condition) {
-  TabStripModel* model;
-  int index = FindTabStripModelById(target_web_contents_id, &model);
-
-  if (index == -1)
-    return nullptr;
-
-  VLOG(1) << "Discarding tab " << index << " id " << target_web_contents_id;
-
-  return DiscardWebContentsAt(index, model, condition);
-}
-
 WebContents* TabManager::DiscardTabByExtension(content::WebContents* contents) {
-  if (contents)
+  /*if (contents)
     return DiscardTabById(IdFromWebContents(contents), kProactiveShutdown);
 
   return DiscardTabImpl(kProactiveShutdown);
+  */
+  return nullptr;
 }
 
-void TabManager::LogMemoryAndDiscardTab(DiscardTabCondition condition) {
+void TabManager::LogMemoryAndDiscardTab(SystemCondition condition) {
   LogMemory("Tab Discards Memory details",
             base::Bind(&TabManager::PurgeMemoryAndDiscardTab, condition));
 }
@@ -550,45 +480,6 @@ bool TabManager::CanSuspendBackgroundedRenderer(int render_process_id) const {
 }
 
 // static
-bool TabManager::CompareTabStats(const TabStats& first,
-                                 const TabStats& second) {
-  // Protect non auto-discardable tabs.
-  if (first.is_auto_discardable != second.is_auto_discardable)
-    return !first.is_auto_discardable;
-
-  // Protect tabs with pending form entries.
-  if (first.has_form_entry != second.has_form_entry)
-    return first.has_form_entry;
-
-  // Protect streaming audio and video conferencing tabs as these are similar to
-  // active tabs.
-  if (first.is_media != second.is_media)
-    return first.is_media;
-
-  // Tab with internal web UI like NTP or Settings are good choices to discard,
-  // so protect non-Web UI and let the other conditionals finish the sort.
-  if (first.is_internal_page != second.is_internal_page)
-    return !first.is_internal_page;
-
-  // Being pinned is important to protect.
-  if (first.is_pinned != second.is_pinned)
-    return first.is_pinned;
-
-  // Being an app is important too, as it's the only visible surface in the
-  // window and should not be discarded.
-  if (first.is_app != second.is_app)
-    return first.is_app;
-
-  // A tab with a beforeunload handler usually indicates that the tab has
-  // unsaved user state.
-  if (first.has_beforeunload_handler != second.has_beforeunload_handler)
-    return first.has_beforeunload_handler;
-
-  // Being more recently active is more important.
-  return first.last_active > second.last_active;
-}
-
-// static
 int64_t TabManager::IdFromWebContents(WebContents* web_contents) {
   return reinterpret_cast<int64_t>(web_contents);
 }
@@ -648,7 +539,7 @@ void TabManager::OnAutoDiscardableStateChange(content::WebContents* contents,
 }
 
 // static
-void TabManager::PurgeMemoryAndDiscardTab(DiscardTabCondition condition) {
+void TabManager::PurgeMemoryAndDiscardTab(SystemCondition condition) {
   TabManager* manager = g_browser_process->GetTabManager();
   manager->PurgeBrowserMemory();
   manager->DiscardTab(condition);
@@ -851,7 +742,7 @@ void TabManager::PurgeBackgroundedTabsIfNeeded() {
 
 WebContents* TabManager::DiscardWebContentsAt(int index,
                                               TabStripModel* model,
-                                              DiscardTabCondition condition) {
+                                              SystemCondition condition) {
   WebContents* old_contents = model->GetWebContentsAt(index);
 
   // Can't discard tabs that are already discarded.
@@ -1085,7 +976,7 @@ TimeTicks TabManager::NowTicks() const {
 // such as tabs created with JavaScript window.open(). Potentially consider
 // discarding the entire set together, or use that in the priority computation.
 content::WebContents* TabManager::DiscardTabImpl(
-    DiscardTabCondition condition) {
+    SystemCondition condition) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   TabStatsList stats = GetTabStats();
 
@@ -1388,5 +1279,9 @@ bool TabManager::TriggerForceLoadTimerForTest() {
   timer_callback.Run();
   return true;
 }
+
+TabManager::DiscardableUnitData::DiscardableUnitData(
+    DiscardableUnit* discardable_unit)
+    : discardable_unit(discardable_unit) {}
 
 }  // namespace resource_coordinator
