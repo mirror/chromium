@@ -47,22 +47,6 @@ WebRtcAudioDeviceImpl::~WebRtcAudioDeviceImpl() {
   DCHECK(!initialized_) << "Terminate must have been called.";
 }
 
-int32_t WebRtcAudioDeviceImpl::AddRef() const {
-  // We can be AddRefed and released on both the UI thread as well as
-  // libjingle's signaling thread.
-  return base::subtle::Barrier_AtomicIncrement(&ref_count_, 1);
-}
-
-int32_t WebRtcAudioDeviceImpl::Release() const {
-  // We can be AddRefed and released on both the UI thread as well as
-  // libjingle's signaling thread.
-  int ret = base::subtle::Barrier_AtomicIncrement(&ref_count_, -1);
-  if (ret == 0) {
-    delete this;
-  }
-  return ret;
-}
-
 void WebRtcAudioDeviceImpl::RenderData(media::AudioBus* audio_bus,
                                        int sample_rate,
                                        int audio_delay_milliseconds,
