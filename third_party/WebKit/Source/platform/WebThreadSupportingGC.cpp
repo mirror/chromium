@@ -6,7 +6,6 @@
 
 #include <memory>
 #include "platform/MemoryCoordinator.h"
-#include "platform/heap/SafePoint.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Threading.h"
