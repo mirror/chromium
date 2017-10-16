@@ -182,6 +182,30 @@
     },
     {
       "key": {
+        "uuid": "9130fcc2_6e8b50ac",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-16T15:03:17Z",
+      "side": 1,
+      "message": "I\u0027d rather we simply obey a rule of, if InitiateTruncateEntry returns true, that we don\u0027t modify the members.\n\nWhat you\u0027re saying, \"we know we are already in do loop\", requires that the reader have implementation knowledge (e.g., knowledge beyond public comments) of InitiateTruncateEntry to understand why it\u0027s okay.",
+      "parentUuid": "f779381c_beac552e",
+      "range": {
+        "startLine": 420,
+        "startChar": 2,
+        "endLine": 420,
+        "endChar": 21
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6a2c078_19bb5021",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 60
