@@ -543,6 +543,11 @@ size_t HTMLDocumentParser::ProcessTokenizedChunkFromBackgroundParser(
       FetchQueuedPreloads();
     }
 
+    DCHECK(GetDocument());
+    if (GetDocument()->Loader()) {
+      GetDocument()->Loader()->Fetcher()->FirstChunkProcessed();
+    }
+
     if (IsPaused()) {
       // The script or stylesheet should be the last token of this bunch.
       DCHECK_EQ(it + 1, tokens->end());
