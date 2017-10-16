@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09a133b2_87b1be96",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T07:02:06Z",
+      "side": 1,
+      "message": "Should we use thread-safe version here?",
+      "revId": "ed3923f784a881d65524bd2e324996caeab752af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f98910_28a29206",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T07:02:06Z",
+      "side": 1,
+      "message": "Might we want to have a short (todo) comment to note that we might want more break-down here (but after we see the initial results)?  (Up to you)",
+      "revId": "ed3923f784a881d65524bd2e324996caeab752af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
