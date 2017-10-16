@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3df4dcdd_3ff71b61",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPhase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-10-16T21:02:47Z",
+      "side": 1,
+      "message": "Do we still need the \u003d \u003cdecimal\u003e here and below?",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 22
+      },
+      "revId": "8f51acc7fe6c5dd4455012c17894b9946b3a7165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cdefcdd_4fb2ebff",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPhase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-10-16T21:02:47Z",
+      "side": 1,
+      "message": "nit: adding sentinel values like this to enums is starting to feel undesirable to me as I work with them more, since they aren\u0027t actually a real enum value, but they can be incorrectly referenced as one. We could move to a const value to which we assign kClippingMask?",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 23
+      },
+      "revId": "8f51acc7fe6c5dd4455012c17894b9946b3a7165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
