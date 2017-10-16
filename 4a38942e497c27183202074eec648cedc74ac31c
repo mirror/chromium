@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45dc2b27_3ce22e7e",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-10-16T18:33:32Z",
+      "side": 1,
+      "message": "I assume the x,y,z to alpha,beta,gamma mapping is correct ;). maybe checking manually (through a webpage) would be good.",
+      "revId": "4a38942e497c27183202074eec648cedc74ac31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
