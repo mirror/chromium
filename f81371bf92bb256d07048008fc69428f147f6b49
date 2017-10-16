@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a6703e5_4c259d9b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_database.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-16T15:48:35Z",
+      "side": 1,
+      "message": "nit: CreateWithProtoDatabaseImpl?\n\nOtherwise when seeing RemoteSuggestionDatabase::Create I start wondering why this is not a constructor.",
+      "range": {
+        "startLine": 39,
+        "startChar": 52,
+        "endLine": 39,
+        "endChar": 58
+      },
+      "revId": "f81371bf92bb256d07048008fc69428f147f6b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf9ea8c_9e096220",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_database_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-16T15:48:35Z",
+      "side": 1,
+      "message": "I would either rewrite the comment (saying that databases are owned by db_) or set them to nullptr after reset().\nCurrently it feels like they are being destroyed by setting them to nullptr.",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "f81371bf92bb256d07048008fc69428f147f6b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8f1d07_32feea77",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_database_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-16T15:48:35Z",
+      "side": 1,
+      "message": "Why isn\u0027t this \"Load\"?\nIf it is intended, a comment would be nice.",
+      "range": {
+        "startLine": 140,
+        "startChar": 14,
+        "endLine": 140,
+        "endChar": 17
+      },
+      "revId": "f81371bf92bb256d07048008fc69428f147f6b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b8d14b_d005d1ff",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_database_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-16T15:48:35Z",
+      "side": 1,
+      "message": "A comment explaining why you don\u0027t provide the data explicitly may be useful.",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 38
+      },
+      "revId": "f81371bf92bb256d07048008fc69428f147f6b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
