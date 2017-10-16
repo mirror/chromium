@@ -217,6 +217,8 @@ class ExternalVideoEncoder::VEAClientImpl
   }
 
  protected:
+  void NotifyFlushDone() final { NOTIMPLEMENTED(); }
+
   void NotifyError(VideoEncodeAccelerator::Error error) final {
     DCHECK(task_runner_->RunsTasksInCurrentSequence());
 

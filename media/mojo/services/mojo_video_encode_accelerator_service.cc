@@ -212,4 +212,7 @@ void MojoVideoEncodeAcceleratorService::NotifyError(
   vea_client_->NotifyError(error);
 }
 
+void MojoVideoEncodeAcceleratorService::NotifyFlushDone() {
+  NOTIMPLEMENTED();
+}
 }  // namespace media

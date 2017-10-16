@@ -231,6 +231,10 @@ void GpuVideoEncodeAccelerator::NotifyError(
   }
 }
 
+void GpuVideoEncodeAccelerator::NotifyFlushDone() {
+  NOTIMPLEMENTED();
+}
+
 void GpuVideoEncodeAccelerator::OnWillDestroyStub() {
   DVLOG(2) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());

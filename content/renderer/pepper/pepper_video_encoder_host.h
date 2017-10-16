@@ -69,6 +69,7 @@ class CONTENT_EXPORT PepperVideoEncoderHost
                             bool key_frame,
                             base::TimeDelta timestamp) override;
   void NotifyError(media::VideoEncodeAccelerator::Error error) override;
+  void NotifyFlushDone() override;
 
   // ResourceHost implementation.
   int32_t OnResourceMessageReceived(

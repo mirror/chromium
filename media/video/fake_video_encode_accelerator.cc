@@ -83,6 +83,10 @@ void FakeVideoEncodeAccelerator::RequestEncodingParametersChange(
   stored_bitrates_.push_back(bitrate);
 }
 
+void FakeVideoEncodeAccelerator::Flush() {
+  NOTIMPLEMENTED();
+}
+
 void FakeVideoEncodeAccelerator::Destroy() { delete this; }
 
 void FakeVideoEncodeAccelerator::SendDummyFrameForTesting(bool key_frame) {
