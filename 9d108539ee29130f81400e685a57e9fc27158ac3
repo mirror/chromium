@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f7b61be_7ef2171d",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScopeTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-16T03:58:15Z",
+      "side": 1,
+      "message": "CaptureEvalErrorFlag::kCapture\nreturn error.IsEmpty(); -\u003e true: no error, false: some error.",
+      "range": {
+        "startLine": 200,
+        "startChar": 63,
+        "endLine": 200,
+        "endChar": 64
+      },
+      "revId": "9d108539ee29130f81400e685a57e9fc27158ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
