@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4196773d_a4c1c933",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-16T08:59:50Z",
+      "side": 1,
+      "message": "Remove trailing space.",
+      "range": {
+        "startLine": 7,
+        "startChar": 36,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "87ffc63d909a126f35f1bf4eddec62db3c780891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d29b16ae_3d1f585f",
+        "filename": "content/browser/browser_histogram_fetcher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-16T08:59:50Z",
+      "side": 1,
+      "message": "FindHistogram() is threadsafe so this could run on a sequence instead of doing work on the IO thread.",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 50
+      },
+      "revId": "87ffc63d909a126f35f1bf4eddec62db3c780891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d0fec2e_c600bcc6",
+        "filename": "content/browser/browser_histogram_fetcher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-16T08:59:50Z",
+      "side": 1,
+      "message": "You still need to run the callback.\n\nShould this call mojo::ReportBadMessage()?",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 10
+      },
+      "revId": "87ffc63d909a126f35f1bf4eddec62db3c780891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb946d2b_6f1763f1",
+        "filename": "content/browser/browser_histogram_fetcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-16T08:59:50Z",
+      "side": 1,
+      "message": "This should be more specific to what this class does (providing renderers access to histograms).",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 75
+      },
+      "revId": "87ffc63d909a126f35f1bf4eddec62db3c780891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436e148b_b8620b4a",
+        "filename": "content/browser/browser_histogram_fetcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-16T08:59:50Z",
+      "side": 1,
+      "message": "No content:: within namespace content.",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 22
+      },
+      "revId": "87ffc63d909a126f35f1bf4eddec62db3c780891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2927794_754c276f",
+        "filename": "content/browser/browser_histogram_fetcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-16T08:59:50Z",
+      "side": 1,
+      "message": "mojom::BrowserHistogramFetcher:",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 22
+      },
+      "revId": "87ffc63d909a126f35f1bf4eddec62db3c780891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1cb4eb6_d4816d23",
+        "filename": "content/renderer/stats_collection_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-16T08:59:50Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "87ffc63d909a126f35f1bf4eddec62db3c780891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0728dca1_d6ca3273",
+        "filename": "content/renderer/stats_collection_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-16T08:59:50Z",
+      "side": 1,
+      "message": "This isn\u0027t doing anything useful.",
+      "revId": "87ffc63d909a126f35f1bf4eddec62db3c780891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
