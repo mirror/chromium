@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7afe538_6035f7ff",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioParam/worklet-warnings-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-16T15:52:30Z",
+      "side": 1,
+      "message": "Maybe it should be\n\nAudioWorklet(\"noise-generator\").amplitude\n\nInstead?",
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3da7e4_02753c0d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-16T15:52:30Z",
+      "side": 1,
+      "message": "Not sure I really like this.  I think it\u0027s better if the constructor takes an extra arg to specify the name.\n\nWDYT?",
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
