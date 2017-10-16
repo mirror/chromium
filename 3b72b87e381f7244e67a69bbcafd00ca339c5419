@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf39d827_bc65fd9f",
+        "filename": "chrome/browser/vr/elements/spinner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-16T15:58:30Z",
+      "side": 1,
+      "message": "In retrospect, this should have been a unitless scale factor. I\u0027ve updated the value and name accordingly.",
+      "parentUuid": "085efc30_53fb580b",
+      "range": {
+        "startLine": 20,
+        "startChar": 21,
+        "endLine": 20,
+        "endChar": 34
+      },
+      "revId": "3b72b87e381f7244e67a69bbcafd00ca339c5419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34c31f9d_829d6588",
         "filename": "chrome/browser/vr/elements/spinner.cc",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-16T15:26:11Z",
       "side": 1,
       "message": "OOC, why the cute fractional for sweep and 1568 for duration?",
+      "revId": "3b72b87e381f7244e67a69bbcafd00ca339c5419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58791e2c_53b0e1e0",
+        "filename": "chrome/browser/vr/elements/spinner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-16T15:58:30Z",
+      "side": 1,
+      "message": "Not sure. This seemed to be the timing of this element elsewhere.",
+      "parentUuid": "34c31f9d_829d6588",
       "revId": "3b72b87e381f7244e67a69bbcafd00ca339c5419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "1ff907fa_9331db83",
+        "filename": "chrome/browser/vr/elements/spinner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-16T15:58:30Z",
+      "side": 1,
+      "message": "Yep, it was for symmetry. I\u0027ve unrolled the loop.",
+      "parentUuid": "0a039bc2_dd8452ca",
+      "revId": "3b72b87e381f7244e67a69bbcafd00ca339c5419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "609b160a_bf76cca5",
         "filename": "chrome/browser/vr/elements/spinner.cc",
         "patchSetId": 3
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "ae274112_2567b78a",
+        "filename": "chrome/browser/vr/elements/spinner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-16T15:58:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "609b160a_bf76cca5",
+      "revId": "3b72b87e381f7244e67a69bbcafd00ca339c5419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68823b09_c827cdbc",
         "filename": "chrome/browser/vr/elements/spinner_unittest.cc",
         "patchSetId": 3
@@ -90,6 +168,24 @@
       "revId": "3b72b87e381f7244e67a69bbcafd00ca339c5419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb3e9d04_349f6c38",
+        "filename": "chrome/browser/vr/elements/spinner_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-16T15:58:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68823b09_c827cdbc",
+      "revId": "3b72b87e381f7244e67a69bbcafd00ca339c5419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
