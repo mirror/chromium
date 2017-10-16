@@ -320,6 +320,8 @@ SkColor SkColorFromColorId(ui::NativeTheme::ColorId color_id) {
           SkColorFromColorId(
               ui::NativeTheme::kColorId_TextfieldDefaultBackground),
           0x80);
+    case ui::NativeTheme::kColorId_ResultsTableInvisibleText:
+      return SK_ColorTRANSPARENT;
     case ui::NativeTheme::kColorId_ResultsTableNormalUrl:
     case ui::NativeTheme::kColorId_ResultsTableHoveredUrl:
       return NormalURLColor(

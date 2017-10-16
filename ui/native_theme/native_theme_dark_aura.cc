@@ -29,6 +29,7 @@ SkColor NativeThemeDarkAura::GetSystemColor(ColorId color_id) const {
   static const SkColor kResultsTableText = SK_ColorWHITE;
   static const SkColor kResultsTableDimmedText =
       SkColorSetA(kResultsTableText, 0x80);
+  static const SkColor kResultsTableInvisibleText = SK_ColorTRANSPARENT;
 
   switch (color_id) {
     // Window
@@ -75,6 +76,9 @@ SkColor NativeThemeDarkAura::GetSystemColor(ColorId color_id) const {
     case kColorId_ResultsTableHoveredDimmedText:
     case kColorId_ResultsTableSelectedDimmedText:
       return kResultsTableDimmedText;
+
+    case kColorId_ResultsTableInvisibleText:
+      return kResultsTableInvisibleText;
 
     // FocusableBorder
     case kColorId_FocusedBorderColor:

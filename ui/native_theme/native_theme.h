@@ -369,6 +369,7 @@ class NATIVE_THEME_EXPORT NativeTheme {
     kColorId_ResultsTableNormalDimmedText,
     kColorId_ResultsTableHoveredDimmedText,
     kColorId_ResultsTableSelectedDimmedText,
+    kColorId_ResultsTableInvisibleText,
     kColorId_ResultsTableNormalUrl,
     kColorId_ResultsTableHoveredUrl,
     kColorId_ResultsTableSelectedUrl,
