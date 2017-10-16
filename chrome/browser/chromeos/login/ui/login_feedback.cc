@@ -241,8 +241,9 @@ void LoginFeedback::Request(const std::string& description,
       profile_,
       base::Bind(&LoginFeedback::EnsureFeedbackUI, weak_factory_.GetWeakPtr()));
 
-  // Triggers the extension background to be loaded.
-  EnsureFeedbackUI();
+  // Do not call EnsureFeedbackUI() immediately. Otherwise, event listener is
+  // possibility registered before extension installation complete in
+  // EventRouter::DispatchEventWithLazyListener() which causes race condition.
 }
 
 void LoginFeedback::EnsureFeedbackUI() {
