@@ -62,16 +62,27 @@ class MockInstaller : public CrxInstaller {
 class MockUpdateClient : public UpdateClient {
  public:
   MockUpdateClient();
+  void Install(const std::string& id,
+               const CrxDataCallback& crx_data_callback,
+               OnceCallback callback) override {
+    DoInstall(id, crx_data_callback);
+    std::move(callback).Run(update_client::Error::NONE);
+  }
+  void Update(const std::vector<std::string>& ids,
+              const CrxDataCallback& crx_data_callback,
+              OnceCallback callback) override {
+    DoUpdate(ids, crx_data_callback);
+    std::move(callback).Run(update_client::Error::NONE);
+  }
+
   MOCK_METHOD1(AddObserver, void(Observer* observer));
   MOCK_METHOD1(RemoveObserver, void(Observer* observer));
-  MOCK_METHOD3(Install,
+  MOCK_METHOD2(DoInstall,
                void(const std::string& id,
-                    const CrxDataCallback& crx_data_callback,
-                    const Callback& callback));
-  MOCK_METHOD3(Update,
+                    const CrxDataCallback& crx_data_callback));
+  MOCK_METHOD2(DoUpdate,
                void(const std::vector<std::string>& ids,
-                    const CrxDataCallback& crx_data_callback,
-                    const Callback& callback));
+                    const CrxDataCallback& crx_data_callback));
   MOCK_CONST_METHOD2(GetCrxUpdateState,
                      bool(const std::string& id, CrxUpdateItem* update_item));
   MOCK_CONST_METHOD1(IsUpdating, bool(const std::string& id));
@@ -80,7 +91,7 @@ class MockUpdateClient : public UpdateClient {
                void(const std::string& id,
                     const base::Version& version,
                     int reason,
-                    const Callback& callback));
+                    const update_client::Callback& callback));
 
  private:
   ~MockUpdateClient() override;
@@ -220,9 +231,7 @@ TEST_F(ComponentUpdaterTest, RegisterComponent) {
         : max_cnt_(max_cnt), quit_closure_(quit_closure) {}
 
     void OnUpdate(const std::vector<std::string>& ids,
-                  const UpdateClient::CrxDataCallback& crx_data_callback,
-                  const Callback& callback) {
-      callback.Run(update_client::Error::NONE);
+                  const UpdateClient::CrxDataCallback& crx_data_callback) {
       static int cnt = 0;
       ++cnt;
       if (cnt >= max_cnt_)
@@ -260,7 +269,7 @@ TEST_F(ComponentUpdaterTest, RegisterComponent) {
 
   // Quit after two update checks have fired.
   LoopHandler loop_handler(2, quit_closure());
-  EXPECT_CALL(update_client(), Update(ids, _, _))
+  EXPECT_CALL(update_client(), DoUpdate(ids, _))
       .WillRepeatedly(Invoke(&loop_handler, &LoopHandler::OnUpdate));
 
   EXPECT_CALL(update_client(), IsUpdating(id1)).Times(1);
@@ -284,9 +293,7 @@ TEST_F(ComponentUpdaterTest, OnDemandUpdate) {
     explicit LoopHandler(int max_cnt) : max_cnt_(max_cnt) {}
 
     void OnInstall(const std::string& ids,
-                   const UpdateClient::CrxDataCallback& crx_data_callback,
-                   const Callback& callback) {
-      callback.Run(update_client::Error::NONE);
+                   const UpdateClient::CrxDataCallback& crx_data_callback) {
       static int cnt = 0;
       ++cnt;
       if (cnt >= max_cnt_) {
@@ -325,8 +332,7 @@ TEST_F(ComponentUpdaterTest, OnDemandUpdate) {
   crx_component.installer = new MockInstaller();
 
   LoopHandler loop_handler(1);
-  EXPECT_CALL(update_client(),
-              Install("jebgalgnebhfojomionfpkfelancnnkf", _, _))
+  EXPECT_CALL(update_client(), DoInstall("jebgalgnebhfojomionfpkfelancnnkf", _))
       .WillOnce(Invoke(&loop_handler, &LoopHandler::OnInstall));
   EXPECT_CALL(update_client(), Stop()).Times(1);
 
@@ -353,9 +359,7 @@ TEST_F(ComponentUpdaterTest, MaybeThrottle) {
         : max_cnt_(max_cnt), quit_closure_(quit_closure) {}
 
     void OnInstall(const std::string& ids,
-                   const UpdateClient::CrxDataCallback& crx_data_callback,
-                   const Callback& callback) {
-      callback.Run(update_client::Error::NONE);
+                   const UpdateClient::CrxDataCallback& crx_data_callback) {
       static int cnt = 0;
       ++cnt;
       if (cnt >= max_cnt_)
@@ -381,8 +385,7 @@ TEST_F(ComponentUpdaterTest, MaybeThrottle) {
   crx_component.installer = installer;
 
   LoopHandler loop_handler(1, quit_closure());
-  EXPECT_CALL(update_client(),
-              Install("jebgalgnebhfojomionfpkfelancnnkf", _, _))
+  EXPECT_CALL(update_client(), DoInstall("jebgalgnebhfojomionfpkfelancnnkf", _))
       .WillOnce(Invoke(&loop_handler, &LoopHandler::OnInstall));
   EXPECT_CALL(update_client(), Stop()).Times(1);
 

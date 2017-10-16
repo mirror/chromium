@@ -39,10 +39,10 @@ class UpdateClientImpl : public UpdateClient {
   void RemoveObserver(Observer* observer) override;
   void Install(const std::string& id,
                const CrxDataCallback& crx_data_callback,
-               const Callback& callback) override;
+               OnceCallback callback) override;
   void Update(const std::vector<std::string>& ids,
               const CrxDataCallback& crx_data_callback,
-              const Callback& callback) override;
+              OnceCallback callback) override;
   bool GetCrxUpdateState(const std::string& id,
                          CrxUpdateItem* update_item) const override;
   bool IsUpdating(const std::string& id) const override;
@@ -56,7 +56,7 @@ class UpdateClientImpl : public UpdateClient {
   ~UpdateClientImpl() override;
 
   void RunTask(std::unique_ptr<Task> task);
-  void OnTaskComplete(const Callback& callback, Task* task, Error error);
+  void OnTaskComplete(OnceCallback callback, Task* task, Error error);
 
   void NotifyObservers(Observer::Events event, const std::string& id);
 
