@@ -29,6 +29,8 @@ TEST_F(NativeThemeMacTest, SystemColorsExist) {
   NativeTheme* native_theme = NativeTheme::GetInstanceForNativeUi();
   ASSERT_TRUE(native_theme);
   for (int i = 0; i < NativeTheme::kColorId_NumColors; ++i) {
+    if (i == NativeTheme::kColorId_ResultsTableInvisibleText)
+      continue;
     // While 0 is a valid color, no system color should be fully transparent.
     // This is also to probe for CHECKs.
     EXPECT_NE(
