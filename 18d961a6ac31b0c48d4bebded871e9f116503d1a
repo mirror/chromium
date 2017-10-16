@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2505180b_4fe241fe",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-16T19:04:46Z",
+      "side": 1,
+      "message": "Unfortunately, not on Windows. Since this code is Windows only, we can\u0027t even rely on bots getting it on other OS\u0027es.\n\nFiled crbug/775153 to Chrome Infra, since this is not the first time someone brings this up during a code review.",
+      "parentUuid": "636f44f0_28542475",
+      "range": {
+        "startLine": 374,
+        "startChar": 12,
+        "endLine": 374,
+        "endChar": 0
+      },
+      "revId": "18d961a6ac31b0c48d4bebded871e9f116503d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a8deda6_0a7b408a",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-16T18:13:59Z",
       "side": 1,
       "message": "Nit: ditto",
+      "range": {
+        "startLine": 402,
+        "startChar": 12,
+        "endLine": 402,
+        "endChar": 0
+      },
+      "revId": "18d961a6ac31b0c48d4bebded871e9f116503d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac90065d_82824759",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-16T19:04:46Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "6a8deda6_0a7b408a",
       "range": {
         "startLine": 402,
         "startChar": 12,
