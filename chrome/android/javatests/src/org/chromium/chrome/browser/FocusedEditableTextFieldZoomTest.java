@@ -26,6 +26,7 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content.browser.test.util.KeyUtils;
+import org.chromium.content_public.browser.WebContents;
 import org.chromium.net.test.EmbeddedTestServer;
 
 /**
@@ -65,22 +66,21 @@ public class FocusedEditableTextFieldZoomTest {
         // the initial value problematic. We solve this by explicitly specifying the initial zoom
         // level via the viewport tag and waiting for the zoom level to reach that value before we
         // proceed with the rest of the test.
-        final ContentViewCore contentViewCore =
-                mActivityTestRule.getActivity().getActivityTab().getContentViewCore();
+        final WebContents webContents =
+                mActivityTestRule.getActivity().getActivityTab().getWebContents();
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return contentViewCore.getPageScaleFactor() - INITIAL_SCALE < FLOAT_DELTA;
+                return webContents.getPageScaleFactor() - INITIAL_SCALE < FLOAT_DELTA;
             }
         }, TEST_TIMEOUT, DEFAULT_POLLING_INTERVAL);
     }
 
-    private void waitForZoomIn(final ContentViewCore contentViewCore,
-            final float initialZoomLevel) {
+    private void waitForZoomIn(final WebContents webContents, final float initialZoomLevel) {
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return contentViewCore.getPageScaleFactor() > initialZoomLevel;
+                return webContents.getPageScaleFactor() > initialZoomLevel;
             }
         }, TEST_TIMEOUT, DEFAULT_POLLING_INTERVAL);
     }
@@ -95,12 +95,12 @@ public class FocusedEditableTextFieldZoomTest {
         // This should focus the text field and initiate a zoom in.
         Tab tab = mActivityTestRule.getActivity().getActivityTab();
         final ContentViewCore contentViewCore = tab.getContentViewCore();
-        float initialZoomLevel = contentViewCore.getPageScaleFactor();
+        float initialZoomLevel = tab.getWebContents().getPageScaleFactor();
 
         DOMUtils.clickNode(contentViewCore, TEXTFIELD_DOM_ID);
 
         // Wait for the zoom in to complete.
-        waitForZoomIn(contentViewCore, initialZoomLevel);
+        waitForZoomIn(tab.getWebContents(), initialZoomLevel);
     }
 
     /*
@@ -111,14 +111,14 @@ public class FocusedEditableTextFieldZoomTest {
     @Feature({"TabContents"})
     public void testZoomOutOfSelectedIfOnlyBackPressed() throws Throwable {
         final Tab tab = mActivityTestRule.getActivity().getActivityTab();
-        final ContentViewCore contentViewCore = tab.getContentViewCore();
-        final float initialZoomLevel = contentViewCore.getPageScaleFactor();
+        final WebContents webContents = tab.getWebContents();
+        final float initialZoomLevel = webContents.getPageScaleFactor();
 
         // This should focus the text field and initiate a zoom in.
-        DOMUtils.clickNode(contentViewCore, TEXTFIELD_DOM_ID);
+        DOMUtils.clickNode(tab.getContentViewCore(), TEXTFIELD_DOM_ID);
 
         // Wait for the zoom in to complete.
-        waitForZoomIn(contentViewCore, initialZoomLevel);
+        waitForZoomIn(webContents, initialZoomLevel);
 
         KeyUtils.singleKeyEventView(
                 InstrumentationRegistry.getInstrumentation(), tab.getView(), KeyEvent.KEYCODE_BACK);
@@ -127,7 +127,7 @@ public class FocusedEditableTextFieldZoomTest {
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return (contentViewCore.getPageScaleFactor() - initialZoomLevel) < FLOAT_DELTA;
+                return (webContents.getPageScaleFactor() - initialZoomLevel) < FLOAT_DELTA;
             }
         }, TEST_TIMEOUT, DEFAULT_POLLING_INTERVAL);
     }

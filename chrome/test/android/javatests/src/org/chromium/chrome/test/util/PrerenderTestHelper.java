@@ -93,11 +93,9 @@ public class PrerenderTestHelper {
                     @Override
                     public ExternalPrerenderHandler call() throws Exception {
                         ExternalPrerenderHandler prerenderHandler = new ExternalPrerenderHandler();
-                        Rect bounds = new Rect(
-                                0, 0, currentTab.getContentViewCore().getRenderCoordinates()
-                                        .getContentWidthPixInt(),
-                                currentTab.getContentViewCore().getRenderCoordinates()
-                                        .getContentHeightPixInt());
+                        Rect bounds =
+                                new Rect(0, 0, currentTab.getWebContents().getContentWidthPixInt(),
+                                        currentTab.getWebContents().getContentHeightPixInt());
                         boolean didPrerender =
                                 prerenderHandler.addPrerender(currentTab.getProfile(),
                                         currentTab.getWebContents(), testUrl, null, bounds, true)

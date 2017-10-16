@@ -134,8 +134,8 @@ public class OSKOverscrollTest {
         // Get the position of the footer and the viewport height before bringing up the OSK.
         Rect footerPositionBefore = DOMUtils.getNodeBounds(webContentsRef.get(), "footer");
         final int viewportHeightBeforeCss = getViewportHeight(webContentsRef.get());
-        final float cssToDevicePixFactor = viewCoreRef.get().getPageScaleFactor()
-                * viewCoreRef.get().getDeviceScaleFactor();
+        final float cssToDevicePixFactor = webContentsRef.get().getPageScaleFactor()
+                * webContentsRef.get().getDeviceScaleFactor();
 
         // Click on the unfocused input element for the first time to focus on it. This brings up
         // the OSK.

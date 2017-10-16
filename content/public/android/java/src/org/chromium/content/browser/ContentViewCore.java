@@ -202,9 +202,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     private int mBottomControlsHeightPix;
     private boolean mTopControlsShrinkBlinkSize;
 
-    // Cached copy of all positions and scales as reported by the renderer.
-    private final RenderCoordinates mRenderCoordinates;
-
     // Whether joystick scroll is enabled.  It's disabled when an editable field is focused.
     private boolean mJoystickScrollEnabled = true;
 
@@ -292,7 +289,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     public ContentViewCore(Context context, String productVersion) {
         mContext = context;
         mProductVersion = productVersion;
-        mRenderCoordinates = new RenderCoordinates();
         mAccessibilityManager = (AccessibilityManager)
                 getContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
         mSystemCaptioningBridge = CaptioningBridgeFactory.getSystemCaptioningBridge(mContext);
@@ -436,12 +432,10 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
 
         final float dipScale = windowAndroid.getDisplay().getDipScale();
 
-        mRenderCoordinates.reset();
-        mRenderCoordinates.setDeviceScaleFactor(dipScale, windowAndroid.getContext());
-
         mNativeContentViewCore =
                 nativeInit(webContents, mViewAndroidDelegate, windowNativePointer, dipScale);
         mWebContents = nativeGetWebContentsAndroid(mNativeContentViewCore);
+        mWebContents.setDeviceScaleFactor(dipScale, windowAndroid.getContext().get());
 
         setContainerViewInternals(internalDispatcher);
 
@@ -451,8 +445,8 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         mImeAdapter.addEventObserver(this);
         mTextSuggestionHost = new TextSuggestionHost(this);
 
-        mSelectionPopupController = new SelectionPopupController(
-                mContext, windowAndroid, webContents, mContainerView, mRenderCoordinates);
+        mSelectionPopupController =
+                new SelectionPopupController(mContext, windowAndroid, webContents, mContainerView);
         mSelectionPopupController.setCallback(ActionModeCallbackHelper.EMPTY_CALLBACK);
         mSelectionPopupController.setContainerView(mContainerView);
 
@@ -655,44 +649,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     @CalledByNative
     public int getBottomControlsHeightPix() {
         return mBottomControlsHeightPix;
-    }
-
-    /**
-     * @return Current device scale factor (maps DIP pixels to physical pixels).
-     */
-    @VisibleForTesting
-    public float getDeviceScaleFactor() {
-        return mRenderCoordinates.getDeviceScaleFactor();
-    }
-
-    /**
-     * @return Current page scale factor (maps CSS pixels to DIP pixels).
-     */
-    @VisibleForTesting
-    public float getPageScaleFactor() {
-        return mRenderCoordinates.getPageScaleFactor();
-    }
-
-    /**
-     * @see android.webkit.WebView#getContentHeight()
-     */
-    public float getContentHeightCss() {
-        return mRenderCoordinates.getContentHeightCss();
-    }
-
-    /**
-     * @see android.webkit.WebView#getContentWidth()
-     */
-    public float getContentWidthCss() {
-        return mRenderCoordinates.getContentWidthCss();
-    }
-
-    /**
-     * @return Last frame viewport width.
-     */
-    @VisibleForTesting
-    public float getLastFrameViewportWidthCss() {
-        return mRenderCoordinates.getLastFrameViewportWidthCss();
     }
 
     /**
@@ -1226,7 +1182,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
                     getEventForwarder().onMouseWheelEvent(event.getEventTime(), event.getX(),
                             event.getY(), event.getAxisValue(MotionEvent.AXIS_HSCROLL),
                             event.getAxisValue(MotionEvent.AXIS_VSCROLL),
-                            mRenderCoordinates.getWheelScrollFactor());
+                            mWebContents.getWheelScrollFactor());
                     return true;
                 case MotionEvent.ACTION_BUTTON_PRESS:
                 case MotionEvent.ACTION_BUTTON_RELEASE:
@@ -1290,23 +1246,11 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
      */
     public void scrollTo(float xPix, float yPix) {
         if (mNativeContentViewCore == 0) return;
-        final float xCurrentPix = mRenderCoordinates.getScrollXPix();
-        final float yCurrentPix = mRenderCoordinates.getScrollYPix();
+        final float xCurrentPix = mWebContents.getScrollXPix();
+        final float yCurrentPix = mWebContents.getScrollYPix();
         final float dxPix = xPix - xCurrentPix;
         final float dyPix = yPix - yCurrentPix;
         scrollBy(dxPix, dyPix);
-    }
-
-    // NOTE: this can go away once ContentView.getScrollX() reports correct values.
-    //       see: b/6029133
-    public int getNativeScrollXForTest() {
-        return mRenderCoordinates.getScrollXPixInt();
-    }
-
-    // NOTE: this can go away once ContentView.getScrollY() reports correct values.
-    //       see: b/6029133
-    public int getNativeScrollYForTest() {
-        return mRenderCoordinates.getScrollYPixInt();
     }
 
     /**
@@ -1314,7 +1258,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
      */
     @SuppressWarnings("javadoc")
     public int computeHorizontalScrollExtent() {
-        return mRenderCoordinates.getLastFrameViewportWidthPixInt();
+        return mWebContents.getLastFrameViewportWidthPixInt();
     }
 
     /**
@@ -1322,7 +1266,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
      */
     @SuppressWarnings("javadoc")
     public int computeHorizontalScrollOffset() {
-        return mRenderCoordinates.getScrollXPixInt();
+        return mWebContents.getScrollXPixInt();
     }
 
     /**
@@ -1330,7 +1274,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
      */
     @SuppressWarnings("javadoc")
     public int computeHorizontalScrollRange() {
-        return mRenderCoordinates.getContentWidthPixInt();
+        return mWebContents.getContentWidthPixInt();
     }
 
     /**
@@ -1338,7 +1282,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
      */
     @SuppressWarnings("javadoc")
     public int computeVerticalScrollExtent() {
-        return mRenderCoordinates.getLastFrameViewportHeightPixInt();
+        return mWebContents.getLastFrameViewportHeightPixInt();
     }
 
     /**
@@ -1346,7 +1290,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
      */
     @SuppressWarnings("javadoc")
     public int computeVerticalScrollOffset() {
-        return mRenderCoordinates.getScrollYPixInt();
+        return mWebContents.getScrollYPixInt();
     }
 
     /**
@@ -1354,7 +1298,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
      */
     @SuppressWarnings("javadoc")
     public int computeVerticalScrollRange() {
-        return mRenderCoordinates.getContentHeightPixInt();
+        return mWebContents.getContentHeightPixInt();
     }
 
     // End FrameLayout overrides.
@@ -1431,30 +1375,18 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     @CalledByNative
     private void updateFrameInfo(float scrollOffsetX, float scrollOffsetY, float pageScaleFactor,
             float minPageScaleFactor, float maxPageScaleFactor, float contentWidth,
-            float contentHeight, float viewportWidth, float viewportHeight, float topBarShownPix,
-            boolean topBarChanged, boolean isMobileOptimizedHint) {
+            float contentHeight, float topBarShownPix, boolean topBarChanged,
+            boolean isMobileOptimizedHint) {
         TraceEvent.begin("ContentViewCore:updateFrameInfo");
         mIsMobileOptimizedHint = isMobileOptimizedHint;
-        // Adjust contentWidth/Height to be always at least as big as
-        // the actual viewport (as set by onSizeChanged).
-        final float deviceScale = mRenderCoordinates.getDeviceScaleFactor();
-        contentWidth = Math.max(contentWidth,
-                mViewportWidthPix / (deviceScale * pageScaleFactor));
-        contentHeight = Math.max(contentHeight,
-                mViewportHeightPix / (deviceScale * pageScaleFactor));
-
-        final boolean contentSizeChanged =
-                contentWidth != mRenderCoordinates.getContentWidthCss()
-                || contentHeight != mRenderCoordinates.getContentHeightCss();
+        final boolean contentSizeChanged = contentWidth != mWebContents.getContentWidthCss()
+                || contentHeight != mWebContents.getContentHeightCss();
         final boolean scaleLimitsChanged =
-                minPageScaleFactor != mRenderCoordinates.getMinPageScaleFactor()
-                || maxPageScaleFactor != mRenderCoordinates.getMaxPageScaleFactor();
-        final boolean pageScaleChanged =
-                pageScaleFactor != mRenderCoordinates.getPageScaleFactor();
-        final boolean scrollChanged =
-                pageScaleChanged
-                || scrollOffsetX != mRenderCoordinates.getScrollX()
-                || scrollOffsetY != mRenderCoordinates.getScrollY();
+                minPageScaleFactor != mWebContents.getMinPageScaleFactor()
+                || maxPageScaleFactor != mWebContents.getMaxPageScaleFactor();
+        final boolean pageScaleChanged = pageScaleFactor != mWebContents.getPageScaleFactor();
+        final boolean scrollChanged = pageScaleChanged || scrollOffsetX != mWebContents.getScrollX()
+                || scrollOffsetY != mWebContents.getScrollY();
 
         final boolean needHidePopupZoomer = contentSizeChanged || scrollChanged;
 
@@ -1462,15 +1394,10 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
 
         if (scrollChanged) {
             mContainerViewInternals.onScrollChanged(
-                    (int) mRenderCoordinates.fromLocalCssToPix(scrollOffsetX),
-                    (int) mRenderCoordinates.fromLocalCssToPix(scrollOffsetY),
-                    (int) mRenderCoordinates.getScrollXPix(),
-                    (int) mRenderCoordinates.getScrollYPix());
+                    (int) mWebContents.fromLocalCssToPix(scrollOffsetX),
+                    (int) mWebContents.fromLocalCssToPix(scrollOffsetY),
+                    (int) mWebContents.getScrollXPix(), (int) mWebContents.getScrollYPix());
         }
-
-        mRenderCoordinates.updateFrameInfo(scrollOffsetX, scrollOffsetY, contentWidth,
-                contentHeight, viewportWidth, viewportHeight, pageScaleFactor, minPageScaleFactor,
-                maxPageScaleFactor, topBarShownPix);
 
         if (scrollChanged || topBarChanged) {
             for (mGestureStateListenersIterator.rewind();
@@ -1598,8 +1525,8 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     // This method uses the term 'zoom' for legacy reasons, but relates
     // to what chrome calls the 'page scale factor'.
     public boolean canZoomIn() {
-        final float zoomInExtent = mRenderCoordinates.getMaxPageScaleFactor()
-                - mRenderCoordinates.getPageScaleFactor();
+        final float zoomInExtent =
+                mWebContents.getMaxPageScaleFactor() - mWebContents.getPageScaleFactor();
         return zoomInExtent > ZOOM_CONTROLS_EPSILON;
     }
 
@@ -1611,8 +1538,8 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     // This method uses the term 'zoom' for legacy reasons, but relates
     // to what chrome calls the 'page scale factor'.
     public boolean canZoomOut() {
-        final float zoomOutExtent = mRenderCoordinates.getPageScaleFactor()
-                - mRenderCoordinates.getMinPageScaleFactor();
+        final float zoomOutExtent =
+                mWebContents.getPageScaleFactor() - mWebContents.getMinPageScaleFactor();
         return zoomOutExtent > ZOOM_CONTROLS_EPSILON;
     }
 
@@ -1658,8 +1585,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         // the page finishes loading. Thus sets it back to mNativeMinimumScale.
         if (!canZoomOut()) return false;
         return pinchByDelta(
-                mRenderCoordinates.getMinPageScaleFactor()
-                        / mRenderCoordinates.getPageScaleFactor());
+                mWebContents.getMinPageScaleFactor() / mWebContents.getPageScaleFactor());
     }
 
     /**
@@ -1739,8 +1665,8 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
             mWebContentsAccessibility.enable();
         } else if (mNativeAccessibilityAllowed) {
             if (mWebContents == null) return null;
-            mWebContentsAccessibility = WebContentsAccessibility.create(mContext, mContainerView,
-                    mWebContents, mRenderCoordinates, mShouldSetAccessibilityFocusOnPageLoad);
+            mWebContentsAccessibility = WebContentsAccessibility.create(
+                    mContext, mContainerView, mWebContents, mShouldSetAccessibilityFocusOnPageLoad);
             mWebContentsAccessibility.enable();
         }
         return null;
@@ -1793,18 +1719,18 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         } else {
             viewNode.setText(node.text);
         }
-        int left = (int) mRenderCoordinates.fromLocalCssToPix(node.x);
-        int top = (int) mRenderCoordinates.fromLocalCssToPix(node.y);
-        int width = (int) mRenderCoordinates.fromLocalCssToPix(node.width);
-        int height = (int) mRenderCoordinates.fromLocalCssToPix(node.height);
+        int left = (int) mWebContents.fromLocalCssToPix(node.x);
+        int top = (int) mWebContents.fromLocalCssToPix(node.y);
+        int width = (int) mWebContents.fromLocalCssToPix(node.width);
+        int height = (int) mWebContents.fromLocalCssToPix(node.height);
 
         Rect boundsInParent = new Rect(left, top, left + width, top + height);
         if (node.isRootNode) {
             // Offset of the web content relative to the View.
-            boundsInParent.offset(0, (int) mRenderCoordinates.getContentOffsetYPix());
+            boundsInParent.offset(0, (int) mWebContents.getContentOffsetYPix());
             if (!ignoreScrollOffset) {
-                boundsInParent.offset(-(int) mRenderCoordinates.getScrollXPix(),
-                        -(int) mRenderCoordinates.getScrollYPix());
+                boundsInParent.offset(
+                        -(int) mWebContents.getScrollXPix(), -(int) mWebContents.getScrollYPix());
             }
         }
 
@@ -1812,7 +1738,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         viewNode.setChildCount(node.children.size());
         if (node.hasStyle) {
             // The text size should be in physical pixels, not CSS pixels.
-            float textSize = mRenderCoordinates.fromLocalCssToPix(node.textSize);
+            float textSize = mWebContents.fromLocalCssToPix(node.textSize);
 
             int style = (node.bold ? ViewNode.TEXT_STYLE_BOLD : 0)
                     | (node.italic ? ViewNode.TEXT_STYLE_ITALIC : 0)
@@ -1883,14 +1809,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
      */
     public void setShouldSetAccessibilityFocusOnPageLoad(boolean on) {
         mShouldSetAccessibilityFocusOnPageLoad = on;
-    }
-
-    /**
-     *
-     * @return The cached copy of render positions and scales.
-     */
-    public RenderCoordinates getRenderCoordinates() {
-        return mRenderCoordinates;
     }
 
     /**
@@ -1985,7 +1903,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         WindowAndroid windowAndroid = getWindowAndroid();
         if (windowAndroid == null || mNativeContentViewCore == 0) return;
 
-        mRenderCoordinates.setDeviceScaleFactor(dipScale, getWindowAndroid().getContext());
+        mWebContents.setDeviceScaleFactor(dipScale, getWindowAndroid().getContext().get());
         nativeSetDIPScale(mNativeContentViewCore, dipScale);
     }
 

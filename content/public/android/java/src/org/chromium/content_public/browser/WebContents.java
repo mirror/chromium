@@ -4,6 +4,7 @@
 
 package org.chromium.content_public.browser;
 
+import android.content.Context;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -11,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.util.Pair;
 
 import org.chromium.base.VisibleForTesting;
-import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.ui.OverscrollRefreshHandler;
 import org.chromium.ui.base.EventForwarder;
 import org.chromium.ui.base.WindowAndroid;
@@ -374,8 +374,7 @@ public interface WebContents extends Parcelable {
      * Initiate extraction of text, HTML, and other information for clipping puposes (smart clip)
      * from the rectangle area defined by starting positions (x and y), and width and height.
      */
-    void requestSmartClipExtract(
-            int x, int y, int width, int height, RenderCoordinates coordinateSpace);
+    void requestSmartClipExtract(int x, int y, int width, int height);
 
     /**
      * Register a handler to handle smart clip data once extraction is done.
@@ -563,4 +562,130 @@ public interface WebContents extends Parcelable {
      * @param name The name of the interface to remove.
      */
     void removeJavascriptInterface(String name);
+
+    /**
+     * @return Render-reported width of the viewport in CSS pixels.
+     */
+    float getLastFrameViewportWidthCss();
+
+    /**
+     * @return Render-reported height of the viewport in CSS pixels.
+     */
+    float getLastFrameViewportHeightCss();
+
+    /**
+     * @return Render-reported width of the viewport in physical pixels (approx, integer).
+     */
+    int getLastFrameViewportWidthPixInt();
+
+    /**
+     * @return Render-reported height of the viewport in physical pixels (approx, integer).
+     */
+    int getLastFrameViewportHeightPixInt();
+
+    /**
+     * @return The Physical on-screen Y offset amount below the browser controls.
+     */
+    float getContentOffsetYPix();
+
+    /**
+     * @return Current page scale factor (maps CSS pixels to DIP pixels).
+     */
+    float getPageScaleFactor();
+
+    /**
+     * @return Minimum page scale factor to be used with the content.
+     */
+    float getMinPageScaleFactor();
+
+    /**
+     * @return Maximum page scale factor to be used with the content.
+     */
+    float getMaxPageScaleFactor();
+
+    /**
+     * @return Current device scale factor (maps DIP pixels to physical pixels).
+     */
+    float getDeviceScaleFactor();
+
+    /**
+     * @return Current wheel scroll factor (physical pixels per mouse scroll click).
+     */
+    float getWheelScrollFactor();
+
+    /**
+     * @return Local CSS converted to physical coordinates.
+     */
+    float fromLocalCssToPix(float css);
+
+    /**
+     * @return Horizontal scroll offset in CSS pixels.
+     */
+    float getScrollX();
+
+    /**
+     * @return Vertical scroll offset in CSS pixels.
+     */
+    float getScrollY();
+
+    /**
+     * @return Horizontal scroll offset in physical pixels.
+     */
+    float getScrollXPix();
+
+    /**
+     * @return Vertical scroll offset in physical pixels.
+     */
+    float getScrollYPix();
+
+    /**
+     * @return Horizontal scroll offset in physical pixels (approx, integer).
+     */
+    int getScrollXPixInt();
+
+    /**
+     * @return Vertical scroll offset in physical pixels (approx, integer).
+     */
+    int getScrollYPixInt();
+
+    /**
+     * @return Width of the content in CSS pixels.
+     */
+    float getContentWidthCss();
+
+    /**
+     * @return Height of the content in CSS pixels.
+     */
+    float getContentHeightCss();
+
+    /**
+     * @return Approximate width of the content in physical pixels.
+     */
+    float getContentWidthPix();
+
+    /**
+     * @return Approximate height of the content in physical pixels.
+     */
+    float getContentHeightPix();
+
+    /**
+     * @return Approximate width of the content in physical pixels (integer).
+     */
+    int getContentWidthPixInt();
+
+    /**
+     * @return Approximate height of the content in physical pixels (integer).
+     */
+    int getContentHeightPixInt();
+
+    /**
+     * Sets device scale factor used to convert units between DIP and physical pixel.
+     * Also sets the wheel scroll ratio that maps device pixels to scroll per
+     * mouse wheel tick.
+     *
+     * @param dipScale A new dip scale.
+     * @param context {@link Context} whose theme is used to get the right wheel scroll factor.
+     *                Can be {@code null}.
+     */
+    void setDeviceScaleFactor(float dipScale, Context context);
 }

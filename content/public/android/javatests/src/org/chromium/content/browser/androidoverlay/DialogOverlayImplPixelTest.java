@@ -25,8 +25,8 @@ import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.base.test.util.UrlUtils;
-import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.androidoverlay.DialogOverlayImplTestRule.Client;
+import org.chromium.content_public.browser.WebContents;
 
 import java.util.concurrent.Callable;
 
@@ -119,8 +119,8 @@ public class DialogOverlayImplPixelTest {
     }
 
     int convertCSSToScreenPixels(int css) {
-        ContentViewCore cvc = mActivityTestRule.getContentViewCore();
-        return (int) (css * cvc.getPageScaleFactor() * cvc.getDeviceScaleFactor());
+        WebContents wc = mActivityTestRule.getWebContents();
+        return (int) (css * wc.getPageScaleFactor() * wc.getDeviceScaleFactor());
     }
 
     // Since ContentShell makes our solid color div have some textured background, we have to be

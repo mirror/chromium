@@ -469,6 +469,13 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void ActivateNearestFindResult(float x, float y) override;
   void RequestFindMatchRects(int current_version) override;
   service_manager::InterfaceProvider* GetJavaInterfaces() override;
+  void UpdateFrameInfo(const gfx::Vector2dF& scroll_offset,
+                       float content_width,
+                       float content_height,
+                       const gfx::SizeF& viewport_size,
+                       float page_scale_factor,
+                       const gfx::Vector2dF& page_scale_factor_limits,
+                       const float top_shown_pix);
 #elif defined(OS_MACOSX)
   void SetAllowOtherViews(bool allow) override;
   bool GetAllowOtherViews() override;

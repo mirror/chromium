@@ -25,7 +25,6 @@ import android.view.accessibility.AccessibilityNodeProvider;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.content_public.browser.WebContents;
 
 import java.util.ArrayList;
@@ -60,7 +59,6 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
 
     protected final AccessibilityManager mAccessibilityManager;
     private final Context mContext;
-    private final RenderCoordinates mRenderCoordinates;
     private final WebContents mWebContents;
     protected long mNativeObj;
     private Rect mAccessibilityFocusRect;
@@ -84,33 +82,30 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
      * Create a WebContentsAccessibility object.
      */
     public static WebContentsAccessibility create(Context context, ViewGroup containerView,
-            WebContents webContents, RenderCoordinates renderCoordinates,
-            boolean shouldFocusOnPageLoad) {
+            WebContents webContents, boolean shouldFocusOnPageLoad) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             return new OWebContentsAccessibility(
-                    context, containerView, webContents, renderCoordinates, shouldFocusOnPageLoad);
+                    context, containerView, webContents, shouldFocusOnPageLoad);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return new LollipopWebContentsAccessibility(
-                    context, containerView, webContents, renderCoordinates, shouldFocusOnPageLoad);
+                    context, containerView, webContents, shouldFocusOnPageLoad);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             return new KitKatWebContentsAccessibility(
-                    context, containerView, webContents, renderCoordinates, shouldFocusOnPageLoad);
+                    context, containerView, webContents, shouldFocusOnPageLoad);
         } else {
             return new WebContentsAccessibility(
-                    context, containerView, webContents, renderCoordinates, shouldFocusOnPageLoad);
+                    context, containerView, webContents, shouldFocusOnPageLoad);
         }
     }
 
     protected WebContentsAccessibility(Context context, ViewGroup containerView,
-            WebContents webContents, RenderCoordinates renderCoordinates,
-            boolean shouldFocusOnPageLoad) {
+            WebContents webContents, boolean shouldFocusOnPageLoad) {
         mContext = context;
         mWebContents = webContents;
         mAccessibilityFocusId = View.NO_ID;
         mIsHovering = false;
         mCurrentRootId = View.NO_ID;
         mView = containerView;
-        mRenderCoordinates = renderCoordinates;
         mAccessibilityManager =
                 (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
         mShouldFocusOnPageLoad = shouldFocusOnPageLoad;
@@ -379,7 +374,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
 
     /**
      * Notify us when the frame info is initialized,
-     * the first time, since until that point, we can't use mRenderCoordinates to transform
+     * the first time, since until that point, we can't use WebContents to transform
      * web coordinates to screen coordinates.
      */
     @CalledByNative
@@ -663,12 +658,12 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
      * convert web coordinates to screen coordinates. When this is first initialized,
      * notifyFrameInfoInitialized is called - but we shouldn't check whether or not
      * that method was called as a way to determine if frame info is valid because
-     * notifyFrameInfoInitialized might not be called at all if mRenderCoordinates
-     * gets initialized first.
+     * notifyFrameInfoInitialized might not be called at all if RenderCoordinates
+     * in WebContents gets initialized first.
      */
     private boolean isFrameInfoInitialized() {
-        return mRenderCoordinates.getContentWidthCss() != 0.0
-                || mRenderCoordinates.getContentHeightCss() != 0.0;
+        return mWebContents.getContentWidthCss() != 0.0
+                || mWebContents.getContentHeightCss() != 0.0;
     }
 
     @CalledByNative
@@ -913,16 +908,16 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
 
     protected void convertWebRectToAndroidCoordinates(Rect rect) {
         // Offset by the scroll position.
-        rect.offset(-(int) mRenderCoordinates.getScrollX(), -(int) mRenderCoordinates.getScrollY());
+        rect.offset(-(int) mWebContents.getScrollX(), -(int) mWebContents.getScrollY());
 
         // Convert CSS (web) pixels to Android View pixels
-        rect.left = (int) mRenderCoordinates.fromLocalCssToPix(rect.left);
-        rect.top = (int) mRenderCoordinates.fromLocalCssToPix(rect.top);
-        rect.bottom = (int) mRenderCoordinates.fromLocalCssToPix(rect.bottom);
-        rect.right = (int) mRenderCoordinates.fromLocalCssToPix(rect.right);
+        rect.left = (int) mWebContents.fromLocalCssToPix(rect.left);
+        rect.top = (int) mWebContents.fromLocalCssToPix(rect.top);
+        rect.bottom = (int) mWebContents.fromLocalCssToPix(rect.bottom);
+        rect.right = (int) mWebContents.fromLocalCssToPix(rect.right);
 
         // Offset by the location of the web content within the view.
-        rect.offset(0, (int) mRenderCoordinates.getContentOffsetYPix());
+        rect.offset(0, (int) mWebContents.getContentOffsetYPix());
 
         // Finally offset by the location of the view within the screen.
         final int[] viewLocation = new int[2];
@@ -930,7 +925,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
         rect.offset(viewLocation[0], viewLocation[1]);
 
         // Clip to the viewport bounds.
-        int viewportRectTop = viewLocation[1] + (int) mRenderCoordinates.getContentOffsetYPix();
+        int viewportRectTop = viewLocation[1] + (int) mWebContents.getContentOffsetYPix();
         int viewportRectBottom = viewportRectTop + mView.getHeight();
         if (rect.top < viewportRectTop) rect.top = viewportRectTop;
         if (rect.bottom > viewportRectBottom) rect.bottom = viewportRectBottom;
@@ -945,7 +940,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
                 parentRelativeLeft + width, parentRelativeTop + height);
         if (isRootNode) {
             // Offset of the web content relative to the View.
-            boundsInParent.offset(0, (int) mRenderCoordinates.getContentOffsetYPix());
+            boundsInParent.offset(0, (int) mWebContents.getContentOffsetYPix());
         }
         node.setBoundsInParent(boundsInParent);
 
