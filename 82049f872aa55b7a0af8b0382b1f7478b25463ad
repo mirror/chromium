@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "991d22ce_cc3f6f7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-16T23:18:27Z",
+      "side": 1,
+      "message": "This needs to be written as chromedriver:2081. Otherwise when you click on the link, it goes to a different bug.\n\nAlso, the Bug: and Change-Id: lines should be at the end of the description.",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "82049f872aa55b7a0af8b0382b1f7478b25463ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
