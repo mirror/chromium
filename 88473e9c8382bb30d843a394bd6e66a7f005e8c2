@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0af90329_ab7c1739",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-16T20:31:52Z",
+      "side": 1,
+      "message": "The comment in base/strings/string_util.h says \"The 8-bit version only works on 8-bit characters, not UTF-8.\" Could there be a case where this ends up removing more than expected?\n\nAre the multiple new line characters that need trimming, or is it always just the last one? If it\u0027s just the last one, maybe just do body_str.pop_back() ?",
+      "revId": "88473e9c8382bb30d843a394bd6e66a7f005e8c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
