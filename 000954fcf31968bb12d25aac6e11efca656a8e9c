@@ -2,6 +2,420 @@
   "comments": [
     {
       "key": {
+        "uuid": "b04a38e2_00e37f54",
+        "filename": "chrome/browser/ui/views/page_info/chosen_object_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "Document/describe layout?",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42ce768_b41fd4a3",
+        "filename": "chrome/browser/ui/views/page_info/chosen_object_row.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "Can we move kIconWidth to a more descriptive name declared in page_info_bubble_view.h?",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae687fc_337f959c",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "will we be in a position to just scrap this too? (i.e. are the new mocks using a proper CONTEXT_DIALOG_TITLE-sized text). We can probably just change this now, in m64..",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b45a11_69d8939c",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "can we just start using DISTANCE_DIALOG_CONTENT_MARGIN_TOP_TEXT always? (how bad does it look..)",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5921862f_d0321ff7",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "comment describing the layout?",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dadc9198_aa9a04d8",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "might be nice to declare this as `views::View* const permissions_view_;` - this guarantees nothing re-assigns it.",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44f95ad9_67661ad3",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "(hopefully we can remove this special-casing and just modify the existing dialog slightly)",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20a0c6f_71790cab",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "constexpr int kColumnId",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885c46d1_6f31e361",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "kVerticalSpacing -\u003e vertical_spacing",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd73d30_618867bf",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "I think this would be easier to follow if the next few if (harmony) blocks were merged into an if/else. E.g.\n\n// In Harmony, permissions are displayed above the separator.\nif (ui::MaterialDesignController::IsSecondaryUiMaterial()) {\n  layout-\u003eStartRow(0, column_id);\n  layout-\u003eAddView(permissions_view_);\n  layout-\u003eStartRow(0, column_id);\n  layout-\u003eAddView(new views::Separator());\n  layout-\u003eAddPaddingRow(0, vertical_spacing);\n} else {\n  layout-\u003eAddPaddingRow(0, vertical_spacing);\n  layout-\u003eStartRow(0, column_id);  // Or StartRowWithPadding?\n  layout-\u003eStartRow(0, column_id);  // Is this right?? It seems to repeat..\n  layout-\u003eAddView(new views::Separator());\n}\n\nbut...",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adcdae71_065444ee",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "but... where does non-harmony do this?",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4dbaf0_29708460",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "(I think we should just kill this now...)",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3aaec8_f3de0046",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "permissions_view_-\u003ehas_children()",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "563708e0_41ccaa54",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "If you need something short, `const bool is_md`?",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92df317_82d63c89",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "is_list\n\n(only things that can be declared constexpr should have kFooBar style).",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ead494_39eb43b2",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "list_item_padding",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b042a32_fc68f369",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "This looks out of place here.. comment? Maybe something like\n\n// Under MD, when there is nothing to show, just add padding above the\n// \u003csomething?\u003e and exit.\nif (is_md \u0026\u0026 !is_list) {\n  layout-\u003eAddPaddingRow(0, layout_provider-\u003eGetDistanceMetric(\n                                   views::DISTANCE_UNRELATED_CONTROL_VERTICAL));\n  return;\n}",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb486ec0_e005b34e",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "If we need to keep the non-MD flavour, it would be really good to do this in the same place. I think adding the subview in two different places will be really error-prone.",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ff5282_00b83fe7",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "constexpr",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe14a73_c9bf097a",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "comment describing layout",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20302c5_f90bee63",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "for the floating point \"resize percent\" constants, I usually do something like\n\nconstexpr float kFixed \u003d 0.f;\nconstexpr float kStretchy \u003d 1.f;\n\notherwise the integral-looking `1` down on line 796 is really hard to miss that it\u0027s the signal for the stretchy column",
+      "range": {
+        "startLine": 775,
+        "startChar": 56,
+        "endLine": 775,
+        "endChar": 57
+      },
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6b923f_9a2c7cb0",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "constexpr",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a5e8d7_ac736606",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "why this change? (seems `i` isn\u0027t used below?)",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d375df_53613aa0",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "why this change?",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa3362db_7974328f",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 4
@@ -13,6 +427,159 @@
       "writtenOn": "2017-10-13T06:41:26Z",
       "side": 1,
       "message": "I\u0027m holding off on adding padding to the chosen object stuff because they weren\u0027t included in the original mocks - just using the kComboboxHeight to make it not look weird for now. There\u0027s an outstanding thread where I\u0027ve asked the designer to provide mocks for it, so hopefully I can address this in another patch.",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72fa9338_3b47c543",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "auto object_view \u003d std::make_unique\u003cChosenObjectRow(..);",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578c62c6_c19bcec1",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "and, here,\n  layout-\u003eAddView(object_view.release());",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51baeacf_7c178d7e",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "nit: Font -\u003e Text.  (since it controls more than just fonts - also line height and color)",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867d8ba2_b421f3af",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "same",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b1eb1e_eb25f870",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "list_item_padding",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8514389a_e0fe9136",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "combobox_height . But also how about making this a helper method. Something like\n\nstatic int MinHeightForPermissionRow() {\n  ..\n}",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f3ef1a_53d17b34",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "constexpr",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d0e986_ce28283c",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "helper function for this",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f24dc1_8762a82d",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:02:37Z",
+      "side": 1,
+      "message": "column_id -\u003e column_set_id, and describe what it is (and say what it should be with examples - i.e. I\u0027m guessing it\u0027s only one of two things?",
       "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
