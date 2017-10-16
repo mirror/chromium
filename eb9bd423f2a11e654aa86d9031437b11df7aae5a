@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6ef2207_dfe6f895",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T20:08:56Z",
+      "side": 1,
+      "message": "Yup, that still works and was not changed.",
+      "parentUuid": "02ec3f98_85c15253",
+      "revId": "eb9bd423f2a11e654aa86d9031437b11df7aae5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4617b2ce_4db08583",
         "filename": "/COMMIT_MSG",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-12T21:56:36Z",
       "side": 1,
       "message": "I am not sure this is equivalent to what existed before. I found potential cases where a page count would have counted before this CL but does not anymore.\n\nwebWillUpdateSessionForLoadWithURL does record page loads (through LoadURLWithParams) for some cases that are excluded in this CL:\n\nRequest Desktop Site (which is counted as a reload) in Tab\u0027s reloadWithUserAgentType. I tested this one explicitly with breakpoints.\n\nReloads of transient items: https://cs.chromium.org/chromium/src/ios/web/web_state/ui/crw_web_controller.mm?q\u003dLoadURLWithParams+file:ios\u0026l\u003d1972\u0026dr\u003dC",
+      "revId": "eb9bd423f2a11e654aa86d9031437b11df7aae5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eec0c84_71d43768",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T20:08:56Z",
+      "side": 1,
+      "message": "Fixed User Agent use case.",
+      "parentUuid": "4617b2ce_4db08583",
       "revId": "eb9bd423f2a11e654aa86d9031437b11df7aae5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
