@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fd88453_7281e1f8",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-16T21:47:44Z",
+      "side": 0,
+      "message": "fuchsia_audio_output_stream_write() will always return ZX_ERR_IO_MISSED_DEADLINE if this check fails, see https://fuchsia-review.googlesource.com/c/garnet/+/73959/5/lib/media/audio_output_stream.cc#217\nResetting the stream here instead of later allows to pass correct delay value to OnMoreData().\nSo I\u0027m not sure why you are removing this check. Without it OnMoreData() will be called with |delay| below |presentation_delay_ns_|, which is wrong - it\u0027s not possible to render audio with delay lower than |presentation_delay_ns_|. Also with this change delay may be below 0, which is obviously wrong.",
+      "range": {
+        "startLine": 116,
+        "startChar": 29,
+        "endLine": 116,
+        "endChar": 62
+      },
+      "revId": "19ef4f158eef576247d1812d63475da19979902a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
