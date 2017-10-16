@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "209acb6c_9d84fc29",
+        "filename": "chrome/installer/linux/debian/postinst",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-16T19:21:24Z",
+      "side": 1,
+      "message": "Should this be: /usr/bin/@@USR_BIN_SYMLINK_NAME@@ ?\n\nThe --install and --remove targets are inconsistent, at least in the pre-template processing form. Ditto for the RPM side.",
+      "range": {
+        "startLine": 52,
+        "startChar": 30,
+        "endLine": 52,
+        "endChar": 55
+      },
+      "revId": "292203a6e579915bc90d964b9da372d4c8494eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
