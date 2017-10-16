@@ -16,6 +16,24 @@
       "revId": "02832ab0e278ccd38d30558de21e2a30436bca61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917a4642_41e67aa3",
+        "filename": "content/public/network/ignore_errors_cert_verifier.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-16T19:56:53Z",
+      "side": 1,
+      "message": "I assume that eventually services/network shouldn\u0027t depend on content/common, right? It seems reasonable to me for it to live in serivces/network. We might be able to remove all usage outside of network -- they seem mostly used for constructing URLRequestContext (but I haven\u0027t carefully looked at all of them). At least we could share it from services/network at that point.\n\nWDYT? Thanks!",
+      "parentUuid": "3857c644_04738732",
+      "revId": "02832ab0e278ccd38d30558de21e2a30436bca61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
