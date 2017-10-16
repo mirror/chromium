@@ -46,6 +46,52 @@
       "revId": "32e700ad69f4120a6663ee50e2b6c3d1373f78af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b23bb6c_54ec131c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 32473,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T18:55:37Z",
+      "side": 0,
+      "message": "Please revert the changes in this file.",
+      "range": {
+        "startLine": 32460,
+        "startChar": 0,
+        "endLine": 32473,
+        "endChar": 7
+      },
+      "revId": "32e700ad69f4120a6663ee50e2b6c3d1373f78af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4ffcee_75b8380f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64756,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T18:55:37Z",
+      "side": 0,
+      "message": "Please mark the removed histograms as \u003cobsolete\u003e rather than deleting their metadata.  (Just applies to the histograms.xml metadata file.)",
+      "range": {
+        "startLine": 64749,
+        "startChar": 0,
+        "endLine": 64756,
+        "endChar": 12
+      },
+      "revId": "32e700ad69f4120a6663ee50e2b6c3d1373f78af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
