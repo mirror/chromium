@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa692b6d_8a7fa6a1",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T05:21:56Z",
+      "side": 1,
+      "message": "The main contribution of this patch is precisely for favicons that haven\u0027t expired. If a favicon did expire, future SetFavicons() will anyway update redirects. Am I missing something?",
+      "parentUuid": "21df2325_791b1ef6",
+      "revId": "a1444cf27fd074c347f5332b5157c74bd46ede6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb495b72_150a56ac",
         "filename": "components/history/core/browser/history_backend.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "31e47b6f_b210047e",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2234,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T05:21:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb495b72_150a56ac",
+      "revId": "a1444cf27fd074c347f5332b5157c74bd46ede6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f0d5c6_a239dcda",
         "filename": "components/history/core/browser/history_backend.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "a1444cf27fd074c347f5332b5157c74bd46ede6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749d57e3_10903d41",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2236,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T05:21:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23f0d5c6_a239dcda",
+      "revId": "a1444cf27fd074c347f5332b5157c74bd46ede6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
