@@ -30,7 +30,9 @@ void EnsureAllChildrenAreVisible(ui::Layer* layer) {
 
 }  // namespace
 
-WindowMirrorView::WindowMirrorView(aura::Window* window) : target_(window) {
+WindowMirrorView::WindowMirrorView(aura::Window* window,
+                                   bool trilinear_filtering)
+    : target_(window), trilinear_filtering_(trilinear_filtering) {
   DCHECK(window);
 }
 
@@ -90,6 +92,11 @@ void WindowMirrorView::InitLayerOwner() {
   if (wm::GetWindowState(target_)->IsMinimized()) {
     GetMirrorLayer()->SetOpacity(1);
     EnsureAllChildrenAreVisible(GetMirrorLayer());
+  }
+
+  if (trilinear_filtering_) {
+    GetMirrorLayer()->AddCacheRenderSurfaceRequest();
+    GetMirrorLayer()->AddTrilinearFilteringRequest();
   }
 
   Layout();
