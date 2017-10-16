@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cadd5be8_4c49f123",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-16T12:54:03Z",
+      "side": 1,
+      "message": "Eh, sure - it\u0027s now 73 everywhere. Though for tests that don\u0027t record timings, it really doesn\u0027t matter IMO.",
+      "parentUuid": "7dfb875e_ec91c655",
+      "range": {
+        "startLine": 70,
+        "startChar": 66,
+        "endLine": 70,
+        "endChar": 67
+      },
+      "revId": "69079443bc93b7698600bd7273c50f9e13225076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27c869ea_d897fc7b",
         "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "69079443bc93b7698600bd7273c50f9e13225076",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c311f33_f6c538bc",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-16T12:54:03Z",
+      "side": 1,
+      "message": "I\u0027d say it\u0027s one NTP impression, including multiple tile impressions :)\nIt now says \"Record some previous tile impressions.\"",
+      "parentUuid": "27c869ea_d897fc7b",
+      "range": {
+        "startLine": 340,
+        "startChar": 30,
+        "endLine": 340,
+        "endChar": 40
+      },
+      "revId": "69079443bc93b7698600bd7273c50f9e13225076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
