@@ -199,11 +199,11 @@ media::AudioParameters GetAudioHardwareParams() {
       .output_params();
 }
 
-mojom::URLLoaderFactoryPtr GetBlobURLLoaderFactoryGetter() {
-  mojom::URLLoaderFactoryPtr blob_loader_factory;
-  RenderThreadImpl::current()->GetRendererHost()->GetBlobURLLoaderFactory(
-      mojo::MakeRequest(&blob_loader_factory));
-  return blob_loader_factory;
+mojom::URLLoaderFactoryPtr GetNonNetworkURLLoaderFactory() {
+  mojom::URLLoaderFactoryPtr factory;
+  RenderThreadImpl::current()->GetRendererHost()->GetNonNetworkURLLoaderFactory(
+      mojo::MakeRequest(&factory));
+  return factory;
 }
 
 }  // namespace
@@ -352,7 +352,7 @@ RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactoryGetter() {
   return base::MakeRefCounted<ChildURLLoaderFactoryGetterImpl>(
       CreateNetworkURLLoaderFactory(),
       base::FeatureList::IsEnabled(features::kNetworkService)
-          ? base::BindOnce(&GetBlobURLLoaderFactoryGetter)
+          ? base::BindOnce(&GetNonNetworkURLLoaderFactory)
           : ChildURLLoaderFactoryGetterImpl::URLLoaderFactoryGetterCallback());
 }
 

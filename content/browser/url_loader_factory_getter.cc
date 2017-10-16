@@ -5,6 +5,7 @@
 #include "content/browser/url_loader_factory_getter.h"
 
 #include "base/bind.h"
+#include "content/browser/non_network_url_loader_factory.h"
 #include "content/browser/storage_partition_impl.h"
 #include "content/public/common/network_service.mojom.h"
 
@@ -17,15 +18,15 @@ void URLLoaderFactoryGetter::Initialize(StoragePartitionImpl* partition) {
   partition->GetNetworkContext()->CreateURLLoaderFactory(
       MakeRequest(&network_factory), 0);
 
-  mojom::URLLoaderFactoryPtr blob_factory;
-  partition->GetBlobURLLoaderFactory()->HandleRequest(
-      mojo::MakeRequest(&blob_factory));
+  mojom::URLLoaderFactoryPtr non_network_factory;
+  partition->GetNonNetworkURLLoaderFactory()->BindRequest(
+      mojo::MakeRequest(&non_network_factory));
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&URLLoaderFactoryGetter::InitializeOnIOThread, this,
                      network_factory.PassInterface(),
-                     blob_factory.PassInterface()));
+                     non_network_factory.PassInterface()));
 }
 
 mojom::URLLoaderFactoryPtr* URLLoaderFactoryGetter::GetNetworkFactory() {
@@ -33,9 +34,9 @@ mojom::URLLoaderFactoryPtr* URLLoaderFactoryGetter::GetNetworkFactory() {
   return test_factory_.is_bound() ? &test_factory_ : &network_factory_;
 }
 
-mojom::URLLoaderFactoryPtr* URLLoaderFactoryGetter::GetBlobFactory() {
+mojom::URLLoaderFactoryPtr* URLLoaderFactoryGetter::GetNonNetworkFactory() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  return &blob_factory_;
+  return &non_network_factory_;
 }
 
 void URLLoaderFactoryGetter::SetNetworkFactoryForTesting(
@@ -59,9 +60,9 @@ URLLoaderFactoryGetter::~URLLoaderFactoryGetter() {}
 
 void URLLoaderFactoryGetter::InitializeOnIOThread(
     mojom::URLLoaderFactoryPtrInfo network_factory,
-    mojom::URLLoaderFactoryPtrInfo blob_factory) {
+    mojom::URLLoaderFactoryPtrInfo non_network_factory) {
   network_factory_.Bind(std::move(network_factory));
-  blob_factory_.Bind(std::move(blob_factory));
+  non_network_factory_.Bind(std::move(non_network_factory));
 }
 
 void URLLoaderFactoryGetter::SetTestNetworkFactoryOnIOThread(

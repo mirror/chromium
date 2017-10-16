@@ -32,9 +32,9 @@ class URLLoaderFactoryGetter
   // The pointer shouldn't be cached.
   mojom::URLLoaderFactoryPtr* GetNetworkFactory();
 
-  // Called on the IO thread to get the URLLoaderFactory to the blob service.
-  // The pointer shouldn't be cached.
-  CONTENT_EXPORT mojom::URLLoaderFactoryPtr* GetBlobFactory();
+  // Called on the IO thread to get the URLLoaderFactory for non-network
+  // resources such as blobs and files. The pointer shouldn't be cached.
+  CONTENT_EXPORT mojom::URLLoaderFactoryPtr* GetNonNetworkFactory();
 
   // Overrides the network URLLoaderFactory for subsequent requests. Passing a
   // null pointer will restore the default behavior.
@@ -48,13 +48,13 @@ class URLLoaderFactoryGetter
 
   CONTENT_EXPORT ~URLLoaderFactoryGetter();
   void InitializeOnIOThread(mojom::URLLoaderFactoryPtrInfo network_factory,
-                            mojom::URLLoaderFactoryPtrInfo blob_factory);
+                            mojom::URLLoaderFactoryPtrInfo non_network);
   void SetTestNetworkFactoryOnIOThread(
       mojom::URLLoaderFactoryPtrInfo test_factory);
 
   // Only accessed on IO thread.
   mojom::URLLoaderFactoryPtr network_factory_;
-  mojom::URLLoaderFactoryPtr blob_factory_;
+  mojom::URLLoaderFactoryPtr non_network_factory_;
   mojom::URLLoaderFactoryPtr test_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(URLLoaderFactoryGetter);

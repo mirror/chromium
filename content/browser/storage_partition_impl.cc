@@ -24,6 +24,7 @@
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/fileapi/browser_file_system_helper.h"
 #include "content/browser/gpu/shader_cache_factory.h"
+#include "content/browser/non_network_url_loader_factory.h"
 #include "content/browser/notifications/platform_notification_context_impl.h"
 #include "content/common/dom_storage/dom_storage_types.h"
 #include "content/network/network_context.h"
@@ -550,10 +551,11 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
           context, in_memory, relative_partition_path);
 
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    BlobURLLoaderFactory::BlobContextGetter blob_getter =
+    NonNetworkURLLoaderFactory::BlobContextGetter blob_getter =
         base::BindOnce(&BlobStorageContextGetter, blob_context);
-    partition->blob_url_loader_factory_ = BlobURLLoaderFactory::Create(
-        std::move(blob_getter), partition->filesystem_context_);
+    partition->non_network_url_loader_factory_ =
+        NonNetworkURLLoaderFactory::Create(std::move(blob_getter),
+                                           partition->filesystem_context_);
 
     partition->url_loader_factory_getter_ = new URLLoaderFactoryGetter();
     partition->url_loader_factory_getter_->Initialize(partition.get());
@@ -687,8 +689,9 @@ StoragePartitionImpl::GetBluetoothAllowedDevicesMap() {
   return bluetooth_allowed_devices_map_.get();
 }
 
-BlobURLLoaderFactory* StoragePartitionImpl::GetBlobURLLoaderFactory() {
-  return blob_url_loader_factory_.get();
+NonNetworkURLLoaderFactory*
+StoragePartitionImpl::GetNonNetworkURLLoaderFactory() {
+  return non_network_url_loader_factory_.get();
 }
 
 BlobRegistryWrapper* StoragePartitionImpl::GetBlobRegistry() {
