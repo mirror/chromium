@@ -1249,9 +1249,10 @@ bool TabStripModel::InternalCloseTabs(const std::vector<int>& indices,
                      (close_types & CLOSE_CREATE_HISTORICAL_TAB) != 0);
   }
 
-  if (ref && closing_all && !retval)
+  if (ref && closing_all && !retval) {
     for (auto& observer : observers_)
       observer.CloseAllTabsCanceled();
+  }
 
   return retval;
 }
@@ -1294,9 +1295,10 @@ void TabStripModel::NotifyIfActiveTabChanged(WebContents* old_contents,
                  : TabStripModelObserver::CHANGE_REASON_NONE;
     CHECK(!in_notify_);
     in_notify_ = true;
-    for (auto& observer : observers_)
+    for (auto& observer : observers_) {
       observer.ActiveTabChanged(old_contents, new_contents, active_index(),
                                 reason);
+    }
     in_notify_ = false;
   }
 }
