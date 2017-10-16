@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3066310_688ca724",
+        "filename": "sandbox/win/src/app_container_profile.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-10-16T14:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4114bd55_a86a1257",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 13
+      },
+      "revId": "327c5743fb378438060ebe0eebf7c7ec50da3f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c59ed7e_38e7a5e5",
         "filename": "sandbox/win/src/app_container_profile.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "327c5743fb378438060ebe0eebf7c7ec50da3f41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "013d0326_3a1daabc",
+        "filename": "sandbox/win/src/app_container_profile.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-10-16T14:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c59ed7e_38e7a5e5",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "327c5743fb378438060ebe0eebf7c7ec50da3f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0b6f1d19_1077b67a",
+        "filename": "sandbox/win/src/app_container_profile.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-10-16T14:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b20987f_fe531d80",
+      "range": {
+        "startLine": 65,
+        "startChar": 15,
+        "endLine": 65,
+        "endChar": 53
+      },
+      "revId": "327c5743fb378438060ebe0eebf7c7ec50da3f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "884cddc8_9f773992",
         "filename": "sandbox/win/src/app_container_unittest.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7faa53cc_cc7e6ecb",
+        "filename": "sandbox/win/src/app_container_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-10-16T14:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "884cddc8_9f773992",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "327c5743fb378438060ebe0eebf7c7ec50da3f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f3a7e3b_211e8658",
         "filename": "sandbox/win/src/app_container_unittest.cc",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-11T15:26:29Z",
       "side": 1,
       "message": "hmm do we have any bots running this?",
+      "range": {
+        "startLine": 143,
+        "startChar": 43,
+        "endLine": 143,
+        "endChar": 52
+      },
+      "revId": "327c5743fb378438060ebe0eebf7c7ec50da3f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab6b6e33_3243b0e1",
+        "filename": "sandbox/win/src/app_container_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-10-16T14:14:51Z",
+      "side": 1,
+      "message": "I\u0027ll see if it works out of the box on Win8, then move this down so we can test it on more platforms.",
+      "parentUuid": "5f3a7e3b_211e8658",
       "range": {
         "startLine": 143,
         "startChar": 43,
