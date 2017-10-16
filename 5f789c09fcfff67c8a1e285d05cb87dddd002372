@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "1749b078_0bc8b2a4",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/first_app_run_toast_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-16T21:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b7cf0c_0afb5b1d",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 33
+      },
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffcad1b7_19af948f",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/first_app_run_toast_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-16T21:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2040d29c_8e45b59c",
+      "range": {
+        "startLine": 76,
+        "startChar": 11,
+        "endLine": 76,
+        "endChar": 15
+      },
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a191124f_28c08e3e",
         "filename": "chrome/browser/chromeos/lock_screen_apps/first_app_run_toast_manager.h",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b694e0_0a9739f0",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/first_app_run_toast_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-16T21:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a191124f_28c08e3e",
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "d4bc3469_dd5f8e7d",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/first_app_run_toast_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-16T21:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19616d58_948f2830",
+      "range": {
+        "startLine": 61,
+        "startChar": 31,
+        "endLine": 61,
+        "endChar": 36
+      },
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b17cc671_54cbbe4c",
         "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
         "patchSetId": 3
@@ -99,6 +189,24 @@
       "writtenOn": "2017-10-16T21:34:23Z",
       "side": 1,
       "message": "What breaks if we don\u0027t add this?",
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cdfdd59_71c29142",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-16T21:54:39Z",
+      "side": 1,
+      "message": "adding a window to lock system modal dialog would crash, as it checks the login state:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/ash/system_tray_client.cc?rcl\u003deb7313fe32adf423390ee7f74cc1c7653e1dbcab\u0026l\u003d201\n\n(same goes for setting test_session_controller_client\u0027s session state to locked bellow - ToastDialogShownOnFirstAppRun test would crash on a DCHECK when attempting to add a lock system modal dialog).",
+      "parentUuid": "b17cc671_54cbbe4c",
       "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "44e7ae91_e78e9a79",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-16T21:54:39Z",
+      "side": 1,
+      "message": "these are BrowserWithTestWindowTest, which do set up ash.",
+      "parentUuid": "41350f2c_c440612b",
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91090512_d6cb4f87",
         "filename": "chrome/browser/chromeos/lock_screen_apps/toast_dialog_view.h",
         "patchSetId": 3
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "5708c6bf_4b656918",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/toast_dialog_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-16T21:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91090512_d6cb4f87",
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a9db540_0ba8a1d3",
         "filename": "chrome/browser/chromeos/lock_screen_apps/toast_dialog_view.h",
         "patchSetId": 3
@@ -153,6 +297,24 @@
       "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf53b5c2_f8e4912b",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/toast_dialog_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-16T21:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a9db540_0ba8a1d3",
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
