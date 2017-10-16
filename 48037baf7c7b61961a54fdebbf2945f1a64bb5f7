@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea367b84_1929056d",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-16T18:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe512024_171ae1c6",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 40
+      },
+      "revId": "48037baf7c7b61961a54fdebbf2945f1a64bb5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a20889d2_c5fd6dcf",
         "filename": "components/arc/arc_session.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d715b13c_b4e9e11b",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-16T18:07:25Z",
+      "side": 1,
+      "message": "Good point. Can I postpone it?\nI\u0027m thinking to expose |state_| for unittest of ArcSession(impl), e.g. GetStateForTesting().\nThen, this method will be replaced by it.\nWDYT?",
+      "parentUuid": "a20889d2_c5fd6dcf",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 31
+      },
+      "revId": "48037baf7c7b61961a54fdebbf2945f1a64bb5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77280860_55830a66",
         "filename": "components/arc/arc_session.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-16T17:24:56Z",
       "side": 1,
       "message": "OT: can we remove this is we check if target_mode_ is nullopt in  ArcSessionRunner::RequestStart() instead?",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 37
+      },
+      "revId": "48037baf7c7b61961a54fdebbf2945f1a64bb5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32d5499_a208eb4b",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-16T18:07:25Z",
+      "side": 1,
+      "message": "Unfortunately, at the moment, it cannot, due to asynchronous and synchronous manner diff.\nIn the following situation.\n\nASR::RequestStart(FULL_INSTANCE)\nASR::RequestStop()\nASR::RequestStart(MINI_INSTANCE) // before the instance stops actually.\nASR::RequestStart(FULL_INSTANCE) // before the instance stops actually.\n\nin the last RequestStart(FULL_INSTANCE), |target_mode_| was MINI_INSTANCE,\nbut AS::IsStopRequested() is also true. And in this case, re-starting FULL_INSTANCE\nshould be delayed until the old ARC is actually stopped.\nHmm, complicated... Welcome any suggestions to simplify the situation.",
+      "parentUuid": "77280860_55830a66",
       "range": {
         "startLine": 66,
         "startChar": 0,
