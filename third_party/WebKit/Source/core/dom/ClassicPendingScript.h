@@ -55,7 +55,6 @@ class CORE_EXPORT ClassicPendingScript final
   bool WasCanceled() const override;
   bool StartStreamingIfPossible(ScriptStreamer::Type, WTF::Closure) override;
   bool IsCurrentlyStreaming() const override;
-  KURL UrlForClassicScript() const override;
   void DisposeInternal() override;
 
   void Prefinalize();

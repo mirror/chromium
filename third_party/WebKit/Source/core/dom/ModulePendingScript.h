@@ -86,11 +86,6 @@ class CORE_EXPORT ModulePendingScript : public PendingScript {
   }
   bool IsCurrentlyStreaming() const override { return false; }
 
-  KURL UrlForClassicScript() const override {
-    NOTREACHED();
-    return KURL();
-  }
-
   void DisposeInternal() override;
 
   void CheckState() const override {}
