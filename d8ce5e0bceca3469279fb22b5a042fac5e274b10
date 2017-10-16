@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d9dd755_13f391ef",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-16T07:13:21Z",
+      "side": 1,
+      "message": "Do you mind adding a TODO(https://crbug.com/742517): here to use the mojo generated constants once I fix that bug?",
+      "revId": "d8ce5e0bceca3469279fb22b5a042fac5e274b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
