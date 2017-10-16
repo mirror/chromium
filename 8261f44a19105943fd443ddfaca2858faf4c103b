@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c140474_e306c8a4",
+        "filename": "ui/keyboard/container_full_width_behavior.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-16T08:10:10Z",
+      "side": 1,
+      "message": "0.0",
+      "range": {
+        "startLine": 32,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "8261f44a19105943fd443ddfaca2858faf4c103b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
