@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b96d50af_06b704b9",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-16T09:46:13Z",
+      "side": 1,
+      "message": "I\u0027m getting a bit scared of the kinda unorganized state in this class, but maybe it\u0027s OK for now. I\u0027m thinking someday we might want something like a struct StartRequestInfo that you reset when you call StartRequest() so we don\u0027t have to reset individual members in the current callsite.",
+      "revId": "dd56a01d0e9780b1fcc82bd9fdb772c5a354adc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
