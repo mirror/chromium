@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca679295_67a8cace",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-16T19:34:26Z",
+      "side": 1,
+      "message": "Nit: why is this DCHECK necessary? We don\u0027t check arguments[2] for emptyness, but maybe I\u0027m forgetting something.",
+      "revId": "375596c5c7876a65e7ba94e872aa344f0943c587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34448e2_884e6749",
+        "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-16T19:34:26Z",
+      "side": 1,
+      "message": "super-nit: could just pass \"const char*\" instead of \"const std::string\u0026\" here, since it\u0027s always just a string literal. Then you can skip the \"c_str()\" calls.",
+      "revId": "375596c5c7876a65e7ba94e872aa344f0943c587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
