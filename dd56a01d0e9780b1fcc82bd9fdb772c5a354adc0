@@ -16,6 +16,24 @@
       "revId": "dd56a01d0e9780b1fcc82bd9fdb772c5a354adc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a4a610_ea60db77",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T13:41:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b96d50af_06b704b9",
+      "revId": "dd56a01d0e9780b1fcc82bd9fdb772c5a354adc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
