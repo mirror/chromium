@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38d72de4_ab4922ae",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2103,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T16:25:32Z",
+      "side": 1,
+      "message": "Is there a guarantee that |currentTabInTargetBVC.webState| is not null?",
+      "range": {
+        "startLine": 2103,
+        "startChar": 17,
+        "endLine": 2103,
+        "endChar": 38
+      },
+      "revId": "24133099ce84106b6e9f957b094fcd5d16875d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9f8d93_ee852132",
+        "filename": "ios/chrome/browser/metrics/new_tab_page_uma.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T16:25:32Z",
+      "side": 1,
+      "message": "Maybe |tab_model.currentTab.webState \u0026\u0026| ?",
+      "revId": "24133099ce84106b6e9f957b094fcd5d16875d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c08e371_d9344b8f",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T16:25:32Z",
+      "side": 1,
+      "message": "Is there guarantee that self.webState is not null?",
+      "range": {
+        "startLine": 414,
+        "startChar": 21,
+        "endLine": 414,
+        "endChar": 34
+      },
+      "revId": "24133099ce84106b6e9f957b094fcd5d16875d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea10577_12304486",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T16:25:32Z",
+      "side": 1,
+      "message": "nit: Do you want to use a local variable for representedObject to improve the formatting?",
+      "range": {
+        "startLine": 41,
+        "startChar": 38,
+        "endLine": 41,
+        "endChar": 50
+      },
+      "revId": "24133099ce84106b6e9f957b094fcd5d16875d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f97832_2b8224e9",
+        "filename": "ios/chrome/browser/ui/main/browser_view_wrangler.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T16:25:32Z",
+      "side": 1,
+      "message": "Is there a guarantee that |currentTab.webState| is not null?",
+      "range": {
+        "startLine": 268,
+        "startChar": 16,
+        "endLine": 268,
+        "endChar": 26
+      },
+      "revId": "24133099ce84106b6e9f957b094fcd5d16875d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
