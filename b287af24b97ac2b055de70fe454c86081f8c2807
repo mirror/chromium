@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "c435ec16_db3d5c86",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-16T20:08:45Z",
+      "side": 1,
+      "message": "I noticed after this CL that the flag characters (\"⚑\") are showing up on top of the help; maybe for #help we should add a z-index?",
+      "revId": "b287af24b97ac2b055de70fe454c86081f8c2807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe4eba0_bc1f2f50",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-16T20:08:45Z",
+      "side": 1,
+      "message": "Nit: Space after colon for consistency",
+      "revId": "b287af24b97ac2b055de70fe454c86081f8c2807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902d2fca_c04e29cd",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-16T20:08:45Z",
+      "side": 1,
+      "message": "Possible additional keyboard shortcuts:\n\n - Esc could deselect text (right now there\u0027s no very simple way to do this without clicking somewhere else on the page).\n - \"/\" could focus the filter text field.\n - I know you considered this before, but I still think j/k could be alternate shortcuts for up/down (currently Tab/Shift+Tab). I think this would be nice because almost all other tools (including Gerrit, Monorail, Code search, Gmail, Calendar, etc.) all have j/k set meaning up/down.",
+      "revId": "b287af24b97ac2b055de70fe454c86081f8c2807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c8a9caf_0f7f0bfe",
         "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
         "patchSetId": 3
@@ -13,6 +64,23 @@
       "writtenOn": "2017-10-16T19:46:29Z",
       "side": 1,
       "message": "Add \"F|f to flag\"",
+      "revId": "b287af24b97ac2b055de70fe454c86081f8c2807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a89c11_c235e565",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-16T20:08:45Z",
+      "side": 1,
+      "message": "IMO, I feel like Ctrl + clicking one checkbox doesn\u0027t seem like an intuitive action for toggling all flags, because clicking one checkbox feels like it should be related to that one checkbox.\n\nCtrl+f to toggle all seems a little nicer, but Ctrl+f is already taken by the \"find in page\" function.\n\nWhat do you think about F (shift+f) for \"flag all\" and f (without shift) for flag selected? Or, alternately, x/X for flag and Ctrl+x/X for flag all?",
       "revId": "b287af24b97ac2b055de70fe454c86081f8c2807",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
