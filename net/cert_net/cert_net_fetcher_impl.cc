@@ -68,6 +68,7 @@
 #include "base/numerics/safe_math.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
 #include "net/base/load_flags.h"
@@ -82,6 +83,12 @@
 // TODO(eroman): Add NetLog integration.
 
 namespace net {
+
+// Allows CertNetFetcherImpl to wait on a base::WaitableEvent. CertNetFetcher is
+// called from worker threads to do the network operations used by certificate
+// verification.
+class CertNetFetcherScopedAllowBaseSyncPrimitives
+    : public base::ScopedAllowBaseSyncPrimitives {};
 
 namespace {
 
@@ -238,6 +245,9 @@ class RequestCore : public base::RefCountedThreadSafe<RequestCore> {
   // Should only be called once.
   void WaitForResult(Error* error, std::vector<uint8_t>* bytes) {
     DCHECK(!task_runner_->RunsTasksInCurrentSequence());
+
+    CertNetFetcherScopedAllowBaseSyncPrimitives
+        scoped_allow_base_sync_primitives;
 
     completion_event_.Wait();
     *bytes = std::move(bytes_);
