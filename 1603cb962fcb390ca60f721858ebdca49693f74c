@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3c1235b_e198205e",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-16T15:38:08Z",
+      "side": 1,
+      "message": "I think you can also remove this one",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "1603cb962fcb390ca60f721858ebdca49693f74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97116a1_ecd22700",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-16T15:38:08Z",
+      "side": 1,
+      "message": "what do you need this for?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "1603cb962fcb390ca60f721858ebdca49693f74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313be9de_c255b6d7",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-16T15:38:08Z",
+      "side": 1,
+      "message": "Maybe add a comment (Either here or on the process_token_ below).\nSoomething like:\n// A per-process token, valid throughout all the lifetime of the current process, used to disambiguate dumps with the same name generated in different processes.",
+      "range": {
+        "startLine": 245,
+        "startChar": 2,
+        "endLine": 245,
+        "endChar": 7
+      },
+      "revId": "1603cb962fcb390ca60f721858ebdca49693f74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
