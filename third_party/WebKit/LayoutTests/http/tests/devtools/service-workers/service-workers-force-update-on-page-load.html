@@ -5,20 +5,9 @@
 <script src="../../inspector/resources-test.js"></script>
 <script>
 
-function loadIframe(url)
-{
-    var callback;
-    var promise = new Promise((fulfill) => callback = fulfill);
-    var frame = document.createElement('iframe');
-    frame.src = url;
-    frame.onload = callback;
-    document.body.appendChild(frame);
-    return promise;
-}
-
 function test() {
-  var scriptURL = 'http://127.0.0.1:8000/devtools/service-workers/resources/force-update-on-page-load-worker.php';
-  var scope = 'http://127.0.0.1:8000/devtools/service-workers/resources/service-worker-force-update-on-page-load/';
+  const scriptURL = 'http://127.0.0.1:8000/devtools/service-workers/resources/force-update-on-page-load-worker.php';
+  const scope = 'http://127.0.0.1:8000/devtools/service-workers/resources/service-worker-force-update-on-page-load/';
 
   function waitForWorkerActivated(scope) {
     return new Promise(function(resolve) {
