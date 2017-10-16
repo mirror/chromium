@@ -201,6 +201,11 @@ class CORE_EXPORT LayoutText : public LayoutObject {
   // whitespace) output.
   bool HasTextBoxes() const { return FirstTextBox(); }
 
+  // Returns true if the offset is next to a non-collapsed non-linebreak
+  // character, or before a forced linebreak (<br>, or segment break in
+  // node with style white-space: pre/pre-line/pre-wrap).
+  bool ContainsCaretOffset(int) const;
+
   int CaretMinOffset() const override;
   int CaretMaxOffset() const override;
   unsigned ResolvedTextLength() const;
