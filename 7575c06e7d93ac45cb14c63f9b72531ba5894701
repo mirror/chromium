@@ -34,6 +34,24 @@
       "revId": "7575c06e7d93ac45cb14c63f9b72531ba5894701",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f397f37f_de2046e2",
+        "filename": "chrome/browser/ui/views/browser_dialogs_views_mac_browser.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T23:38:19Z",
+      "side": 1,
+      "message": "\u003e We still need to do something DEPS-wise to allow the body of chrome::ShowTaskManager() from task_manager_mac.mm to call into task_manager::TaskManagerMac, right? This file only really exists as a DEPS bridge. Do you have another solution in mind that doesn\u0027t involve adding a dep from //c/b/ui/views to //c/b/ui/cocoa?\n\nI think task_manager_mac.mm can just keep calling chrome::ShowTaskManagerViews(browser) the way it does at HEAD? That doesn\u0027t need a new DEPS.\n\nI\u0027m also OK with just updating chrome/browser/ui/cocoa/DEPS if that makes things easier, but I don\u0027t think it\u0027s necessary here. That is, things have moved on a bit from when I added \"-ui/views\" there, and it might no longer be a useful distinction to make.\n\nBut I\u0027m much more hesitant to change chrome/browser/ui/views/DEPS, since any coupling with cocoa stuff there will make it harder to eventually `rm -rf c/b/ui/cocoa`",
+      "parentUuid": "1699b4a8_a7966901",
+      "revId": "7575c06e7d93ac45cb14c63f9b72531ba5894701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
