@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cc334ac_e8ae1422",
+        "filename": "chrome/browser/ui/cocoa/overlay/overlay_window_cocoa.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-10-16T20:27:05Z",
+      "side": 1,
+      "message": "@class NSWindow too?",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "444c19f649008f7b41d63a151e76960de72601b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0304ce3_88eb9ee9",
+        "filename": "chrome/browser/ui/cocoa/overlay/overlay_window_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-10-16T20:27:05Z",
+      "side": 1,
+      "message": "the Views OverlayWindow class seems to retain ownership of these things, with the effect that the overlay window closes when destroyed, and this class doesn\u0027t seem to obey that contract.",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 14
+      },
+      "revId": "444c19f649008f7b41d63a151e76960de72601b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a446bdb_01f80efe",
+        "filename": "chrome/browser/ui/cocoa/overlay/overlay_window_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-10-16T20:27:05Z",
+      "side": 1,
+      "message": "[NSColor windowBackgroundColor]",
+      "range": {
+        "startLine": 33,
+        "startChar": 39,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "444c19f649008f7b41d63a151e76960de72601b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886b46ae_5ffee251",
+        "filename": "chrome/browser/ui/cocoa/overlay/overlay_window_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-10-16T20:27:05Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure you can\u0027t do this - this re-enters the system runloop, which I think may starve the chromium runloop and generally cause all sorts of havoc. This should not be necessary to do. What happens if you don\u0027t do it?",
+      "range": {
+        "startLine": 35,
+        "startChar": 9,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "444c19f649008f7b41d63a151e76960de72601b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb46e239_08911751",
+        "filename": "chrome/browser/ui/cocoa/overlay/overlay_window_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-10-16T20:27:05Z",
+      "side": 1,
+      "message": "what is Activate intended to mean? maybe this should be makeKeyAndOrderFront:?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 16
+      },
+      "revId": "444c19f649008f7b41d63a151e76960de72601b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "465f2948_3bb01b12",
+        "filename": "chrome/browser/ui/cocoa/overlay/overlay_window_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-10-16T20:27:05Z",
+      "side": 1,
+      "message": "will bad stuff happen if this isn\u0027t implemented?",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 16
+      },
+      "revId": "444c19f649008f7b41d63a151e76960de72601b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dac18581_9162d775",
+        "filename": "chrome/browser/ui/cocoa/overlay/overlay_window_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-10-16T20:27:05Z",
+      "side": 1,
+      "message": "[window_ frame] as a gfx::Rect?",
+      "range": {
+        "startLine": 75,
+        "startChar": 14,
+        "endLine": 75,
+        "endChar": 18
+      },
+      "revId": "444c19f649008f7b41d63a151e76960de72601b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
