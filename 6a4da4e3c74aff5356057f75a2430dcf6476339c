@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c927701d_cb471f70",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-16T15:19:30Z",
+      "side": 1,
+      "message": "See below. It is only chrome for now, but it might also include separate ChromeOS version in future.",
+      "parentUuid": "c755086c_773dd439",
+      "range": {
+        "startLine": 909,
+        "startChar": 35,
+        "endLine": 909,
+        "endChar": 42
+      },
+      "revId": "6a4da4e3c74aff5356057f75a2430dcf6476339c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb4ef71e_5e9e5cde",
         "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-16T10:35:03Z",
       "side": 1,
       "message": "Why not MinimumRequiredChromeVersionProto?",
+      "revId": "6a4da4e3c74aff5356057f75a2430dcf6476339c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da6c87f_ce6024a3",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-16T15:19:30Z",
+      "side": 1,
+      "message": "Because with all the servicification going on at some point that might also include chromeos version (if Chrome/ChromeOS become lesser coupled than now).",
+      "parentUuid": "bb4ef71e_5e9e5cde",
       "revId": "6a4da4e3c74aff5356057f75a2430dcf6476339c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
