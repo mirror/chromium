@@ -122,6 +122,38 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   ScrollBoundaryBehavior scroll_boundary_behavior() const {
     return inputs_.scroll_boundary_behavior;
   }
+// TODO(rjk): 
+SetHittestRectangles( <list of hittest rectangles> )
+
+// TODO(rjk):
+// rectangles come out of squashing...
+
+// christhr:  (CompositedLayerMapping has the info and computes all the geom and
+// positions and such.)
+// already computes
+// CompositedLayerMapping will set the HittestRectangles on the Layer.
+// go write a CL...
+// SubmitCompositorFrame -- figure out where it it gets called...
+// 
+// need to 
+// is this the right way to plumb this here?
+// I need to ask piman@ about this.
+
+/*
+
+	essay
+	Chris's CL will provide a list of rectangles from CompositedLayerMapping
+	Each Layer will get a list of rectangle
+	Each rectangle will hence inherit the transform (learn how to get the transform
+	associated with a given Layer)
+	Commit transports the necessary data
+
+	From LayerTreeHostImpl we will build a CompositorFrame and HitTestData
+
+	
+
+*/
+
 
   void SetMasksToBounds(bool masks_to_bounds);
   bool masks_to_bounds() const { return inputs_.masks_to_bounds; }
@@ -149,6 +181,11 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   bool is_root_for_isolated_group() const {
     return inputs_.is_root_for_isolated_group;
   }
+
+// TODO(rjk): Can rewrite in terms of asking if the length of hittest rectangles
+// so this gets via commit to LayerImpl.
+
+// where do the rects come from?
 
   void SetShouldHitTest(bool should_hit_test);
   bool should_hit_test() const { return inputs_.should_hit_test; }
