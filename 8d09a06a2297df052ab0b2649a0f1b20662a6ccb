@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae83de45_14b8bb80",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-16T20:33:24Z",
+      "side": 1,
+      "message": "We need to initialize the endIndex in WebContentsAccessibility.java (line 523) and we do not have the text there to calculate the length.",
+      "parentUuid": "ec7f8247_acc17979",
+      "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc035d86_b9c89922",
         "filename": "content/browser/accessibility/web_contents_accessibility_android.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-16T19:04:43Z",
       "side": 1,
       "message": "nit: update comment",
+      "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "390c07e0_0e18ba81",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-16T20:33:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc035d86_b9c89922",
       "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "298521f1_cd457647",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-16T20:33:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4168499_99a416ec",
+      "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5639b909_4ab9b4dc",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-16T19:04:43Z",
       "side": 1,
       "message": "Is this ever expected? Shouldn\u0027t we just return if there\u0027s no granularity specified?",
+      "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d2b075e_e6f4fe32",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-16T20:33:24Z",
+      "side": 1,
+      "message": "I don\u0027t think this is required, but I was skeptical about changing any existing code without need as I am not sure if it touches any edge case.",
+      "parentUuid": "5639b909_4ab9b4dc",
       "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "59ecc55d_561afc6b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-16T20:33:24Z",
+      "side": 1,
+      "message": "Start index and end index are different because they are required for forward and backward movement respectively. The reason currently backward movement was not functional for character granularity was that end index did not point at the end of the text.",
+      "parentUuid": "fa7f68a2_f6027ace",
+      "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67e1a793_d6b0bc6a",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-16T19:04:43Z",
       "side": 1,
       "message": "Just get the text and get its length directly.\nAlso, just to be sure, you want to select the entire contents of the node\u0027s text? This differs from the previous logic that placed selection as a collapsed selection at the beginning of the node.",
+      "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56973ea6_c9fc227b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-16T20:33:24Z",
+      "side": 1,
+      "message": "I don\u0027t see a way I can get the node at java level and so I had to make a native function and go that way.",
+      "parentUuid": "67e1a793_d6b0bc6a",
       "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
