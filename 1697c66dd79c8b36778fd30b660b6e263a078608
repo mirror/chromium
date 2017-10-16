@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60dbef4b_a2213673",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-16T21:52:49Z",
+      "side": 1,
+      "message": "We could, but I thought that having it as a separate method would be clearer since otherwise it would need to be inside a for loop, and have a break for every case as opposed to just a neat return. If you still prefer inline I can do that.",
+      "parentUuid": "3ed59a58_611d8be4",
+      "range": {
+        "startLine": 122,
+        "startChar": 40,
+        "endLine": 122,
+        "endChar": 68
+      },
+      "revId": "1697c66dd79c8b36778fd30b660b6e263a078608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea2c9a2b_9696c40c",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-13T21:03:44Z",
       "side": 1,
       "message": "I think these macros assume the name doesn\u0027t change. Consider using STATIC_HISTOGRAM_POINTER_GROUP.\n\nhttps://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?q\u003dstatic_histogram\u0026sq\u003dpackage:chromium\u0026l\u003d297",
+      "range": {
+        "startLine": 2045,
+        "startChar": 2,
+        "endLine": 2045,
+        "endChar": 21
+      },
+      "revId": "1697c66dd79c8b36778fd30b660b6e263a078608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66905fc4_25353bb1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2045,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-16T21:52:49Z",
+      "side": 1,
+      "message": "I don\u0027t know if that one is to be used outside of metrics/ (it currently isn\u0027t). Using base::UmaHistogramTimes per suggestion in another comment.",
+      "parentUuid": "ea2c9a2b_9696c40c",
       "range": {
         "startLine": 2045,
         "startChar": 2,

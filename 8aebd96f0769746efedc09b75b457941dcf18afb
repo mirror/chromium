@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec821a1d_c281e556",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-16T21:52:49Z",
+      "side": 1,
+      "message": "I don\u0027t think so. First, this is in scheduler/base. Despite there being no DEPS complaining about it, I\u0027d assume we don\u0027t want includes from scheduler/renderer in here. Also, I now changed the strings to now include the whole message. Finally, I think that the format of MainThreadTaskQueue::NameForQueueType is not good for UMA reporting.",
+      "parentUuid": "f50cf178_6b2bfb90",
+      "revId": "8aebd96f0769746efedc09b75b457941dcf18afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5d66cc6_2be2fc01",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-16T21:35:29Z",
       "side": 1,
       "message": "We could use const char* here and avoid creating new objects, right?",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 44
+      },
+      "revId": "8aebd96f0769746efedc09b75b457941dcf18afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89dd0387_94bb762e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-16T21:52:49Z",
+      "side": 1,
+      "message": "const char* variables cannot be added, but I think we do want creating new objects every time we report, so I just modified the char[] to contain the complete message.",
+      "parentUuid": "b5d66cc6_2be2fc01",
       "range": {
         "startLine": 26,
         "startChar": 8,

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3226e70f_74e35d13",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-16T21:52:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd6c8a06_339edb14",
+      "range": {
+        "startLine": 58,
+        "startChar": 11,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a750103b_f948bd45",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-14T01:14:14Z",
       "side": 1,
       "message": "Do you really need to expose these in the header?  I\u0027m actually not sure what the currently preferred style is, but this looks odd to me.  I sent a message on chromium-dev to see what the community preference is.",
+      "range": {
+        "startLine": 58,
+        "startChar": 1,
+        "endLine": 66,
+        "endChar": 61
+      },
+      "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd230ae3_b6efbb8b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-16T21:52:49Z",
+      "side": 1,
+      "message": "Certainly only need to expose one from the index / char. Done.",
+      "parentUuid": "a750103b_f948bd45",
       "range": {
         "startLine": 58,
         "startChar": 1,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6b2a13d4_08e9eff9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-16T21:52:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fcbcd7f_d684db75",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8858665e_b2f283e1",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-14T01:14:14Z",
       "side": 1,
       "message": "nit: In general, \"default\" is discouraged vs. explicitly listing all of the enum values.  I\u0027m not sure whether that applies here, given that you\u0027re folding quite a lot of cases into the \"other\" type.",
+      "range": {
+        "startLine": 1975,
+        "startChar": 4,
+        "endLine": 1975,
+        "endChar": 11
+      },
+      "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0963581_6367fcde",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-16T21:52:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I prefer listing all of the options in this case. Done",
+      "parentUuid": "8858665e_b2f283e1",
       "range": {
         "startLine": 1975,
         "startChar": 4,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cf1e04eb_83608f4b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2042,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-16T21:52:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c293acd_1068ff57",
+      "range": {
+        "startLine": 2042,
+        "startChar": 41,
+        "endLine": 2042,
+        "endChar": 44
+      },
+      "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "964d6132_f3768ef7",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "e77129ed_9e4b698f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-16T21:52:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "964d6132_f3768ef7",
+      "range": {
+        "startLine": 2045,
+        "startChar": 2,
+        "endLine": 2046,
+        "endChar": 66
+      },
+      "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "289e42dc_6d2fb534",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc0f791_60e4be43",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 67021,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-16T21:52:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "289e42dc_6d2fb534",
+      "range": {
+        "startLine": 67021,
+        "startChar": 72,
+        "endLine": 67021,
+        "endChar": 0
+      },
+      "revId": "bbd446a06940a87ccb64dfbadda484b912b1e93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
