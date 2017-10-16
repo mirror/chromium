@@ -16,6 +16,24 @@
       "revId": "bb5278adca3037478d033a984b3521fa7e16bb5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c19afca6_847f2152",
+        "filename": "remoting/ios/domain/host_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-16T18:31:58Z",
+      "side": 1,
+      "message": "So could we delete this now?",
+      "parentUuid": "9742ba6c_856b07e8",
+      "revId": "bb5278adca3037478d033a984b3521fa7e16bb5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
