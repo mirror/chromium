@@ -83,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "4c590053_a0d87e99",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-16T22:18:13Z",
+      "side": 1,
+      "message": "if you remove UpdatePresentationDelay() call from here then we won\u0027t need it method at all. Instead it may better to call fuchsia_audio_output_stream_get_min_delay() below, where PTS is initialized.",
+      "parentUuid": "3d5f520b_862d9e69",
+      "revId": "b257260c8e5e01ffe7e558fe196e2705a9f364b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6684bf0a_52dfc314",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 2
@@ -115,6 +133,29 @@
       "revId": "b257260c8e5e01ffe7e558fe196e2705a9f364b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7cfe78f_a42a2e00",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-16T22:18:13Z",
+      "side": 1,
+      "message": "Is it still necessary to add 1us here?",
+      "range": {
+        "startLine": 141,
+        "startChar": 60,
+        "endLine": 141,
+        "endChar": 70
+      },
+      "revId": "b257260c8e5e01ffe7e558fe196e2705a9f364b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
