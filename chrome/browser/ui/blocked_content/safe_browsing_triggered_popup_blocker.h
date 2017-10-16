@@ -66,6 +66,7 @@ class SafeBrowsingTriggeredPopupBlocker
     // Add new entries before this one
     kCount
   };
+
   explicit SafeBrowsingTriggeredPopupBlocker(
       content::WebContents* web_contents,
       std::unique_ptr<ConsoleLogger> logger);
