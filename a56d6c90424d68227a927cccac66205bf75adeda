@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45909c9e_a06977ae",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T02:55:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b00ee8f8_02e8032c",
+      "range": {
+        "startLine": 51,
+        "startChar": 55,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "a56d6c90424d68227a927cccac66205bf75adeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "183fc2b7_5cda1235",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "99fab4d3_a97ab09e",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T02:55:58Z",
+      "side": 1,
+      "message": "Ah, so it does. Done",
+      "parentUuid": "183fc2b7_5cda1235",
+      "range": {
+        "startLine": 74,
+        "startChar": 79,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "a56d6c90424d68227a927cccac66205bf75adeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb2edf6d_8a4547aa",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "a56d6c90424d68227a927cccac66205bf75adeda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce830a2c_809f0727",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T02:55:58Z",
+      "side": 1,
+      "message": "That\u0027s nicer, done",
+      "parentUuid": "fb2edf6d_8a4547aa",
+      "range": {
+        "startLine": 134,
+        "startChar": 51,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "a56d6c90424d68227a927cccac66205bf75adeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
