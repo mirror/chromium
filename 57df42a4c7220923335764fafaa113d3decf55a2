@@ -22,6 +22,30 @@
       "revId": "57df42a4c7220923335764fafaa113d3decf55a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880edab8_585dffdc",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-16T16:34:06Z",
+      "side": 1,
+      "message": "I think this should just pass -1 as the |modified_index| arg to CancelDrag. It seems like (1) this function doesn\u0027t need an updated index resulting from the cancellation of a drag, it just need to actually cancel the drag (via line 1472):\n  model_-\u003eMove(drag_view_index, start_drag_index_);\nand (2) it doesn\u0027t make sense to pass the |model_index| of the deleted item (that now points to the next item or an invalid index).",
+      "parentUuid": "c3b2465f_cd8f51bb",
+      "range": {
+        "startLine": 1623,
+        "startChar": 18,
+        "endLine": 1623,
+        "endChar": 28
+      },
+      "revId": "57df42a4c7220923335764fafaa113d3decf55a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
