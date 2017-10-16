@@ -20,8 +20,8 @@ class CSSPaintImageGeneratorImpl;
 
 // Manages a paint worklet:
 // https://drafts.css-houdini.org/css-paint-api/#dom-css-paintworklet
-class MODULES_EXPORT PaintWorklet final : public Worklet,
-                                          public Supplement<LocalDOMWindow> {
+class MODULES_EXPORT PaintWorklet : public Worklet,
+                                    public Supplement<LocalDOMWindow> {
   USING_GARBAGE_COLLECTED_MIXIN(PaintWorklet);
   WTF_MAKE_NONCOPYABLE(PaintWorklet);
 
@@ -30,6 +30,7 @@ class MODULES_EXPORT PaintWorklet final : public Worklet,
   static const size_t kNumGlobalScopes;
   static PaintWorklet* From(LocalDOMWindow&);
   static PaintWorklet* Create(LocalFrame*);
+
   ~PaintWorklet() override;
 
   void AddPendingGenerator(const String& name, CSSPaintImageGeneratorImpl*);
@@ -48,20 +49,27 @@ class MODULES_EXPORT PaintWorklet final : public Worklet,
   }
   DECLARE_VIRTUAL_TRACE();
 
+ protected:
+  explicit PaintWorklet(LocalFrame*);
+
+  // Since paint worklet has more than one global scope, we MUST override this
+  // function and provide our own selection logic.
+  size_t SelectGlobalScope() final;
+  virtual void SetPaintsBeforeSwitching();
+  int paints_before_switching_global_scope_;
+
  private:
   friend class PaintWorkletTest;
-
-  explicit PaintWorklet(LocalFrame*);
 
   // Implements Worklet.
   bool NeedsToCreateGlobalScope() final;
   WorkletGlobalScopeProxy* CreateGlobalScope() final;
 
-  // Since paint worklet has more than one global scope, we MUST override this
-  // function and provide our own selection logic.
-  size_t SelectGlobalScope() const final;
   Member<PaintWorkletPendingGeneratorRegistry> pending_generator_registry_;
   DocumentDefinitionMap document_definition_map_;
+
+  size_t active_frame_count_ = 0u;
+  size_t active_global_scope_ = 0u;
 
   static const char* SupplementName();
 };
