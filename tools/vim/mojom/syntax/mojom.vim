@@ -5,7 +5,7 @@
 " Vim syntax file " Language: Mojom
 " To get syntax highlighting for .mojom files, add the following to your .vimrc
 " file:
-"     set runtimepath^=/path/to/src/tools/vim/mojom
+"     set runtimepath+=/path/to/src/tools/vim/mojom
 
 syn case match
 
