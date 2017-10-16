@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a9a9f02_ed7eb45a",
+        "filename": "remoting/codec/webrtc_video_encoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-16T21:47:10Z",
+      "side": 1,
+      "message": "Not used, move to .cc ?",
+      "range": {
+        "startLine": 11,
+        "startChar": 17,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "0b4b26e66fd0ce04bfd943d70f46739b3685e83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
