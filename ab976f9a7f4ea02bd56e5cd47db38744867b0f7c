@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6058ae09_b7696c37",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_bypass_protocol_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-16T21:24:29Z",
+      "side": 1,
+      "message": "mmenke: Were you referring to this call? Note that |accepted_socket_count_| is also used by simple connection listener where it is used to intercept only the first read.\n\nAlso, IIUC, your comment implied that the EmbeddedTestServerConnectionListener would not work with servicification. Is that correct?",
+      "range": {
+        "startLine": 473,
+        "startChar": 4,
+        "endLine": 473,
+        "endChar": 71
+      },
+      "revId": "ab976f9a7f4ea02bd56e5cd47db38744867b0f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
