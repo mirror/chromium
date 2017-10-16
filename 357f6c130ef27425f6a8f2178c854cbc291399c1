@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adf1f2ad_f753abb7",
+        "filename": "third_party/WebKit/Source/platform/wtf/WTF.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-16T14:26:49Z",
+      "side": 1,
+      "message": "This can also make some other thread spuriously start registering as the main thread. It also only fools one check, but many other things still look like it\u0027s the main thread, like TLS and WTF::MayNotBeMainThread, so this is a very limited illusion.\n\nIf it\u0027s just for your particular tests, maybe your code could provide its own bypass (named IsMainThreadOrTest or something) that can be overridden?\n\nIdeally, though, we would actually run it off the main thread, since if the code cares about threading we should probably test how it deals with threading (this also seems like it would give TSAN a better opportunity to detect bugs).",
+      "revId": "357f6c130ef27425f6a8f2178c854cbc291399c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb26dd4_993c181e",
+        "filename": "third_party/WebKit/Source/platform/wtf/WTFThreadTestHelper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-16T14:26:49Z",
+      "side": 1,
+      "message": "Putting it in a target with testonly\u003dtrue will do the trick, but that will also prevent including it from WTF.cpp.\n\nI\u0027m not sure I like the pattern of having WTF.cpp provide the implementation of something in a non-matching header. Could this either be in WTF.h, clearly labelled, or have the |g_main_thread_identifier| variable exported from WTF.h, and the implementation of this class being in a source file in such a test_support target?",
+      "revId": "357f6c130ef27425f6a8f2178c854cbc291399c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
