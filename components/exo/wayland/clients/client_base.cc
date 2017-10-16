@@ -137,6 +137,113 @@ wl_registry_listener g_registry_listener = {RegistryHandler, RegistryRemover};
 
 wl_buffer_listener g_buffer_listener = {BufferRelease};
 
+uint32_t VulkandChooseGraphicsQueueFamily(VkPhysicalDevice device) {
+  uint32_t family_index = UINT32_MAX;
+  std::vector<VkQueueFamilyProperties> properties;
+  uint32_t properties_number = 0;
+
+  vkGetPhysicalDeviceQueueFamilyProperties(device, &properties_number, nullptr);
+  properties.resize(properties_number);
+
+  vkGetPhysicalDeviceQueueFamilyProperties(device, &properties_number,
+                                           properties.data());
+
+  // Choose the first graphics queue.
+  for (uint32_t i = 0; i < properties_number; ++i) {
+    if ((properties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) &&
+        properties[i].queueCount > 0) {
+      family_index = i;
+      break;
+    }
+  }
+
+  return family_index;
+}
+
+VkResult VulkanInitialize(VkDevice* device,
+                          VkQueue* queue,
+                          VkCommandPool* command_pool) {
+  const VkAllocationCallbacks* allocator = NULL;
+  uint32_t extensions_count = 0;
+  const char* extensions[1] = {0};
+  VkApplicationInfo application_info{
+      .sType = VK_STRUCTURE_TYPE_APPLICATION_INFO,
+      .pApplicationName = NULL,
+      .applicationVersion = 0,
+      .pEngineName = NULL,
+      .engineVersion = 0,
+      .apiVersion = VK_MAKE_VERSION(1, 0, 0),
+  };
+  VkInstanceCreateInfo create_info{
+      .sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
+      .flags = 0,
+      .pApplicationInfo = &application_info,
+      .enabledLayerCount = 0,
+      .ppEnabledLayerNames = NULL,
+      .enabledExtensionCount = extensions_count,
+      .ppEnabledExtensionNames = extensions,
+  };
+
+  VkResult result = VK_SUCCESS;
+  VkInstance instance;
+  result = vkCreateInstance(&create_info, allocator, &instance);
+  if (result != VK_SUCCESS) {
+    LOG(ERROR) << "Failed to create a Vulkan instance. Do you have an ICD "
+                  "driver (e.g: "
+                  "/usr/share/vulkan/icd.d/intel_icd.x86_64.json). Does it "
+                  "point to a valid .so? Try to set export VK_LOADER_DEBUG=all "
+                  "for more debuggining info.";
+
+    return result;
+  }
+
+  uint32_t physical_devices_number = 1;
+  VkPhysicalDevice physical_device;
+  result = vkEnumeratePhysicalDevices(instance, &physical_devices_number,
+                                      &physical_device);
+  if (result != VK_SUCCESS) {
+    LOG(ERROR) << "Failed to enumerate physical devices.";
+    return result;
+  }
+
+  uint32_t queue_family_index =
+      VulkandChooseGraphicsQueueFamily(physical_device);
+  DCHECK_NE(UINT32_MAX, queue_family_index);
+
+  float priority = 1.0f;
+  VkDeviceQueueCreateInfo device_queue_create_info{
+      .sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
+      .queueFamilyIndex = queue_family_index,
+      .queueCount = 1,
+      .pQueuePriorities = &priority,
+  };
+  VkDeviceCreateInfo device_create_info{
+      .sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
+      .queueCreateInfoCount = 1,
+      .pQueueCreateInfos = &device_queue_create_info,
+  };
+  result =
+      vkCreateDevice(physical_device, &device_create_info, allocator, device);
+  if (result != VK_SUCCESS) {
+    LOG(ERROR) << "Can't create Vulkan device.";
+    return result;
+  }
+  vkGetDeviceQueue(*device, queue_family_index, 0, queue);
+  VkCommandPoolCreateInfo command_pool_create_info{
+      .sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
+      .flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT |
+               VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
+      .queueFamilyIndex = queue_family_index,
+  };
+  result = vkCreateCommandPool(*device, &command_pool_create_info, nullptr,
+                               command_pool);
+  if (result != VK_SUCCESS) {
+    LOG(ERROR) << "Can't create Vulkan command pool.";
+    return result;
+  }
+  return result;
+}
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -339,8 +446,47 @@ bool ClientBase::Init(const InitParams& params) {
         kOpenGL_GrBackend,
         reinterpret_cast<GrBackendContext>(native_interface.get())));
     DCHECK(gr_context_);
+
+#if defined(USE_VULKAN)
+    VkResult result =
+        VulkanInitialize(&vk_device_, &vk_queue_, &vk_command_pool_);
+    CHECK_EQ(VK_SUCCESS, result);
+    VkAttachmentDescription attach_desc[]{
+        {
+            .format = VK_FORMAT_A8B8G8R8_UNORM_PACK32,
+            .samples = (VkSampleCountFlagBits)1,
+            .loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR,
+            .storeOp = VK_ATTACHMENT_STORE_OP_STORE,
+            .initialLayout = VK_IMAGE_LAYOUT_UNDEFINED,
+            .finalLayout = VK_IMAGE_LAYOUT_GENERAL,
+        },
+    };
+    VkAttachmentReference attach_ref[]{
+        {
+            .attachment = 0, .layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+        },
+    };
+    VkSubpassDescription subpass_desk[]{
+        {
+            .pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS,
+            .colorAttachmentCount = 1,
+            .pColorAttachments = attach_ref,
+        },
+    };
+    VkRenderPassCreateInfo create_pass_info{
+        .sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,
+        .attachmentCount = 1,
+        .pAttachments = attach_desc,
+        .subpassCount = 1,
+        .pSubpasses = subpass_desk,
+    };
+    result = vkCreateRenderPass(vk_device_, &create_pass_info, nullptr,
+                                &vk_renderpass_);
+    CHECK_EQ(VK_SUCCESS, result);
+
+#endif  // defined(USE_VULKAN)
   }
-#endif
+#endif  // defined(USE_GBM)
   for (size_t i = 0; i < params.num_buffers; ++i) {
     auto buffer = CreateBuffer(size_, params.drm_format, params.bo_usage);
     if (!buffer) {
@@ -527,8 +673,81 @@ std::unique_ptr<ClientBase::Buffer> ClientBase::CreateDrmBuffer(
         gr_context_.get(), backend_texture, kTopLeft_GrSurfaceOrigin,
         /* sampleCnt */ 0, /* colorSpace */ nullptr, /* props */ nullptr);
     DCHECK(buffer->sk_surface);
+
+#if defined(USE_VULKAN)
+    {
+      PFN_vkCreateDmaBufImageINTEL create_dma_buf_image_intel =
+          reinterpret_cast<PFN_vkCreateDmaBufImageINTEL>(
+              vkGetDeviceProcAddr(vk_device_, "vkCreateDmaBufImageINTEL"));
+      if (!create_dma_buf_image_intel) {
+        LOG(ERROR) << "Vulkan wayland clients work only where "
+                      "vkCreateDmaBufImageINTEL is available.";
+        return nullptr;
+      }
+      VkDmaBufImageCreateInfo dma_buf_image_create_info{
+          .sType = static_cast<VkStructureType>(
+              VK_STRUCTURE_TYPE_DMA_BUF_IMAGE_CREATE_INFO_INTEL),
+          .fd = gbm_bo_get_plane_fd(buffer->bo.get(), 0),
+          .format = VK_FORMAT_A8B8G8R8_UNORM_PACK32,
+          .extent = (VkExtent3D){size.width(), size.height(), 1},
+          .strideInBytes = gbm_bo_get_stride(buffer->bo.get()),
+      };
+      VkResult result = create_dma_buf_image_intel(
+          vk_device_, &dma_buf_image_create_info, nullptr, &buffer->vk_memory,
+          &buffer->vk_image);
+
+      if (result != VK_SUCCESS) {
+        LOG(ERROR) << "Failed to create a Vulkan image from a dmabuf.";
+        return buffer;
+      }
+      VkImageViewCreateInfo vk_iamge_view_create_info{
+          .sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
+          .image = buffer->vk_image,
+          .viewType = VK_IMAGE_VIEW_TYPE_2D,
+          .format = VK_FORMAT_A8B8G8R8_UNORM_PACK32,
+          .components =
+              {
+                  .r = VK_COMPONENT_SWIZZLE_IDENTITY,
+                  .b = VK_COMPONENT_SWIZZLE_IDENTITY,
+                  .g = VK_COMPONENT_SWIZZLE_IDENTITY,
+                  .a = VK_COMPONENT_SWIZZLE_IDENTITY,
+              },
+          .subresourceRange =
+              {
+                  .aspectMask = VK_IMAGE_ASPECT_COLOR_BIT,
+                  .baseMipLevel = 0,
+                  .levelCount = 1,
+                  .baseArrayLayer = 0,
+                  .layerCount = 1,
+              },
+      };
+
+      result = vkCreateImageView(vk_device_, &vk_iamge_view_create_info,
+                                 nullptr, &buffer->vk_image_view);
+      if (result != VK_SUCCESS) {
+        LOG(ERROR) << "Failed to create a Vulkan image view.";
+        return buffer;
+      }
+      VkFramebufferCreateInfo vk_framebuffer_create_info{
+          .sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
+          .renderPass = vk_renderpass_,
+          .attachmentCount = 1,
+          .pAttachments = &buffer->vk_image_view,
+          .width = size.width(),
+          .height = size.height(),
+          .layers = 1,
+      };
+      result = vkCreateFramebuffer(vk_device_, &vk_framebuffer_create_info,
+                                   nullptr, &buffer->vk_framebuffer);
+      if (result != VK_SUCCESS) {
+        LOG(ERROR) << "Failed to create a Vulkan framebuffer.";
+        return buffer;
+      }
+    }
+#endif  // defined(USE_VULKAN)
   }
-#endif
+#endif  // defined(USE_GBM)
+
   return buffer;
 }
 
