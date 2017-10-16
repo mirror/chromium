@@ -262,6 +262,7 @@ source_set("unit_tests") {
 
   deps = [
     ":arc_test_support",
+    "//ash:test_support_without_content",
     "//ash/public/cpp:ash_public_cpp",
     "//base",
     "//base/test:test_support",

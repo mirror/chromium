@@ -9,6 +9,7 @@
 
 #include "ash/shell_delegate.h"
 #include "base/macros.h"
+#include "url/gurl.h"
 
 namespace ash {
 
@@ -39,8 +40,13 @@ class TestShellDelegate : public ShellDelegate {
     force_maximize_on_first_run_ = maximize;
   }
 
+  const GURL& GetLastOpenedUrlFromArc() const {
+    return last_opened_url_from_arc_;
+  }
+
  private:
   bool force_maximize_on_first_run_ = false;
+  GURL last_opened_url_from_arc_ = GURL();
 
   DISALLOW_COPY_AND_ASSIGN(TestShellDelegate);
 };

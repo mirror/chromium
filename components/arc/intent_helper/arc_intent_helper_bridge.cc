@@ -16,11 +16,14 @@
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/audio/arc_audio_bridge.h"
+#include "content/public/common/url_constants.h"
 #include "ui/base/layout.h"
 #include "url/gurl.h"
 
 namespace arc {
 namespace {
+
+constexpr char kMultideviceSettingsUrl[] = "chrome://settings/multidevice";
 
 // Singleton factory for ArcIntentHelperBridge.
 class ArcIntentHelperBridgeFactory
@@ -102,9 +105,23 @@ void ArcIntentHelperBridge::OnOpenDownloads() {
 
 void ArcIntentHelperBridge::OnOpenUrl(const std::string& url) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  const GURL gurl(url);
+  if (gurl.SchemeIs(content::kChromeUIScheme)) {
+    // Disallow opening chrome:// URLs.
+    return;
+  }
   // TODO(mash): Support this functionality without ash::Shell access in Chrome.
   if (ash::Shell::HasInstance())
-    ash::Shell::Get()->shell_delegate()->OpenUrlFromArc(GURL(url));
+    ash::Shell::Get()->shell_delegate()->OpenUrlFromArc(gurl);
+}
+
+void ArcIntentHelperBridge::OnOpenChromeSettingsMultideviceUrl() {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  // TODO(mash): Support this functionality without ash::Shell access in Chrome.
+  if (ash::Shell::HasInstance()) {
+    ash::Shell::Get()->shell_delegate()->OpenUrlFromArc(
+        GURL(kMultideviceSettingsUrl));
+  }
 }
 
 void ArcIntentHelperBridge::OpenWallpaperPicker() {

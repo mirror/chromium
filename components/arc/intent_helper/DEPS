@@ -4,8 +4,13 @@ include_rules = [
   "+ash/new_window_controller.h",
   "+ash/shell.h",
   "+ash/shell_delegate.h",
+  "+ash/shell_init_params.h",
+  "+ash/test",
+  "+ash/test_shell_delegate.h",
   "+ash/wallpaper/wallpaper_controller.h",
+  "+content/public/common",
   "+components/google/core/browser",
   "+ui/base",
   "+ui/gfx",
+  "+ui/message_center/message_center.h",
 ]

@@ -62,6 +62,7 @@ class ArcIntentHelperBridge
       std::vector<IntentFilter> intent_filters) override;
   void OnOpenDownloads() override;
   void OnOpenUrl(const std::string& url) override;
+  void OnOpenChromeSettingsMultideviceUrl() override;
   void OpenWallpaperPicker() override;
   void SetWallpaperDeprecated(const std::vector<uint8_t>& jpeg_data) override;
   void OpenVolumeControl() override;
@@ -109,6 +110,8 @@ class ArcIntentHelperBridge
   std::vector<IntentFilter> intent_filters_;
 
   base::ObserverList<ArcIntentHelperObserver> observer_list_;
+
+  friend class ArcIntentHelperTest;
 
   DISALLOW_COPY_AND_ASSIGN(ArcIntentHelperBridge);
 };
