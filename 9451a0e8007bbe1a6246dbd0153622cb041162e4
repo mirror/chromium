@@ -334,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "a2c12017_ab69503a",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-16T19:17:48Z",
+      "side": 1,
+      "message": "Okay, please also test the user switch/flip animation as well.",
+      "parentUuid": "e381c9b1_ee65cfd6",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27d3ed19_f353403c",
         "filename": "ash/login/ui/login_user_view.cc",
         "patchSetId": 3

@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5eb769a_606c3551",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-16T19:17:48Z",
+      "side": 1,
+      "message": "Add note on what needs to be handled here.",
+      "revId": "ce7023de62f7ba1055bcd9887f56a0692696051b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba80f7e_852d3423",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-16T19:17:48Z",
+      "side": 1,
+      "message": "Rename to UpdateLayout or similar. This does more than just layout auth now.",
+      "revId": "ce7023de62f7ba1055bcd9887f56a0692696051b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf25df6_4dea5b22",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-16T19:17:48Z",
+      "side": 1,
+      "message": "Add block-level comment similar to other blocks in this function.",
+      "revId": "ce7023de62f7ba1055bcd9887f56a0692696051b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd86e87f_79286f33",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-16T19:17:48Z",
+      "side": 1,
+      "message": "Revert? We should only finish animate if we\u0027re running animations.",
+      "revId": "ce7023de62f7ba1055bcd9887f56a0692696051b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f344d17c_73da1b1b",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-16T19:17:48Z",
+      "side": 1,
+      "message": "What about display_size_changed instead of is_display_size_changing?",
+      "revId": "ce7023de62f7ba1055bcd9887f56a0692696051b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b601db5_53525b17",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-16T19:17:48Z",
+      "side": 1,
+      "message": "Drop Current from both of these, ie, ActiveAuthView() and MaybeInactiveAuthView()",
+      "revId": "ce7023de62f7ba1055bcd9887f56a0692696051b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd0154a_c0f03a99",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-16T19:17:48Z",
+      "side": 1,
+      "message": "Add comment that this might be null.",
+      "revId": "ce7023de62f7ba1055bcd9887f56a0692696051b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9efcd2b3_590a5309",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-16T19:17:48Z",
+      "side": 1,
+      "message": "Does this animation work as expected if you animate the child layers independently?\n\nI wonder if animating child layers separately is conceptually simpler, so as the reader you don\u0027t need to worry about which set of layers is being animated, ie, it is always consistent that it is the child layers throughout this entire class.",
+      "revId": "ce7023de62f7ba1055bcd9887f56a0692696051b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59036733_4a72b26f",
+        "filename": "ash/login/ui/login_user_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-16T19:17:48Z",
+      "side": 1,
+      "message": "What about using optional\u003cint\u003e for cached_start_y_coordinate_? Then if cached_start_y_coordinate_ has a value it is implicitly the most recent value. When we use the value reset the optional to nullopt. When saving the value we DCHECK to make sure the value is nullopt before setting it.\n\nThis approach more aggressively eliminates the possibility that we use stale data.",
+      "revId": "ce7023de62f7ba1055bcd9887f56a0692696051b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
