@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "357459a6_a4d94b43",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/resources/service-workers-bypass-for-network-cors-target.php",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T09:20:28Z",
+      "side": 1,
+      "message": "Ah, I think I should remove Line 15 instead.",
+      "parentUuid": "5cfc4082_f74c1255",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2af53060_2d3716c1",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/resources/service-workers-bypass-for-network-cors-worker.js",
         "patchSetId": 7
@@ -84,6 +102,24 @@
       "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd60bf02_3c31cd20",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/resources/service-workers-bypass-for-network-cors-worker.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T09:20:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2af53060_2d3716c1",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +261,24 @@
       "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2dfaa5_fc7e47ee",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-bypass-for-network-cors.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T09:20:28Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "79db7d51_cff8ae7d",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
