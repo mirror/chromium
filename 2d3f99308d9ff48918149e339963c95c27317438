@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f026d26d_d35f2854",
+        "filename": "content/network/network_service_impl.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-16T19:31:10Z",
+      "side": 1,
+      "message": "Ack. I can work on converting chrome/ consumers, and handle other content/ embedders when NetworkService is ready there.",
+      "parentUuid": "1b13311b_cea73b7c",
+      "range": {
+        "startLine": 62,
+        "startChar": 41,
+        "endLine": 62,
+        "endChar": 48
+      },
+      "revId": "2d3f99308d9ff48918149e339963c95c27317438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac915fb_da7511b1",
         "filename": "content/public/common/network_connection_tracker.cc",
         "patchSetId": 23
@@ -45,6 +69,30 @@
       "revId": "2d3f99308d9ff48918149e339963c95c27317438",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41399b79_16ce14b1",
+        "filename": "content/public/common/network_connection_tracker.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-16T19:31:10Z",
+      "side": 1,
+      "message": "Done. Good idea! Thanks.",
+      "parentUuid": "7ac915fb_da7511b1",
+      "range": {
+        "startLine": 37,
+        "startChar": 27,
+        "endLine": 37,
+        "endChar": 51
+      },
+      "revId": "2d3f99308d9ff48918149e339963c95c27317438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "2e9f1259_e9afa89a",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-16T19:31:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18f97549_90476d29",
+      "revId": "2d3f99308d9ff48918149e339963c95c27317438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f0a9d17_576c0e70",
         "filename": "content/public/common/network_connection_tracker.h",
         "patchSetId": 23
@@ -97,6 +163,24 @@
       "revId": "2d3f99308d9ff48918149e339963c95c27317438",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eec69c1_3f58ecc6",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-16T19:31:10Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "0f0a9d17_576c0e70",
+      "revId": "2d3f99308d9ff48918149e339963c95c27317438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

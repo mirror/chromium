@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "824835c8_a7bd59c1",
+        "filename": "content/public/common/network_connection_tracker.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-16T19:31:10Z",
+      "side": 1,
+      "message": "Matt, I am applying your suggestion here.\nI think there\u0027s a race condition. If after we read |connection_type_| here on a user thread, NCT sets it in OnInitialConnectionType() on NCT\u0027s thread at the same time, won\u0027t we be in trouble?\n\nIs there another way of writing this to make it thread safe?",
+      "revId": "0f9d17c124a9bcf90c0bbead8e257508f641ad3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
