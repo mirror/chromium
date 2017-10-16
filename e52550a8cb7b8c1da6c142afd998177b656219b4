@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cdc0b14_11f028fb",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-16T18:26:50Z",
+      "side": 1,
+      "message": "Seems that these two Ranges are only used for length measuring, in which case they should be changed into EphemeralRange.",
+      "revId": "e52550a8cb7b8c1da6c142afd998177b656219b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f300c0b_ab09b162",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-16T18:26:50Z",
+      "side": 1,
+      "message": "nit: No need to add inclusion. It\u0027s already declared in editing/Forward.h.",
+      "revId": "e52550a8cb7b8c1da6c142afd998177b656219b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
