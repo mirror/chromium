@@ -6,6 +6,7 @@
 #define CHROME_GPU_GPU_ARC_VIDEO_ENCODE_ACCELERATOR_H_
 
 #include <memory>
+#include <queue>
 #include <unordered_map>
 #include <vector>
 
@@ -66,6 +67,7 @@ class GpuArcVideoEncodeAccelerator
                           UseBitstreamBufferCallback callback) override;
   void RequestEncodingParametersChange(uint32_t bitrate,
                                        uint32_t framerate) override;
+  void Flush(FlushCallback callback) override;
 
   // Unwraps a file descriptor from the given mojo::ScopedHandle.
   // If an error is encountered, it returns an invalid base::ScopedFD and
@@ -80,6 +82,7 @@ class GpuArcVideoEncodeAccelerator
   VideoPixelFormat input_pixel_format_;
   int32_t bitstream_buffer_serial_;
   std::unordered_map<uint32_t, UseBitstreamBufferCallback> use_bitstream_cbs_;
+  std::queue<FlushCallback> flush_callbacks_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuArcVideoEncodeAccelerator);
 };

@@ -162,6 +162,12 @@ interface VideoEncodeAccelerator {
   //  |framerate| is the requested new framerate, in frames per second.
   RequestEncodingParametersChange@4(uint32 bitrate,
                                     uint32 framerate);
+
+  // Flushes the encoder: all pending inputs will be encoded and all bitstreams
+  // handed back to the client.
+  // Callback:
+  //  Called when Flush() is complete.
+  Flush@5() => ();
 };
 
 // Interface for clients that use VideoEncodeAccelerator. These callbacks will

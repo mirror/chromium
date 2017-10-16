@@ -75,7 +75,9 @@ void GpuArcVideoEncodeAccelerator::NotifyError(Error error) {
 
 void GpuArcVideoEncodeAccelerator::NotifyFlushDone() {
   DVLOGF(2);
-  NOTIMPLEMENTED();
+  DCHECK(!flush_callbacks_.empty());
+  std::move(flush_callbacks_.front()).Run();
+  flush_callbacks_.pop();
 }
 
 // ::arc::mojom::VideoEncodeAccelerator implementation.
@@ -228,6 +230,16 @@ void GpuArcVideoEncodeAccelerator::RequestEncodingParametersChange(
     return;
   }
   accelerator_->RequestEncodingParametersChange(bitrate, framerate);
+}
+
+void GpuArcVideoEncodeAccelerator::Flush(FlushCallback callback) {
+  DVLOGF(2);
+  if (!accelerator_) {
+    DLOG(ERROR) << "Accelerator is not initialized.";
+    return;
+  }
+  flush_callbacks_.push(std::move(callback));
+  accelerator_->Flush();
 }
 
 base::ScopedFD GpuArcVideoEncodeAccelerator::UnwrapFdFromMojoHandle(
