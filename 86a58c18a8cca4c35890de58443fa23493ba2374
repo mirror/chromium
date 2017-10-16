@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "850cd50c_159a5690",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-10-16T17:56:50Z",
+      "side": 1,
+      "message": "I know it\u0027s just a couple of lines but would you mind moving the implementation out of the class definition? There was an effort in the past to keep interface definitions clear and I think it paid off.",
+      "revId": "86a58c18a8cca4c35890de58443fa23493ba2374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749f22ba_2023b6ad",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-10-16T17:56:50Z",
+      "side": 1,
+      "message": "Lacks override?",
+      "revId": "86a58c18a8cca4c35890de58443fa23493ba2374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04419ea7_b220bb3b",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-10-16T17:56:50Z",
+      "side": 1,
+      "message": "I don\u0027t get this.",
+      "revId": "86a58c18a8cca4c35890de58443fa23493ba2374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
