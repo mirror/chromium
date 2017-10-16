@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "7eb86944_084f8927",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-16T03:39:11Z",
+      "side": 1,
+      "message": "We can use std::unique_ptr\u003cui::EventHandler\u003e instead of std::unique_ptr\u003cClickActivator\u003e.  But I don\u0027t have strong opinion for this. It\u0027s up to you.",
+      "parentUuid": "0000a3fd_b1b3b04e",
+      "range": {
+        "startLine": 323,
+        "startChar": 6,
+        "endLine": 323,
+        "endChar": 40
+      },
+      "revId": "f09da93d438e8034fe7804cef72e8b888fdd8ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b4aa918_40ddee9c",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 1
