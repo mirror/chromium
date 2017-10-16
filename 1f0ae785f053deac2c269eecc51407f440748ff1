@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4eafefc5_b5ba395c",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "531d8410_b87ce6e1",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd8a53a7_319f6f14",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-13T18:50:49Z",
       "side": 1,
       "message": "I think common practice is to just use EXPECT_TRUE/ASSERT_TRUE for checking if something is not null.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5791eb54_68038a34",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "Yuck.  OK.",
+      "parentUuid": "dd8a53a7_319f6f14",
       "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c0a896e7_5a39f60e",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "To ensure there isn\u0027t an undocumented assumption of singleton-ness.",
+      "parentUuid": "653d155f_bde319f4",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f6c21a3_55b0f422",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-13T18:50:49Z",
       "side": 1,
       "message": "Nit; my preference would be to:\n\n1. Place these above all TESTs, and\n2. Put them in an anonymous namespace.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77126d06_1fe52086",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "1. I considered that, but doing so makes it less clear that some tests don\u0027t need these constructs.\nIs there a common precedent?\n\n2. Done.",
+      "parentUuid": "6f6c21a3_55b0f422",
       "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce51f012_d44330b8",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "It prevents theoretically being able to loop the integer and have an incorrect implementation pass.  It only matters that 10000 \u003e 3 (or any rational extension of three by more cases).  It\u0027s pedantic, but that\u0027s OK in unit tests, IMHO.",
+      "parentUuid": "7aa5ebca_ad343227",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "972c52cd_940b15ec",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "I think it should be named for its role, not it\u0027s type, which I think is peer - its supposed to represent the main thread mutator client, IIUC.\n\nImproved.",
+      "parentUuid": "19d4aacf_6c93a739",
+      "range": {
+        "startLine": 54,
+        "startChar": 21,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c9beed0_c2ca4cbc",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 3
@@ -121,6 +235,24 @@
       "writtenOn": "2017-10-13T18:50:49Z",
       "side": 1,
       "message": "Please use descriptive variable names. Based on this declaration I do not know what \u0027m\u0027 is.\n\nAdditionally, if this is overriding the Mutate function in CompositorAnimator it should be marked \u0027override\u0027",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74d24d9_1ccab7f6",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "I was trying to avoid using the same name as the overridden function because I do not understand or restrict the values to be \"monotonic\" in any way, so calling it that in a test seems misleading.  For test purposes it is just payload/baggage.  Perhaps \"payload\" would be more appropriate than what it is in the overall project? \n\nAdded override (surprised the presubmit and compile let me make that mistake).",
+      "parentUuid": "6c9beed0_c2ca4cbc",
       "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "7bcde82b_4511aafb",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "Does this one not describe what the grouped functions are about?  Perhaps it needs to be longer, or less whimsical?",
+      "parentUuid": "7b56b19b_bea0a034",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7df195f8_f07ae94b",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 3
@@ -155,6 +305,24 @@
       "writtenOn": "2017-10-13T18:50:49Z",
       "side": 1,
       "message": "Can you provide a more detailed commentary as to why you are \u0027neutering\u0027 GC? I don\u0027t see a harm in using heap allocation for this test.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8399bde2_64e0b6b2",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "This stuff should be gone.",
+      "parentUuid": "7df195f8_f07ae94b",
       "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "fd5cd354_9f9ec311",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "The double use of Test is because this is testing the test.\nI\u0027ve added a comment to clarify the double use.  It wasn\u0027t by accident.",
+      "parentUuid": "23a396c7_9ad6cf88",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f31a68f4_11da90af",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 3
@@ -192,6 +378,24 @@
       "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79ea4a3_cdc5a325",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f31a68f4_11da90af",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "4bb6d7f5_778ca6be",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "It is weird that constructing a class causes it to not be in the initial state expressed in its constructor.  It\u0027s surprising unless you know what the class is doing inside of itself, and think through its specific circumstances and use.",
+      "parentUuid": "9b662b72_e8011905",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fb16cff_e631e1b5",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 3
@@ -226,6 +448,24 @@
       "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3baec9a7_56d2fdb2",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "Ack.  These are things that are made clearer by unittesting.",
+      "parentUuid": "9fb16cff_e631e1b5",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -252,6 +492,30 @@
     },
     {
       "key": {
+        "uuid": "bbbaece9_863788e9",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "I agree they are some notion of time in the product.  That isn\u0027t documented or required in the interface, so it shouldn\u0027t be presumed in the test. These values for test purposes are some payload that is expected to be passed through unaltered.  Therefore I disagree with calling them time values or tying them to a clock in testing.\n\nI don\u0027t think there is value in testing the handling of which particular doubles we are passing around in the unit test.",
+      "parentUuid": "75549623_0443ae8e",
+      "range": {
+        "startLine": 160,
+        "startChar": 17,
+        "endLine": 160,
+        "endChar": 27
+      },
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d3a2624_d104f75e",
         "filename": "third_party/WebKit/Source/platform/wtf/WTF.cpp",
         "patchSetId": 3
@@ -263,6 +527,24 @@
       "writtenOn": "2017-10-13T18:50:49Z",
       "side": 1,
       "message": "Given that the implementation is in WTF.cpp, I would suggest that you place the declaration of this class in WTF.h rather than a new file. It seems an appropriate place to me.",
+      "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9b75d5a_a928baa2",
+        "filename": "third_party/WebKit/Source/platform/wtf/WTF.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T13:58:48Z",
+      "side": 1,
+      "message": "I respectfully disagree.  This class should only be used in testing, declaring it in a separate, test-only, header makes it clearer when someone violates this in the shipping product.  I or someone may come up with a build rule to enforce this someday sooner or later.  If it was in the same header, this safeguard would not be possible, nor the purpose as clear.\n\nThe implementation has to be here to modify the behavior of IsMainThread to lie.",
+      "parentUuid": "6d3a2624_d104f75e",
       "revId": "1f0ae785f053deac2c269eecc51407f440748ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
