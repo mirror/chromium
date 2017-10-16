@@ -196,6 +196,12 @@ DownloadFileImpl::SourceStream::Read(scoped_refptr<net::IOBuffer>* data,
   return COMPLETE;
 }
 
+void DownloadFileImpl::SourceStream::SetCompletionStatusForTesting(
+    DownloadInterruptReason completion_status) {
+  stream_reader_.reset();
+  completion_status_ = completion_status;
+}
+
 DownloadFileImpl::DownloadFileImpl(
     std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
@@ -227,6 +233,8 @@ DownloadFileImpl::DownloadFileImpl(
       record_stream_bandwidth_(false),
       bytes_seen_with_parallel_streams_(0),
       bytes_seen_without_parallel_streams_(0),
+      injected_error_offset_(-1),
+      injected_error_length_(0),
       observer_(observer),
       weak_factory_(this) {
   download_item_net_log.AddEvent(
@@ -508,6 +516,24 @@ void DownloadFileImpl::WasPaused() {
   record_stream_bandwidth_ = false;
 }
 
+void DownloadFileImpl::InjectErrorForTest(int64_t offset, int64_t length) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  injected_error_offset_ = offset;
+  injected_error_length_ = length;
+  auto iter = source_streams_.find(offset);
+
+  if (iter == source_streams_.end())
+    return;
+  SourceStream* stream = iter->second.get();
+
+  if (stream->is_finished())
+    return;
+
+  if (stream->bytes_written() == length)
+    HandleStreamError(stream, DOWNLOAD_INTERRUPT_REASON_SERVER_FAILED);
+}
+
 // TODO(qinmin): This only works with byte stream now, need to handle callback
 // from data pipe.
 void DownloadFileImpl::StreamActive(SourceStream* source_stream,
@@ -566,6 +592,12 @@ void DownloadFileImpl::StreamActive(SourceStream* source_stream,
             &DownloadFileImpl::OnStreamCompleted, weak_factory_.GetWeakPtr()));
         break;
       case SourceStream::COMPLETE:
+        // Handle error injection if needed.
+        if (source_stream->offset() == injected_error_offset_ &&
+            source_stream->bytes_written() == injected_error_length_) {
+          source_stream->SetCompletionStatusForTesting(
+              DOWNLOAD_INTERRUPT_REASON_SERVER_FAILED);
+        }
         break;
       default:
         NOTREACHED();
