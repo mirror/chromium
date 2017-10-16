@@ -328,10 +328,7 @@ def _OutputComment(f, comment):
 # Returns an iterator over all the policies in |template_file_contents|.
 def _Flatten(template_file_contents):
   for policy in template_file_contents['policy_definitions']:
-    if policy['type'] == 'group':
-      for sub_policy in policy['policies']:
-        yield sub_policy
-    else:
+    if policy['type'] != 'group':
       yield policy
 
 
