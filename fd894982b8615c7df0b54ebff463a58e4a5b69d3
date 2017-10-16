@@ -16,6 +16,24 @@
       "revId": "fd894982b8615c7df0b54ebff463a58e4a5b69d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e007d217_431180cb",
+        "filename": "mojo/public/tools/bindings/generators/mojom_java_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1230447
+      },
+      "writtenOn": "2017-10-16T18:46:23Z",
+      "side": 1,
+      "message": "The previous rules here made little assumptions about what sorts of inputs we could get (based on the example on the comments). If there\u0027s such a guarantee that names will either be camel case or macro case, then things get easier.\n\nThe new patch implements both rules you suggested, so we cover macro case, snake case, camel case. Anything non standard will produce undefined results.",
+      "parentUuid": "04d98894_30a85952",
+      "revId": "fd894982b8615c7df0b54ebff463a58e4a5b69d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
