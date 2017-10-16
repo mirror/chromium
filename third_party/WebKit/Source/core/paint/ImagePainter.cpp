@@ -15,11 +15,11 @@
 #include "core/layout/TextRunConstructor.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
-#include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/PaintInfo.h"
 #include "platform/geometry/LayoutPoint.h"
 #include "platform/graphics/Path.h"
 #include "platform/graphics/paint/DisplayItemCacheSkipper.h"
+#include "platform/graphics/paint/DrawingRecorder.h"
 
 namespace blink {
 
@@ -27,7 +27,7 @@ void ImagePainter::Paint(const PaintInfo& paint_info,
                          const LayoutPoint& paint_offset) {
   layout_image_.LayoutReplaced::Paint(paint_info, paint_offset);
 
-  if (paint_info.phase == kPaintPhaseOutline)
+  if (paint_info.phase == PaintPhase::kOutline)
     PaintAreaElementFocusRing(paint_info, paint_offset);
 }
 
@@ -66,15 +66,15 @@ void ImagePainter::PaintAreaElementFocusRing(const PaintInfo& paint_info,
   path.Translate(
       FloatSize(adjusted_paint_offset.X(), adjusted_paint_offset.Y()));
 
-  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+  if (DrawingRecorder::UseCachedDrawingIfPossible(
           paint_info.context, layout_image_, DisplayItem::kImageAreaFocusRing))
     return;
 
   LayoutRect focus_rect = layout_image_.ContentBoxRect();
   focus_rect.MoveBy(adjusted_paint_offset);
-  LayoutObjectDrawingRecorder drawing_recorder(
-      paint_info.context, layout_image_, DisplayItem::kImageAreaFocusRing,
-      focus_rect);
+  DrawingRecorder drawing_recorder(paint_info.context, layout_image_,
+                                   DisplayItem::kImageAreaFocusRing,
+                                   focus_rect);
 
   // FIXME: Clip path instead of context when Skia pathops is ready.
   // https://crbug.com/251206
@@ -98,15 +98,15 @@ void ImagePainter::PaintReplaced(const PaintInfo& paint_info,
     if (!c_width || !c_height)
       return;
   } else {
-    if (paint_info.phase == kPaintPhaseSelection)
+    if (paint_info.phase == PaintPhase::kSelection)
       return;
     if (c_width <= 2 || c_height <= 2)
       return;
   }
 
   GraphicsContext& context = paint_info.context;
-  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
-          context, layout_image_, paint_info.phase))
+  if (DrawingRecorder::UseCachedDrawingIfPossible(context, layout_image_,
+                                                  paint_info.phase))
     return;
 
   // Disable cache in under-invalidation checking mode for delayed-invalidation
@@ -125,8 +125,8 @@ void ImagePainter::PaintReplaced(const PaintInfo& paint_info,
                    paint_offset.Y() + layout_image_.BorderTop() +
                        layout_image_.PaddingTop(),
                    c_width, c_height));
-    LayoutObjectDrawingRecorder drawing_recorder(context, layout_image_,
-                                                 paint_info.phase, paint_rect);
+    DrawingRecorder drawing_recorder(context, layout_image_, paint_info.phase,
+                                     paint_rect);
     context.SetStrokeStyle(kSolidStroke);
     context.SetStrokeColor(Color::kLightGray);
     context.SetFillColor(Color::kTransparent);
@@ -139,8 +139,8 @@ void ImagePainter::PaintReplaced(const PaintInfo& paint_info,
   LayoutRect paint_rect = layout_image_.ReplacedContentRect();
   paint_rect.MoveBy(paint_offset);
 
-  LayoutObjectDrawingRecorder drawing_recorder(context, layout_image_,
-                                               paint_info.phase, content_rect);
+  DrawingRecorder drawing_recorder(context, layout_image_, paint_info.phase,
+                                   content_rect);
   PaintIntoRect(context, paint_rect, content_rect);
 }
 
