@@ -197,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "a163c8b5_abc3561b",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-16T06:26:57Z",
+      "side": 1,
+      "message": "Added comments in both js and css.",
+      "parentUuid": "ca23f4f5_a9c01886",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e9be70d_afbed347",
         "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
         "patchSetId": 12
