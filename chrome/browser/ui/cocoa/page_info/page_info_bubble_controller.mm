@@ -761,8 +761,11 @@ bool IsInternalURL(const GURL& url) {
                   display:YES
                   animate:[[self window] isVisible]];
 
-  // Adjust the anchor for the bubble.
-  [self setAnchorPoint:AnchorPointForWindow([self parentWindow])];
+  // Adjust the anchor for the bubble. Note if the browser is transitioning to
+  // full screen, the parentWindow may be null. If this is the case the bubble
+  // will just close, so there is no need to reposition the anchor.
+  if ([self parentWindow])
+    [self setAnchorPoint:AnchorPointForWindow([self parentWindow])];
 }
 
 // Sets properties on the given |field| to act as the title or description
