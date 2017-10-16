@@ -207,25 +207,6 @@ v8::MaybeLocal<v8::Script> CompileAndProduceCache(
   return script;
 }
 
-// Compile a script, and consume or produce a V8 Cache, depending on whether the
-// given resource already has cached data available.
-v8::MaybeLocal<v8::Script> CompileAndConsumeOrProduce(
-    CachedMetadataHandler* cache_handler,
-    uint32_t tag,
-    v8::ScriptCompiler::CompileOptions consume_options,
-    v8::ScriptCompiler::CompileOptions produce_options,
-    CachedMetadataHandler::CacheType cache_type,
-    v8::Isolate* isolate,
-    v8::Local<v8::String> code,
-    v8::ScriptOrigin origin) {
-  RefPtr<CachedMetadata> code_cache(cache_handler->GetCachedMetadata(tag));
-  return code_cache.get()
-             ? CompileAndConsumeCache(cache_handler, code_cache,
-                                      consume_options, isolate, code, origin)
-             : CompileAndProduceCache(cache_handler, tag, produce_options,
-                                      cache_type, isolate, code, origin);
-}
-
 enum CacheTagKind {
   kCacheTagParser = 0,
   kCacheTagCode = 1,
@@ -347,14 +328,17 @@ static CompileFn SelectCompileFunction(
     return WTF::Bind(CompileWithoutOptions, V8CompileHistogram::kCacheable);
 
   // The cacheOptions will guide our strategy:
+  uint32_t code_cache_tag = CacheTag(kCacheTagCode, cache_handler);
   switch (cache_options) {
     case kV8CacheOptionsParse:
       // Use parser-cache; in-memory only.
-      return WTF::Bind(CompileAndConsumeOrProduce,
-                       WrapPersistent(cache_handler),
-                       CacheTag(kCacheTagParser, cache_handler),
-                       v8::ScriptCompiler::kConsumeParserCache,
-                       v8::ScriptCompiler::kProduceParserCache,
+      if (code_cache) {
+        return WTF::Bind(CompileAndConsumeCache, WrapPersistent(cache_handler),
+                         std::move(code_cache),
+                         v8::ScriptCompiler::kConsumeParserCache);
+      }
+      return WTF::Bind(CompileAndProduceCache, WrapPersistent(cache_handler),
+                       code_cache_tag, v8::ScriptCompiler::kConsumeParserCache,
                        CachedMetadataHandler::kCacheLocally);
       break;
 
@@ -373,7 +357,6 @@ static CompileFn SelectCompileFunction(
         V8ScriptRunner::SetCacheTimeStamp(cache_handler);
         return WTF::Bind(CompileWithoutOptions, V8CompileHistogram::kCacheable);
       }
-      uint32_t code_cache_tag = CacheTag(kCacheTagCode, cache_handler);
       return WTF::Bind(CompileAndProduceCache, WrapPersistent(cache_handler),
                        code_cache_tag, v8::ScriptCompiler::kProduceCodeCache,
                        CachedMetadataHandler::kSendToPlatform);
