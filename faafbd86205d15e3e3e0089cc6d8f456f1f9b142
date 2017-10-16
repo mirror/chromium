@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b81b8410_106975c4",
+        "filename": "headless/lib/browser/headless_browser_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-16T18:31:25Z",
+      "side": 1,
+      "message": "an alternative might be HeadlessBrowserContextImpl::From(RenderProcessHost::FromId(render_process_id)-\u003eGetBrowserContext()) -- might avoid the need for the lock?",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 242,
+        "endChar": 3
+      },
+      "revId": "faafbd86205d15e3e3e0089cc6d8f456f1f9b142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
