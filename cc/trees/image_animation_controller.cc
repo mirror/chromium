@@ -48,13 +48,15 @@ void ImageAnimationController::UnregisterAnimationDriver(
   it->second.RemoveDriver(driver);
 }
 
-const PaintImageIdFlatSet& ImageAnimationController::AnimateForSyncTree(
-    base::TimeTicks now) {
+const ImageAnimationController::Invalidations&
+ImageAnimationController::AnimateForSyncTree(base::TimeTicks now) {
   TRACE_EVENT0("cc", "ImageAnimationController::AnimateImagesForSyncTree");
-  DCHECK(images_animated_on_sync_tree_.empty());
+  DCHECK(images_invalidated_on_sync_tree_.empty())
+      << "Can't animate again until the previous tree is activated";
 
   notifier_.WillAnimate();
   base::Optional<base::TimeTicks> next_invalidation_time;
+  images_invalidated_on_sync_tree_.swap(images_for_deferred_update_);
 
   for (auto id : active_animations_) {
     auto it = animation_state_map_.find(id);
@@ -67,8 +69,20 @@ const PaintImageIdFlatSet& ImageAnimationController::AnimateForSyncTree(
 
     // If we were able to advance this animation, invalidate it on the sync
     // tree.
-    if (state.AdvanceFrame(now))
-      images_animated_on_sync_tree_.insert(id);
+    if (state.AdvanceFrame(now)) {
+      // Only perform a full invalidation if the frame index for the image
+      // changed. It is important to provide this distinction to layers for 2
+      // reasons:
+      // 1) If the frame index was not mutated on this tree, we don't need to
+      // invalidate regions which are already displaying the current index.
+      // 2) We don't end up in a state of perpetual invalidations. Since some
+      // region of the image may always be outside the layer's visible rect,
+      // if all invalidations are the same, from the layer's perspective that
+      // region will always need a deferred update, even if the animation has
+      // finished.
+      images_invalidated_on_sync_tree_[id] =
+          InvalidationType::kFullInvalidation;
+    }
 
     // Update the next invalidation time to the earliest time at which we need
     // a frame to animate an image.
@@ -92,16 +106,20 @@ const PaintImageIdFlatSet& ImageAnimationController::AnimateForSyncTree(
   else
     notifier_.Cancel();
 
-  return images_animated_on_sync_tree_;
+  return images_invalidated_on_sync_tree_;
 }
 
 void ImageAnimationController::UpdateStateFromDrivers(base::TimeTicks now) {
   TRACE_EVENT0("cc", "UpdateStateFromAnimationDrivers");
 
   base::Optional<base::TimeTicks> next_invalidation_time;
+  images_for_deferred_update_.clear();
   for (auto& it : animation_state_map_) {
+    // TODO(khushalsagar): Don't keep pulling state from drivers if we can't
+    // advance the animation anymore (no more frames available, repetitions
+    // finished, etc.)
     AnimationState& state = it.second;
-    state.UpdateStateFromDrivers();
+    state.UpdateStateFromDrivers(&images_for_deferred_update_);
 
     // If we don't need to animate this image anymore, remove it from the list
     // of active animations.
@@ -122,6 +140,11 @@ void ImageAnimationController::UpdateStateFromDrivers(base::TimeTicks now) {
     }
   }
 
+  // If there are any images which need a deferred update, we need an
+  // invalidation now, since these images are displaying stale content.
+  if (!images_for_deferred_update_.empty())
+    next_invalidation_time.emplace(now);
+
   if (next_invalidation_time.has_value())
     notifier_.Schedule(now, next_invalidation_time.value());
   else
@@ -131,13 +154,13 @@ void ImageAnimationController::UpdateStateFromDrivers(base::TimeTicks now) {
 void ImageAnimationController::DidActivate() {
   TRACE_EVENT0("cc", "ImageAnimationController::WillActivate");
 
-  for (auto id : images_animated_on_sync_tree_) {
-    auto it = animation_state_map_.find(id);
+  for (const auto& invalidate_it : images_invalidated_on_sync_tree_) {
+    auto it = animation_state_map_.find(invalidate_it.first);
     DCHECK(it != animation_state_map_.end());
     it->second.PushPendingToActive();
   }
 
-  images_animated_on_sync_tree_.clear();
+  images_invalidated_on_sync_tree_.clear();
 }
 
 size_t ImageAnimationController::GetFrameIndexForImage(
@@ -342,12 +365,22 @@ void ImageAnimationController::AnimationState::RemoveDriver(
   drivers_.erase(driver);
 }
 
-void ImageAnimationController::AnimationState::UpdateStateFromDrivers() {
+void ImageAnimationController::AnimationState::UpdateStateFromDrivers(
+    Invalidations* deferred_images) {
   should_animate_from_drivers_ = false;
-  for (auto* driver : drivers_) {
-    if (driver->ShouldAnimate(paint_image_id_)) {
-      should_animate_from_drivers_ = true;
-      break;
+  for (const auto* driver : drivers_) {
+    auto update_type = driver->ShouldAnimate(paint_image_id_);
+    switch (update_type) {
+      case AnimationDriver::UpdateType::kAnimate:
+        should_animate_from_drivers_ = true;
+        break;
+      case AnimationDriver::UpdateType::kAnimateAndInvalidate:
+        should_animate_from_drivers_ = true;
+        (*deferred_images)[paint_image_id_] =
+            InvalidationType::kDeferredInvalidation;
+        break;
+      case AnimationDriver::UpdateType::kDontAnimate:
+        break;
     }
   }
 }
