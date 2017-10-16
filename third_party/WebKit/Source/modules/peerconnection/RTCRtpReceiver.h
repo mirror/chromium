@@ -7,6 +7,7 @@
 
 #include <map>
 
+#include "modules/mediastream/MediaStream.h"
 #include "modules/mediastream/MediaStreamTrack.h"
 #include "modules/peerconnection/RTCRtpContributingSource.h"
 #include "platform/bindings/ScriptWrappable.h"
@@ -24,21 +25,26 @@ class RTCRtpReceiver final : public GarbageCollectedFinalized<RTCRtpReceiver>,
 
  public:
   // Takes ownership of the receiver.
-  RTCRtpReceiver(std::unique_ptr<WebRTCRtpReceiver>, MediaStreamTrack*);
+  RTCRtpReceiver(std::unique_ptr<WebRTCRtpReceiver>,
+                 MediaStreamTrack*,
+                 MediaStreamVector);
 
   MediaStreamTrack* track() const;
   const HeapVector<Member<RTCRtpContributingSource>>& getContributingSources();
 
   const WebRTCRtpReceiver& web_receiver() const;
+  MediaStreamVector streams() const;
   void UpdateSourcesIfNeeded();
 
   DECLARE_VIRTUAL_TRACE();
 
  private:
+  bool StateMatchesWebReceiver() const;
   void SetContributingSourcesNeedsUpdating();
 
   std::unique_ptr<WebRTCRtpReceiver> receiver_;
   Member<MediaStreamTrack> track_;
+  MediaStreamVector streams_;
 
   // All contributing sources that have ever been returned by
   // |getContributingSources| that are still alive. If |UpdateSourcesIfNeeded|
