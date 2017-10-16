@@ -16,6 +16,7 @@
 #import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
+#include "ios/web/public/navigation_manager.h"
 #include "ios/web/public/test/http_server/html_response_provider.h"
 #import "ios/web/public/test/http_server/http_server.h"
 #include "ios/web/public/test/http_server/http_server_util.h"
@@ -49,9 +50,10 @@ void PurgeCachedWebViewPages() {
   chrome_test_util::GetCurrentWebState()->SetWebUsageEnabled(false);
   chrome_test_util::GetCurrentWebState()->SetWebUsageEnabled(true);
   // TODO(crbug.com/705819): Reload will not happen after purging web view,
-  // unless WebState::GetView is called.
-  chrome_test_util::GetCurrentWebState()->GetView();
-  [ChromeEarlGrey reload];
+  // unless LoadIfNecessary is called.
+  chrome_test_util::GetCurrentWebState()
+      ->GetNavigationManager()
+      ->LoadIfNecessary();
 }
 
 // Response provider which can be paused. When it is paused it buffers all
