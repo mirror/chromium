@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e9ad37d_559ad096",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-16T01:42:10Z",
+      "side": 1,
+      "message": "Isn\u0027t this contradicting with DCHECK in LayoutTest::CareMinOffset()?",
+      "revId": "be29222f49c4439b4e986efd328cbba037fade1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
