@@ -395,7 +395,7 @@ void RegisterArticleProviderIfEnabled(ContentSuggestionsService* service,
       std::move(suggestions_fetcher),
       base::MakeUnique<ImageFetcherImpl>(base::MakeUnique<ImageDecoderImpl>(),
                                          request_context.get()),
-      base::MakeUnique<RemoteSuggestionsDatabase>(database_dir),
+      RemoteSuggestionsDatabase::Create(database_dir),
       base::MakeUnique<RemoteSuggestionsStatusServiceImpl>(
           signin_manager, pref_service, additional_toggle_pref),
       std::move(prefetched_pages_tracker),

@@ -12,6 +12,7 @@
 #include "components/leveldb_proto/proto_database_impl.h"
 #include "components/ntp_snippets/remote/proto/ntp_snippets.pb.h"
 
+using leveldb_proto::ProtoDatabase;
 using leveldb_proto::ProtoDatabaseImpl;
 
 namespace {
@@ -30,19 +31,29 @@ const size_t kDatabaseWriteBufferSizeBytes = 512 << 10;
 
 namespace ntp_snippets {
 
-RemoteSuggestionsDatabase::RemoteSuggestionsDatabase(
-    const base::FilePath& database_dir)
-    : database_initialized_(false),
-      image_database_initialized_(false),
-      weak_ptr_factory_(this) {
+// static
+std::unique_ptr<RemoteSuggestionsDatabase> RemoteSuggestionsDatabase::Create(
+    const base::FilePath& database_dir) {
   auto file_task_runner = base::CreateSequencedTaskRunnerWithTraits(
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
-  database_ =
+  auto database =
       base::MakeUnique<ProtoDatabaseImpl<SnippetProto>>(file_task_runner);
-  image_database_ =
+  auto image_database =
       base::MakeUnique<ProtoDatabaseImpl<SnippetImageProto>>(file_task_runner);
+  return std::make_unique<RemoteSuggestionsDatabase>(
+      std::move(database), std::move(image_database), database_dir);
+}
 
+RemoteSuggestionsDatabase::RemoteSuggestionsDatabase(
+    std::unique_ptr<ProtoDatabase<SnippetProto>> database,
+    std::unique_ptr<ProtoDatabase<SnippetImageProto>> image_database,
+    const base::FilePath& database_dir)
+    : database_(std::move(database)),
+      database_initialized_(false),
+      image_database_(std::move(image_database)),
+      image_database_initialized_(false),
+      weak_ptr_factory_(this) {
   base::FilePath snippet_dir = database_dir.AppendASCII(kSnippetDatabaseFolder);
   leveldb_env::Options options = leveldb_proto::CreateSimpleOptions();
   options.write_buffer_size = kDatabaseWriteBufferSizeBytes;

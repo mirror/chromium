@@ -419,8 +419,7 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
         .WillByDefault(Return(&image_decoder_));
     EXPECT_FALSE(observer_);
     observer_ = base::MakeUnique<FakeContentSuggestionsProviderObserver>();
-    auto database =
-        base::MakeUnique<RemoteSuggestionsDatabase>(database_dir_.GetPath());
+    auto database = RemoteSuggestionsDatabase::Create(database_dir_.GetPath());
     database_ = database.get();
 
     auto fetch_timeout_timer =

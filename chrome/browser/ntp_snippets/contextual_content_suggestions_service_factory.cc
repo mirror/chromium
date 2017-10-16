@@ -106,7 +106,7 @@ ContextualContentSuggestionsServiceFactory::BuildServiceInstanceFor(
       FILE_PATH_LITERAL("contextualSuggestionsDatabase");
   base::FilePath database_dir(profile->GetPath().Append(kDatabaseFolder));
   auto contextual_suggestions_database =
-      base::MakeUnique<RemoteSuggestionsDatabase>(database_dir);
+      RemoteSuggestionsDatabase::Create(database_dir);
   auto cached_image_fetcher =
       base::MakeUnique<ntp_snippets::CachedImageFetcher>(
           base::MakeUnique<image_fetcher::ImageFetcherImpl>(
