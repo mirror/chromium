@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40c455f9_8da459b3",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-16T22:57:33Z",
+      "side": 1,
+      "message": "Could it be better to do this：\nUpdatePhantomWindowAndWindowGrid(location_in_screen);\nwindow_selector_-\u003eSetSplitViewOverviewOverlayIndicatorType(GetIndicatorType(),\n                                                           gfx::Point());\n\nIndicatorType GetIndicatorType() {\n  if (SplitViewController::CanSnap(item_-\u003eGetWindow()))\n    return IndicatorType::CANNOT_SNAP;\n  return PhantomWindowShowing() ? IndicatorType::NONE : IndicatorType::DRAG_AREA;\n}",
+      "revId": "d401d84cfa262c6655b5620e1d19d5da912fd65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1a23a5_98e21b3a",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-16T22:57:33Z",
+      "side": 1,
+      "message": "remove this line",
+      "revId": "d401d84cfa262c6655b5620e1d19d5da912fd65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b039057_7adcd9ca",
+        "filename": "ash/wm/overview/overview_window_drag_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-16T22:57:33Z",
+      "side": 1,
+      "message": "optional: Rename it to IsPhantomWindowShowing()? (up to you)",
+      "revId": "d401d84cfa262c6655b5620e1d19d5da912fd65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
