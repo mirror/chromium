@@ -113,16 +113,27 @@ void AccountReconcilor::Initialize(bool start_reconcile_if_tokens_available) {
 void AccountReconcilor::Shutdown() {
   VLOG(1) << "AccountReconcilor::Shutdown";
   UnregisterWithCookieManagerService();
-  UnregisterWithSigninManager();
   UnregisterWithTokenService();
   UnregisterWithContentSettings();
+  UnregisterWithSigninManager();
 }
 
 void AccountReconcilor::RegisterWithSigninManager() {
+  if (signin::IsAccountConsistencyDiceEnabled()) {
+    // Reconcilor is always turned on when DICE is enabled. It does not need to
+    // observer the SigninManager events.
+    return;
+  }
+
+  VLOG(1) << "AccountReconcilor::RegisterWithSigninManager";
   signin_manager_->AddObserver(this);
 }
 
 void AccountReconcilor::UnregisterWithSigninManager() {
+  if (!signin::IsAccountConsistencyDiceEnabled())
+    return;
+
+  VLOG(1) << "AccountReconcilor::UnregisterWithSigninManager";
   signin_manager_->RemoveObserver(this);
 }
 
@@ -179,6 +190,7 @@ void AccountReconcilor::RegisterWithCookieManagerService() {
   cookie_manager_service_->AddObserver(this);
   registered_with_cookie_manager_service_ = true;
 }
+
 void AccountReconcilor::UnregisterWithCookieManagerService() {
   VLOG(1) << "AccountReconcilor::UnregisterWithCookieManagerService";
   if (!registered_with_cookie_manager_service_)
