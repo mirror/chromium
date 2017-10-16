@@ -50334,6 +50334,25 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="NewTabPage.TileFaviconType" enum="FaviconType">
+  <owner>mastiz@chromium.org</owner>
+  <summary>
+    The favicon type that was chosen to represent a most visited tile displayed
+    on the new tab page. Note that these values don't involve an actual icon
+    being displayed (see NewTabPage.TileType).
+  </summary>
+</histogram>
+
+<histogram name="NewTabPage.TileFaviconTypeClicked" enum="FaviconType">
+  <owner>mastiz@chromium.org</owner>
+  <summary>
+    The favicon type that was chosen to represent a most visited tile displayed
+    on the new tab page, logged when a tile is clicked. Note that these values
+    don't involve an actual icon being displayed (see
+    NewTabPage.TileTypeClicked).
+  </summary>
+</histogram>
+
 <histogram name="NewTabPage.TileOfflineAvailable" enum="MostVisitedTileIndex">
   <owner>treib@chromium.org</owner>
   <summary>
@@ -101021,6 +101040,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="NewTabPage.MostVisitedAge"/>
   <affected-histogram name="NewTabPage.SuggestionsImpression"/>
   <affected-histogram name="NewTabPage.SuggestionsImpressionAge"/>
+  <affected-histogram name="NewTabPage.TileFaviconType"/>
+  <affected-histogram name="NewTabPage.TileFaviconTypeClicked"/>
   <affected-histogram name="NewTabPage.TileTitle"/>
   <affected-histogram name="NewTabPage.TileTitleClicked"/>
   <affected-histogram name="NewTabPage.TileType"/>
