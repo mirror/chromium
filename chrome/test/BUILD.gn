@@ -460,6 +460,7 @@ if (!is_android) {
       "../browser/renderer_host/site_per_process_text_input_browsertest.cc",
       "../browser/site_per_process_interactive_browsertest.cc",
       "../browser/ui/autofill/autofill_popup_controller_interactive_uitest.cc",
+      "../browser/ui/autofill/autofill_popup_view_toolkit_views_browsertest.cc",
       "../browser/ui/blocked_content/popup_blocker_browsertest.cc",
       "../browser/ui/blocked_content/popup_tracker_browsertest.cc",
       "../browser/ui/blocked_content/tab_under_blocker_browsertest.cc",
@@ -4928,6 +4929,7 @@ test("unit_tests") {
       sources += [
         "../browser/ui/views/accelerator_table_unittest.cc",
         "../browser/ui/views/accelerator_table_unittest_mac.mm",
+        "../browser/ui/views/autofill/autofill_popup_expanded_view_views_unittest.cc",
         "../browser/ui/views/bookmarks/bookmark_bar_view_unittest.cc",
         "../browser/ui/views/bookmarks/bookmark_bubble_view_unittest.cc",
         "../browser/ui/views/bookmarks/bookmark_context_menu_unittest.cc",
