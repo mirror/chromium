@@ -19,6 +19,110 @@
     },
     {
       "key": {
+        "uuid": "d41a51a9_eea99775",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioParam/worklet-warnings-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-16T16:37:55Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "e7afe538_6035f7ff",
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54f15ff_0b0105dd",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioParam/worklet-warnings.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-16T16:37:55Z",
+      "side": 1,
+      "message": "Can we at least separate this portion (string template + createObjectURL) in a different file? Then we can simply load it with \u003cscript\u003e.",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779a63ae_d2935632",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioParam/worklet-warnings.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-16T16:37:55Z",
+      "side": 1,
+      "message": "a trailing space.",
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f97e7b_9d760837",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-16T16:37:55Z",
+      "side": 1,
+      "message": "Can we remove this TODO with this CL?",
+      "range": {
+        "startLine": 141,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 16
+      },
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d19f103_5c5e6e8c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-16T16:37:55Z",
+      "side": 1,
+      "message": "Let\u0027s wrap this with quotes.",
+      "range": {
+        "startLine": 154,
+        "startChar": 42,
+        "endLine": 154,
+        "endChar": 62
+      },
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc3da7e4_02753c0d",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.h",
         "patchSetId": 1
@@ -30,6 +134,47 @@
       "writtenOn": "2017-10-16T15:52:30Z",
       "side": 1,
       "message": "Not sure I really like this.  I think it\u0027s better if the constructor takes an extra arg to specify the name.\n\nWDYT?",
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042a773c_69359ad5",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-16T16:37:55Z",
+      "side": 1,
+      "message": "This is a temporary measure for the warning message. Right? We might want to add \"TODO\" here and make sure to remove it when it\u0027s no longer necessary.\n\nIf this is not temporary and we want to keep the param name in the object, we should consider revising the static constructor.",
+      "parentUuid": "dc3da7e4_02753c0d",
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b114a97_52f90a54",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-16T16:37:55Z",
+      "side": 1,
+      "message": "Please add a comment about what this contains when it\u0027s not for worklet.",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 33
+      },
       "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
