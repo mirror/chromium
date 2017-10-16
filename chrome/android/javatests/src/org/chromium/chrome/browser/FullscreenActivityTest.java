@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.provider.Browser;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
-import android.support.test.rule.UiThreadTestRule;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -46,8 +45,6 @@ public class FullscreenActivityTest {
     private static final String VIDEO_ID = "video";
 
     @Rule
-    public UiThreadTestRule mUiThreadTestRule = new UiThreadTestRule();
-    @Rule
     public ChromeActivityTestRule<ChromeTabbedActivity> mActivityTestRule =
             new ChromeActivityTestRule<>(ChromeTabbedActivity.class);
 
@@ -57,7 +54,7 @@ public class FullscreenActivityTest {
     @Before
     public void setUp() throws InterruptedException {
         mTestServer = EmbeddedTestServer.createAndStartServer(
-                mActivityTestRule.getInstrumentation().getContext());
+                InstrumentationRegistry.getInstrumentation().getContext());
         mActivityTestRule.startMainActivityWithURL(mTestServer.getURL(TEST_PATH));
         mActivity = mActivityTestRule.getActivity();
     }
