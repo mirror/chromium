@@ -264,6 +264,7 @@ void NGInlineLayoutStateStack::CreateBoxFragments(
     NGFragmentBuilder box(placeholder.item->GetLayoutObject(),
                           placeholder.item->Style(), line_box->WritingMode(),
                           placeholder.item->Direction());
+    box.SetIsInlineBlock();
     const NGLogicalOffset& box_offset = offsets[placeholder.fragment_end];
     for (unsigned i = placeholder.fragment_start; i < placeholder.fragment_end;
          i++) {
@@ -280,6 +281,7 @@ void NGInlineLayoutStateStack::CreateBoxFragments(
     box.SetInlineSize(placeholder.size.inline_size);
     box.SetBlockSize(placeholder.size.block_size);
     RefPtr<NGLayoutResult> layout_result = box.ToBoxFragment();
+    DCHECK(box.IsInlineBlock());
     DCHECK(!children[placeholder.fragment_end]);
     children[placeholder.fragment_end] =
         std::move(layout_result->MutablePhysicalFragment());

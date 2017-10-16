@@ -54,6 +54,8 @@ void AppendFragmentToString(const NGPhysicalFragment* fragment,
   if (fragment->IsBox()) {
     if (flags & NGPhysicalFragment::DumpType) {
       builder->Append("Box");
+      if (fragment->IsInlineBlock())
+        builder->Append(" (inline-block)");
       has_content = true;
     }
     has_content =
@@ -136,7 +138,8 @@ NGPhysicalFragment::NGPhysicalFragment(LayoutObject* layout_object,
       size_(size),
       break_token_(std::move(break_token)),
       type_(type),
-      is_placed_(false) {}
+      is_placed_(false),
+      is_inline_block_(false) {}
 
 // Keep the implementation of the destructor here, to avoid dependencies on
 // ComputedStyle in the header file.
@@ -232,9 +235,10 @@ RefPtr<NGPhysicalFragment> NGPhysicalFragment::CloneWithoutOffset() const {
 }
 
 String NGPhysicalFragment::ToString() const {
-  return String::Format("Type: '%d' Size: '%s' Offset: '%s' Placed: '%d'",
-                        Type(), Size().ToString().Ascii().data(),
-                        Offset().ToString().Ascii().data(), IsPlaced());
+  return String::Format(
+      "Type: '%d' Size: '%s' Offset: '%s' Placed: '%d', Inline '%d'", Type(),
+      Size().ToString().Ascii().data(), Offset().ToString().Ascii().data(),
+      IsPlaced(), IsInlineBlock());
 }
 
 String NGPhysicalFragment::DumpFragmentTree(DumpFlags flags) const {

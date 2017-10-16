@@ -13,8 +13,8 @@
 
 namespace blink {
 
-void NGBlockFlowPainter::PaintContents(const PaintInfo& paint_info,
-                                       const LayoutPoint& paint_offset) {
+void NGBlockFlowPainter::Paint(const PaintInfo& paint_info,
+                               const LayoutPoint& paint_offset) {
   if (const NGPaintFragment* paint_fragment = block_.PaintFragment())
     PaintBoxFragment(*paint_fragment, paint_info, paint_offset);
 }
