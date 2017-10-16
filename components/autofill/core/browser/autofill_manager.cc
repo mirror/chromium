@@ -221,7 +221,9 @@ AutofillManager::AutofillManager(
       payments_client_(base::MakeUnique<payments::PaymentsClient>(
           driver->GetURLRequestContext(),
           client->GetPrefs(),
-          this)),
+          client->GetIdentityProvider(),
+          /*unmask_delegate=*/this,
+          /*save_delegate=*/this)),
       app_locale_(app_locale),
       personal_data_(client->GetPersonalDataManager()),
       autocomplete_history_manager_(
@@ -1081,10 +1083,6 @@ void AutofillManager::OnLoadedServerPredictions(
   driver()->SendAutofillTypePredictionsToRenderer(queried_forms);
 }
 
-IdentityProvider* AutofillManager::GetIdentityProvider() {
-  return client_->GetIdentityProvider();
-}
-
 void AutofillManager::OnDidGetRealPan(AutofillClient::PaymentsRpcResult result,
                                       const std::string& real_pan) {
   DCHECK(full_card_request_);
@@ -1237,7 +1235,7 @@ bool AutofillManager::IsAutofillEnabled() const {
 bool AutofillManager::IsCreditCardUploadEnabled() {
   return ::autofill::IsCreditCardUploadEnabled(
       client_->GetPrefs(), client_->GetSyncService(),
-      GetIdentityProvider()->GetActiveUsername());
+      client_->GetIdentityProvider()->GetActiveUsername());
 }
 
 bool AutofillManager::IsCreditCardAutofillEnabled() {
@@ -1640,7 +1638,9 @@ AutofillManager::AutofillManager(AutofillDriver* driver,
       payments_client_(base::MakeUnique<payments::PaymentsClient>(
           driver->GetURLRequestContext(),
           client->GetPrefs(),
-          this)),
+          client->GetIdentityProvider(),
+          /*unmask_delegate=*/this,
+          /*save_delegate=*/this)),
       app_locale_("en-US"),
       personal_data_(personal_data),
       autocomplete_history_manager_(
