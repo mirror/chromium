@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bb9a79f_3b2c5afe",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-16T00:28:40Z",
+      "side": 1,
+      "message": "I would actually suggest moving api_class and api_methods towards the bottom, as they are an implementation detail",
+      "revId": "73b423c512347f4f29f267a6f9dda4300cf63b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6f43f8_5f541a2a",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-16T00:28:40Z",
+      "side": 1,
+      "message": "can we change this to \"\u003cRuntimeFlagName\u003e\" or something?",
+      "revId": "73b423c512347f4f29f267a6f9dda4300cf63b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

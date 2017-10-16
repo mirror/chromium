@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3dc06beb_6d67ab1e",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-16T00:28:40Z",
+      "side": 1,
+      "message": "til: none of our existing json5 files seem to have these, but the style guide states \"all files in chromium start with a common license header\", so yes it should. the style guide also states \"$YEAR should be set to the current year at the time a file is created, and not changed thereafter.\" this file seems to have been created in 2017, so this is correct, but dam, i didn\u0027t know we should be backdating these when we add them! style guide here if you\u0027re interested: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#File-headers",
+      "parentUuid": "6e685a8a_61cab365",
+      "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8198b75_e34e4d38",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 5
