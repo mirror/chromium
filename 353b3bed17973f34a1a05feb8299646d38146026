@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5e29cb8_d0efc63d",
+        "filename": "net/cert/ev_root_ca_metadata.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-10-16T22:31:37Z",
+      "side": 1,
+      "message": "What\u0027s the reasoning for defining these stubs? Shouldn\u0027t there be nothing referencing them?",
+      "revId": "353b3bed17973f34a1a05feb8299646d38146026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
