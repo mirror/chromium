@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f2d73bf_24fc8d8d",
+        "filename": "ui/keyboard/container_behavior.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-16T07:40:22Z",
+      "side": 1,
+      "message": "Will you add more methods to this class? If not, I\u0027d prefer to include \"Animation\" to the class name.",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "29f8f91662c900c907524cfb6f6908df226e1498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15777bc9_75366e99",
+        "filename": "ui/keyboard/container_behavior.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-16T07:40:22Z",
+      "side": 1,
+      "message": "We can remove this argument (as well in DoHidingAnimation), I think. WDYT?",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 58
+      },
+      "revId": "29f8f91662c900c907524cfb6f6908df226e1498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b7eed6_f439d829",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-16T07:40:22Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 366,
+        "startChar": 28,
+        "endLine": 366,
+        "endChar": 33
+      },
+      "revId": "29f8f91662c900c907524cfb6f6908df226e1498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6983e3d_248fdaa0",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-16T07:40:22Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 576,
+        "startChar": 25,
+        "endLine": 576,
+        "endChar": 31
+      },
+      "revId": "29f8f91662c900c907524cfb6f6908df226e1498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efff7ba8_67e72f48",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-16T07:40:22Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 601,
+        "startChar": 21,
+        "endLine": 601,
+        "endChar": 26
+      },
+      "revId": "29f8f91662c900c907524cfb6f6908df226e1498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
