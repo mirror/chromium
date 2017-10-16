@@ -54,7 +54,7 @@ void DataDrivenTest::RunDataDrivenTest(
 void DataDrivenTest::RunOneDataDrivenTest(
     const base::FilePath& test_file_name,
     const base::FilePath& output_directory,
-    DataDrivenTestStatus expected_status) {
+    DataDrivenTestStatus status) {
   base::ThreadRestrictions::ScopedAllowIO allow_io;
   // iOS doesn't get rid of removed test files. TODO(estade): remove this after
   // all iOS bots are clobbered.
@@ -78,12 +78,12 @@ void DataDrivenTest::RunOneDataDrivenTest(
 
   std::string output_file_contents;
   if (ReadFile(output_file, &output_file_contents)) {
-    if (expected_status == TEST_PASSING)
+    if (status == TEST_PASSING)
       EXPECT_EQ(output_file_contents, output);
     else
       EXPECT_NE(output_file_contents, output);
   } else {
-    ASSERT_TRUE(expected_status == TEST_PASSING);
+    ASSERT_TRUE(status == TEST_PASSING);
     ASSERT_TRUE(WriteFile(output_file, output));
   }
 }
