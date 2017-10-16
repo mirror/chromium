@@ -103,8 +103,10 @@ class CORE_EXPORT WebLocalFrameImpl final
   void DispatchUnloadEvent() override;
   void ExecuteScript(const WebScriptSource&) override;
   void ExecuteScriptInIsolatedWorld(int world_id,
-                                    const WebScriptSource* sources,
-                                    unsigned num_sources) override;
+                                    const WebScriptSource&) override;
+  v8::Local<v8::Value> ExecuteScriptInIsolatedWorldAndReturnValue(
+      int world_id,
+      const WebScriptSource&) override;
   void SetIsolatedWorldSecurityOrigin(int world_id,
                                       const WebSecurityOrigin&) override;
   void SetIsolatedWorldContentSecurityPolicy(int world_id,
@@ -124,11 +126,6 @@ class CORE_EXPORT WebLocalFrameImpl final
                                 int argc,
                                 v8::Local<v8::Value> argv[],
                                 WebScriptExecutionCallback*) override;
-  void ExecuteScriptInIsolatedWorld(
-      int world_id,
-      const WebScriptSource* sources_in,
-      unsigned num_sources,
-      WebVector<v8::Local<v8::Value>>* results) override;
   void RequestExecuteScriptInIsolatedWorld(
       int world_id,
       const WebScriptSource* source_in,
