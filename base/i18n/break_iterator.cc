@@ -100,11 +100,14 @@ bool BreakIterator::Advance() {
     case BREAK_LINE:
     case RULE_BASED:
       pos = ubrk_next(static_cast<UBreakIterator*>(iter_));
+      DLOG(INFO) << "prev= " << prev_ << " pos=" << pos_;
       if (pos == UBRK_DONE) {
         pos_ = npos;
+        DLOG(INFO) << "returning false";
         return false;
       }
       pos_ = static_cast<size_t>(pos);
+      DLOG(INFO) << "returning true";
       return true;
     case BREAK_NEWLINE:
       do {

@@ -815,6 +815,9 @@ bool RenderText::IsValidLogicalIndex(size_t index) const {
 
 Rect RenderText::GetCursorBounds(const SelectionModel& caret,
                                  bool insert_mode) {
+  static std::string depth = "";
+  depth += "*";
+  DLOG(INFO) << depth << "GetCursorBounds im= " << insert_mode;
   // TODO(ckocagil): Support multiline. This function should return the height
   //                 of the line the cursor is on. |GetStringSize()| now returns
   //                 the multiline size, eliminate its use here.
@@ -822,12 +825,14 @@ Rect RenderText::GetCursorBounds(const SelectionModel& caret,
   EnsureLayout();
   size_t caret_pos = caret.caret_pos();
   DCHECK(IsValidLogicalIndex(caret_pos));
+  DLOG(INFO) << depth << "GetCursorBounds im= " << insert_mode;
   // In overtype mode, ignore the affinity and always indicate that we will
   // overtype the next character.
   LogicalCursorDirection caret_affinity =
       insert_mode ? caret.caret_affinity() : CURSOR_FORWARD;
   int x = 0, width = 1;
   Size size = GetStringSize();
+  DLOG(INFO) << depth << "GetCursorBounds im= " << insert_mode;
   if (caret_pos == (caret_affinity == CURSOR_BACKWARD ? 0 : text().length())) {
     // The caret is attached to the boundary. Always return a 1-dip width caret,
     // since there is nothing to overtype.
@@ -836,9 +841,20 @@ Rect RenderText::GetCursorBounds(const SelectionModel& caret,
       x = size.width();
     }
   } else {
-    size_t grapheme_start = (caret_affinity == CURSOR_FORWARD) ?
-        caret_pos : IndexOfAdjacentGrapheme(caret_pos, CURSOR_BACKWARD);
-    Range xspan(GetGlyphBounds(grapheme_start));
+    // Find the next grapheme continuing in the current direction, then move one
+    // character index closer to the caret. This determines the substring range
+    // that should be highlighted.
+    const size_t next_grapheme_start =
+        IndexOfAdjacentGrapheme(caret_pos, caret_affinity);
+
+    size_t caret_end;
+    if (caret_pos != next_grapheme_start) {
+      caret_end = next_grapheme_start +
+          (caret_affinity == CURSOR_BACKWARD ? 1 : -1);
+    } else {
+      caret_end = caret_pos;
+    }
+    Range xspan(GetCursorSpan({caret_pos, caret_end}));
     if (insert_mode) {
       x = (caret_affinity == CURSOR_BACKWARD) ? xspan.end() : xspan.start();
     } else {  // overtype mode
@@ -850,6 +866,7 @@ Rect RenderText::GetCursorBounds(const SelectionModel& caret,
 }
 
 const Rect& RenderText::GetUpdatedCursorBounds() {
+  DLOG(INFO) << "GetUpdatedCursorBounds();";
   UpdateCachedBoundsAndOffset();
   return cursor_bounds_;
 }
@@ -1625,12 +1642,17 @@ void RenderText::UpdateCachedBoundsAndOffset() {
     cached_bounds_and_offset_valid_ = true;
     cursor_bounds_ = GetCursorBounds(selection_model_, true);
 
+    DLOG(INFO) << "cusor = " << cursor_bounds_.ToString();
+    DLOG(INFO) << "dispaly = " << display_rect_.ToString();
+
     // TODO(bidi): Show RTL glyphs at the cursor position for ALIGN_LEFT, etc.
     if (cursor_bounds_.right() > display_rect_.right())
       delta_x = display_rect_.right() - cursor_bounds_.right();
     else if (cursor_bounds_.x() < display_rect_.x())
       delta_x = display_rect_.x() - cursor_bounds_.x();
   }
+
+  DLOG(INFO) << "delta_x = " << delta_x;
 
   SetDisplayOffset(display_offset_.x() + delta_x);
 }
