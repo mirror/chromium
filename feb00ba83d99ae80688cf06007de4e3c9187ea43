@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3f331a75_67e4b59b",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-16T14:36:04Z",
+      "side": 1,
+      "message": "I think you probably want to change CancelTouchTimeout to be SetTouchAction message here:\n\nhttps://cs.chromium.org/chromium/src/content/common/input/input_handler.mojom?q\u003dinput_handler.mojo\u0026sq\u003dpackage:chromium\u0026l\u003d159\n\nThen that would be using mojo and not ChromeIPC",
+      "parentUuid": "a00e0124_6b13613c",
+      "range": {
+        "startLine": 271,
+        "startChar": 53,
+        "endLine": 271,
+        "endChar": 69
+      },
+      "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1eae413f_7c69642d",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 47
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "I don\u0027t think we need to worry about it here. The |zoom_disabled| bit is checked here:\nhttps://cs.chromium.org/chromium/src/ui/events/blink/input_handler_proxy.cc?dr\u0026sq\u003dpackage:chromium\u0026l\u003d431\n\nIf that bit is true, then the InputHandlerProxy::HandleInputEvent() returns DROP_EVENT. My understanding is that if it is DROP_EVENT, the event won\u0027t even get to the TouchActionFilter, is that correct?",
       "parentUuid": "1eae413f_7c69642d",
+      "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847f7071_9f52c7d8",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-16T14:36:04Z",
+      "side": 1,
+      "message": "The TouchActionFilter is *before* the InputHandlerProxy as it runs on the browser side before the events are sent to the InputHandlerProxy.",
+      "parentUuid": "ed856a5e_424fe53f",
       "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -166,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "680100ed_769289fb",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-16T14:36:04Z",
+      "side": 1,
+      "message": "That is certainly a difference in the behavior than todays. I didn\u0027t think you intended to have any behavioral changes. From a performance point of view as soon as the touch action is known we should dispatch any accumulated delta instead of waiting around.",
+      "parentUuid": "42a93140_aba1e3f9",
+      "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c51365c9_00915a48",
         "filename": "content/browser/renderer_host/input/touch_action_filter_unittest.cc",
         "patchSetId": 47
@@ -248,6 +308,30 @@
       "side": 1,
       "message": "Based on our offline discussion, my understanding is that a mojo message for touch action is bundled with an ACK. Right now the compositor is sending an ACK with whitelisted touch action. So the main thread won\u0027t send another message because there is nothing to ACK. That\u0027s why we need an extra message to the browser to set the real touch action.",
       "parentUuid": "011983c1_bd60c274",
+      "range": {
+        "startLine": 2385,
+        "startChar": 11,
+        "endLine": 2385,
+        "endChar": 38
+      },
+      "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c670ac3_876b6783",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 2385,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-16T14:36:04Z",
+      "side": 1,
+      "message": "See the other comment.. InputHostMsg_ is replaced with Mojo but here you are mixing them.",
+      "parentUuid": "534a5676_f03e9bc6",
       "range": {
         "startLine": 2385,
         "startChar": 11,
