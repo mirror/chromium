@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b617306d_dfb40517",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentLifecycle.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-16T18:37:50Z",
+      "side": 1,
+      "message": "Add a comment that raster invalidations happen here in SPv1, and in kInPaint for\nSP1.75+",
+      "revId": "2038a7a6101fe46f5a8ed67d7effc8c38885c586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3de197_3032a267",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-16T18:37:50Z",
+      "side": 1,
+      "message": "Add a comment that this is when raster invalidations happen in SP1.75",
+      "revId": "2038a7a6101fe46f5a8ed67d7effc8c38885c586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d771787e_41f86401",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintControllerTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-16T18:37:50Z",
+      "side": 1,
+      "message": "Change this to v175?",
+      "revId": "2038a7a6101fe46f5a8ed67d7effc8c38885c586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ae9723_8d279b86",
+        "filename": "third_party/WebKit/Source/platform/testing/PaintTestConfigurations.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-16T18:37:50Z",
+      "side": 1,
+      "message": "The stuff you\u0027re adding here doesn\u0027t seem to be used?",
+      "revId": "2038a7a6101fe46f5a8ed67d7effc8c38885c586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

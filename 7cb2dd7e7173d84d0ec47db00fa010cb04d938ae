@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "593d44a6_3ef82b4c",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/raster-under-invalidation-checking-expected.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-16T18:37:50Z",
+      "side": 0,
+      "message": "Why the change here?",
+      "revId": "7cb2dd7e7173d84d0ec47db00fa010cb04d938ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "029d6b1c_63f6d262",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 9
