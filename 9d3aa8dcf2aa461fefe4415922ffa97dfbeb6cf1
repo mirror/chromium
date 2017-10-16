@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "14dd3485_e3ac81b1",
+        "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-16T19:35:16Z",
+      "side": 1,
+      "message": "This IS the recommended way, according to rockot@. In unit tests content::ServiceManagerConnection::GetForProcess() is null, and setting things up properly is too much work.",
+      "parentUuid": "3a8ad0c6_cd596fd0",
+      "revId": "9d3aa8dcf2aa461fefe4415922ffa97dfbeb6cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c9a3175_ab024025",
         "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-16T19:03:30Z",
       "side": 1,
       "message": "I think a lambda could improve readability in this function, ie,\n\n  auto has_note_taking_apps \u003d [\u0026]() {\n    return test_note_taking_controller()-\u003eclient_attached();\n  };\n\n  EXPECT_FALSE(has_note_taking_apps());",
+      "revId": "9d3aa8dcf2aa461fefe4415922ffa97dfbeb6cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b684ac_084cbd3e",
+        "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1570,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-16T19:35:16Z",
+      "side": 1,
+      "message": "Thanks! I learned something today!",
+      "parentUuid": "7c9a3175_ab024025",
       "revId": "9d3aa8dcf2aa461fefe4415922ffa97dfbeb6cf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
