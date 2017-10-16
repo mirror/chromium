@@ -16,6 +16,23 @@
       "revId": "a15cbbe3a8b66d313d51f52d6cd8eba6de853983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d652c0_0d6e5079",
+        "filename": "components/domain_reliability/service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-16T19:42:27Z",
+      "side": 1,
+      "message": "Yeah, I know. This is old code, so it\u0027s not already using url::Origin. Reports for a single origin are batched, so we just use the root URL of the origin as the URL for the permission check.\n\nThe replacements for this (Reporting API and Network Error Logging) do this right.",
+      "revId": "a15cbbe3a8b66d313d51f52d6cd8eba6de853983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
