@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "303de33e_d10cb07b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/FileSystemWorkspaceBinding.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-16T18:16:35Z",
+      "side": 1,
+      "message": "pass it all the way into FS",
+      "revId": "eb24258c3e2821025f771e99d37f8d0c44caebe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fadf214_c2d34f91",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-16T18:16:35Z",
+      "side": 1,
+      "message": "this becomes private...",
+      "revId": "eb24258c3e2821025f771e99d37f8d0c44caebe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
