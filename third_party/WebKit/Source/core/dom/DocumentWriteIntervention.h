@@ -13,6 +13,14 @@ namespace blink {
 
 class Document;
 
+// If the script was blocked as part of document.write intervention,
+// then send an asynchronous GET request with an interventions header.
+// This is done by saving the original FetchParameters in
+// FetchBlockedDocWriteScriptClient when sending intervened request is sent
+// and resending a request using the saved FetchParameters + some modifications
+// in NotifyFinished() when the request turns actually blocked.
+// This is done separately from the code path for script execution, and
+// ClassicPendingScript will be notified separately.
 class FetchBlockedDocWriteScriptClient
     : public GarbageCollectedFinalized<FetchBlockedDocWriteScriptClient>,
       public ResourceOwner<ScriptResource> {
@@ -28,8 +36,6 @@ class FetchBlockedDocWriteScriptClient
   DECLARE_VIRTUAL_TRACE();
 
  private:
-  // If the script was blocked as part of document.write intervention,
-  // then send an asynchronous GET request with an interventions header.
   void NotifyFinished(Resource*) override;
   String DebugName() const override {
     return "FetchBlockedDocWriteScriptClient";

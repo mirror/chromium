@@ -226,6 +226,8 @@ void FetchBlockedDocWriteScriptClient::NotifyFinished(Resource* resource) {
   // ERR_CACHE_MISS but other errors are rare with
   // WebCachePolicy::ReturnCacheDataDontLoad.
 
+  // The ScriptResource is not on MemoryCache because it is errored.
+
   EmitErrorBlocked(params_.Url(), *document);
 
   AddHeader(&params_);
