@@ -157,7 +157,7 @@ void PrefetchServiceTestTaco::CreatePrefetchService() {
       std::move(prefetch_store_), std::move(suggested_articles_observer_),
       std::move(prefetch_downloader_), std::move(prefetch_importer_),
       std::move(prefetch_background_task_handler_),
-      std::move(prefetch_configuration_));
+      std::move(prefetch_configuration_), nullptr);
 }
 
 std::unique_ptr<PrefetchService>

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.h"
+#include "components/offline_pages/webui/offline_internals_ui_message_handler.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -20,13 +20,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "build/build_config.h"
-#include "chrome/browser/offline_pages/offline_page_model_factory.h"
-#include "chrome/browser/offline_pages/prefetch/prefetch_service_factory.h"
-#include "chrome/browser/offline_pages/prefetch/prefetched_pages_notifier.h"
-#include "chrome/browser/offline_pages/request_coordinator_factory.h"
-#include "chrome/browser/profiles/profile.h"
-#include "chrome/common/channel_info.h"
-#include "chrome/common/chrome_content_client.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/prefetch/generate_page_bundle_request.h"
@@ -38,6 +31,10 @@
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "content/public/browser/web_ui.h"
 #include "net/base/network_change_notifier.h"
+
+using offline_pages::OfflinePageModel;
+using offline_pages::PrefetchService;
+using offline_pages::RequestCoordinator;
 
 namespace offline_internals {
 
@@ -80,10 +77,13 @@ std::string GetStringFromSavePageStatus() {
 
 }  // namespace
 
-OfflineInternalsUIMessageHandler::OfflineInternalsUIMessageHandler()
-    : offline_page_model_(nullptr),
-      request_coordinator_(nullptr),
-      prefetch_service_(nullptr),
+OfflineInternalsUIMessageHandler::OfflineInternalsUIMessageHandler(
+    OfflinePageModel* offline_page_model,
+    RequestCoordinator* request_coordinator,
+    PrefetchService* prefetch_service)
+    : offline_page_model_(offline_page_model),
+      request_coordinator_(request_coordinator),
+      prefetch_service_(prefetch_service),
       weak_ptr_factory_(this) {}
 
 OfflineInternalsUIMessageHandler::~OfflineInternalsUIMessageHandler() {}
@@ -292,9 +292,9 @@ void OfflineInternalsUIMessageHandler::HandleShowPrefetchNotification(
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
 
-  offline_pages::ShowPrefetchedContentNotification(
-      GURL("https://www.example.com"));
-  ResolveJavascriptCallback(*callback_id, base::Value("Scheduled."));
+  prefetch_service_->GetPrefetchInternalsDelegate()
+      ->ShowNotificationForDebugging();
+  ResolveJavascriptCallback(*callback_id, base::Value("Notification shown."));
 }
 
 void OfflineInternalsUIMessageHandler::HandleGeneratePageBundle(
@@ -522,15 +522,6 @@ void OfflineInternalsUIMessageHandler::RegisterMessages() {
       "downloadArchive",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleDownloadArchive,
                  base::Unretained(this)));
-
-  // Get the offline page model associated with this web ui.
-  Profile* profile = Profile::FromWebUI(web_ui());
-  offline_page_model_ =
-      offline_pages::OfflinePageModelFactory::GetForBrowserContext(profile);
-  request_coordinator_ =
-      offline_pages::RequestCoordinatorFactory::GetForBrowserContext(profile);
-  prefetch_service_ =
-      offline_pages::PrefetchServiceFactory::GetForBrowserContext(profile);
 }
 
 void OfflineInternalsUIMessageHandler::OnJavascriptDisallowed() {

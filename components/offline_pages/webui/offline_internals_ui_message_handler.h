@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_UI_WEBUI_OFFLINE_OFFLINE_INTERNALS_UI_MESSAGE_HANDLER_H_
-#define CHROME_BROWSER_UI_WEBUI_OFFLINE_OFFLINE_INTERNALS_UI_MESSAGE_HANDLER_H_
+#ifndef COMPONENTS_OFFLINE_PAGES_WEBUI_OFFLINE_INTERNALS_UI_MESSAGE_HANDLER_H_
+#define COMPONENTS_OFFLINE_PAGES_WEBUI_OFFLINE_INTERNALS_UI_MESSAGE_HANDLER_H_
 
 #include <memory>
 #include <string>
@@ -19,16 +19,19 @@
 #include "content/public/browser/web_ui_message_handler.h"
 
 namespace offline_pages {
-class PrefetchService;
 enum class GetRequestsResult;
-}
+class PrefetchService;
+}  // namespace offline_pages
 
 namespace offline_internals {
 
 // Class acting as a controller of the chrome://offline-internals WebUI.
 class OfflineInternalsUIMessageHandler : public content::WebUIMessageHandler {
  public:
-  OfflineInternalsUIMessageHandler();
+  OfflineInternalsUIMessageHandler(
+      offline_pages::OfflinePageModel* offline_page_model,
+      offline_pages::RequestCoordinator* request_coordinator,
+      offline_pages::PrefetchService* prefetch_service);
   ~OfflineInternalsUIMessageHandler() override;
 
   // WebUIMessageHandler implementation.
@@ -124,4 +127,4 @@ class OfflineInternalsUIMessageHandler : public content::WebUIMessageHandler {
 
 }  // namespace offline_internals
 
-#endif  // CHROME_BROWSER_UI_WEBUI_OFFLINE_OFFLINE_INTERNALS_UI_MESSAGE_HANDLER_H_
+#endif  // COMPONENTS_OFFLINE_PAGES_WEBUI_OFFLINE_INTERNALS_UI_MESSAGE_HANDLER_H_

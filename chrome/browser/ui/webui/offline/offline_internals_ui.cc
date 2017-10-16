@@ -6,10 +6,16 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/offline_pages/offline_page_model_factory.h"
+#include "chrome/browser/offline_pages/prefetch/prefetch_service_factory.h"
+#include "chrome/browser/offline_pages/prefetch/prefetched_pages_notifier.h"
+#include "chrome/browser/offline_pages/request_coordinator_factory.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.h"
+#include "chrome/common/channel_info.h"
+#include "chrome/common/chrome_content_client.h"
 #include "chrome/common/url_constants.h"
-#include "chrome/grit/browser_resources.h"
+#include "components/grit/components_resources.h"
+#include "components/offline_pages/webui/offline_internals_ui_message_handler.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_controller.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -37,7 +43,12 @@ OfflineInternalsUI::OfflineInternalsUI(content::WebUI* web_ui)
   content::WebUIDataSource::Add(profile, html_source);
 
   web_ui->AddMessageHandler(
-      base::MakeUnique<offline_internals::OfflineInternalsUIMessageHandler>());
+      base::MakeUnique<offline_internals::OfflineInternalsUIMessageHandler>(
+          offline_pages::OfflinePageModelFactory::GetForBrowserContext(profile),
+          offline_pages::RequestCoordinatorFactory::GetForBrowserContext(
+              profile),
+          offline_pages::PrefetchServiceFactory::GetForBrowserContext(
+              profile)));
 }
 
 OfflineInternalsUI::~OfflineInternalsUI() {}
