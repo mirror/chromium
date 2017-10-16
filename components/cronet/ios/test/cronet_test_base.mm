@@ -23,8 +23,9 @@
 
 @synthesize error = _error;
 @synthesize totalBytesReceived = _totalBytesReceived;
+@synthesize expectedContentLength = _expectedContentLength;
 
-NSMutableArray<NSData*>* _responseData;
+static NSMutableArray<NSData*>* _responseData;
 
 - (id)init {
   if (self = [super init]) {
@@ -37,6 +38,7 @@ NSMutableArray<NSData*>* _responseData;
   _responseData = nil;
   _error = nil;
   _totalBytesReceived = 0;
+  _expectedContentLength = 0;
 }
 
 - (NSString*)responseBody {
@@ -54,9 +56,10 @@ NSMutableArray<NSData*>* _responseData;
 }
 
 - (BOOL)waitForDone {
-  int64_t deadline_ns = 20 * NSEC_PER_SEC;
-  return dispatch_semaphore_wait(
-             _semaphore, dispatch_time(DISPATCH_TIME_NOW, deadline_ns)) == 0;
+  //int64_t deadline_ns = 20 * NSEC_PER_SEC;
+  //return dispatch_semaphore_wait(
+  //           _semaphore, dispatch_time(DISPATCH_TIME_NOW, deadline_ns)) == 0;
+  return dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
 }
 
 - (void)URLSession:(NSURLSession*)session
@@ -66,7 +69,8 @@ NSMutableArray<NSData*>* _responseData;
 - (void)URLSession:(NSURLSession*)session
                     task:(NSURLSessionTask*)task
     didCompleteWithError:(NSError*)error {
-  [self setError:error];
+  if (error)
+    [self setError:error];
   dispatch_semaphore_signal(_semaphore);
 }
 
@@ -84,6 +88,7 @@ NSMutableArray<NSData*>* _responseData;
     didReceiveResponse:(NSURLResponse*)response
      completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))
                            completionHandler {
+  _expectedContentLength = [response expectedContentLength];
   completionHandler(NSURLSessionResponseAllow);
 }
 

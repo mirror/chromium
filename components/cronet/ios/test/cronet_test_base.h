@@ -36,13 +36,15 @@ class Thread;
 // Contains total amount of received data.
 @property(readonly) long totalBytesReceived;
 
+@property(readonly) long expectedContentLength;
+
 // Resets the delegate, so it can be used again for another request.
 - (void)reset;
 
 // Contains the response body.
 - (NSString*)responseBody;
 
-/// Waits for request to complete.
+/// Waits for a single request to complete.
 
 /// @return  |NO| if the request didn't complete and the method timed-out.
 - (BOOL)waitForDone;
