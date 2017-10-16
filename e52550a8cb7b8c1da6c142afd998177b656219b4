@@ -33,6 +33,41 @@
       "revId": "e52550a8cb7b8c1da6c142afd998177b656219b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7791b3d_aa0afe05",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-10-16T20:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f300c0b_ab09b162",
+      "revId": "e52550a8cb7b8c1da6c142afd998177b656219b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1284ecc8_83dfe046",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-10-16T20:27:56Z",
+      "side": 1,
+      "message": "Looks like this function can take a |const Node\u0026|\nWill make another CL.",
+      "revId": "e52550a8cb7b8c1da6c142afd998177b656219b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
