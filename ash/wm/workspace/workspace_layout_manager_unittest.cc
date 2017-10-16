@@ -1175,6 +1175,12 @@ TEST_F(WorkspaceLayoutManagerBackdropTest,
 }
 
 TEST_F(WorkspaceLayoutManagerBackdropTest, BackdropTest) {
+  if (Shell::GetAshConfig() != Config::CLASSIC) {
+    // TODO(wutao): should work for mus/mash once http://crbug.com/775067 is
+    // fixed.
+    return;
+  }
+
   WorkspaceController* wc = ShellTestApi(Shell::Get()).workspace_controller();
   WorkspaceControllerTestApi test_helper(wc);
 
