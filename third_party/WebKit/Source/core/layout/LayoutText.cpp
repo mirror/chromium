@@ -45,8 +45,10 @@
 #include "core/layout/line/EllipsisBox.h"
 #include "core/layout/line/GlyphOverflow.h"
 #include "core/layout/line/InlineTextBox.h"
+#include "core/layout/ng/inline/ng_inline_fragment_iterator.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_offset_mapping_result.h"
+#include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "platform/fonts/CharacterRange.h"
 #include "platform/geometry/FloatQuad.h"
 #include "platform/runtime_enabled_features.h"
@@ -1807,6 +1809,22 @@ LayoutRect LayoutText::LinesBoundingBox() const {
 }
 
 LayoutRect LayoutText::VisualOverflowRect() const {
+  if (RuntimeEnabledFeatures::LayoutNGEnabled()) {
+    if (LayoutNGBlockFlow* ng_block_flow = EnclosingNGBlockFlow()) {
+      NGPhysicalOffsetRect visual_rect;
+      for (NGInlineFragmentIterator it =
+               ng_block_flow->InlineChildFragments(this);
+           !it.IsAtEnd(); it.MoveToNext()) {
+        const NGPhysicalFragment* fragment;
+        NGPhysicalOffset offset_to_container_box;
+        std::tie(fragment, offset_to_container_box) = *it;
+        NGPhysicalOffsetRect child_visual_rect = ToNGPhysicalTextFragment(fragment)->LocalVisualRect();
+        visual_rect.Unite(child_visual_rect + offset_to_container_box);
+      }
+      return visual_rect.ToLayoutRect();
+    }
+  }
+
   if (!FirstTextBox())
     return LayoutRect();
 

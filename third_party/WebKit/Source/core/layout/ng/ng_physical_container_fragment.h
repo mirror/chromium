@@ -17,6 +17,8 @@ class CORE_EXPORT NGPhysicalContainerFragment : public NGPhysicalFragment {
     return children_;
   }
 
+  void ComputeLocalVisualRectForInlineChildren() const;
+
  protected:
   // This modifies the passed-in children vector.
   NGPhysicalContainerFragment(LayoutObject*,
@@ -25,6 +27,9 @@ class CORE_EXPORT NGPhysicalContainerFragment : public NGPhysicalFragment {
                               NGFragmentType,
                               Vector<RefPtr<NGPhysicalFragment>>& children,
                               RefPtr<NGBreakToken> = nullptr);
+
+  void ComputeLocalVisualRectForInlineChildren(
+      const NGPhysicalOffset offset_to_containing_box) const;
 
   Vector<RefPtr<NGPhysicalFragment>> children_;
 };

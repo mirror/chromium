@@ -10,6 +10,7 @@
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutMultiColumnSpannerPlaceholder.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/graphics/paint/GeometryMapper.h"
 
@@ -204,6 +205,12 @@ void PrePaintTreeWalk::Walk(const LayoutObject& object,
         object, *context.tree_builder_context);
 
     InvalidatePaintLayerOptimizationsIfNeeded(object, context);
+  }
+
+  if (RuntimeEnabledFeatures::LayoutNGEnabled() &&
+      object.IsLayoutNGBlockFlow()) {
+    ToLayoutNGBlockFlow(object)
+        .ComputeLocalVisualRectForInlineChildrenIfNeeded();
   }
 
   for (const LayoutObject* child = object.SlowFirstChild(); child;

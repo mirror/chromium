@@ -6,6 +6,7 @@
 
 #include "core/layout/HitTestLocation.h"
 #include "core/layout/LayoutAnalyzer.h"
+#include "core/layout/ng/inline/ng_inline_fragment_iterator.h"
 #include "core/layout/ng/inline/ng_inline_node_data.h"
 #include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_fragment_builder.h"
@@ -305,6 +306,18 @@ void LayoutNGBlockFlow::SetCachedLayoutResult(
 
   cached_constraint_space_ = &constraint_space;
   cached_result_ = layout_result;
+}
+
+NGInlineFragmentIterator LayoutNGBlockFlow::InlineChildFragments(const LayoutObject* target) const {
+  return NGInlineFragmentIterator(CurrentFragment(), target);
+}
+
+void LayoutNGBlockFlow::ComputeLocalVisualRectForInlineChildrenIfNeeded() const {
+  if (!HasNGInlineNodeData())
+    return;
+
+  DCHECK(CurrentFragment());
+  CurrentFragment()->ComputeLocalVisualRectForInlineChildren();
 }
 
 void LayoutNGBlockFlow::PaintObject(const PaintInfo& paint_info,

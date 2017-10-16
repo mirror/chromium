@@ -14,6 +14,7 @@ namespace blink {
 
 class NGBreakToken;
 class NGConstraintSpace;
+class NGInlineFragmentIterator;
 class NGLayoutResult;
 enum class NGBaselineAlgorithmType;
 struct NGBaseline;
@@ -57,6 +58,10 @@ class CORE_EXPORT LayoutNGBlockFlow : public LayoutBlockFlow {
                              RefPtr<NGLayoutResult>);
 
   const NGPaintFragment* PaintFragment() const { return paint_fragment_.get(); }
+
+  NGInlineFragmentIterator InlineChildFragments(const LayoutObject*) const;
+
+  void ComputeLocalVisualRectForInlineChildrenIfNeeded() const;
 
  protected:
   bool IsOfType(LayoutObjectType) const override;
