@@ -9,6 +9,7 @@
 #include <memory>
 #include <vector>
 
+#include "ash/login/lock_screen_controller.h"
 #include "ash/login_status.h"
 #include "ash/metrics/user_metrics_recorder.h"
 #include "ash/public/cpp/ash_switches.h"
@@ -622,6 +623,11 @@ void SystemTray::ClickedOutsideBubble() {
 }
 
 bool SystemTray::PerformAction(const ui::Event& event) {
+  Shell::Get()
+      ->lock_screen_controller()
+      ->metrics()
+      ->RecordUserClickEventOnLockScreen(
+          LoginMetricsRecorder::LockScreenUserClickTarget::kSystemTray);
   // If we're already showing a full system tray menu, either default or
   // detailed menu, hide it; otherwise, show it (and hide any popup that's
   // currently shown).

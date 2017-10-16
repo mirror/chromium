@@ -2752,6 +2752,55 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Ash.Login.AuthMethodSwitch.Lock" enum="AuthMethodSwitchType">
+  <owner>xiaoyinh@google.com</owner>
+  <summary>
+    The count of auth method switching actions in ChromeOS lock screen.
+  </summary>
+</histogram>
+
+<histogram name="Ash.Login.AuthMethodUsage.Lock.ClamShell" enum="AuthMethod">
+  <owner>xiaoyinh@google.com</owner>
+  <summary>
+    The usage of different auth methods (PIN / Password / Smartlock) in ChromeOS
+    lock screen clamshell mode.
+  </summary>
+</histogram>
+
+<histogram name="Ash.Login.AuthMethodUsage.Lock.TabletMode" enum="AuthMethod">
+  <owner>xiaoyinh@google.com</owner>
+  <summary>
+    The usage of different auth methods (PIN / Password / Smartlock) in ChromeOS
+    lock screen tablet mode.
+  </summary>
+</histogram>
+
+<histogram name="Ash.Login.NumPasswordAttemptUntilAuthSuccess.Lock"
+    units="count">
+  <owner>xiaoyinh@google.com</owner>
+  <summary>
+    The number of incorrect password entered in ChromeOS lock screen until
+    successful attempt.
+  </summary>
+</histogram>
+
+<histogram name="Ash.Login.NumPasswordAttemptUntilUserAbandon.Lock"
+    units="count">
+  <owner>xiaoyinh@google.com</owner>
+  <summary>
+    The number of incorrect password entered in ChromeOS lock screen until the
+    user gives up (switch pods or device goes to sleep).
+  </summary>
+</histogram>
+
+<histogram name="Ash.Login.UserClicks.Lock" enum="LockScreenUserClickTarget">
+  <owner>xiaoyinh@google.com</owner>
+  <summary>
+    Times user clicks on the shelf buttons, trays and lock screen note on
+    ChromeOS lock screen.
+  </summary>
+</histogram>
+
 <histogram name="Ash.NightLight.ScheduleType" enum="AshNightLightScheduleType">
   <owner>afakhry@chromium.org</owner>
   <summary>

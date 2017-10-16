@@ -1773,6 +1773,21 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="Processing in WebRTC"/>
 </enum>
 
+<enum name="AuthMethod">
+  <int value="0" label="Password"/>
+  <int value="1" label="PIN"/>
+  <int value="2" label="Smartlock"/>
+</enum>
+
+<enum name="AuthMethodSwitchType">
+  <int value="0" label="Switch auth method from password to PIN"/>
+  <int value="1" label="Switch auth method from password to smartlock"/>
+  <int value="2" label="Switch auth method from PIN to password"/>
+  <int value="3" label="Switch auth method from PIN to smartlock"/>
+  <int value="4" label="Switch auth method from smartlock to password"/>
+  <int value="5" label="Switch auth method from smartlock to PIN"/>
+</enum>
+
 <enum name="AuthPolicyErrorType">
   <int value="0" label="Success"/>
   <int value="1" label="Unspecified error"/>
@@ -23351,6 +23366,18 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="Choose pin or password"/>
   <int value="3" label="Enter pin"/>
   <int value="4" label="Confirm pin"/>
+</enum>
+
+<enum name="LockScreenUserClickTarget">
+  <int value="0" label="Shut down button"/>
+  <int value="1" label="Restart button"/>
+  <int value="2" label="Sign out button"/>
+  <int value="3" label="Close note button"/>
+  <int value="4" label="System tray"/>
+  <int value="5" label="Virtual keyboard tray"/>
+  <int value="6" label="IME tray"/>
+  <int value="7" label="Notification tray"/>
+  <int value="8" label="Lock screen note action button"/>
 </enum>
 
 <enum name="LoginConsumerWhitelist">

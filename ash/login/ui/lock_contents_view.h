@@ -17,6 +17,7 @@
 #include "base/macros.h"
 #include "base/optional.h"
 #include "base/scoped_observer.h"
+#include "chromeos/dbus/power_manager_client.h"
 #include "ui/display/display_observer.h"
 #include "ui/display/screen.h"
 #include "ui/views/view.h"
@@ -41,11 +42,13 @@ enum class TrayActionState;
 // screen views are embedded within this one. LockContentsView is per-display,
 // but it is always shown on the primary display. There is only one instance
 // at a time.
-class ASH_EXPORT LockContentsView : public NonAccessibleView,
-                                    public LockScreenAppsFocusObserver,
-                                    public LoginDataDispatcher::Observer,
-                                    public SystemTrayFocusObserver,
-                                    public display::DisplayObserver {
+class ASH_EXPORT LockContentsView
+    : public NonAccessibleView,
+      public LockScreenAppsFocusObserver,
+      public LoginDataDispatcher::Observer,
+      public SystemTrayFocusObserver,
+      public display::DisplayObserver,
+      public chromeos::PowerManagerClient::Observer {
  public:
   // TestApi is used for tests to get internal implementation details.
   class ASH_EXPORT TestApi {
@@ -87,6 +90,9 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   // display::DisplayObserver:
   void OnDisplayMetricsChanged(const display::Display& display,
                                uint32_t changed_metrics) override;
+
+  // chromeos::PowerManagerClient::Observer:
+  void SuspendImminent() override;
 
  private:
   struct UserState {

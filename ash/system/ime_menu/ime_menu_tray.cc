@@ -7,6 +7,7 @@
 #include "ash/accessibility/accessibility_delegate.h"
 #include "ash/ash_constants.h"
 #include "ash/ime/ime_controller.h"
+#include "ash/login/lock_screen_controller.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf.h"
@@ -443,6 +444,11 @@ void ImeMenuTray::ClickedOutsideBubble() {
 }
 
 bool ImeMenuTray::PerformAction(const ui::Event& event) {
+  Shell::Get()
+      ->lock_screen_controller()
+      ->metrics()
+      ->RecordUserClickEventOnLockScreen(
+          LoginMetricsRecorder::LockScreenUserClickTarget::kImeTray);
   if (bubble_)
     CloseBubble();
   else

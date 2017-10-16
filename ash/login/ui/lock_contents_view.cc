@@ -26,6 +26,7 @@
 #include "ash/system/tray/system_tray_notifier.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/display/display.h"
 #include "ui/display/manager/display_manager.h"
@@ -174,6 +175,8 @@ LockContentsView::LockContentsView(
   display_observer_.Add(display::Screen::GetScreen());
   Shell::Get()->lock_screen_controller()->AddLockScreenAppsFocusObserver(this);
   Shell::Get()->system_tray_notifier()->AddSystemTrayFocusObserver(this);
+  chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
+      this);
   error_bubble_ = std::make_unique<LoginBubble>();
 
   // We reuse the focusable state on this view as a signal that focus should
@@ -194,10 +197,20 @@ LockContentsView::LockContentsView(
 }
 
 LockContentsView::~LockContentsView() {
+  chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->RemoveObserver(
+      this);
   data_dispatcher_->RemoveObserver(this);
   Shell::Get()->lock_screen_controller()->RemoveLockScreenAppsFocusObserver(
       this);
   Shell::Get()->system_tray_notifier()->RemoveSystemTrayFocusObserver(this);
+
+  if (unlock_attempt_ > 0) {
+    // Times a password was incorrectly entered until the successful attempt (by
+    // smart unlock).
+    Shell::Get()->lock_screen_controller()->metrics()->RecordNumAttempt(
+        unlock_attempt_, true /*eventual success*/);
+    unlock_attempt_ = 0;
+  }
 }
 
 void LockContentsView::Layout() {
@@ -358,6 +371,16 @@ void LockContentsView::OnDisplayMetricsChanged(const display::Display& display,
     return;
 
   DoLayout();
+}
+
+void LockContentsView::SuspendImminent() {
+  if (unlock_attempt_ > 0) {
+    // Times a password was incorrectly entered, until user gives up (device
+    // goes to suspend).
+    Shell::Get()->lock_screen_controller()->metrics()->RecordNumAttempt(
+        unlock_attempt_, false /*eventual success*/);
+    unlock_attempt_ = 0;
+  }
 }
 
 void LockContentsView::FocusNextWidget(bool reverse) {
@@ -531,6 +554,10 @@ void LockContentsView::SwapPrimaryAndSecondaryAuth(bool is_primary) {
 
 void LockContentsView::OnAuthenticate(bool auth_success) {
   if (auth_success) {
+    // Times a password was incorrectly entered until the successful attempt.
+    Shell::Get()->lock_screen_controller()->metrics()->RecordNumAttempt(
+        unlock_attempt_, true /*eventual success*/);
+
     unlock_attempt_ = 0;
     error_bubble_->Close();
   } else {
@@ -593,6 +620,11 @@ void LockContentsView::SwapToAuthUser(int user_index) {
 void LockContentsView::OnAuthUserChanged() {
   Shell::Get()->lock_screen_controller()->OnFocusPod(
       CurrentAuthUserView()->current_user()->basic_user_info->account_id);
+
+  // Times a password was incorrectly entered until user gives up (change user
+  // pod).
+  Shell::Get()->lock_screen_controller()->metrics()->RecordNumAttempt(
+      unlock_attempt_, false /*eventual success*/);
 
   // Reset unlock attempt when the auth user changes.
   unlock_attempt_ = 0;
