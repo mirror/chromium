@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b37c066_dd00f330",
+        "filename": "tools/chrome_proxy/webdriver/proxy_connection.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-16T19:46:15Z",
+      "side": 1,
+      "message": "Is there a way to make sure the request was re-issued as opposed to garbage?",
+      "revId": "d2cddb7d3d86e572e6ac21d91d7e9371102c9fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
