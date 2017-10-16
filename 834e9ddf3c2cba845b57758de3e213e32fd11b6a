@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06477ccc_b5f04016",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-16T04:24:47Z",
+      "side": 1,
+      "message": "This class has a lot of state. Are there other things we should clear here to give \"Restart\" a clean slate? For example, should |redirect_info_| be cleared, and all the Blob reading members?",
+      "revId": "834e9ddf3c2cba845b57758de3e213e32fd11b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30cf9e1c_5b267dac",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-16T04:24:47Z",
+      "side": 1,
+      "message": "consider using blocks to avoid redirect_info1, redirect_info2 naming, if we don\u0027t use redirect_info1 after this line:\n\n{\n  const net::RedirectrInfo\u0026 redirect_info \u003d ...;\n  ...\n}\n\n{\n  const net::RedirectrInfo\u0026 redirect_info \u003d ...;\n}",
+      "revId": "834e9ddf3c2cba845b57758de3e213e32fd11b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79aa3fd_8c37aa53",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-16T04:24:47Z",
+      "side": 1,
+      "message": "Say something about how 20 is the max permitted redirects",
+      "revId": "834e9ddf3c2cba845b57758de3e213e32fd11b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
