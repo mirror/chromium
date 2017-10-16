@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/files/memory_mapped_file.h"
+#include "base/sequenced_task_runner.h"
 #include "components/url_pattern_index/url_pattern_index.h"
 
 namespace base {
@@ -25,6 +26,7 @@ namespace declarative_net_request {
 
 namespace flat {
 struct ExtensionIndexedRuleset;
+struct UrlRuleMetadata;
 }  // namespace flat
 
 // RulesetMatcher encapsulates the Declarative Net Request API ruleset
@@ -37,23 +39,21 @@ class RulesetMatcher {
  public:
   // Describes the result of creating a RulesetMatcher instance.
   enum LoadRulesetResult {
-    kLoadSuccess = 0,
-    kLoadErrorInvalidPath = 1,
-    kLoadErrorMemoryMap = 2,
-    kLoadErrorRulesetVerification = 3,
-    kLoadResultMax
+    LOAD_SUCCESS = 0,
+    LOAD_ERROR_INVALID_PATH = 1,
+    LOAD_ERROR_MEMORY_MAP = 2,
+    LOAD_ERROR_RULESET_VERIFICATION = 3,
+    LOAD_RESULT_MAX
   };
 
   // Factory function to create a verified RulesetMatcher.
   // |indexed_ruleset_path| is the path of the extension ruleset in flatbuffer
   // format. Must be called on a sequence where file IO is allowed. Returns
-  // kLoadSuccess on success along with the ruleset |matcher|.
+  // LOAD_SUCCESS on success along with the ruleset |matcher|.
   static LoadRulesetResult CreateVerifiedMatcher(
       const base::FilePath& indexed_ruleset_path,
       int expected_ruleset_checksum,
       std::unique_ptr<RulesetMatcher>* matcher);
-
-  ~RulesetMatcher();
 
   // Returns whether the network request as specified by the passed parameters
   // should be blocked.
@@ -62,17 +62,31 @@ class RulesetMatcher {
                           url_pattern_index::flat::ElementType element_type,
                           bool is_third_party) const;
 
+  // Returns true along with the |redirect_url| if the network request as
+  // specified by the passed parameters should be redirected.
+  bool ShouldRedirectRequest(const GURL& url,
+                             const url::Origin& first_party_origin,
+                             url_pattern_index::flat::ElementType element_type,
+                             bool is_third_party,
+                             GURL* redirect_url) const;
+
  private:
   using UrlPatternIndexMatcher = url_pattern_index::UrlPatternIndexMatcher;
+  using MemoryMappedRuleset =
+      std::unique_ptr<base::MemoryMappedFile, base::OnTaskRunnerDeleter>;
 
-  explicit RulesetMatcher(std::unique_ptr<base::MemoryMappedFile> ruleset_file);
+  explicit RulesetMatcher(MemoryMappedRuleset ruleset_file);
 
-  // The memory mapped ruleset file.
-  std::unique_ptr<base::MemoryMappedFile> ruleset_;
+  // The memory mapped ruleset file. Deleted on a sequence which supports
+  // blocking calls.
+  const MemoryMappedRuleset ruleset_;
 
   const flat::ExtensionIndexedRuleset* root_;
   const UrlPatternIndexMatcher blacklist_matcher_;
   const UrlPatternIndexMatcher whitelist_matcher_;
+  const UrlPatternIndexMatcher redirect_matcher_;
+  const flatbuffers::Vector<flatbuffers::Offset<flat::UrlRuleMetadata>>*
+      extension_metadata_;
 
   DISALLOW_COPY_AND_ASSIGN(RulesetMatcher);
 };

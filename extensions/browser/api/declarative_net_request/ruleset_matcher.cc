@@ -21,13 +21,6 @@ namespace extensions {
 namespace declarative_net_request {
 namespace flat_rule = url_pattern_index::flat;
 
-namespace {
-void DeleteRulesetHelper(std::unique_ptr<base::MemoryMappedFile> ruleset) {
-  base::AssertBlockingAllowed();
-}
-
-}  // namespace
-
 // static
 RulesetMatcher::LoadRulesetResult RulesetMatcher::CreateVerifiedMatcher(
     const base::FilePath& indexed_ruleset_path,
@@ -40,23 +33,32 @@ RulesetMatcher::LoadRulesetResult RulesetMatcher::CreateVerifiedMatcher(
   base::ElapsedTimer timer;
 
   if (!base::PathExists(indexed_ruleset_path))
-    return kLoadErrorInvalidPath;
+    return LOAD_ERROR_INVALID_PATH;
 
   scoped_refptr<base::SequencedTaskRunner> deleter_task_runner =
       base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND});
 
+  // COMMENT: What's the difference between OnTaskRunnerDeleter and just posting
+  // a task to delete from the destructor? If this task fails, the file won't be
+  // unmapped?
+
   // TODO(crbug.com/774271): Revisit mmap-ing the file.
-  auto ruleset = base::MakeUnique<base::MemoryMappedFile>();
+  // Not using (Make/Wrap)Unique since MemoryMappedRuleset has a custom
+  // deleter.
+  MemoryMappedRuleset ruleset(
+      new base::MemoryMappedFile,
+      base::OnTaskRunnerDeleter(std::move(deleter_task_runner)));
+
   if (!ruleset->Initialize(indexed_ruleset_path,
                            base::MemoryMappedFile::READ_ONLY)) {
-    return kLoadErrorMemoryMap;
+    return LOAD_ERROR_MEMORY_MAP;
   }
 
   // This guarantees that no memory access will end up outside the buffer.
   if (!IsValidRulesetData(ruleset->data(), ruleset->length(),
                           expected_ruleset_checksum)) {
-    return kLoadErrorRulesetVerification;
+    return LOAD_ERROR_RULESET_VERIFICATION;
   }
 
   UMA_HISTOGRAM_TIMES(
@@ -66,14 +68,7 @@ RulesetMatcher::LoadRulesetResult RulesetMatcher::CreateVerifiedMatcher(
   // Using WrapUnique instead of MakeUnique since this class has a private
   // constructor.
   *matcher = base::WrapUnique(new RulesetMatcher(std::move(ruleset)));
-  return kLoadSuccess;
-}
-
-RulesetMatcher::~RulesetMatcher() {
-  // |ruleset_| must be destroyed on a sequence which supports file IO.
-  base::PostTaskWithTraits(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::BindOnce(&DeleteRulesetHelper, std::move(ruleset_)));
+  return LOAD_SUCCESS;
 }
 
 bool RulesetMatcher::ShouldBlockRequest(const GURL& url,
@@ -93,11 +88,25 @@ bool RulesetMatcher::ShouldBlockRequest(const GURL& url,
   return success;
 }
 
-RulesetMatcher::RulesetMatcher(std::unique_ptr<base::MemoryMappedFile> ruleset)
+bool RulesetMatcher::ShouldRedirectRequest(
+    const GURL& url,
+    const url::Origin& first_party_origin,
+    flat_rule::ElementType element_type,
+    bool is_third_party,
+    GURL* redirect_url) const {
+  // TODO(crbug.com/696822): Implement support for redirect request matching.
+  NOTIMPLEMENTED();
+
+  return false;
+}
+
+RulesetMatcher::RulesetMatcher(MemoryMappedRuleset ruleset)
     : ruleset_(std::move(ruleset)),
       root_(flat::GetExtensionIndexedRuleset(ruleset_->data())),
       blacklist_matcher_(root_->blacklist_index()),
-      whitelist_matcher_(root_->whitelist_index()) {}
+      whitelist_matcher_(root_->whitelist_index()),
+      redirect_matcher_(root_->redirect_index()),
+      extension_metadata_(root_->extension_metadata()) {}
 
 }  // namespace declarative_net_request
 }  // namespace extensions

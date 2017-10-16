@@ -60,27 +60,24 @@ class RulesetMatcherTest
   }
 
  protected:
-  const Extension* extension() const { return extension_.get(); }
-
-  void LoadExtensionWithRules(const std::vector<TestRule>& rules) {
-    ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
+  scoped_refptr<const Extension> LoadExtensionWithRules(
+      const std::vector<TestRule>& rules) {
+    CHECK(temp_dir_.CreateUniqueTempDir());
     base::FilePath extension_dir =
         temp_dir_.GetPath().Append(FILE_PATH_LITERAL("test_extension"));
 
     // Create extension directory.
-    ASSERT_TRUE(base::CreateDirectory(extension_dir));
+    CHECK(base::CreateDirectory(extension_dir));
     WriteManifestAndRuleset(extension_dir, kJSONRulesetFilepath,
                             kJSONRulesFilename, rules);
 
-    extension_ = loader_->LoadExtension(extension_dir);
-    ASSERT_TRUE(extension_);
+    return loader_->LoadExtension(extension_dir);
   }
 
  private:
   ScopedCurrentChannel channel_;
   base::ScopedTempDir temp_dir_;
   std::unique_ptr<ChromeTestExtensionLoader> loader_;
-  scoped_refptr<const Extension> extension_;
 
   DISALLOW_COPY_AND_ASSIGN(RulesetMatcherTest);
 };
@@ -90,17 +87,17 @@ TEST_P(RulesetMatcherTest, ShouldBlockRequest) {
   TestRule rule = CreateGenericRule();
   rule.condition->url_filter = std::string("google.com");
 
-  ASSERT_NO_FATAL_FAILURE(LoadExtensionWithRules({rule}));
+  scoped_refptr<const Extension> extension = LoadExtensionWithRules({rule});
+  ASSERT_TRUE(extension);
 
   int expected_checksum;
-  ASSERT_TRUE(
-      ExtensionPrefs::Get(browser_context())
-          ->GetDNRRulesetChecksum(extension()->id(), &expected_checksum));
+  ASSERT_TRUE(ExtensionPrefs::Get(browser_context())
+                  ->GetDNRRulesetChecksum(extension->id(), &expected_checksum));
 
   std::unique_ptr<RulesetMatcher> matcher;
-  EXPECT_EQ(RulesetMatcher::kLoadSuccess,
+  EXPECT_EQ(RulesetMatcher::LOAD_SUCCESS,
             RulesetMatcher::CreateVerifiedMatcher(
-                file_util::GetIndexedRulesetPath(extension()->path()),
+                file_util::GetIndexedRulesetPath(extension->path()),
                 expected_checksum, &matcher));
 
   EXPECT_TRUE(matcher->ShouldBlockRequest(
@@ -113,10 +110,12 @@ TEST_P(RulesetMatcherTest, ShouldBlockRequest) {
 
 // Tests that a modified ruleset file fails verification.
 TEST_P(RulesetMatcherTest, FailedVerification) {
-  ASSERT_NO_FATAL_FAILURE(LoadExtensionWithRules({CreateGenericRule()}));
+  scoped_refptr<const Extension> extension =
+      LoadExtensionWithRules({CreateGenericRule()});
+  ASSERT_TRUE(extension);
 
   base::FilePath indexed_ruleset_path =
-      file_util::GetIndexedRulesetPath(extension()->path());
+      file_util::GetIndexedRulesetPath(extension->path());
 
   // Persist invalid data to the ruleset file.
   std::string data = "invalid data";
@@ -124,12 +123,11 @@ TEST_P(RulesetMatcherTest, FailedVerification) {
             base::WriteFile(indexed_ruleset_path, data.c_str(), data.size()));
 
   int expected_checksum;
-  ASSERT_TRUE(
-      ExtensionPrefs::Get(browser_context())
-          ->GetDNRRulesetChecksum(extension()->id(), &expected_checksum));
+  ASSERT_TRUE(ExtensionPrefs::Get(browser_context())
+                  ->GetDNRRulesetChecksum(extension->id(), &expected_checksum));
 
   std::unique_ptr<RulesetMatcher> matcher;
-  EXPECT_EQ(RulesetMatcher::kLoadErrorRulesetVerification,
+  EXPECT_EQ(RulesetMatcher::LOAD_ERROR_RULESET_VERIFICATION,
             RulesetMatcher::CreateVerifiedMatcher(indexed_ruleset_path,
                                                   expected_checksum, &matcher));
 }

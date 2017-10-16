@@ -752,6 +752,7 @@ void ExtensionService::ReloadExtensionImpl(
 }
 
 void ExtensionService::ReloadExtension(const std::string& extension_id) {
+  LOG(ERROR) << "--------ExtensionService::ReloadExtension " << extension_id;
   ReloadExtensionImpl(extension_id, true);  // be_noisy
 }
 

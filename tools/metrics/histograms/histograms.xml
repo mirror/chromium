@@ -21460,7 +21460,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Extensions.DeclarativeNetRequest.IndexAndPersistRulesTime"
+<histogram name="Extensions.DeclarativeNetRequest.IndexAndPersistRulesetTime"
     units="ms">
   <owner>karandeepb@chromium.org</owner>
   <summary>

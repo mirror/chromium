@@ -441,6 +441,7 @@ void ExtensionSystemImpl::InstallUpdate(const std::string& extension_id,
 void ExtensionSystemImpl::RegisterExtensionWithRequestContexts(
     const Extension* extension,
     const base::Closure& callback) {
+  LOG(ERROR) << "--------RegisterExtensionWithRequestContexts\n";
   base::Time install_time;
   if (extension->location() != Manifest::COMPONENT) {
     install_time = ExtensionPrefs::Get(profile_)->
