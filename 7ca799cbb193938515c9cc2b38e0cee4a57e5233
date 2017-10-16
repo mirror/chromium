@@ -610,6 +610,30 @@
       "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408278f7_7abb4e6b",
+        "filename": "chrome/browser/android/preferences/pref_change_registrar_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-16T18:02:17Z",
+      "side": 1,
+      "message": "I see.",
+      "parentUuid": "29ebb321_b98a0dd1",
+      "range": {
+        "startLine": 32,
+        "startChar": 39,
+        "endLine": 32,
+        "endChar": 61
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

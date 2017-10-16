@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13bbbedb_1c9f10c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-16T18:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fbfb28f_a9da5e6c",
+      "range": {
+        "startLine": 16,
+        "startChar": 28,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "1a73754a8636ebfb103219d4e9bdcec6890f7407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "052226c6_2342c945",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "1a73754a8636ebfb103219d4e9bdcec6890f7407",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c0cbd2_7a1d56bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-16T18:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "052226c6_2342c945",
+      "range": {
+        "startLine": 26,
+        "startChar": 36,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "1a73754a8636ebfb103219d4e9bdcec6890f7407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "91efddfe_cef75e05",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-16T18:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d413c87_09543546",
+      "range": {
+        "startLine": 61,
+        "startChar": 80,
+        "endLine": 62,
+        "endChar": 20
+      },
+      "revId": "1a73754a8636ebfb103219d4e9bdcec6890f7407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9c10371_f7b6c575",
         "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c2f990bf_57714768",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-16T18:02:17Z",
+      "side": 1,
+      "message": "This website is awesome!",
+      "parentUuid": "f9c10371_f7b6c575",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 7
+      },
+      "revId": "1a73754a8636ebfb103219d4e9bdcec6890f7407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1036a9aa_6b158eaa",
         "filename": "chrome/browser/android/preferences/pref_service_bridge.h",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-16T09:19:30Z",
       "side": 1,
       "message": "I don\u0027t think we need this method in the header (or as a class method overall).",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 45
+      },
+      "revId": "1a73754a8636ebfb103219d4e9bdcec6890f7407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3038bd55_b4a1b9c7",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-16T18:02:17Z",
+      "side": 1,
+      "message": "I use this in pref_change_registrar_android.cc. If not making this as class method, how can I make it not local to pref_service_bridge? \n\nOr alternatively, should I have a GetPrefName exposed to Java and pass the pref name to PrefChangeResgitrarAndroid#Add so that this method doesn\u0027t need to be exposed to pref_change_registrar_android.cc?",
+      "parentUuid": "1036a9aa_6b158eaa",
       "range": {
         "startLine": 29,
         "startChar": 21,
