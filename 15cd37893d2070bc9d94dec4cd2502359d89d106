@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72c5a32b_14b7dcdd",
+        "filename": "third_party/zlib/google/zip_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T21:32:23Z",
+      "side": 1,
+      "message": "nit: Probably omit the curlies here, for consistency with the lines below.",
+      "range": {
+        "startLine": 63,
+        "startChar": 3,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "15cd37893d2070bc9d94dec4cd2502359d89d106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db6b8c5_a007150e",
+        "filename": "third_party/zlib/google/zip_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T21:32:23Z",
+      "side": 1,
+      "message": "nit: nullptr here too",
+      "range": {
+        "startLine": 111,
+        "startChar": 20,
+        "endLine": 111,
+        "endChar": 48
+      },
+      "revId": "15cd37893d2070bc9d94dec4cd2502359d89d106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8513aaa_f5dc10e6",
+        "filename": "third_party/zlib/google/zip_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T21:32:23Z",
+      "side": 1,
+      "message": "nit: DCHECK(zip_file_) – the style guide says not to handle (D)CHECK failures, as they are meant to document code invariants.",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 3
+      },
+      "revId": "15cd37893d2070bc9d94dec4cd2502359d89d106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b35cfb_d0527489",
+        "filename": "third_party/zlib/google/zip_writer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T21:32:23Z",
+      "side": 1,
+      "message": "nit: Please document the return value",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 6
+      },
+      "revId": "15cd37893d2070bc9d94dec4cd2502359d89d106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b9138590_88fd063d",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T21:32:23Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not following – you pass params.dest_fd() into the Create function above.  I think that\u0027s all that\u0027s needed for this log statement, right?",
+      "parentUuid": "2cc37268_a7b5c306",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 76
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b04a1ad_722d9eb0",
         "filename": "third_party/zlib/google/zip.cc",
         "patchSetId": 5
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "My thought here is that it\u0027s better to fail fast given incorrect input params, than to potentially do a bunch of work (the path entries below) that\u0027s not going to be used.",
       "parentUuid": "1ead31e8_343f8b9b",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 3
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd451c5_be913ec6",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T21:32:23Z",
+      "side": 1,
+      "message": "It seems like an exceptional (albeit reachable) case for the code to return early, right?  If it\u0027s not very rare, then I agree that it\u0027s worth saving the extra work.  If it\u0027s pretty rare, then I\u0027m not convinced that it\u0027s worth that bit of extra optimization.\n\nI\u0027ll leave it up to you, but those are my two cents.",
+      "parentUuid": "0e6a2551_77d84fe6",
       "range": {
         "startLine": 103,
         "startChar": 0,
