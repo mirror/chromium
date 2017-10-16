@@ -307,14 +307,12 @@ void LayoutNGBlockFlow::SetCachedLayoutResult(
   cached_result_ = layout_result;
 }
 
-void LayoutNGBlockFlow::PaintObject(const PaintInfo& paint_info,
-                                    const LayoutPoint& paint_offset) const {
-  // TODO(eae): This logic should go in Paint instead and it should drive the
-  // full paint logic for LayoutNGBlockFlow.
+void LayoutNGBlockFlow::Paint(const PaintInfo& paint_info,
+                              const LayoutPoint& paint_offset) const {
   if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
-    NGBlockFlowPainter(*this).PaintContents(paint_info, paint_offset);
+    NGBlockFlowPainter(*this).Paint(paint_info, paint_offset);
   else
-    LayoutBlockFlow::PaintObject(paint_info, paint_offset);
+    LayoutBlockFlow::Paint(paint_info, paint_offset);
 }
 
 bool LayoutNGBlockFlow::NodeAtPoint(

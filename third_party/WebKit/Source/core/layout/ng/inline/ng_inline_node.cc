@@ -565,6 +565,7 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
 
   NGFragmentBuilder container_builder(node, &node.Style(), space->WritingMode(),
                                       TextDirection::kLtr);
+  container_builder.SetIsInlineBlock();
   container_builder.SetBfcOffset(NGBfcOffset{LayoutUnit(), LayoutUnit()});
 
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats;
