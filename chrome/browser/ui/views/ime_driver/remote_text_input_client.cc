@@ -11,10 +11,6 @@
 
 #include "base/strings/utf_string_conversions.h"
 
-#if defined(OS_CHROMEOS)
-#include "ui/base/ime/ime_bridge.h"
-#endif
-
 RemoteTextInputClient::RemoteTextInputClient(
     ui::mojom::TextInputClientPtr remote_client,
     ui::TextInputType text_input_type,
@@ -27,11 +23,7 @@ RemoteTextInputClient::RemoteTextInputClient(
       text_input_mode_(text_input_mode),
       text_direction_(text_direction),
       text_input_flags_(text_input_flags),
-      caret_bounds_(caret_bounds) {
-#if defined(OS_CHROMEOS)
-  ui::IMEBridge::Get()->SetCandidateWindowHandler(this);
-#endif
-}
+      caret_bounds_(caret_bounds) {}
 
 RemoteTextInputClient::~RemoteTextInputClient() {}
 
@@ -47,15 +39,20 @@ void RemoteTextInputClient::SetCaretBounds(const gfx::Rect& caret_bounds) {
 void RemoteTextInputClient::SetCompositionText(
     const ui::CompositionText& composition) {
   remote_client_->SetCompositionText(composition);
+  has_composition_text_ = !composition.text.empty();
 }
 
 void RemoteTextInputClient::ConfirmCompositionText() {
   remote_client_->ConfirmCompositionText();
+  has_composition_text_ = false;
 }
 
 void RemoteTextInputClient::ClearCompositionText() {
   remote_client_->ClearCompositionText();
+  has_composition_text_ = false;
 }
+
+void RemoteTextInputClient::EnsureCaretNotInRect(const gfx::Rect& rect) {}
 
 void RemoteTextInputClient::InsertText(const base::string16& text) {
   remote_client_->InsertText(base::UTF16ToUTF8(text));
@@ -101,16 +98,27 @@ bool RemoteTextInputClient::GetCompositionCharacterBounds(
 }
 
 bool RemoteTextInputClient::HasCompositionText() const {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
-  return false;
+  return has_composition_text_;
 }
 
 bool RemoteTextInputClient::GetTextRange(gfx::Range* range) const {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
-  return false;
+  if (!ImeEditingAllowed())
+    return false;
+
+  remote_client_->DispatchGetTextRange(base::Bind(
+      &RemoteTextInputClient::GetTextRangeCallBack, base::ConstRef(this)));
+  return true;
 }
+
+void RemoteTextInputClient::GetTextRangeCallBack(bool success,
+                                                 const gfx::Range& text_range) {
+  LOG(ERROR) << __PRETTY_FUNCTION__ << " -- success: " << success;
+}
+
+// void RemoteTextInputClient::GetTextRange1(gfx::Range range,
+// base::OnceCallback<void(gfx::Range)> TextRangeCallback) {
+// std::move(TextRangeCallback).Run(range);
+//}
 
 bool RemoteTextInputClient::GetCompositionTextRange(gfx::Range* range) const {
   // TODO(moshayedi): crbug.com/631527.
@@ -138,14 +146,15 @@ bool RemoteTextInputClient::DeleteRange(const gfx::Range& range) {
 
 bool RemoteTextInputClient::GetTextFromRange(const gfx::Range& range,
                                              base::string16* text) const {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
-  return false;
+  if (!ImeEditingAllowed())
+    return false;
+
+  // remote_client_->GetTextFromRange(range, text);
+  return true;
 }
 
 void RemoteTextInputClient::OnInputMethodChanged() {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
+  // remote_client_->OnInputMethodChanged();
 }
 
 bool RemoteTextInputClient::ChangeTextDirectionAndLayoutAlignment(
@@ -161,10 +170,14 @@ void RemoteTextInputClient::ExtendSelectionAndDelete(size_t before,
   NOTIMPLEMENTED();
 }
 
-void RemoteTextInputClient::EnsureCaretNotInRect(const gfx::Rect& rect) {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
-}
+// bool RemoteTextInputClient::GetTextRange1(gfx::Range range,
+// base::Callback<void(gfx::Range)> TextRangeCallback) {
+// TextRangeCallback.Run(range);
+//}
+
+// void RemoteTextInputClient::EnsureCaretNotInRect(const gfx::Rect& rect) {
+// remote_client_->EnsureCaretNotInRect(rect);
+//}
 
 bool RemoteTextInputClient::IsTextEditCommandEnabled(
     ui::TextEditCommand command) const {
@@ -186,20 +199,7 @@ ui::EventDispatchDetails RemoteTextInputClient::DispatchKeyEventPostIME(
   return ui::EventDispatchDetails();
 }
 
-void RemoteTextInputClient::UpdateLookupTable(
-    const ui::CandidateWindow& candidate_window,
-    bool visible) {}
-
-void RemoteTextInputClient::UpdatePreeditText(const base::string16& text,
-                                              uint32_t cursor_pos,
-                                              bool visible) {}
-
-void RemoteTextInputClient::SetCursorBounds(const gfx::Rect& cursor_bounds,
-                                            const gfx::Rect& composition_head) {
-}
-
-void RemoteTextInputClient::OnCandidateWindowVisibilityChanged(bool visible) {
-#if defined(OS_CHROMEOS)
-  remote_client_->SetCandidateWindowVisible(visible);
-#endif
+bool RemoteTextInputClient::ImeEditingAllowed() const {
+  return (text_input_type_ != ui::TEXT_INPUT_TYPE_NONE &&
+          text_input_type_ != ui::TEXT_INPUT_TYPE_PASSWORD);
 }

@@ -57,9 +57,12 @@ void TextInputClientImpl::DispatchKeyEventPostIME(
       std::move(callback).Run(event->stopped_propagation());
   }
 }
-
-void TextInputClientImpl::SetCandidateWindowVisible(bool visible) {
-  is_candidate_window_visible_ = visible;
+void TextInputClientImpl::DispatchGetTextRange(
+    DispatchGetTextRangeCallback callback) {
+  gfx::Range text_range;
+  bool success = text_input_client_->GetTextRange(&text_range);
+  LOG(ERROR) << __PRETTY_FUNCTION__ << " -- success: " << success;
+  std::move(callback).Run(success, text_range);
 }
 
 }  // namespace aura

@@ -13,6 +13,8 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/callback.h"
+#include "base/cancelable_callback.h"
 #include "base/i18n/char_iterator.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -203,40 +205,58 @@ void InputMethodChromeOS::OnCaretBoundsChanged(const TextInputClient* client) {
   candidate_window->SetCursorBounds(caret_rect, composition_head);
 
   gfx::Range text_range;
-  gfx::Range selection_range;
-  base::string16 surrounding_text;
-  if (!client->GetTextRange(&text_range) ||
-      !client->GetTextFromRange(text_range, &surrounding_text) ||
-      !client->GetSelectionRange(&selection_range)) {
-    previous_surrounding_text_.clear();
-    previous_selection_range_ = gfx::Range::InvalidRange();
-    return;
-  }
-
-  if (previous_selection_range_ == selection_range &&
-      previous_surrounding_text_ == surrounding_text)
-    return;
-
-  previous_selection_range_ = selection_range;
-  previous_surrounding_text_ = surrounding_text;
-
-  if (!selection_range.IsValid()) {
-    // TODO(nona): Ideally selection_range should not be invalid.
-    // TODO(nona): If javascript changes the focus on page loading, even (0,0)
-    //             can not be obtained. Need investigation.
-    return;
-  }
-
-  // Here SetSurroundingText accepts relative position of |surrounding_text|, so
-  // we have to convert |selection_range| from node coordinates to
-  // |surrounding_text| coordinates.
-  if (!GetEngine())
-    return;
-  GetEngine()->SetSurroundingText(base::UTF16ToUTF8(surrounding_text),
-                                  selection_range.start() - text_range.start(),
-                                  selection_range.end() - text_range.start(),
-                                  text_range.start());
+  client->GetTextRange(&text_range);
+  // client->GetTextRange1(text_range,
+  // base::Bind(&InputMethodChromeOS::GetTextRangeCallBack,
+  // base::Unretained(this)));
 }
+
+void InputMethodChromeOS::GetTextRangeCallBack(gfx::Range range) {
+  // base::string16 surrounding_text;
+  // text_from_range_exists_ = client->GetTextFromRange(text_range,
+  // &surrounding_text, GetTextFromRangeCallBack);
+}
+
+// void InputMethodChromeOS::GetTextFromRangeCallBack() {
+// gfx::Range selection_range;
+// text_from_range_exists_ = client->GetSelectionRange(&selection_range_,
+// OnCaretBoundsChangedCallBack);
+//}
+
+// void InputMethodChromeOS::OnCaretBoundsChangedCallBack(const TextInputClient*
+// client) {  gfx::Range text_range;  gfx::Range selection_range; base::string16
+// surrounding_text;  if (!client->GetTextRange(&text_range) ||
+//! client->GetTextFromRange(text_range, &surrounding_text) ||
+//! client->GetSelectionRange(&selection_range)) {
+// previous_surrounding_text_.clear();
+// previous_selection_range_ = gfx::Range::InvalidRange();
+// return;
+//}
+
+// if (previous_selection_range_ == selection_range &&
+// previous_surrounding_text_ == surrounding_text)
+// return;
+
+// previous_selection_range_ = selection_range;
+// previous_surrounding_text_ = surrounding_text;
+
+// if (!selection_range.IsValid()) {
+//// TODO(nona): Ideally selection_range should not be invalid.
+//// TODO(nona): If javascript changes the focus on page loading, even (0,0)
+////             can not be obtained. Need investigation.
+// return;
+//}
+
+//// Here SetSurroundingText accepts relative position of |surrounding_text|, so
+//// we have to convert |selection_range| from node coordinates to
+//// |surrounding_text| coordinates.
+// if (!GetEngine())
+// return;
+// GetEngine()->SetSurroundingText(base::UTF16ToUTF8(surrounding_text),
+// selection_range.start() - text_range.start(),
+// selection_range.end() - text_range.start(),
+// text_range.start());
+//}
 
 void InputMethodChromeOS::CancelComposition(const TextInputClient* client) {
   if (IsNonPasswordInputFieldFocused() && IsTextInputClientFocused(client))

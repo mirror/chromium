@@ -22,6 +22,8 @@
 
 namespace ui {
 
+typedef base::Callback<void(gfx::Range)> TextRangeCallback;
+
 // A ui::InputMethod implementation based on IBus.
 class UI_BASE_IME_EXPORT InputMethodChromeOS : public InputMethodBase {
  public:
@@ -40,6 +42,7 @@ class UI_BASE_IME_EXPORT InputMethodChromeOS : public InputMethodBase {
   void OnCaretBoundsChanged(const TextInputClient* client) override;
   void CancelComposition(const TextInputClient* client) override;
   bool IsCandidatePopupOpen() const override;
+  void GetTextRangeCallBack(gfx::Range text_range);
 
  protected:
   // Converts |text| into CompositionText.
@@ -134,6 +137,9 @@ class UI_BASE_IME_EXPORT InputMethodChromeOS : public InputMethodBase {
                                                bool is_handled)
       WARN_UNUSED_RESULT;
 
+  void GetTextRange1(gfx::Range range,
+                     base::OnceCallback<void(gfx::Range)> TextRangeCallback);
+
   // Returns whether an non-password input field is focused.
   bool IsNonPasswordInputFieldFocused();
 
@@ -166,6 +172,10 @@ class UI_BASE_IME_EXPORT InputMethodChromeOS : public InputMethodBase {
   // Indicates whether currently is handling a physical key event.
   // This is used in CommitText/UpdateCompositionText/etc.
   bool handling_key_event_;
+
+  bool text_range_exists_ = false;
+  bool text_from_range_exists_ = false;
+  bool selection_range_exists_ = false;
 
   // Used for making callbacks.
   base::WeakPtrFactory<InputMethodChromeOS> weak_ptr_factory_;
