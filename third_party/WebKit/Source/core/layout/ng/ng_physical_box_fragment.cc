@@ -4,6 +4,8 @@
 
 #include "core/layout/ng/ng_physical_box_fragment.h"
 
+#include "core/layout/LayoutObject.h"
+
 namespace blink {
 
 NGPhysicalBoxFragment::NGPhysicalBoxFragment(
@@ -34,6 +36,16 @@ const NGBaseline* NGPhysicalBoxFragment::Baseline(
       return &baseline;
   }
   return nullptr;
+}
+
+bool NGPhysicalBoxFragment::IsBlockLayoutBoundary() const {
+  // An anonymous fragment is not a boundary.
+  if (!layout_object_ || layout_object_->Style() != style_.get())
+    return false;
+  if (layout_object_->IsAtomicInlineLevel() ||
+      layout_object_->IsFloatingOrOutOfFlowPositioned())
+    return true;
+  return false;
 }
 
 const NGPhysicalOffsetRect NGPhysicalBoxFragment::LocalVisualRect() const {
