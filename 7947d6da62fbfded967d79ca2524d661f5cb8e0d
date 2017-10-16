@@ -19,6 +19,57 @@
     },
     {
       "key": {
+        "uuid": "ec2de34a_c24dbd1e",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T05:22:16Z",
+      "side": 1,
+      "message": "By the way now that we\u0027re trying to gather common things into WebKit/common could we start trying to do that too at some point? (No need to be addressed in this CL)",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648dabbc_381b06cb",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T05:22:16Z",
+      "side": 1,
+      "message": "(Not fully sure why we need this method)",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f086daf1_019ce48b",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T05:22:16Z",
+      "side": 1,
+      "message": "These don\u0027t seem to be needed member methods, can they just be static helper methods?  Also do they need to be on this class?",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5470b000_9d4fc148",
         "filename": "content/browser/service_worker/service_worker_handle.cc",
         "patchSetId": 2
@@ -59,6 +110,23 @@
         "endLine": 897,
         "endChar": 76
       },
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1212e1_e5dec819",
+        "filename": "content/common/service_worker/service_worker_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T05:22:16Z",
+      "side": 1,
+      "message": "(Oh... haven\u0027t really thought about having legacy STRUCT_TRAITS for a mojom struct.)",
       "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
