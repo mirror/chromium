@@ -52,7 +52,7 @@ class DEVICE_GEOLOCATION_EXPORT LocationArbitrator : public LocationProvider {
   // LocationProvider implementation.
   void SetUpdateCallback(
       const LocationProviderUpdateCallback& callback) override;
-  bool StartProvider(bool enable_high_accuracy) override;
+  void StartProvider(bool enable_high_accuracy) override;
   void StopProvider() override;
   const Geoposition& GetPosition() override;
   void OnPermissionGranted() override;
@@ -78,7 +78,7 @@ class DEVICE_GEOLOCATION_EXPORT LocationArbitrator : public LocationProvider {
   void RegisterSystemProvider();
 
   // Tell all registered providers to start.
-  bool DoStartProviders();
+  void DoStartProviders();
 
   // Response callback for request_context_callback_.
   void OnRequestContextResponse(

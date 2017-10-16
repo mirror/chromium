@@ -18,7 +18,7 @@ class MockLocationProvider : public device::LocationProvider {
 
   MOCK_METHOD1(SetUpdateCallback,
                void(const LocationProviderUpdateCallback& callback));
-  MOCK_METHOD1(StartProvider, bool(bool high_accuracy));
+  MOCK_METHOD1(StartProvider, void(bool high_accuracy));
   MOCK_METHOD0(StopProvider, void());
   MOCK_METHOD0(GetPosition, const Geoposition&());
   MOCK_METHOD0(OnPermissionGranted, void());
