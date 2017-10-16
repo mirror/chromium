@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e6668722_2a4fd3d4",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-16T14:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb270eb8_3d484091",
+      "range": {
+        "startLine": 76,
+        "startChar": 20,
+        "endLine": 76,
+        "endChar": 30
+      },
+      "revId": "bcfd362209dfaf14d756ae98f682eefe990e64d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73ae01f8_bea99399",
         "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "bcfd362209dfaf14d756ae98f682eefe990e64d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a03e13_41932195",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-16T14:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73ae01f8_bea99399",
+      "range": {
+        "startLine": 674,
+        "startChar": 9,
+        "endLine": 674,
+        "endChar": 13
+      },
+      "revId": "bcfd362209dfaf14d756ae98f682eefe990e64d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d3fdf788_de6d94da",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-16T14:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e7cd27d_4fbad459",
+      "range": {
+        "startLine": 40,
+        "startChar": 32,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "bcfd362209dfaf14d756ae98f682eefe990e64d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2295a93e_b427cf4c",
         "filename": "third_party/WebKit/Source/core/css/FontFace.idl",
         "patchSetId": 4
@@ -85,6 +157,24 @@
       "revId": "bcfd362209dfaf14d756ae98f682eefe990e64d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5674369c_627dab07",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-16T14:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2295a93e_b427cf4c",
+      "revId": "bcfd362209dfaf14d756ae98f682eefe990e64d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +198,30 @@
       "revId": "bcfd362209dfaf14d756ae98f682eefe990e64d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3027005a_de986986",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-16T14:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f67188b_f8ce27d3",
+      "range": {
+        "startLine": 2,
+        "startChar": 22,
+        "endLine": 2,
+        "endChar": 30
+      },
+      "revId": "bcfd362209dfaf14d756ae98f682eefe990e64d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
