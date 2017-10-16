@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27051263_33dcb6d5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-16T21:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba84746b_da13061c",
+      "range": {
+        "startLine": 21,
+        "startChar": 32,
+        "endLine": 21,
+        "endChar": 44
+      },
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37055320_0a53ebfb",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "2182f44894a6a069328174279414e922c1612579",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de3a1c0_22babc0d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-16T21:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37055320_0a53ebfb",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "5d7e595c_9ad78d79",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-16T21:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91ea34b3_3633bcba",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b760b78_b37010f5",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "2182f44894a6a069328174279414e922c1612579",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9727285a_f7d709c8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-16T21:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b760b78_b37010f5",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "f66b8199_0898c828",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-16T21:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ca84f7c_6483b50d",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f09a4cbc_7466c726",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 4
@@ -107,6 +203,24 @@
       "revId": "2182f44894a6a069328174279414e922c1612579",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87714ace_010a3bbc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-16T21:14:41Z",
+      "side": 1,
+      "message": "Done.  Also renamed \u0027_groups\u0027 to \u0027_treeElements\u0027",
+      "parentUuid": "f09a4cbc_7466c726",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "f2c483a5_0ad368d5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-16T21:14:41Z",
+      "side": 1,
+      "message": "I want to avoid double-incrementing the filter\u0027s counters when a single message is added, since Sidebar.p.applyFilters() already increments when it is the _selectedTreeElement.\n\nProposal: instead of onMessageAdded creating treeElements, we rely on applyFilter to create child url treeElements as needed and we make shouldBeVisible() public so that we can query the selectedTreeElement without affecting counters.  WDYT?",
+      "parentUuid": "29a20a70_f8517011",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3eaf3f1_0c789769",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 4
@@ -138,6 +270,24 @@
       "writtenOn": "2017-10-13T23:40:31Z",
       "side": 1,
       "message": "- Instead of constructing a filter every time, let\u0027s construct it when user selects a tree item instead (by copying from parent and adding url).\n- Introduce ConsoleFilter.clone, and then just add a url filter to it.",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d445e93_c26d9a91",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-16T21:14:41Z",
+      "side": 1,
+      "message": "This is a good point, it would be more efficient on memory.  As per our offline discussion, we can create them immediately for now, but should keep an eye on performance/memory.",
+      "parentUuid": "e3eaf3f1_0c789769",
       "revId": "2182f44894a6a069328174279414e922c1612579",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "5d822706_8e4f2ec1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-16T21:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abda6dcd_b9986a98",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90742069_50f5a782",
         "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
         "patchSetId": 4
@@ -175,6 +343,24 @@
       "revId": "2182f44894a6a069328174279414e922c1612579",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65204760_22fcd10f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-16T21:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90742069_50f5a782",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
