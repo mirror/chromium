@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8588b37f_582d177c",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2536,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-16T16:03:53Z",
+      "side": 1,
+      "message": "Would this break old app list ? That is, would the |model_|\u0027s state_fullscreen() stay with CLOSED for old app list?",
+      "revId": "6417f34ab097989da18275183497203de76a70ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
