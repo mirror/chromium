@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82f074db_6f44a5bb",
+        "filename": "chrome/browser/permissions/permission_request_manager_test_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:10:17Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "8841bae59b98ecf1074d44180632ff29198d4859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
