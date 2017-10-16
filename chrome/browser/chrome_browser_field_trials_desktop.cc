@@ -11,6 +11,8 @@
 #include <map>
 #include <string>
 
+#include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/debug/activity_tracker.h"
 #include "base/feature_list.h"
@@ -19,6 +21,7 @@
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/time.h"
 #include "chrome/browser/prerender/prerender_field_trial.h"
 #include "chrome/common/chrome_features.h"
@@ -184,8 +187,15 @@ void SetupStabilityDebugging() {
     const bool should_flush = base::GetFieldTrialParamByFeatureAsBool(
         browser_watcher::kStabilityDebuggingFeature,
         browser_watcher::kInitFlushParam, false);
-    if (should_flush)
-      ::FlushViewOfFile(global_tracker->allocator()->data(), 0U);
+    if (should_flush) {
+      // Flushing a mapped view incurs synchronous IO, so post off to a
+      // background task.
+      base::PostTaskWithTraits(
+          FROM_HERE, {base::MayBlock()},
+          base::BindOnce(base::IgnoreResult(&::FlushViewOfFile),
+                         base::Unretained(global_tracker->allocator()->data()),
+                         0u));
+    }
 
     // Store a copy of the system profile in this allocator. There will be some
     // delay before this gets populated, perhaps as much as a minute. Because
