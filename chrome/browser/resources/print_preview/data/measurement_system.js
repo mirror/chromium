@@ -44,17 +44,15 @@ cr.define('print_preview', function() {
        * @private {!print_preview.MeasurementSystemUnitType}
        */
       this.unitType_ = unitType;
+      if (this.unitType_ != print_preview.MeasurementSystemUnitType.METRIC &&
+          this.unitType_ != print_preview.MeasurementSystemUnitType.IMPERIAL) {
+        throw Error('Unit type not supported: ' + this.unitType_);
+      }
     }
 
     /** @return {string} The unit type symbol of the measurement system. */
     get unitSymbol() {
-      if (this.unitType_ == print_preview.MeasurementSystemUnitType.METRIC) {
-        return 'mm';
-      }
-      if (this.unitType_ == print_preview.MeasurementSystemUnitType.IMPERIAL) {
-        return '"';
-      }
-      throw Error('Unit type not supported: ' + this.unitType_);
+      return measurementSystemPrefs.get(this.unitType_).unitSymbol;
     }
 
     /**
@@ -85,10 +83,11 @@ cr.define('print_preview', function() {
      * @return {number} Rounded value.
      */
     roundValue(value) {
-      var precision = Precision_[this.unitType_];
+      var precision = measurementSystemPrefs.get(this.unitType_).precision;
       var roundedValue = Math.round(value / precision) * precision;
       // Truncate
-      return +roundedValue.toFixed(DecimalPlaces_[this.unitType_]);
+      return +roundedValue.toFixed(
+          measurementSystemPrefs.get(this.unitType_).decimalPlaces);
     }
 
     /**
@@ -96,10 +95,7 @@ cr.define('print_preview', function() {
      * @return {number} Value in local units.
      */
     convertFromPoints(pts) {
-      if (this.unitType_ == print_preview.MeasurementSystemUnitType.METRIC) {
-        return pts / PTS_PER_MM_;
-      }
-      return pts / PTS_PER_INCH_;
+      return pts / measurementSystemPrefs.get(this.unitType_).ptsPerUnit;
     }
 
     /**
@@ -107,42 +103,32 @@ cr.define('print_preview', function() {
      * @return {number} Value in points.
      */
     convertToPoints(localUnits) {
-      if (this.unitType_ == print_preview.MeasurementSystemUnitType.METRIC) {
-        return localUnits * PTS_PER_MM_;
-      }
-      return localUnits * PTS_PER_INCH_;
+      return localUnits * measurementSystemPrefs.get(this.unitType_).ptsPerUnit;
     }
   }
 
   /**
-   * Maximum resolution of local unit values.
-   * @private {!Object<!print_preview.MeasurementSystemUnitType, number>}
+   * Maximum resolution and number of decimal places for local unit values.
+   * @private {!Map<!print_preview.MeasurementSystemUnitType,
+   *                !{precision: number,
+   *                  decimalPlaces: number,
+   *                  ptsPerUnit: number,
+   *                  unitSymbol: string}>}
    */
-  var Precision_ = {};
-  Precision_[print_preview.MeasurementSystemUnitType.METRIC] = 0.5;
-  Precision_[print_preview.MeasurementSystemUnitType.IMPERIAL] = 0.01;
-
-  /**
-   * Maximum number of decimal places to keep for local unit.
-   * @private {!Object<!print_preview.MeasurementSystemUnitType, number>}
-   */
-  var DecimalPlaces_ = {};
-  DecimalPlaces_[print_preview.MeasurementSystemUnitType.METRIC] = 1;
-  DecimalPlaces_[print_preview.MeasurementSystemUnitType.IMPERIAL] = 2;
-
-  /**
-   * Number of points per inch.
-   * @const {number}
-   * @private
-   */
-  var PTS_PER_INCH_ = 72.0;
-
-  /**
-   * Number of points per millimeter.
-   * @const {number}
-   * @private
-   */
-  var PTS_PER_MM_ = PTS_PER_INCH_ / 25.4;
+  var measurementSystemPrefs = new Map([
+    [
+      print_preview.MeasurementSystemUnitType.METRIC, {
+        precision: 0.5,
+        decimalPlaces: 1,
+        ptsPerUnit: 72.0 / 25.4,
+        unitSymbol: 'mm'
+      }
+    ],
+    [
+      print_preview.MeasurementSystemUnitType.IMPERIAL,
+      {precision: 0.01, decimalPlaces: 2, ptsPerUnit: 72.0, unitSymbol: '"'}
+    ]
+  ]);
 
   // Export
   return {MeasurementSystem: MeasurementSystem};
