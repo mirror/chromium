@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08ab9d30_c7ef857c",
+        "filename": "services/metrics/public/cpp/delegating_ukm_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-16T21:07:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0495288a_66916835",
+      "revId": "dbbdb4d97c926489442c6cec6b1987430f9be812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f2e7404_156c60c4",
         "filename": "services/metrics/public/cpp/ukm_recorder.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "dbbdb4d97c926489442c6cec6b1987430f9be812",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdeb171a_cbc833d5",
+        "filename": "services/metrics/public/cpp/ukm_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-16T21:07:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f2e7404_156c60c4",
+      "revId": "dbbdb4d97c926489442c6cec6b1987430f9be812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
