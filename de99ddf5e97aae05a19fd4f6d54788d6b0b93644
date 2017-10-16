@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "34a54ccf_312442ae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/Automapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-16T21:09:16Z",
+      "side": 1,
+      "message": "Instead of calling _onProjectRemoved, I\u0027d just call \u0027_scheduleRemap\u0027.\nRemap is a high-level function that removes all the bindings and re-figures them from scratch.\n\nNote: you\u0027d need to check for ignored project in _onProjectAdded and _onUISOurceCodeAdded.",
+      "revId": "de99ddf5e97aae05a19fd4f6d54788d6b0b93644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d1396c_76da981d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/Automapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-16T21:09:16Z",
+      "side": 1,
+      "message": "why is this necessary?",
+      "revId": "de99ddf5e97aae05a19fd4f6d54788d6b0b93644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54d59d7f_0d4aec7a",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/Automapping.js",
         "patchSetId": 3
@@ -31,6 +65,40 @@
       "side": 1,
       "message": "If a project becomes un-ignored it needs to re-run this function on the project. The performance penalty should be very small since by default projects come in with no UISourceCodes and they get added when the directory structure is resolved (which happens async).",
       "parentUuid": "54d59d7f_0d4aec7a",
+      "revId": "de99ddf5e97aae05a19fd4f6d54788d6b0b93644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58df0727_8447d5f8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/Automapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-16T21:09:16Z",
+      "side": 1,
+      "message": "this is not needed since there\u0027s remap is scheduled on the following line",
+      "revId": "de99ddf5e97aae05a19fd4f6d54788d6b0b93644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "572cdd8d_2b6945f9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/Automapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-16T21:09:16Z",
+      "side": 1,
+      "message": "Instead of having addBinding/removeBinding exposed on mapping algorithms, you can have them straight in persistence.js.",
       "revId": "de99ddf5e97aae05a19fd4f6d54788d6b0b93644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
