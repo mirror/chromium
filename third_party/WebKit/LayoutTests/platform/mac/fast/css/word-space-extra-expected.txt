@@ -7,11 +7,11 @@ layer at (0,0) size 800x2386 backgroundClip at (0,0) size 800x600 clip at (0,0) 
         LayoutText {#text} at (0,0) size 139x28
           text run at (0,0) width 139: "word-spacing"
       LayoutBlockFlow (anonymous) at (0,47.91) size 784x193.41
-        LayoutBlockFlow (floating) {PRE} at (0,13) size 1201.58x167.41
-          LayoutBlockFlow {H3} at (0,15.20) size 1201.58x17
+        LayoutBlockFlow (floating) {PRE} at (0,13) size 1201.56x167.41
+          LayoutBlockFlow {H3} at (0,15.20) size 1201.56x17
             LayoutText {#text} at (0,0) size 207x17
               text run at (0,0) width 207: "In a floated pre"
-          LayoutBlockFlow (anonymous) at (0,47.41) size 1201.58x120
+          LayoutBlockFlow (anonymous) at (0,47.41) size 1201.56x120
             LayoutText {#text} at (0,0) size 257x30
               text run at (0,0) width 0: " "
               text run at (0,15) width 257: "Word   spacing test "
@@ -894,11 +894,11 @@ layer at (0,0) size 800x2386 backgroundClip at (0,0) size 800x600 clip at (0,0) 
         LayoutText {#text} at (0,0) size 133x28
           text run at (0,0) width 133: "both-spacing"
       LayoutBlockFlow (anonymous) at (0,1595.03) size 784x193.41
-        LayoutBlockFlow (floating) {PRE} at (0,13) size 1947.39x167.41
-          LayoutBlockFlow {H3} at (0,15.20) size 1947.39x17
+        LayoutBlockFlow (floating) {PRE} at (0,13) size 1947.38x167.41
+          LayoutBlockFlow {H3} at (0,15.20) size 1947.38x17
             LayoutText {#text} at (0,0) size 287x17
               text run at (0,0) width 287: "In a floated pre"
-          LayoutBlockFlow (anonymous) at (0,47.41) size 1947.39x120
+          LayoutBlockFlow (anonymous) at (0,47.41) size 1947.38x120
             LayoutText {#text} at (0,0) size 537x30
               text run at (0,0) width 0: " "
               text run at (0,15) width 537: "Word and letter   spacing test "
