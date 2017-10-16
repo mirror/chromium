@@ -16,6 +16,24 @@
       "revId": "de99ddf5e97aae05a19fd4f6d54788d6b0b93644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3026a44_cdce3757",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/Automapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-16T20:50:29Z",
+      "side": 1,
+      "message": "If a project becomes un-ignored it needs to re-run this function on the project. The performance penalty should be very small since by default projects come in with no UISourceCodes and they get added when the directory structure is resolved (which happens async).",
+      "parentUuid": "54d59d7f_0d4aec7a",
+      "revId": "de99ddf5e97aae05a19fd4f6d54788d6b0b93644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
