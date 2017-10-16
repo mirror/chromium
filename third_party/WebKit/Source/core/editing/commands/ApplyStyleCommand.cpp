@@ -269,22 +269,20 @@ void ApplyStyleCommand::ApplyBlockStyle(EditingStyle* style,
   // document, since addBlockStyleIfNeeded may moveParagraphs, which can remove
   // these endpoints. Calculate start and end indices from the start of the tree
   // that they're in.
-  Node& scope = NodeTraversal::HighestAncestorOrSelf(
+  const Node& scope = NodeTraversal::HighestAncestorOrSelf(
       *visible_start.DeepEquivalent().AnchorNode());
-  Range* start_range =
-      Range::Create(GetDocument(), Position::FirstPositionInNode(scope),
-                    visible_start.DeepEquivalent().ParentAnchoredEquivalent());
-  Range* end_range =
-      Range::Create(GetDocument(), Position::FirstPositionInNode(scope),
-                    visible_end.DeepEquivalent().ParentAnchoredEquivalent());
+  const EphemeralRange start_range(
+      Position::FirstPositionInNode(scope),
+      visible_start.DeepEquivalent().ParentAnchoredEquivalent());
+  const EphemeralRange end_range(
+      Position::FirstPositionInNode(scope),
+      visible_start.DeepEquivalent().ParentAnchoredEquivalent());
 
   const TextIteratorBehavior behavior =
       TextIteratorBehavior::AllVisiblePositionsRangeLengthBehavior();
 
-  int start_index =
-      TextIterator::RangeLength(EphemeralRange(start_range), behavior);
-  int end_index =
-      TextIterator::RangeLength(EphemeralRange(end_range), behavior);
+  const int start_index = TextIterator::RangeLength(start_range, behavior);
+  const int end_index = TextIterator::RangeLength(end_range, behavior);
 
   VisiblePosition paragraph_start(StartOfParagraph(visible_start));
   VisiblePosition next_paragraph_start(
@@ -890,11 +888,11 @@ void ApplyStyleCommand::FixRangeAndApplyInlineStyle(
   // color="blue">hello</font>, we need to include the font element in our run
   // to generate <font color="blue" size="4">hello</font> instead of <font
   // color="blue"><font size="4">hello</font></font>
-  Range* range = Range::Create(start_node->GetDocument(), start, end);
+  const EphemeralRange range(start, end);
   Element* editable_root = RootEditableElement(*start_node);
   if (start_node != editable_root) {
     while (editable_root && start_node->parentNode() != editable_root &&
-           IsNodeVisiblyContainedWithin(*start_node->parentNode(), *range))
+           IsNodeVisiblyContainedWithin(*start_node->parentNode(), range))
       start_node = start_node->parentNode();
   }
 
