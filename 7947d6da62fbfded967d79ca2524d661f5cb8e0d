@@ -19,6 +19,75 @@
     },
     {
       "key": {
+        "uuid": "5470b000_9d4fc148",
+        "filename": "content/browser/service_worker/service_worker_handle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-16T04:47:11Z",
+      "side": 1,
+      "message": "As I commented in service_worker_provider_host.cc, it\u0027d be better to change this to blink::mojom::ServiceWorkerObjectInfoPtr since the struct is mainly for IPC and we should call .Clone() every time to send it over Mojo connection if we don\u0027t create mojo::StructPtr\u003c\u003e here.",
+      "range": {
+        "startLine": 56,
+        "startChar": 40,
+        "endLine": 56,
+        "endChar": 44
+      },
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a706ae_1ee2a00c",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-16T04:47:11Z",
+      "side": 1,
+      "message": "If GetOrCreateServiceWorkerHandle() returns mojo::StructPtr\u003c\u003e instead of bare struct, we can remove Clone() which is to wrapping mojo::StructPtr\u003c\u003e.",
+      "range": {
+        "startLine": 897,
+        "startChar": 28,
+        "endLine": 897,
+        "endChar": 76
+      },
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec4bbc8_cbbaf79c",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-16T04:47:11Z",
+      "side": 1,
+      "message": "Full path starting from third_party/WebKit is needed.",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "959c143d_5debe771",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
         "patchSetId": 2
