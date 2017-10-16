@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3994419c_15e06e18",
+        "filename": "third_party/WebKit/Source/core/dom/Modulator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-16T04:14:16Z",
+      "side": 1,
+      "message": "Or, GetFetchClientSecurityOrigin()?\n\nThe spec uses the term \"a fetch client settings object\":\nhttps://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-module-worker-script-tree",
+      "revId": "6f2d157fdb6c57ca46562cd194fafa92131dfc9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
