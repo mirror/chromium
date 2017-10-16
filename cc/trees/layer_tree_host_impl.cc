@@ -2552,7 +2552,7 @@ void LayerTreeHostImpl::DidChangeScrollbarVisibility() {
 }
 
 void LayerTreeHostImpl::CleanUpTileManagerAndUIResources() {
-  ClearUIResources();
+  EvictAllUIResources();
   tile_manager_.FinishTasksAndCleanUp();
   resource_pool_ = nullptr;
   single_thread_synchronous_task_graph_runner_ = nullptr;
