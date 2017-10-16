@@ -16,6 +16,24 @@
       "revId": "cd2d9ecc08d1cd3a6bf77f7bc66fe8fb80fda7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ae5751_f90bcffd",
+        "filename": "net/http/transport_security_state_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3104,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-16T07:50:55Z",
+      "side": 1,
+      "message": "We\u0027re only preloading at one level (youtube.com) and these tests are more of a sanity check, so I\u0027m pretty comfortable with this.",
+      "parentUuid": "c4f0b467_ec9de7af",
+      "revId": "cd2d9ecc08d1cd3a6bf77f7bc66fe8fb80fda7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
