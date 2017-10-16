@@ -22,6 +22,30 @@
       "revId": "ab976f9a7f4ea02bd56e5cd47db38744867b0f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ae7bd3_9e4c1dbc",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_bypass_protocol_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-16T21:29:37Z",
+      "side": 1,
+      "message": "No, I mean TestNetworkDelegate will no longer work - you\u0027ll only be able to use the NetworkService API, so you won\u0027t be able to set a NetworkDelegate, or even use TestURLRequestContext.",
+      "parentUuid": "6058ae09_b7696c37",
+      "range": {
+        "startLine": 473,
+        "startChar": 4,
+        "endLine": 473,
+        "endChar": 71
+      },
+      "revId": "ab976f9a7f4ea02bd56e5cd47db38744867b0f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
