@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd63125c_ca798b99",
+        "filename": "testing/buildbot/filters/ash_unittests_mus.filter",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-16T20:58:11Z",
+      "side": 1,
+      "message": "What happens when you run these in --mus now? What breaks?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 57
+      },
+      "revId": "aa924b791d85cb8b1cd0478d95a3b3457eb079e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
