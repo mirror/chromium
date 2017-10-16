@@ -12,6 +12,6 @@ layer at (0,0) size 800x600
 layer at (10,10) size 40x50 clip at (11,11) size 38x48
   LayoutBlockFlow {SPAN} at (0,0) size 40x50 [border: (1px solid #C0C0C0)]
     LayoutImage (floating) {IMG} at (2,2) size 16x16
-    LayoutInline {SPAN} at (0,0) size 37x13
-      LayoutText {#text} at (2,18) size 37x13
-        text run at (2,18) width 37: "Submit"
+    LayoutInline {SPAN} at (0,0) size 35x13
+      LayoutText {#text} at (2,18) size 35x13
+        text run at (2,18) width 35: "Submit"

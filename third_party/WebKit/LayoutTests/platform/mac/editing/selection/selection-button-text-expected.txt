@@ -13,21 +13,21 @@ layer at (0,0) size 800x132
           LayoutBR {BR} at (49,0) size 1x18
           LayoutText {#text} at (0,18) size 61x18
             text run at (0,18) width 61: "with text "
-          LayoutButton {INPUT} at (60.44,19) size 58.63x18 [bgcolor=#FFFFFF]
-            LayoutBlockFlow (anonymous) at (8,2) size 42.63x13
-              LayoutText {#text} at (0,0) size 43x13
-                text run at (0,0) width 43: "too little"
-          LayoutText {#text} at (119,18) size 58x18
-            text run at (119,18) width 58: " too little"
+          LayoutButton {INPUT} at (60.44,19) size 55.92x18 [bgcolor=#FFFFFF]
+            LayoutBlockFlow (anonymous) at (8,2) size 39.92x13
+              LayoutText {#text} at (0,0) size 40x13
+                text run at (0,0) width 40: "too little"
+          LayoutText {#text} at (116,18) size 59x18
+            text run at (116,18) width 59: " too little"
         LayoutBlockFlow {DIV} at (0,37) size 784x19
           LayoutText {#text} at (0,0) size 56x18
             text run at (0,0) width 56: "and text "
-          LayoutButton {INPUT} at (55.09,1) size 64.78x18 [bgcolor=#FFFFFF]
-            LayoutBlockFlow (anonymous) at (8,2) size 48.78x13
-              LayoutText {#text} at (0,0) size 49x13
-                text run at (0,0) width 49: "too much"
-          LayoutText {#text} at (119,0) size 65x18
-            text run at (119,0) width 65: " too much"
+          LayoutButton {INPUT} at (55.09,1) size 62.61x18 [bgcolor=#FFFFFF]
+            LayoutBlockFlow (anonymous) at (8,2) size 46.61x13
+              LayoutText {#text} at (0,0) size 47x13
+                text run at (0,0) width 47: "too much"
+          LayoutText {#text} at (117,0) size 65x18
+            text run at (117,0) width 65: " too much"
         LayoutBlockFlow (anonymous) at (0,56) size 784x18
           LayoutText {#text} at (0,0) size 250x18
             text run at (0,0) width 250: "Should not be selected in the selection."

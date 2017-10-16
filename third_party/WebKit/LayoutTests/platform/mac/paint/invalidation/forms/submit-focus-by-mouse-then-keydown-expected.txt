@@ -8,17 +8,17 @@
       "paintInvalidations": [
         {
           "object": "LayoutButton INPUT",
-          "rect": [3, 4, 63, 29],
+          "rect": [3, 4, 61, 29],
           "reason": "subtree"
         },
         {
           "object": "LayoutText #text",
-          "rect": [16, 11, 37, 14],
+          "rect": [16, 11, 35, 14],
           "reason": "subtree"
         },
         {
           "object": "LayoutBlockFlow (anonymous)",
-          "rect": [16, 11, 37, 13],
+          "rect": [16, 11, 35, 13],
           "reason": "subtree"
         }
       ]
