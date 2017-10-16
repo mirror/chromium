@@ -46,7 +46,6 @@
 <translation id="1263231323834454256">વાચન સૂચિ</translation>
 <translation id="1264126396475825575"><ph name="CRASH_TIME" /> એ ક્રેશ રિપોર્ટ કૅપ્ચર કરવામાં આવી (હજી સુધી અપલોડ કરવામાં કે અવગણવામાં આવેલ નથી)</translation>
 <translation id="1270502636509132238">પિકઅપ પદ્ધતિ</translation>
-<translation id="1281526147609854549"><ph name="ISSUER" /> દ્વારા જારી કરાયેલ</translation>
 <translation id="1285320974508926690">આ સાઇટનું ક્યારેય ભાષાંતર કરશો નહીં</translation>
 <translation id="129553762522093515">તાજેતરમાં બંધ કરેલા</translation>
 <translation id="129863573139666797"><ph name="BEGIN_LINK" />તમારી કૂકીઝને સાફ કરવાનો પ્રયાસ કરો<ph name="END_LINK" /></translation>
@@ -153,6 +152,7 @@
 <translation id="214556005048008348">ચુકવણી રદ કરો</translation>
 <translation id="2147827593068025794">પૃષ્ઠભૂમિ સમન્વયન</translation>
 <translation id="2148613324460538318">કાર્ડ ઉમેરો</translation>
+<translation id="2149973817440762519">બુકમાર્ક સંપાદિત કરો</translation>
 <translation id="2154054054215849342">સમન્વયન તમારા ડોમેન માટે ઉપલબ્ધ નથી.</translation>
 <translation id="2154484045852737596">કાર્ડ સંપાદિત કરો</translation>
 <translation id="2166049586286450108">સંપૂર્ણ વ્યવસ્થાપક ઍક્સેસ</translation>
@@ -211,12 +211,12 @@
 <translation id="2609632851001447353">વૈવિધ્ય</translation>
 <translation id="262424810616849754">{COUNT,plural, =0{કોઈ નહીં}=1{1 ઍપ્લિકેશન ($1)}=2{2 ઍપ્લિકેશનો ($1, $2)}one{# ઍપ્લિકેશનો ($1, $2, $3)}other{# ઍપ્લિકેશનો ($1, $2, $3)}}</translation>
 <translation id="2625385379895617796">તમારી ઘડિયાળ આગળ છે</translation>
+<translation id="2634124572758952069"><ph name="HOST_NAME" />નું સર્વર IP ઍડ્રેસ ન મળ્યું.</translation>
 <translation id="2639739919103226564">સ્થિતિ:</translation>
 <translation id="2649204054376361687"><ph name="CITY" />, <ph name="COUNTRY" /></translation>
 <translation id="2650446666397867134">ફાઇલની ઍક્સેસ નકારવામાં આવી હતી</translation>
 <translation id="2653659639078652383">સબમિટ કરો</translation>
 <translation id="2666117266261740852">અન્ય ટૅબ અથવા ઍપ્લિકેશનો બંધ કરો</translation>
-<translation id="2670429602441959756">આ પેજમાં હજી પણ એવી સુવિધાઓ છે કે જે VRમાં સમર્થિત નથી. બહાર નીકાળી રહ્યું છે…</translation>
 <translation id="2674170444375937751">શું તમે ખરેખર તમારા ઇતિહાસમાંથી આ પૃષ્ઠોને કાઢી નાખવા માંગો છો?</translation>
 <translation id="2677748264148917807">છોડો</translation>
 <translation id="2702801445560668637">વાંચન સૂચિ</translation>
@@ -392,6 +392,7 @@
 <translation id="3778403066972421603">શું તમે આ કાર્ડને તમારા Google એકાઉન્ટ અને આ ઉપકરણ પર સાચવવા માગો છો?</translation>
 <translation id="3783418713923659662">Mastercard</translation>
 <translation id="3787705759683870569"><ph name="EXPIRATION_MONTH" />/<ph name="EXPIRATION_YEAR" /> માં સમાપ્ત થાય છે</translation>
+<translation id="3808375843007691220">ચેતવણી: આગળ પ્રાયોગિક સુવિધાઓ છે!</translation>
 <translation id="382518646247711829">જો તમે કોઈ પ્રોક્સી સર્વરનો ઉપયોગ કરો છો...</translation>
 <translation id="3828924085048779000">ખાલી પાસફ્રેઝને અનુમતિ નથી. </translation>
 <translation id="385051799172605136">પાછળ</translation>
@@ -447,6 +448,7 @@
 <translation id="4269787794583293679">(કોઇ વપરાશકર્તાનામ નથી)</translation>
 <translation id="4275830172053184480">તમારું ઉપકરણ પુનઃપ્રારંભ કરો</translation>
 <translation id="4280429058323657511">, સમાપ્તિ તારીખ <ph name="EXPIRATION_DATE_ABBR" /></translation>
+<translation id="4292213515608230699">કોઈ મેળ ખાતા પ્રયોગો નથી</translation>
 <translation id="4304224509867189079">લૉગ ઇન કરો</translation>
 <translation id="4312866146174492540">અવરોધિત કરો (ડિફૉલ્ટ)</translation>
 <translation id="4325863107915753736">લેખ શોધવામાં નિષ્ફળ થયાં</translation>
@@ -517,6 +519,7 @@
 <translation id="495170559598752135">ક્રિયાઓ</translation>
 <translation id="4958444002117714549">સૂચિ વિસ્તૃત કરો</translation>
 <translation id="4974590756084640048">ચેતવણીઓ ફરીથી સક્ષમ કરો</translation>
+<translation id="4989542687859782284">અનુપલબ્ધ</translation>
 <translation id="4989809363548539747">આ પ્લગ-ઇન સમર્થિત નથી</translation>
 <translation id="5002932099480077015">જો સક્ષમ કરેલું હોય, તો ઝડપથી ફોર્મ ભરવા માટે Chrome આ ઉપકરણ પર તમારા કાર્ડની એક કૉપિ સંગ્રહશે.</translation>
 <translation id="5018422839182700155">આ પૃષ્ઠ ખોલી શકતાં નથી</translation>
@@ -570,6 +573,7 @@
 <translation id="5355557959165512791">તમે અત્યારે <ph name="SITE" />ની મુલાકાત લઈ શકતાં નથી કારણ કે તેનું પ્રમાણપત્ર રદબાતલ કરવામાં આવ્યું છે. નેટવર્કમાં ભૂલ આવવી અને હુમલા થવા સામાન્ય રીતે અસ્થાયી હોય છે, તેથી આ પેજ સંભવિત રૂપે થોડા સમય પછી કાર્ય કરશે.</translation>
 <translation id="536296301121032821">નીતિ સેટિંગ્સ સ્ટોર કરવામાં નિષ્ફળ થયાં</translation>
 <translation id="5386426401304769735">આ સાઇટ માટેની પ્રમાણપત્ર શ્રૃંખલા SHA-1 નો ઉપયોગ કરીને સહી કરેલ પ્રમાણપત્ર ધરાવે છે.</translation>
+<translation id="5401815295726769233">ફ્લૅગ શોધો</translation>
 <translation id="5402410679244714488">સમાપ્તિ: <ph name="EXPIRATION_DATE_ABBR" />, છેલ્લે એક વર્ષ પહેલાં ઉપયોગ કરેલ</translation>
 <translation id="540969355065856584">આ સર્વર સાબિત કરી શક્યું નથી કે તે <ph name="DOMAIN" /> છે; તેનું સુરક્ષા પ્રમાણપત્ર આ સમયે માન્ય નથી. આ કોઇ ખોટી ગોઠવણીને કારણે થયું હોય અથવા કોઈ હુમલાખોર તમારા કનેક્શનને અટકાવી રહ્યો હોઇ શકે છે.</translation>
 <translation id="5421136146218899937">બ્રાઉઝિંગ ડેટા સાફ કરો...</translation>
@@ -622,6 +626,7 @@
 <translation id="5732392974455271431">તમારા માટે તમારા માતાપિતા તેને અનાવરોધિત કરી શકે છે</translation>
 <translation id="5763042198335101085">એક માન્ય ઇમેઇલ ઍડ્રેસ ઉમેરો</translation>
 <translation id="5765072501007116331">વિતરણ પદ્ધતિઓ અને આવશ્યકતાઓ જોવા માટે, એક સરનામું પસંદ કરો</translation>
+<translation id="5770114862687765385">ફાઇલ ખામીવાળી લાગે છે. સત્રને રીસેટ કરવા માટે 'રીસેટ કરો' બટન પર ક્લિક કરો.</translation>
 <translation id="5778550464785688721">MIDI ઉપકરણોનું પૂર્ણ નિયંત્રણ</translation>
 <translation id="5784606427469807560">તમારા કાર્ડની પુષ્ટિ કરવામાં એક સમસ્યા આવી હતી. તમારું ઇન્ટરનેટ કનેક્શન તપાસો અને ફરીથી પ્રયાસ કરો.</translation>
 <translation id="5785756445106461925">વળી, આ પૃષ્ઠમાં અન્ય એવા સાધનો છે જે સુરક્ષિત નથી. ટ્રાંઝિટમાં હોવા પર અન્ય લોકો દ્વારા આ સાધનો જોઈ શકાય છે અને પૃષ્ઠનો દેખાવ બદલવા માટે હુમલાખોર દ્વારા સંશોધિત કરવામાં આવી શકે છે.</translation>
@@ -635,6 +640,7 @@
 <translation id="5869522115854928033">સાચવેલા પાસવર્ડ્સ</translation>
 <translation id="5893752035575986141">ક્રેડિટ કાર્ડ સ્વીકારવામાં આવે છે.</translation>
 <translation id="5908541034548427511"><ph name="TYPE_1" /> (સમન્વયિત)</translation>
+<translation id="5909194079078764042">આ સુવિધાઓ ચાલુ કરીને, તમે બ્રાઉઝરનો ડેટા ગુમાવશો અથવા તમારી સુરક્ષા કે ગોપનીયતા સાથે સમાધાન કરશો. ચાલુ કરેલી સુવિધાઓ આ બ્રાઉઝરના બધા વપરાશકર્તાઓને લાગુ થાય છે.</translation>
 <translation id="5920262536204764679">{NUM_COOKIES,plural, =1{1 ઉપયોગમાં છે}one{# ઉપયોગમાં છે}other{# ઉપયોગમાં છે}}</translation>
 <translation id="5939518447894949180">રીસેટ કરો</translation>
 <translation id="5959728338436674663">જોખમી અ‍ૅપ્લિકેશનો અને સાઇટ્સ શોધવામાં સહાય કરવા માટે Google ને કેટલીક <ph name="BEGIN_WHITEPAPER_LINK" />સિસ્ટમ માહિતી અને પૃષ્ઠ સામગ્રી<ph name="END_WHITEPAPER_LINK" /> આપમેળે મોકલો. <ph name="PRIVACY_PAGE_LINK" /></translation>
@@ -650,6 +656,7 @@
 <translation id="6017850046339264347">હુમલાખોરો <ph name="BEGIN_BOLD" /><ph name="SITE" /><ph name="END_BOLD" /> પર ભ્રામક ઍપ્લિકેશન ઇન્સ્ટૉલ કરી શકે છે જે કંઈક બીજું હોવાનો ડોળ કરે છે અથવા તમને ટ્રૅક કરવા માટે ઉપયોગમાં લઈ શકાય તેવો ડેટા એકત્રિત કરી શકે છે. <ph name="BEGIN_LEARN_MORE_LINK" />વધુ જાણો<ph name="END_LEARN_MORE_LINK" /></translation>
 <translation id="6025416945513303461"><ph name="TYPE_1" />, <ph name="TYPE_2" />, <ph name="TYPE_3" /> (સમન્વયિત)</translation>
 <translation id="6027201098523975773">એક નામ દાખલ કરો</translation>
+<translation id="6039846035001940113">જો સમસ્યા ચાલુ રહે, તો સાઇટના માલિકનો સંપર્ક કરો.</translation>
 <translation id="6040143037577758943">બંધ કરો</translation>
 <translation id="6047233362582046994">જો તમે તમારી સુરક્ષાના જોખમોને સમજો છો, તો તમે જોખમકારક ઍપ્લિકેશનો દૂર કરતા પહેલા <ph name="BEGIN_LINK" />આ સાઇટની મુલાકાત<ph name="END_LINK" /> લઈ શકો છો.</translation>
 <translation id="6047927260846328439">આ કન્ટેન્ટ કદાચ સૉફ્ટવેર ઇન્સ્ટૉલ કરવા માટે અથવા વ્યક્તિગત માહિતી કઢાવવા માટે તમારી સાથે કપટ કરવાનો પ્રયાસ કરી શકે છે. <ph name="BEGIN_LINK" />છતાં પણ બતાવો<ph name="END_LINK" /></translation>
@@ -681,6 +688,7 @@
 <translation id="6305205051461490394"><ph name="URL" />, પહોંચવા યોગ્ય નથી.</translation>
 <translation id="6319915415804115995">છેલ્લે એક વર્ષ પહેલાં ઉપયોગ કરેલ</translation>
 <translation id="6321917430147971392">તમારી DNS સેટિંગ્સ તપાસો</translation>
+<translation id="6325286409953503969">Chromeની નવી આકર્ષક સુવિધાઓમાં રસ છે? અમારી <ph name="BEGIN_LINK" />dev ચૅનલ<ph name="END_LINK" /> અજમાવી જુઓ.</translation>
 <translation id="6328639280570009161">નેટવર્ક પૂર્વાનુમાનને અક્ષમ કરવાનો પ્રયાસ કરો</translation>
 <translation id="6328786501058569169">આ સાઇટ ભ્રામક છે</translation>
 <translation id="6337133576188860026"><ph name="SIZE" /> કરતાં ઓછી જગ્યા ખાલી કરે છે. તમારી આગલી મુલાકાત સમયે કેટલીક સાઇટ વધુ ધીમે લોડ થઈ શકે છે.</translation>
@@ -783,6 +791,7 @@
 <translation id="7298195798382681320">ભલામણ કરેલ</translation>
 <translation id="7309308571273880165">ક્રેશ રિપોર્ટ <ph name="CRASH_TIME" /> એ કૅપ્ચર કરવામાં આવી (વપરાશકર્તા દ્વારા અપલોડની વિનંતી કરવામાં આવી, હજી સુધી અપલોડ કરેલ નથી)</translation>
 <translation id="7334320624316649418">&amp;પુનઃક્રમાંકિત કરવું ફરી કરો</translation>
+<translation id="7337706099755338005">તમારા પ્લૅટફૉર્મ પર ઉપલબ્ધ નથી.</translation>
 <translation id="733923710415886693">પ્રમાણપત્ર પારદર્શિતા દ્વારા સર્વરનું પ્રમાણપત્ર જાહેર કરવામાં આવ્યું ન હતું.</translation>
 <translation id="7353601530677266744">આદેશ પંક્તિ</translation>
 <translation id="7372973238305370288">શોધ પરિણામ</translation>
@@ -790,6 +799,7 @@
 <translation id="7378627244592794276">ના</translation>
 <translation id="7378810950367401542">/</translation>
 <translation id="7390545607259442187">કાર્ડની પુષ્ટિ કરો</translation>
+<translation id="739697976928952788">સાચવેલા બધા પાસવર્ડ બતાવો</translation>
 <translation id="7400418766976504921">URL</translation>
 <translation id="7419106976560586862">પ્રોફાઇલ પાથ</translation>
 <translation id="7424977062513257142">આ વેબપૃષ્ઠ પરનું એમ્બેડ કરેલ પૃષ્ઠ આ કહે છે:</translation>
@@ -836,6 +846,7 @@
 <translation id="7668654391829183341">અજ્ઞાત ઉપકરણ</translation>
 <translation id="7669271284792375604">આ સાઇટ પરના હુમલાખોરો તમને તમારા બ્રાઉઝિંગ અનુભવને નુકસાન પહોંચાડે એવા પ્રોગ્રામ્સ ઇન્સ્ટૉલ કરવા માટે છેતરવાનો પ્રયાસ કરી શકે છે (ઉદાહરણ તરીકે, તમારું હોમપેજ બદલીને અથવા તમે મુલાકાત લો છો તે સાઇટ્સ પર વધુ પડતી જાહેરાતો બતાવીને).</translation>
 <translation id="7682287625158474539">શિપિંગ</translation>
+<translation id="7695552107151968219">Chromeની નવી આકર્ષક સુવિધાઓમાં રસ છે? અમારી <ph name="BEGIN_LINK" />બીટા ચૅનલ<ph name="END_LINK" /> અજમાવી જુઓ.</translation>
 <translation id="7699293099605015246">લેખો અત્યારે ઉપલબ્ધ નથી</translation>
 <translation id="7701040980221191251">કોઈ નહીં</translation>
 <translation id="7704050614460855821"><ph name="BEGIN_LINK" /><ph name="SITE" /> પર આગળ વધો (અસલામત)<ph name="END_LINK" /></translation>
