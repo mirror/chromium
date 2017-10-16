@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d65c5035_7c685473",
+        "filename": "components/autofill/content/renderer/form_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-16T23:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a79ebff9_b0d851a7",
+      "range": {
+        "startLine": 393,
+        "startChar": 4,
+        "endLine": 393,
+        "endChar": 15
+      },
+      "revId": "d912bac4ef80bf57421afa4dc8403c0760543a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca381101_3b457ac4",
         "filename": "components/autofill/content/renderer/page_form_analyser_logger.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "575c24d1_6a5689a0",
+        "filename": "components/autofill/content/renderer/page_form_analyser_logger.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-16T23:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca381101_3b457ac4",
+      "range": {
+        "startLine": 38,
+        "startChar": 22,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "d912bac4ef80bf57421afa4dc8403c0760543a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5c8cee1_b021a41e",
         "filename": "components/autofill/content/renderer/page_form_analyser_logger.cc",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "d912bac4ef80bf57421afa4dc8403c0760543a7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf92318_97e723c6",
+        "filename": "components/autofill/content/renderer/page_form_analyser_logger.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-16T23:59:23Z",
+      "side": 1,
+      "message": "I\u0027d missed this subtlety!",
+      "parentUuid": "a5c8cee1_b021a41e",
+      "range": {
+        "startLine": 43,
+        "startChar": 51,
+        "endLine": 43,
+        "endChar": 73
+      },
+      "revId": "d912bac4ef80bf57421afa4dc8403c0760543a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
