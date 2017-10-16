@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "779aaa3f_1c055611",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-10-16T12:10:09Z",
+      "side": 1,
+      "message": "Sanitize?",
+      "revId": "5e060e3a34d766044bc17b03b1119a378e394ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "676e9118_fe688665",
         "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
         "patchSetId": 3
