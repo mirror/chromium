@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "361cb116_16cb8aa5",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-16T17:35:28Z",
+      "side": 1,
+      "message": "I was making it const, but then I noticed that it\u0027s not const as the first parameter in NotificationPlatformBridgeWin::Display(). I think maybe it\u0027s better to make it consistent here and in Display().",
+      "parentUuid": "b36cade8_63776e0a",
+      "range": {
+        "startLine": 62,
+        "startChar": 22,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "ccfd759ed17b5a7e2440dd783e0e1eeb7672d0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea79eecc_de2fde59",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 15
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-16T11:22:44Z",
       "side": 1,
       "message": "Under which circumstances is Display called with identical data, causing it to execute this line of code?",
+      "range": {
+        "startLine": 222,
+        "startChar": 30,
+        "endLine": 222,
+        "endChar": 47
+      },
+      "revId": "ccfd759ed17b5a7e2440dd783e0e1eeb7672d0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151c8b02_9698b7a1",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-16T17:35:28Z",
+      "side": 1,
+      "message": "Honestly, I am not sure when this line of code can be executed. The thing is that |notification_type| is not const as the first parameter in this method, so I think it may change.",
+      "parentUuid": "ea79eecc_de2fde59",
       "range": {
         "startLine": 222,
         "startChar": 30,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1d5f016c_667f9307",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-16T17:35:28Z",
+      "side": 1,
+      "message": "I think a combination of notification_id, profile_id, incognito can uniquely identify a toast, so checking origin is not required IMO.",
+      "parentUuid": "98c41aee_2182f71d",
+      "range": {
+        "startLine": 351,
+        "startChar": 26,
+        "endLine": 351,
+        "endChar": 28
+      },
+      "revId": "ccfd759ed17b5a7e2440dd783e0e1eeb7672d0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30f4ccf5_83260737",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
         "patchSetId": 15
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-16T11:22:44Z",
       "side": 1,
       "message": "Not entirely sure, but I suspect we want to use the full prefix (ABI::Windows::UI) in this file and move the namespace alias back to the .cc file.",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 16
+      },
+      "revId": "ccfd759ed17b5a7e2440dd783e0e1eeb7672d0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786323bf_76cb96ff",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-16T17:35:28Z",
+      "side": 1,
+      "message": "Sure. Done.",
+      "parentUuid": "30f4ccf5_83260737",
       "range": {
         "startLine": 15,
         "startChar": 10,
