@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f6b5053_9c9ac395",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-16T18:02:09Z",
+      "side": 1,
+      "message": "I think it might be more efficient to make |sinks| a const ref for now. The reason is that the ProvideSinks method in the generated mojom bindings takes a const ref, so the std::move doesn\u0027t actually work. Maybe someday...",
+      "revId": "97f9b7125d2c0d00f7f5611da9e67fdd5784b644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
