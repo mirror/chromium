@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e960fa5_170ddeed",
+        "filename": "third_party/WebKit/Source/platform/wtf/WTF.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T14:40:48Z",
+      "side": 1,
+      "message": "In a multithreaded test it would seem trivial to create or choose a different thread.  bypassing/overloading/removing the tests has already been rejected in the other place.\n\nI guess I\u0027m over to the unittest overhead of creating a thread just to run each test.",
+      "parentUuid": "adf1f2ad_f753abb7",
+      "revId": "357f6c130ef27425f6a8f2178c854cbc291399c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "feb26dd4_993c181e",
         "filename": "third_party/WebKit/Source/platform/wtf/WTFThreadTestHelper.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "357f6c130ef27425f6a8f2178c854cbc291399c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d3576b_42f9f069",
+        "filename": "third_party/WebKit/Source/platform/wtf/WTFThreadTestHelper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T14:40:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "feb26dd4_993c181e",
+      "revId": "357f6c130ef27425f6a8f2178c854cbc291399c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
