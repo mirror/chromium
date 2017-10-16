@@ -435,15 +435,10 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnChannelOpenFailed) {
       cast_sink, &socket, CastMediaSinkServiceImpl::SinkSource::kMdns);
 
   EXPECT_EQ(1u, media_sink_service_impl_.current_sinks_map_.size());
-  EXPECT_TRUE(media_sink_service_impl_.failure_count_map_.empty());
 
   socket.SetIPEndpoint(ip_endpoint1);
   media_sink_service_impl_.OnChannelOpenFailed(ip_endpoint1);
   EXPECT_TRUE(media_sink_service_impl_.current_sinks_map_.empty());
-  EXPECT_EQ(1, media_sink_service_impl_.failure_count_map_[ip_endpoint1]);
-
-  media_sink_service_impl_.OnChannelOpenFailed(ip_endpoint1);
-  EXPECT_EQ(2, media_sink_service_impl_.failure_count_map_[ip_endpoint1]);
 }
 
 TEST_F(CastMediaSinkServiceImplTest,
@@ -477,6 +472,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnChannelErrorMayRetryForCastSink) {
   cast_channel::MockCastSocket socket;
   socket.set_id(1);
   socket.SetIPEndpoint(ip_endpoint1);
+  socket.SetErrorState(cast_channel::ChannelError::CHANNEL_NOT_OPEN);
 
   media_sink_service_impl_.SetTaskRunnerForTest(mock_time_task_runner_);
 
@@ -488,11 +484,16 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnChannelErrorMayRetryForCastSink) {
       socket, cast_channel::ChannelError::CHANNEL_NOT_OPEN);
 
   EXPECT_CALL(*mock_cast_socket_service_,
-              OpenSocketInternal(ip_endpoint1, _, _));
-  mock_time_task_runner_->FastForwardBy(base::TimeDelta::FromSeconds(16));
-  EXPECT_TRUE(media_sink_service_impl_.current_sinks_map_.empty());
+              OpenSocketInternal(ip_endpoint1, _, _))
+      .WillRepeatedly(
+          Invoke([&](const auto& ip_endpoint, auto* net_log, auto open_cb) {
+            std::move(open_cb).Run(&socket);
+            return socket.id();
+          }));
 
-  base::RunLoop().RunUntilIdle();
+  mock_time_task_runner_->FastForwardUntilNoTasksRemain();
+  EXPECT_EQ(4, media_sink_service_impl_.failure_count_map_[ip_endpoint1]);
+  EXPECT_TRUE(media_sink_service_impl_.current_sinks_map_.empty());
 }
 
 TEST_F(CastMediaSinkServiceImplTest, TestOnChannelErrorNoRetryForMissingSink) {

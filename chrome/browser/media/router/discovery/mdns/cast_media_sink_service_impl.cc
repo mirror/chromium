@@ -316,6 +316,7 @@ void CastMediaSinkServiceImpl::OnError(const cast_channel::CastSocket& socket,
 
   std::unique_ptr<net::BackoffEntry> backoff_entry(
       new net::BackoffEntry(&backoff_policy_));
+  backoff_entry->InformOfRequest(false);
 
   DVLOG(2) << "OnError starts reopening cast channel: "
            << ip_endpoint.ToString();
@@ -449,7 +450,8 @@ void CastMediaSinkServiceImpl::OnChannelErrorMayRetry(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   const net::IPEndPoint& ip_endpoint = cast_sink.cast_data().ip_endpoint;
-  OnChannelOpenFailed(ip_endpoint);
+  int failure_count = ++failure_count_map_[ip_endpoint];
+  failure_count_map_[ip_endpoint] = std::min(failure_count, kMaxFailureCount);
 
   if (!backoff_entry ||
       backoff_entry->failure_count() > retry_params_.max_retry_attempts) {
@@ -457,6 +459,7 @@ void CastMediaSinkServiceImpl::OnChannelErrorMayRetry(
              << ip_endpoint.ToString() << " [error_state]: "
              << cast_channel::ChannelErrorToString(error_state);
 
+    OnChannelOpenFailed(ip_endpoint);
     CastAnalytics::RecordCastChannelConnectResult(false);
     return;
   }
@@ -514,9 +517,6 @@ void CastMediaSinkServiceImpl::OnChannelOpenSucceeded(
 void CastMediaSinkServiceImpl::OnChannelOpenFailed(
     const net::IPEndPoint& ip_endpoint) {
   current_sinks_map_.erase(ip_endpoint);
-
-  int failure_count = ++failure_count_map_[ip_endpoint];
-  failure_count_map_[ip_endpoint] = std::min(failure_count, kMaxFailureCount);
   MediaSinkServiceBase::RestartTimer();
 }
 
