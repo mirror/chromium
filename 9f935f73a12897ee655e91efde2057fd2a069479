@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3551bc29_f5fb780c",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-16T00:26:51Z",
+      "side": 1,
+      "message": "nit: please document boolean params, e.g. /*is_reshow\u003d*/true",
+      "revId": "9f935f73a12897ee655e91efde2057fd2a069479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
