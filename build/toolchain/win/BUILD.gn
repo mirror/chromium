@@ -222,6 +222,7 @@ template("msvc_toolchain") {
       rspfile_content = "{{inputs_newline}}"
     }
 
+    # Link shared objects - .dll on Windows
     tool("solink") {
       dllname = "{{output_dir}}/{{target_output_name}}{{output_extension}}"  # e.g. foo.dll
       libname = "${dllname}.lib"  # e.g. foo.dll.lib
@@ -230,6 +231,10 @@ template("msvc_toolchain") {
       pool = "//build/toolchain:link_pool($default_toolchain)"
 
       command = "$python_path $tool_wrapper_path link-wrapper $env False $link /nologo /IMPLIB:$libname /DLL /OUT:$dllname /PDB:$pdbname @$rspfile"
+
+      # On bots, the binary's PDB grow and eventually exceed 4G, causing the
+      # link to fail.
+      command = "cmd /c $python_path $tool_wrapper_path delete-file $pdbname && $command"
 
       default_output_extension = ".dll"
       default_output_dir = "{{root_out_dir}}"
@@ -256,6 +261,7 @@ template("msvc_toolchain") {
       rspfile_content = "{{libs}} {{solibs}} {{inputs_newline}} {{ldflags}}"
     }
 
+    # Link shared objects (.dll on Windows) that don't have import libraries
     tool("solink_module") {
       dllname = "{{output_dir}}/{{target_output_name}}{{output_extension}}"  # e.g. foo.dll
       pdbname = "${dllname}.pdb"
@@ -263,6 +269,10 @@ template("msvc_toolchain") {
       pool = "//build/toolchain:link_pool($default_toolchain)"
 
       command = "$python_path $tool_wrapper_path link-wrapper $env False $link /nologo /DLL /OUT:$dllname /PDB:$pdbname @$rspfile"
+
+      # On bots, the binary's PDB grow and eventually exceed 4G, causing the
+      # link to fail.
+      command = "cmd /c $python_path $tool_wrapper_path delete-file $pdbname && $command"
 
       default_output_extension = ".dll"
       default_output_dir = "{{root_out_dir}}"
@@ -280,6 +290,7 @@ template("msvc_toolchain") {
       rspfile_content = "{{libs}} {{solibs}} {{inputs_newline}} {{ldflags}}"
     }
 
+    # Link executables
     tool("link") {
       exename = "{{output_dir}}/{{target_output_name}}{{output_extension}}"
       pdbname = "$exename.pdb"
@@ -288,13 +299,9 @@ template("msvc_toolchain") {
 
       command = "$python_path $tool_wrapper_path link-wrapper $env False $link /nologo /OUT:$exename /PDB:$pdbname @$rspfile"
 
-      if (is_official_build) {
-        # On bots, the binary's PDB grow and eventually exceed 4G, causing the
-        # link to fail. As there's no utility to keeping the PDB around
-        # incrementally anyway in this config (because we're doing
-        # non-incremental LTCG builds), delete it before linking.
-        command = "cmd /c $python_path $tool_wrapper_path delete-file $pdbname && $command"
-      }
+      # On bots, the binary's PDB grow and eventually exceed 4G, causing the
+      # link to fail.
+      command = "cmd /c $python_path $tool_wrapper_path delete-file $pdbname && $command"
 
       if (linkrepro_root_dir != "") {
         # Create the directory that will receive the link repro for this target
