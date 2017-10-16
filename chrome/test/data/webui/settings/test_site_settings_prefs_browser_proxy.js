@@ -125,11 +125,12 @@ class TestSiteSettingsPrefsBrowserProxy extends TestBrowserProxy {
     this.prefs_ = prefs;
 
     // Notify all listeners that their data may be out of date.
-    for (var type in settings.ContentSettingsTypes) {
-      cr.webUIListenerCallback(
-          'contentSettingSitePermissionChanged',
-          settings.ContentSettingsTypes[type],
-          '');
+    for (var type in this.prefs_.exceptions) {
+      for (var i = 0; i < this.prefs_.exceptions[type].length; ++i) {
+        cr.webUIListenerCallback(
+            'contentSettingSitePermissionChanged', type,
+            this.prefs_.exceptions[type][i].origin, '');
+      }
     }
   }
 
@@ -207,6 +208,19 @@ class TestSiteSettingsPrefsBrowserProxy extends TestBrowserProxy {
 
   /** @override */
   setOriginPermissions(origin, contentTypes, blanketSetting) {
+    for (var type in this.prefs_.exceptions) {
+      for (var i = 0; i < this.prefs_.exceptions[type].length; ++i) {
+        var effectiveSetting = blanketSetting;
+        if (blanketSetting == settings.ContentSetting.DEFAULT) {
+          effectiveSetting = this.prefs_.defaults[type].setting;
+          this.prefs_.exceptions[type][i].source =
+              settings.SiteSettingSource.DEFAULT;
+        }
+        this.prefs_.exceptions[type][i].setting = effectiveSetting;
+      }
+    }
+
+    this.setPrefs(this.prefs_);
     this.methodCalled(
         'setOriginPermissions', [origin, contentTypes, blanketSetting]);
   }
