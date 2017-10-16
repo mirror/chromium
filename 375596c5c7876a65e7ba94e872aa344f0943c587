@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "56350af4_362cc22a",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T22:05:10Z",
+      "side": 1,
+      "message": "It\u0027s not necessary.  I added a few of these DCHECKs to serve more as documentation than anything else (i.e., equivalent of // We know that v8_message should never be empty), but this one\u0027s probably less valuable.  Removed.",
+      "parentUuid": "ca679295_67a8cace",
+      "revId": "375596c5c7876a65e7ba94e872aa344f0943c587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b34448e2_884e6749",
         "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "375596c5c7876a65e7ba94e872aa344f0943c587",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4445608c_50129764",
+        "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T22:05:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b34448e2_884e6749",
+      "revId": "375596c5c7876a65e7ba94e872aa344f0943c587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
