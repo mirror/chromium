@@ -34,6 +34,24 @@
       "revId": "801cf0aa2434e362f9bd4147c644df9ed2fe942a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f16c41_36b56851",
+        "filename": "content/browser/web_contents/web_contents_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-16T16:33:03Z",
+      "side": 1,
+      "message": "It should work. It would be good to verify that though. Can you find someone who could test it first?",
+      "parentUuid": "f6cdc49d_be6ce54e",
+      "revId": "801cf0aa2434e362f9bd4147c644df9ed2fe942a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
