@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8390b3a7_9a25fbf0",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T05:35:34Z",
+      "side": 1,
+      "message": "Done\n\n|blob_loader_| should be null because we don\u0027t support the body of redirect responses..",
+      "parentUuid": "06477ccc_b5f04016",
+      "revId": "834e9ddf3c2cba845b57758de3e213e32fd11b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30cf9e1c_5b267dac",
         "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2d83eb3f_0dc073f7",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T05:35:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30cf9e1c_5b267dac",
+      "revId": "834e9ddf3c2cba845b57758de3e213e32fd11b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e79aa3fd_8c37aa53",
         "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "834e9ddf3c2cba845b57758de3e213e32fd11b6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec99104_da59501f",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T05:35:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e79aa3fd_8c37aa53",
+      "revId": "834e9ddf3c2cba845b57758de3e213e32fd11b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
