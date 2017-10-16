@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4461f80b_dacd7cc6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-16T21:30:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe957687_7a06da2c",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "502d813f5516da8b10429b5a93798048c386be7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2e61ecb_55714fea",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e5b3fa33_3f8bed57",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-16T21:30:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2e61ecb_55714fea",
+      "range": {
+        "startLine": 899,
+        "startChar": 38,
+        "endLine": 899,
+        "endChar": 59
+      },
+      "revId": "502d813f5516da8b10429b5a93798048c386be7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "632eeed5_101c1942",
         "filename": "chrome/browser/ui/android/javascript_dialog_android.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "502d813f5516da8b10429b5a93798048c386be7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c962076_acff882f",
+        "filename": "chrome/browser/ui/android/javascript_dialog_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-16T21:30:05Z",
+      "side": 1,
+      "message": "Right... Sorry about that",
+      "parentUuid": "632eeed5_101c1942",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "502d813f5516da8b10429b5a93798048c386be7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

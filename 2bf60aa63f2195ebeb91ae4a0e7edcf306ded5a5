@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "f06c1406_62c0329b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavaScriptDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-16T21:30:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3fa4b3ce_8f2fcf49",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "361d4a70_04c0745e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavaScriptDialog.java",
         "patchSetId": 1
@@ -730,6 +754,30 @@
       "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8edc6c_1a1a202b",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-16T21:30:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28dfa159_378dbf38",
+      "range": {
+        "startLine": 34,
+        "startChar": 21,
+        "endLine": 34,
+        "endChar": 40
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
