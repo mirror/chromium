@@ -16,6 +16,24 @@
       "revId": "7575c06e7d93ac45cb14c63f9b72531ba5894701",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1699b4a8_a7966901",
+        "filename": "chrome/browser/ui/views/browser_dialogs_views_mac_browser.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-10-16T20:17:43Z",
+      "side": 1,
+      "message": "We still need to do something DEPS-wise to allow the body of chrome::ShowTaskManager() from task_manager_mac.mm to call into task_manager::TaskManagerMac, right? This file only really exists as a DEPS bridge. Do you have another solution in mind that doesn\u0027t involve adding a dep from //c/b/ui/views to //c/b/ui/cocoa?",
+      "parentUuid": "1c031993_7d12e8b4",
+      "revId": "7575c06e7d93ac45cb14c63f9b72531ba5894701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
