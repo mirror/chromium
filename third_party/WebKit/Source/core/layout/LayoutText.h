@@ -188,7 +188,6 @@ class CORE_EXPORT LayoutText : public LayoutObject {
   virtual void TransformText();
 
   bool CanBeSelectionLeaf() const override { return true; }
-  void SetSelectionState(SelectionState) final;
   LayoutRect LocalSelectionRect() const final;
   LayoutRect LocalCaretRect(
       const InlineBox*,
