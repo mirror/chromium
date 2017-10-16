@@ -17,9 +17,11 @@
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
+#include "components/safe_browsing_db/notification_types.h"
 #include "components/safe_browsing_db/v4_feature_list.h"
 #include "components/safe_browsing_db/v4_protocol_manager_util.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/notification_service.h"
 #include "crypto/sha2.h"
 
 using content::BrowserThread;
@@ -565,6 +567,11 @@ void V4LocalDatabaseManager::DatabaseUpdated() {
     v4_database_->RecordFileSizeHistograms();
     v4_update_protocol_manager_->ScheduleNextUpdate(
         v4_database_->GetStoreStateMap());
+
+    content::NotificationService::current()->Notify(
+        NOTIFICATION_SAFE_BROWSING_UPDATE_COMPLETE,
+        content::Source<SafeBrowsingDatabaseManager>(this),
+        content::NotificationService::NoDetails());
   }
 }
 
