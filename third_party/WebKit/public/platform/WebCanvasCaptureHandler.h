@@ -7,7 +7,15 @@
 
 #include "WebCommon.h"
 
+#include "third_party/skia/include/core/SkRefCnt.h"
+
 class SkImage;
+
+namespace gpu {
+namespace gles2 {
+class GLES2Interface;
+}  // namespace gles2
+}  // namespace gpu
 
 namespace blink {
 
@@ -15,7 +23,7 @@ namespace blink {
 class BLINK_PLATFORM_EXPORT WebCanvasCaptureHandler {
  public:
   virtual ~WebCanvasCaptureHandler() = default;
-  virtual void SendNewFrame(const SkImage*) {}
+  virtual void SendNewFrame(sk_sp<SkImage>, gpu::gles2::GLES2Interface*) {}
   virtual bool NeedsNewFrame() const { return false; }
 };
 

@@ -6,7 +6,7 @@
 
 #include <memory>
 #include "core/dom/TaskRunnerHelper.h"
-#include "third_party/skia/include/core/SkImage.h"
+#include "platform/graphics/StaticBitmapImage.h"
 
 namespace blink {
 
@@ -35,9 +35,9 @@ TimedCanvasDrawListener* TimedCanvasDrawListener::Create(
   return listener;
 }
 
-void TimedCanvasDrawListener::SendNewFrame(sk_sp<SkImage> image) {
+void TimedCanvasDrawListener::SendNewFrame(RefPtr<StaticBitmapImage> image) {
   frame_capture_requested_ = false;
-  CanvasDrawListener::SendNewFrame(std::move(image));
+  CanvasDrawListener::SendNewFrame(image);
 }
 
 void TimedCanvasDrawListener::RequestFrameTimerFired(TimerBase*) {

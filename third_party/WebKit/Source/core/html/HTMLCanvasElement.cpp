@@ -578,8 +578,9 @@ void HTMLCanvasElement::NotifyListenersCanvasChanged() {
         FloatSize());
     if (status != kNormalSourceImageStatus)
       return;
-    sk_sp<SkImage> image =
-        source_image->PaintImageForCurrentFrame().GetSkImage();
+    RefPtr<StaticBitmapImage> image = StaticBitmapImage::Create(
+        source_image->PaintImageForCurrentFrame().GetSkImage(),
+        source_image->ContextProviderWrapper());
     for (CanvasDrawListener* listener : listeners_) {
       if (listener->NeedsNewFrame()) {
         listener->SendNewFrame(image);

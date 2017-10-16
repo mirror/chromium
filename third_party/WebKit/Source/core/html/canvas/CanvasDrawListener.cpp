@@ -4,15 +4,17 @@
 
 #include "core/html/canvas/CanvasDrawListener.h"
 
-#include "third_party/skia/include/core/SkImage.h"
 #include <memory>
+#include "platform/graphics/StaticBitmapImage.h"
+#include "public/platform/WebGraphicsContext3DProvider.h"
 
 namespace blink {
 
 CanvasDrawListener::~CanvasDrawListener() {}
 
-void CanvasDrawListener::SendNewFrame(sk_sp<SkImage> image) {
-  handler_->SendNewFrame(image.get());
+void CanvasDrawListener::SendNewFrame(RefPtr<StaticBitmapImage> image) {
+  handler_->SendNewFrame(image->PaintImageForCurrentFrame().GetSkImage(),
+                         image->ContextProvider()->ContextGL());
 }
 
 bool CanvasDrawListener::NeedsNewFrame() const {

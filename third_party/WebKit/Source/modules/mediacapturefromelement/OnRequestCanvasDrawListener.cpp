@@ -4,8 +4,8 @@
 
 #include "modules/mediacapturefromelement/OnRequestCanvasDrawListener.h"
 
-#include "third_party/skia/include/core/SkImage.h"
 #include <memory>
+#include "platform/graphics/StaticBitmapImage.h"
 
 namespace blink {
 
@@ -21,9 +21,10 @@ OnRequestCanvasDrawListener* OnRequestCanvasDrawListener::Create(
   return new OnRequestCanvasDrawListener(std::move(handler));
 }
 
-void OnRequestCanvasDrawListener::SendNewFrame(sk_sp<SkImage> image) {
+void OnRequestCanvasDrawListener::SendNewFrame(
+    RefPtr<StaticBitmapImage> image) {
   frame_capture_requested_ = false;
-  CanvasDrawListener::SendNewFrame(std::move(image));
+  CanvasDrawListener::SendNewFrame(image);
 }
 
 }  // namespace blink

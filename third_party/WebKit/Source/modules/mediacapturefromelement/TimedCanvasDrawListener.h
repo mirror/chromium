@@ -5,12 +5,12 @@
 #ifndef TimedCanvasDrawListener_h
 #define TimedCanvasDrawListener_h
 
+#include <memory>
 #include "core/html/canvas/CanvasDrawListener.h"
 #include "platform/Timer.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/RefPtr.h"
 #include "public/platform/WebCanvasCaptureHandler.h"
-#include "third_party/skia/include/core/SkRefCnt.h"
-#include <memory>
 
 namespace blink {
 class ExecutionContext;
@@ -26,7 +26,7 @@ class TimedCanvasDrawListener final
       std::unique_ptr<WebCanvasCaptureHandler>,
       double frame_rate,
       ExecutionContext*);
-  void SendNewFrame(sk_sp<SkImage>) override;
+  void SendNewFrame(RefPtr<StaticBitmapImage>) override;
 
   DEFINE_INLINE_TRACE() {}
 
