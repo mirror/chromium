@@ -1718,6 +1718,7 @@ enum WebFeature {
   kImageCaptureSetOptions = 2187,
   kPerformanceObserverForWindow = 2188,
   kPerformanceObserverForWorker = 2189,
+  kHTMLMediaElementMediaPlaybackRateOutOfRange = 2190,
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
   // Also, run update_use_counter_feature_enum.py in
