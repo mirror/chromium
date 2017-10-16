@@ -99,6 +99,7 @@ class IndefiniteSizeStrategy final : public GridTrackSizingAlgorithmStrategy {
       double& flex_fraction,
       Vector<LayoutUnit>& increments,
       LayoutUnit& total_growth) const override;
+  LayoutUnit FreeSpaceForStretchAutoTracksStep() const override;
 };
 
 class DefiniteSizeStrategy final : public GridTrackSizingAlgorithmStrategy {
@@ -124,6 +125,10 @@ class DefiniteSizeStrategy final : public GridTrackSizingAlgorithmStrategy {
       Vector<LayoutUnit>& increments,
       LayoutUnit& total_growth) const override {
     return false;
+  }
+  LayoutUnit FreeSpaceForStretchAutoTracksStep() const override {
+    DCHECK(algorithm_.FreeSpace(Direction()));
+    return algorithm_.FreeSpace(Direction()).value();
   }
 };
 
@@ -547,6 +552,16 @@ bool IndefiniteSizeStrategy::RecomputeUsedFlexFractionIfNeeded(
   flex_fraction = FindFrUnitSize(
       GridSpan::TranslatedDefiniteGridSpan(0, number_of_tracks), free_space);
   return true;
+}
+
+LayoutUnit IndefiniteSizeStrategy::FreeSpaceForStretchAutoTracksStep() const {
+  DCHECK(!algorithm_.FreeSpace(Direction()));
+  if (Direction() == kForColumns)
+    return LayoutUnit();
+
+  LayoutUnit min_size = GetLayoutGrid()->ComputeContentLogicalHeight(
+      kMinSize, GetLayoutGrid()->StyleRef().LogicalMinHeight(), LayoutUnit(-1));
+  return min_size - ComputeTrackBasedSize();
 }
 
 Optional<LayoutUnit> GridTrackSizingAlgorithm::FreeSpace(
@@ -1336,17 +1351,15 @@ void GridTrackSizingAlgorithm::StretchFlexibleTracks(
 }
 
 void GridTrackSizingAlgorithm::StretchAutoTracks() {
-  Optional<LayoutUnit> free_space = FreeSpace(direction_);
-  if (auto_sized_tracks_for_stretch_index_.IsEmpty() ||
-      (!free_space || free_space.value() <= 0) ||
+  LayoutUnit free_space = strategy_->FreeSpaceForStretchAutoTracksStep();
+  if (auto_sized_tracks_for_stretch_index_.IsEmpty() || (free_space <= 0) ||
       (layout_grid_->ContentAlignment(direction_).Distribution() !=
        kContentDistributionStretch))
     return;
 
   unsigned number_of_auto_sized_tracks =
       auto_sized_tracks_for_stretch_index_.size();
-  LayoutUnit size_to_increase =
-      free_space.value() / number_of_auto_sized_tracks;
+  LayoutUnit size_to_increase = free_space / number_of_auto_sized_tracks;
   Vector<GridTrack>& all_tracks = Tracks(direction_);
   for (const auto& track_index : auto_sized_tracks_for_stretch_index_) {
     auto& track = all_tracks[track_index];
