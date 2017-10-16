@@ -16,6 +16,24 @@
       "revId": "70a6f8dd6a957b2d99f1b2de11e5eb676cfa3271",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890cbdf8_a9eebe0d",
+        "filename": "content/browser/accessibility/browser_accessibility_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-16T15:16:49Z",
+      "side": 1,
+      "message": "Yes, see line 164 above. That\u0027s the only place Initialize is called.",
+      "parentUuid": "aff12500_7a1d59aa",
+      "revId": "70a6f8dd6a957b2d99f1b2de11e5eb676cfa3271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
