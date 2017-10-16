@@ -534,33 +534,44 @@ void VaapiVideoEncodeAccelerator::TryToReturnBitstreamBuffer() {
   if (state_ != kEncoding)
     return;
 
-  if (submitted_encode_jobs_.empty() || available_bitstream_buffers_.empty())
-    return;
+  while (!submitted_encode_jobs_.empty()) {
+    linked_ptr<EncodeJob> encode_job = submitted_encode_jobs_.front();
+    // An empty job indicates a flush command
+    if (encode_job->input_surface == nullptr) {
+      submitted_encode_jobs_.pop();
+      DVLOGF(2) << "FlushDone";
+      child_task_runner_->PostTask(
+          FROM_HERE, base::Bind(&Client::NotifyFlushDone, client_));
+      continue;
+    }
 
-  linked_ptr<BitstreamBufferRef> buffer = available_bitstream_buffers_.front();
-  available_bitstream_buffers_.pop();
+    if (available_bitstream_buffers_.empty())
+      break;
+    auto buffer = available_bitstream_buffers_.front();
 
-  uint8_t* target_data = reinterpret_cast<uint8_t*>(buffer->shm->memory());
+    available_bitstream_buffers_.pop();
+    submitted_encode_jobs_.pop();
 
-  linked_ptr<EncodeJob> encode_job = submitted_encode_jobs_.front();
-  submitted_encode_jobs_.pop();
+    uint8_t* target_data = reinterpret_cast<uint8_t*>(buffer->shm->memory());
 
-  size_t data_size = 0;
-  if (!vaapi_wrapper_->DownloadAndDestroyCodedBuffer(
-          encode_job->coded_buffer, encode_job->input_surface->id(),
-          target_data, buffer->shm->size(), &data_size)) {
-    NOTIFY_ERROR(kPlatformFailureError, "Failed downloading coded buffer");
-    return;
+    size_t data_size = 0;
+    if (!vaapi_wrapper_->DownloadAndDestroyCodedBuffer(
+            encode_job->coded_buffer, encode_job->input_surface->id(),
+            target_data, buffer->shm->size(), &data_size)) {
+      NOTIFY_ERROR(kPlatformFailureError, "Failed downloading coded buffer");
+      return;
+    }
+
+    DVLOGF(4) << "Returning bitstream buffer "
+              << (encode_job->keyframe ? "(keyframe)" : "")
+              << " id: " << buffer->id << " size: " << data_size;
+
+    child_task_runner_->PostTask(
+        FROM_HERE,
+        base::Bind(&Client::BitstreamBufferReady, client_, buffer->id,
+                   data_size, encode_job->keyframe, encode_job->timestamp));
+    break;
   }
-
-  DVLOGF(4) << "Returning bitstream buffer "
-            << (encode_job->keyframe ? "(keyframe)" : "")
-            << " id: " << buffer->id << " size: " << data_size;
-
-  child_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&Client::BitstreamBufferReady, client_, buffer->id, data_size,
-                 encode_job->keyframe, encode_job->timestamp));
 }
 
 void VaapiVideoEncodeAccelerator::Encode(const scoped_refptr<VideoFrame>& frame,
@@ -745,6 +756,24 @@ void VaapiVideoEncodeAccelerator::RequestEncodingParametersChangeTask(
 
   // Submit new parameters along with next frame that will be processed.
   encoding_parameters_changed_ = true;
+}
+
+void VaapiVideoEncodeAccelerator::Flush() {
+  DVLOGF(2);
+  DCHECK(child_task_runner_->BelongsToCurrentThread());
+
+  encoder_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VaapiVideoEncodeAccelerator::FlushTask,
+                            base::Unretained(this)));
+  NOTIMPLEMENTED();
+}
+
+void VaapiVideoEncodeAccelerator::FlushTask() {
+  DCHECK(encoder_thread_task_runner_->BelongsToCurrentThread());
+
+  // Insert an empty job to indicate a flush command.
+  submitted_encode_jobs_.push(make_linked_ptr(new EncodeJob()));
+  TryToReturnBitstreamBuffer();
 }
 
 void VaapiVideoEncodeAccelerator::Destroy() {
@@ -1052,6 +1081,10 @@ void VaapiVideoEncodeAccelerator::NotifyError(Error error) {
     client_->NotifyError(error);
     client_ptr_factory_.reset();
   }
+}
+
+void VaapiVideoEncodeAccelerator::NotifyFlushDone() {
+  NOTIMPLEMENTED();
 }
 
 VaapiVideoEncodeAccelerator::EncodeJob::EncodeJob()

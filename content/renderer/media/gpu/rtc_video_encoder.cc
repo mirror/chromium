@@ -167,6 +167,7 @@ class RTCVideoEncoder::Impl
                             bool key_frame,
                             base::TimeDelta timestamp) override;
   void NotifyError(media::VideoEncodeAccelerator::Error error) override;
+  void NotifyFlushDone() override;
 
  private:
   friend class base::RefCountedThreadSafe<Impl>;
@@ -581,6 +582,10 @@ void RTCVideoEncoder::Impl::NotifyError(
   SetStatus(retval);
   if (async_waiter_)
     SignalAsyncWaiter(retval);
+}
+
+void RTCVideoEncoder::Impl::NotifyFlushDone() {
+  NOTIMPLEMENTED();
 }
 
 RTCVideoEncoder::Impl::~Impl() { DCHECK(!video_encoder_); }
