@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ed810e1_69cec479",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCRtpReceiver-getSynchronizationSources.https-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-16T21:00:26Z",
+      "side": 1,
+      "message": "This now fails with the same message as the RTCRtpReceiver-getContributingSources test.",
+      "revId": "1200811914203188a369364f966bbb62261debc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
