@@ -281,10 +281,7 @@ void IntersectionObserver::unobserve(Element* target,
 void IntersectionObserver::ComputeIntersectionObservations() {
   if (!RootIsValid())
     return;
-  Document* delegate_document = ToDocument(delegate_->GetExecutionContext());
-  if (!delegate_document)
-    return;
-  LocalDOMWindow* delegate_dom_window = delegate_document->domWindow();
+  LocalDOMWindow* delegate_dom_window = TrackingDocument().domWindow();
   if (!delegate_dom_window)
     return;
   DOMHighResTimeStamp timestamp =
@@ -330,8 +327,8 @@ String IntersectionObserver::rootMargin() const {
 void IntersectionObserver::EnqueueIntersectionObserverEntry(
     IntersectionObserverEntry& entry) {
   entries_.push_back(&entry);
-  ToDocument(delegate_->GetExecutionContext())
-      ->EnsureIntersectionObserverController()
+  TrackingDocument()
+      .EnsureIntersectionObserverController()
       .ScheduleIntersectionObserverForDelivery(*this);
 }
 
