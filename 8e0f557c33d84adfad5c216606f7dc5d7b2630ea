@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "27c04e9f_90844553",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-16T06:21:34Z",
+      "side": 1,
+      "message": "I changed video_frame_id to a pointer to the provided bitstream_buffer.\n\nTalked to jcliang@. Since we want to use the buffer camera framework provides us, allocating the buffer inside VideoFrameReady does not fit our purpose.",
+      "parentUuid": "385a03d2_7554bc95",
+      "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61575663_d906efa5",
         "filename": "media/video/jpeg_encode_accelerator.h",
         "patchSetId": 1
