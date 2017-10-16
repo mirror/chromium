@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e2220a2_279c5762",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_box_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-16T19:14:18Z",
+      "side": 1,
+      "message": "are we able to move this out of the NGInlineLayoutStateStack in the future?",
+      "range": {
+        "startLine": 247,
+        "startChar": 31,
+        "endLine": 247,
+        "endChar": 49
+      },
+      "revId": "baea18e92add8f44de66bc710594b23cce7ed7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de67b71c_85995817",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-16T19:14:18Z",
+      "side": 1,
+      "message": "Would it be better/easier the step which was adding children without a correct position, occurred with a stack allocated vector inside NGInlineLayoutAlgorithm?\n\nThen at the end of PlaceItems once all the shifts have been performed move them into the fragment builder?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 4
+      },
+      "revId": "baea18e92add8f44de66bc710594b23cce7ed7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
