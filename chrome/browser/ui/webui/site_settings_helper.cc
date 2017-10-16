@@ -7,8 +7,10 @@
 #include <functional>
 #include <string>
 
+#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "base/values.h"
+#include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/permissions/chooser_context_base.h"
 #include "chrome/browser/permissions/permission_manager.h"
 #include "chrome/browser/permissions/permission_result.h"
@@ -20,6 +22,7 @@
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/content_settings/core/common/content_settings_utils.h"
 #include "components/prefs/pref_service.h"
+#include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/constants.h"
 #include "url/origin.h"
@@ -118,6 +121,8 @@ const SiteSettingSourceStringMapping kSiteSettingSourceStringMapping[] = {
     {SiteSettingSource::kKillSwitch, "kill-switch"},
     {SiteSettingSource::kPolicy, "policy"},
     {SiteSettingSource::kPreference, "preference"},
+    {SiteSettingSource::kSubresourceFilterBlacklist,
+     "subresource-filter-blacklist"},
 };
 static_assert(arraysize(kSiteSettingSourceStringMapping) ==
                   static_cast<int>(SiteSettingSource::kNumSources),
@@ -130,15 +135,17 @@ static_assert(arraysize(kSiteSettingSourceStringMapping) ==
 //    2. Insecure origins (some permissions are denied to insecure origins).
 //    3. Enterprise policy.
 //    4. Extensions.
-//    5. DRM disabled (for CrOS's Protected Content ContentSettingsType only).
-//    6. User-set per-origin setting.
-//    7. Embargo.
-//    8. User-set patterns.
-//    9. User-set global default for a ContentSettingsType.
-//   10. Chrome's built-in default.
+//    5. Activated for subresource filtering (for Ads ContentSettingsType only).
+//    6. DRM disabled (for CrOS's Protected Content ContentSettingsType only).
+//    7. User-set per-origin setting.
+//    8. Embargo.
+//    9. User-set patterns.
+//   10. User-set global default for a ContentSettingsType.
+//   11. Chrome's built-in default.
 SiteSettingSource CalculateSiteSettingSource(
     Profile* profile,
     const ContentSettingsType content_type,
+    const GURL& origin,
     const content_settings::SettingInfo& info,
     const PermissionStatusSource permission_status_source) {
   if (permission_status_source == PermissionStatusSource::KILL_SWITCH)
@@ -155,10 +162,21 @@ SiteSettingSource CalculateSiteSettingSource(
   if (info.source == content_settings::SETTING_SOURCE_EXTENSION)
     return SiteSettingSource::kExtension;  // Source #4.
 
+  if (content_type == CONTENT_SETTINGS_TYPE_ADS &&
+      base::FeatureList::IsEnabled(
+          subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI)) {
+    HostContentSettingsMap* map =
+        HostContentSettingsMapFactory::GetForProfile(profile);
+    if (map->GetWebsiteSetting(origin, GURL(), CONTENT_SETTINGS_TYPE_ADS_DATA,
+                               std::string(), nullptr) != nullptr) {
+      return SiteSettingSource::kSubresourceFilterBlacklist;  // Source #5.
+    }
+  }
+
   // Protected Content will be blocked if the |kEnableDRM| pref is off.
   if (content_type == CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER &&
       !profile->GetPrefs()->GetBoolean(prefs::kEnableDRM)) {
-    return SiteSettingSource::kDrmDisabled;  // Source #5.
+    return SiteSettingSource::kDrmDisabled;  // Source #6.
   }
 
   DCHECK_NE(content_settings::SETTING_SOURCE_NONE, info.source);
@@ -168,14 +186,14 @@ SiteSettingSource CalculateSiteSettingSource(
         permission_status_source ==
             PermissionStatusSource::MULTIPLE_DISMISSALS ||
         permission_status_source == PermissionStatusSource::MULTIPLE_IGNORES) {
-      return SiteSettingSource::kEmbargo;  // Source #7.
+      return SiteSettingSource::kEmbargo;  // Source #8.
     }
     if (info.primary_pattern == ContentSettingsPattern::Wildcard() &&
         info.secondary_pattern == ContentSettingsPattern::Wildcard()) {
-      return SiteSettingSource::kDefault;  // Source #9, #10.
+      return SiteSettingSource::kDefault;  // Source #10, #11.
     }
-    // Source #6, #8. When #6 is the source, |permission_status_source| won't
-    // be set to any of the source #6 enum values, as PermissionManager is
+    // Source #7, #9. When #7 is the source, |permission_status_source| won't
+    // be set to any of the source #7 enum values, as PermissionManager is
     // aware of the difference between these two sources internally. The
     // subtlety here should go away when PermissionManager can handle all
     // content settings and all possible sources.
@@ -469,8 +487,8 @@ ContentSetting GetContentSettingForOrigin(
   }
 
   // Retrieve the source of the content setting.
-  *source_string = SiteSettingSourceToString(
-      CalculateSiteSettingSource(profile, content_type, info, result.source));
+  *source_string = SiteSettingSourceToString(CalculateSiteSettingSource(
+      profile, content_type, origin, info, result.source));
   *display_name = GetDisplayNameForGURL(origin, extension_registry);
 
   return result.content_setting;

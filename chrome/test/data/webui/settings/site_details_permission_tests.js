@@ -263,4 +263,65 @@ suite('SiteDetailsPermission', function() {
     assertTrue(testElement.$.permissionItem.classList.contains('two-line'));
     assertTrue(testElement.$.permission.disabled);
   });
+
+  test('source string correct for ads', function() {
+    var origin = 'https://www.example.com';
+    testElement.category = settings.ContentSettingsTypes.ADS;
+    testElement.site = {
+      origin: origin,
+      embeddingOrigin: origin,
+      setting: settings.ContentSetting.BLOCK,
+      source: settings.SiteSettingSource.SUBRESOURCE_FILTER_BLACKLIST,
+    };
+    assertEquals(
+        'Site tends to show intrusive ads',
+        testElement.$.permissionItem.innerText.trim());
+    assertTrue(testElement.$.permissionItem.classList.contains('two-line'));
+    assertFalse(testElement.$.permission.disabled);
+
+    // Check the string that shows when ads is blocked but not blacklisted.
+    testElement.site = {
+      origin: origin,
+      embeddingOrigin: origin,
+      setting: settings.ContentSetting.BLOCK,
+      source: settings.SiteSettingSource.DEFAULT,
+    };
+    assertEquals(
+        'Block if site tends to show intrusive ads',
+        testElement.$.permissionItem.innerText.trim());
+    assertTrue(testElement.$.permissionItem.classList.contains('two-line'));
+    assertFalse(testElement.$.permission.disabled);
+
+    // Allowing ads for unblacklisted sites shows nothing.
+    testElement.site = {
+      origin: origin,
+      embeddingOrigin: origin,
+      setting: settings.ContentSetting.ALLOW,
+      source: settings.SiteSettingSource.PREFERENCE,
+    };
+    assertEquals('', testElement.$.permissionItem.innerText.trim());
+    assertFalse(testElement.$.permissionItem.classList.contains('two-line'));
+    assertFalse(testElement.$.permission.disabled);
+  });
+
+  test('changing ads permission behavior', function() {
+    var origin = 'https://www.example.com';
+    testElement.category = settings.ContentSettingsTypes.ADS;
+    testElement.site = {
+      origin: origin,
+      embeddingOrigin: origin,
+      setting: settings.ContentSetting.BLOCK,
+      source: settings.SiteSettingSource.PREFERENCE,
+    };
+
+    var options = testElement.$.permission.options;
+    // Currently there are four options - 'Default', 'Allow', 'Block' and 'Ask'.
+    assertEquals(4, options.length);
+
+    // The ads permission should only show 'Allow' and 'Block' options.
+    assertTrue(options.default.hidden);
+    assertFalse(options.allow.hidden);
+    assertFalse(options.allow.hidden);
+    assertTrue(options.ask.hidden);
+  });
 });
