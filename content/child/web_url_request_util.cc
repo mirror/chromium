@@ -11,9 +11,15 @@
 
 #include "base/logging.h"
 #include "base/strings/string_util.h"
+#include "content/child/child_thread_impl.h"
 #include "content/child/request_extra_data.h"
+#include "content/public/common/content_features.h"
+#include "content/public/common/service_names.mojom.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
 #include "third_party/WebKit/public/platform/WebCachePolicy.h"
 #include "third_party/WebKit/public/platform/WebData.h"
@@ -320,9 +326,24 @@ scoped_refptr<ResourceRequestBody> GetRequestBodyForWebHTTPBody(
             base::Time::FromDoubleT(element.modification_time));
         break;
       }
-      case WebHTTPBody::Element::kTypeBlob:
-        request_body->AppendBlob(element.blob_uuid.Utf8());
+      case WebHTTPBody::Element::kTypeBlob: {
+        if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+          // TODO(jam): cache this somewhere so we don't request it each time?
+          storage::mojom::BlobRegistryPtr blob_registry;
+          // TODO(jam): handle other threads.
+          ChildThreadImpl::current()->GetConnector()->BindInterface(
+              mojom::kBrowserServiceName, MakeRequest(&blob_registry));
+          storage::mojom::BlobPtr blob_ptr;
+          blob_registry->GetBlobFromUUID(MakeRequest(&blob_ptr),
+                                         element.blob_uuid.Utf8());
+          mojo::DataPipe data_pipe;
+          request_body->AppendDataPipe(std::move(data_pipe.consumer_handle));
+          blob_ptr->ReadAll(std::move(data_pipe.producer_handle), nullptr);
+        } else {
+          request_body->AppendBlob(element.blob_uuid.Utf8());
+        }
         break;
+      }
       default:
         NOTREACHED();
     }

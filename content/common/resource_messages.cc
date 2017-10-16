@@ -4,6 +4,7 @@
 
 #include "content/common/resource_messages.h"
 
+#include "ipc/ipc_mojo_param_traits.h"
 #include "net/base/load_timing_info.h"
 #include "net/http/http_response_headers.h"
 
@@ -213,13 +214,16 @@ void ParamTraits<storage::DataElement>::GetSize(base::PickleSizer* s,
       break;
     }
     case storage::DataElement::TYPE_BLOB: {
-      GetParamSize(s, p.blob_uuid());
       GetParamSize(s, p.offset());
       GetParamSize(s, p.length());
       break;
     }
     case storage::DataElement::TYPE_DISK_CACHE_ENTRY: {
       NOTREACHED() << "Can't be sent by IPC.";
+      break;
+    }
+    case storage::DataElement::TYPE_DATA_PIPE: {
+      GetParamSize(s, p.data_pipe());
       break;
     }
     case storage::DataElement::TYPE_UNKNOWN: {
@@ -263,6 +267,10 @@ void ParamTraits<storage::DataElement>::Write(base::Pickle* m,
     }
     case storage::DataElement::TYPE_DISK_CACHE_ENTRY: {
       NOTREACHED() << "Can't be sent by IPC.";
+      break;
+    }
+    case storage::DataElement::TYPE_DATA_PIPE: {
+      WriteParam(m, const_cast<param_type&>(p).ReleaseDataPipe().release());
       break;
     }
     case storage::DataElement::TYPE_UNKNOWN: {
@@ -341,6 +349,13 @@ bool ParamTraits<storage::DataElement>::Read(const base::Pickle* m,
     case storage::DataElement::TYPE_DISK_CACHE_ENTRY: {
       NOTREACHED() << "Can't be sent by IPC.";
       return false;
+    }
+    case storage::DataElement::TYPE_DATA_PIPE: {
+      mojo::DataPipeConsumerHandle data_pipe;
+      if (!ReadParam(m, iter, &data_pipe))
+        return false;
+      r->SetToDataPipe(mojo::ScopedDataPipeConsumerHandle(data_pipe));
+      return true;
     }
     case storage::DataElement::TYPE_UNKNOWN: {
       NOTREACHED();
