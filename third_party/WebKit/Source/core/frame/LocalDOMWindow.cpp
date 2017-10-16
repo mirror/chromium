@@ -82,6 +82,7 @@
 #include "core/page/ChromeClient.h"
 #include "core/page/CreateWindow.h"
 #include "core/page/Page.h"
+#include "core/page/PageLifecycleState.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/probe/CoreProbes.h"
 #include "core/style/ComputedStyle.h"
@@ -386,6 +387,8 @@ void LocalDOMWindow::DispatchWindowLoadEvent() {
 }
 
 void LocalDOMWindow::DocumentWasClosed() {
+  // TODO: look up whether this was previously discarded or stopped,
+  // and pass the page lifecycle "endstate" to EnqueuePageShowEvent(..)
   DispatchWindowLoadEvent();
   EnqueuePageshowEvent(kPageshowEventNotPersisted);
   if (pending_state_object_)
@@ -398,8 +401,8 @@ void LocalDOMWindow::EnqueuePageshowEvent(PageshowEventPersistence persisted) {
   // asynchronously.  However to be compatible with other browsers blink fires
   // pageshow synchronously unless we are in EventQueueScope.
   if (ScopedEventQueue::Instance()->ShouldQueueEvents() && document_) {
-      EnqueueWindowEvent(
-        PageTransitionEvent::Create(EventTypeNames::pageshow, persisted));
+    EnqueueWindowEvent(PageTransitionEvent::Create(
+        EventTypeNames::pageshow, persisted));  // TODO: last end state
     return;
   }
   DispatchEvent(
