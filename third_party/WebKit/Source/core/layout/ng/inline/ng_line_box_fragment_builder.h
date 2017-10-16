@@ -29,12 +29,31 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
 
   NGLogicalSize Size() const final;
 
+  NGLineBoxFragmentBuilder& AddChild(RefPtr<NGLayoutResult>,
+                                     const NGLogicalOffset&) override;
+  NGLineBoxFragmentBuilder& AddChild(RefPtr<NGPhysicalFragment>,
+                                     const NGLogicalOffset&) override;
+  // nullptr child is a placeholder until enclosing inline boxes are closed and
+  // we know the final box structure and their positions. This variant helps to
+  // avoid needing static_cast when adding a nullptr.
+  NGLineBoxFragmentBuilder& AddChild(std::nullptr_t, const NGLogicalOffset&);
+
+  // A struct to keep NGLayoutResult until we finalize the box tree structures
+  // and child offsets, so that we can give the final offset to e.g. out of flow
+  // objects.
+  struct Child {
+    RefPtr<NGLayoutResult> layout_result;
+    RefPtr<NGPhysicalFragment> fragment;
+    NGLogicalOffset offset;
+
+    const NGPhysicalFragment* PhysicalFragment() const;
+  };
+  const Vector<Child, 16>& Children() const { return children_; }
+  Vector<Child, 16>& MutableChildren() { return children_; }
+  const NGPhysicalFragment* ChildFragment(unsigned) const;
+  void SetChildInlineOffset(unsigned, LayoutUnit);
   void MoveChildrenInBlockDirection(LayoutUnit);
   void MoveChildrenInBlockDirection(LayoutUnit, unsigned start, unsigned end);
-
-  Vector<RefPtr<NGPhysicalFragment>>& MutableChildren() { return children_; }
-  const Vector<NGLogicalOffset>& Offsets() const { return offsets_; }
-  Vector<NGLogicalOffset>& MutableOffsets() { return offsets_; }
 
   void SetMetrics(const NGLineHeightMetrics&);
   const NGLineHeightMetrics& Metrics() const { return metrics_; }
@@ -48,6 +67,8 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
 
  private:
   NGInlineNode node_;
+
+  Vector<Child, 16> children_;
 
   NGLineHeightMetrics metrics_;
 
