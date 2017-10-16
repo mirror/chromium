@@ -35,6 +35,7 @@
 #include "platform/wtf/StackUtil.h"
 #include "platform/wtf/ThreadSpecific.h"
 #include "platform/wtf/Threading.h"
+#include "platform/wtf/WTFThreadTestHelper.h"
 #include "platform/wtf/allocator/Partitions.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "platform/wtf/text/StringStatics.h"
@@ -75,6 +76,15 @@ void Initialize(void (*call_on_main_thread_function)(MainThreadFunction,
   internal::InitializeMainThreadStackEstimate();
   AtomicString::Init();
   StringStatics::Init();
+}
+
+NotOnMainThread::NotOnMainThread() {
+  old_main_ = g_main_thread_identifier;
+  g_main_thread_identifier--;
+}
+
+NotOnMainThread::~NotOnMainThread() {
+  g_main_thread_identifier = old_main_;
 }
 
 }  // namespace WTF

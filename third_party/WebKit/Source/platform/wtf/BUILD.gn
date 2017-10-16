@@ -348,6 +348,7 @@ test("wtf_unittests") {
     "TreeNodeTest.cpp",
     "TypeTraitsTest.cpp",
     "VectorTest.cpp",
+    "WTFThreadTestHelperTest.cpp",
     "dtoa_test.cpp",
     "experimental/ContainerTypeOperationsTest.cpp",
     "testing/RunAllTests.cpp",
