@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8654cc3_dd475d01",
+        "filename": "chrome/browser/media/encrypted_media_supported_types_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-16T22:05:35Z",
+      "side": 1,
+      "message": "There is BrowserTestBase::embedded_test_server(). Should that be used instead of creating a new one?",
+      "range": {
+        "startLine": 183,
+        "startChar": 9,
+        "endLine": 183,
+        "endChar": 25
+      },
+      "revId": "a685b239c258d81a8be6d1d1b2c200317f602533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899cd634_3a71e746",
+        "filename": "chrome/browser/media/encrypted_media_supported_types_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-16T22:05:35Z",
+      "side": 1,
+      "message": "Can you use EmbeddedTestServer::base_url().host() to get this so that it changes if EmbeddedTestServer does? Looks like |http_test_server| will need to be a class variable (how does it stay alive after it\u0027s destructed in SetUpOnMainThread()?).",
+      "range": {
+        "startLine": 352,
+        "startChar": 67,
+        "endLine": 352,
+        "endChar": 78
+      },
+      "revId": "a685b239c258d81a8be6d1d1b2c200317f602533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ce05e5_8d11a2ef",
+        "filename": "chrome/browser/media/encrypted_media_supported_types_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-16T22:05:35Z",
+      "side": 1,
+      "message": "nit: Can you add SessionType::kTemporary just in case the default changes? ditto the other 2 tests below.",
+      "range": {
+        "startLine": 536,
+        "startChar": 61,
+        "endLine": 536,
+        "endChar": 62
+      },
+      "revId": "a685b239c258d81a8be6d1d1b2c200317f602533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
