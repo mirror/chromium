@@ -537,6 +537,11 @@ const char kNoServiceAutorun[]              = "no-service-autorun";
 // launching Chrome for the purpose of hosting background apps).
 const char kNoStartupWindow[]               = "no-startup-window";
 
+#if defined(OS_POSIX)
+// Enables NTLMv2 authentication. When false NTLMv1 authentication is used.
+const char kNtlmV2Enabled[] = "ntlm-v2-enabled";
+#endif
+
 // Disables checking whether we received an acknowledgment when registering
 // a supervised user. Also disables the timeout during registration that waits
 // for the ack. Useful when debugging against a server that does not

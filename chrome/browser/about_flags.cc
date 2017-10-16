@@ -165,6 +165,7 @@ namespace {
 
 const unsigned kOsAll = kOsMac | kOsWin | kOsLinux | kOsCrOS | kOsAndroid;
 const unsigned kOsDesktop = kOsMac | kOsWin | kOsLinux | kOsCrOS;
+const unsigned kOsNotWindows = kOsAll | ~kOsWin;
 
 #if defined(USE_AURA)
 const unsigned kOsAura = kOsWin | kOsLinux | kOsCrOS;
@@ -3546,6 +3547,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kBlockTabUndersDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(TabUnderNavigationThrottle::kBlockTabUnders)},
 #endif  // defined(OS_ANDROID)
+
+#if defined(OS_POSIX)
+    {"enable-ntlm-v2", flag_descriptions::kNtlmV2EnabledName,
+     flag_descriptions::kNtlmV2EnabledDescription, kOsNotWindows,
+     FEATURE_VALUE_TYPE(features::kNtlmV2Enabled)},
+#endif  // defined(OS_POSIX)
 
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag

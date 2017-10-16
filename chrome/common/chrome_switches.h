@@ -164,6 +164,7 @@ extern const char kNoProxyServer[];
 extern const char kNoServiceAutorun[];
 extern const char kNoStartupWindow[];
 extern const char kNoSupervisedUserAcknowledgmentCheck[];
+extern const char kNtlmV2Enabled[];
 extern const char kOpenInNewWindow[];
 extern const char kOriginalProcessStartTime[];
 extern const char kOriginTrialDisabledFeatures[];
