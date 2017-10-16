@@ -6,17 +6,18 @@
 <script src="../../inspector/persistence/persistence-test.js"></script>
 <script src="resources/foo.js"></script>
 <script>
-
+window.debugTest = true;
 function test() {
   var testMapping = BindingsTestRunner.initializeTestMapping();
   Runtime.experiments.enableForTest('persistence2');
-  var sourcesNavigator = new Sources.SourcesNavigatorView();
+  var sourcesNavigator = new Sources.FilesNavigatorView();
   sourcesNavigator.show(UI.inspectorView.element);
   var fs = new BindingsTestRunner.TestFileSystem('file:///var/www');
   var fsEntry = BindingsTestRunner.addFooJSFile(fs);
 
   TestRunner.runTestSuite([
     function addFileSystem(next) {
+      debugger;
       fs.reportCreated(next);
     },
 
