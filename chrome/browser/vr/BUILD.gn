@@ -200,6 +200,7 @@ test("vr_common_unittests") {
     "elements/ui_element_iterator_unittest.cc",
     "elements/ui_element_unittest.cc",
     "elements/url_bar_texture_unittest.cc",
+    "elements/vector_icon_unittest.cc",
     "elements/viewport_aware_root_unittest.cc",
     "fps_meter_unittest.cc",
     "gltf_parser_unittest.cc",
@@ -239,6 +240,7 @@ test("vr_common_unittests") {
     ":vr_common",
     ":vr_test_pak",
     "//base/test:test_support",
+    "//cc:test_support",
     "//components/security_state/core",
     "//components/toolbar:vector_icons",
 

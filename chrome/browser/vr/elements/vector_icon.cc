@@ -4,17 +4,69 @@
 
 #include "chrome/browser/vr/elements/vector_icon.h"
 
+#include "base/memory/ptr_util.h"
+#include "chrome/browser/vr/elements/ui_texture.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/scoped_canvas.h"
 #include "ui/gfx/vector_icon_types.h"
 
 namespace vr {
 
-void DrawVectorIcon(gfx::Canvas* canvas,
-                    const gfx::VectorIcon& icon,
-                    float size_px,
-                    const gfx::PointF& corner,
-                    SkColor color) {
+class VectorIconTexture : public UiTexture {
+ public:
+  explicit VectorIconTexture(const gfx::VectorIcon& icon) : icon_(icon) {}
+  ~VectorIconTexture() override {}
+
+  void SetColor(SkColor color) {
+    color_ = color;
+    set_dirty();
+  }
+
+ private:
+  gfx::Size GetPreferredTextureSize(int width) const override {
+    return gfx::Size(width, width);
+  }
+
+  gfx::SizeF GetDrawnSize() const override { return size_; }
+
+  void Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) override {
+    cc::SkiaPaintCanvas paint_canvas(sk_canvas);
+    gfx::Canvas gfx_canvas(&paint_canvas, 1.0f);
+
+    size_.set_height(texture_size.height());
+    size_.set_width(texture_size.width());
+
+    float icon_size = size_.height();
+    float icon_corner_offset = (size_.height() - icon_size) / 2;
+    VectorIcon::DrawVectorIcon(
+        &gfx_canvas, icon_, icon_size,
+        gfx::PointF(icon_corner_offset, icon_corner_offset), color_);
+  }
+
+  gfx::SizeF size_;
+  const gfx::VectorIcon& icon_;
+  SkColor color_ = SK_ColorWHITE;
+  DISALLOW_COPY_AND_ASSIGN(VectorIconTexture);
+};
+
+VectorIcon::VectorIcon(int maximum_width_pixels, const gfx::VectorIcon& icon)
+    : TexturedElement(maximum_width_pixels),
+      texture_(base::MakeUnique<VectorIconTexture>(icon)) {}
+VectorIcon::~VectorIcon() {}
+
+void VectorIcon::SetColor(SkColor color) {
+  texture_->SetColor(color);
+}
+
+UiTexture* VectorIcon::GetTexture() const {
+  return texture_.get();
+}
+
+void VectorIcon::DrawVectorIcon(gfx::Canvas* canvas,
+                                const gfx::VectorIcon& icon,
+                                float size_px,
+                                const gfx::PointF& corner,
+                                SkColor color) {
   gfx::ScopedCanvas scoped(canvas);
   canvas->Translate(
       {static_cast<int>(corner.x()), static_cast<int>(corner.y())});
