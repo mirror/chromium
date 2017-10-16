@@ -148,6 +148,10 @@ Sources.FilesNavigatorView = class extends Sources.NavigatorView {
         UI.ToolbarButton.Events.Click, () => Persistence.isolatedFileSystemManager.addFileSystem());
     toolbar.appendToolbarItem(addButton);
     this.contentElement.insertBefore(toolbar.element, this.contentElement.firstChild);
+    this._workspace.addEventListener(
+        Workspace.Workspace.Events.ProjectAdded,
+        event => this._projectAdded(/** @type {!Workspace.Project} */ (event.data)), this);
+    this._workspace.projects().forEach(this._projectAdded.bind(this));
   }
 
   /**
@@ -167,6 +171,31 @@ Sources.FilesNavigatorView = class extends Sources.NavigatorView {
     var contextMenu = new UI.ContextMenu(event);
     Sources.NavigatorView.appendAddFolderItem(contextMenu);
     contextMenu.show();
+  }
+
+  /**
+   * @override
+   * @param {!Workspace.Project} project
+   */
+  projectRemoved(project) {
+    super.projectRemoved(project);
+    if (project.type() !== Workspace.projectTypes.FileSystem)
+      return;
+    var fileSystemNode = this.rootNode().child(project.id());
+    if (!fileSystemNode)
+      return;
+    this.rootNode().removeChild(fileSystemNode);
+  }
+
+  /**
+   * @param {!Workspace.Project} project
+   */
+  _projectAdded(project) {
+    if (project.type() !== Workspace.projectTypes.FileSystem)
+      return;
+    var fileSystemNode = new Sources.NavigatorGroupTreeNode(
+        this, project, project.id(), Sources.NavigatorView.Types.FileSystem, project.displayName());
+    this.rootNode().appendChild(fileSystemNode);
   }
 };
 

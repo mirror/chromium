@@ -164,6 +164,14 @@ Sources.NavigatorView = class extends UI.VBox {
   }
 
   /**
+   * @protected
+   * @return {!Sources.NavigatorTreeNode}
+   */
+  rootNode() {
+    return this._rootNode;
+  }
+
+  /**
    * @param {!Common.Event} event
    */
   _onBindingCreated(event) {
@@ -226,7 +234,9 @@ Sources.NavigatorView = class extends UI.VBox {
     this._workspace = workspace;
     this._workspace.addEventListener(Workspace.Workspace.Events.UISourceCodeAdded, this._uiSourceCodeAdded, this);
     this._workspace.addEventListener(Workspace.Workspace.Events.UISourceCodeRemoved, this._uiSourceCodeRemoved, this);
-    this._workspace.addEventListener(Workspace.Workspace.Events.ProjectRemoved, this._projectRemoved.bind(this), this);
+    this._workspace.addEventListener(
+        Workspace.Workspace.Events.ProjectRemoved,
+        event => this.projectRemoved(/** @type {!Workspace.Project} */ (event.data)), this);
   }
 
   /**
@@ -346,11 +356,10 @@ Sources.NavigatorView = class extends UI.VBox {
   }
 
   /**
-   * @param {!Common.Event} event
+   * @protected
+   * @param {!Workspace.Project} project
    */
-  _projectRemoved(event) {
-    var project = /** @type {!Workspace.Project} */ (event.data);
-
+  projectRemoved(project) {
     var uiSourceCodes = project.uiSourceCodes();
     for (var i = 0; i < uiSourceCodes.length; ++i)
       this._removeUISourceCode(uiSourceCodes[i]);
@@ -397,13 +406,8 @@ Sources.NavigatorView = class extends UI.VBox {
     if (!path.length) {
       if (target)
         return this._domainNode(uiSourceCode, project, target, frame, projectOrigin);
-      var fileSystemNode = this._rootNode.child(project.id());
-      if (!fileSystemNode) {
-        fileSystemNode = new Sources.NavigatorGroupTreeNode(
-            this, project, project.id(), Sources.NavigatorView.Types.FileSystem, project.displayName());
-        this._rootNode.appendChild(fileSystemNode);
-      }
-      return fileSystemNode;
+      // We expect the project to be a filesystem project and the root filesystem NavigatorTreeNode to exist.
+      return /** @type {!Sources.NavigatorTreeNode} */ (this._rootNode.child(project.id()));
     }
 
     var parentNode =
@@ -585,6 +589,8 @@ Sources.NavigatorView = class extends UI.VBox {
     while (node) {
       parentNode = node.parent;
       if (!parentNode || !node.isEmpty())
+        break;
+      if (parentNode === this._rootNode && project.type() === Workspace.projectTypes.FileSystem)
         break;
       if (!(node instanceof Sources.NavigatorGroupTreeNode || node instanceof Sources.NavigatorFolderTreeNode))
         break;
