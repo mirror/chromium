@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ac8d264_a8cf38ee",
+        "filename": "tools/metrics/ukm/gen_builders.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-16T14:00:44Z",
+      "side": 1,
+      "message": "I\u0027d comment that this needs to stay in sync with the original hashing done",
+      "revId": "f412b30ac9646ebe226f9c4dedbba8839cd95596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
