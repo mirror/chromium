@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff1ff689_df6bb280",
+        "filename": "content/renderer/mus/renderer_window_tree_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-16T15:37:40Z",
+      "side": 1,
+      "message": "Seems like we might want embedded_frames_ to be a map? No reason to block on that for now though.",
+      "revId": "be5d81269de655f0352bc7874d0179eb4ed3f027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
