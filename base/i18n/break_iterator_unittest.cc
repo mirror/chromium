@@ -457,5 +457,25 @@ TEST(BreakIteratorTest, GetWordBreakStatusBreakWord) {
   EXPECT_FALSE(iter.Advance());
 }
 
+// Test behavior of unicode regional indicators. See
+// http://unicode.org/reports/tr29/#GB_After_Joiner .
+TEST(BreakIteratorTest, FlagEmoji) {
+  // Two emoji: the British flag and the Greek flag. No space between.
+  base::string16 text(UTF8ToUTF16("🇬🇧🇬🇷"));
+  EXPECT_EQ(8u, text.length());  // Becomes 4 surrogate pair code points.
+  BreakIterator iter(text, BreakIterator::BREAK_CHARACTER);
+  ASSERT_TRUE(iter.Init());
+  EXPECT_TRUE(iter.IsGraphemeBoundary(0));
+  EXPECT_TRUE(iter.IsGraphemeBoundary(4));
+  for (int i : {1, 2, 3, 5, 6, 7})
+    EXPECT_FALSE(iter.IsGraphemeBoundary(i)) << i;
+
+  ASSERT_TRUE(iter.Init());
+  EXPECT_TRUE(iter.Advance());
+  EXPECT_EQ(UTF8ToUTF16("🇬🇧"), iter.GetString());
+  EXPECT_TRUE(iter.Advance());
+  EXPECT_EQ(UTF8ToUTF16("🇬🇷"), iter.GetString());
+}
+
 }  // namespace i18n
 }  // namespace base

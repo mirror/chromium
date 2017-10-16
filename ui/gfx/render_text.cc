@@ -836,9 +836,11 @@ Rect RenderText::GetCursorBounds(const SelectionModel& caret,
       x = size.width();
     }
   } else {
-    size_t grapheme_start = (caret_affinity == CURSOR_FORWARD) ?
-        caret_pos : IndexOfAdjacentGrapheme(caret_pos, CURSOR_BACKWARD);
-    Range xspan(GetGlyphBounds(grapheme_start));
+    // Find the next grapheme continuing in the current direction. This
+    // determines the substring range that should be highlighted.
+    const size_t next_grapheme_start =
+        IndexOfAdjacentGrapheme(caret_pos, caret_affinity);
+    Range xspan(GetCursorSpan({caret_pos, next_grapheme_start}));
     if (insert_mode) {
       x = (caret_affinity == CURSOR_BACKWARD) ? xspan.end() : xspan.start();
     } else {  // overtype mode
