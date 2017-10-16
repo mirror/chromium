@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43135d19_81b41ec9",
+        "filename": "components/arc/arc_instance_mode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-16T08:38:50Z",
+      "side": 1,
+      "message": "I\u0027m happy with either way. Done.\n(I assume \"printer function\" here means ToString(), right?)",
+      "parentUuid": "1ae43c69_713be3a9",
+      "range": {
+        "startLine": 30,
+        "startChar": 29,
+        "endLine": 30,
+        "endChar": 47
+      },
+      "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3dee016_a4086434",
         "filename": "components/arc/arc_session.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3b074a_d22b7384",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-16T08:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3dee016_a4086434",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "da2b7f43_f1b3eada",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-16T08:38:50Z",
+      "side": 1,
+      "message": "Done to rename original_target_mode with short comment.\nNote that I\u0027m thinking to remove the var in a following CL,\nso logic which is slightly confusing between |target_mode_| and |original_target_mode| should be gone with it, and I would like to postpone the discussion till then.\nDoes it work for you?",
+      "parentUuid": "606fae7f_7a8a04c1",
+      "range": {
+        "startLine": 392,
+        "startChar": 55,
+        "endLine": 392,
+        "endChar": 66
+      },
+      "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cff54f82_5817c014",
         "filename": "components/arc/arc_session.h",
         "patchSetId": 1
@@ -99,6 +171,30 @@
       "writtenOn": "2017-10-13T18:04:17Z",
       "side": 1,
       "message": "As before, this function crashes with DCHECK if e.g. you call Start(MINI) while a FULL instance is already running, right? How about this:\n\n1) Move IsRequestAllowed() from ASR to AS as a public (and maybe static) member function.\n2) Here, just say that you can call the function when IsRequestAllowed() returns true for the |request_mode|.",
+      "range": {
+        "startLine": 47,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 53
+      },
+      "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454ce4b2_0a8fc097",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-16T08:38:50Z",
+      "side": 1,
+      "message": "IsRequestAllowed needs to be in arc_session_runner.cc, for now.\nIt checks the state transition in ASR, which is different from AS because of asynchronous manner.\nChecking \"current\" AS\u0027s target mode does not work, because it may be in the stopping situation.\nIn that case, it is NOT the state transition in this AS, but the state transition in ASR.\n\nWDYT?",
+      "parentUuid": "cff54f82_5817c014",
       "range": {
         "startLine": 47,
         "startChar": 47,
@@ -128,6 +224,24 @@
     },
     {
       "key": {
+        "uuid": "f2109495_fa052e99",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-16T08:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d2eca72_9d43d4a0",
+      "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6b0c659_d2de4b65",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -148,6 +262,30 @@
       "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24da15e_5ba2e3f5",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-16T08:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6b0c659_d2de4b65",
+      "range": {
+        "startLine": 228,
+        "startChar": 36,
+        "endLine": 228,
+        "endChar": 69
+      },
+      "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
