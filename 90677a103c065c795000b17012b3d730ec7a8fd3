@@ -16,6 +16,24 @@
       "revId": "90677a103c065c795000b17012b3d730ec7a8fd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ca03b5_03605494",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-16T14:32:31Z",
+      "side": 1,
+      "message": "Yeah I removed the \"direction\" argument.\nI\u0027m still calling this method for columns, like we do for RecomputeUsedFlexFractionIfNeeded()\nwith an early return if we\u0027re calling it in the case of columns.\nI guess it keeps the same structure than other methods in the strategy.",
+      "parentUuid": "c47602df_7072a5e1",
+      "revId": "90677a103c065c795000b17012b3d730ec7a8fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
