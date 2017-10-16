@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "136e61bf_0bf0f086",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-16T17:23:29Z",
+      "side": 1,
+      "message": "+Memory for consistency with the above.\nI\u0027d be more in favor of removing \"Memory\" from both since this class is already under \"memory_instrumentation\" but that might pragmatically be more work and not worth it.",
+      "range": {
+        "startLine": 56,
+        "startChar": 20,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "d6b37850832458b04015d1f91232243bb85999bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
