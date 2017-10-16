@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9509fd99_2bccacee",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-bypass-for-network-redirect.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T07:32:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "580fc312_039a8795",
+      "revId": "74a28cac9d56c9cff3278dd6b74e3fc1ed907a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c38f810_ce0dde05",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-navigation-preload.html",
         "patchSetId": 8
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "5bf91f5b_7061df4f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-navigation-preload.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T07:32:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c38f810_ce0dde05",
+      "range": {
+        "startLine": 9,
+        "startChar": 49,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "74a28cac9d56c9cff3278dd6b74e3fc1ed907a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32534882_e27b3c9f",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-navigation-preload.html",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "74a28cac9d56c9cff3278dd6b74e3fc1ed907a65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61155294_f3d58f88",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-navigation-preload.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T07:32:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32534882_e27b3c9f",
+      "revId": "74a28cac9d56c9cff3278dd6b74e3fc1ed907a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "aa6e2fc6_6cd16d94",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-navigation-preload.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T07:32:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35ca77fa_14af27f0",
+      "revId": "74a28cac9d56c9cff3278dd6b74e3fc1ed907a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6299af4_56fc740b",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-redundant.html",
         "patchSetId": 8
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "3f6f3760_8f48417b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-redundant.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T07:32:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6299af4_56fc740b",
+      "revId": "74a28cac9d56c9cff3278dd6b74e3fc1ed907a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd421b13_438b565b",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-redundant.html",
         "patchSetId": 8
@@ -107,6 +203,24 @@
       "revId": "74a28cac9d56c9cff3278dd6b74e3fc1ed907a65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d0fa7c_44ab4735",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-redundant.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T07:32:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd421b13_438b565b",
+      "revId": "74a28cac9d56c9cff3278dd6b74e3fc1ed907a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
