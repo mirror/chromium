@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c6e5bf4_415c28a4",
+        "filename": "mojo/public/interfaces/bindings/tests/name_generator_test.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-16T19:26:54Z",
+      "side": 1,
+      "message": "Nit: to be more consistent with other testing mojom files, maybe we could consider the name \"test_constant_names.mojom\" or \"test_name_generator.mojom\"",
+      "revId": "ba7bcf5a60710ba67956875563a520bc26b8b00a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
