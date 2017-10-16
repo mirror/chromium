@@ -184,8 +184,10 @@ void SetupStabilityDebugging() {
     const bool should_flush = base::GetFieldTrialParamByFeatureAsBool(
         browser_watcher::kStabilityDebuggingFeature,
         browser_watcher::kInitFlushParam, false);
-    if (should_flush)
-      ::FlushViewOfFile(global_tracker->allocator()->data(), 0U);
+// DO NOT SUBMIT
+// TODO(siggi): if this is the culprit, post it to a blocking task.
+//    if (should_flush)
+//      ::FlushViewOfFile(global_tracker->allocator()->data(), 0U);
 
     // Store a copy of the system profile in this allocator. There will be some
     // delay before this gets populated, perhaps as much as a minute. Because
