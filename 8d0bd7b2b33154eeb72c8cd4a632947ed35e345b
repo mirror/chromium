@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95827e61_9bee5d3e",
+        "filename": "ui/file_manager/file_manager/foreground/elements/compiled_resources2.gyp",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-16T08:24:06Z",
+      "side": 1,
+      "message": "Thanks for pointing it out - I didn\u0027t notice that my editor had set up tabs for this file type oO",
+      "parentUuid": "8ed88997_956ef17a",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 1
+      },
+      "revId": "8d0bd7b2b33154eeb72c8cd4a632947ed35e345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54fbfe62_0c58b909",
         "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.js",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "8d0bd7b2b33154eeb72c8cd4a632947ed35e345b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bce964_0751c986",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-16T08:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54fbfe62_0c58b909",
+      "revId": "8d0bd7b2b33154eeb72c8cd4a632947ed35e345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "8d0bd7b2b33154eeb72c8cd4a632947ed35e345b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438f0de4_878da9f7",
+        "filename": "ui/file_manager/file_manager/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-16T08:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aafdd76_abf2ffbf",
+      "range": {
+        "startLine": 56,
+        "startChar": 29,
+        "endLine": 56,
+        "endChar": 60
+      },
+      "revId": "8d0bd7b2b33154eeb72c8cd4a632947ed35e345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
