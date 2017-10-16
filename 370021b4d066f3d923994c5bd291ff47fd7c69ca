@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab2ede3e_eb34f03c",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-10-16T16:25:17Z",
+      "side": 1,
+      "message": "This certainly works, but Chad has been working on better (more widely supported and standardized) dma-buf integration. I don\u0027t know if it\u0027s at a point yet where it can replace this extension, and we can start we this.",
+      "range": {
+        "startLine": 687,
+        "startChar": 30,
+        "endLine": 687,
+        "endChar": 55
+      },
+      "revId": "370021b4d066f3d923994c5bd291ff47fd7c69ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a7103f_34507dac",
+        "filename": "components/exo/wayland/clients/client_base.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-10-16T16:25:17Z",
+      "side": 1,
+      "message": "I wouldn\u0027t put a command buffer here. The pool API is there so that command buffers are cheap to allocate and free on the fly, so I\u0027d recommend doing that.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 38
+      },
+      "revId": "370021b4d066f3d923994c5bd291ff47fd7c69ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03592a20_15e295cc",
+        "filename": "components/exo/wayland/clients/vulkan.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-10-16T16:25:17Z",
+      "side": 1,
+      "message": "It might be useful to have a smartptr like object that sets all this up for your (creates command buffer for a buffer, starts a render pass, maybe initialized with the clear color), let\u0027s you access the cmd buffer for further rendering commands and then in the destructor ends the render pass and cmd buffer.  It could even submit to the queue as well.",
+      "range": {
+        "startLine": 87,
+        "startChar": 13,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "370021b4d066f3d923994c5bd291ff47fd7c69ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
