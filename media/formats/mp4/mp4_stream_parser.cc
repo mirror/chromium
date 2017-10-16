@@ -674,8 +674,7 @@ bool MP4StreamParser::EnqueueSample(BufferQueueMap* buffers, bool* err) {
     LIMITED_MEDIA_LOG(DEBUG, media_log_, num_empty_samples_skipped_,
                       kMaxEmptySampleLogs)
         << "Skipping 'trun' sample with size of 0.";
-    runs_->AdvanceSample();
-    return true;
+    return runs_->AdvanceSample();
   }
 
   std::unique_ptr<DecryptConfig> decrypt_config;
@@ -779,8 +778,7 @@ bool MP4StreamParser::EnqueueSample(BufferQueueMap* buffers, bool* err) {
            << ", size=" << sample_size;
 
   (*buffers)[runs_->track_id()].push_back(stream_buf);
-  runs_->AdvanceSample();
-  return true;
+  return runs_->AdvanceSample();
 }
 
 bool MP4StreamParser::SendAndFlushSamples(BufferQueueMap* buffers) {
@@ -848,8 +846,8 @@ bool MP4StreamParser::ComputeHighestEndOffset(const MovieFragment& moof) {
       int64_t sample_end_offset = runs.sample_offset() + runs.sample_size();
       if (sample_end_offset > highest_end_offset_)
         highest_end_offset_ = sample_end_offset;
-
-      runs.AdvanceSample();
+      if (!runs.AdvanceSample())
+        return false;
     }
     runs.AdvanceRun();
   }

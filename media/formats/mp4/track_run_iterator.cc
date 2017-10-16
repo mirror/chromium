@@ -10,6 +10,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/numerics/checked_math.h"
 #include "media/base/timestamp_constants.h"
 #include "media/formats/mp4/rcheck.h"
 #include "media/formats/mp4/sample_to_group_iterator.h"
@@ -149,12 +150,12 @@ static bool PopulateSampleInfo(const TrackExtends& trex,
     sample_info->duration = trex.default_sample_duration;
   }
 
-  if (i < trun.sample_composition_time_offsets.size()) {
-    sample_info->cts_offset = trun.sample_composition_time_offsets[i];
-  } else {
-    sample_info->cts_offset = 0;
-  }
-  sample_info->cts_offset += edit_list_offset;
+  auto cts_offset = -base::CheckedNumeric<int64_t>(edit_list_offset);
+  if (i < trun.sample_composition_time_offsets.size())
+    cts_offset += trun.sample_composition_time_offsets[i];
+  RCHECK_MEDIA_LOGGED(cts_offset.IsValid(), media_log,
+                      "PTS offset exceeds representable range.");
+  sample_info->cts_offset = cts_offset.ValueOrDie();
 
   uint32_t flags;
   if (i < trun.sample_flags.size()) {
@@ -316,7 +317,7 @@ bool TrackRunIterator::Init(const MovieFragment& moof) {
       if (edits[0].media_time < 0) {
         DVLOG(1) << "Empty edit list entry ignored.";
       } else {
-        edit_list_offset = -edits[0].media_time;
+        edit_list_offset = edits[0].media_time;
       }
     }
 
@@ -490,11 +491,19 @@ void TrackRunIterator::ResetRun() {
   sample_itr_ = run_itr_->samples.begin();
 }
 
-void TrackRunIterator::AdvanceSample() {
+bool TrackRunIterator::AdvanceSample() {
   DCHECK(IsSampleValid());
-  sample_dts_ += sample_itr_->duration;
+  auto dts = base::CheckedNumeric<int64_t>(sample_dts_) + sample_itr_->duration;
+  RCHECK_MEDIA_LOGGED(dts.IsValid(), media_log_,
+                      "Sample DTS exceeds representable range.");
+  auto cts = dts + sample_itr_->cts_offset;
+  RCHECK_MEDIA_LOGGED(cts.IsValid(), media_log_,
+                      "Sample PTS exceeds representable range.");
+  sample_dts_ = dts.ValueOrDie();
+  sample_cts_ = cts.ValueOrDie();
   sample_offset_ += sample_itr_->size;
   ++sample_itr_;
+  return true;
 }
 
 // This implementation only indicates a need for caching if CENC auxiliary
@@ -626,8 +635,7 @@ DecodeTimestamp TrackRunIterator::dts() const {
 
 base::TimeDelta TrackRunIterator::cts() const {
   DCHECK(IsSampleValid());
-  return TimeDeltaFromRational(sample_dts_ + sample_itr_->cts_offset,
-                               run_itr_->timescale);
+  return TimeDeltaFromRational(sample_cts_, run_itr_->timescale);
 }
 
 base::TimeDelta TrackRunIterator::duration() const {

@@ -50,7 +50,7 @@ class MEDIA_EXPORT TrackRunIterator {
   // Advance the properties to refer to the next run or sample. Requires that
   // the current sample be valid.
   void AdvanceRun();
-  void AdvanceSample();
+  bool AdvanceSample();
 
   // Returns true if this track run has auxiliary information and has not yet
   // been cached. Only valid if IsRunValid().
@@ -112,6 +112,7 @@ class MEDIA_EXPORT TrackRunIterator {
   std::vector<SampleInfo>::const_iterator sample_itr_;
 
   int64_t sample_dts_;
+  int64_t sample_cts_;
   int64_t sample_offset_;
 
   DISALLOW_COPY_AND_ASSIGN(TrackRunIterator);
