@@ -586,6 +586,30 @@
       "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ebb321_b98a0dd1",
+        "filename": "chrome/browser/android/preferences/pref_change_registrar_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-16T09:19:30Z",
+      "side": 1,
+      "message": "No, declare |pref_change_registrar_| directly as a PrefChangeRegistrar, as opposed to a std::unique_ptr to it.",
+      "parentUuid": "03d473f0_6aeba39b",
+      "range": {
+        "startLine": 32,
+        "startChar": 39,
+        "endLine": 32,
+        "endChar": 61
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

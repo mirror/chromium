@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fbfb28f_a9da5e6c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-16T09:19:30Z",
+      "side": 1,
+      "message": "Tiny nit: Javadoc documentation (http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#styleguide) says to only use the version with the full parameter list if that\u0027s necessary to disambiguate it.",
+      "range": {
+        "startLine": 16,
+        "startChar": 28,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "1a73754a8636ebfb103219d4e9bdcec6890f7407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052226c6_2342c945",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-16T09:19:30Z",
+      "side": 1,
+      "message": "Nit: \"corresponding\"",
+      "range": {
+        "startLine": 26,
+        "startChar": 36,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "1a73754a8636ebfb103219d4e9bdcec6890f7407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d413c87_09543546",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-16T09:19:30Z",
+      "side": 1,
+      "message": "I think more important than the names now are the values, which match the indices in |kPrefsExposedToJava|.",
+      "range": {
+        "startLine": 61,
+        "startChar": 80,
+        "endLine": 62,
+        "endChar": 20
+      },
+      "revId": "1a73754a8636ebfb103219d4e9bdcec6890f7407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c10371_f7b6c575",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-16T09:19:30Z",
+      "side": 1,
+      "message": "`static` is not necessary if this is already in an anonymous namespace (which prevents it from getting linked with other compilation units). What this does need however is an additional const, so that you have a constant array of constant character pointers, which allows the array to be put in a read-only memory section of the binary, which helps with memory). Specifically, this should be `const char* const kPrefsExposedToJava[]` -- as a general rule of thumb, you want as many `const`s as there are arrays of any sort :) I personally can never remember the exact type declaration, but https://cdecl.org/?q\u003dconst+char*+const+kPrefsExposedToJava%5B%5D tells me it\u0027s correct :D",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 7
+      },
+      "revId": "1a73754a8636ebfb103219d4e9bdcec6890f7407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1036a9aa_6b158eaa",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-16T09:19:30Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this method in the header (or as a class method overall).",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 45
+      },
+      "revId": "1a73754a8636ebfb103219d4e9bdcec6890f7407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
