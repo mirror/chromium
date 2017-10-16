@@ -15,6 +15,7 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
@@ -34,6 +35,7 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
 #include "printing/features/features.h"
@@ -103,6 +105,190 @@ bool PrintViewManagerBase::PrintNow(content::RenderFrameHost* rfh) {
 }
 #endif
 
+void PrintViewManagerBase::PrintForPrintPreview(
+    const base::Callback<void(bool success, const base::Value& error)>&
+        callback,
+    std::unique_ptr<base::DictionaryValue> job_settings,
+    int page_count,
+    const scoped_refptr<base::RefCountedBytes>& print_data,
+    content::RenderFrameHost* rfh,
+    content::RenderProcessHost* rph,
+    const base::Callback<scoped_refptr<base::RefCountedBytes>(int page)>&
+        get_page_callback) {
+  scoped_refptr<printing::PrinterQuery> printer_query =
+      queue_->CreatePrinterQuery(rph->GetID(), rfh->GetRoutingID());
+  if (!printer_query) {
+    callback.Run(false, base::Value("Failed to create query"));
+    return;
+  }
+  printer_query->SetSettings(
+      std::move(job_settings),
+      base::Bind(&PrintViewManagerBase::OnPrintSettingsDone,
+                 base::Unretained(this), callback, page_count, print_data,
+                 printer_query, get_page_callback));
+}
+
+void PrintViewManagerBase::OnPrintSettingsDone(
+    const base::Callback<void(bool success, const base::Value& error)>&
+        callback,
+    int page_count,
+    const scoped_refptr<base::RefCountedBytes>& print_data,
+    scoped_refptr<printing::PrinterQuery> printer_query,
+    const base::Callback<scoped_refptr<base::RefCountedBytes>(int page)>&
+        get_page_callback) {
+  queue_->QueuePrinterQuery(printer_query.get());
+
+  // Post task so that the query has time to reset the callback before calling
+  // OnDidGetPrintedPagesCount.
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::Bind(&PrintViewManagerBase::StartLocalPrintJob,
+                 base::Unretained(this), callback, page_count, print_data,
+                 printer_query, get_page_callback));
+}
+
+bool PrintViewManagerBase::PrintPage(
+    int page_num,
+    const gfx::Size& page_size,
+    const gfx::Rect& content_area,
+    const gfx::Point& offsets,
+    const scoped_refptr<base::RefCountedBytes>& print_data,
+    bool metafile_must_be_valid) {
+  std::unique_ptr<PdfMetafileSkia> metafile(
+      new PdfMetafileSkia(SkiaDocumentType::PDF));
+  if (metafile_must_be_valid) {
+    if (!metafile->InitFromData(print_data->front(), print_data->size())) {
+      NOTREACHED() << "Invalid metafile header";
+      web_contents()->Stop();
+      return false;
+    }
+  }
+
+  PrintedDocument* document = print_job_->document();
+#if defined(OS_WIN)
+  print_job_->AppendPrintedPage(page_num);
+  if (metafile_must_be_valid) {
+    document->DebugDumpData(print_data.get(), FILE_PATH_LITERAL(".pdf"));
+
+    const auto& settings = document->settings();
+    if (settings.printer_is_textonly()) {
+      print_job_->StartPdfToTextConversion(print_data, page_size);
+    } else if ((settings.printer_is_ps2() || settings.printer_is_ps3()) &&
+               !base::FeatureList::IsEnabled(
+                   features::kDisablePostScriptPrinting)) {
+      print_job_->StartPdfToPostScriptConversion(
+          print_data, content_area, offsets, settings.printer_is_ps2());
+    } else {
+      // TODO(thestig): Figure out why rendering text with GDI results in random
+      // missing characters for some users. https://crbug.com/658606
+      // Update : The missing letters seem to have been caused by the same
+      // problem as https://crbug.com/659604 which was resolved. GDI printing
+      // seems to work with the fix for this bug applied.
+      bool print_text_with_gdi =
+          settings.print_text_with_gdi() && !settings.printer_is_xps() &&
+          base::FeatureList::IsEnabled(features::kGdiTextPrinting);
+      print_job_->StartPdfToEmfConversion(print_data, page_size, content_area,
+                                          print_text_with_gdi);
+    }
+  }
+#else
+  // Update the rendered document. It will send notifications to the listener.
+  document->SetPage(page_num, std::move(metafile),
+#if defined(OS_WIN)
+                    0.0f /* dummy shrink_factor */,
+#endif
+                    page_size, content_area);
+  ShouldQuitFromInnerMessageLoop();
+#endif
+  return true;
+}
+
+#if defined(OS_MACOSX)
+void PrintViewManagerBase::OnGotPrintData(
+    const base::Callback<void(bool success, const base::Value& error)>&
+        callback,
+    const base::Callback<scoped_refptr<base::RefCountedBytes>(int page)>&
+        get_page_callback,
+    const std::vector<int>& page_nums,
+    int index,
+    scoped_refptr<printing::PrinterQuery> printer_query,
+    const gfx::Size& page_size,
+    const gfx::Rect& content_area,
+    const gfx::Point& offsets,
+    scoped_refptr<base::RefCountedBytes> print_data) {
+  if (!print_data.get() || print_data->size() == 0 ||
+      !CheckCookie(printer_query->cookie())) {
+    callback.Run(false, base::Value("Print failed"));
+    return;
+  }
+  if (!PrintPage(page_nums[index], page_size, content_area, offsets, print_data,
+                 MetafileMustBeValid())) {
+    callback.Run(false, base::Value("Print failed"));
+    return;
+  }
+  if (++index == page_nums.size()) {
+    callback.Run(true, base::Value());
+    return;
+  }
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_BLOCKING},
+      base::Bind(get_page_callback, page_nums[index]),
+      base::Bind(&PrintViewManagerBase::OnGotPrintData, base::Unretained(this),
+                 callback, get_page_callback, page_nums, index, printer_query,
+                 page_size, content_area, offsets));
+}
+#endif
+
+void PrintViewManagerBase::StartLocalPrintJob(
+    const base::Callback<void(bool success, const base::Value& error)>&
+        callback,
+    int page_count,
+    const scoped_refptr<base::RefCountedBytes>& print_data,
+    scoped_refptr<printing::PrinterQuery> printer_query,
+    const base::Callback<scoped_refptr<base::RefCountedBytes>(int page)>&
+        get_page_callback) {
+  const printing::PrintSettings& settings = printer_query->settings();
+
+  // Get page numbers
+  std::vector<int> page_nums = printing::PageRange::GetPages(settings.ranges());
+  if (page_nums.empty()) {
+    for (int i = 0; i < page_count; i++)
+      page_nums.push_back(i);
+  }
+
+  PrintManager::OnDidGetPrintedPagesCount(printer_query->cookie(),
+                                          page_nums.size());
+  OpportunisticallyCreatePrintJob(printer_query->cookie());
+
+  gfx::Size page_size = settings.page_setup_device_units().physical_size();
+  gfx::Rect content_area =
+      gfx::Rect(0, 0, page_size.width(), page_size.height());
+  gfx::Point offsets =
+      gfx::Point(settings.page_setup_device_units().content_area().x(),
+                 settings.page_setup_device_units().content_area().y());
+  // Print pages
+  for (int page_num : page_nums) {
+    if (!CheckCookie(printer_query->cookie()) ||
+        !PrintPage(page_num, page_size, content_area, offsets, print_data,
+                   MetafileMustBeValid())) {
+      callback.Run(false, base::Value("Failed to print"));
+    }
+#if defined(OS_MACOSX)
+    if (page_nums.size() > 1) {
+      base::PostTaskWithTraitsAndReplyWithResult(
+          FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_BLOCKING},
+          base::Bind(get_page_callback, page_nums[1]),
+          base::Bind(&PrintViewManagerBase::OnGotPrintData,
+                     base::Unretained(this), callback, get_page_callback,
+                     page_nums, 1, printer_query, page_size, content_area,
+                     offsets));
+      return;
+    }
+#endif
+  }
+  callback.Run(true, base::Value());
+}
+
 void PrintViewManagerBase::UpdatePrintingEnabled() {
   web_contents()->ForEachFrame(
       base::Bind(&PrintViewManagerBase::SendPrintingEnabled,
@@ -127,27 +313,39 @@ void PrintViewManagerBase::OnDidGetPrintedPagesCount(int cookie,
   OpportunisticallyCreatePrintJob(cookie);
 }
 
-void PrintViewManagerBase::OnDidPrintPage(
-  const PrintHostMsg_DidPrintPage_Params& params) {
-  if (!OpportunisticallyCreatePrintJob(params.document_cookie))
-    return;
+bool PrintViewManagerBase::CheckCookie(int cookie) {
+  if (!OpportunisticallyCreatePrintJob(cookie))
+    return false;
 
   PrintedDocument* document = print_job_->document();
-  if (!document || params.document_cookie != document->cookie()) {
+  if (!document || cookie != document->cookie()) {
     // Out of sync. It may happen since we are completely asynchronous. Old
     // spurious messages can be received if one of the processes is overloaded.
-    return;
+    return false;
   }
+  return true;
+}
 
+bool PrintViewManagerBase::MetafileMustBeValid() {
 #if defined(OS_MACOSX)
-  const bool metafile_must_be_valid = true;
+  return true;
 #else
   const bool metafile_must_be_valid = expecting_first_page_;
   expecting_first_page_ = false;
+  return metafile_must_be_valid;
 #endif
+}
+
+void PrintViewManagerBase::OnDidPrintPage(
+    const PrintHostMsg_DidPrintPage_Params& params) {
+  if (!CheckCookie(params.document_cookie))
+    return;
+
+  const bool metafile_must_be_valid = MetafileMustBeValid();
 
   // Only used when |metafile_must_be_valid| is true.
   std::unique_ptr<base::SharedMemory> shared_buf;
+  scoped_refptr<base::RefCountedBytes> bytes;
   if (metafile_must_be_valid) {
     if (!base::SharedMemory::IsHandleValid(params.metafile_data_handle)) {
       NOTREACHED() << "invalid memory handle";
@@ -161,6 +359,9 @@ void PrintViewManagerBase::OnDidPrintPage(
       web_contents()->Stop();
       return;
     }
+    bytes = new base::RefCountedBytes(
+        reinterpret_cast<const unsigned char*>(shared_buf->memory()),
+        params.data_size);
   } else {
     if (base::SharedMemory::IsHandleValid(params.metafile_data_handle)) {
       NOTREACHED() << "unexpected valid memory handle";
@@ -170,59 +371,8 @@ void PrintViewManagerBase::OnDidPrintPage(
     }
   }
 
-  std::unique_ptr<PdfMetafileSkia> metafile(
-      new PdfMetafileSkia(SkiaDocumentType::PDF));
-  if (metafile_must_be_valid) {
-    if (!metafile->InitFromData(shared_buf->memory(), params.data_size)) {
-      NOTREACHED() << "Invalid metafile header";
-      web_contents()->Stop();
-      return;
-    }
-  }
-
-#if defined(OS_WIN)
-  print_job_->AppendPrintedPage(params.page_number);
-  if (metafile_must_be_valid) {
-    scoped_refptr<base::RefCountedBytes> bytes = new base::RefCountedBytes(
-        reinterpret_cast<const unsigned char*>(shared_buf->memory()),
-        params.data_size);
-    document->DebugDumpData(bytes.get(), FILE_PATH_LITERAL(".pdf"));
-
-    const auto& settings = document->settings();
-    if (settings.printer_is_textonly()) {
-      print_job_->StartPdfToTextConversion(bytes, params.page_size);
-    } else if ((settings.printer_is_ps2() || settings.printer_is_ps3()) &&
-               !base::FeatureList::IsEnabled(
-                   features::kDisablePostScriptPrinting)) {
-      print_job_->StartPdfToPostScriptConversion(bytes, params.content_area,
-                                                 params.physical_offsets,
-                                                 settings.printer_is_ps2());
-    } else {
-      // TODO(thestig): Figure out why rendering text with GDI results in random
-      // missing characters for some users. https://crbug.com/658606
-      // Update : The missing letters seem to have been caused by the same
-      // problem as https://crbug.com/659604 which was resolved. GDI printing
-      // seems to work with the fix for this bug applied.
-      bool print_text_with_gdi = settings.print_text_with_gdi() &&
-                                 !settings.printer_is_xps() &&
-                                 base::FeatureList::IsEnabled(
-                                     features::kGdiTextPrinting);
-      print_job_->StartPdfToEmfConversion(
-          bytes, params.page_size, params.content_area, print_text_with_gdi);
-    }
-  }
-#else
-  // Update the rendered document. It will send notifications to the listener.
-  document->SetPage(params.page_number,
-                    std::move(metafile),
-#if defined(OS_WIN)
-                    0.0f /* dummy shrink_factor */,
-#endif
-                    params.page_size,
-                    params.content_area);
-
-  ShouldQuitFromInnerMessageLoop();
-#endif
+  PrintPage(params.page_number, params.page_size, params.content_area,
+            params.physical_offsets, bytes, metafile_must_be_valid);
 }
 
 void PrintViewManagerBase::OnPrintingFailed(int cookie) {
