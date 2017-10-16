@@ -807,8 +807,14 @@ gfx::Rect PictureLayerImpl::GetEnclosingRectInTargetSpace() const {
   return GetScaledEnclosingRectInTargetSpace(MaximumTilingContentsScale());
 }
 
-bool PictureLayerImpl::ShouldAnimate(PaintImage::Id paint_image_id) const {
+PictureLayerImpl::UpdateType PictureLayerImpl::ShouldAnimate(
+    PaintImage::Id paint_image_id) const {
+  // If we are registered with the animation controller, which queries whether
+  // the image should be animated, then we must have recordings with this image.
   DCHECK(raster_source_);
+  DCHECK(raster_source_->GetDisplayItemList());
+  DCHECK(
+      !raster_source_->GetDisplayItemList()->discardable_image_map().empty());
 
   // Only animate images for layers which HasValidTilePriorities. This check is
   // important for 2 reasons:
@@ -822,9 +828,27 @@ bool PictureLayerImpl::ShouldAnimate(PaintImage::Id paint_image_id) const {
   //
   //  Additionally only animate images which are on-screen, animations are
   //  paused once they are not visible.
-  return HasValidTilePriorities() &&
-         raster_source_->GetRectForImage(paint_image_id)
-             .Intersects(visible_layer_rect());
+  if (!HasValidTilePriorities())
+    return UpdateType::kDontAnimate;
+
+  const Region& image_region = raster_source_->GetDisplayItemList()
+                                   ->discardable_image_map()
+                                   .GetRegionForImage(paint_image_id);
+  DCHECK(!image_region.IsEmpty());
+
+  if (!image_region.Intersects(visible_layer_rect()))
+    return UpdateType::kDontAnimate;
+
+  // If any region for this image was not updated in a previous invalidation,
+  // request another one if that region is now visible.
+  const auto it = image_region_with_stale_content_.find(paint_image_id);
+  if (it == image_region_with_stale_content_.end())
+    return UpdateType::kAnimate;
+
+  DCHECK(!it->second.IsEmpty());
+  return it->second.Intersects(visible_layer_rect())
+             ? UpdateType::kAnimateAndInvalidate
+             : UpdateType::kAnimate;
 }
 
 gfx::Size PictureLayerImpl::CalculateTileSize(
@@ -1554,18 +1578,84 @@ bool PictureLayerImpl::HasValidTilePriorities() const {
 }
 
 void PictureLayerImpl::InvalidateRegionForImages(
-    const PaintImageIdFlatSet& images_to_invalidate) {
-  TRACE_EVENT_BEGIN0("cc", "PictureLayerImpl::InvalidateRegionForImages");
+    const PaintImageIdFlatSet& checkered_images,
+    const ImageAnimationController::Invalidations& animated_images) {
+  TRACE_EVENT0("cc", "PictureLayerImpl::InvalidateRegionForImages");
+
+  if (!raster_source_ || !raster_source_->GetDisplayItemList() ||
+      raster_source_->GetDisplayItemList()->discardable_image_map().empty()) {
+    TRACE_EVENT0("cc", "PictureLayerImpl::InvalidateRegionForImages::NoImages");
+    return;
+  }
 
   InvalidationRegion image_invalidation;
-  for (auto image_id : images_to_invalidate)
-    image_invalidation.Union(raster_source_->GetRectForImage(image_id));
+  for (auto image_id : checkered_images) {
+    // For checkered images, invalidate the complete region, including the
+    // prepaint area.
+    image_invalidation.Union(raster_source_->GetDisplayItemList()
+                                 ->discardable_image_map()
+                                 .GetRegionForImage(image_id));
+  }
+
+  for (auto it : animated_images) {
+    // In the case of animated images, only invalidate the rect if it intersects
+    // with the layer's visible rect to avoid regular invalidations to prepaint
+    // regions. For the region which is not visible, it is saved in
+    // |image_region_with_stale_content_| for deferred update when the
+    // visibility changes.
+    // Note it is still important to invalidate the whole rect to ensure that
+    // the update to this instance of the image is atomic.
+    const PaintImage::Id image_id = it.first;
+    const bool only_invalidate_stale_region =
+        it.second ==
+        ImageAnimationController::InvalidationType::kDeferredInvalidation;
+    const auto& image_region = raster_source_->GetDisplayItemList()
+                                   ->discardable_image_map()
+                                   .GetRegionForImage(image_id);
+    if (image_region.IsEmpty())
+      continue;
+
+    auto stale_region_it = image_region_with_stale_content_.find(image_id);
+    if (only_invalidate_stale_region &&
+        stale_region_it == image_region_with_stale_content_.end())
+      continue;
+
+    for (Region::Iterator iter(image_region); iter.has_rect(); iter.next()) {
+      auto rect = iter.rect();
+      if (only_invalidate_stale_region &&
+          !stale_region_it->second.Intersects(rect))
+        continue;
+
+      if (rect.Intersects(visible_layer_rect())) {
+        image_invalidation.Union(rect);
+
+        // If the region was saved for deferred update, it will be invalidated
+        // now. Update this tracking.
+        if (stale_region_it != image_region_with_stale_content_.end())
+          stale_region_it->second.Subtract(rect);
+      } else {
+        // Save the region for updating when it becomes visible.
+        if (stale_region_it == image_region_with_stale_content_.end()) {
+          stale_region_it = image_region_with_stale_content_
+                                .insert(std::make_pair(image_id, Region(rect)))
+                                .first;
+        } else {
+          stale_region_it->second.Union(rect);
+        }
+      }
+    }
+
+    if (stale_region_it != image_region_with_stale_content_.end() &&
+        stale_region_it->second.IsEmpty())
+      image_region_with_stale_content_.erase(stale_region_it);
+  }
+
   Region invalidation;
   image_invalidation.Swap(&invalidation);
 
   if (invalidation.IsEmpty()) {
-    TRACE_EVENT_END1("cc", "PictureLayerImpl::InvalidateRegionForImages",
-                     "Invalidation", invalidation.ToString());
+    TRACE_EVENT0("cc",
+                 "PictureLayerImpl::InvalidateRegionForImages::NoInvalidation");
     return;
   }
 
@@ -1579,8 +1669,8 @@ void PictureLayerImpl::InvalidateRegionForImages(
   invalidation_.Union(invalidation);
   tilings_->Invalidate(invalidation);
   SetNeedsPushProperties();
-  TRACE_EVENT_END1("cc", "PictureLayerImpl::InvalidateRegionForImages",
-                   "Invalidation", invalidation.ToString());
+  TRACE_EVENT1("cc", "PictureLayerImpl::InvalidateRegionForImages",
+               "Invalidation", invalidation.ToString());
 }
 
 void PictureLayerImpl::RegisterAnimatedImages() {
