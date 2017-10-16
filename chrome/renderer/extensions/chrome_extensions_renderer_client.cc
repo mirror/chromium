@@ -176,12 +176,6 @@ void ChromeExtensionsRendererClient::RenderFrameCreated(
   extension_dispatcher_->OnRenderFrameCreated(render_frame);
 }
 
-void ChromeExtensionsRendererClient::RenderViewCreated(
-    content::RenderView* render_view) {
-  // Manages its own lifetime.
-  new extensions::AutomationApiHelper(render_view);
-}
-
 bool ChromeExtensionsRendererClient::OverrideCreatePlugin(
     content::RenderFrame* render_frame,
     const blink::WebPluginParams& params) {
