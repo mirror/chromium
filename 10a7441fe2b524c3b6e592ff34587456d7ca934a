@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f09eb495_f8514d97",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-10-16T21:41:40Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "10a7441fe2b524c3b6e592ff34587456d7ca934a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7148006_3dfe66ae",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-10-16T21:41:40Z",
+      "side": 1,
+      "message": "I haven\u0027t looked at this method in detail yet, so maybe these are dumb ideas.  But do you think it would be possible to a) perform the adjustment in 1D (mixing 2D geometry at this level makes it hard to follow) then apply to 2D data in a separate phase, and possibly b) refactor in a less repetitive manner (table driven? no idea if feasible, i\u0027d have to grok it first :)",
+      "revId": "10a7441fe2b524c3b6e592ff34587456d7ca934a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e7049e_6dc89a9b",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-10-16T21:41:40Z",
+      "side": 1,
+      "message": "This is only used in GraphicsContext.cpp - can you make it static/anonymous and hide it from GC.h?",
+      "revId": "10a7441fe2b524c3b6e592ff34587456d7ca934a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
