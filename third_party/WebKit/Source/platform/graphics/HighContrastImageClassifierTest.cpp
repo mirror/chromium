@@ -66,7 +66,7 @@ TEST_F(HighContrastImageClassifierTest, FeaturesAndClassification) {
   EXPECT_FALSE(GetFeaturesAndClassification(
       "/LayoutTests/images/resources/blue-wheel-srgb-color-profile.png",
       &features));
-  EXPECT_TRUE(AreFeaturesEqual(features, {1.0f, 0.0336914f}));
+  EXPECT_TRUE(AreFeaturesEqual(features, {1.0f, 0.0314941f}));
 
   // Test Case 2:
   EXPECT_TRUE(GetFeaturesAndClassification(
