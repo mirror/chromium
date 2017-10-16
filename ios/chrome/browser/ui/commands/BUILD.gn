@@ -16,6 +16,7 @@ source_set("commands") {
     "command_dispatcher.mm",
     "generic_chrome_command.h",
     "generic_chrome_command.mm",
+    "gr_search_commands.h",
     "history_popup_commands.h",
     "ios_command_ids.h",
     "open_new_tab_command.h",

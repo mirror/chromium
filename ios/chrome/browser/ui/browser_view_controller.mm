@@ -130,6 +130,7 @@
 #import "ios/chrome/browser/ui/find_bar/find_bar_controller_ios.h"
 #import "ios/chrome/browser/ui/first_run/welcome_to_chrome_view_controller.h"
 #import "ios/chrome/browser/ui/fullscreen_controller.h"
+#import "ios/chrome/browser/ui/gr_search/gr_search_coordinator.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_presentation.h"
 #import "ios/chrome/browser/ui/history_popup/tab_history_legacy_coordinator.h"
 #import "ios/chrome/browser/ui/key_commands_provider.h"
@@ -558,6 +559,9 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
   // Coordinator for the toolbar.
   LegacyToolbarCoordinator* _toolbarCoordinator;
+
+  // Coordinator for the GR Search UI.
+  GRSearchCoordinator* _grSearchCoordinator;
 
   // Fake status bar view used to blend the toolbar into the status bar.
   UIView* _fakeStatusBarView;
@@ -1968,6 +1972,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _pageInfoCoordinator.loader = self;
   _pageInfoCoordinator.presentationProvider = self;
   _pageInfoCoordinator.tabModel = _model;
+
+  _grSearchCoordinator =
+      [[GRSearchCoordinator alloc] initWithBaseViewController:self];
+  _grSearchCoordinator.dispatcher = _dispatcher;
 
   if (base::FeatureList::IsEnabled(payments::features::kWebPayments)) {
     _paymentRequestManager = [[PaymentRequestManager alloc]

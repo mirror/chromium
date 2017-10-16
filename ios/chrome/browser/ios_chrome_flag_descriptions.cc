@@ -89,6 +89,9 @@ const char kUseDdljsonApiName[] = "Use new ddljson API for Doodles";
 const char kUseDdljsonApiDescription[] =
     "Enables the new ddljson API to fetch Doodles for the NTP.";
 
+const char kGRSearchName[] = "GR Search";
+const char kGRSearchDescription[] = "Enable support for GR Search.";
+
 const char kWebPaymentsName[] = "Web Payments";
 const char kWebPaymentsDescription[] =
     "Enable Payment Request API integration, a JavaScript API for merchants.";
