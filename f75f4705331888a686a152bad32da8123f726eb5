@@ -46,6 +46,30 @@
       "revId": "f75f4705331888a686a152bad32da8123f726eb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce76a1c4_007ec8cf",
+        "filename": "ash/fast_ink/fast_ink_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-16T17:21:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "058cbb9d_f2c34f05",
+      "range": {
+        "startLine": 40,
+        "startChar": 36,
+        "endLine": 40,
+        "endChar": 39
+      },
+      "revId": "f75f4705331888a686a152bad32da8123f726eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
