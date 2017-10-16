@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0dfc4e3_5559c2b0",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-16T21:07:34Z",
+      "side": 1,
+      "message": "nit: action.",
+      "revId": "da83e50461b5bd8fa74c88ce89ee4cc803fe3b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11facc32_bb3695ee",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-16T21:07:34Z",
+      "side": 1,
+      "message": "Any chance we could just queue up the number of expected events and make assertions at the end once all events come through? Adding sleeps is bound to cause flakes.",
+      "revId": "da83e50461b5bd8fa74c88ce89ee4cc803fe3b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bac81f2e_4f218b9b",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-16T21:07:34Z",
+      "side": 1,
+      "message": "Would be clearer to assert each of these equals i.",
+      "revId": "da83e50461b5bd8fa74c88ce89ee4cc803fe3b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
