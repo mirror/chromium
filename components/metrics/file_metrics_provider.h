@@ -103,6 +103,12 @@ class FileMetricsProvider : public MetricsProvider,
     // Process this file normally.
     FILTER_PROCESS_FILE,
 
+    // This file is the active metrics file for the current process.  Don't
+    // do anything with it. This is effectively "try later" but isn't
+    // added to the results histogram because the file has to be ignored
+    // throughout the life of the browser and that skews the distribution.
+    FILTER_ACTIVE_THIS_PID,
+
     // Try again. This could happen within milliseconds or minutes but no other
     // files from the same source will get processed in between. The process
     // must have permission to "touch" the file and alter its last-modified
@@ -200,6 +206,9 @@ class FileMetricsProvider : public MetricsProvider,
 
     // The file was skipped according to filtering rules.
     ACCESS_RESULT_FILTER_SKIP_FILE,
+
+    // The file was skipped because it's being written by this process.
+    ACCESS_RESULT_THIS_PID,
 
     ACCESS_RESULT_MAX
   };

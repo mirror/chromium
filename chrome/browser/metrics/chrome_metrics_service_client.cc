@@ -64,7 +64,6 @@
 #include "components/metrics/component_metrics_provider.h"
 #include "components/metrics/drive_metrics_provider.h"
 #include "components/metrics/field_trials_provider.h"
-#include "components/metrics/file_metrics_provider.h"
 #include "components/metrics/gpu/gpu_metrics_provider.h"
 #include "components/metrics/metrics_log_uploader.h"
 #include "components/metrics/metrics_pref_names.h"
@@ -98,6 +97,10 @@
 #include "chrome/browser/metrics/page_load_metrics_provider.h"
 #include "chrome/browser/ui/android/tab_model/tab_model_list.h"
 #include "chrome/browser/ui/android/tab_model/tab_model_list_observer.h"
+#endif
+
+#if defined(OS_POSIX)
+#include <signal.h>
 #endif
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
@@ -245,12 +248,14 @@ std::unique_ptr<metrics::FileMetricsProvider> CreateFileMetricsProvider(
     base::FilePath browser_metrics_upload_dir = user_data_dir.AppendASCII(
         ChromeMetricsServiceClient::kBrowserMetricsName);
     if (metrics_reporting_enabled) {
-      file_metrics_provider->RegisterSource(
-          metrics::FileMetricsProvider::Params(
-              browser_metrics_upload_dir,
-              metrics::FileMetricsProvider::SOURCE_HISTOGRAMS_ATOMIC_DIR,
-              metrics::FileMetricsProvider::ASSOCIATE_INTERNAL_PROFILE,
-              ChromeMetricsServiceClient::kBrowserMetricsName));
+      metrics::FileMetricsProvider::Params browser_metrics_params(
+          browser_metrics_upload_dir,
+          metrics::FileMetricsProvider::SOURCE_HISTOGRAMS_ATOMIC_DIR,
+          metrics::FileMetricsProvider::ASSOCIATE_INTERNAL_PROFILE,
+          ChromeMetricsServiceClient::kBrowserMetricsName);
+      browser_metrics_params.filter = base::BindRepeating(
+          &ChromeMetricsServiceClient::FilterBrowserMetricsFiles);
+      file_metrics_provider->RegisterSource(browser_metrics_params);
 
       base::FilePath active_path;
       base::GlobalHistogramAllocator::ConstructFilePaths(
@@ -333,6 +338,27 @@ class AndroidIncognitoObserver : public TabModelListObserver {
   ChromeMetricsServiceClient* parent_;
 };
 #endif
+
+ChromeMetricsServiceClient::IsProcessRunningFunction g_is_process_running =
+    nullptr;
+bool IsProcessRunning(base::ProcessId pid) {
+#if defined(OS_WIN)
+  HANDLE process = OpenProcess(SYNCHRONIZE, FALSE, pid);
+  if (process) {
+    DWORD ret = WaitForSingleObject(process, 0);
+    CloseHandle(process);
+    if (ret == WAIT_TIMEOUT)
+      return true;
+  }
+#elif defined(OS_POSIX)
+  // Sending a signal value of 0 will cause error checking to be performed
+  // with no signal being sent.
+  if (kill(pid, 0) == 0 || errno != ESRCH)
+    return true;
+#endif
+
+  return false;
+}
 
 }  // namespace
 
@@ -910,6 +936,36 @@ void ChromeMetricsServiceClient::OnSyncPrefsChanged(bool must_purge) {
   }
   // Signal service manager to enable/disable UKM based on new state.
   UpdateRunningServices();
+}
+
+// static
+metrics::FileMetricsProvider::FilterAction
+ChromeMetricsServiceClient::FilterBrowserMetricsFiles(
+    const base::FilePath& path) {
+  base::ProcessId pid;
+  if (!base::GlobalHistogramAllocator::ParseFilePath(path, nullptr, nullptr,
+                                                     &pid)) {
+    return metrics::FileMetricsProvider::FILTER_PROCESS_FILE;
+  }
+
+  if (pid == base::GetCurrentProcId())
+    return metrics::FileMetricsProvider::FILTER_ACTIVE_THIS_PID;
+
+  if (g_is_process_running) {
+    if (g_is_process_running(pid))
+      return metrics::FileMetricsProvider::FILTER_TRY_LATER;
+  } else {
+    if (IsProcessRunning(pid))
+      return metrics::FileMetricsProvider::FILTER_TRY_LATER;
+  }
+
+  return metrics::FileMetricsProvider::FILTER_PROCESS_FILE;
+}
+
+// static
+void ChromeMetricsServiceClient::SetIsProcessRunningForTesting(
+    ChromeMetricsServiceClient::IsProcessRunningFunction func) {
+  g_is_process_running = func;
 }
 
 bool ChromeMetricsServiceClient::IsHistorySyncEnabledOnAllProfiles() {
