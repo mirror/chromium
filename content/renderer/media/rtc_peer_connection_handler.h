@@ -149,8 +149,7 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
       std::unique_ptr<blink::WebRTCStatsReportCallback> callback) override;
   blink::WebVector<std::unique_ptr<blink::WebRTCRtpSender>> GetSenders()
       override;
-  blink::WebVector<std::unique_ptr<blink::WebRTCRtpReceiver>> GetReceivers()
-      override;
+  std::vector<std::unique_ptr<RTCRtpReceiver>> GetReceiversForTesting();
   std::unique_ptr<blink::WebRTCRtpSender> AddTrack(
       const blink::WebMediaStreamTrack& web_track,
       const blink::WebVector<blink::WebMediaStream>& web_streams) override;
@@ -247,8 +246,6 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
       std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>::iterator
   FindRemoteStreamAdapter(
       const scoped_refptr<webrtc::MediaStreamInterface>& webrtc_stream);
-  std::unique_ptr<blink::WebRTCRtpReceiver> GetWebRTCRtpReceiver(
-      rtc::scoped_refptr<webrtc::RtpReceiverInterface> webrtc_receiver);
 
   scoped_refptr<base::SingleThreadTaskRunner> signaling_thread() const;
 
