@@ -59,6 +59,7 @@ enum class FetchCompletedReasonHistogramSuffix {
   kDownloadSuccess,
   kDownloadFailure,
   kNetworkError,
+  kTestingWinClang,
 };
 
 base::FilePath::StringType CleanerTempDirectoryPrefix() {
