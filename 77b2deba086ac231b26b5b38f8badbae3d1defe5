@@ -16,6 +16,24 @@
       "revId": "77b2deba086ac231b26b5b38f8badbae3d1defe5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0fa427f_244b2be8",
+        "filename": "components/payments/core/strings_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-16T14:25:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42c45e70_a6b02156",
+      "revId": "77b2deba086ac231b26b5b38f8badbae3d1defe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
