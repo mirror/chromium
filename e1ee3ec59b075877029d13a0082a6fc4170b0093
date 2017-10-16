@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5889c882_a24dada5",
+        "filename": "headless/lib/browser/headless_url_request_context_getter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-10-16T00:44:19Z",
+      "side": 1,
+      "message": "If no --user-data-dir is set, this defaults to EXE_DIR (see https://cs.chromium.org/chromium/src/headless/lib/browser/headless_browser_context_impl.cc?rcl\u003d60dbde98da0052691c263cf66859eb14514aae28\u0026l\u003d206)\nwhich could be problematic. \n\nI think for now it would be better to enable it only if --user-data-dir is set and perhaps add a TODO to enable it by default once saving/restoring sessions is implemented (https://crbug.com/617931)",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 41
+      },
+      "revId": "e1ee3ec59b075877029d13a0082a6fc4170b0093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
