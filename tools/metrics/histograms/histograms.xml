@@ -32587,6 +32587,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.VAJEA.EncoderFailure" enum="VAJEAEncoderFailure">
+  <owner>shenghao@chromium.org</owner>
+  <summary>
+    Error codes reported by jpeg encode using VA-API hardware jpeg encoder.
+  </summary>
+</histogram>
+
 <histogram name="Media.VAVDA.DecoderFailure" enum="VAVDADecoderFailure">
   <owner>posciak@chromium.org</owner>
   <summary>
