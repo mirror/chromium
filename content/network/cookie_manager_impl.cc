@@ -4,6 +4,7 @@
 
 #include "content/network/cookie_manager_impl.h"
 
+#include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_constants.h"
 #include "net/cookies/cookie_options.h"
@@ -32,15 +33,20 @@ class PredicateWrapper {
                                : std::set<std::string>()),
         session_control_(filter->session_control) {}
 
+  // Return true if the given cookie should be deleted.
   bool Predicate(const net::CanonicalCookie& cookie) {
     // Ignore begin/end times; they're handled by method args.
+    std::string domain = cookie.Domain();
     bool result = true;
+    // Delete if the cookie is not in excluding_domains_
     if (use_excluding_domains_)
-      result &= (excluding_domains_.count(cookie.Domain()) == 0);
+      result &= !DomainMatches(domain, excluding_domains_);
 
+    // Delete if the cookie is in including_domains_
     if (use_including_domains_)
-      result &= (including_domains_.count(cookie.Domain()) != 0);
+      result &= DomainMatches(domain, including_domains_);
 
+    // Delete if the cookie is not the correct persistent or session type.
     if (session_control_ !=
         network::mojom::CookieDeletionSessionControl::IGNORE_CONTROL) {
       // Relies on the assumption that there are only three values possible for
@@ -54,6 +60,22 @@ class PredicateWrapper {
   }
 
  private:
+  // Return true if the eTLD+1 of the domain matches any of the strings
+  // in match_domains, false otherwise.
+  bool DomainMatches(const std::string& domain,
+                     const std::set<std::string>& match_domains) {
+    std::string effective_domain(
+        net::registry_controlled_domains::GetDomainAndRegistry(
+            domain,
+            net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES));
+    if (effective_domain.empty())
+      effective_domain = domain;
+
+    if (!effective_domain.empty() && effective_domain[0] == '.')
+      effective_domain = effective_domain.substr(1);
+    return match_domains.count(effective_domain) != 0;
+  }
+
   bool use_excluding_domains_;
   std::set<std::string> excluding_domains_;
 
