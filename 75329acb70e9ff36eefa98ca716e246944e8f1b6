@@ -36,6 +36,40 @@
     },
     {
       "key": {
+        "uuid": "bcf26331_c3c0e52d",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-16T14:45:03Z",
+      "side": 1,
+      "message": "This may already exist, but we should certainly have a trace event that measures the cost of animation updates.",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc874131_9a5125fb",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-16T14:45:03Z",
+      "side": 1,
+      "message": "Is the reason that we start based on monotonic rather than the provided time that no other accelerated animation would have its start triggered by the time fraction vended by the AW animation?\n\nHow are AW animations started?",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b833e713_54306015",
         "filename": "cc/animation/worklet_animation_player.h",
         "patchSetId": 28
@@ -47,6 +81,23 @@
       "writtenOn": "2017-10-16T13:16:55Z",
       "side": 1,
       "message": "It looks like WAP is not instantiated yet in the current code, so I\u0027m not totally sure its relationship to other classes. Say we have an element whose opacity is being mutated by one worklet, but its transform is being animated by another. Will the results of these two animations be propagated to the correct property tree nodes via a single WAP corresponding to the DOM element, or will each worklet have a player?",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2bc5c8_88a8e9f1",
+        "filename": "cc/animation/worklet_animation_player.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-16T14:45:03Z",
+      "side": 1,
+      "message": "OOC: why this string type and not something like base::string16?",
       "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -98,6 +149,23 @@
       "writtenOn": "2017-10-14T01:07:34Z",
       "side": 1,
       "message": "Add explicit.",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d04a4d7_c039684c",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-16T14:45:03Z",
+      "side": 1,
+      "message": "Could you please log a bug for this?",
       "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
