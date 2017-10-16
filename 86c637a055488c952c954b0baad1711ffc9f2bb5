@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e264dea_17d2e948",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-16T08:57:36Z",
+      "side": 1,
+      "message": "We block web content from opening a number of things beyond `chrome` (`chrome-search` and `chrome-native`, for instance: see the set of things that call into `WebSecurityPolicy::RegisterURLSchemeAsDisplayIsolated`). What are the security guarantees you\u0027d like to provide with this check? Does it make sense to reuse that wider list, or is there a specific issue you wish to prevent for `chrome:`? Would it be possible to enumerate the schemes you _do_ wish to open, rather than enumerating those you wish to restrict?\n\n+creis@, who knows more about the display-isolated restrictions than I do, and who might have opinions about y\u0027all\u0027s threat model. :)",
+      "revId": "86c637a055488c952c954b0baad1711ffc9f2bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed496a0_4bf7e341",
+        "filename": "url/url_constants.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-16T08:57:36Z",
+      "side": 1,
+      "message": "Ideally, this wouldn\u0027t be a concept in //url. We have `kChromeUIScheme` in //content/public/common/url_constants.h, though: could you use that instead?",
+      "revId": "86c637a055488c952c954b0baad1711ffc9f2bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
