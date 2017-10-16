@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c69d9aa0_a6ea3dc0",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_screen_eula.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-16T18:15:04Z",
+      "side": 1,
+      "message": "nit: sent",
+      "range": {
+        "startLine": 14,
+        "startChar": 13,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "fbddb113938f7c06ba2da4079c6030206ed1b9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f235c6d6_f59d6f57",
+        "filename": "chrome/browser/ui/webui/about_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-16T18:15:04Z",
+      "side": 1,
+      "message": "Great, thanks!  Agreed that this should force a swap when loaded in the main frame.  The navigation may be blocked if attempted in a subframe after https://crbug.com/683418 is fixed, but that should be fine since we don\u0027t expect this URL to load in any WebUI iframes after this CL lands.",
+      "revId": "fbddb113938f7c06ba2da4079c6030206ed1b9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
