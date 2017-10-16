@@ -22,6 +22,30 @@
       "revId": "32e700ad69f4120a6663ee50e2b6c3d1373f78af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b267719c_ea83c8ec",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-16T18:54:38Z",
+      "side": 0,
+      "message": "I don\u0027t see any nib. It looks like the author of that code used IBAction, for methods called by UI objects created in that file.\n\nSo I take the opportunity of this patch to replace IBAction to void.",
+      "parentUuid": "0de26404_7231c175",
+      "range": {
+        "startLine": 908,
+        "startChar": 12,
+        "endLine": 908,
+        "endChar": 31
+      },
+      "revId": "32e700ad69f4120a6663ee50e2b6c3d1373f78af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
