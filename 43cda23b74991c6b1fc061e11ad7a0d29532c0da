@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b82af288_2420655b",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-16T17:19:03Z",
+      "side": 1,
+      "message": "Are we sure base::Passed works in conjunction with base::RepeatingBind they way we want them to?",
+      "revId": "43cda23b74991c6b1fc061e11ad7a0d29532c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
