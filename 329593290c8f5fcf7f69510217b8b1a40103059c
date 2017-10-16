@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9605e8f3_3d0fd36f",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-16T12:55:08Z",
+      "side": 1,
+      "message": "Should we have a DCHECK that Dice is not enabled here? And in GoogleSigninSucceeded() too?",
+      "revId": "329593290c8f5fcf7f69510217b8b1a40103059c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
