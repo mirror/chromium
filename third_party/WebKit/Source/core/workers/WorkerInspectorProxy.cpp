@@ -16,6 +16,7 @@
 #include "platform/WebTaskRunner.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/wtf/CryptographicallyRandomNumber.h"
 #include "public/platform/WebTraceLocation.h"
 
 namespace blink {
@@ -45,8 +46,6 @@ WorkerInspectorProxy* WorkerInspectorProxy::Create() {
 WorkerInspectorProxy::~WorkerInspectorProxy() {}
 
 const String& WorkerInspectorProxy::InspectorId() {
-  if (inspector_id_.IsEmpty())
-    inspector_id_ = "dedicated:" + IdentifiersFactory::CreateIdentifier();
   return inspector_id_;
 }
 
@@ -65,6 +64,7 @@ void WorkerInspectorProxy::WorkerThreadCreated(
   worker_thread_ = worker_thread;
   execution_context_ = execution_context;
   url_ = url.GetString();
+  inspector_id_ = String::Number(CryptographicallyRandomNumber());
   InspectorProxies().insert(this);
   // We expect everyone starting worker thread to synchronously ask for
   // WorkerStartMode() right before.
@@ -163,6 +163,7 @@ void WorkerInspectorProxy::SendMessageToInspector(int session_id,
 }
 
 void WorkerInspectorProxy::WriteTimelineStartedEvent(
+    const String& event_id,
     const String& tracing_session_id) {
   if (!worker_thread_)
     return;
@@ -170,7 +171,7 @@ void WorkerInspectorProxy::WriteTimelineStartedEvent(
                        "TracingSessionIdForWorker", TRACE_EVENT_SCOPE_THREAD,
                        "data",
                        InspectorTracingSessionIdForWorkerEvent::Data(
-                           tracing_session_id, InspectorId(), worker_thread_));
+                           tracing_session_id, event_id, worker_thread_));
 }
 
 DEFINE_TRACE(WorkerInspectorProxy) {

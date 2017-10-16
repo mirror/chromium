@@ -94,7 +94,6 @@ class TargetHandler : public DevToolsDomainHandler,
   std::map<std::string, std::unique_ptr<Session>> attached_sessions_;
   std::map<DevToolsAgentHost*, Session*> auto_attached_sessions_;
   std::set<DevToolsAgentHost*> reported_hosts_;
-  int last_session_id_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(TargetHandler);
 };

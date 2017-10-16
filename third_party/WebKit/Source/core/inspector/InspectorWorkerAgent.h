@@ -79,6 +79,7 @@ class CORE_EXPORT InspectorWorkerAgent final
   void DisconnectFromAllProxies(bool report_to_frontend);
   void ConnectToProxy(WorkerInspectorProxy*, bool waiting_for_debugger);
   protocol::DictionaryValue* AttachedSessionIds();
+  String TargetId(WorkerInspectorProxy*);
 
   // WorkerInspectorProxy::PageInspector implementation.
   void DispatchMessageFromWorker(WorkerInspectorProxy*,
@@ -91,7 +92,6 @@ class CORE_EXPORT InspectorWorkerAgent final
   HashMap<String, int> session_id_to_connection_;
   String host_id_;
   String tracing_session_id_;
-  static int s_last_connection_;
 };
 
 }  // namespace blink

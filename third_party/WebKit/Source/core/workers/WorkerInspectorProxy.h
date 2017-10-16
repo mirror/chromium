@@ -46,7 +46,8 @@ class CORE_EXPORT WorkerInspectorProxy final
   void ConnectToInspector(int session_id, const String&, PageInspector*);
   void DisconnectFromInspector(int session_id, PageInspector*);
   void SendMessageToInspector(int session_id, const String& message);
-  void WriteTimelineStartedEvent(const String& tracing_session_id);
+  void WriteTimelineStartedEvent(const String& event_id,
+                                 const String& tracing_session_id);
 
   const String& Url() { return url_; }
   ExecutionContext* GetExecutionContext() { return execution_context_; }

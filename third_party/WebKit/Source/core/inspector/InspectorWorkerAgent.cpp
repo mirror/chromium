@@ -33,6 +33,7 @@
 #include "core/dom/Document.h"
 #include "core/inspector/InspectedFrames.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/wtf/CryptographicallyRandomNumber.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -46,8 +47,6 @@ static const char kAutoAttach[] = "autoAttach";
 static const char kWaitForDebuggerOnStart[] = "waitForDebuggerOnStart";
 static const char kAttachedSessionIds[] = "attachedSessionIds";
 };
-
-int InspectorWorkerAgent::s_last_connection_ = 0;
 
 InspectorWorkerAgent::InspectorWorkerAgent(InspectedFrames* inspected_frames)
     : inspected_frames_(inspected_frames) {}
@@ -116,7 +115,7 @@ Response InspectorWorkerAgent::sendMessageToTarget(const String& message,
   if (target_id.isJust()) {
     int connection = 0;
     for (auto& it : connected_proxies_) {
-      if (it.value->InspectorId() == target_id.fromJust()) {
+      if (TargetId(it.value) == target_id.fromJust()) {
         if (connection)
           return Response::Error("Multiple sessions attached, specify id");
         connection = it.key;
@@ -140,8 +139,10 @@ void InspectorWorkerAgent::SetTracingSessionId(
   tracing_session_id_ = tracing_session_id;
   if (tracing_session_id.IsEmpty())
     return;
-  for (auto& id_proxy : connected_proxies_)
-    id_proxy.value->WriteTimelineStartedEvent(tracing_session_id);
+  for (auto& id_proxy : connected_proxies_) {
+    WorkerInspectorProxy* proxy = id_proxy.value;
+    proxy->WriteTimelineStartedEvent(TargetId(proxy), tracing_session_id);
+  }
 }
 
 void InspectorWorkerAgent::ShouldWaitForDebuggerOnWorkerStart(bool* result) {
@@ -155,7 +156,7 @@ void InspectorWorkerAgent::DidStartWorker(WorkerInspectorProxy* proxy,
   DCHECK(GetFrontend() && AutoAttachEnabled());
   ConnectToProxy(proxy, waiting_for_debugger);
   if (!tracing_session_id_.IsEmpty())
-    proxy->WriteTimelineStartedEvent(tracing_session_id_);
+    proxy->WriteTimelineStartedEvent(TargetId(proxy), tracing_session_id_);
 }
 
 void InspectorWorkerAgent::WorkerTerminated(WorkerInspectorProxy* proxy) {
@@ -167,7 +168,7 @@ void InspectorWorkerAgent::WorkerTerminated(WorkerInspectorProxy* proxy) {
   }
   for (const String& session_id : session_ids) {
     AttachedSessionIds()->remove(session_id);
-    GetFrontend()->detachedFromTarget(session_id, proxy->InspectorId());
+    GetFrontend()->detachedFromTarget(session_id, TargetId(proxy));
     int connection = session_id_to_connection_.at(session_id);
     proxy->DisconnectFromInspector(connection, this);
     connected_proxies_.erase(connection);
@@ -193,7 +194,7 @@ void InspectorWorkerAgent::DisconnectFromAllProxies(bool report_to_frontend) {
     WorkerInspectorProxy* proxy = connected_proxies_.at(it.value);
     if (report_to_frontend) {
       AttachedSessionIds()->remove(it.key);
-      GetFrontend()->detachedFromTarget(it.key, proxy->InspectorId());
+      GetFrontend()->detachedFromTarget(it.key, TargetId(proxy));
     }
     proxy->DisconnectFromInspector(it.value, this);
   }
@@ -225,12 +226,16 @@ protocol::DictionaryValue* InspectorWorkerAgent::AttachedSessionIds() {
   return ids;
 }
 
+String InspectorWorkerAgent::TargetId(WorkerInspectorProxy* proxy) {
+  return host_id_ + ":" + proxy->InspectorId();
+}
+
 void InspectorWorkerAgent::ConnectToProxy(WorkerInspectorProxy* proxy,
                                           bool waiting_for_debugger) {
-  int connection = ++s_last_connection_;
+  int connection = static_cast<int>(CryptographicallyRandomNumber());
   connected_proxies_.Set(connection, proxy);
 
-  String session_id = proxy->InspectorId() + "-" + String::Number(connection);
+  String session_id = TargetId(proxy) + ":" + String::Number(connection);
   session_id_to_connection_.Set(session_id, connection);
   connection_to_session_id_.Set(connection, session_id);
 
@@ -239,7 +244,7 @@ void InspectorWorkerAgent::ConnectToProxy(WorkerInspectorProxy* proxy,
   AttachedSessionIds()->setBoolean(session_id, true);
   GetFrontend()->attachedToTarget(session_id,
                                   protocol::Target::TargetInfo::create()
-                                      .setTargetId(proxy->InspectorId())
+                                      .setTargetId(TargetId(proxy))
                                       .setType("worker")
                                       .setTitle(proxy->Url())
                                       .setUrl(proxy->Url())
@@ -255,8 +260,7 @@ void InspectorWorkerAgent::DispatchMessageFromWorker(
   auto it = connection_to_session_id_.find(connection);
   if (it == connection_to_session_id_.end())
     return;
-  GetFrontend()->receivedMessageFromTarget(it->value, message,
-                                           proxy->InspectorId());
+  GetFrontend()->receivedMessageFromTarget(it->value, message, TargetId(proxy));
 }
 
 DEFINE_TRACE(InspectorWorkerAgent) {

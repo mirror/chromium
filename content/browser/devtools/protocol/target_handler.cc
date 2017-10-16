@@ -5,6 +5,7 @@
 #include "content/browser/devtools/protocol/target_handler.h"
 
 #include "base/strings/stringprintf.h"
+#include "base/unguessable_token.h"
 #include "content/browser/devtools/devtools_manager.h"
 #include "content/browser/devtools/devtools_session.h"
 #include "content/public/browser/devtools_agent_host_client.h"
@@ -35,8 +36,9 @@ class TargetHandler::Session : public DevToolsAgentHostClient {
   static std::string Attach(TargetHandler* handler,
                             DevToolsAgentHost* agent_host,
                             bool waiting_for_debugger) {
-    std::string id = base::StringPrintf("%s:%d", agent_host->GetId().c_str(),
-                                        ++handler->last_session_id_);
+    std::string id =
+        base::StringPrintf("%s:%s", agent_host->GetId().c_str(),
+                           base::UnguessableToken::Create().ToString().c_str());
     Session* session = new Session(handler, agent_host, id);
     handler->attached_sessions_[id].reset(session);
     agent_host->AttachClient(session);
