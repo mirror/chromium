@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12f8da67_2887cda4",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-16T16:19:55Z",
+      "side": 1,
+      "message": "Maybe add a few words about it not working because without this option they get different inodes?",
+      "revId": "716f48493646c6a00f47d229ada3bd41e6b056f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
