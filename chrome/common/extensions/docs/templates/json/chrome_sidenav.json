@@ -535,10 +535,6 @@
                 "href": "/extensions/overview"
               },
               {
-                "title": "Hosting Changes",
-                "href": "/extensions/hosting_changes"
-              },
-              {
                 "title": "Extension Quality Guidelines FAQ",
                 "href": "/extensions/single_purpose"
               },
@@ -621,11 +617,11 @@
           },
           {
             "title": "Distribute Extensions",
-            "href": "/extensions/hosting",
+            "href": "/extensions/hosting_updating",
             "items": [
               {
-                "title": "Hosting",
-                "href": "/extensions/hosting"
+                "title": "Hosting and Updating",
+                "href": "/extensions/hosting_updating"
               },
               {
                 "title": "Packaging",
@@ -634,10 +630,6 @@
               {
                 "title": "One-Time Payments",
                 "href": "/webstore/one_time_payments"
-              },
-              {
-                "title": "Autoupdating",
-                "href": "/extensions/autoupdate"
               },
               {
                 "title": "Other Deployment Options",
