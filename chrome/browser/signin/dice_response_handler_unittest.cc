@@ -133,6 +133,7 @@ class DiceResponseHandlerTest : public testing::Test,
     signin_client_.SetURLRequestContext(request_context_getter_.get());
     AccountTrackerService::RegisterPrefs(pref_service_.registry());
     SigninManager::RegisterProfilePrefs(pref_service_.registry());
+    signin::RegisterAccountConsistentyProfilePrefs(pref_service_.registry());
     account_tracker_service_.Initialize(&signin_client_);
     account_reconcilor_.AddObserver(this);
   }
@@ -204,6 +205,7 @@ class TestProcessDiceHeaderObserver : public ProcessDiceHeaderObserver {
 // Checks that a SIGNIN action triggers a token exchange request.
 TEST_F(DiceResponseHandlerTest, Signin) {
   signin::ScopedAccountConsistencyDice scoped_dice;
+  signin::EnableAccountConsistencyDiceForProfile(&pref_service_);
   DiceResponseParams dice_params = MakeDiceParams(DiceAction::SIGNIN);
   ASSERT_FALSE(
       token_service_.RefreshTokenIsAvailable(dice_params.signin_info.gaia_id));
@@ -233,6 +235,7 @@ TEST_F(DiceResponseHandlerTest, Signin) {
 // Checks that a GaiaAuthFetcher failure is handled correctly.
 TEST_F(DiceResponseHandlerTest, SigninFailure) {
   signin::ScopedAccountConsistencyDice scoped_dice;
+  signin::EnableAccountConsistencyDiceForProfile(&pref_service_);
   DiceResponseParams dice_params = MakeDiceParams(DiceAction::SIGNIN);
   ASSERT_FALSE(
       token_service_.RefreshTokenIsAvailable(dice_params.signin_info.gaia_id));
@@ -262,6 +265,7 @@ TEST_F(DiceResponseHandlerTest, SigninFailure) {
 // request is already in flight.
 TEST_F(DiceResponseHandlerTest, SigninRepeatedWithSameAccount) {
   signin::ScopedAccountConsistencyDice scoped_dice;
+  signin::EnableAccountConsistencyDiceForProfile(&pref_service_);
   DiceResponseParams dice_params = MakeDiceParams(DiceAction::SIGNIN);
   ASSERT_FALSE(
       token_service_.RefreshTokenIsAvailable(dice_params.signin_info.gaia_id));
@@ -291,6 +295,7 @@ TEST_F(DiceResponseHandlerTest, SigninRepeatedWithSameAccount) {
 // Checks that two SIGNIN requests can happen concurrently.
 TEST_F(DiceResponseHandlerTest, SigninWithTwoAccounts) {
   signin::ScopedAccountConsistencyDice scoped_dice;
+  signin::EnableAccountConsistencyDiceForProfile(&pref_service_);
   DiceResponseParams dice_params_1 = MakeDiceParams(DiceAction::SIGNIN);
   DiceResponseParams dice_params_2 = MakeDiceParams(DiceAction::SIGNIN);
   dice_params_2.signin_info.email = "other_email";
@@ -332,6 +337,7 @@ TEST_F(DiceResponseHandlerTest, SigninWithTwoAccounts) {
 
 TEST_F(DiceResponseHandlerTest, Timeout) {
   signin::ScopedAccountConsistencyDice scoped_dice;
+  signin::EnableAccountConsistencyDiceForProfile(&pref_service_);
   DiceResponseParams dice_params = MakeDiceParams(DiceAction::SIGNIN);
   ASSERT_FALSE(
       token_service_.RefreshTokenIsAvailable(dice_params.signin_info.gaia_id));
@@ -356,6 +362,7 @@ TEST_F(DiceResponseHandlerTest, Timeout) {
 
 TEST_F(DiceResponseHandlerTest, SignoutMainAccount) {
   signin::ScopedAccountConsistencyDice scoped_dice;
+  signin::EnableAccountConsistencyDiceForProfile(&pref_service_);
   const char kSecondaryGaiaID[] = "secondary_account";
   DiceResponseParams dice_params = MakeDiceParams(DiceAction::SIGNOUT);
   // User is signed in to Chrome, and has some refresh token for a secondary
@@ -389,6 +396,7 @@ TEST_F(DiceResponseHandlerTest, SignoutMainAccount) {
 
 TEST_F(DiceResponseHandlerTest, SignoutSecondaryAccount) {
   signin::ScopedAccountConsistencyDice scoped_dice;
+  signin::EnableAccountConsistencyDiceForProfile(&pref_service_);
   const char kMainGaiaID[] = "main_account";
   DiceResponseParams dice_params = MakeDiceParams(DiceAction::SIGNOUT);
   // User is signed in to Chrome, and has some refresh token for a secondary
@@ -419,6 +427,7 @@ TEST_F(DiceResponseHandlerTest, SignoutSecondaryAccount) {
 
 TEST_F(DiceResponseHandlerTest, SignoutWebOnly) {
   signin::ScopedAccountConsistencyDice scoped_dice;
+  signin::EnableAccountConsistencyDiceForProfile(&pref_service_);
   const char kSecondaryGaiaID[] = "secondary_account";
   DiceResponseParams dice_params = MakeDiceParams(DiceAction::SIGNOUT);
   // User is NOT signed in to Chrome, and has some refresh tokens for two
@@ -443,6 +452,7 @@ TEST_F(DiceResponseHandlerTest, SignoutWebOnly) {
 // Checks that signin in progress is canceled by a signout for the main account.
 TEST_F(DiceResponseHandlerTest, SigninSignoutMainAccount) {
   signin::ScopedAccountConsistencyDice scoped_dice;
+  signin::EnableAccountConsistencyDiceForProfile(&pref_service_);
   DiceResponseParams dice_params = MakeDiceParams(DiceAction::SIGNOUT);
   // User is signed in to Chrome with a main account.
   signin_manager_.SignIn(dice_params.signout_info.gaia_id[0],
@@ -479,6 +489,7 @@ TEST_F(DiceResponseHandlerTest, SigninSignoutMainAccount) {
 // account.
 TEST_F(DiceResponseHandlerTest, SigninSignoutSecondaryAccount) {
   signin::ScopedAccountConsistencyDice scoped_dice;
+  signin::EnableAccountConsistencyDiceForProfile(&pref_service_);
   // User starts signin in the web with two accounts, and is not signed into
   // Chrome.
   DiceResponseParams signout_params_1 = MakeDiceParams(DiceAction::SIGNOUT);

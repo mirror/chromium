@@ -464,6 +464,12 @@ class DiceBrowserTestBase : public InProcessBrowserTest,
 class DiceBrowserTest : public DiceBrowserTestBase {
  public:
   DiceBrowserTest() : DiceBrowserTestBase(AccountConsistencyMethod::kDice) {}
+
+  void SetUpOnMainThread() override {
+    DiceBrowserTestBase::SetUpOnMainThread();
+    signin::EnableAccountConsistencyDiceForProfile(
+        browser()->profile()->GetPrefs());
+  }
 };
 
 class DiceFixAuthErrorsBrowserTest : public DiceBrowserTestBase {
