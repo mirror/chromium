@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a90277e_98dda231",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-16T21:24:47Z",
+      "side": 1,
+      "message": "Can you use SplitViewController::CanSnap() instead? I plan to add more codes in this function to make it more strict to snap a window.",
+      "revId": "ff918731bd899d733140d43d7c5f590c31c13f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd881db_8b9a8b52",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-16T21:24:47Z",
+      "side": 1,
+      "message": "Same as above. Can you use SplitViewController::CanSnap() instead?",
+      "revId": "ff918731bd899d733140d43d7c5f590c31c13f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa0a2d4_14e66e82",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-16T21:24:47Z",
+      "side": 1,
+      "message": "I don\u0027t think you need modify this function. The return result is always the same as !!phantom_window_controller_.",
+      "revId": "ff918731bd899d733140d43d7c5f590c31c13f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64068df3_ce80748d",
+        "filename": "ash/wm/overview/overview_window_drag_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-16T21:24:47Z",
+      "side": 1,
+      "message": "Seems it\u0027s only used in tests, rename it to IsPhantomWindowShowingForTesting()?",
+      "revId": "ff918731bd899d733140d43d7c5f590c31c13f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
