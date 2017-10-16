@@ -8,7 +8,10 @@
 
 #include <utility>
 
+#include "ash/shell_port.h"
+#include "ash/shell_port_classic.h"
 #include "ash/public/cpp/ash_pref_names.h"
+#include "ash/system/palette/palette_utils.h"
 #include "base/memory/ptr_util.h"
 #include "base/sys_info.h"
 #include "base/values.h"
@@ -34,12 +37,18 @@
 #include "extensions/browser/extensions_browser_client.h"
 #include "extensions/common/error_utils.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
+#include "ui/events/event.h"
+#include "ui/views/mus/mus_client.h"
+#include "ui/views/mus/pointer_watcher_event_router.h"
+#include "ui/views/pointer_watcher.h"
 
 using chromeos::NetworkHandler;
 
 namespace extensions {
 
 namespace {
+
+bool g_has_seen_stylus = false;
 
 // Key which corresponds to the HWID setting.
 const char kPropertyHWID[] = "hwid";
@@ -165,6 +174,20 @@ const char kDeviceTypeChromebox[] = "chromebox";
 // Value to which deviceType property is set when the specific type is unknown.
 const char kDeviceTypeChromedevice[] = "chromedevice";
 
+// Key which corresponds to the stylusInfo property in JS.
+const char kPropertyStylusInfo[] = "stylusInfo";
+
+// Value to which stylusInfo property is set when stylus is not available.
+const char kStylusInfoNotAvailable[] = "not available";
+
+// Value to which stylusInfo property is set when stylus is available but has
+// not been used after reboot.
+const char kStylusInfoAvailable[] = "available";
+
+// Value to which stylusInfo property is set when stylus is available and has
+// been used after reboot.
+const char kStylusInfoSeen[] = "seen";
+
 const struct {
   const char* api_name;
   const char* preference_name;
@@ -220,7 +243,43 @@ std::string GetClientId() {
 
 }  // namespace
 
-ChromeosInfoPrivateGetFunction::ChromeosInfoPrivateGetFunction() {
+
+class ChromeosInfoPrivateGetFunction::StylusWatcher : views::PointerWatcher {
+ public:
+  StylusWatcher() {
+    ash::ShellPort::Get()->AddPointerWatcher(this,
+                                                                                    views::PointerWatcherEventTypes::BASIC);
+
+    auto* m = views::MusClient::Get();
+    LOG(ERROR) << "m: " << (!!m);
+    auto* r = m->pointer_watcher_event_router();
+    LOG(ERROR) << "r: " << (!!r);
+    r->AddPointerWatcher(this, false);
+    // views::MusClient::Get()->pointer_watcher_event_router()->AddPointerWatcher(this, false /* want_moves */);
+
+  };
+
+  ~StylusWatcher() override {
+    ash::ShellPort::Get()->RemovePointerWatcher(this);
+
+    views::MusClient::Get()->pointer_watcher_event_router()->RemovePointerWatcher(this);
+  }
+
+  // views::PointerWatcher:
+  void OnPointerEventObserved(const ui::PointerEvent& event,
+                              const gfx::Point& location_in_screen,
+                              gfx::NativeView target) override {
+    if (event.pointer_details().pointer_type ==
+        ui::EventPointerType::POINTER_TYPE_PEN) {
+      g_has_seen_stylus = true;
+    }
+  }
+  
+ private:
+  DISALLOW_COPY_AND_ASSIGN(StylusWatcher);
+};
+
+ChromeosInfoPrivateGetFunction::ChromeosInfoPrivateGetFunction(): stylus_watcher_(std::make_unique<ChromeosInfoPrivateGetFunction::StylusWatcher>()) {
 }
 
 ChromeosInfoPrivateGetFunction::~ChromeosInfoPrivateGetFunction() {
@@ -322,6 +381,17 @@ std::unique_ptr<base::Value> ChromeosInfoPrivateGetFunction::GetValue(
         return base::MakeUnique<base::Value>(kDeviceTypeChromebook);
       default:
         return base::MakeUnique<base::Value>(kDeviceTypeChromedevice);
+    }
+  }
+
+  if (property_name == kPropertyStylusInfo) {
+    if (!ash::palette_utils::HasStylusInput()) {
+      return base::MakeUnique<base::Value>(kStylusInfoNotAvailable);
+    }
+    if (g_has_seen_stylus) {
+      return base::MakeUnique<base::Value>(kStylusInfoSeen);
+    } else {
+      return base::MakeUnique<base::Value>(kStylusInfoAvailable);
     }
   }
 

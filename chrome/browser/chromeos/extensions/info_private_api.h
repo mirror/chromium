@@ -26,11 +26,15 @@ class ChromeosInfoPrivateGetFunction : public AsyncExtensionFunction {
   bool RunAsync() override;
 
  private:
+  class StylusWatcher;
+
   // Returns a newly allocate value, or null.
   std::unique_ptr<base::Value> GetValue(const std::string& property_name);
 
   // Gets boolean |pref| value from PrefService.
   bool GetBooleanPrefValue(const char* pref);
+
+  std::unique_ptr<StylusWatcher> stylus_watcher_;
 
   DECLARE_EXTENSION_FUNCTION("chromeosInfoPrivate.get", CHROMEOSINFOPRIVATE_GET)
 };
@@ -45,6 +49,7 @@ class ChromeosInfoPrivateSetFunction : public UIThreadExtensionFunction {
   ResponseAction Run() override;
 
  private:
+
   DECLARE_EXTENSION_FUNCTION("chromeosInfoPrivate.set", CHROMEOSINFOPRIVATE_SET)
 };
 

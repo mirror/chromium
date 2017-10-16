@@ -156,6 +156,7 @@ class PaletteTray::StylusWatcher : views::PointerWatcher {
   void OnPointerEventObserved(const ui::PointerEvent& event,
                               const gfx::Point& location_in_screen,
                               gfx::NativeView target) override {
+    LOG(ERROR) << "PaletteTray::OnPointerEventObserved";
     if (event.pointer_details().pointer_type ==
         ui::EventPointerType::POINTER_TYPE_PEN) {
       if (local_state_pref_service_)

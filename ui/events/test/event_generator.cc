@@ -620,6 +620,7 @@ void EventGenerator::ReleaseKey(ui::KeyboardCode key_code, int flags) {
 }
 
 void EventGenerator::Dispatch(ui::Event* event) {
+  LOG(ERROR) << "Dispatch  async_: " << async_;
   DoDispatchEvent(event, async_);
 }
 
