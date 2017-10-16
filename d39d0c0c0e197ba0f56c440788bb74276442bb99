@@ -16,6 +16,24 @@
       "revId": "d39d0c0c0e197ba0f56c440788bb74276442bb99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136cbe0e_3e687660",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-16T23:34:22Z",
+      "side": 1,
+      "message": "Oops, sorry-- my link was truncated.  https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "parentUuid": "9d948862_1b1b65d6",
+      "revId": "d39d0c0c0e197ba0f56c440788bb74276442bb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
