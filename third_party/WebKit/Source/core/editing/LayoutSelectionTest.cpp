@@ -186,6 +186,8 @@ TEST_F(LayoutSelectionTest, TraverseLayoutObjectBRs) {
   TEST_NEXT(IsBR, kInside, ShouldInvalidate);
   TEST_NEXT(IsBR, kEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
+  EXPECT_FALSE(Selection().LayoutSelectionStart().has_value());
+  EXPECT_FALSE(Selection().LayoutSelectionEnd().has_value());
 }
 
 TEST_F(LayoutSelectionTest, TraverseLayoutObjectListStyleImage) {
@@ -408,6 +410,8 @@ TEST_F(LayoutSelectionTest, SelectImage) {
   TEST_NEXT(IsLayoutBlock, kStartAndEnd, NotInvalidate);
   TEST_NEXT(IsLayoutImage, kStartAndEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
+  EXPECT_FALSE(Selection().LayoutSelectionStart().has_value());
+  EXPECT_FALSE(Selection().LayoutSelectionEnd().has_value());
 }
 
 TEST_F(LayoutSelectionTest, MoveOnSameNode_Start) {
