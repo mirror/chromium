@@ -1254,6 +1254,30 @@ TEST_P(PaintPropertyTreeBuilderTest, ControlClip) {
                           GetDocument().View()->GetLayoutView());
 }
 
+TEST_P(PaintPropertyTreeBuilderTest, ControlClipInsideForeignObject) {
+  SetBodyInnerHTML(
+      "<div style='column-count:2;'>"
+      "  <div style='columns: 2'>"
+      "    <svg>"
+      "      <foreignObject>"
+      "        <input id='button'/>"
+      "      </foreignObject>"
+      "    </svg>"
+      "  </div>"
+      "</div>");
+
+  LayoutObject& button = *GetLayoutObjectByElementId("button");
+  const ObjectPaintProperties* button_properties =
+      button.FirstFragment()->PaintProperties();
+  // No scroll translation because the document does not scroll (not enough
+  // content).
+  EXPECT_TRUE(!FrameScrollTranslation());
+  EXPECT_EQ(FloatRoundedRect(4, 4, 150, 17),
+            button_properties->OverflowClip()->ClipRect());
+  CHECK_EXACT_VISUAL_RECT(LayoutRect(8, 8, 154, 21), &button,
+                          GetDocument().View()->GetLayoutView());
+}
+
 TEST_P(PaintPropertyTreeBuilderTest, BorderRadiusClip) {
   SetBodyInnerHTML(
       "<style>"
