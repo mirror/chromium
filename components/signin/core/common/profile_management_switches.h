@@ -23,6 +23,7 @@ extern const char kAccountConsistencyFeatureMethodParameter[];
 // Account consistency method values.
 extern const char kAccountConsistencyFeatureMethodMirror[];
 extern const char kAccountConsistencyFeatureMethodDiceFixAuthErrors[];
+extern const char kAccountConsistencyFeatureMethodDiceMigration[];
 extern const char kAccountConsistencyFeatureMethodDice[];
 
 enum class AccountConsistencyMethod {
@@ -30,7 +31,8 @@ enum class AccountConsistencyMethod {
   kMirror,             // Account management UI in the avatar bubble.
   kDiceFixAuthErrors,  // No account consistency, but Dice fixes authentication
                        // errors.
-  kDice                // Account management UI on Gaia webpages.
+  kDiceMigration,      // Account management UI on Gaia webpages is available.
+  kDice                // Account management UI on Gaia webpages is enabled.
 };
 
 // Returns the account consistency method.
@@ -40,14 +42,14 @@ AccountConsistencyMethod GetAccountConsistencyMethod();
 // management UI is available in the avatar bubble.
 bool IsAccountConsistencyMirrorEnabled();
 
-// Checks whether Dice account consistency is enabled. If enabled, then account
+// Checks whether Dice account consistency is available. If true, then account
 // management UI is available on the Gaia webpages.
-// Returns true when the account consistency method is kDice.
+// Returns true when the account consistency method is kDice or kDiceMigration.
 // WARNING: returns false when the method is kDiceFixAuthErrors.
-bool IsAccountConsistencyDiceEnabled();
+bool IsAccountConsistencyDiceAvailable();
 
-// Returns true if the account consistency method is kDiceFixAuthErrors or
-// kDice.
+// Returns true if the account consistency method is kDiceFixAuthErrors,
+// kDiceMigration or kDice.
 bool IsDiceFixAuthErrorsEnabled();
 
 // Whether the chrome.identity API should be multi-account.
