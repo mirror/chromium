@@ -534,6 +534,9 @@ class RenderTextTest : public testing::Test,
   Rect GetSubstringBoundsUnion(const Range& range) {
     const std::vector<Rect> bounds =
         render_text_->GetSubstringBoundsForTesting(range);
+    for (const auto b : bounds) {
+       DLOG(INFO) << b.ToString();
+    }
     return std::accumulate(bounds.begin(), bounds.end(), Rect(), UnionRects);
   }
 
@@ -4855,6 +4858,61 @@ TEST_P(RenderTextHarfBuzzTest, TeluguGraphemeBoundaries) {
   test_api()->EnsureLayout();
 
   // The selection should cover the entire width.
+  selection_bounds = GetSelectionBoundsUnion();
+  EXPECT_EQ(0, selection_bounds.x());
+  EXPECT_EQ(whole_width, selection_bounds.width());
+}
+
+TEST_P(RenderTextHarfBuzzTest, FlagEmoji) {
+  RenderText* render_text = GetRenderText();
+  render_text->SetDisplayRect(Rect(1000, 1000));
+
+  // Two emoji: the British flag and the Greek flag. No space between.
+  base::string16 text(UTF8ToUTF16("🇬🇧🇬🇷"));
+  EXPECT_EQ(8u, text.length());  // Becomes 4 surrogate pair code points.
+
+  render_text->SetText(text);
+  test_api()->EnsureLayout();
+
+  const int whole_width = render_text->GetStringSize().width();
+  const int half_width = whole_width / 2;
+  EXPECT_LE(6, whole_width);  // Sanity check.
+
+  EXPECT_EQ("[0->7]", GetRunListStructureString());
+
+  // Move from the left to the right.
+  const Rect start_cursor = render_text->GetUpdatedCursorBounds();
+  EXPECT_EQ(0, start_cursor.x());
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_NONE);
+  EXPECT_EQ(Range(4, 4), render_text->selection());
+  const Rect middle_cursor = render_text->GetUpdatedCursorBounds();
+  EXPECT_LE(half_width, middle_cursor.x());  // Should move about half way.
+
+  // No scrolling required, so current and updated cursor bounds should match.
+  //EXPECT_EQ(middle_cursor, render_text->GetUpdatedCursorBounds());
+
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_NONE);
+  EXPECT_EQ(Range(8, 8), render_text->selection());
+  const Rect end_cursor = render_text->GetUpdatedCursorBounds();
+
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_NONE);
+  EXPECT_EQ(end_cursor, render_text->GetUpdatedCursorBounds());  // No change.
+
+  // Move right to left.
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_LEFT, SELECTION_NONE);
+  EXPECT_EQ(Range(4, 4), render_text->selection());
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_LEFT, SELECTION_NONE);
+  EXPECT_EQ(Range(0, 0), render_text->selection());
+
+  // Select from the left to the right. The British flag should be selected.
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_RETAIN);
+  EXPECT_EQ(Range(0, 4), render_text->selection());
+  Rect selection_bounds = GetSelectionBoundsUnion();
+  EXPECT_EQ(0, selection_bounds.x());
+  EXPECT_GE(half_width, selection_bounds.width());
+
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_RETAIN);
+  EXPECT_EQ(Range(0, 8), render_text->selection());
   selection_bounds = GetSelectionBoundsUnion();
   EXPECT_EQ(0, selection_bounds.x());
   EXPECT_EQ(whole_width, selection_bounds.width());
