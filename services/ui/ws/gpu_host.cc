@@ -89,6 +89,10 @@ void DefaultGpuHost::OnAcceleratedWidgetDestroyed(
 #endif
 }
 
+scoped_refptr<base::SingleThreadTaskRunner> DefaultGpuHost::GetTaskRunner() {
+  return gpu_thread_.task_runner();
+}
+
 void DefaultGpuHost::CreateFrameSinkManager(
     viz::mojom::FrameSinkManagerRequest request,
     viz::mojom::FrameSinkManagerClientPtr client) {

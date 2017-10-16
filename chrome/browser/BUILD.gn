@@ -2733,6 +2733,10 @@ split_static_library("browser") {
     deps += [
       "//ash",
       "//chrome/browser/chromeos",
+
+      # TODO(penghuang): remove it when we have a separate viz process.
+      # http;//crbug.com/774514
+      "//media/gpu:gpu",
       "//services/ui/public/cpp/input_devices",
       "//services/ui/public/cpp/input_devices:input_device_controller",
       "//ui/ozone",
