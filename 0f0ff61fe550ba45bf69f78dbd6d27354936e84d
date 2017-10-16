@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a9fb0253_861fe866",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T23:05:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0e9284_f57c38a6",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 22
+      },
+      "revId": "0f0ff61fe550ba45bf69f78dbd6d27354936e84d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa42437d_b3ab917f",
         "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ae678451_d8af3822",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T23:05:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa42437d_b3ab917f",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "0f0ff61fe550ba45bf69f78dbd6d27354936e84d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e725161_469ce74d",
         "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "0f0ff61fe550ba45bf69f78dbd6d27354936e84d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e080d9_6094d147",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T23:05:10Z",
+      "side": 1,
+      "message": "I need tab_ to be defined after chrome_browser_state_ so that destruction order is correct. And protected needs to come before private and I don\u0027t want to have all data member protected. I\u0027ve added a separate getter to remove the cast.",
+      "parentUuid": "9e725161_469ce74d",
+      "range": {
+        "startLine": 128,
+        "startChar": 44,
+        "endLine": 128,
+        "endChar": 45
+      },
+      "revId": "0f0ff61fe550ba45bf69f78dbd6d27354936e84d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
