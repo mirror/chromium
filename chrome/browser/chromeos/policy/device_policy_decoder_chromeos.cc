@@ -951,6 +951,15 @@ void DecodeGenericPolicies(const em::ChromeDeviceSettingsProto& policy,
                       policy.tpm_firmware_update_settings()),
                   nullptr);
   }
+
+  if (policy.has_minimum_version()) {
+    const em::MinimumRequiredVersionProto& container(policy.minimum_version());
+    if (container.has_chrome_version())
+      policies->Set(key::kMinimumAllowedChromeVersion, POLICY_LEVEL_MANDATORY,
+                    POLICY_SCOPE_MACHINE, POLICY_SOURCE_CLOUD,
+                    base::MakeUnique<base::Value>(container.chrome_version()),
+                    nullptr);
+  }
 }
 }  // namespace
 

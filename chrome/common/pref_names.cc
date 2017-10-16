@@ -886,6 +886,11 @@ const char kCastReceiverEnabled[] = "cast_receiver.enabled";
 // If the string is empty or blank the system name will be used.
 const char kCastReceiverName[] = "cast_receiver.name";
 
+// String pref indicating what is the minimum version of Chrome required to
+// allow user sign in. If the string is empty or blank no restrictions will
+// be applied.
+const char kMinimumAllowedChromeVersion[] = "minimum_req.chrome_version";
+
 #endif  // defined(OS_CHROMEOS)
 
 // A boolean pref set to true if a Home button to open the Home pages should be

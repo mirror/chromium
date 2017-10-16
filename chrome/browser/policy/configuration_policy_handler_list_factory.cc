@@ -703,6 +703,9 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kCastReceiverName,
     prefs::kCastReceiverName,
     base::Value::Type::STRING },
+  { key::kMinimumAllowedChromeVersion,
+    prefs::kMinimumAllowedChromeVersion,
+    base::Value::Type::STRING },
 #endif
 
   { key::kRoamingProfileSupportEnabled,

@@ -133,6 +133,7 @@ void Preferences::RegisterPrefs(PrefRegistrySimple* registry) {
 
   registry->RegisterDictionaryPref(ash::prefs::kWallpaperColors,
                                    PrefRegistry::PUBLIC);
+  registry->RegisterStringPref(prefs::kMinimumAllowedChromeVersion, "");
 }
 
 // static
