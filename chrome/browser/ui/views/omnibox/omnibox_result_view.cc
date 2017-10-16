@@ -60,6 +60,7 @@ static const int kVerticalPadding = 4;
 
 // A mapping from OmniboxResultView's ResultViewState/ColorKind types to
 // NativeTheme colors.
+// clang-format off
 struct TranslationTable {
   ui::NativeTheme::ColorId id;
   OmniboxResultView::ResultViewState state;
@@ -83,6 +84,12 @@ struct TranslationTable {
     OmniboxResultView::HOVERED, OmniboxResultView::DIMMED_TEXT },
   { NativeTheme::kColorId_ResultsTableSelectedDimmedText,
     OmniboxResultView::SELECTED, OmniboxResultView::DIMMED_TEXT },
+  { NativeTheme::kColorId_ResultsTableInvisibleText,
+    OmniboxResultView::NORMAL, OmniboxResultView::INVISIBLE_TEXT },
+  { NativeTheme::kColorId_ResultsTableHoveredText,
+    OmniboxResultView::HOVERED, OmniboxResultView::INVISIBLE_TEXT },
+  { NativeTheme::kColorId_ResultsTableSelectedText,
+    OmniboxResultView::SELECTED, OmniboxResultView::INVISIBLE_TEXT },
   { NativeTheme::kColorId_ResultsTableNormalUrl,
     OmniboxResultView::NORMAL, OmniboxResultView::URL },
   { NativeTheme::kColorId_ResultsTableHoveredUrl,
@@ -550,6 +557,8 @@ std::unique_ptr<gfx::RenderText> OmniboxResultView::CreateClassifiedRenderText(
     } else if (force_dim ||
         (classifications[i].style & ACMatchClassification::DIM)) {
       color_kind = DIMMED_TEXT;
+    } else if (classifications[i].style & ACMatchClassification::INVISIBLE) {
+      color_kind = INVISIBLE_TEXT;
     }
     render_text->ApplyColor(GetColor(GetState(), color_kind), current_range);
   }

@@ -560,6 +560,8 @@ SkColor NativeThemeWin::GetSystemColor(ColorId color_id) const {
     case kColorId_ResultsTableSelectedDimmedText:
       return color_utils::AlphaBlend(system_colors_[COLOR_HIGHLIGHTTEXT],
                                      system_colors_[COLOR_HIGHLIGHT], 0x80);
+    case kColorId_ResultsTableInvisibleText:
+      return SK_ColorTRANSPARENT;
     case kColorId_ResultsTableNormalUrl:
       return color_utils::GetReadableColor(kResultsTableUrlColor,
                                             system_colors_[COLOR_WINDOW]);
