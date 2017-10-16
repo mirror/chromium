@@ -248,10 +248,12 @@ void NGInlineLayoutStateStack::CreateBoxFragments(
     NGLineBoxFragmentBuilder* line_box) {
   DCHECK(!box_placeholders_.IsEmpty());
 
-  Vector<RefPtr<NGPhysicalFragment>> children =
+  // Take the children list out of NGLineBoxFragmentBuilder, in order to sort
+  // them out and add them back.
+  Vector<NGLineBoxFragmentBuilder::Child, 16> children =
       std::move(line_box->MutableChildren());
-  Vector<NGLogicalOffset> offsets = std::move(line_box->MutableOffsets());
-  DCHECK(line_box->Children().IsEmpty() && line_box->Offsets().IsEmpty());
+  DCHECK(line_box->Children().IsEmpty());
+  line_box->MutableChildren().ReserveInitialCapacity(children.size());
 
   // At this point, children is a list of text fragments and box placeholders.
   // |  0  |  1  |  2  |  3  |  4  |  5  |
@@ -264,13 +266,15 @@ void NGInlineLayoutStateStack::CreateBoxFragments(
     NGFragmentBuilder box(placeholder.item->GetLayoutObject(),
                           placeholder.item->Style(), line_box->WritingMode(),
                           placeholder.item->Direction());
-    const NGLogicalOffset& box_offset = offsets[placeholder.fragment_end];
+    const NGLogicalOffset& box_offset =
+        children[placeholder.fragment_end].offset;
     for (unsigned i = placeholder.fragment_start; i < placeholder.fragment_end;
          i++) {
-      if (RefPtr<NGPhysicalFragment>& child = children[i]) {
-        box.AddChild(std::move(child), offsets[i] - box_offset);
-        DCHECK(!children[i]);
-      }
+      NGLineBoxFragmentBuilder::Child& child = children[i];
+      if (child.layout_result)
+        box.AddChild(std::move(child.layout_result), child.offset - box_offset);
+      else if (child.fragment)
+        box.AddChild(std::move(child.fragment), child.offset - box_offset);
     }
 
     // Inline boxes have block start/end borders, even when its containing block
@@ -279,18 +283,20 @@ void NGInlineLayoutStateStack::CreateBoxFragments(
     box.SetBorderEdges(placeholder.border_edges);
     box.SetInlineSize(placeholder.size.inline_size);
     box.SetBlockSize(placeholder.size.block_size);
-    RefPtr<NGLayoutResult> layout_result = box.ToBoxFragment();
-    DCHECK(!children[placeholder.fragment_end]);
-    children[placeholder.fragment_end] =
-        std::move(layout_result->MutablePhysicalFragment());
+    DCHECK(!children[placeholder.fragment_end].layout_result &&
+           !children[placeholder.fragment_end].fragment);
+    children[placeholder.fragment_end].layout_result = box.ToBoxFragment();
   }
   box_placeholders_.clear();
 
   // Add the list to line_box by skipping null fragments; i.e., fragments added
   // to box children.
   for (unsigned i = 0; i < children.size(); i++) {
-    if (children[i])
-      line_box->AddChild(children[i], offsets[i]);
+    NGLineBoxFragmentBuilder::Child& child = children[i];
+    if (child.layout_result)
+      line_box->AddChild(std::move(child.layout_result), child.offset);
+    else if (child.fragment)
+      line_box->AddChild(std::move(child.fragment), child.offset);
   }
 }
 
