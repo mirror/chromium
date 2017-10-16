@@ -54,6 +54,9 @@ class MEDIA_MOJO_EXPORT VideoDecodeStatsDB {
       base::OnceCallback<void(bool, std::unique_ptr<DecodeStatsEntry>)>;
   virtual void GetDecodeStats(const VideoDescKey& key,
                               GetDecodeStatsCB callback) = 0;
+
+  // Clears the database and executes |callback| when finished.
+  virtual void ClearDB(base::OnceClosure callback);
 };
 
 }  // namespace media

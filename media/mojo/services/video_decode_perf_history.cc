@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "media/base/video_codecs.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
@@ -17,9 +18,17 @@ namespace media {
 VideoDecodeStatsDB* g_database = nullptr;
 
 // static
-void VideoDecodePerfHistory::Initialize(VideoDecodeStatsDB* db_instance) {
+void VideoDecodePerfHistory::Initialize(
+    VideoDecodeStatsDB* db_instance,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   DVLOG(2) << __func__;
   g_database = db_instance;
+}
+
+// static
+VideoDecodePerfHistory* VideoDecodePerfHistory::GetInstance() {
+  static VideoDecodePerfHistory* instance = new VideoDecodePerfHistory();
+  return instance;
 }
 
 // static
@@ -27,13 +36,12 @@ void VideoDecodePerfHistory::BindRequest(
     mojom::VideoDecodePerfHistoryRequest request) {
   DVLOG(2) << __func__;
 
-  // Single static instance should serve all requests.
-  static VideoDecodePerfHistory* instance = new VideoDecodePerfHistory();
-
-  instance->BindRequestInternal(std::move(request));
+  // Singleton should serve all requests.
+  GetInstance()->BindRequestInternal(std::move(request));
 }
 
-VideoDecodePerfHistory::VideoDecodePerfHistory() {
+VideoDecodePerfHistory::VideoDecodePerfHistory()
+    : task_runner_(base::ThreadTaskRunnerHandle::Get()) {
   DVLOG(2) << __func__;
 }
 
@@ -118,6 +126,37 @@ void VideoDecodePerfHistory::GetPerfInfo(VideoCodecProfile profile,
   g_database->GetDecodeStats(
       key, base::BindOnce(&VideoDecodePerfHistory::OnGotStatsEntry,
                           base::Unretained(this), key, std::move(callback)));
+}
+
+void VideoDecodePerfHistory::ClearHistory(base::OnceClosure callback) {
+  DVLOG(3) << __func__;
+
+  // Post call to our |task_runner_| to synchronize access to |g_database|.
+  if (!sequence_checker_.CalledOnValidSequence()) {
+    DVLOG(3) << __func__ << " Trampolining to task_runner_";
+
+    base::OnceClosure trampoline_callback = base::BindOnce(
+        [](scoped_refptr<base::SingleThreadTaskRunner> runner,
+           base::OnceClosure callback) {
+          runner->PostTask(FROM_HERE, std::move(callback));
+        },
+        base::ThreadTaskRunnerHandle::Get(), std::move(callback));
+
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&VideoDecodePerfHistory::ClearHistory,
+                       base::Unretained(this), std::move(trampoline_callback)));
+    return;
+  }
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  if (!g_database) {
+    DVLOG(3) << __func__ << " NOOP";
+    std::move(callback).Run();
+    return;
+  }
+
+  g_database->ClearDB(std::move(callback));
 }
 
 }  // namespace media

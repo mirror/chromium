@@ -191,4 +191,31 @@ void VideoDecodeStatsDBImpl::OnGotDecodeStats(
   std::move(callback).Run(success, std::move(entry));
 }
 
+void VideoDecodeStatsDBImpl::ClearDB(base::OnceClosure callback) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  // TODO(chcunningham): Record UMA.
+
+  db_->Destroy(base::BindOnce(&VideoDecodeStatsDBImpl::OnClearedDB,
+                              weak_ptr_factory_.GetWeakPtr(),
+                              std::move(callback)));
+}
+
+void VideoDecodeStatsDBImpl::OnClearedDB(base::OnceClosure callback,
+                                         bool success) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  // TODO(chcunningham): record UMA.
+
+  DVLOG(2) << __func__ << " update " << (success ? "succeeded" : "FAILED!");
+
+  // DB is in a bad state, so don't attempt to use it.
+  // TODO(chcunningham): Monitor UMA, consider more aggressive action like
+  // nuking the DB directory.
+  if (!success)
+    db_.reset();
+
+  // We don't pass success on to |callback|. Clearing is best effort and
+  // there's no additional action for callers to take in case of failure.
+  std::move(callback).Run();
+}
+
 }  // namespace media

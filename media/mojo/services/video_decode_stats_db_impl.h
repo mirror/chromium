@@ -43,6 +43,7 @@ class MEDIA_MOJO_EXPORT VideoDecodeStatsDBImpl : public VideoDecodeStatsDB {
                          const DecodeStatsEntry& entry) override;
   void GetDecodeStats(const VideoDescKey& key,
                       GetDecodeStatsCB callback) override;
+  void ClearDB(base::OnceClosure callback) override;
 
  private:
   friend class VideoDecodeStatsDBTest;
@@ -72,6 +73,10 @@ class MEDIA_MOJO_EXPORT VideoDecodeStatsDBImpl : public VideoDecodeStatsDB {
       GetDecodeStatsCB callback,
       bool success,
       std::unique_ptr<DecodeStatsProto> capabilities_info_proto);
+
+  // Internal callback for ClearDB(). Will handle |success| and execute
+  // |callback|.
+  void OnClearedDB(base::OnceClosure callback, bool success);
 
   // Indicates whether initialization is completed. Does not indicate whether it
   // was successful. Failed initialization is signaled by setting |db_| to null.

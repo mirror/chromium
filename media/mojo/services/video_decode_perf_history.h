@@ -10,6 +10,7 @@
 #include <string>
 
 #include "base/callback.h"
+#include "base/memory/ref_counted.h"
 #include "base/sequence_checker.h"
 #include "media/base/video_codecs.h"
 #include "media/mojo/interfaces/video_decode_perf_history.mojom.h"
@@ -27,12 +28,14 @@ namespace media {
 // Smoothness and power efficiency are assessed by evaluating raw stats from the
 // MediaCapabilitiesDatabse.
 //
-// The object is lazily created upon the first call to BindRequest(). Future
-// calls will bind to the same instance.
+// The object is lazily created upon the first call to BindRequest() (via Mojo)
+// or GetSingletonInstance(). Future calls to BindRequest() will bind to the
+// same instance.
 //
 // This class is not thread safe. All calls to BindRequest() and GetPerfInfo()
 // should be made on the same sequence (generally stemming from inbound Mojo
-// IPCs on the browser IO sequence).
+// IPCs on the browser IO thread). ClearHistory() is special case that may be
+// called from any sequence.
 class MEDIA_MOJO_EXPORT VideoDecodePerfHistory
     : public mojom::VideoDecodePerfHistory {
  public:
@@ -40,6 +43,10 @@ class MEDIA_MOJO_EXPORT VideoDecodePerfHistory
   // first BindRequest) instantiated. Database lifetime should match/exceed that
   // of the VideoDecodePerfHistory singleton.
   static void Initialize(VideoDecodeStatsDB* db_instance);
+
+  // Grab a pointer to the singleton instance (potentially lazily creating it).
+  // Requires that Initialize has previously been called.
+  static VideoDecodePerfHistory* GetInstance();
 
   // Bind the request to singleton instance.
   static void BindRequest(mojom::VideoDecodePerfHistoryRequest request);
@@ -49,6 +56,10 @@ class MEDIA_MOJO_EXPORT VideoDecodePerfHistory
                    const gfx::Size& natural_size,
                    int frame_rate,
                    GetPerfInfoCallback callback) override;
+
+  // Clears the history and runs |callback| when done. May be called from any
+  // sequence. |callback| will be executed on the same sequence as the call.
+  void ClearHistory(base::OnceClosure callback);
 
  private:
   // Friends so it can create its own instances with mock database.
@@ -76,6 +87,10 @@ class MEDIA_MOJO_EXPORT VideoDecodePerfHistory
   // Maps bindings from several render-processes to this single browser-process
   // service.
   mojo::BindingSet<mojom::VideoDecodePerfHistory> bindings_;
+
+  // The task runner belonging to the sequence used to construct this instance.
+  // Used by ClearHistory() to trampoline calls from other sequences.
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   // Ensures all access to class members come on the same sequence.
   SEQUENCE_CHECKER(sequence_checker_);
