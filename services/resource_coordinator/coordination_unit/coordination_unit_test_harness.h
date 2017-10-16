@@ -6,8 +6,7 @@
 #define SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_TEST_HARNESS_H_
 
 #include <stdint.h>
-
-#include <memory>
+#include <string>
 
 #include "base/message_loop/message_loop.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
@@ -20,22 +19,29 @@ namespace resource_coordinator {
 
 struct CoordinationUnitID;
 
+template <class CoordinationUnitImpl>
 class TestCoordinationUnitWrapper {
  public:
-  TestCoordinationUnitWrapper(CoordinationUnitBase* impl) : impl_(impl) {
+  static TestCoordinationUnitWrapper<CoordinationUnitImpl> Create() {
+    CoordinationUnitID cu_id(CoordinationUnitImpl::Type(), std::string());
+    return TestCoordinationUnitWrapper<CoordinationUnitImpl>(
+        CoordinationUnitImpl::Create(cu_id, nullptr));
+  }
+
+  TestCoordinationUnitWrapper(CoordinationUnitImpl* impl) : impl_(impl) {
     DCHECK(impl);
   }
   ~TestCoordinationUnitWrapper() { impl_->Destruct(); }
 
-  CoordinationUnitBase* operator->() const { return impl_; }
+  CoordinationUnitImpl* operator->() const { return impl_; }
 
   TestCoordinationUnitWrapper(TestCoordinationUnitWrapper&& other)
       : impl_(other.impl_) {}
 
-  CoordinationUnitBase* get() const { return impl_; }
+  CoordinationUnitImpl* get() const { return impl_; }
 
  private:
-  CoordinationUnitBase* impl_;
+  CoordinationUnitImpl* impl_;
 
   DISALLOW_COPY_AND_ASSIGN(TestCoordinationUnitWrapper);
 };
@@ -45,11 +51,20 @@ class CoordinationUnitTestHarness : public testing::Test {
   CoordinationUnitTestHarness();
   ~CoordinationUnitTestHarness() override;
 
+  template <class CoordinationUnitImpl>
+  TestCoordinationUnitWrapper<CoordinationUnitImpl> CreateCoordinationUnit(
+      CoordinationUnitID cu_id) {
+    return TestCoordinationUnitWrapper<CoordinationUnitImpl>(
+        CoordinationUnitImpl::Create(cu_id, service_ref_factory_.CreateRef()));
+  }
+  template <class CoordinationUnitImpl>
+  TestCoordinationUnitWrapper<CoordinationUnitImpl> CreateCoordinationUnit() {
+    CoordinationUnitID cu_id(CoordinationUnitImpl::Type(), std::string());
+    return CreateCoordinationUnit<CoordinationUnitImpl>(cu_id);
+  }
+
   // testing::Test:
   void TearDown() override;
-
-  TestCoordinationUnitWrapper CreateCoordinationUnit(CoordinationUnitID cu_id);
-  TestCoordinationUnitWrapper CreateCoordinationUnit(CoordinationUnitType type);
 
  protected:
   service_manager::ServiceContextRefFactory* service_context_ref_factory() {
