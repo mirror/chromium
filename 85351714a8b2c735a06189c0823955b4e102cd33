@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecb7ac0e_b78e9465",
+        "filename": "tools/metrics/histograms/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-16T20:16:01Z",
+      "side": 1,
+      "message": "Nit: Maybe move this line below the next one to match the other files.",
+      "range": {
+        "startLine": 2,
+        "startChar": 36,
+        "endLine": 2,
+        "endChar": 0
+      },
+      "revId": "85351714a8b2c735a06189c0823955b4e102cd33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
