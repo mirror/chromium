@@ -34,6 +34,24 @@
       "revId": "353b3bed17973f34a1a05feb8299646d38146026",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c74221_d1ed2df5",
+        "filename": "net/cert/ev_root_ca_metadata.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-10-16T23:23:02Z",
+      "side": 1,
+      "message": "So I guess if CertVerifyProcBuiltin needs them, the ideal solution would just be to use the real impl on those platforms too, but we don\u0027t want to due to code bloat of including all the data which isn\u0027t used by the platform verifier?",
+      "parentUuid": "690aa619_0ec9f492",
+      "revId": "353b3bed17973f34a1a05feb8299646d38146026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
