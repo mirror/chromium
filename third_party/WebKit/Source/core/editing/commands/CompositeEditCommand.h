@@ -28,6 +28,7 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
+#include "core/editing/EphemeralRange.h"
 #include "core/editing/Forward.h"
 #include "core/editing/commands/EditCommand.h"
 #include "core/editing/commands/EditingState.h"
@@ -226,7 +227,7 @@ class CORE_EXPORT CompositeEditCommand : public EditCommand {
 
   Node* SplitTreeToNode(Node*, Node*, bool split_ancestor = false);
 
-  static bool IsNodeVisiblyContainedWithin(Node&, const Range&);
+  static bool IsNodeVisiblyContainedWithin(Node&, const EphemeralRange&);
 
   HeapVector<Member<EditCommand>> commands_;
 

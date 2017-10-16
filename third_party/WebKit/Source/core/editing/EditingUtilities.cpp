@@ -327,7 +327,7 @@ int ComparePositions(const VisiblePosition& a, const VisiblePosition& b) {
   return ComparePositions(a.DeepEquivalent(), b.DeepEquivalent());
 }
 
-bool IsNodeFullyContained(const EphemeralRange& range, Node& node) {
+bool IsNodeFullyContained(const EphemeralRange& range, const Node& node) {
   if (range.IsNull())
     return false;
 
