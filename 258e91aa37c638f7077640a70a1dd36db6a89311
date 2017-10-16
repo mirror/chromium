@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05d1a930_59a17f26",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-16T10:39:38Z",
+      "side": 1,
+      "message": "Since there are now multiple \"types\", could you rename this to visual_type?",
+      "range": {
+        "startLine": 51,
+        "startChar": 33,
+        "endLine": 51,
+        "endChar": 38
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac6fe54_cbbe880c",
+        "filename": "components/favicon_base/favicon_types.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-16T10:39:38Z",
+      "side": 1,
+      "message": "It looks like IconType is meant to be used as a bitmask. In case there\u0027s more than one bit set in |icon_type|, this\u0027ll fall through to the \"return 0\", is that intended? (In that case, the value should be passed as \"int\" rather than \"IconType\", but AFAIK we don\u0027t always follow that rule.)\nIf the fallthrough is intended, please add a comment saying so. Otherwise, add a NOTREACHED or something along those lines.",
+      "range": {
+        "startLine": 67,
+        "startChar": 11,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d5d071_6a00b718",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-16T10:39:38Z",
+      "side": 1,
+      "message": "This isn\u0027t quite accurate, since the enum isn\u0027t directly recorded, but rather goes through GetUmaFaviconType below. (Right?)",
+      "range": {
+        "startLine": 30,
+        "startChar": 24,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100e45be_295a4559",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-16T10:39:38Z",
+      "side": 1,
+      "message": "tile_type_suffix is the *visual* type, but in histograms.xml it looks like you want the provider (server/client)?",
+      "range": {
+        "startLine": 147,
+        "startChar": 62,
+        "endLine": 147,
+        "endChar": 78
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66dd22a8_ba579cd2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 50337,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-16T10:39:38Z",
+      "side": 1,
+      "message": "Right now, these are both only recorded with a suffix. Is that intended? If so, then I think you should add \"base\u003dtrue\" or something like that here (I forget the exact syntax), so that the non-suffixed histogram doesn\u0027t show up in the dashboard.\nBut maybe it should just be recorded without suffix too?",
+      "range": {
+        "startLine": 50337,
+        "startChar": 64,
+        "endLine": 50337,
+        "endChar": 0
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e369c5b8_6ca13aac",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 50342,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-16T10:39:38Z",
+      "side": 1,
+      "message": "Mention when this is recorded (on impression I assume) and on which platforms (Android only for now?)",
+      "range": {
+        "startLine": 50342,
+        "startChar": 46,
+        "endLine": 50342,
+        "endChar": 0
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a4b09d_8e4d4177",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 50342,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-16T10:39:38Z",
+      "side": 1,
+      "message": "This sentence makes me wonder \"so what *does* it involve then?\".\nAlso, it *does* involve an icon being displayed, no?!",
+      "range": {
+        "startLine": 50341,
+        "startChar": 25,
+        "endLine": 50342,
+        "endChar": 19
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
