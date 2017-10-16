@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3012d76_88736afd",
+        "filename": "ios/chrome/browser/ui/main/main_containing_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-16T11:55:14Z",
+      "side": 1,
+      "message": "Tried adding that, but it crashes on startup, before any children are added.",
+      "parentUuid": "1f833e43_37771ae9",
+      "range": {
+        "startLine": 16,
+        "startChar": 36,
+        "endLine": 16,
+        "endChar": 47
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82f2ddac_ed9e2111",
         "filename": "ios/chrome/browser/ui/main/main_containing_view_controller.mm",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f83489_322a67b8",
+        "filename": "ios/chrome/browser/ui/main/main_containing_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-16T11:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82f2ddac_ed9e2111",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "46b148a2_55ae7c8b",
+        "filename": "ios/chrome/browser/ui/main/main_containing_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-16T11:55:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "87d0ecaf_320233a9",
+      "range": {
+        "startLine": 79,
+        "startChar": 3,
+        "endLine": 79,
+        "endChar": 50
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0380ee2_64cd4fcc",
         "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.h",
         "patchSetId": 3
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "60adaef7_7c4842d3",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-16T11:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0380ee2_64cd4fcc",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48a0bd81_3eeeb60b",
         "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.mm",
         "patchSetId": 3
@@ -153,6 +249,30 @@
       "writtenOn": "2017-10-13T09:25:03Z",
       "side": 1,
       "message": "This looks like the tab switcher is presented, which isn\u0027t what I expected; I expected that the tab switcher would always be contained, and the BVC would be presented. If the BVC is active, -showTabSwicther should dismiss it. Right?",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 43
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9cd27c_6a01c64b",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-16T11:55:14Z",
+      "side": 1,
+      "message": "That\u0027s coming in the next CL.  I hadn\u0027t landed any of those changes yet, and this CL is simply splitting the existing implementation into two separate files.",
+      "parentUuid": "48a0bd81_3eeeb60b",
       "range": {
         "startLine": 21,
         "startChar": 8,
@@ -185,6 +305,30 @@
       "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c05978_7fddf27d",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-16T11:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dcc72c2_6dad91fb",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 69
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "f46d4b13_82295d59",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-16T11:55:14Z",
+      "side": 1,
+      "message": "Long-term, I\u0027d like it to be an error to invoke this method at all on MainPresentingViewController.  All callers should be presenting directly on top of a known VC (tab switcher or BVC).",
+      "parentUuid": "d0830bb7_2bb2204e",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 1
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7517ffb_7d751a75",
         "filename": "ios/chrome/browser/ui/main/view_controller_swapping.h",
         "patchSetId": 3
@@ -246,6 +414,30 @@
       "writtenOn": "2017-10-12T18:16:32Z",
       "side": 1,
       "message": "This doesn\u0027t seem like it\u0027s needed in the public interface. It is only accessed inside the implementation.",
+      "range": {
+        "startLine": 19,
+        "startChar": 57,
+        "endLine": 19,
+        "endChar": 77
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc2ee20_96edefb7",
+        "filename": "ios/chrome/browser/ui/main/view_controller_swapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-16T11:55:14Z",
+      "side": 1,
+      "message": "This is used by a number of external callers, like MainController or the test utilities.",
+      "parentUuid": "d7517ffb_7d751a75",
       "range": {
         "startLine": 19,
         "startChar": 57,
@@ -281,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "ba6a9269_2b769628",
+        "filename": "ios/chrome/browser/ui/main/view_controller_swapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-16T11:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be5c6b36_1543585d",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb0da0e8_9c9ebcd6",
         "filename": "ios/chrome/browser/ui/main/view_controller_swapping.h",
         "patchSetId": 3
@@ -304,6 +520,30 @@
     },
     {
       "key": {
+        "uuid": "d1b29abd_64da75b4",
+        "filename": "ios/chrome/browser/ui/main/view_controller_swapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-16T11:55:14Z",
+      "side": 1,
+      "message": "Done, although the comments got a bit more awkward because they aren\u0027t able to refer to a specific class anymore.",
+      "parentUuid": "cb0da0e8_9c9ebcd6",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c2ec080_8abe0dd8",
         "filename": "ios/chrome/browser/ui/safe_mode/safe_mode_egtest.mm",
         "patchSetId": 3
@@ -315,6 +555,30 @@
       "writtenOn": "2017-10-13T09:25:03Z",
       "side": 1,
       "message": "Any reason that calls to this method can\u0027t be replaced by calls to the chrome_test_util method of the same name?",
+      "range": {
+        "startLine": 24,
+        "startChar": 18,
+        "endLine": 24,
+        "endChar": 41
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6cb0bf_4b57d9a8",
+        "filename": "ios/chrome/browser/ui/safe_mode/safe_mode_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-16T11:55:14Z",
+      "side": 1,
+      "message": "The chrome_test_util method isn\u0027t exposed publicly.  I don\u0027t know if that\u0027s intentional; was planning to follow up and ask baxley.",
+      "parentUuid": "3c2ec080_8abe0dd8",
       "range": {
         "startLine": 24,
         "startChar": 18,
