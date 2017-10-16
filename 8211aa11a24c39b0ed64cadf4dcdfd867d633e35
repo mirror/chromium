@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "992e22e7_318f837b",
+        "filename": "content/child/blink_platform_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-16T17:50:32Z",
+      "side": 1,
+      "message": "Not that I am aware of. I think I tried this before. Yea it really bothers me too :(\n\n@dcheng, could you please correct me if I am wrong?\n\nThanks",
+      "parentUuid": "07ad5e34_05e60c6b",
+      "range": {
+        "startLine": 811,
+        "startChar": 0,
+        "endLine": 816,
+        "endChar": 1
+      },
+      "revId": "8211aa11a24c39b0ed64cadf4dcdfd867d633e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "949f6f60_267911c8",
         "filename": "content/common/feature_policy/feature_policy.cc",
         "patchSetId": 15
@@ -39,6 +63,24 @@
       "revId": "8211aa11a24c39b0ed64cadf4dcdfd867d633e35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55bd3519_f7c8b89e",
+        "filename": "content/common/feature_policy/feature_policy.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-16T17:50:32Z",
+      "side": 1,
+      "message": "\u003e What is this DCHECK for? Does it get triggered if you ask for the origins of a feature which *is* enabled by default on all frames?\n\nThis DCHECK if to verify that IsFeatureEnabledForAll correctly handled the case for enabled for all. Since these 2 methods are always bundled together, no policy should be enabled for all in this method. But yea I guess it is silly.",
+      "parentUuid": "949f6f60_267911c8",
+      "revId": "8211aa11a24c39b0ed64cadf4dcdfd867d633e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "caebeb3b_a254214e",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac/virtual/stable/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-16T17:50:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6ac102a_97b5c817",
+      "revId": "8211aa11a24c39b0ed64cadf4dcdfd867d633e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed49c6d1_baf61347",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 15
@@ -73,6 +133,24 @@
       "revId": "8211aa11a24c39b0ed64cadf4dcdfd867d633e35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62813d30_dd667c39",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-16T17:50:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed49c6d1_baf61347",
+      "revId": "8211aa11a24c39b0ed64cadf4dcdfd867d633e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "ee86acc8_1792f07b",
+        "filename": "third_party/WebKit/Source/core/dom/PolicyTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-16T17:50:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09e8d472_b32a32f5",
+      "revId": "8211aa11a24c39b0ed64cadf4dcdfd867d633e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be03a287_08a8c133",
         "filename": "third_party/WebKit/Source/core/dom/PolicyTest.cpp",
         "patchSetId": 15
@@ -107,6 +203,24 @@
       "revId": "8211aa11a24c39b0ed64cadf4dcdfd867d633e35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02474baf_b895ab72",
+        "filename": "third_party/WebKit/Source/core/dom/PolicyTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-16T17:50:32Z",
+      "side": 1,
+      "message": "Used UnorderedElementsAre instead",
+      "parentUuid": "be03a287_08a8c133",
+      "revId": "8211aa11a24c39b0ed64cadf4dcdfd867d633e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
