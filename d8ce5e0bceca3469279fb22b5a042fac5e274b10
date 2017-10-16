@@ -16,6 +16,24 @@
       "revId": "d8ce5e0bceca3469279fb22b5a042fac5e274b10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8adb9476_983e22de",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-10-16T17:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d9dd755_13f391ef",
+      "revId": "d8ce5e0bceca3469279fb22b5a042fac5e274b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
