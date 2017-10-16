@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "b46a832c_906c85a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 28
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-16T13:16:55Z",
+      "side": 1,
+      "message": "nit: worklet.",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ac9f12_ffc89156",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-16T13:16:55Z",
+      "side": 1,
+      "message": "Say, eg, we\u0027re operating on scroll or complementing a CSS animation (perhaps we\u0027re animating a blurry shadow which is a non linear transform on the shadow caster\u0027s position). In these cases, we\u0027ll have new data (if only time fractions) that need to be propagated to the Worklet in order for it to do its job, no? Is this plumbed to the Worklet by some other means than the input state?",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b833e713_54306015",
+        "filename": "cc/animation/worklet_animation_player.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-16T13:16:55Z",
+      "side": 1,
+      "message": "It looks like WAP is not instantiated yet in the current code, so I\u0027m not totally sure its relationship to other classes. Say we have an element whose opacity is being mutated by one worklet, but its transform is being animated by another. Will the results of these two animations be propagated to the correct property tree nodes via a single WAP corresponding to the DOM element, or will each worklet have a player?",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84834bf0_246a28db",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
         "patchSetId": 28
