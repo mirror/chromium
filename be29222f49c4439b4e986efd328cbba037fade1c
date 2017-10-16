@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "777c06a7_03c5f71d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-16T03:54:34Z",
+      "side": 1,
+      "message": "Thanks for helping the clarification!",
+      "parentUuid": "034c33bd_cef2a0b3",
+      "revId": "be29222f49c4439b4e986efd328cbba037fade1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdf50659_c92226d6",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragmentTest.cpp",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "be29222f49c4439b4e986efd328cbba037fade1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a77b0e_d6b77bc3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragmentTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-16T03:54:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdf50659_c92226d6",
+      "revId": "be29222f49c4439b4e986efd328cbba037fade1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
