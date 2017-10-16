@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a142244c_adf735ad",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwActivityTestRule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-16T22:04:50Z",
+      "side": 1,
+      "message": "this is just inlining things that were TestCommon before, right?",
+      "revId": "355c8b6014adc007aac637484ffc61a83f92d112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87eea2a7_9573d22f",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwActivityTestRule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-16T22:04:50Z",
+      "side": 1,
+      "message": "format",
+      "revId": "355c8b6014adc007aac637484ffc61a83f92d112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab295b7f_3422c425",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwActivityTestRule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-16T22:04:50Z",
+      "side": 1,
+      "message": "format",
+      "revId": "355c8b6014adc007aac637484ffc61a83f92d112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198fa983_10a06006",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwContentsGarbageCollectionTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-16T22:04:50Z",
+      "side": 1,
+      "message": "format",
+      "revId": "355c8b6014adc007aac637484ffc61a83f92d112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2224f79_1a534459",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/PopupWindowTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-16T22:04:50Z",
+      "side": 1,
+      "message": "format",
+      "revId": "355c8b6014adc007aac637484ffc61a83f92d112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bfa9505_0563d874",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/StandaloneAwQuotaManagerBridgeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-16T22:04:50Z",
+      "side": 1,
+      "message": "well... can it be private?",
+      "revId": "355c8b6014adc007aac637484ffc61a83f92d112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
