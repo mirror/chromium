@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "116facff_025a6ec6",
+        "filename": "third_party/WebKit/Source/core/paint/TableCollapsedBorderPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-10-16T15:26:51Z",
+      "side": 1,
+      "message": "I\u0027m doing something wrong here and I\u0027m hoping you can give me a steer, wangxianzhu.\n\nSee https://storage.googleapis.com/chromium-layout-test-archives/linux_trusty_blink_dbg/220/layout-test-results/paint/invalidation/table-collapsed-border-crash-log.txt for example.\n\nThe old and new record in that output are the same apart from the color value, so I\u0027m not sure what the problem is.\n\nwangxianzhu, can you suggeest where I start to look? I sense it\u0027s related to some difference in the paint rect due to the fact that the border is on the table but we\u0027re painting from the section, but the debug output doesn\u0027t support that - so I must have the wrong idea.\n\nMore examples here: https://storage.googleapis.com/chromium-layout-test-archives/linux_trusty_blink_dbg/220/layout-test-results/paint/invalidation/table-collapsed-border-crash-log.txt",
+      "revId": "8734e050291668b63959035e1d3c99db07f8f5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
