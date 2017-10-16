@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "156012d6_eb32efef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManagerToolbar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-16T20:58:22Z",
+      "side": 1,
+      "message": "Should this also be using PrefServiceBridge#getBoolean()?",
+      "range": {
+        "startLine": 102,
+        "startChar": 13,
+        "endLine": 102,
+        "endChar": 69
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d53c2b5_8adf9e6d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-16T20:58:22Z",
+      "side": 1,
+      "message": "nit: add a blank line above this line",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 9
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12073c7_c330b910",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-16T20:58:22Z",
+      "side": 1,
+      "message": "nit: JavaDocs",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 53
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab2a277_38bf0f49",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-16T20:58:22Z",
+      "side": 1,
+      "message": "nit: Add an observer to be notified of changes to the specified preference.",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 19
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6b1ab7_8157ae36",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-16T20:58:22Z",
+      "side": 1,
+      "message": "The idea here is that we have one PrefChangeRegistrar for each client that wants to be notified of changes? So there may be multiple active PrefChangeRegistrar\u0027s?",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 40,
+        "endChar": 82
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f8c5be_38a1715f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-16T20:58:22Z",
+      "side": 1,
+      "message": "If we use an enum in C++, we can generate a corresponding Java enum. https://chromium.googlesource.com/chromium/src/+/lkcr/docs/android_accessing_cpp_enums_in_java.md",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 57
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406f5889_a063a201",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-16T20:58:22Z",
+      "side": 1,
+      "message": "Can we set this, then wait for the callbacks we expect to occur when the preference state changes? That will give us some extra coverage over the registrar.\n\nAlso, Yoland was seeing flakiness without the !mRecyclerView.isAnimating() checks.. if the adapter items change as a result of this call, we may need another wait after this.",
+      "range": {
+        "startLine": 705,
+        "startChar": 10,
+        "endLine": 705,
+        "endChar": 84
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
