@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4aeb075b_b31ce4b9",
+        "filename": "base/logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-16T08:36:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3ec961a_591c0511",
+      "revId": "f420b10e8dfbda9587304574aec9fff309e7e078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a9c4f1a_0667ed47",
         "filename": "base/logging.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-14T03:42:21Z",
       "side": 1,
       "message": "I think that I did the split std::string/const char* thing in mini_chromium because it was a better way to distinguish between “string is set but is (inexplicably) empty” and “string isn’t set” while also being 100% clean to pass to os_log directly. As far as the former concern goes, I was also trying to mirror exactly the underlying behavior of CF.",
+      "revId": "f420b10e8dfbda9587304574aec9fff309e7e078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ffb716_397ad179",
+        "filename": "base/logging.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-16T08:36:43Z",
+      "side": 1,
+      "message": "If you don\u0027t mind I\u0027m going to keep the std::string, just because I\u0027m really not a fan of allocating a fixed size buffer with a length that \"should be enough\".",
+      "parentUuid": "5a9c4f1a_0667ed47",
       "revId": "f420b10e8dfbda9587304574aec9fff309e7e078",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
