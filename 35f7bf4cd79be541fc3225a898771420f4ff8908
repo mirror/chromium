@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89f2aa5d_457af6c9",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-16T22:43:45Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused about the semantics. Does cancelling this also free the fence that was separately bound for the PostTask call?",
+      "range": {
+        "startLine": 850,
+        "startChar": 26,
+        "endLine": 850,
+        "endChar": 32
+      },
+      "revId": "35f7bf4cd79be541fc3225a898771420f4ff8908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de6ed9f_fc76d3ca",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-16T22:43:45Z",
+      "side": 1,
+      "message": "Call this gvr_acquired_frame_ or similar to make the semantics more obvious?",
+      "range": {
+        "startLine": 218,
+        "startChar": 2,
+        "endLine": 218,
+        "endChar": 5
+      },
+      "revId": "35f7bf4cd79be541fc3225a898771420f4ff8908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a49e1a_43d5e838",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-16T22:43:45Z",
+      "side": 1,
+      "message": "Rename to webvr_draw_frame_wait_for_render_fence_ or similar? \"phase_two\" is a bit unclear, and I think it would help to explicitly prefix WebVR-specific attributes.\n\nAlso, since the type needs to stay in sync with the DrawFrameSubmitWhenReady prototype, would it be preferable to bind the arguments into the callback closure so that they aren\u0027t visible at this level? Alternatively, please add a comment reminding that these should stay in sync.",
+      "range": {
+        "startLine": 289,
+        "startChar": 6,
+        "endLine": 289,
+        "endChar": 27
+      },
+      "revId": "35f7bf4cd79be541fc3225a898771420f4ff8908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
