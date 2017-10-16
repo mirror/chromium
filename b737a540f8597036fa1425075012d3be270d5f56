@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42c37e85_dee9f6c6",
+        "filename": "docs/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-10-16T19:25:17Z",
+      "side": 1,
+      "message": "Nit: correct indentation",
+      "range": {
+        "startLine": 138,
+        "startChar": 101,
+        "endLine": 138,
+        "endChar": 104
+      },
+      "revId": "b737a540f8597036fa1425075012d3be270d5f56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ddcfa71_11d3dbdb",
+        "filename": "docs/release_branch_guidance.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-10-16T19:25:17Z",
+      "side": 1,
+      "message": "Nit: correct indentation",
+      "range": {
+        "startLine": 4,
+        "startChar": 101,
+        "endLine": 4,
+        "endChar": 104
+      },
+      "revId": "b737a540f8597036fa1425075012d3be270d5f56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
