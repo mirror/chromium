@@ -22,6 +22,30 @@
       "revId": "267faa772b9cb14d8333410582cd5737535d0caa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36fccf7f_f27de588",
+        "filename": "build/config/coverage/coverage.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-16T14:33:47Z",
+      "side": 1,
+      "message": "Done. Only the extra space you\u0027ve highlighted was changed.",
+      "parentUuid": "1fe53db8_8d666308",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 12
+      },
+      "revId": "267faa772b9cb14d8333410582cd5737535d0caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
