@@ -1026,11 +1026,14 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 
 - (NSDictionary*)WKWebViewObservers {
   NSMutableDictionary* result = [NSMutableDictionary dictionary];
-  if (base::ios::IsRunningOnIOS10OrLater()) {
+  if (@available(iOS 10, *)) {
     result[@"serverTrust"] = @"webViewSecurityFeaturesDidChange";
-  } else {
+  }
+#if !defined(__IPHONE_10_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_10_0
+  else {
     result[@"certificateChain"] = @"webViewSecurityFeaturesDidChange";
   }
+#endif
 
   [result addEntriesFromDictionary:@{
     @"estimatedProgress" : @"webViewEstimatedProgressDidChange",
@@ -3737,9 +3740,12 @@ registerLoadRequestForURL:(const GURL&)requestURL
   base::ScopedCFTypeRef<SecTrustRef> trust;
   if (@available(iOS 10, *)) {
     trust.reset([_webView serverTrust], base::scoped_policy::RETAIN);
-  } else {
+  }
+#if !defined(__IPHONE_10_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_10_0
+  else {
     trust = web::CreateServerTrustFromChain([_webView certificateChain], host);
   }
+#endif
 
   [_SSLStatusUpdater updateSSLStatusForNavigationItem:currentNavItem
                                          withCertHost:host
