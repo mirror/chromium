@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c22cbecf_eff17152",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T10:24:48Z",
+      "side": 1,
+      "message": "Sorry, I understand what you mean now. Your claiming the opposite, right? No need to do anything if SetFavicons() is going to be called anyway.\n\nI\u0027m not sure I agree. First, the cost of writing should be negligible considering favicons expire rarely. Second, one of the goals of this patch is that we cover all cases where a user clicks on a gray NTP tile so it gets fixed (for the cases where Chrome displays a favicon in other UIs, e.g. tab switcher). I think keeping the logic simple is better, even for cases where for example the download of the favicon was interrupted. WDYT?",
+      "parentUuid": "aa692b6d_8a7fa6a1",
+      "revId": "a1444cf27fd074c347f5332b5157c74bd46ede6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb495b72_150a56ac",
         "filename": "components/history/core/browser/history_backend.cc",
         "patchSetId": 5
