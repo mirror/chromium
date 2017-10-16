@@ -311,7 +311,8 @@ bool ClientBase::Init(const InitParams& params) {
       LOG(ERROR) << "Can't create gbm device";
       return false;
     }
-    ui_loop_.reset(new base::MessageLoopForUI);
+    if (base::MessageLoop::current())
+      ui_loop_.reset(new base::MessageLoopForUI);
     ui::OzonePlatform::InitParams params;
     params.single_process = true;
     ui::OzonePlatform::InitializeForGPU(params);
