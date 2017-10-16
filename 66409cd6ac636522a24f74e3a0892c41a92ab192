@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb681b67_d835f33c",
+        "filename": "ios/chrome/browser/ui/main/main_containing_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-16T13:17:22Z",
+      "side": 1,
+      "message": "The \"presenting\" version of this VC may sometimes skip the animation entirely, and when it does run the animation, it will be run through a transition animator.\n\nMoving the call into the VC seemed like the most straightforward way to make the migration easier.  Longer-term, I don\u0027t think MainViewController will continue to determine which animations are run, but MainController is also not the right place for that code to live.",
+      "revId": "66409cd6ac636522a24f74e3a0892c41a92ab192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
