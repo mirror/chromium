@@ -336,7 +336,8 @@ void ChromePasswordManagerClient::HideManualFallbackForSaving() {
 #if !defined(OS_ANDROID)
   PasswordsClientUIDelegate* manage_passwords_ui_controller =
       PasswordsClientUIDelegateFromWebContents(web_contents());
-  manage_passwords_ui_controller->OnHideManualFallbackForSaving();
+  if (manage_passwords_ui_controller)
+    manage_passwords_ui_controller->OnHideManualFallbackForSaving();
 #endif  // !defined(OS_ANDROID)
 }
 
