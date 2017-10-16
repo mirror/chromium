@@ -392,6 +392,9 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // url we're navigating to.
   void SetExpectedProcess(RenderProcessHost* expected_process);
 
+  static constexpr ui::PageTransition kDefaultPageTransition =
+      ui::PAGE_TRANSITION_LINK;
+
  private:
   friend class NavigationHandleImplTest;
 
