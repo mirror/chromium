@@ -39,12 +39,26 @@ Console.ConsoleFilter = class {
   }
 
   /**
+   * @param {string} level
+   * @return {!Object<string, boolean>}
+   */
+  static singleLevelMask(level) {
+    var result = {};
+    result[level] = true;
+    return result;
+  }
+
+  /**
    * @param {!Console.ConsoleViewMessage} viewMessage
    * @return {boolean}
    */
   applyFilter(viewMessage) {
-    var visible = this._shouldBeVisible(viewMessage);
-    if (visible)
+    var visible = this.shouldBeVisible(viewMessage);
+    var message = viewMessage.consoleMessage();
+    var skipCounters =
+        (message.type === ConsoleModel.ConsoleMessage.MessageType.Command ||
+         message.type === ConsoleModel.ConsoleMessage.MessageType.Result || message.isGroupMessage());
+    if (visible && !skipCounters)
       this._incrementCounters(viewMessage.consoleMessage().level);
     return visible;
   }
@@ -53,7 +67,7 @@ Console.ConsoleFilter = class {
    * @param {!Console.ConsoleViewMessage} viewMessage
    * @return {boolean}
    */
-  _shouldBeVisible(viewMessage) {
+  shouldBeVisible(viewMessage) {
     var message = viewMessage.consoleMessage();
     if (this.executionContext &&
         (this.executionContext.runtimeModel !== message.runtimeModel() ||
