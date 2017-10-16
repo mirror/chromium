@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d729590b_b56a0413",
+        "filename": "ui/views/controls/scroll_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-16T21:05:44Z",
+      "side": 1,
+      "message": "private: DISALLOW...",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 2
+      },
+      "revId": "45c2bd9dd82c02ffcec3cac45f0de1d80825f6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
