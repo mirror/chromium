@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "caa2a3e3_9be691b4",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadDispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-16T21:08:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78b2c6c9_0778c81a",
+      "revId": "c604d48b1c8b93e4ca4823ebc18a93ee553c0db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56473d82_21641d6b",
         "filename": "third_party/WebKit/Source/modules/gamepad/GamepadEffectParameters.idl",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f182fa86_e88e4da3",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadEffectParameters.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-16T21:08:53Z",
+      "side": 1,
+      "message": "EnforceRange is only for integer types:\n\nhttps://www.w3.org/TR/WebIDL-1/#EnforceRange",
+      "parentUuid": "56473d82_21641d6b",
+      "revId": "c604d48b1c8b93e4ca4823ebc18a93ee553c0db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f244360_888bd439",
         "filename": "third_party/WebKit/Source/modules/gamepad/NavigatorGamepad.cpp",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-13T23:11:31Z",
       "side": 1,
       "message": "This is the wrong place for this. SampleGamepad happens once per poll, while I would expect the haptics capabilities of a gamepad to be consistent for the lifetime of the device connection. Maybe move it to an initialization point?",
+      "revId": "c604d48b1c8b93e4ca4823ebc18a93ee553c0db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59696df_4ec1c76d",
+        "filename": "third_party/WebKit/Source/modules/gamepad/NavigatorGamepad.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-16T21:08:53Z",
+      "side": 1,
+      "message": "Good point, and this also applies to SetIndex, SetMapping, SetHand, and SetDisplayId as these fields are not expected to change. We don\u0027t have a convenient initialization point but we can add a check to skip the initialization unless it\u0027s the first time we\u0027ve seen the gamepad.\n\nWhile investigating this I noticed that SetVibrationActuator is implemented poorly, it will create a new GamepadHapticActuator on each call even when the member is already created.",
+      "parentUuid": "4f244360_888bd439",
       "revId": "c604d48b1c8b93e4ca4823ebc18a93ee553c0db3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
