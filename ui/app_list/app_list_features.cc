@@ -23,7 +23,6 @@ const base::Feature kEnablePlayStoreAppSearch{"EnablePlayStoreAppSearch",
 const base::Feature kEnableAppListFocus{"EnableAppListFocus",
                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
-
 bool IsAnswerCardEnabled() {
   // Not using local static variable to allow tests to change this value.
   return base::FeatureList::IsEnabled(kEnableAnswerCard);
