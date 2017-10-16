@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cef5e544_cd6d518d",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1725,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T05:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4b349ad_70e50dac",
+      "revId": "a2797c196d762b0b9ce9be2482d1b2b83cd6a770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5528ff77_9f0185fd",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d132d8b8_9e9f42bd",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T05:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5528ff77_9f0185fd",
+      "revId": "a2797c196d762b0b9ce9be2482d1b2b83cd6a770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3297a79_4bf854cd",
         "filename": "content/common/service_worker/embedded_worker.mojom",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-16T03:34:04Z",
       "side": 1,
       "message": "I think |dispatcher_request| is used in the non-S13nSW path? So the comment should be outside \nthe S13nSW annotation.",
+      "revId": "a2797c196d762b0b9ce9be2482d1b2b83cd6a770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b49eafa5_8bc55f9a",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T05:33:40Z",
+      "side": 1,
+      "message": "Yep, wanted to make this one sentence which made this a bit awkward. Split it into two now.",
+      "parentUuid": "e3297a79_4bf854cd",
       "revId": "a2797c196d762b0b9ce9be2482d1b2b83cd6a770",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
