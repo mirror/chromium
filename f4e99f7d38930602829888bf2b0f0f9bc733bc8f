@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "b5c8064a_88414df2",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2189,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-16T12:41:59Z",
+      "side": 1,
+      "message": "There are two issues with the code you propose in the comment above:\n\n(A) By assigning\n  signin_form.signon_realm \u003d iframe_url.spec();\nyou include the origin path in the realm. That\u0027s then different from the page realm (which is just the scheme, hostname and port). As a result, Chrome thinks this is also a PSL match and won\u0027t autofill it. Please change to:\n  signin_form.signon_realm \u003d iframe_url.GetOrigin().spec();\n\n(B) You use CheckElementValue in the end directly, which causes the disallowed cross-site access. Just use sendMessage as you do in the end of the current version of the test. Note that this has nothing to do with the TestPasswordStore.",
+      "parentUuid": "52de5673_f97761c6",
+      "range": {
+        "startLine": 2181,
+        "startChar": 2,
+        "endLine": 2189,
+        "endChar": 38
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3287dffe_1c666e8c",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 4
