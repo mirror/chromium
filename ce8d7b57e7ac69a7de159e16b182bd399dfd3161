@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f550220_bc468473",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-16T22:22:23Z",
+      "side": 1,
+      "message": "nit: non-animated",
+      "range": {
+        "startLine": 18,
+        "startChar": 40,
+        "endLine": 18,
+        "endChar": 53
+      },
+      "revId": "ce8d7b57e7ac69a7de159e16b182bd399dfd3161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb11b55_b1bdbbe9",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-16T22:22:23Z",
+      "side": 1,
+      "message": "Put this in a helper method, e.g. SynthesizeGestureScrollBegin(gesture_event)",
+      "range": {
+        "startLine": 402,
+        "startChar": 6,
+        "endLine": 414,
+        "endChar": 45
+      },
+      "revId": "ce8d7b57e7ac69a7de159e16b182bd399dfd3161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
