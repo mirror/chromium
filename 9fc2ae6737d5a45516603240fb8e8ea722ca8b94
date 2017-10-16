@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdc15a70_4a612329",
+        "filename": "content/child/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T08:36:36Z",
+      "side": 1,
+      "message": "Can you add /* */ comment after nullopt and nullptr to make it clear what these args are?",
+      "revId": "9fc2ae6737d5a45516603240fb8e8ea722ca8b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfdb13fc_02213c8c",
+        "filename": "content/child/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T08:36:36Z",
+      "side": 1,
+      "message": "nit: now we have a convenient ctor for this pattern,\n\nOnComplete(ResourceRequestCompletionStatus(error_code));\n\nshould be fine",
+      "revId": "9fc2ae6737d5a45516603240fb8e8ea722ca8b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0269223_505033e8",
+        "filename": "content/child/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T08:36:36Z",
+      "side": 1,
+      "message": "nit: the third 0 should be mojom::kURLLoadOptionNone",
+      "revId": "9fc2ae6737d5a45516603240fb8e8ea722ca8b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ca85c9_b095a4d9",
+        "filename": "content/child/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T08:36:36Z",
+      "side": 1,
+      "message": "nit: client().RunUntilComplete() is fine?",
+      "revId": "9fc2ae6737d5a45516603240fb8e8ea722ca8b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
