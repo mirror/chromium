@@ -110,7 +110,7 @@ TEST_F(ManagePasswordsBubbleControllerTest,
   feature_list.InitAndEnableFeature(
       password_manager::features::kEnablePasswordSelection);
   SetUpSavePendingState(false);
-  GetModelAndCreateIfNull()->set_hide_eye_icon(false);
+  GetModelAndCreateIfNull()->set_lock_eye_icon(false);
   [controller() showWindow:nil];
   SavePendingPasswordViewController* saveController =
       base::mac::ObjCCastStrict<SavePendingPasswordViewController>(

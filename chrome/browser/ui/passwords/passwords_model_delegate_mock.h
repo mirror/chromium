@@ -48,6 +48,7 @@ class PasswordsModelDelegateMock
   MOCK_METHOD0(NavigateToPasswordManagerSettingsPage, void());
   MOCK_METHOD0(NavigateToChromeSignIn, void());
   MOCK_METHOD0(OnDialogHidden, void());
+  MOCK_METHOD0(IsUserAuthenticated, bool());
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PasswordsModelDelegateMock);

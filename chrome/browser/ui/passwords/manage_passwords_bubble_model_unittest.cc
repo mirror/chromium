@@ -658,7 +658,7 @@ TEST_F(ManagePasswordsBubbleModelTest, EyeIcon) {
             is_manual_fallback_for_saving
                 ? form_has_autofilled_value
                 : display_reason == ManagePasswordsBubbleModel::USER_ACTION,
-            model()->hide_eye_icon());
+            model()->lock_eye_icon());
 
         DestroyModel();
         // Flush async calls on password store.
