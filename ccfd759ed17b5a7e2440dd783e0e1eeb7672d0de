@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b36cade8_63776e0a",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-16T11:22:44Z",
+      "side": 1,
+      "message": "nit: const?",
+      "range": {
+        "startLine": 62,
+        "startChar": 22,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "ccfd759ed17b5a7e2440dd783e0e1eeb7672d0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea79eecc_de2fde59",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-16T11:22:44Z",
+      "side": 1,
+      "message": "Under which circumstances is Display called with identical data, causing it to execute this line of code?",
+      "range": {
+        "startLine": 222,
+        "startChar": 30,
+        "endLine": 222,
+        "endChar": 47
+      },
+      "revId": "ccfd759ed17b5a7e2440dd783e0e1eeb7672d0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c41aee_2182f71d",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-16T11:22:44Z",
+      "side": 1,
+      "message": "What about origin?",
+      "range": {
+        "startLine": 351,
+        "startChar": 26,
+        "endLine": 351,
+        "endChar": 28
+      },
+      "revId": "ccfd759ed17b5a7e2440dd783e0e1eeb7672d0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f4ccf5_83260737",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-16T11:22:44Z",
+      "side": 1,
+      "message": "Not entirely sure, but I suspect we want to use the full prefix (ABI::Windows::UI) in this file and move the namespace alias back to the .cc file.",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 16
+      },
+      "revId": "ccfd759ed17b5a7e2440dd783e0e1eeb7672d0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
