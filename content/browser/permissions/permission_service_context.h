@@ -32,7 +32,9 @@ class CONTENT_EXPORT PermissionServiceContext : public WebContentsObserver {
   explicit PermissionServiceContext(RenderProcessHost* render_process_host);
   ~PermissionServiceContext() override;
 
-  void CreateService(blink::mojom::PermissionServiceRequest request);
+  void CreateServiceForFrame(blink::mojom::PermissionServiceRequest request);
+  void CreateService(blink::mojom::PermissionServiceRequest request,
+                     const url::Origin& origin);
 
   void CreateSubscription(PermissionType permission_type,
                           const url::Origin& origin,
