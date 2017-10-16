@@ -52,6 +52,24 @@
       "revId": "353b3bed17973f34a1a05feb8299646d38146026",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa3ee7d_c08d2d51",
+        "filename": "net/cert/ev_root_ca_metadata.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-16T23:26:47Z",
+      "side": 1,
+      "message": "Generalizing EVRootCAMetadata to work on all platforms would be ideal, but yeah I would be concerned that might pull in more code. Or virtualizing it.\n\nWould you be more comfortable if I instead stop compiling CertVerifyProcBuiltin on affected platforms?",
+      "parentUuid": "87c74221_d1ed2df5",
+      "revId": "353b3bed17973f34a1a05feb8299646d38146026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
