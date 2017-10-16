@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a8ad0c6_cd596fd0",
+        "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-16T19:03:30Z",
+      "side": 1,
+      "message": "Is there some way to inject the connector in ServceManagerConnection? Maybe the pattern here is the established default.",
+      "revId": "9d3aa8dcf2aa461fefe4415922ffa97dfbeb6cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9a3175_ab024025",
+        "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1570,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-16T19:03:30Z",
+      "side": 1,
+      "message": "I think a lambda could improve readability in this function, ie,\n\n  auto has_note_taking_apps \u003d [\u0026]() {\n    return test_note_taking_controller()-\u003eclient_attached();\n  };\n\n  EXPECT_FALSE(has_note_taking_apps());",
+      "revId": "9d3aa8dcf2aa461fefe4415922ffa97dfbeb6cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
