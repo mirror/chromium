@@ -87,6 +87,8 @@ target(link_target_type, "ipc_service_sources") {
       "direct_composition_child_surface_win.h",
       "direct_composition_surface_win.cc",
       "direct_composition_surface_win.h",
+      "gpu_memory_buffer_factory_dxgi.cc",
+      "gpu_memory_buffer_factory_dxgi.h",
       "image_transport_surface_win.cc",
     ]
     libs += [
@@ -189,6 +191,9 @@ test("gpu_ipc_service_unittests") {
   }
   if (is_linux) {
     sources += [ "gpu_memory_buffer_factory_native_pixmap_unittest.cc" ]
+  }
+  if (is_win) {
+    sources += [ "gpu_memory_buffer_factory_dxgi_unittest.cc" ]
   }
   if (use_ozone) {
     deps += [ "//ui/ozone" ]

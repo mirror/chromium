@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #include "ui/gfx/mojo/buffer_types_struct_traits.h"
-
+#include "build/build_config.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
 namespace mojo {
@@ -75,6 +75,19 @@ mojo::ScopedHandle StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
 #endif
 }
 
+mojo::ScopedHandle StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
+                                gfx::GpuMemoryBufferHandle>::
+    dxgi_handle(const gfx::GpuMemoryBufferHandle& handle) {
+  if (handle.type != gfx::DXGI_SHARED_HANDLE)
+    return mojo::ScopedHandle();
+
+#if defined(OS_WIN)
+  return mojo::WrapPlatformFile(handle.handle.GetHandle());
+#else
+  return mojo::ScopedHandle();
+#endif
+}
+
 bool StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
                   gfx::GpuMemoryBufferHandle>::
     Read(gfx::mojom::GpuMemoryBufferHandleDataView data,
@@ -107,6 +120,18 @@ bool StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
     if (unwrap_result != MOJO_RESULT_OK)
       return false;
     out->mach_port.reset(mach_port);
+  }
+#endif
+#if defined(OS_WIN)
+  if (out->type == gfx::DXGI_SHARED_HANDLE) {
+    base::PlatformFile dxgi_handle;
+    MojoResult unwrap_result =
+        mojo::UnwrapPlatformFile(data.TakeDxgiHandle(), &dxgi_handle);
+    if (unwrap_result != MOJO_RESULT_OK) {
+      return false;
+    }
+    out->handle = base::SharedMemoryHandle(dxgi_handle, 0,
+                                           base::UnguessableToken::Create());
   }
 #endif
   return true;
