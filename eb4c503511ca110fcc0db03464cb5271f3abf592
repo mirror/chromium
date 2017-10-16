@@ -67,6 +67,24 @@
       "revId": "eb4c503511ca110fcc0db03464cb5271f3abf592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87de280d_7dcc5f23",
+        "filename": "ui/ozone/platform/wayland/wayland_pointer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-10-16T11:37:49Z",
+      "side": 1,
+      "message": "Good point. Thanks. I\u0027ll take a look into this.",
+      "parentUuid": "9fe65820_1c21c7e6",
+      "revId": "eb4c503511ca110fcc0db03464cb5271f3abf592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
