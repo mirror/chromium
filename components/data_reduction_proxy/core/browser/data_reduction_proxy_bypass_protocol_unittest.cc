@@ -25,6 +25,7 @@
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params_test_utils.h"
+#include "components/data_reduction_proxy/core/common/data_reduction_proxy_switches.h"
 #include "net/base/completion_callback.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/load_flags.h"
@@ -37,6 +38,9 @@
 #include "net/proxy/proxy_server.h"
 #include "net/proxy/proxy_service.h"
 #include "net/socket/socket_test_util.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
+#include "net/test/embedded_test_server/embedded_test_server_connection_listener.h"
+#include "net/test/embedded_test_server/http_response.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/static_http_user_agent_settings.h"
 #include "net/url_request/url_request.h"
@@ -74,6 +78,36 @@ class SimpleURLRequestInterceptor : public net::URLRequestInterceptor {
   }
 };
 
+// An embedded test server connection listener that resets the connection
+// after accepting it.
+class SimpleConnectionListener
+    : public net::test_server::EmbeddedTestServerConnectionListener {
+ public:
+  SimpleConnectionListener() : accepted_socket_count_(0) {}
+  ~SimpleConnectionListener() override {}
+
+  void AcceptedSocket(const net::StreamSocket& socket) override {
+    accepted_socket_count_++;
+  }
+  void ReadFromSocket(const net::StreamSocket& socket, int* rv) override {
+    if (accepted_socket_count_ == 1) {
+      // Only intercept the first connection attempt.
+      *rv = -130;
+    }
+  }
+
+  size_t accepted_socket_count() const { return accepted_socket_count_; }
+
+ private:
+  const scoped_refptr<base::SequencedTaskRunner> run_loop_task_runner_;
+
+  base::RunLoop run_loop_;
+
+  size_t accepted_socket_count_;
+
+  DISALLOW_COPY_AND_ASSIGN(SimpleConnectionListener);
+};
+
 // Constructs a |TestURLRequestContext| that uses a |MockSocketFactory| to
 // simulate requests and responses.
 class DataReductionProxyProtocolTest : public testing::Test {
@@ -82,6 +116,7 @@ class DataReductionProxyProtocolTest : public testing::Test {
     simple_interceptor_.reset(new SimpleURLRequestInterceptor());
     net::URLRequestFilter::GetInstance()->AddHostnameInterceptor(
         "http", "www.google.com", std::move(simple_interceptor_));
+    embedded_test_server_.SetConnectionListener(&simple_connection_listener_);
   }
 
   ~DataReductionProxyProtocolTest() override {
@@ -93,18 +128,27 @@ class DataReductionProxyProtocolTest : public testing::Test {
 
   void SetUp() override {
     net::NetworkChangeNotifier::SetTestNotificationsOnly(true);
-    test_context_ = DataReductionProxyTestContext::Builder().Build();
+    test_context_ = DataReductionProxyTestContext::Builder()
+                        .SkipSettingsInitialization()
+                        .Build();
+    test_context_->config()->SetShouldAddDefaultProxyBypassRules(false);
+    test_context_->InitSettingsWithoutCheck();
+
     network_change_notifier_.reset(net::NetworkChangeNotifier::CreateMock());
     test_context_->RunUntilIdle();
   }
 
   // Sets up the |TestURLRequestContext| with the provided |ProxyService|.
-  void ConfigureTestDependencies(std::unique_ptr<ProxyService> proxy_service) {
+  void ConfigureTestDependencies(std::unique_ptr<ProxyService> proxy_service,
+                                 bool use_mock_socket_factory,
+                                 bool use_drp_proxy_delegate) {
     // Create a context with delayed initialization.
     context_.reset(new TestURLRequestContext(true));
 
     proxy_service_ = std::move(proxy_service);
-    context_->set_client_socket_factory(&mock_socket_factory_);
+    if (use_mock_socket_factory) {
+      context_->set_client_socket_factory(&mock_socket_factory_);
+    }
     context_->set_proxy_service(proxy_service_.get());
     network_delegate_.reset(new net::TestNetworkDelegate());
     context_->set_network_delegate(network_delegate_.get());
@@ -125,6 +169,11 @@ class DataReductionProxyProtocolTest : public testing::Test {
         std::move(job_factory_impl), base::WrapUnique(interceptor)));
 
     context_->set_job_factory(job_factory_.get());
+
+    if (use_drp_proxy_delegate) {
+      proxy_delegate_ = test_context_->io_data()->CreateProxyDelegate();
+      context_->set_proxy_delegate(proxy_delegate_.get());
+    }
     context_->Init();
   }
 
@@ -133,13 +182,16 @@ class DataReductionProxyProtocolTest : public testing::Test {
   // Runs a test with the given request |method| that expects the first response
   // from the server to be |first_response|. If |expected_retry|, the test
   // will expect a retry of the request. A response body will be expected
-  // if |expect_response_body|.
+  // if |expect_response_body|. |net_error_code| is the error code returned if
+  // |generate_response_error| is true.
   void TestProxyFallback(const char* method,
                          const char* first_response,
                          bool expected_retry,
                          bool generate_response_error,
                          size_t expected_bad_proxy_count,
-                         bool expect_response_body) {
+                         bool expect_response_body,
+                         int net_error_code,
+                         bool expect_final_error) {
     std::string m(method);
     std::string trailer =
         (m == "PUT" || m == "POST") ? "Content-Length: 0\r\n" : "";
@@ -165,7 +217,7 @@ class DataReductionProxyProtocolTest : public testing::Test {
       MockRead(net::SYNCHRONOUS, net::OK),
     };
     MockRead data_reads_error[] = {
-      MockRead(net::SYNCHRONOUS, net::ERR_INVALID_RESPONSE),
+        MockRead(net::SYNCHRONOUS, net_error_code),
     };
 
     StaticSocketDataProvider data1(data_reads, arraysize(data_reads),
@@ -234,10 +286,8 @@ class DataReductionProxyProtocolTest : public testing::Test {
     // Expect that we get "content" and not "Bypass message", and that there's
     // a "not-proxy" "Server:" header in the final response.
     ExecuteRequestExpectingContentAndHeader(
-        method,
-        (expect_response_body ? "content" : ""),
-        expected_retry,
-        generate_response_error);
+        method, (expect_response_body ? "content" : ""), expected_retry,
+        expect_final_error, net_error_code);
   }
 
   // Starts a request with the given |method| and checks that the response
@@ -245,7 +295,8 @@ class DataReductionProxyProtocolTest : public testing::Test {
   void ExecuteRequestExpectingContentAndHeader(const std::string& method,
                                                const std::string& content,
                                                bool expected_retry,
-                                               bool expected_error) {
+                                               bool expected_error,
+                                               int net_error_code) {
     int initial_headers_received_count =
         network_delegate_->headers_received_count();
     TestDelegate d;
@@ -260,16 +311,18 @@ class DataReductionProxyProtocolTest : public testing::Test {
 
     if (!expected_error) {
       EXPECT_EQ(net::OK, d.request_status());
-      if (expected_retry)
+      if (expected_retry && net_error_code == net::ERR_INTERNET_DISCONNECTED) {
         EXPECT_EQ(initial_headers_received_count + 2,
                   network_delegate_->headers_received_count());
-      else
+      } else {
         EXPECT_EQ(initial_headers_received_count + 1,
                   network_delegate_->headers_received_count());
+      }
       EXPECT_EQ(content, d.data_received());
       return;
     }
-    EXPECT_EQ(net::ERR_INVALID_RESPONSE, d.request_status());
+
+    EXPECT_EQ(net_error_code, d.request_status());
     EXPECT_EQ(initial_headers_received_count,
               network_delegate_->headers_received_count());
   }
@@ -322,6 +375,9 @@ class DataReductionProxyProtocolTest : public testing::Test {
 
  protected:
   base::MessageLoopForIO message_loop_;
+  SimpleConnectionListener simple_connection_listener_;
+  net::EmbeddedTestServer embedded_test_server_;
+
   std::unique_ptr<net::NetworkChangeNotifier> network_change_notifier_;
 
   std::unique_ptr<net::URLRequestInterceptor> simple_interceptor_;
@@ -334,6 +390,7 @@ class DataReductionProxyProtocolTest : public testing::Test {
 
   std::unique_ptr<net::URLRequestInterceptingJobFactory> job_factory_;
   std::unique_ptr<TestURLRequestContext> context_;
+  std::unique_ptr<net::ProxyDelegate> proxy_delegate_;
 };
 
 // Tests that request are deemed idempotent or not according to the method used.
@@ -359,6 +416,119 @@ TEST_F(DataReductionProxyProtocolTest, TestIdempotency) {
     request->set_method(tests[i].method);
     EXPECT_EQ(tests[i].expected_result,
               net::HttpUtil::IsMethodIdempotent(request->method()));
+  }
+}
+
+// Tests that if the embedded test server resets the connection after accepting
+// it, then the data saver proxy is bypassed, and the request is retried.
+TEST_F(DataReductionProxyProtocolTest,
+       EmbeddedTestServerBypassRetryOnPostConnectionErrors) {
+  embedded_test_server_.AddDefaultHandlers(
+      base::FilePath(FILE_PATH_LITERAL("net/data/url_request_unittest")));
+  ASSERT_TRUE(embedded_test_server_.Start());
+  const GURL url = embedded_test_server_.GetURL("/simple.html");
+
+  test_context_->config()->test_params()->UseNonSecureProxiesForHttp();
+  test_context_->SetDataReductionProxyEnabled(true);
+  net::ProxyServer proxy_server(net::ProxyServer::SCHEME_HTTP,
+                                embedded_test_server_.host_port_pair());
+
+  ASSERT_TRUE(proxy_server.is_http());
+  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+      switches::kDataReductionProxy, proxy_server.host_port_pair().ToString());
+  test_context_->config()->ResetParamFlagsForTest();
+  ConfigureTestDependencies(ProxyService::CreateFixedFromPacResult("DIRECT"),
+                            false, true);
+  network_delegate_->set_will_be_restarted_after_bytes_sent(true);
+  test_context_->RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
+
+  net::TestDelegate delegate;
+  std::unique_ptr<net::URLRequest> url_request(context_->CreateRequest(
+      url, net::IDLE, &delegate, TRAFFIC_ANNOTATION_FOR_TESTS));
+  url_request->Start();
+  while (!url_request->status().is_success()) {
+    // Need to pump the thread for the embedded server and the DRP thread.
+    test_context_->RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
+  }
+  EXPECT_FALSE(url_request->proxy_server().is_http());
+  ProxyRetryInfoMap retry_info = proxy_service_->proxy_retry_info();
+  while (retry_info.size() != 1) {
+    test_context_->RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
+    retry_info = proxy_service_->proxy_retry_info();
+  }
+
+  EXPECT_LE(base::TimeDelta::FromMinutes(10),
+            retry_info.begin()->second.current_delay);
+  // Two connections should be accepted: First when using the proxy, second when
+  // establishing the direct connection.
+  EXPECT_EQ(2u, simple_connection_listener_.accepted_socket_count());
+}
+
+// Tests that if the connection is reset, then the proxy is bypassed, and
+// request is retried with the next proxy.
+TEST_F(DataReductionProxyProtocolTest, BypassRetryOnPostConnectionErrors) {
+  const struct {
+    const char* method;
+    const char* first_response;
+    bool expected_retry;
+    bool generate_response_error;
+    size_t expected_bad_proxy_count;
+    bool expect_response_body;
+    int expected_duration;
+    DataReductionProxyBypassType expected_bypass_type;
+  } tests[] = {
+      {
+          "GET", "Connection reset after accept", true, true, 1u, true, 3600,
+          BYPASS_EVENT_TYPE_MAX,
+      },
+  };
+  test_context_->config()->test_params()->UseNonSecureProxiesForHttp();
+  std::string primary = test_context_->config()
+                            ->test_params()
+                            ->proxies_for_http()
+                            .front()
+                            .proxy_server()
+                            .host_port_pair()
+                            .ToString();
+  std::string fallback = test_context_->config()
+                             ->test_params()
+                             ->proxies_for_http()
+                             .at(1)
+                             .proxy_server()
+                             .host_port_pair()
+                             .ToString();
+  for (size_t i = 0; i < arraysize(tests); ++i) {
+    ConfigureTestDependencies(
+        ProxyService::CreateFixedFromPacResult(
+            net::ProxyServer::FromURI(primary, net::ProxyServer::SCHEME_HTTP)
+                .ToPacString() +
+            "; " +
+            net::ProxyServer::FromURI(fallback, net::ProxyServer::SCHEME_HTTP)
+                .ToPacString() +
+            "; DIRECT"),
+        true, false);
+    network_delegate_->set_will_be_restarted_after_bytes_sent(true);
+    TestProxyFallback(
+        tests[i].method, tests[i].first_response, tests[i].expected_retry,
+        tests[i].generate_response_error, tests[i].expected_bad_proxy_count,
+        tests[i].expect_response_body, net::ERR_CONNECTION_RESET, false);
+    EXPECT_EQ(tests[i].expected_bypass_type, bypass_stats_->GetBypassType());
+    // We should also observe the bad proxy in the retry list.
+    TestBadProxies(tests[i].expected_bad_proxy_count,
+                   tests[i].expected_duration, primary, fallback);
+
+    ProxyRetryInfoMap retry_info = proxy_service_->proxy_retry_info();
+    while (retry_info.size() != 1) {
+      test_context_->RunUntilIdle();
+      base::RunLoop().RunUntilIdle();
+      retry_info = proxy_service_->proxy_retry_info();
+    }
+
+    EXPECT_LE(base::TimeDelta::FromMinutes(10),
+              retry_info.begin()->second.current_delay);
   }
 }
 
@@ -771,18 +941,20 @@ TEST_F(DataReductionProxyProtocolTest, BypassLogic) {
                              .host_port_pair()
                              .ToString();
   for (size_t i = 0; i < arraysize(tests); ++i) {
-    ConfigureTestDependencies(ProxyService::CreateFixedFromPacResult(
-        net::ProxyServer::FromURI(
-            primary, net::ProxyServer::SCHEME_HTTP).ToPacString() + "; " +
-            net::ProxyServer::FromURI(
-                fallback,
-                net::ProxyServer::SCHEME_HTTP).ToPacString() + "; DIRECT"));
-    TestProxyFallback(tests[i].method,
-                      tests[i].first_response,
-                      tests[i].expected_retry,
-                      tests[i].generate_response_error,
-                      tests[i].expected_bad_proxy_count,
-                      tests[i].expect_response_body);
+    ConfigureTestDependencies(
+        ProxyService::CreateFixedFromPacResult(
+            net::ProxyServer::FromURI(primary, net::ProxyServer::SCHEME_HTTP)
+                .ToPacString() +
+            "; " +
+            net::ProxyServer::FromURI(fallback, net::ProxyServer::SCHEME_HTTP)
+                .ToPacString() +
+            "; DIRECT"),
+        true, false);
+    TestProxyFallback(
+        tests[i].method, tests[i].first_response, tests[i].expected_retry,
+        tests[i].generate_response_error, tests[i].expected_bad_proxy_count,
+        tests[i].expect_response_body, net::ERR_INTERNET_DISCONNECTED,
+        tests[i].generate_response_error);
     EXPECT_EQ(tests[i].expected_bypass_type, bypass_stats_->GetBypassType());
     // We should also observe the bad proxy in the retry list.
     TestBadProxies(tests[i].expected_bad_proxy_count,
@@ -982,7 +1154,8 @@ TEST_F(DataReductionProxyProtocolTest,
        ProxyBypassIgnoredOnDirectConnection) {
   // Verify that a Chrome-Proxy header is ignored when returned from a directly
   // connected origin server.
-  ConfigureTestDependencies(ProxyService::CreateFixedFromPacResult("DIRECT"));
+  ConfigureTestDependencies(ProxyService::CreateFixedFromPacResult("DIRECT"),
+                            true, false);
 
   MockRead data_reads[] = {
     MockRead("HTTP/1.1 200 OK\r\n"

@@ -143,10 +143,10 @@ class ConnectionListener
 
   // Get called from the EmbeddedTestServer thread to be notified that
   // a connection was read from.
-  void ReadFromSocket(const net::StreamSocket& connection, int rv) override {
+  void ReadFromSocket(const net::StreamSocket& connection, int* rv) override {
     // Don't log a read if no data was transferred. This case often happens if
     // the sockets of the test server are being flushed and disconnected.
-    if (rv <= 0)
+    if (*rv <= 0)
       return;
     base::AutoLock lock(lock_);
     uint16_t socket = GetPort(connection);
