@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "98d2f5f4_d38bdf67",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-16T23:18:10Z",
+      "side": 1,
+      "message": "I was tempted to do this, but worried about log spam. So, I went with NOTIMPLEMENTED and set the NOTIMPLEMENTED_POLICY to 5.",
+      "parentUuid": "5fd3b9f3_67c2cffd",
+      "revId": "771453bd99151568862c84a822335044c75d8374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "833433c2_6d5bc755",
         "filename": "ui/wm/core/easy_resize_window_targeter.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "771453bd99151568862c84a822335044c75d8374",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c208b0f5_94285cca",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-16T23:18:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "833433c2_6d5bc755",
+      "revId": "771453bd99151568862c84a822335044c75d8374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
