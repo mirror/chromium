@@ -31540,7 +31540,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="Media.AudioInputControllerSessionSilenceReport"
     enum="AudioInputSilenceReport">
   <owner>grunell@chromium.org</owner>
-  <summary>The silence report for an audio input device session.</summary>
+  <summary>
+    Every 15 seconds during the lifetime of an audio input stream, the sound
+    level is measured, see AudioInputController::CheckAudioPower(). If the level
+    is below a certain threshold, it's considered &quot;silence&quot;. Otherwise
+    it's considered &quot;audio&quot;. This metric shows whether there was only
+    silence, only audio, or both, during the lifetime of a stream. If logged
+    before the first measurement, i.e. if the lifetime is less than 15 seconds,
+    &quot;no measurement&quot; is reported.
+  </summary>
 </histogram>
 
 <histogram name="Media.AudioInputDeviceManager" units="ms">
