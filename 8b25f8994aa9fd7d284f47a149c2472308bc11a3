@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "919666ca_68c7e786",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-16T01:38:40Z",
+      "side": 1,
+      "message": "Instead of this arithmetic, WDYT about fleshing out the enum with the relevant info? As follows:\n\nenum class DenialComboboxIndex {\n    DONT_TRANSLATE \u003d 0,\n    NEVER_TRANSLATE_LANGUAGE \u003d 1,\n    SEPARATOR \u003d 2,\n    MENU_SIZE_NO_BLACKLIST \u003d SEPARATOR,\n    NEVER_TRANSLATE_SITE \u003d 3,\n    MENU_SIZE_FULL \u003d 4,\n  };",
+      "range": {
+        "startLine": 659,
+        "startChar": 6,
+        "endLine": 659,
+        "endChar": 21
+      },
+      "revId": "8b25f8994aa9fd7d284f47a149c2472308bc11a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac82e37_1ae5c460",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-16T01:38:40Z",
+      "side": 1,
+      "message": "Are we able to directly test the bubble menu?",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 51
+      },
+      "revId": "8b25f8994aa9fd7d284f47a149c2472308bc11a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb1039e_6acbf693",
+        "filename": "components/translate/core/browser/translate_ui_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-16T01:38:40Z",
+      "side": 1,
+      "message": "Confused at first how all these blacklist functions related to each other. Do you know quite what this SetSiteBlacklist does? If so can you reword the comment a bit?",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 58
+      },
+      "revId": "8b25f8994aa9fd7d284f47a149c2472308bc11a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
