@@ -16,6 +16,24 @@
       "revId": "842392d6d161ff3779190f14c6d0b2edc9b70c0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b754f5_f8641066",
+        "filename": "tools/vim/mojom/syntax/mojom.vim",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-16T23:23:06Z",
+      "side": 1,
+      "message": "Not sure what the original intent was, but as an example:\n\n/* See [README.md] for details. */\n\n`:gf` will open that file. So it makes it look link-y, I guess.\n\nDunno why it\u0027s not included in mojomLineComment. Should probably be in both or neither so I\u0027ll add it there too.\n\nSome folks use [foo] instead of |foo| to refer to variables in comments, so maybe it\u0027s worth considering handling |foo| too.",
+      "parentUuid": "eb88eb4a_1c7aac17",
+      "revId": "842392d6d161ff3779190f14c6d0b2edc9b70c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
