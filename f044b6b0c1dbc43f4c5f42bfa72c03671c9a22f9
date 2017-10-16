@@ -94,6 +94,30 @@
       "revId": "f044b6b0c1dbc43f4c5f42bfa72c03671c9a22f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e84d39_258a35d3",
+        "filename": "chrome/browser/chromeos/input_method/candidate_window_controller_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-16T15:39:30Z",
+      "side": 0,
+      "message": "Nice!\n\nIf the display id is not set kInvalidDisplayId is used [1]. So, I don\u0027t think you need to specify any property here and the window should appear on the right display.",
+      "parentUuid": "0e1161c3_2abf8602",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 44,
+        "endChar": 59
+      },
+      "revId": "f044b6b0c1dbc43f4c5f42bfa72c03671c9a22f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
