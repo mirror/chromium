@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f58abea9_664209c9",
+        "filename": "chrome/browser/ui/libgtkui/native_theme_gtk3.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-16T21:29:37Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment, and nit: TODO must have an author/owner",
+      "range": {
+        "startLine": 324,
+        "startChar": 9,
+        "endLine": 324,
+        "endChar": 13
+      },
+      "revId": "422e60adc05bda1ced64f94510ec0d02ab5acbff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
