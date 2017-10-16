@@ -16,6 +16,24 @@
       "revId": "f318b4f4b4d638f9ac89b889e2cf6536b439e933",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c314bab8_88079817",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-16T09:07:16Z",
+      "side": 1,
+      "message": "Yes, the bindings team wants to remove this class entirely although they don\u0027t have a concrete plan.",
+      "parentUuid": "eac6cbec_a5177b10",
+      "revId": "f318b4f4b4d638f9ac89b889e2cf6536b439e933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
