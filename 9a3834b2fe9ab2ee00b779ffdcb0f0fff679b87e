@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26c7f45d_d6dbae53",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-16T17:14:36Z",
+      "side": 1,
+      "message": "nit: trailing white space",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 1
+      },
+      "revId": "9a3834b2fe9ab2ee00b779ffdcb0f0fff679b87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82a14f8_5653835c",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-16T17:14:36Z",
+      "side": 1,
+      "message": "DCHECK_EQ to ensure CurrentAuthUserView() is for |user| ?",
+      "revId": "9a3834b2fe9ab2ee00b779ffdcb0f0fff679b87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "864fe4c1_7a4b191a",
+        "filename": "ash/login/ui/login_data_dispatcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-16T17:14:36Z",
+      "side": 1,
+      "message": "nit: display -\u003e displayed",
+      "range": {
+        "startLine": 56,
+        "startChar": 43,
+        "endLine": 56,
+        "endChar": 50
+      },
+      "revId": "9a3834b2fe9ab2ee00b779ffdcb0f0fff679b87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1e56c5_8552b509",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-16T17:14:36Z",
+      "side": 1,
+      "message": "Check !GetWidget(). If a view is not attached, GetWidget() returns nullptr. If a view has a non null GetWidget(), the widget must have been initialized hence always have a root view.\n\nThis means it is possible the |icon_| is not up-to-late since UpdateImage could be skipped when this view is not attached. Should we override ViewHierarchyChanged so that we could make up for the skipped UpdateImage when the view is added/attached to a view hierarchy?",
+      "revId": "9a3834b2fe9ab2ee00b779ffdcb0f0fff679b87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
