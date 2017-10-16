@@ -25,7 +25,7 @@ void NGListLayoutAlgorithm::SetListMarkerPosition(
   if (!RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
     list_marker_index++;
   const NGPhysicalFragment& physical_fragment =
-      *line_box->Children()[list_marker_index];
+      *line_box->ChildFragment(list_marker_index);
   NGFragment list_marker(constraint_space.WritingMode(), physical_fragment);
 
   // Compute the inline offset relative to the line.
@@ -35,10 +35,9 @@ void NGListLayoutAlgorithm::SetListMarkerPosition(
   LayoutUnit line_offset = IsLtr(line_info.BaseDirection())
                                ? margins.first
                                : line_width + margins.second;
-  Vector<NGLogicalOffset>& offsets = line_box->MutableOffsets();
-  offsets[list_marker_index].inline_offset = line_offset;
+  line_box->SetChildInlineOffset(list_marker_index, line_offset);
   if (!RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
-    offsets[list_marker_index - 1].inline_offset = line_offset;
+    line_box->SetChildInlineOffset(list_marker_index - 1, line_offset);
 }
 
 }  // namespace blink
