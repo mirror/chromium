@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec7f8247_acc17979",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-16T19:04:43Z",
+      "side": 1,
+      "message": "I\u0027m a little confused why this can\u0027t be simply done in java/TalkBack?",
+      "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc035d86_b9c89922",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-16T19:04:43Z",
+      "side": 1,
+      "message": "nit: update comment",
+      "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4168499_99a416ec",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-16T19:04:43Z",
+      "side": 1,
+      "message": "nit: period i.e. selected.",
+      "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5639b909_4ab9b4dc",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-16T19:04:43Z",
+      "side": 1,
+      "message": "Is this ever expected? Shouldn\u0027t we just return if there\u0027s no granularity specified?",
+      "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa7f68a2_f6027ace",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-16T19:04:43Z",
+      "side": 1,
+      "message": "Why -1 for start and text length for end? How does Android handle text offsets when there\u0027s no caret?",
+      "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67e1a793_d6b0bc6a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-16T19:04:43Z",
+      "side": 1,
+      "message": "Just get the text and get its length directly.\nAlso, just to be sure, you want to select the entire contents of the node\u0027s text? This differs from the previous logic that placed selection as a collapsed selection at the beginning of the node.",
+      "revId": "8d09a06a2297df052ab0b2649a0f1b20662a6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
