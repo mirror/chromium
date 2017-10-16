@@ -22,6 +22,30 @@
       "revId": "19ef4f158eef576247d1812d63475da19979902a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f66fe3_87305847",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-10-16T22:05:50Z",
+      "side": 0,
+      "message": "\u003e fuchsia_audio_output_stream_write() will always return ZX_ERR_IO_MISSED_DEADLINE if this check fails, see https://fuchsia-review.googlesource.com/c/garnet/+/73959/5/lib/media/audio_output_stream.cc#217\n\nNo, that check was incorrect and isn\u0027t there any more.\n\n\u003e it\u0027s not possible to render audio with delay lower than |presentation_delay_ns_|\n\nThat\u0027s not strictly speaking true - it\u0027s not possible to guarantee that every sample provided with a delay lower than |pres_delay_ns_| will render, but it\u0027s perfectly valid to pass in frames that are near or even slightly behind this deadline.  The mixer will sample frames for presentation.  If the provider of the audio is running too close to |pres_delay_ns_| they run the risk of some of their samples being missed, but the way to compensate for that is to increase the low water mark.",
+      "parentUuid": "0fd88453_7281e1f8",
+      "range": {
+        "startLine": 116,
+        "startChar": 29,
+        "endLine": 116,
+        "endChar": 62
+      },
+      "revId": "19ef4f158eef576247d1812d63475da19979902a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

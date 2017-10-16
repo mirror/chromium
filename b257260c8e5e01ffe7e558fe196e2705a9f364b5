@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "3d5f520b_862d9e69",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-10-16T22:05:50Z",
+      "side": 1,
+      "message": "We want to call UpdatePresentationDelay() to update presentation_delay_ns_, but I can do that in that loop.  Will fix.",
+      "parentUuid": "605bac86_d00e79a9",
+      "revId": "b257260c8e5e01ffe7e558fe196e2705a9f364b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6684bf0a_52dfc314",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 2
@@ -79,6 +97,24 @@
       "revId": "b257260c8e5e01ffe7e558fe196e2705a9f364b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f820b64e_6008f7c8",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-10-16T22:05:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6684bf0a_52dfc314",
+      "revId": "b257260c8e5e01ffe7e558fe196e2705a9f364b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
