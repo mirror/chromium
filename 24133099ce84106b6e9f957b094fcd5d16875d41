@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "380cae3b_29e05921",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2103,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T23:02:27Z",
+      "side": 1,
+      "message": "\u003e Is there a guarantee that |currentTabInTargetBVC.webState| is not null?\n\nTab -visibleURL would have crashed if webState was null. But since there is a check for th Tab to be non-nil, I\u0027ve changed it to check that the WebState is non-null.",
+      "parentUuid": "38d72de4_ab4922ae",
+      "range": {
+        "startLine": 2103,
+        "startChar": 17,
+        "endLine": 2103,
+        "endChar": 38
+      },
+      "revId": "24133099ce84106b6e9f957b094fcd5d16875d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b9f8d93_ee852132",
         "filename": "ios/chrome/browser/metrics/new_tab_page_uma.mm",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "24133099ce84106b6e9f957b094fcd5d16875d41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1aa3dac_b7f7f28c",
+        "filename": "ios/chrome/browser/metrics/new_tab_page_uma.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T23:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b9f8d93_ee852132",
+      "revId": "24133099ce84106b6e9f957b094fcd5d16875d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "95738d87_0ac9aff7",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T23:02:27Z",
+      "side": 1,
+      "message": "Original code was not checking it either.",
+      "parentUuid": "1c08e371_d9344b8f",
+      "range": {
+        "startLine": 414,
+        "startChar": 21,
+        "endLine": 414,
+        "endChar": 34
+      },
+      "revId": "24133099ce84106b6e9f957b094fcd5d16875d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ea10577_12304486",
         "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
         "patchSetId": 2
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "46286c88_b3d9f60a",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T23:02:27Z",
+      "side": 1,
+      "message": "Moved the \"super\" invocation out of the if ().",
+      "parentUuid": "6ea10577_12304486",
+      "range": {
+        "startLine": 41,
+        "startChar": 38,
+        "endLine": 41,
+        "endChar": 50
+      },
+      "revId": "24133099ce84106b6e9f957b094fcd5d16875d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91f97832_2b8224e9",
         "filename": "ios/chrome/browser/ui/main/browser_view_wrangler.mm",
         "patchSetId": 2
@@ -108,6 +198,30 @@
       "revId": "24133099ce84106b6e9f957b094fcd5d16875d41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fa17a6_5712ad7e",
+        "filename": "ios/chrome/browser/ui/main/browser_view_wrangler.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T23:02:27Z",
+      "side": 1,
+      "message": "Yes, all Tab in TabModel are guaranteed to have non-null WebStates.",
+      "parentUuid": "91f97832_2b8224e9",
+      "range": {
+        "startLine": 268,
+        "startChar": 16,
+        "endLine": 268,
+        "endChar": 26
+      },
+      "revId": "24133099ce84106b6e9f957b094fcd5d16875d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
