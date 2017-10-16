@@ -431,7 +431,7 @@ void EmbeddedTestServer::OnReadCompleted(HttpConnection* connection, int rv) {
 bool EmbeddedTestServer::HandleReadResult(HttpConnection* connection, int rv) {
   DCHECK(io_thread_->task_runner()->BelongsToCurrentThread());
   if (connection_listener_)
-    connection_listener_->ReadFromSocket(*connection->socket_, rv);
+    connection_listener_->ReadFromSocket(*connection->socket_, &rv);
   if (rv <= 0) {
     DidClose(connection);
     return false;
