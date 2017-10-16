@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b35b1e9_227ef75d",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-16T16:44:11Z",
+      "side": 1,
+      "message": "Nah, no need for this temp variable, will just\nreturn gfx::ColorSpace() directly.",
+      "parentUuid": "91b4a1f2_ef0ffc41",
+      "revId": "2f901a0fa6e30059b2c4ba11e021a0f005c271cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b85cc64_4709d6ff",
         "filename": "ui/ozone/platform/drm/common/drm_util_unittest.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "2f901a0fa6e30059b2c4ba11e021a0f005c271cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50269e29_c9f30e81",
+        "filename": "ui/ozone/platform/drm/common/drm_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-16T16:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b85cc64_4709d6ff",
+      "revId": "2f901a0fa6e30059b2c4ba11e021a0f005c271cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
