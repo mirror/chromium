@@ -76,7 +76,6 @@
 #include "content/common/view_messages.h"
 #include "content/public/child/child_url_loader_factory_getter.h"
 #include "content/public/common/appcache_info.h"
-#include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/bindings_policy.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_constants.h"
@@ -171,6 +170,7 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "storage/common/data_element.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
 #include "third_party/WebKit/public/platform/InterfaceProvider.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
@@ -2728,12 +2728,12 @@ service_manager::InterfaceProvider* RenderFrameImpl::GetRemoteInterfaces() {
   return remote_interfaces_.get();
 }
 
-AssociatedInterfaceRegistry*
+blink::AssociatedInterfaceRegistry*
 RenderFrameImpl::GetAssociatedInterfaceRegistry() {
   return &associated_interfaces_;
 }
 
-AssociatedInterfaceProvider*
+blink::AssociatedInterfaceProvider*
 RenderFrameImpl::GetRemoteAssociatedInterfaces() {
   if (!remote_associated_interfaces_) {
     ChildThreadImpl* thread = ChildThreadImpl::current();
@@ -3123,6 +3123,11 @@ RenderFrameImpl::CreateServiceWorkerProvider() {
 service_manager::InterfaceProvider* RenderFrameImpl::GetInterfaceProvider() {
   DCHECK(remote_interfaces_);
   return remote_interfaces_.get();
+}
+
+blink::AssociatedInterfaceProvider*
+RenderFrameImpl::GetAssociatedInterfaceProvider() {
+  return GetRemoteAssociatedInterfaces();
 }
 
 void RenderFrameImpl::DidAccessInitialDocument() {
