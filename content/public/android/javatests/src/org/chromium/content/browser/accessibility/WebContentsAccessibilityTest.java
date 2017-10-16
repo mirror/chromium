@@ -29,6 +29,8 @@ import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.test.util.Criteria;
+import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content_shell_apk.ContentShellActivityTestRule;
 
 import java.lang.reflect.Method;
@@ -38,6 +40,9 @@ import java.lang.reflect.Method;
  */
 @RunWith(BaseJUnit4ClassRunner.class)
 public class WebContentsAccessibilityTest {
+    // Constant from AccessibilityNodeInfo defined in the L SDK.
+    private static final int ACTION_SET_TEXT = 0x200000;
+
     @Rule
     public ContentShellActivityTestRule mActivityTestRule = new ContentShellActivityTestRule();
 
@@ -57,7 +62,63 @@ public class WebContentsAccessibilityTest {
         }
     };
 
+    /*
+     * Enable accessibility and wait until ContentViewCore.getAccessibilityNodeProvider()
+     * returns something not null.
+     */
+    private AccessibilityNodeProvider enableAccessibilityAndWaitForNodeProvider() {
+        final ContentViewCore contentViewCore = mActivityTestRule.getContentViewCore();
+        contentViewCore.setAccessibilityState(true);
+
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return contentViewCore.getAccessibilityNodeProvider() != null;
+            }
+        });
+
+        return contentViewCore.getAccessibilityNodeProvider();
+    }
+
     AccessibilityEventCallbackHelper mAccessibilityEventCallbackHelper;
+
+    /**
+     * Text fields should expose ACTION_SET_TEXT
+     */
+    @Test
+    @MediumTest
+    @MinAndroidSdkLevel(Build.VERSION_CODES.LOLLIPOP)
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void testTextFieldExposesActionSetText() throws Throwable {
+        // Load a web page with a text field.
+        final String data = "<h1>Simple test page</h1>"
+                + "<section><input type=text placeholder=Text></section>";
+        mActivityTestRule.launchContentShellWithUrl(UrlUtils.encodeHtmlDataUri(data));
+        mActivityTestRule.waitForActiveShellToBeDoneLoading();
+        AccessibilityNodeProvider provider = enableAccessibilityAndWaitForNodeProvider();
+
+        // Wait until we find a node in the accessibility tree with the text "TextGoesHere".
+        // Whenever the tree is updated, an AccessibilityEvent is fired, so we can just wait until
+        // the next event before checking again.
+        int textNodeVirtualViewId =
+                findNodeWithClassName(provider, View.NO_ID, "android.widget.EditText", 0);
+        while (textNodeVirtualViewId == View.NO_ID) {
+            mAccessibilityEventCallbackHelper.waitForCallback(
+                    mAccessibilityEventCallbackHelper.getCallCount());
+
+            textNodeVirtualViewId =
+                    findNodeWithClassName(provider, View.NO_ID, "android.widget.EditText", 0);
+        }
+
+        AccessibilityNodeInfo textNode =
+                provider.createAccessibilityNodeInfo(textNodeVirtualViewId);
+        Assert.assertNotEquals(textNode, null);
+        boolean foundSetTextAction = false;
+        for (AccessibilityNodeInfo.AccessibilityAction action : textNode.getActionList()) {
+            if (action.getId() == ACTION_SET_TEXT) foundSetTextAction = true;
+        }
+        Assert.assertTrue(foundSetTextAction);
+    }
 
     /**
      * Test Android O API to retrieve character bounds from an accessible node.
@@ -72,15 +133,12 @@ public class WebContentsAccessibilityTest {
                 + "<section><p>Text</p></section>";
         mActivityTestRule.launchContentShellWithUrl(UrlUtils.encodeHtmlDataUri(data));
         mActivityTestRule.waitForActiveShellToBeDoneLoading();
-
-        // Get the AccessibilityNodeProvider.
-        ContentViewCore contentViewCore = mActivityTestRule.getContentViewCore();
-        contentViewCore.setAccessibilityState(true);
-        AccessibilityNodeProvider provider = contentViewCore.getAccessibilityNodeProvider();
+        AccessibilityNodeProvider provider = enableAccessibilityAndWaitForNodeProvider();
 
         // Wait until we find a node in the accessibility tree with the text "Text".
         // Whenever the tree is updated, an AccessibilityEvent is fired, so we can just wait until
         // the next event before checking again.
+        ContentViewCore contentViewCore = mActivityTestRule.getContentViewCore();
         mAccessibilityEventCallbackHelper =
                 new AccessibilityEventCallbackHelper(contentViewCore.getContainerView());
         int textNodeVirtualViewId = View.NO_ID;
@@ -88,7 +146,7 @@ public class WebContentsAccessibilityTest {
             mAccessibilityEventCallbackHelper.waitForCallback(
                     mAccessibilityEventCallbackHelper.getCallCount());
 
-            textNodeVirtualViewId = findNodeWithText(provider, View.NO_ID, "Text");
+            textNodeVirtualViewId = findNodeWithText(provider, View.NO_ID, "Text", 0);
         } while (textNodeVirtualViewId == View.NO_ID);
 
         // Now call the API we want to test - addExtraDataToAccessibilityNodeInfo.
@@ -174,7 +232,7 @@ public class WebContentsAccessibilityTest {
      * Returns the virtual view ID of the matching node, if found, and View.NO_ID if not.
      */
     private int findNodeWithText(
-            AccessibilityNodeProvider provider, int virtualViewId, String text) {
+            AccessibilityNodeProvider provider, int virtualViewId, String text, int depth) {
         AccessibilityNodeInfo node = provider.createAccessibilityNodeInfo(virtualViewId);
         Assert.assertNotEquals(node, null);
 
@@ -186,7 +244,33 @@ public class WebContentsAccessibilityTest {
             int childId = getChildId(node, i);
             AccessibilityNodeInfo child = provider.createAccessibilityNodeInfo(childId);
             if (child != null) {
-                int result = findNodeWithText(provider, childId, text);
+                int result = findNodeWithText(provider, childId, text, depth + 1);
+                if (result != View.NO_ID) return result;
+            }
+        }
+
+        return View.NO_ID;
+    }
+
+    /**
+     * Helper method to recursively search a tree of virtual views under an
+     * AccessibilityNodeProvider and return one whose text or contentDescription equals |text|.
+     * Returns the virtual view ID of the matching node, if found, and View.NO_ID if not.
+     */
+    private int findNodeWithClassName(
+            AccessibilityNodeProvider provider, int virtualViewId, String className, int depth) {
+        AccessibilityNodeInfo node = provider.createAccessibilityNodeInfo(virtualViewId);
+        Assert.assertNotEquals(node, null);
+
+        if (className.equals(node.getClassName())) {
+            return virtualViewId;
+        }
+
+        for (int i = 0; i < node.getChildCount(); i++) {
+            int childId = getChildId(node, i);
+            AccessibilityNodeInfo child = provider.createAccessibilityNodeInfo(childId);
+            if (child != null) {
+                int result = findNodeWithClassName(provider, childId, className, depth + 1);
                 if (result != View.NO_ID) return result;
             }
         }
