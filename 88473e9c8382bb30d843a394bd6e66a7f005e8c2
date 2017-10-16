@@ -16,6 +16,24 @@
       "revId": "88473e9c8382bb30d843a394bd6e66a7f005e8c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6f7392_a951ce5d",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-16T21:12:18Z",
+      "side": 1,
+      "message": "\u003e The comment in base/strings/string_util.h says \"The 8-bit version only works on 8-bit characters, not UTF-8.\" Could there be a case where this ends up removing more than expected?\n\nI think it\u0027s ok because unicode characters \u003e127 will consist of 2 or more bytes, but each of them will be in [128, 255], so the only way a \u0027\\n\u0027 can appear in a UTF8 string is if it\u0027s an actual \u0027\\n\u0027.\n\n\u003e Are the multiple new line characters that need trimming, or is it always just the last one? If it\u0027s just the last one, maybe just do body_str.pop_back() ?\n\nThere may be two newlines when there\u0027s an origin but no body.",
+      "parentUuid": "0af90329_ab7c1739",
+      "revId": "88473e9c8382bb30d843a394bd6e66a7f005e8c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
