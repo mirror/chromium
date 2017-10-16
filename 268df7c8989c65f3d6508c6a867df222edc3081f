@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1cc028b3_2b238156",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-16T19:51:26Z",
+      "side": 1,
+      "message": "nit: may be move this comment just before allowed_subresource_filter and add a TODO to remove using allowed_subresource_filter once safe_browsing_triggered_popup_blocker is completely functional.",
+      "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11f30166_0b8a8da2",
         "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
         "patchSetId": 4
@@ -19,6 +36,104 @@
         "endLine": 160,
         "endChar": 30
       },
+      "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1f5ec7_52c774d9",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-16T19:51:26Z",
+      "side": 1,
+      "message": "Can we add a dcheck instead?\nDCHECK(safe_browsing_blocker)",
+      "parentUuid": "11f30166_0b8a8da2",
+      "range": {
+        "startLine": 160,
+        "startChar": 9,
+        "endLine": 160,
+        "endChar": 30
+      },
+      "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2e7e02_03590d1c",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-16T19:51:26Z",
+      "side": 1,
+      "message": "TODO to remove SubresourceFilter once AbusiveExperienceEnforce is completely functional?",
+      "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c8e3c1_8e0086fa",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-16T19:51:26Z",
+      "side": 1,
+      "message": "abusive.\n\nOr rather, no need for this comment as ConfigureAsAbusive is self explanatory. Also in other places.",
+      "range": {
+        "startLine": 192,
+        "startChar": 33,
+        "endLine": 192,
+        "endChar": 41
+      },
+      "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ea7d86_72c57dc1",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-16T19:51:26Z",
+      "side": 1,
+      "message": "No need for this comment as ConfigureAsAbusive is self explanatory. Also in other places.",
+      "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2f928f_3157772c",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-16T19:51:26Z",
+      "side": 1,
+      "message": "Can we add warning mode tests here as well?",
       "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
