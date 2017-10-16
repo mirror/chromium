@@ -129,10 +129,6 @@ TEST_F(ToastManagerTest, ShowAndCloseManually) {
 }
 
 TEST_F(ToastManagerTest, ShowAndCloseManuallyDuringAnimation) {
-  // TODO: gets wedged running animator. http://crbug.com/698016.
-  if (Shell::GetAshConfig() == Config::MASH)
-    return;
-
   ui::ScopedAnimationDurationScaleMode slow_animation_duration(
       ui::ScopedAnimationDurationScaleMode::SLOW_DURATION);
 
