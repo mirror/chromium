@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68923e03_517ea85a",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T17:50:16Z",
+      "side": 1,
+      "message": "nit: const?",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4acc75a2_68edd942",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T17:50:16Z",
+      "side": 1,
+      "message": "nit: It probably makes sense to push this down into the ZipWriter class.",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 76
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b04a1ad_722d9eb0",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T17:50:16Z",
+      "side": 1,
+      "message": "nit: Ditto.",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 42
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ead31e8_343f8b9b",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T17:50:16Z",
+      "side": 1,
+      "message": "nit: Mebbe move all of this logic down to around line 163, where the writer is used?",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 3
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4190c3_aeb674fe",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T17:50:16Z",
+      "side": 1,
+      "message": "Optional nit: Is it important to have AddEntries() and Close() be separate files?  It seems simpler to just write\n\n  return zip_writer-\u003eWriteFiles(*files_to_add);\n\nand push all of the other logic into the writer class.  (In fact, it might be even simpler to have a static helper function exposed in the ZipWriter class, and skip constructing the class.  That way, there\u0027s no need for the ZipWriter to DCHECK externally-maintained invariants like not calling methods in the wrong order, or trying to reuse a writer.",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 14
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba4bf8e_8bd214a6",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T17:50:16Z",
+      "side": 1,
+      "message": "nit: Perhaps something like \"Directories should be mapped to invalid files.\" would be clearer?",
+      "range": {
+        "startLine": 38,
+        "startChar": 39,
+        "endLine": 39,
+        "endChar": 17
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47621423_66444f58",
+        "filename": "third_party/zlib/google/zip_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T17:50:16Z",
+      "side": 1,
+      "message": "nit: I believe that std::make_unique() is preferred whenever possible.",
+      "range": {
+        "startLine": 108,
+        "startChar": 20,
+        "endLine": 108,
+        "endChar": 46
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5cabae_9a58e8af",
+        "filename": "third_party/zlib/google/zip_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T17:50:16Z",
+      "side": 1,
+      "message": "nit: IIRC you can return nullptr for equivalent behavior.",
+      "range": {
+        "startLine": 110,
+        "startChar": 20,
+        "endLine": 110,
+        "endChar": 48
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94592dec_b1c76218",
+        "filename": "third_party/zlib/google/zip_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T17:50:16Z",
+      "side": 1,
+      "message": "nit: This type of log stmt should go in a comment, so that the string doesn\u0027t need to be compiled into the binary.",
+      "range": {
+        "startLine": 124,
+        "startChar": 16,
+        "endLine": 124,
+        "endChar": 59
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820fc12e_2ee9349e",
+        "filename": "third_party/zlib/google/zip_writer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T17:50:16Z",
+      "side": 1,
+      "message": "nit: extra whitespace",
+      "range": {
+        "startLine": 47,
+        "startChar": 18,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c4cb15_ffe57aea",
+        "filename": "third_party/zlib/google/zip_writer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-16T17:50:16Z",
+      "side": 1,
+      "message": "nit: Could this be defined in an anonymous namespace in the impl file?",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 40
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
