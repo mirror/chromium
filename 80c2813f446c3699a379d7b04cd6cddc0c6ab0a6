@@ -437,6 +437,30 @@
     },
     {
       "key": {
+        "uuid": "5736440b_4a2942a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-16T21:08:08Z",
+      "side": 1,
+      "message": "We have a TintedDrawable helper class that creates tinted drawables. We created it before the DrawableCompat#setTintList() was available, but it\u0027s still pretty useful since it encapsulates some of this. You\u0027d need to change mIcon to a TintedImageView, but then you could do this:\n\nmIcon.setTint(tint) in #setIconTint() below and this method could just be mIcon#setImageDrawable().",
+      "parentUuid": "b73cc34b_111d9324",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 56
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc668e4c_0961cfac",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationMenuView.java",
         "patchSetId": 3
@@ -754,6 +778,30 @@
       "side": 1,
       "message": "Yes, that would just rely on making the base implementation of BottomNavigationItemView useful again. If we decide to go that route and leave it mostly intact, then this can have a default implementation again. I was just trying to avoid the situation where this class gets used and the menu items are totally useless.",
       "parentUuid": "0f9642c7_0ff21155",
+      "range": {
+        "startLine": 207,
+        "startChar": 4,
+        "endLine": 207,
+        "endChar": 73
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20dce544_ed8197ec",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-16T21:08:08Z",
+      "side": 1,
+      "message": "I\u0027d prefer to have a functional third_party widget implementation. Perhaps some of the logic for whether labels are enabled or not could be in the base class instead of a separate implementation?",
+      "parentUuid": "22aaa413_5d299e85",
       "range": {
         "startLine": 207,
         "startChar": 4,
