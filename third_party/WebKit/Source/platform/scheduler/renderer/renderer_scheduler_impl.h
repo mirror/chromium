@@ -145,6 +145,9 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // QueueingTimeEstimator::Client implementation:
   void OnQueueingTimeForWindowEstimated(base::TimeDelta queueing_time,
                                         bool is_disjoint_window) override;
+  void OnReportSplitExpectedQueueingTime(
+      const std::string& split_description,
+      base::TimeDelta queueing_time) override;
 
   scoped_refptr<MainThreadTaskQueue> DefaultTaskQueue();
   scoped_refptr<MainThreadTaskQueue> CompositorTaskQueue();
@@ -255,6 +258,9 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   scoped_refptr<base::SingleThreadTaskRunner> CompositorTaskRunner() override;
   scoped_refptr<base::SingleThreadTaskRunner> LoadingTaskRunner() override;
 
+  static size_t GetIndexFromQueueType(
+      MainThreadTaskQueue::QueueType queue_type);
+
  private:
   friend class RenderWidgetSchedulingState;
   friend class RendererMetricsHelper;
@@ -265,6 +271,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   FRIEND_TEST_ALL_PREFIXES(
       renderer_scheduler_impl_unittest::RendererSchedulerImplTest,
       Tracing);
+  friend class TestQueueingTimeEstimatorClient;
 
   enum class ExpensiveTaskPolicy { RUN, BLOCK, THROTTLE };
 
