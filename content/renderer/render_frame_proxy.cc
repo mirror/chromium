@@ -351,6 +351,7 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_WillEnterFullscreen, OnWillEnterFullscreen)
     IPC_MESSAGE_HANDLER(FrameMsg_SetHasReceivedUserGesture,
                         OnSetHasReceivedUserGesture)
+    IPC_MESSAGE_HANDLER(FrameMsg_ScrollRectToVisible, OnScrollRectToVisible)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -473,6 +474,12 @@ void RenderFrameProxy::OnWillEnterFullscreen() {
 
 void RenderFrameProxy::OnSetHasReceivedUserGesture() {
   web_frame_->SetHasReceivedUserGesture();
+}
+
+void RenderFrameProxy::OnScrollRectToVisible(
+    const gfx::Rect& rect_to_scroll,
+    const blink::WebRemoteScrollProperties& properties) {
+  web_frame_->ScrollRectToVisible(rect_to_scroll, properties);
 }
 
 #if defined(USE_AURA)
