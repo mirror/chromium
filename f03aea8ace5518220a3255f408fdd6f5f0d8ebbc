@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd9fa2d7_bec9d138",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-16T15:02:10Z",
+      "side": 1,
+      "message": "Might be good to bail early if text hasn\u0027t changed as we do in SetColor, even though it means a string comparison. Perhaps you could alternate between two strings in the perf test loop?",
+      "revId": "f03aea8ace5518220a3255f408fdd6f5f0d8ebbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
