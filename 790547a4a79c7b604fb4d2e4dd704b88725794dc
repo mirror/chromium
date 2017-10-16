@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fa4fd0c_118f79c4",
+        "filename": "net/dns/dns_config_service_posix_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-16T17:20:21Z",
+      "side": 0,
+      "message": "have you verified this catches the bug when the crbug.com/704662 fix is reverted, without the Sleep() call?",
+      "range": {
+        "startLine": 311,
+        "startChar": 71,
+        "endLine": 311,
+        "endChar": 0
+      },
+      "revId": "790547a4a79c7b604fb4d2e4dd704b88725794dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
