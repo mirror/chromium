@@ -68,6 +68,7 @@ const int kMaxRecursionDepth = 44;
 class V8CompileHistogram {
  public:
   enum Cacheability { kCacheable, kNoncacheable, kInlineScript };
+
   explicit V8CompileHistogram(Cacheability);
   ~V8CompileHistogram();
 
@@ -106,6 +107,27 @@ V8CompileHistogram::~V8CompileHistogram() {
       break;
     }
   }
+}
+
+enum class CompileHeuristicsDecision {
+  kNoCacheHandler,
+  kCachingDisabled,
+  kCodeTooShortToCache,
+  kCacheTooCold,
+  kProduceParserCache,
+  kConsumeParserCache,
+  kConsumeCodeCache,
+  kProduceCodeCache,
+  kStreamingCompile,
+  kEnumMax
+};
+
+static void ReportCompileHeuristicsHistogram(
+    CompileHeuristicsDecision decision) {
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, compile_heuristics_histogram,
+                      ("V8.CompileHeuristicsDecision",
+                       static_cast<int>(CompileHeuristicsDecision::kEnumMax)));
+  compile_heuristics_histogram.Count(static_cast<int>(decision));
 }
 
 // In order to make sure all pending messages to be processed in
@@ -205,25 +227,6 @@ v8::MaybeLocal<v8::Script> CompileAndProduceCache(
     cache_handler->SetCachedMetadata(tag, data, length, cache_type);
   }
   return script;
-}
-
-// Compile a script, and consume or produce a V8 Cache, depending on whether the
-// given resource already has cached data available.
-v8::MaybeLocal<v8::Script> CompileAndConsumeOrProduce(
-    CachedMetadataHandler* cache_handler,
-    uint32_t tag,
-    v8::ScriptCompiler::CompileOptions consume_options,
-    v8::ScriptCompiler::CompileOptions produce_options,
-    CachedMetadataHandler::CacheType cache_type,
-    v8::Isolate* isolate,
-    v8::Local<v8::String> code,
-    v8::ScriptOrigin origin) {
-  RefPtr<CachedMetadata> code_cache(cache_handler->GetCachedMetadata(tag));
-  return code_cache.get()
-             ? CompileAndConsumeCache(cache_handler, code_cache,
-                                      consume_options, isolate, code, origin)
-             : CompileAndProduceCache(cache_handler, tag, produce_options,
-                                      cache_type, isolate, code, origin);
 }
 
 enum CacheTagKind {
@@ -335,26 +338,42 @@ static CompileFn SelectCompileFunction(
   static const int kHotHours = 72;
 
   // Caching is not available in this case.
-  if (!cache_handler)
+  if (!cache_handler) {
+    ReportCompileHeuristicsHistogram(
+        CompileHeuristicsDecision::kNoCacheHandler);
     return WTF::Bind(CompileWithoutOptions, cacheability_if_no_handler);
+  }
 
-  if (cache_options == kV8CacheOptionsNone)
+  if (cache_options == kV8CacheOptionsNone) {
+    ReportCompileHeuristicsHistogram(
+        CompileHeuristicsDecision::kCachingDisabled);
     return WTF::Bind(CompileWithoutOptions, V8CompileHistogram::kCacheable);
+  }
 
   // Caching is not worthwhile for small scripts.  Do not use caching
   // unless explicitly expected, indicated by the cache option.
-  if (code->Length() < kMinimalCodeLength)
+  if (code->Length() < kMinimalCodeLength) {
+    ReportCompileHeuristicsHistogram(
+        CompileHeuristicsDecision::kCodeTooShortToCache);
     return WTF::Bind(CompileWithoutOptions, V8CompileHistogram::kCacheable);
+  }
 
   // The cacheOptions will guide our strategy:
   switch (cache_options) {
     case kV8CacheOptionsParse:
       // Use parser-cache; in-memory only.
-      return WTF::Bind(CompileAndConsumeOrProduce,
-                       WrapPersistent(cache_handler),
+      if (code_cache) {
+        ReportCompileHeuristicsHistogram(
+            CompileHeuristicsDecision::kProduceParserCache);
+        return WTF::Bind(CompileAndConsumeCache, WrapPersistent(cache_handler),
+                         std::move(code_cache),
+                         v8::ScriptCompiler::kConsumeParserCache);
+      }
+      ReportCompileHeuristicsHistogram(
+          CompileHeuristicsDecision::kConsumeParserCache);
+      return WTF::Bind(CompileAndProduceCache, WrapPersistent(cache_handler),
                        CacheTag(kCacheTagParser, cache_handler),
                        v8::ScriptCompiler::kConsumeParserCache,
-                       v8::ScriptCompiler::kProduceParserCache,
                        CachedMetadataHandler::kCacheLocally);
       break;
 
@@ -364,6 +383,8 @@ static CompileFn SelectCompileFunction(
       // Use code caching for recently seen resources.
       // Use compression depending on the cache option.
       if (code_cache) {
+        ReportCompileHeuristicsHistogram(
+            CompileHeuristicsDecision::kConsumeCodeCache);
         return WTF::Bind(CompileAndConsumeCache, WrapPersistent(cache_handler),
                          std::move(code_cache),
                          v8::ScriptCompiler::kConsumeCodeCache);
@@ -371,9 +392,13 @@ static CompileFn SelectCompileFunction(
       if (cache_options != kV8CacheOptionsAlways &&
           !IsResourceHotForCaching(cache_handler, kHotHours)) {
         V8ScriptRunner::SetCacheTimeStamp(cache_handler);
+        ReportCompileHeuristicsHistogram(
+            CompileHeuristicsDecision::kCacheTooCold);
         return WTF::Bind(CompileWithoutOptions, V8CompileHistogram::kCacheable);
       }
       uint32_t code_cache_tag = CacheTag(kCacheTagCode, cache_handler);
+      ReportCompileHeuristicsHistogram(
+          CompileHeuristicsDecision::kProduceCodeCache);
       return WTF::Bind(CompileAndProduceCache, WrapPersistent(cache_handler),
                        code_cache_tag, v8::ScriptCompiler::kProduceCodeCache,
                        CachedMetadataHandler::kSendToPlatform);
@@ -403,6 +428,8 @@ CompileFn SelectCompileFunction(V8CacheOptions cache_options,
   DCHECK(!resource->ErrorOccurred());
   DCHECK(streamer->IsFinished());
   DCHECK(!streamer->StreamingSuppressed());
+  ReportCompileHeuristicsHistogram(
+      CompileHeuristicsDecision::kStreamingCompile);
   return WTF::Bind(PostStreamCompile, cache_options,
                    WrapPersistent(resource->CacheHandler()),
                    WrapPersistent(streamer));
