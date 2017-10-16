@@ -184,6 +184,10 @@ void WebRuntimeFeatures::EnableMediaCapture(bool enable) {
   RuntimeEnabledFeatures::SetMediaCaptureEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableMediaPlaybackRateOutOfRange(bool enable) {
+  RuntimeEnabledFeatures::SetMediaPlaybackRateOutOfRangeEnabled(enable);
+}
+
 void WebRuntimeFeatures::EnableMediaSession(bool enable) {
   RuntimeEnabledFeatures::SetMediaSessionEnabled(enable);
 }
