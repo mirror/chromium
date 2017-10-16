@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c833fc3f_4557ee12",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-16T21:28:38Z",
+      "side": 1,
+      "message": "I did a code search and it looks like there\u0027s a mix of super.destroy() being called at the beginning and end. Sometimes it\u0027s called in the middle. So this is okay.",
+      "parentUuid": "2a2be801_4020fc03",
+      "range": {
+        "startLine": 214,
+        "startChar": 7,
+        "endLine": 214,
+        "endChar": 24
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35bb65b2_b0c51a07",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 3

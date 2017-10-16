@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "255dbf0e_d504d978",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-16T21:28:38Z",
+      "side": 0,
+      "message": "nit: let\u0027s keep this blank line",
+      "revId": "a35b634e9a117eb3683208fbb8d0b242332fa8b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
