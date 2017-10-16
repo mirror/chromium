@@ -91,7 +91,6 @@ test(function() {
 test(function() {
     var testValues = [
         { accept_languages: 'foo', language: 'foo', languages: ['foo'] },
-        { accept_languages: '', language: '', languages: [] },
         { accept_languages: 'foo,bar', language: 'foo', languages: [ 'foo', 'bar' ] },
         { accept_languages: '  foo , bar ', language: 'foo', languages: [ 'foo', 'bar' ] },
         { accept_languages: '  foo ; bar ', language: 'foo ; bar', languages: [ 'foo ; bar' ] },
@@ -134,6 +133,12 @@ test(function() {
     // The region code should be uppercase.
     assert_equals(navigator.language, 'en-US');
 }, 'Test the default navigator.language in the test environment.');
+
+test(function() {
+    window.testRunner.setAcceptLanguages('');
+    assert_equals(navigator.languages.length, 1);
+    assert_equals(navigator.languages[0], navigator.language);
+}, "Test that navigator.languages has a default language when acceptLanguages is empty");
 
 </script>
 </body>
