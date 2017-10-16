@@ -228,6 +228,14 @@ class MESSAGE_CENTER_EXPORT Notification {
 
   virtual ~Notification();
 
+  // Performs a deep copy of |notification|, including images and optionally,
+  // the icon and small images, which are not supported on all platforms.
+  static std::unique_ptr<Notification> DeepCopy(
+      const Notification& notification,
+      bool include_body_image,
+      bool include_small_image,
+      bool include_icon_images);
+
   // Copies the internal on-memory state from |base|, i.e. shown_as_popup,
   // is_read and never_timeout.
   void CopyState(Notification* base);

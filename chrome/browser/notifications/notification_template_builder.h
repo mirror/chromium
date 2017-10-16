@@ -20,6 +20,8 @@ struct ButtonInfo;
 class Notification;
 }
 
+class TempFileKeeperBase;
+
 // Builds XML-based notification templates for displaying a given notification
 // in the Windows Action Center.
 //
@@ -33,6 +35,7 @@ class NotificationTemplateBuilder {
   // |notification_id| will be available when the user interacts with the toast.
   static std::unique_ptr<NotificationTemplateBuilder> Build(
       const std::string& notification_id,
+      TempFileKeeperBase& temp_file_keeper,
       const message_center::Notification& notification);
 
   ~NotificationTemplateBuilder();
@@ -59,16 +62,28 @@ class NotificationTemplateBuilder {
   void StartBindingElement(const std::string& template_name);
   void EndBindingElement();
 
-  // Writes the <text> element with the given |id| and |content|.
-  void WriteTextElement(const std::string& id, const std::string& content);
+  // Writes the <text> element with the given |content|.
+  void WriteTextElement(const std::string& content);
+
+  // Writes the <image> element for the notification icon.
+  void WriteIconElement(const message_center::Notification& notification,
+                        TempFileKeeperBase& temp_file_keeper);
+  // Writes the <image> element for showing an image within the notification
+  // body.
+  void WriteImageElement(const message_center::Notification& notification,
+                         TempFileKeeperBase& temp_file_keeper);
 
   // Writes the <actions> element.
   void StartActionsElement();
   void EndActionsElement();
 
   // Fills in the details for the actions.
-  void AddActions(const std::vector<message_center::ButtonInfo>& buttons);
-  void WriteActionElement(const message_center::ButtonInfo& button, int index);
+  void AddActions(const message_center::Notification& notification,
+                  TempFileKeeperBase& temp_file_keeper);
+  void WriteActionElement(const message_center::ButtonInfo& button,
+                          int index,
+                          const GURL& origin,
+                          TempFileKeeperBase& temp_file_keeper);
 
   // The XML writer to which the template will be written.
   std::unique_ptr<XmlWriter> xml_writer_;
