@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dfb875e_ec91c655",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-10-16T12:48:17Z",
+      "side": 1,
+      "message": "nit: better than 0 but I would like something more random. 73, 1234, ...",
+      "range": {
+        "startLine": 70,
+        "startChar": 66,
+        "endLine": 70,
+        "endChar": 67
+      },
+      "revId": "69079443bc93b7698600bd7273c50f9e13225076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c869ea_d897fc7b",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-10-16T12:48:17Z",
+      "side": 1,
+      "message": "s/impression/impressions",
+      "range": {
+        "startLine": 340,
+        "startChar": 30,
+        "endLine": 340,
+        "endChar": 40
+      },
+      "revId": "69079443bc93b7698600bd7273c50f9e13225076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
