@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c194732d_05151032",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-16T14:05:02Z",
+      "side": 1,
+      "message": "unit",
+      "revId": "1226109805e4186bb3401b605f25962fe6e27a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845378b4_0c963960",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-16T14:05:02Z",
+      "side": 1,
+      "message": "unit\n\ncould just be \"notifications\"",
+      "revId": "1226109805e4186bb3401b605f25962fe6e27a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ee62f5_aa369eb2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-16T14:05:02Z",
+      "side": 1,
+      "message": "I still don\u0027t like this wording. The focus of this piece should be what this is recording. You can mention in a subsequent sentance how the metric can be used.",
+      "revId": "1226109805e4186bb3401b605f25962fe6e27a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
