@@ -31,6 +31,7 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/CoreExport.h"
 #include "platform/wtf/HashMap.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/StringView.h"
 #include "v8/include/v8.h"
@@ -132,6 +133,15 @@ struct DictionaryHelper {
                   const StringView& key,
                   T& value,
                   ExceptionState&);
+  template <typename T>
+  static WTF::Optional<T> Get(const Dictionary& dictionary,
+                              const StringView& key,
+                              ExceptionState& es) {
+    T value;
+    if (Get(dictionary, key, value, es))
+      return value;
+    return WTF::nullopt;
+  }
   template <typename T>
   static bool GetWithUndefinedCheck(const Dictionary& dictionary,
                                     const StringView& key,
