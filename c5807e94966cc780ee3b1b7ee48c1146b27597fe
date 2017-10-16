@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0a6d044_4baae0bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-16T14:48:49Z",
+      "side": 1,
+      "message": "I was hoping that it wouldn\u0027t need to be copyable. The CL that I mentioned that I gave up on as it seemed to be getting out of hand was to make them non-copyable. Could you do that instead? I\u0027m not convinced that copyable is better. It increases (albeit slightly) memory footprint when we store the same object in many different vectors.",
+      "revId": "c5807e94966cc780ee3b1b7ee48c1146b27597fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f42a47_6d993663",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-16T14:48:49Z",
+      "side": 1,
+      "message": "nit: fix whitespace",
+      "revId": "c5807e94966cc780ee3b1b7ee48c1146b27597fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
