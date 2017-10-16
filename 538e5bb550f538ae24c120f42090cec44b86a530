@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b306766_5358d408",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-16T18:09:35Z",
+      "side": 1,
+      "message": "I think this part landed in another CL?",
+      "revId": "538e5bb550f538ae24c120f42090cec44b86a530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e3405f_61ea8ace",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-16T18:09:35Z",
+      "side": 1,
+      "message": "This should return the ui::Gpu instance being created for mus/viz. May not be a bad idea to throw in a DCHECK() here until then.",
+      "revId": "538e5bb550f538ae24c120f42090cec44b86a530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a166410_d5a21e45",
+        "filename": "content/browser/gpu/browser_gpu_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-16T18:09:35Z",
+      "side": 1,
+      "message": "You probably need to reset g_browser_gpu_client to nullptr for tests?",
+      "revId": "538e5bb550f538ae24c120f42090cec44b86a530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
