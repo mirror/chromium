@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a2be801_4020fc03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-16T18:17:19Z",
+      "side": 1,
+      "message": "No specific reason. I follow TabModelSelectorImpl.destroy() and find it put super.destroy() at the end. Is there any benefit that putting super.destroy() at first than at last?",
+      "parentUuid": "fd925505_467245ce",
+      "range": {
+        "startLine": 214,
+        "startChar": 7,
+        "endLine": 214,
+        "endChar": 24
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35bb65b2_b0c51a07",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d69ce46f_4ccfae6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-16T18:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35bb65b2_b0c51a07",
+      "range": {
+        "startLine": 211,
+        "startChar": 9,
+        "endLine": 211,
+        "endChar": 84
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d638f339_ddbefe79",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-09T22:34:09Z",
       "side": 1,
       "message": "Is there any way we can skip this for ChromeTabbedActivity2 to avoid this disk read on that startup path?",
+      "range": {
+        "startLine": 239,
+        "startChar": 8,
+        "endLine": 242,
+        "endChar": 9
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f60eda47_b74c6259",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-16T18:17:19Z",
+      "side": 1,
+      "message": "Per offline discussion, move this part into mPersistencePolicy.shouldMergeOnStartup() so it only be called by ChromeActivity.",
+      "parentUuid": "d638f339_ddbefe79",
       "range": {
         "startLine": 239,
         "startChar": 8,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "71c9cc67_54f6598b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-16T18:17:19Z",
+      "side": 1,
+      "message": "Per offline discussion, move the BrowserActions tab merging into mPersistencePolicy.shouldMergeOnStartup() so all merges are controlled by mPersistencePolicy.setMergeInProgress(true).",
+      "parentUuid": "d6d2c1d9_776d82e1",
+      "range": {
+        "startLine": 414,
+        "startChar": 20,
+        "endLine": 414,
+        "endChar": 38
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38cfb5d4_dce3012d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfc4263_d37d73ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-16T18:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38cfb5d4_dce3012d",
+      "range": {
+        "startLine": 419,
+        "startChar": 20,
+        "endLine": 419,
+        "endChar": 89
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "2153c4ce_764d8fba",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-16T18:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "008cfcb7_384d79e6",
+      "range": {
+        "startLine": 480,
+        "startChar": 8,
+        "endLine": 480,
+        "endChar": 58
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b72205f6_b3625648",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
         "patchSetId": 3
@@ -160,6 +304,30 @@
       "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b29cf624_c099c783",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-16T18:17:19Z",
+      "side": 1,
+      "message": "The only problem is is there an observer for ChromeActivity.areTabMOdelsInitialized()? It seems MultiWindowUtilsTest.createSecondChromeTabbedActivity does not guarantee ChromeActivity is initialized so when I try to add TabModelSelectorObserver, it fails/",
+      "parentUuid": "b72205f6_b3625648",
+      "range": {
+        "startLine": 487,
+        "startChar": 27,
+        "endLine": 487,
+        "endChar": 84
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "0e343147_922a8c78",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-16T18:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f2ee743_5eab8d19",
+      "range": {
+        "startLine": 506,
+        "startChar": 7,
+        "endLine": 507,
+        "endChar": 28
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1664418e_c6a3cd63",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
         "patchSetId": 3
@@ -197,6 +389,30 @@
       "writtenOn": "2017-10-09T22:34:09Z",
       "side": 1,
       "message": "What\u0027s causing the menu to open?",
+      "range": {
+        "startLine": 519,
+        "startChar": 8,
+        "endLine": 519,
+        "endChar": 62
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d3164f_dba9f6ac",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-16T18:17:19Z",
+      "side": 1,
+      "message": "Nothing specifically, this is just a standard flow I want to make sure that Browser Actions menu is started correctly.",
+      "parentUuid": "1664418e_c6a3cd63",
       "range": {
         "startLine": 519,
         "startChar": 8,
@@ -229,6 +445,30 @@
       "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33745f2d_ba9216dd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-16T18:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37bcbda4_f6b3055e",
+      "range": {
+        "startLine": 535,
+        "startChar": 7,
+        "endLine": 536,
+        "endChar": 60
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
