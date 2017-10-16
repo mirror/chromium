@@ -70,6 +70,24 @@
       "revId": "501e9d572a4d140ccf8f19e9f1fa84641d2e99d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2beb8acd_62859912",
+        "filename": "ui/android/java/src/org/chromium/ui/resources/dynamics/ViewResourceAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-16T15:59:25Z",
+      "side": 1,
+      "message": "I think it is effective, but I believe bitmap relies on phantom reference magic to clean up the native backing, which I believe happens after the initial GC.  recycle() is an optimization to drop the native memory immediately and not rely on the GC pass.  But yeah, definitely not needed.",
+      "parentUuid": "6a9b0714_dc8a5da4",
+      "revId": "501e9d572a4d140ccf8f19e9f1fa84641d2e99d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
