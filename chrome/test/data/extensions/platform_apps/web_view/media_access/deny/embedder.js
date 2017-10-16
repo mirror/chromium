@@ -193,23 +193,25 @@ embedder.testNamesToTestMap = {
       embedder.tests.testNoPreventDefaultImpliesDeny
 };
 
-window['startDenyTest'] = function(testName) {
-  var testFunction = embedder.testNamesToTestMap[testName];
-  if (!testFunction) {
-    embedder.failTest('No such test: ' + testName);
-    return;
-  }
-  testFunction();
+window['startDenyTest'] = function(testName, variant) {
+  chrome.test.getConfig(function(config) {
+    embedder.baseGuestURL = 'http://localhost:' + config.testServer.port;
+    var guest_file = variant == 'getUserMedia'
+        ? '/media_access_guest_getusermedia.html'
+        : '/media_access_guest_speech_recognition.html';
+    embedder.guestURL = embedder.baseGuestURL +
+        '/extensions/platform_apps/web_view/media_access' + guest_file;
+    chrome.test.log('Guest url is: ' + embedder.guestURL);
+    var testFunction = embedder.testNamesToTestMap[testName];
+    if (!testFunction) {
+      embedder.failTest('No such test: ' + testName);
+      return;
+    }
+    testFunction();
+  });
 };
 
 
 onload = function() {
-  chrome.test.getConfig(function(config) {
-    embedder.baseGuestURL = 'http://localhost:' + config.testServer.port;
-    embedder.guestURL = embedder.baseGuestURL +
-        '/extensions/platform_apps/web_view/media_access' +
-        '/media_access_guest.html';
-    chrome.test.log('Guest url is: ' + embedder.guestURL);
-    chrome.test.sendMessage('loaded');
-  });
+  chrome.test.sendMessage('loaded');
 };
