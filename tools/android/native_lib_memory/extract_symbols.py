@@ -166,7 +166,7 @@ def main():
   args = parser.parse_args()
   symbols = GetSymbolNameToFilename(args.build_directory)
   native_lib_filename = os.path.join(
-      args.build_directory, 'lib.unstripped', 'libmonochrome.so')
+      args.build_directory, 'lib.unstripped', 'libchrome.so')
   if not os.path.exists(native_lib_filename):
     logging.error('Native library not found. Did you build monochrome_apk?')
     return 1

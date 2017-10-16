@@ -10,11 +10,16 @@
 #include "components/tracing/common/trace_startup.h"
 #include "content/common/content_constants_internal.h"
 
+namespace cygprofile {
+void LogAndDump(int);
+}
+
 namespace content {
 
 bool LibraryLoaded(JNIEnv* env, jclass clazz) {
   // Enable startup tracing asap to avoid early TRACE_EVENT calls being ignored.
   tracing::EnableStartupTracingIfNeeded(true /* can_access_file_system */);
+  cygprofile::LogAndDump(60);
 
   // Android's main browser loop is custom so we set the browser
   // name here as early as possible.

@@ -4,8 +4,8 @@
 
 static_library("cygprofile") {
   sources = [
-    "cygprofile.cc",
-    "cygprofile.h",
+    "lightweight_cygprofile.cc",
+    "lightweight_cygprofile.h",
   ]
 
   configs -= [ "//build/config/android:default_cygprofile_instrumentation" ]
