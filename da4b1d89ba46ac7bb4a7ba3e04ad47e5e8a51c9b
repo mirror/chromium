@@ -22,6 +22,30 @@
       "revId": "da4b1d89ba46ac7bb4a7ba3e04ad47e5e8a51c9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8f023e_84b254d7",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2865,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-16T16:52:42Z",
+      "side": 1,
+      "message": "The should match the server-side values now.",
+      "parentUuid": "572b3d86_3b34c890",
+      "range": {
+        "startLine": 2865,
+        "startChar": 25,
+        "endLine": 2865,
+        "endChar": 55
+      },
+      "revId": "da4b1d89ba46ac7bb4a7ba3e04ad47e5e8a51c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
