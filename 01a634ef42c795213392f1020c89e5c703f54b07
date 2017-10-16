@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "59d97231_21f8babd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-16T23:16:54Z",
+      "side": 1,
+      "message": "I Am not sure if unittests would be good enough for this kind of scenario, but yes that\u0027s something I Am thinking about b/67655368.",
+      "parentUuid": "6cf9c3f7_069f856f",
+      "range": {
+        "startLine": 11,
+        "startChar": 65,
+        "endLine": 13,
+        "endChar": 61
+      },
+      "revId": "01a634ef42c795213392f1020c89e5c703f54b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66c51cca_b4943b94",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-16T22:42:08Z",
       "side": 1,
       "message": "In the future, it\u0027s probably better to avoid mixing a bug fix and a refactoring.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "01a634ef42c795213392f1020c89e5c703f54b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42dacf8_6fdd5c5d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-16T23:16:54Z",
+      "side": 1,
+      "message": "Definitely, sometimes I feel it\u0027s kind of cheap to small refactor only CLs (but for the record, I do one-liners sometimes to keep warnings out of our codebase), but I know that at the end smaller CLs with a single purpose is way better in the case of a revert and also due to history, will try harder to avoid now :)",
+      "parentUuid": "66c51cca_b4943b94",
       "range": {
         "startLine": 15,
         "startChar": 0,
@@ -62,6 +110,24 @@
       "revId": "01a634ef42c795213392f1020c89e5c703f54b07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e32a3e_389f083b",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-16T23:16:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76b57c95_fbf9d1d4",
+      "revId": "01a634ef42c795213392f1020c89e5c703f54b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
