@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f29627d_1c1c15bb",
+        "filename": "BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Already has one :)",
+      "parentUuid": "4ae19cf9_6bad3644",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f13a715b_93893887",
         "filename": "BUILD.gn",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7303a9_2967ce55",
+        "filename": "BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "I like having all the debugging tools code in the same overall block. It won\u0027t be too long before this compiles for mac as well.",
+      "parentUuid": "f13a715b_93893887",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6d748883_1872c769",
+        "filename": "content/browser/accessibility/accessibility_event_recorder_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24887758_fac9d82e",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "222b4504_2a23ea57",
         "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
         "patchSetId": 18
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-14T22:46:52Z",
       "side": 1,
       "message": "Could we use a lambda to capture this variable?",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aec2286_d0b1bb95",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Could not get it to work.\n\nTried \n\nstatic HWND GetHwndForProcess(base::ProcessId pid) {\n  HWND target_hwnd;\n  auto enum_windows_proc \u003d [\u0026target_hwnd](HWND hwnd, LPARAM lparam) {\n    DWORD process_id;\n    GetWindowThreadProcessId(hwnd, \u0026process_id);\n    if (process_id \u003d\u003d static_cast\u003cDWORD\u003e(lParam)) {\n      target_hwnd \u003d hwnd;\n      return FALSE;\n    }\n    return TRUE;\n  };\n\n  EnumWindows(enum_windows_proc, pid);\n  return target_hwnd;\n}\n\nGot\n../../content/browser/accessibility/accessibility_tree_formatter_win.cc(37): error C2065: \u0027lParam\u0027: undeclared identifier\n../../content/browser/accessibility/accessibility_tree_formatter_win.cc(44): error C2664: \u0027BOOL EnumWindows(WNDENUMPROC,LPARAM)\u0027: cannot convert argument 1 from \u0027GetHwndForProcess::\u003clambda_2ad80afdf96ba7c5ac7518ee371f035c\u003e\u0027 to \u0027WNDENUMPROC\u0027\n../../content/browser/accessibility/accessibility_tree_formatter_win.cc(44): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called\nninja: build stopped: subcommand failed.",
+      "parentUuid": "222b4504_2a23ea57",
       "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6c03e26b_238b69cf",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Could not get it to work, see above.",
+      "parentUuid": "412c1fad_1b395d13",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "516309e5_065a4981",
         "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
         "patchSetId": 18
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "3ba9b394_06795f72",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "I don\u0027t know when we decide to use a separate file or keep it in the same file. Question for @dmazzoni.",
+      "parentUuid": "516309e5_065a4981",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a0c5dbf_d4d58e7f",
         "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
         "patchSetId": 18
@@ -118,6 +226,24 @@
       "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc8f0330_9d4714d0",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a0c5dbf_d4d58e7f",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "797ed455_f689f60a",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fee113ed_4c56eebd",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d2abae9_04cbf4a8",
         "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
         "patchSetId": 18
@@ -166,6 +310,24 @@
       "writtenOn": "2017-10-14T22:46:52Z",
       "side": 1,
       "message": "Why do we need the unique_ptr here?\nDoesn\u0027t a simple Variant[] array suffice?",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3195e46b_d2517488",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Not gonna lie, I copied this from code you and David Tseng collaborated here:\nhttps://cs.chromium.org/chromium/src/content/browser/accessibility/accessibility_win_browsertest.cc?type\u003dcs\u0026q\u003daccessiblechildren\u0026sq\u003dpackage:chromium\u0026l\u003d409\nYou used a scoped_ptr\u003cVARIANT[]\u003e and David changed it to a std::unique_ptr.",
+      "parentUuid": "7d2abae9_04cbf4a8",
       "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "ca7f86f3_cdcf0d67",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19de0079_e97967d9",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd209f3d_befcb19c",
         "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
         "patchSetId": 18
@@ -203,6 +383,24 @@
       "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b741dd95_8402b814",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd209f3d_befcb19c",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "7c252ac7_9bed9a53",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d080c942_c6b537e8",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0859f3bc_14294b25",
         "filename": "tools/accessibility/inspect/ax_dump_events.cc",
         "patchSetId": 18
@@ -237,6 +453,24 @@
       "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe4af83_741f7079",
+        "filename": "tools/accessibility/inspect/ax_dump_events.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0859f3bc_14294b25",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "d268a497_6eb94553",
+        "filename": "tools/accessibility/inspect/ax_dump_events.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c4c76b1_19ea0841",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cce183e3_3860e800",
         "filename": "tools/accessibility/inspect/ax_dump_tree.cc",
         "patchSetId": 18
@@ -271,6 +523,24 @@
       "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44579235_12d2f20e",
+        "filename": "tools/accessibility/inspect/ax_dump_tree.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cce183e3_3860e800",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +561,24 @@
     },
     {
       "key": {
+        "uuid": "8246ecbd_923d072c",
+        "filename": "tools/accessibility/inspect/ax_dump_tree.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c2d1035_3b779cb3",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dcc8bf5_048e7d20",
         "filename": "tools/accessibility/inspect/ax_tree_server.cc",
         "patchSetId": 18
@@ -305,6 +593,24 @@
       "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60731931_e8156d23",
+        "filename": "tools/accessibility/inspect/ax_tree_server.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Changed to cout.",
+      "parentUuid": "6dcc8bf5_048e7d20",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +631,24 @@
     },
     {
       "key": {
+        "uuid": "147c53fc_c02f2e50",
+        "filename": "tools/accessibility/inspect/ax_tree_server.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "Changed to cout, and now we don\u0027t need to convert to utf8 either.",
+      "parentUuid": "dd73ab9c_5a390922",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef05ae4a_3f7e3f09",
         "filename": "tools/accessibility/inspect/ax_tree_server.h",
         "patchSetId": 18
@@ -339,6 +663,24 @@
       "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2ceaf5_b5c09302",
+        "filename": "tools/accessibility/inspect/ax_tree_server.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T17:11:42Z",
+      "side": 1,
+      "message": "I removed the destructor because I don\u0027t think we need it in every class. The style guide doesn\u0027t require it from what I can see. I added DISALLOW_COPY_AND_ASSIGN.",
+      "parentUuid": "ef05ae4a_3f7e3f09",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
