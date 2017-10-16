@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ed88997_956ef17a",
+        "filename": "ui/file_manager/file_manager/foreground/elements/compiled_resources2.gyp",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-16T06:32:34Z",
+      "side": 1,
+      "message": "Use spaces.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 1
+      },
+      "revId": "8d0bd7b2b33154eeb72c8cd4a632947ed35e345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54fbfe62_0c58b909",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-16T06:32:34Z",
+      "side": 1,
+      "message": "applyTextCss ?",
+      "revId": "8d0bd7b2b33154eeb72c8cd4a632947ed35e345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aafdd76_abf2ffbf",
+        "filename": "ui/file_manager/file_manager/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-16T06:32:34Z",
+      "side": 1,
+      "message": "How about s/html/text/ here. I think this template can be used\nfor any text files.",
+      "range": {
+        "startLine": 56,
+        "startChar": 29,
+        "endLine": 56,
+        "endChar": 60
+      },
+      "revId": "8d0bd7b2b33154eeb72c8cd4a632947ed35e345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
