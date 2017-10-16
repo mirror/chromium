@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/path_service.h"
 #include "base/test/launcher/unit_test_launcher.h"
+#include "base/test/test_discardable_memory_allocator.h"
 #include "base/test/test_suite.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -30,6 +31,9 @@ class WMTestSuite : public base::TestSuite {
     base::FilePath ui_test_pak_path;
     ASSERT_TRUE(PathService::Get(ui::UI_TEST_PAK, &ui_test_pak_path));
     ui::ResourceBundle::InitSharedInstanceWithPakPath(ui_test_pak_path);
+
+    base::DiscardableMemoryAllocator::SetInstance(
+        &discardable_memory_allocator_);
 
     env_ = aura::Env::CreateInstance();
   }
