@@ -101,6 +101,7 @@ class MEDIA_GPU_EXPORT VaapiVideoEncodeAccelerator
   void RequestEncodingParametersChangeTask(uint32_t bitrate,
                                            uint32_t framerate);
   void DestroyTask();
+  void FlushTask();
 
   // Prepare and schedule an encode job if we have an input to encode
   // and enough resources to proceed.
