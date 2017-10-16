@@ -33,6 +33,63 @@
       "revId": "c33e230d5d4c6a240ad2a05a4b9aa2d8aae5fc74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ef003d_8569d32a",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-16T18:26:40Z",
+      "side": 1,
+      "message": "These strings (including the label text above) will need to be internationalized. See i18n usage in this file.",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 91,
+        "endChar": 25
+      },
+      "revId": "c33e230d5d4c6a240ad2a05a4b9aa2d8aae5fc74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631f8413_34f85e35",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-16T18:26:40Z",
+      "side": 1,
+      "message": "Please clarify what these values mean and what is the default. (might be good to define an enum but this seems to be the only place that would use it, so it\u0027s up to you)",
+      "revId": "c33e230d5d4c6a240ad2a05a4b9aa2d8aae5fc74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13159d62_ddef4e5d",
+        "filename": "chrome/test/data/webui/media_router/route_controls_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-16T18:26:40Z",
+      "side": 1,
+      "message": "I think you can just pass is |done| as the second argument here. Same for the hangouts test below.",
+      "revId": "c33e230d5d4c6a240ad2a05a4b9aa2d8aae5fc74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
