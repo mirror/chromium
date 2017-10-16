@@ -423,6 +423,7 @@ void SearchResultView::PaintButtonContents(gfx::Canvas* canvas) {
 }
 
 void SearchResultView::OnFocus() {
+  LOG(ERROR) << "Focused!!----------------------------------------";
   SetSelected(true);
 }
 

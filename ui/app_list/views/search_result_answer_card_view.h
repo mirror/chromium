@@ -20,6 +20,7 @@ class APP_LIST_EXPORT SearchResultAnswerCardView
 
   // Overridden from views::View:
   const char* GetClassName() const override;
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
 
   // Overridden from SearchResultContainerView:
   void OnContainerSelected(bool from_bottom,

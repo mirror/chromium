@@ -4,6 +4,8 @@
 
 #include "ui/app_list/views/search_result_answer_card_view.h"
 
+#include "ui/accessibility/ax_node.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_view_delegate.h"
@@ -12,6 +14,8 @@
 #include "ui/views/controls/button/button.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/fill_layout.h"
+
+#include "ui/accessibility/ax_node_data.h"
 
 namespace app_list {
 
@@ -98,6 +102,15 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
     return Button::OnKeyPressed(event);
   }
 
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
+    if (features::IsAppListFocusEnabled()) {
+      node_data->role = ui::AX_ROLE_GENERIC_CONTAINER;
+      node_data->SetName(accessible_name());
+    } else {
+      Button::GetAccessibleNodeData(node_data);
+    }
+  }
+
   // views::ButtonListener overrides:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override {
     DCHECK(sender == this);
@@ -132,6 +145,7 @@ SearchResultAnswerCardView::SearchResultAnswerCardView(
           new SearchAnswerContainerView(view_delegate)) {
   AddChildView(search_answer_container_view_);
   SetLayoutManager(new views::FillLayout);
+  SetFocusBehavior(FocusBehavior::ACCESSIBLE_ONLY);
 }
 
 SearchResultAnswerCardView::~SearchResultAnswerCardView() {}
@@ -191,6 +205,12 @@ bool SearchResultAnswerCardView::OnKeyPressed(const ui::KeyEvent& event) {
   }
 
   return SearchResultContainerView::OnKeyPressed(event);
+}
+
+void SearchResultAnswerCardView::GetAccessibleNodeData(
+    ui::AXNodeData* node_data) {
+  LOG(ERROR) << " SearchResultAnswerCardView::GetAccessibleNodeData";
+  node_data->role = ui::AX_ROLE_GENERIC_CONTAINER;
 }
 
 views::View* SearchResultAnswerCardView::GetSelectedView() const {
