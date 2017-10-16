@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ba96a56d_163b7277",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-16T18:33:35Z",
+      "side": 1,
+      "message": "Let\u0027s call it css_to_dip.",
+      "range": {
+        "startLine": 706,
+        "startChar": 8,
+        "endLine": 706,
+        "endChar": 22
+      },
+      "revId": "dcee9237064c45cc85239e53e55deba9828973c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccab486c_9514fd05",
         "filename": "content/browser/devtools/protocol/page_handler.cc",
         "patchSetId": 7
@@ -13,6 +36,30 @@
       "writtenOn": "2017-10-16T16:41:12Z",
       "side": 1,
       "message": "doesn\u0027t make sense to talk about device independent pixel for scale. just page_scale is fine",
+      "range": {
+        "startLine": 789,
+        "startChar": 19,
+        "endLine": 789,
+        "endChar": 22
+      },
+      "revId": "dcee9237064c45cc85239e53e55deba9828973c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375dfd16_421e7fd0",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-16T18:33:35Z",
+      "side": 1,
+      "message": "Or css_to_dip to be super-clear.",
+      "parentUuid": "ccab486c_9514fd05",
       "range": {
         "startLine": 789,
         "startChar": 19,
