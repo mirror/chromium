@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54d59d7f_0d4aec7a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/Automapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-16T18:36:36Z",
+      "side": 1,
+      "message": "Why is this now necessary? Could be a performance overhead...",
+      "revId": "de99ddf5e97aae05a19fd4f6d54788d6b0b93644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
