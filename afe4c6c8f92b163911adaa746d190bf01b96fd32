@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6287767b_41bc5bac",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-16T20:58:50Z",
+      "side": 1,
+      "message": "Use lists of pairs everywhere you can, so that we never stored named keys on the objects...",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9d5a9d_fff0b554",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/module.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-16T20:58:50Z",
+      "side": 1,
+      "message": "nit: we get it through bindings anyways, so fine.",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
