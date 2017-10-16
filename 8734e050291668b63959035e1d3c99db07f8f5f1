@@ -16,6 +16,24 @@
       "revId": "8734e050291668b63959035e1d3c99db07f8f5f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8ca5d5_6d81dde3",
+        "filename": "third_party/WebKit/Source/core/paint/TableCollapsedBorderPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-16T16:07:36Z",
+      "side": 1,
+      "message": "\u003e I\u0027m doing something wrong here and I\u0027m hoping you can give me a steer, wangxianzhu.\n\u003e \n\u003e See https://storage.googleapis.com/chromium-layout-test-archives/linux_trusty_blink_dbg/220/layout-test-results/paint/invalidation/table-collapsed-border-crash-log.txt for example.\n\u003e \n\u003e The old and new record in that output are the same apart from the color value, so I\u0027m not sure what the problem is.\n\u003e \n\u003e wangxianzhu, can you suggeest where I start to look? I sense it\u0027s related to some difference in the paint rect due to the fact that the border is on the table but we\u0027re painting from the section, but the debug output doesn\u0027t support that - so I must have the wrong idea.\n\u003e \n\u003e More examples here: https://storage.googleapis.com/chromium-layout-test-archives/linux_trusty_blink_dbg/220/layout-test-results/paint/invalidation/table-collapsed-border-crash-log.txt\n\nYour CL changes the display item clients of collapsed borders from tables/table rows to table sections. This requires us to do different paint invalidation, that is, to invalidate the containing table section instead of the table/table row when a collapsed border changes. Please see https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutTableCell.cpp?rcl\u003d301ce027adbc5555dec9ac7e449af1732ce3a5f9\u0026l\u003d1107 (where we invalidate the affected rows when a cell\u0027s collapsed borders changed) and https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutTable.cpp?rcl\u003d301ce027adbc5555dec9ac7e449af1732ce3a5f9\u0026l\u003d1599 (where we let the table paint all the collapsed borders if the table section or the table row is composited).\n\nUsing table sections as the display item clients of collapsed borders will affect performance. Once one cell changes collpased borders, we must invalidate and repaint the whole section. We decided to use rows as the display item clients by trading off performance and complexity. In some rare cases, we use tables as the display item clients, and the cases will disappear in SPv2. We should still use them.\n\nYour CL is a good prototype to paint collapsed borders by table grids, but it needs to be refactored to utilize the existing code to make up its missing parts:\n1. paint and raster invalidation;\n2. cached collapsed border values for both painting and layout (e.g. for crbug.com/716507).\n\nBy using the existing code as much as possible, the path for fixing the bug should be to switch the current LayoutTableCell-based collapsed border value caching and painting to TableGridCell-based.",
+      "parentUuid": "116facff_025a6ec6",
+      "revId": "8734e050291668b63959035e1d3c99db07f8f5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
