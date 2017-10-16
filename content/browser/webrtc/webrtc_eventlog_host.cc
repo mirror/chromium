@@ -155,8 +155,8 @@ void WebRTCEventLogHost::SendEventLogFileToRenderer(
   }
   RenderProcessHost* rph = RenderProcessHost::FromID(render_process_id_);
   if (rph) {
-    rph->Send(new PeerConnectionTracker_StartEventLog(peer_connection_local_id,
-                                                      file_for_transit));
+    rph->Send(new PeerConnectionTracker_StartEventLogFile(peer_connection_local_id,
+                                                          file_for_transit));
   } else {
     --number_active_log_files_;
     IPC::PlatformFileForTransitToFile(file_for_transit).Close();
