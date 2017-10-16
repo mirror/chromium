@@ -16,6 +16,41 @@
       "revId": "77cf4be7deabea0214b95161e8bc11cd42bbc1fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1bb801_a862d158",
+        "filename": "content/renderer/media/rtc_peer_connection_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-16T22:58:13Z",
+      "side": 1,
+      "message": "Removed it and this test. There\u0027s already a test in this file that adds and removes tracks and inspects the publicly visible results. That combined with all the other tests, including layouttests and browsertests, I think it\u0027s safe to remove this.",
+      "parentUuid": "715c9a35_50d1b54b",
+      "revId": "77cf4be7deabea0214b95161e8bc11cd42bbc1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2d05202_e065ee68",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-16T22:58:13Z",
+      "side": 1,
+      "message": "Removed this TODO which was just resolved.",
+      "revId": "77cf4be7deabea0214b95161e8bc11cd42bbc1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
