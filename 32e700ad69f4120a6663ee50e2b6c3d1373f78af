@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0de26404_7231c175",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-16T17:45:34Z",
+      "side": 0,
+      "message": "Where is this IBAction (and the ones below) linked from? There is no nib change in this CL.",
+      "range": {
+        "startLine": 908,
+        "startChar": 12,
+        "endLine": 908,
+        "endChar": 31
+      },
+      "revId": "32e700ad69f4120a6663ee50e2b6c3d1373f78af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
