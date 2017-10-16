@@ -34,6 +34,24 @@
       "revId": "b425bf2e81ca2d5075a409ef56af9f4046da3375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d77b88b7_cad533a3",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-16T04:08:03Z",
+      "side": 1,
+      "message": "I think the prevailing style is to have two separate DCHECK_NE()s",
+      "parentUuid": "09412add_14ce8bf1",
+      "revId": "b425bf2e81ca2d5075a409ef56af9f4046da3375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
