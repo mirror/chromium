@@ -17,6 +17,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
@@ -44,7 +45,8 @@ class SimpleURLLoaderImpl;
 // clases may use BodyReader to handle reading data from the body pipe.
 
 // Utility class to drive the pipe reading a response body. Can be created on
-// one thread and then used to read data on another.
+// one thread and then used to read data on another. A BodyReader may only be
+// used once. If a request is retried, a new one must be created.
 class BodyReader {
  public:
   class Delegate {
@@ -194,6 +196,13 @@ class BodyHandler {
   // being sent to the consumer.
   virtual void NotifyConsumerOfCompletion(bool destroy_results) = 0;
 
+  // Called before retrying a request. Only called either before receiving a
+  // body pipe, or after the body pipe has been closed, so there should be no
+  // pending callbacks when invoked. |retry_callback| should be invoked when
+  // the BodyHandler is ready for the request to be retried. Callback may be
+  // invoked synchronously.
+  virtual void PrepareToRetry(base::OnceClosure retry_callback) = 0;
+
  protected:
   SimpleURLLoaderImpl* simple_url_loader() { return simple_url_loader_; }
 
@@ -212,8 +221,8 @@ class SaveToStringBodyHandler : public BodyHandler,
       SimpleURLLoader::BodyAsStringCallback body_as_string_callback,
       int64_t max_body_size)
       : BodyHandler(simple_url_loader),
-        body_as_string_callback_(std::move(body_as_string_callback)),
-        body_reader_(std::make_unique<BodyReader>(this, max_body_size)) {}
+        max_body_size_(max_body_size),
+        body_as_string_callback_(std::move(body_as_string_callback)) {}
 
   ~SaveToStringBodyHandler() override {}
 
@@ -221,11 +230,14 @@ class SaveToStringBodyHandler : public BodyHandler,
   void OnStartLoadingResponseBody(
       mojo::ScopedDataPipeConsumerHandle body_data_pipe) override;
   void NotifyConsumerOfCompletion(bool destroy_results) override;
+  void PrepareToRetry(base::OnceClosure retry_callback) override;
 
  private:
   // BodyReader::Delegate implementation.
   net::Error OnDataRead(uint32_t length, const char* data) override;
   void OnDone(net::Error error, int64_t total_bytes) override;
+
+  const int64_t max_body_size_;
 
   std::unique_ptr<std::string> body_;
   SimpleURLLoader::BodyAsStringCallback body_as_string_callback_;
@@ -240,17 +252,21 @@ class SaveToFileBodyHandler : public BodyHandler {
  public:
   // |net_priority| is the priority from the ResourceRequest, and is used to
   // determine the TaskPriority of the sequence used to read from the response
-  // body and write to the file.
+  // body and write to the file. If |create_temp_file| is true, a temp file is
+  // created instead of using |path|.
   SaveToFileBodyHandler(SimpleURLLoaderImpl* simple_url_loader,
                         SimpleURLLoader::DownloadToFileCompleteCallback
                             download_to_file_complete_callback,
                         const base::FilePath& path,
+                        bool create_temp_file,
                         uint64_t max_body_size,
                         net::RequestPriority request_priority)
       : BodyHandler(simple_url_loader),
         download_to_file_complete_callback_(
             std::move(download_to_file_complete_callback)),
         weak_ptr_factory_(this) {
+    DCHECK(create_temp_file || !path.empty());
+
     // Choose the TaskPriority based on the net request priority.
     // TODO(mmenke): Can something better be done here?
     base::TaskPriority task_priority;
@@ -263,14 +279,18 @@ class SaveToFileBodyHandler : public BodyHandler {
     }
 
     // Can only do this after initializing the WeakPtrFactory.
-    file_writer_ =
-        std::make_unique<FileWriter>(path, max_body_size, task_priority);
+    file_writer_ = std::make_unique<FileWriter>(path, create_temp_file,
+                                                max_body_size, task_priority);
   }
 
   ~SaveToFileBodyHandler() override {
     DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-    if (file_writer_)
-      FileWriter::Destroy(std::move(file_writer_), base::OnceClosure());
+    if (file_writer_) {
+      // |file_writer_| is only non-null at this point if any downloaded file
+      // wasn't passed to the consumer. Destroy any partially downloaded file.
+      file_writer_->DeleteFile(base::OnceClosure());
+      FileWriter::Destroy(std::move(file_writer_));
+    }
   }
 
   // BodyHandler implementation:
@@ -293,15 +313,30 @@ class SaveToFileBodyHandler : public BodyHandler {
       // To avoid any issues if the consumer tries to re-download a file to the
       // same location, don't invoke the callback until any partially downloaded
       // file has been destroyed.
-      FileWriter::Destroy(
-          std::move(file_writer_),
+      file_writer_->DeleteFile(
           base::Bind(&SaveToFileBodyHandler::InvokeCallbackAsynchronously,
                      weak_ptr_factory_.GetWeakPtr()));
+      FileWriter::Destroy(std::move(file_writer_));
       return;
     }
 
-    file_writer_->ReleaseFile();
+    // Destroy the |file_writer_|, so the file won't be destroyed in |this|'s
+    // destructor.
+    FileWriter::Destroy(std::move(file_writer_));
+
     std::move(download_to_file_complete_callback_).Run(path_);
+  }
+
+  void PrepareToRetry(base::OnceClosure retry_callback) override {
+    // |file_writer_| is only destroyed when notifying the consumer of
+    // completion and in the destructor. After either of those happens, a
+    // request should not be retried.
+    DCHECK(file_writer_);
+
+    // Delete file and wait for it to be destroyed, so if the retry fails
+    // before trying to create a new file, the consumer will still only be
+    // notified of completion after the file is destroyed.
+    file_writer_->DeleteFile(std::move(retry_callback));
   }
 
  private:
@@ -311,31 +346,33 @@ class SaveToFileBodyHandler : public BodyHandler {
   // BodyHandler's TaskRunner.  All private methods and the destructor are run
   // on the file TaskRunner.
   //
-  // Destroys the file that it's saving to on destruction, unless ReleaseFile()
-  // is called first, so on cancellation and errors, the default behavior is to
-  // clean up after itself.
-  //
   // FileWriter is owned by the SaveToFileBodyHandler and destroyed by a task
   // moving its unique_ptr to the |file_writer_task_runner_|. As a result, tasks
   // posted to |file_writer_task_runner_| can always use base::Unretained. Tasks
   // posted the other way, however, require the SaveToFileBodyHandler to use
   // WeakPtrs, since the SaveToFileBodyHandler can be destroyed at any time.
+  //
+  // When a request is retried, the FileWriter deletes any partially downloaded
+  // file, and is then reused.
   class FileWriter : public BodyReader::Delegate {
    public:
     using OnDoneCallback = base::OnceCallback<void(net::Error error,
                                                    int64_t total_bytes,
                                                    const base::FilePath& path)>;
 
-    explicit FileWriter(const base::FilePath& path,
-                        int64_t max_body_size,
-                        base::TaskPriority priority)
+    FileWriter(const base::FilePath& path,
+               bool create_temp_file,
+               int64_t max_body_size,
+               base::TaskPriority priority)
         : body_handler_task_runner_(base::SequencedTaskRunnerHandle::Get()),
           file_writer_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
               {base::MayBlock(), priority,
                base::TaskShutdownBehavior::BLOCK_SHUTDOWN})),
           path_(path),
-          body_reader_(std::make_unique<BodyReader>(this, max_body_size)) {
+          create_temp_file_(create_temp_file),
+          max_body_size_(max_body_size) {
       DCHECK(body_handler_task_runner_->RunsTasksInCurrentSequence());
+      DCHECK(create_temp_file_ || !path_.empty());
     }
 
     // Starts reading from |body_data_pipe| and writing to the file.
@@ -349,44 +386,37 @@ class SaveToFileBodyHandler : public BodyHandler {
                          std::move(on_done_callback)));
     }
 
-    // Releases ownership of the downloaded file. If not called before
-    // destruction, file will automatically be destroyed in the destructor.
-    void ReleaseFile() {
+    // Deletes any partially downloaded file, and closes the body pipe, if open.
+    // Must be called if SaveToFileBodyHandler's OnDone() method is never
+    // invoked, to avoid keeping around partial downloads that were never passed
+    // to the consumer.
+    //
+    // If |on_file_deleted_closure| is non-null, it will be invoked on the
+    // caller's task runner once the file has been deleted.
+    void DeleteFile(base::OnceClosure on_file_deleted_closure) {
       DCHECK(body_handler_task_runner_->RunsTasksInCurrentSequence());
       file_writer_task_runner_->PostTask(
-          FROM_HERE, base::BindOnce(&FileWriter::ReleaseFileOnFileSequence,
-                                    base::Unretained(this)));
+          FROM_HERE, base::BindOnce(&FileWriter::DeleteFileOnFileSequence,
+                                    base::Unretained(this),
+                                    std::move(on_file_deleted_closure)));
     }
 
     // Destroys the FileWriter on the file TaskRunner.
-    //
-    // If |on_destroyed_closure| is non-null, it will be invoked on the caller's
-    // task runner once the FileWriter has been destroyed.
-    static void Destroy(std::unique_ptr<FileWriter> file_writer,
-                        base::OnceClosure on_destroyed_closure) {
+    static void Destroy(std::unique_ptr<FileWriter> file_writer) {
       DCHECK(
           file_writer->body_handler_task_runner_->RunsTasksInCurrentSequence());
+
       // Have to stash this pointer before posting a task, since |file_writer|
       // is bound to the callback that's posted to the TaskRunner.
       base::SequencedTaskRunner* task_runner =
           file_writer->file_writer_task_runner_.get();
-
-      task_runner->PostTask(FROM_HERE,
-                            base::BindOnce(&FileWriter::DestroyOnFileSequence,
-                                           std::move(file_writer),
-                                           std::move(on_destroyed_closure)));
+      task_runner->DeleteSoon(FROM_HERE, std::move(file_writer));
     }
 
     // Destructor is only public so the consumer can keep it in a unique_ptr.
     // Class must be destroyed by using Destroy().
     ~FileWriter() override {
       DCHECK(file_writer_task_runner_->RunsTasksInCurrentSequence());
-      file_.Close();
-
-      if (owns_file_) {
-        DCHECK(!path_.empty());
-        base::DeleteFile(path_, false /* recursive */);
-      }
     }
 
    private:
@@ -395,10 +425,24 @@ class SaveToFileBodyHandler : public BodyHandler {
         OnDoneCallback on_done_callback) {
       DCHECK(file_writer_task_runner_->RunsTasksInCurrentSequence());
       DCHECK(!file_.IsValid());
+      DCHECK(!body_reader_);
 
-      // Try to create the file.
-      file_.Initialize(path_,
-                       base::File::FLAG_WRITE | base::File::FLAG_CREATE_ALWAYS);
+      bool have_path = !create_temp_file_;
+      if (!have_path) {
+        DCHECK(create_temp_file_);
+        have_path = base::CreateTemporaryFile(&path_);
+        // CreateTemporaryFile() creates an empty file.
+        if (have_path)
+          created_file_ = true;
+      }
+
+      if (have_path) {
+        // Try to initialize |file_|, creating the file if needed.
+        file_.Initialize(
+            path_, base::File::FLAG_WRITE | base::File::FLAG_CREATE_ALWAYS);
+      }
+
+      // If CreateTemporaryFile() or File::Initialize() failed, report failure.
       if (!file_.IsValid()) {
         body_handler_task_runner_->PostTask(
             FROM_HERE, base::BindOnce(std::move(on_done_callback),
@@ -409,7 +453,8 @@ class SaveToFileBodyHandler : public BodyHandler {
       }
 
       on_done_callback_ = std::move(on_done_callback);
-      owns_file_ = true;
+      created_file_ = true;
+      body_reader_ = std::make_unique<BodyReader>(this, max_body_size_);
       body_reader_->Start(std::move(body_data_pipe));
     }
 
@@ -437,34 +482,36 @@ class SaveToFileBodyHandler : public BodyHandler {
       // Close the file so that there's no ownership contention when the
       // consumer uses it.
       file_.Close();
+      body_reader_.reset();
 
       body_handler_task_runner_->PostTask(
           FROM_HERE, base::BindOnce(std::move(on_done_callback_), error,
                                     total_bytes, path_));
     }
 
-    // Closes the file, so it won't be deleted on destruction.
-    void ReleaseFileOnFileSequence() {
+    void DeleteFileOnFileSequence(base::OnceClosure on_file_deleted_closure) {
       DCHECK(file_writer_task_runner_->RunsTasksInCurrentSequence());
-      owns_file_ = false;
-    }
 
-    static void DestroyOnFileSequence(std::unique_ptr<FileWriter> file_writer,
-                                      base::OnceClosure on_destroyed_closure) {
-      DCHECK(
-          file_writer->file_writer_task_runner_->RunsTasksInCurrentSequence());
+      if (created_file_) {
+        // Close the file before deleting it, if it's still open.
+        file_.Close();
 
-      // Need to grab this before deleting |file_writer|.
-      scoped_refptr<base::SequencedTaskRunner> body_handler_task_runner =
-          file_writer->body_handler_task_runner_;
+        // Close the body pipe.
+        body_reader_.reset();
 
-      // Need to delete |FileWriter| before posting a task to invoke the
-      // callback.
-      file_writer.reset();
+        // May as well clean this up, too.
+        on_done_callback_.Reset();
 
-      if (on_destroyed_closure)
-        body_handler_task_runner->PostTask(FROM_HERE,
-                                           std::move(on_destroyed_closure));
+        DCHECK(!path_.empty());
+        base::DeleteFile(path_, false /* recursive */);
+
+        created_file_ = false;
+      }
+
+      if (on_file_deleted_closure) {
+        body_handler_task_runner_->PostTask(FROM_HERE,
+                                            std::move(on_file_deleted_closure));
+      }
     }
 
     // These are set on cosntruction and accessed on both task runners.
@@ -475,6 +522,9 @@ class SaveToFileBodyHandler : public BodyHandler {
     // |file_writer_task_runner_|.
 
     base::FilePath path_;
+    const bool create_temp_file_;
+    const int64_t max_body_size_;
+
     // File being downloaded to. Created just before reading from the data pipe.
     base::File file_;
 
@@ -482,9 +532,9 @@ class SaveToFileBodyHandler : public BodyHandler {
 
     std::unique_ptr<BodyReader> body_reader_;
 
-    // If true, destroys the file in the destructor. Set to true once the file
-    // is created.
-    bool owns_file_ = false;
+    // True if a file was successfully created. Set to false when the file is
+    // destroyed.
+    bool created_file_ = false;
 
     DISALLOW_COPY_AND_ASSIGN(FileWriter);
   };
@@ -538,8 +588,15 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
       DownloadToFileCompleteCallback download_to_file_complete_callback,
       const base::FilePath& file_path,
       int64_t max_body_size) override;
+  void DownloadToTempFile(
+      const ResourceRequest& resource_request,
+      mojom::URLLoaderFactory* url_loader_factory,
+      const net::NetworkTrafficAnnotationTag& annotation_tag,
+      DownloadToFileCompleteCallback download_to_file_complete_callback,
+      int64_t max_body_size) override;
   void SetAllowPartialResults(bool allow_partial_results) override;
   void SetAllowHttpErrorResults(bool allow_http_error_results) override;
+  void SetRetryOptions(int max_retries, int retry_mode) override;
   int NetError() const override;
   const ResourceResponseHead* ResponseInfo() const override;
 
@@ -558,9 +615,27 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
   void FinishWithResult(int net_error);
 
  private:
+  // Cleans up per-request values. For use on creation and before retrying a
+  // request.
+  void Initialize();
+
+  // Prepares internal state to start a request, and then calls StartInternal().
+  // Only used for the initial request (Not retries).
+  void PrepareToStart(const ResourceRequest& resource_request,
+                      mojom::URLLoaderFactory* url_loader_factory,
+                      const net::NetworkTrafficAnnotationTag& annotation_tag);
+
+  // Starts a request. Used for both the initial request and retries, if any.
   void StartInternal(const ResourceRequest& resource_request,
                      mojom::URLLoaderFactory* url_loader_factory,
                      const net::NetworkTrafficAnnotationTag& annotation_tag);
+
+  // Re-initializes state of |this| and |body_handler_| prior to retrying a
+  // request.
+  void PrepareToRetry();
+
+  // Restarts a request, after PrepareToRetry() has been called.
+  void Retry();
 
   // mojom::URLLoaderClient implementation;
   void OnReceiveResponse(const ResourceResponseHead& response_head,
@@ -590,30 +665,47 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
   bool allow_partial_results_ = false;
   bool allow_http_error_results_ = false;
 
-  mojom::URLLoaderPtr url_loader_;
-  mojo::Binding<mojom::URLLoaderClient> client_binding_;
+  // Information related to retrying.
+  int remaining_retries_ = 0;
+  int retry_mode_ = RETRY_NEVER;
+
+  // Along with BodyHandler, these contain all the information required to
+  // restart the request, if retries are enabled. There are all null when
+  // retries are not enabled.
+  content::mojom::URLLoaderFactoryPtr url_loader_factory_ptr_;
+  std::unique_ptr<ResourceRequest> resource_request_;
+  std::unique_ptr<net::NetworkTrafficAnnotationTag> annotation_tag_;
+
   std::unique_ptr<BodyHandler> body_handler_;
 
-  bool request_completed_ = false;
+  // Everything below this point is a per-request state value or mojo object,
+  // and should be reset in Initialize().
+
+  mojom::URLLoaderPtr url_loader_;
+  mojo::Binding<mojom::URLLoaderClient> client_binding_;
+
+  bool request_completed_;
   // The expected total size of the body, taken from
   // ResourceRequestCompletionStatus.
-  int64_t expected_body_size_ = 0;
+  int64_t expected_body_size_;
 
-  bool body_started_ = false;
-  bool body_completed_ = false;
+  bool body_started_;
+  bool body_completed_;
   // Final size of the body. Set once the body's Mojo pipe has been closed.
-  int64_t received_body_size_ = 0;
+  int64_t received_body_size_;
 
   // Set to true when FinishWithResult() is called. Once that happens, the
   // consumer is informed of completion, and both pipes are closed.
-  bool finished_ = false;
+  bool finished_;
 
   // Result of the request.
-  int net_error_ = net::ERR_IO_PENDING;
+  int net_error_;
 
   std::unique_ptr<ResourceResponseHead> response_info_;
 
   SEQUENCE_CHECKER(sequence_checker_);
+
+  base::WeakPtrFactory<SimpleURLLoaderImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(SimpleURLLoaderImpl);
 };
@@ -621,8 +713,10 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
 void SaveToStringBodyHandler::OnStartLoadingResponseBody(
     mojo::ScopedDataPipeConsumerHandle body_data_pipe) {
   DCHECK(!body_);
+  DCHECK(!body_reader_);
 
   body_ = base::MakeUnique<std::string>();
+  body_reader_ = std::make_unique<BodyReader>(this, max_body_size_);
   body_reader_->Start(std::move(body_data_pipe));
 }
 
@@ -645,6 +739,14 @@ void SaveToStringBodyHandler::NotifyConsumerOfCompletion(bool destroy_results) {
   std::move(body_as_string_callback_).Run(std::move(body_));
 }
 
+void SaveToStringBodyHandler::PrepareToRetry(base::OnceClosure retry_callback) {
+  body_.reset();
+  body_reader_.reset();
+
+  // This call may delete |this|.
+  std::move(retry_callback).Run();
+}
+
 void SaveToFileBodyHandler::OnDone(net::Error error,
                                    int64_t total_bytes,
                                    const base::FilePath& path) {
@@ -652,9 +754,12 @@ void SaveToFileBodyHandler::OnDone(net::Error error,
   simple_url_loader()->OnBodyHandlerDone(error, total_bytes);
 }
 
-SimpleURLLoaderImpl::SimpleURLLoaderImpl() : client_binding_(this) {
+SimpleURLLoaderImpl::SimpleURLLoaderImpl()
+    : client_binding_(this), weak_ptr_factory_(this) {
   // Allow creation and use on different threads.
   DETACH_FROM_SEQUENCE(sequence_checker_);
+
+  Initialize();
 }
 
 SimpleURLLoaderImpl::~SimpleURLLoaderImpl() {}
@@ -668,7 +773,7 @@ void SimpleURLLoaderImpl::DownloadToString(
   DCHECK_LE(max_body_size, kMaxBoundedStringDownloadSize);
   body_handler_ = base::MakeUnique<SaveToStringBodyHandler>(
       this, std::move(body_as_string_callback), max_body_size);
-  StartInternal(resource_request, url_loader_factory, annotation_tag);
+  PrepareToStart(resource_request, url_loader_factory, annotation_tag);
 }
 
 void SimpleURLLoaderImpl::DownloadToStringOfUnboundedSizeUntilCrashAndDie(
@@ -681,7 +786,7 @@ void SimpleURLLoaderImpl::DownloadToStringOfUnboundedSizeUntilCrashAndDie(
       // int64_t because ResourceRequestCompletionStatus::decoded_body_length is
       // an int64_t, not a size_t.
       std::numeric_limits<int64_t>::max());
-  StartInternal(resource_request, url_loader_factory, annotation_tag);
+  PrepareToStart(resource_request, url_loader_factory, annotation_tag);
 }
 
 void SimpleURLLoaderImpl::DownloadToFile(
@@ -691,10 +796,23 @@ void SimpleURLLoaderImpl::DownloadToFile(
     DownloadToFileCompleteCallback download_to_file_complete_callback,
     const base::FilePath& file_path,
     int64_t max_body_size) {
+  DCHECK(!file_path.empty());
   body_handler_ = std::make_unique<SaveToFileBodyHandler>(
       this, std::move(download_to_file_complete_callback), file_path,
-      max_body_size, resource_request.priority);
-  StartInternal(resource_request, url_loader_factory, annotation_tag);
+      false /* create_temp_file */, max_body_size, resource_request.priority);
+  PrepareToStart(resource_request, url_loader_factory, annotation_tag);
+}
+
+void SimpleURLLoaderImpl::DownloadToTempFile(
+    const ResourceRequest& resource_request,
+    mojom::URLLoaderFactory* url_loader_factory,
+    const net::NetworkTrafficAnnotationTag& annotation_tag,
+    DownloadToFileCompleteCallback download_to_file_complete_callback,
+    int64_t max_body_size) {
+  body_handler_ = std::make_unique<SaveToFileBodyHandler>(
+      this, std::move(download_to_file_complete_callback), base::FilePath(),
+      true /* create_temp_file */, max_body_size, resource_request.priority);
+  PrepareToStart(resource_request, url_loader_factory, annotation_tag);
 }
 
 void SimpleURLLoaderImpl::SetAllowPartialResults(bool allow_partial_results) {
@@ -708,6 +826,15 @@ void SimpleURLLoaderImpl::SetAllowHttpErrorResults(
   // Simplest way to check if a request has not yet been started.
   DCHECK(!body_handler_);
   allow_http_error_results_ = allow_http_error_results;
+}
+
+void SimpleURLLoaderImpl::SetRetryOptions(int max_retries, int retry_mode) {
+  DCHECK_GE(max_retries, 0);
+  // Non-zero |max_retries| makes no sense when retries are disabled.
+  DCHECK(max_retries > 0 || retry_mode == RETRY_NEVER);
+
+  remaining_retries_ = max_retries;
+  retry_mode_ = retry_mode;
 }
 
 int SimpleURLLoaderImpl::NetError() const {
@@ -756,7 +883,25 @@ void SimpleURLLoaderImpl::FinishWithResult(int net_error) {
   body_handler_->NotifyConsumerOfCompletion(destroy_results);
 }
 
-void SimpleURLLoaderImpl::StartInternal(
+void SimpleURLLoaderImpl::Initialize() {
+  url_loader_.reset();
+  client_binding_.Close();
+
+  request_completed_ = false;
+  expected_body_size_ = 0;
+
+  body_started_ = false;
+  body_completed_ = false;
+  received_body_size_ = 0;
+
+  finished_ = false;
+
+  net_error_ = net::ERR_IO_PENDING;
+
+  response_info_.reset();
+}
+
+void SimpleURLLoaderImpl::PrepareToStart(
     const ResourceRequest& resource_request,
     mojom::URLLoaderFactory* url_loader_factory,
     const net::NetworkTrafficAnnotationTag& annotation_tag) {
@@ -766,6 +911,25 @@ void SimpleURLLoaderImpl::StartInternal(
   DCHECK(!url_loader_);
   DCHECK(!body_started_);
 
+  // If retries are enabled, stash the information needed to retry a request.
+  if (remaining_retries_ > 0) {
+    // Clone the URLLoaderFactory, to avoid any dependencies on its lifetime.
+    // Results in an easier to use API, with no shutdown ordering requirements,
+    // at the cost of some resources.
+    url_loader_factory->Clone(mojo::MakeRequest(&url_loader_factory_ptr_));
+    resource_request_ =
+        std::make_unique<content::ResourceRequest>(resource_request);
+    annotation_tag_ =
+        std::make_unique<net::NetworkTrafficAnnotationTag>(annotation_tag);
+  }
+
+  StartInternal(resource_request, url_loader_factory, annotation_tag);
+}
+
+void SimpleURLLoaderImpl::StartInternal(
+    const ResourceRequest& resource_request,
+    mojom::URLLoaderFactory* url_loader_factory,
+    const net::NetworkTrafficAnnotationTag& annotation_tag) {
   mojom::URLLoaderClientPtr client_ptr;
   client_binding_.Bind(mojo::MakeRequest(&client_ptr));
   client_binding_.set_connection_error_handler(base::BindOnce(
@@ -774,6 +938,20 @@ void SimpleURLLoaderImpl::StartInternal(
       mojo::MakeRequest(&url_loader_), 0 /* routing_id */, 0 /* request_id */,
       0 /* options */, resource_request, std::move(client_ptr),
       net::MutableNetworkTrafficAnnotationTag(annotation_tag));
+}
+
+void SimpleURLLoaderImpl::PrepareToRetry() {
+  DCHECK_GT(remaining_retries_, 0);
+  --remaining_retries_;
+
+  Initialize();
+  body_handler_->PrepareToRetry(
+      base::Bind(&SimpleURLLoaderImpl::Retry, weak_ptr_factory_.GetWeakPtr()));
+}
+
+void SimpleURLLoaderImpl::Retry() {
+  StartInternal(*resource_request_, url_loader_factory_ptr_.get(),
+                *annotation_tag_);
 }
 
 void SimpleURLLoaderImpl::OnReceiveResponse(
@@ -788,11 +966,24 @@ void SimpleURLLoaderImpl::OnReceiveResponse(
     return;
   }
 
-  response_info_ = base::MakeUnique<ResourceResponseHead>(response_head);
-  if (!allow_http_error_results_ && response_head.headers &&
-      response_head.headers->response_code() / 100 != 2) {
-    FinishWithResult(net::ERR_FAILED);
+  // Assume a 200 response unless headers were received indicating otherwise.
+  // No headers indicates this was not a real HTTP response (Could be a file
+  // URL, FTP, response could have been provided by something else, etc).
+  int response_code = 200;
+  if (response_head.headers)
+    response_code = response_head.headers->response_code();
+
+  // If a 5xx response was received, and |this| should retry on 5xx errors,
+  // retry the request.
+  if (response_code / 100 == 5 && remaining_retries_ > 0 &&
+      (retry_mode_ & RETRY_ON_5XX)) {
+    PrepareToRetry();
+    return;
   }
+
+  response_info_ = base::MakeUnique<ResourceResponseHead>(response_head);
+  if (!allow_http_error_results_ && response_code / 100 != 2)
+    FinishWithResult(net::ERR_FAILED);
 }
 
 void SimpleURLLoaderImpl::OnReceiveRedirect(
@@ -892,6 +1083,15 @@ void SimpleURLLoaderImpl::MaybeComplete() {
   // read more data.
   if (body_started_ && !body_completed_)
     return;
+
+  // Retry on network change errors. Waiting for body complete isn't strictly
+  // necessary, but it guarantees a consistent situation, with no reads pending
+  // on the body pipe.
+  if (net_error_ == net::ERR_NETWORK_CHANGED && remaining_retries_ > 0 &&
+      (retry_mode_ & RETRY_ON_NETWORK_CHANGE)) {
+    PrepareToRetry();
+    return;
+  }
 
   // When OnCompleted sees a success result, still need to report an error if
   // the size isn't what was expected.

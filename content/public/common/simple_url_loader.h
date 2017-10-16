@@ -41,15 +41,25 @@ class URLLoaderFactory;
 // Each SimpleURLLoader can only be used for a single request.
 //
 // TODO(mmenke): Support the following:
-// * Save to (temp) file.
 // * Consumer-provided methods to receive streaming (with backpressure).
 // * Monitoring (And cancelling during) redirects.
 // * Uploads (Fixed strings, files, data streams (with backpressure), chunked
 // uploads). ResourceRequest may already have some support, but should make it
 // simple.
-// * Retrying.
+// * Maybe some sort of retry backoff or delay?  ServiceURLLoaderContext enables
+// throttling for its URLFetchers.  Could additionally/alternatively support
+// 503 + Retry-After.
 class CONTENT_EXPORT SimpleURLLoader {
  public:
+  // When a failed request should automatically be retried.
+  enum RetryMode {
+    RETRY_NEVER = 0x0,
+    // Retries whenever the server returns a 5xx response code.
+    RETRY_ON_5XX = 0x1,
+    // Retries on net::ERR_NETWORK_CHANGED.
+    RETRY_ON_NETWORK_CHANGE = 0x2,
+  };
+
   // The maximum size DownloadToString will accept.
   const size_t kMaxBoundedStringDownloadSize = 1024 * 1024;
 
@@ -117,6 +127,15 @@ class CONTENT_EXPORT SimpleURLLoader {
       const base::FilePath& file_path,
       int64_t max_body_size = std::numeric_limits<int64_t>::max()) = 0;
 
+  // Same as DownloadToFile, but creates a temporary file instead of taking a
+  // FilePath.
+  virtual void DownloadToTempFile(
+      const ResourceRequest& resource_request,
+      mojom::URLLoaderFactory* url_loader_factory,
+      const net::NetworkTrafficAnnotationTag& annotation_tag,
+      DownloadToFileCompleteCallback download_to_file_complete_callback,
+      int64_t max_body_size = std::numeric_limits<int64_t>::max()) = 0;
+
   // Sets whether partially received results are allowed. Defaults to false.
   // When true, if an error is received after reading the body starts or the max
   // allowed body size exceeded, the partial response body that was received
@@ -141,6 +160,18 @@ class CONTENT_EXPORT SimpleURLLoader {
   // Defaults to false.
   // TODO(mmenke): Consider adding a new error code for this.
   virtual void SetAllowHttpErrorResults(bool allow_http_error_results) = 0;
+
+  // Sets the when to try and the max number of times to retry a request, if
+  // any. |max_retries| is the number of times to retry the request, not
+  // counting the initial request. |retry_mode| is a combination of one or more
+  // RetryModes, indicating when the request should be retried. If it is
+  // RETRY_NEVER, |max_retries| must be 0.
+  //
+  // By default, a request will not be retried.
+  //
+  // When a request is retried, the the request will start again using the
+  // initial content::ResourceRequest, even if the request was redirected.
+  virtual void SetRetryOptions(int max_retries, int retry_mode) = 0;
 
   // Returns the net::Error representing the final status of the request. May
   // only be called once the loader has informed the caller of completion.
