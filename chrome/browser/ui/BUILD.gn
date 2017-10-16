@@ -2203,6 +2203,8 @@ split_static_library("ui") {
         "cocoa/one_click_signin_dialog_controller.mm",
         "cocoa/one_click_signin_view_controller.h",
         "cocoa/one_click_signin_view_controller.mm",
+        "cocoa/overlay/overlay_window_cocoa.h",
+        "cocoa/overlay/overlay_window_cocoa.mm",
         "cocoa/page_info/page_info_bubble_controller.h",
         "cocoa/page_info/page_info_bubble_controller.mm",
         "cocoa/page_info/page_info_utils_cocoa.h",
