@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "066219d6_c88634c8",
+        "filename": "tools/metrics/actions/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-16T18:23:18Z",
+      "side": 1,
+      "message": "Should this be base/metrics/OWNERS to avoid sending people on a goose hunt?\n\nSame comment for other tools/metrics/*/OWNERS files.",
+      "range": {
+        "startLine": 2,
+        "startChar": 48,
+        "endLine": 2,
+        "endChar": 0
+      },
+      "revId": "317413b9dc9e74232ba0c0fa5ecf9e9e063140bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
