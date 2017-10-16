@@ -46,6 +46,30 @@
       "revId": "e1ee3ec59b075877029d13a0082a6fc4170b0093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d726183_6d4ee9c8",
+        "filename": "headless/lib/browser/headless_url_request_context_getter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-10-16T23:50:17Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e66a9936_1953ab72",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 41
+      },
+      "revId": "e1ee3ec59b075877029d13a0082a6fc4170b0093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
