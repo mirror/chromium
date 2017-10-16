@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a969dfe6_b088a845",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_box_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-16T20:04:25Z",
+      "side": 1,
+      "message": "Would you suggest where to move? I started here because it\u0027s this stack who determines whether to create a box fragment or not, then when needed, this stack adds a placeholder in AddBoxFragmentPlaceholder() above. So capsuling this function in the stack looked good to me.\n\nI\u0027m not strong if there were better suggestions.",
+      "parentUuid": "4e2220a2_279c5762",
+      "range": {
+        "startLine": 247,
+        "startChar": 31,
+        "endLine": 247,
+        "endChar": 49
+      },
+      "revId": "baea18e92add8f44de66bc710594b23cce7ed7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de67b71c_85995817",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.h",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-16T19:14:18Z",
       "side": 1,
       "message": "Would it be better/easier the step which was adding children without a correct position, occurred with a stack allocated vector inside NGInlineLayoutAlgorithm?\n\nThen at the end of PlaceItems once all the shifts have been performed move them into the fragment builder?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 4
+      },
+      "revId": "baea18e92add8f44de66bc710594b23cce7ed7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b4d9a5_46103fe1",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-16T20:04:25Z",
+      "side": 1,
+      "message": "Yeah, thought about it. Block layout algorithm runs by AddChild() and change its offset later, so I chose this pattern to be consistent with block layout algorithm.\n\nWe could make fragment builder consistent and algorithm different. Is that more preferable?\n\nOne more question -- is block layout fine not to do this? It needs to process abspos from LayoutResult, but its offset is not finalized yet, until ToBoxFragment(), correct? Maybe I still don\u0027t understand all about abspos yet...",
+      "parentUuid": "de67b71c_85995817",
       "range": {
         "startLine": 44,
         "startChar": 0,
