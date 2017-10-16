@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0287afb_dbd904c7",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T02:07:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is right. All the class intializers DCHECK(parentWindow) - a BaseBubbleController should be allowed to assume it always has a non-nil parent window.\n\nIs something is calling [BaseBubbleController setParentWindow:nil] at some point? I think that\u0027s the \"bad actor\" that needs its behaviour modified.\n\nWe should also add a test, e.g. to ensure nothing regresses with --secondary-ui-md. If the failure happens (without the fix) using ui::test::ScopedFakeNSWindowFullscreen then it should work find in a browser test.\n\n(also this will probably need a merge, and lots will complain if you try to merge regression fixes without tests!)",
+      "revId": "baa54bd50be9afd57bb3044b28a75c53f85127a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
