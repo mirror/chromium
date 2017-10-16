@@ -2008,7 +2008,7 @@ TEST_P(CrasAudioHandlerTest, SetOutputVolumePercentWithoutNotifyingObservers) {
   const int kVolume1 = 60;
   const int kVolume2 = 80;
   cras_audio_handler_->SetOutputVolumePercentWithoutNotifyingObservers(
-      kVolume1, CrasAudioHandler::VOLUME_CHANGE_MAXIMIZE_MODE_SCREENSHOT);
+      kVolume1, CrasAudioHandler::VOLUME_CHANGE_INITIALIZING_AUDIO_STATE);
   // Verify the output volume is changed to the designated value,
   // OnOutputNodeVolumeChanged event is not fired, and the device volume value
   // is saved in the preferences.
@@ -2022,7 +2022,7 @@ TEST_P(CrasAudioHandlerTest, SetOutputVolumePercentWithoutNotifyingObservers) {
   // Make another SetOutputVolumePercentWithoutNotifyingObservers call to make
   // sure everything is right.
   cras_audio_handler_->SetOutputVolumePercentWithoutNotifyingObservers(
-      kVolume2, CrasAudioHandler::VOLUME_CHANGE_MAXIMIZE_MODE_SCREENSHOT);
+      kVolume2, CrasAudioHandler::VOLUME_CHANGE_INITIALIZING_AUDIO_STATE);
   EXPECT_EQ(kVolume2, cras_audio_handler_->GetOutputVolumePercent());
   EXPECT_EQ(0, test_observer_->output_volume_changed_count());
   EXPECT_TRUE(cras_audio_handler_->GetPrimaryActiveOutputDevice(&device));
