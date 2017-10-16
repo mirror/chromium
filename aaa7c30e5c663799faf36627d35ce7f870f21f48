@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd6b851b_60699948",
+        "filename": "chrome/browser/printing/printer_query.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-16T20:25:24Z",
+      "side": 1,
+      "message": "Should we change the call to this function in PrintingMessageFilter to use BindOnce instead of Bind? Same thing for SetSettings below.",
+      "range": {
+        "startLine": 53,
+        "startChar": 25,
+        "endLine": 53,
+        "endChar": 37
+      },
+      "revId": "aaa7c30e5c663799faf36627d35ce7f870f21f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
