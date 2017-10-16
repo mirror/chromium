@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f10580a_aa514766",
+        "filename": "content/test/mock_widget_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-16T16:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b263654_03bb6a2a",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 2
+      },
+      "revId": "5e250c8d4c0e200ed4e6214b634a748ea3a1097d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48284701_1c8f1ef5",
         "filename": "content/test/mock_widget_input_handler.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-16T15:18:14Z",
       "side": 1,
       "message": "If this is really needed, use a delegating constructor.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "5e250c8d4c0e200ed4e6214b634a748ea3a1097d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8194ad5_3c0fcd0b",
+        "filename": "content/test/mock_widget_input_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-16T16:31:30Z",
+      "side": 1,
+      "message": "binding_ has two different constructors which you can\u0027t delegate really because nullptr can\u0027t be passed into the actual one that binds.. I\u0027ve moved the initialization of host_ to the header file to clean this up a little bit. WDYT?",
+      "parentUuid": "48284701_1c8f1ef5",
       "range": {
         "startLine": 19,
         "startChar": 0,
