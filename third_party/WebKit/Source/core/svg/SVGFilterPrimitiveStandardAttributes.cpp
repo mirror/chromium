@@ -175,32 +175,24 @@ bool SVGFilterPrimitiveStandardAttributes::LayoutObjectIsNeeded(
 }
 
 void SVGFilterPrimitiveStandardAttributes::Invalidate() {
-  if (LayoutObject* primitive_layout_object = GetLayoutObject())
-    MarkForLayoutAndParentResourceInvalidation(primitive_layout_object);
+  if (SVGFilterElement* filter = ToSVGFilterElementOrNull(parentElement()))
+    filter->InvalidateFilterChain();
 }
 
 void SVGFilterPrimitiveStandardAttributes::PrimitiveAttributeChanged(
     const QualifiedName& attribute) {
-  if (LayoutObject* primitive_layout_object = GetLayoutObject())
-    static_cast<LayoutSVGResourceFilterPrimitive*>(primitive_layout_object)
-        ->PrimitiveAttributeChanged(attribute);
+  if (SVGFilterElement* filter = ToSVGFilterElementOrNull(parentElement()))
+    filter->PrimitiveAttributeChanged(*this, attribute);
 }
 
-void InvalidateFilterPrimitiveParent(SVGElement* element) {
-  if (!element)
+void InvalidateFilterPrimitiveParent(SVGElement& element) {
+  Element* parent = element.parentElement();
+  if (!parent || !parent->IsSVGElement())
     return;
-
-  ContainerNode* parent = element->parentNode();
-
-  if (!parent)
+  SVGElement& parentSvgElement = ToSVGElement(*parent);
+  if (!IsSVGFilterPrimitiveStandardAttributes(parentSvgElement))
     return;
-
-  LayoutObject* layout_object = parent->GetLayoutObject();
-  if (!layout_object || !layout_object->IsSVGResourceFilterPrimitive())
-    return;
-
-  LayoutSVGResourceContainer::MarkForLayoutAndParentResourceInvalidation(
-      layout_object, false);
+  ToSVGFilterPrimitiveStandardAttributes(parentSvgElement).Invalidate();
 }
 
 }  // namespace blink
