@@ -22,6 +22,30 @@
       "revId": "f75f4705331888a686a152bad32da8123f726eb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "058cbb9d_f2c34f05",
+        "filename": "ash/fast_ink/fast_ink_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-16T17:01:48Z",
+      "side": 1,
+      "message": "Artifacts are not possible anymore as this patch makes use defer buffer updates if there\u0027s a chance they could cause artifacts. The higher this value is the less likely it is that we have to defer a buffer update. 100 is seems enough to make it very unlikely that we\u0027ll have to defer an update. Note: that an alternative is to have surface damage always cover the whole screen and never defer buffer updates. However, that\u0027s not ideal from a performance perspective.",
+      "parentUuid": "778c63c3_5bc0197c",
+      "range": {
+        "startLine": 40,
+        "startChar": 36,
+        "endLine": 40,
+        "endChar": 39
+      },
+      "revId": "f75f4705331888a686a152bad32da8123f726eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
