@@ -73,7 +73,7 @@ bool InstallValue(const base::Value& value,
   // KEY_ALL_ACCESS causes the ctor to create the key if it does not exist yet.
   RegKey key(hive, path.c_str(), KEY_ALL_ACCESS);
   EXPECT_TRUE(key.Valid());
-  switch (value.GetType()) {
+  switch (value.type()) {
     case base::Value::Type::NONE:
       return key.WriteValue(name.c_str(), L"") == ERROR_SUCCESS;
 
@@ -649,7 +649,7 @@ void PRegTestHarness::AppendStringToPRegFile(const base::string16& path,
 void PRegTestHarness::AppendPolicyToPRegFile(const base::string16& path,
                                              const std::string& key,
                                              const base::Value* value) {
-  switch (value->GetType()) {
+  switch (value->type()) {
     case base::Value::Type::BOOLEAN: {
       bool boolean_value = false;
       ASSERT_TRUE(value->GetAsBoolean(&boolean_value));
