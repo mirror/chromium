@@ -662,7 +662,8 @@ bool AutocompleteMatch::SupportsDeletion() const {
   if (deletable)
     return true;
 
-  for (ACMatches::const_iterator it(duplicate_matches.begin());
+  for (std::vector<AutocompleteMatch>::const_iterator it(
+           duplicate_matches.begin());
        it != duplicate_matches.end(); ++it) {
     if (it->deletable)
       return true;

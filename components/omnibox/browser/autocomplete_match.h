@@ -7,6 +7,7 @@
 
 #include <stddef.h>
 
+#include <list>
 #include <map>
 #include <memory>
 #include <string>
@@ -20,10 +21,13 @@
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
+struct AutocompleteMatch;
 class AutocompleteProvider;
 class SuggestionAnswer;
 class TemplateURL;
 class TemplateURLService;
+
+using ACMatches = std::list<AutocompleteMatch>;
 
 namespace base {
 class Time;
@@ -460,8 +464,7 @@ struct AutocompleteMatch {
 #endif
 };
 
-typedef AutocompleteMatch::ACMatchClassification ACMatchClassification;
-typedef std::vector<ACMatchClassification> ACMatchClassifications;
-typedef std::vector<AutocompleteMatch> ACMatches;
+using ACMatchClassification = AutocompleteMatch::ACMatchClassification;
+using ACMatchClassifications = std::vector<ACMatchClassification>;
 
 #endif  // COMPONENTS_OMNIBOX_BROWSER_AUTOCOMPLETE_MATCH_H_
