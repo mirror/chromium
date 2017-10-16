@@ -17,6 +17,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/logging.h"
 #include "base/time/time.h"
+#include "mojo/public/cpp/system/data_pipe.h"
 #include "storage/common/storage_common_export.h"
 #include "url/gurl.h"
 
@@ -34,20 +35,28 @@ class STORAGE_COMMON_EXPORT DataElement {
     // Only used with BlobStorageMsg_StartBuildingBlob
     TYPE_BYTES_DESCRIPTION,
     TYPE_FILE,
-    TYPE_BLOB,
+    TYPE_BLOB,  // Used in ResourceDispatcherHost path.
     TYPE_FILE_FILESYSTEM,
     TYPE_DISK_CACHE_ENTRY,
+    TYPE_DATA_PIPE,  // Used in Network Service path.
   };
 
   DataElement();
-  DataElement(const DataElement& other);
   ~DataElement();
+
+  DataElement(const DataElement&) = delete;
+  void operator=(const DataElement&) = delete;
+  DataElement(DataElement&& other) = default;
+  DataElement& operator=(DataElement&& other) = default;
 
   Type type() const { return type_; }
   const char* bytes() const { return bytes_ ? bytes_ : buf_.data(); }
   const base::FilePath& path() const { return path_; }
   const GURL& filesystem_url() const { return filesystem_url_; }
   const std::string& blob_uuid() const { return blob_uuid_; }
+  const mojo::DataPipeConsumerHandle& data_pipe() const {
+    return data_pipe_.get();
+  }
   uint64_t offset() const { return offset_; }
   uint64_t length() const { return length_; }
   const base::Time& expected_modification_time() const {
@@ -141,6 +150,11 @@ class STORAGE_COMMON_EXPORT DataElement {
   // Sets to TYPE_DISK_CACHE_ENTRY with range.
   void SetToDiskCacheEntryRange(uint64_t offset, uint64_t length);
 
+  // Sets TYPE_DATA_PIPE data.
+  void SetToDataPipe(mojo::ScopedDataPipeConsumerHandle handle);
+
+  mojo::ScopedDataPipeConsumerHandle ReleaseDataPipe();
+
  private:
   FRIEND_TEST_ALL_PREFIXES(BlobAsyncTransportStrategyTest, TestInvalidParams);
   friend STORAGE_COMMON_EXPORT void PrintTo(const DataElement& x,
@@ -151,6 +165,7 @@ class STORAGE_COMMON_EXPORT DataElement {
   base::FilePath path_;  // For TYPE_FILE.
   GURL filesystem_url_;  // For TYPE_FILE_FILESYSTEM.
   std::string blob_uuid_;
+  mojo::ScopedDataPipeConsumerHandle data_pipe_;
   uint64_t offset_;
   uint64_t length_;
   base::Time expected_modification_time_;

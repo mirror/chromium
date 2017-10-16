@@ -19,8 +19,6 @@ DataElement::DataElement()
       offset_(0),
       length_(std::numeric_limits<uint64_t>::max()) {}
 
-DataElement::DataElement(const DataElement& other) = default;
-
 DataElement::~DataElement() {}
 
 void DataElement::SetToFilePathRange(
@@ -60,6 +58,16 @@ void DataElement::SetToDiskCacheEntryRange(uint64_t offset, uint64_t length) {
   type_ = TYPE_DISK_CACHE_ENTRY;
   offset_ = offset;
   length_ = length;
+}
+
+void DataElement::SetToDataPipe(mojo::ScopedDataPipeConsumerHandle handle,
+                                uint64_t length) {
+  type_ = TYPE_DATA_PIPE;
+  data_pipe_ = std::move(handle);
+}
+
+mojo::ScopedDataPipeConsumerHandle DataElement::ReleaseDataPipe() {
+  return std::move(data_pipe_);
 }
 
 void PrintTo(const DataElement& x, std::ostream* os) {

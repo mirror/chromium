@@ -69,6 +69,12 @@ void ResourceRequestBody::AppendFileSystemFileRange(
                                            expected_modification_time);
 }
 
+void ResourceRequestBody::AppendDataPipe(
+    mojo::ScopedDataPipeConsumerHandle handle) {
+  elements_.push_back(Element());
+  elements_.back().SetToDataPipe(std::move(handle));
+}
+
 std::vector<base::FilePath> ResourceRequestBody::GetReferencedFiles() const {
   std::vector<base::FilePath> result;
   for (const auto& element : *elements()) {

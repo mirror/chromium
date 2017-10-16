@@ -59,6 +59,7 @@ class CONTENT_EXPORT ResourceRequestBody
                                  uint64_t offset,
                                  uint64_t length,
                                  const base::Time& expected_modification_time);
+  void AppendDataPipe(mojo::ScopedDataPipeConsumerHandle handle);
 
   const std::vector<Element>* elements() const { return &elements_; }
   std::vector<Element>* elements_mutable() { return &elements_; }
