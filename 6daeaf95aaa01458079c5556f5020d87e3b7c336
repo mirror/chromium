@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "46c4d659_a287532d",
+        "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-16T18:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83adf0bc_49d965a3",
+      "range": {
+        "startLine": 41,
+        "startChar": 67,
+        "endLine": 41,
+        "endChar": 68
+      },
+      "revId": "6daeaf95aaa01458079c5556f5020d87e3b7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcb674d5_c9364451",
         "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_win.h",
         "patchSetId": 2
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "beaca866_4378ab9a",
+        "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-16T18:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4eecae_45bcbc62",
+      "range": {
+        "startLine": 45,
+        "startChar": 13,
+        "endLine": 45,
+        "endChar": 19
+      },
+      "revId": "6daeaf95aaa01458079c5556f5020d87e3b7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab1d41c_252141ba",
+        "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-16T18:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcb674d5_c9364451",
+      "range": {
+        "startLine": 45,
+        "startChar": 20,
+        "endLine": 45,
+        "endChar": 51
+      },
+      "revId": "6daeaf95aaa01458079c5556f5020d87e3b7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f388c5d3_48ff2195",
         "filename": "content/child/dwrite_font_proxy/font_fallback_win.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "bba6227c_a8b363ee",
+        "filename": "content/child/dwrite_font_proxy/font_fallback_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-16T18:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f388c5d3_48ff2195",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 19
+      },
+      "revId": "6daeaf95aaa01458079c5556f5020d87e3b7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed865154_c169de44",
         "filename": "ui/gfx/win/text_analysis_source.h",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "6daeaf95aaa01458079c5556f5020d87e3b7c336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2564c8fe_1a900a21",
+        "filename": "ui/gfx/win/text_analysis_source.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-16T18:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed865154_c169de44",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 19
+      },
+      "revId": "6daeaf95aaa01458079c5556f5020d87e3b7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
