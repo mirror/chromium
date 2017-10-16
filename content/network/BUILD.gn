@@ -59,6 +59,7 @@ source_set("network_sources") {
 
   deps = [
     "//base",
+    "//components/network_error_logging",
     "//components/network_session_configurator/browser",
     "//components/network_session_configurator/common",
     "//components/prefs",

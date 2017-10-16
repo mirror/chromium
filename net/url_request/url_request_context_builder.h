@@ -54,6 +54,7 @@ class HttpAuthHandlerFactory;
 class HttpTransactionFactory;
 class HttpUserAgentSettings;
 class HttpServerProperties;
+class NetworkErrorLoggingDelegate;
 class NetworkQualityEstimator;
 class ProxyConfigService;
 struct ReportingPolicy;
@@ -351,6 +352,10 @@ class NET_EXPORT URLRequestContextBuilder {
       CreateHttpTransactionFactoryCallback
           create_http_network_transaction_factory);
 
+  void SetNetworkErrorLoggingDelegate(
+      std::unique_ptr<NetworkErrorLoggingDelegate>
+          network_error_logging_delegate);
+
   // Returns the previous value passed to set_net_log(), or nullptr if it hasn't
   // been called yet.
   // TODO(mmenke): Remove this method.
@@ -421,6 +426,8 @@ class NET_EXPORT URLRequestContextBuilder {
   std::unique_ptr<CTPolicyEnforcer> ct_policy_enforcer_;
 #if BUILDFLAG(ENABLE_REPORTING)
   std::unique_ptr<net::ReportingPolicy> reporting_policy_;
+  std::unique_ptr<net::NetworkErrorLoggingDelegate>
+      network_error_logging_delegate_;
 #endif  // BUILDFLAG(ENABLE_REPORTING)
   std::vector<std::unique_ptr<URLRequestInterceptor>> url_request_interceptors_;
   CreateInterceptingJobFactory create_intercepting_job_factory_;
