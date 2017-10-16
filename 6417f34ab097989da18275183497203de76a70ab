@@ -16,6 +16,24 @@
       "revId": "6417f34ab097989da18275183497203de76a70ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23dcb37_48383f23",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2536,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-16T16:35:23Z",
+      "side": 1,
+      "message": "I put this behind a flag.",
+      "parentUuid": "8588b37f_582d177c",
+      "revId": "6417f34ab097989da18275183497203de76a70ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
