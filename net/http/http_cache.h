@@ -292,6 +292,8 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
     // writers is not present.
     bool SafeToDestroy();
 
+    bool IsInReaders(Transaction* transaction) const;
+
     disk_cache::Entry* disk_entry = nullptr;
 
     // Transactions waiting to be added to entry.
@@ -432,6 +434,13 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   // cache. It may be successful completion of the response or failure as given
   // by |success|.
   // |entry| is the owner of writers.
+  // Impacts the queued transactions in one of the following ways:
+  // - restart them but do not doom the entry since entry can be saved in its
+  // truncated form.
+  // - restart them and doom/destroy the entry since entry does not have valid
+  // contents.
+  // - let them continue by invoking their callback since entry is successfully
+  // written.
   // Virtual so that it can be extended in tests.
   virtual void WritersDoneWritingToEntry(ActiveEntry* entry,
                                          bool success,
@@ -477,7 +486,9 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   void ProcessDoneHeadersQueue(ActiveEntry* entry);
 
   // Adds a transaction to writers.
-  void AddTransactionToWriters(ActiveEntry* entry, Transaction* transaction);
+  void AddTransactionToWriters(ActiveEntry* entry,
+                               Transaction* transaction,
+                               bool can_do_shared_writing);
 
   // Returns true if this transaction can write headers to the entry.
   bool CanTransactionWriteResponseHeaders(ActiveEntry* entry,

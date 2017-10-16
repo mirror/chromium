@@ -355,8 +355,7 @@ int HttpCache::Transaction::Read(IOBuffer* buf, int buf_len,
   if (auth_response_.headers.get() && mode_ != NONE) {
     UpdateCacheEntryStatus(CacheEntryStatus::ENTRY_OTHER);
     DCHECK(mode_ & WRITE);
-    bool stopped = StopCachingImpl(mode_ == READ_WRITE);
-    DCHECK(stopped);
+    ContinueInNetworkReadOnlyMode(mode_ == READ_WRITE);
   }
 
   reading_ = true;
@@ -401,15 +400,15 @@ int HttpCache::Transaction::TransitionToReadingState() {
   if (!InWriters()) {
     // Since transaction is not a writer and we are in Read(), it must be a
     // reader.
-    DCHECK(entry_->readers.count(this));
-    DCHECK(mode_ == READ || (mode_ == READ_WRITE && partial_));
+    DCHECK(entry_->IsInReaders(this));
     next_state_ = STATE_CACHE_READ_DATA;
     return OK;
   }
 
+  DCHECK(mode_ & WRITE || mode_ == NONE);
+
   // If it's a writer and it is partial then it may need to read from the cache
   // or from the network based on whether network transaction is present or not.
-  DCHECK(mode_ == WRITE || mode_ == NONE || (mode_ == READ_WRITE && partial_));
   if (partial_) {
     if (entry_->writers->network_transaction())
       next_state_ = STATE_NETWORK_READ_CACHE_WRITE;
@@ -441,9 +440,18 @@ void HttpCache::Transaction::StopCaching() {
   // the next piece of code that executes know that we are now reading directly
   // from the net.
   if (cache_.get() && (mode_ & WRITE) && !is_sparse_ && !range_requested_) {
-    if ((InWriters() && entry_->writers->network_transaction()) ||
-        network_trans_) {
-      StopCachingImpl(false);
+    if (InWriters() && entry_->writers->network_transaction()) {
+      if (entry_->writers->StopCaching(false /* keep_entry */)) {
+        // This entry is now doomed.
+        mode_ = NONE;
+      }
+    } else if (network_trans_) {
+      mode_ = NONE;
+
+      // Let entry_ know so that any dependent transactions are restarted and
+      // this entry is doomed.
+      DoneWithEntry(false /* entry_is_complete */);
+      entry_ = nullptr;
     }
   }
 }
@@ -640,7 +648,7 @@ void HttpCache::Transaction::WriterAboutToBeRemovedFromEntry(int result) {
 
   // Transactions in the midst of a Read call through writers will get any error
   // code through the IO callback but for idle transactions/transactions reading
-  // from the cache, the error for a future Read must be stored here.
+  // from the cache, the error for a future Read will be communicated here.
   if (result < 0) {
     entry_ = nullptr;
     mode_ = NONE;
@@ -1782,7 +1790,8 @@ int HttpCache::Transaction::DoUpdateCachedResponseComplete(int result) {
     DoneWithEntry(true);
   } else if (entry_ && !handling_206_) {
     DCHECK_EQ(READ_WRITE, mode_);
-    if (!partial_ || partial_->IsLastRange()) {
+    if ((!partial_ && !cache_->IsWritingInProgress(entry_)) ||
+        partial_->IsLastRange()) {
       mode_ = READ;
     }
     // We no longer need the network transaction, so destroy it.
@@ -2005,6 +2014,8 @@ int HttpCache::Transaction::DoFinishHeadersComplete(int rv) {
 
   if (network_trans_ && InWriters()) {
     entry_->writers->SetNetworkTransaction(this, std::move(network_trans_));
+  } else if (entry_ && entry_->IsInReaders(this)) {
+    mode_ = READ;
   }
 
   // If already reading, that means it is a partial request coming back to the
@@ -2055,7 +2066,6 @@ int HttpCache::Transaction::DoNetworkReadCacheWrite() {
 
 int HttpCache::Transaction::DoNetworkReadCacheWriteComplete(int result) {
   TRACE_EVENT0("io", "HttpCacheTransaction::DoNetworkReadCacheWriteComplete");
-  DCHECK(mode_ & WRITE || mode_ == NONE);
   if (!cache_.get()) {
     TransitionToState(STATE_NONE);
     return ERR_UNEXPECTED;
@@ -2817,7 +2827,8 @@ int HttpCache::Transaction::SetupEntryForRead() {
     }
   }
 
-  mode_ = READ;
+  if (!cache_->IsWritingInProgress(entry_))
+    mode_ = READ;
 
   if (method_ == "HEAD")
     FixHeadersForHead();
@@ -2863,8 +2874,7 @@ int HttpCache::Transaction::WriteResponseInfoToEntry(bool truncated) {
   // status to a net error and replay the net error.
   if ((response_.headers->HasHeaderValue("cache-control", "no-store")) ||
       IsCertStatusError(response_.ssl_info.cert_status)) {
-    bool stopped = StopCachingImpl(false);
-    DCHECK(stopped);
+    ContinueInNetworkReadOnlyMode(false);
     if (net_log_.IsCapturing())
       net_log_.EndEvent(NetLogEventType::HTTP_CACHE_WRITE_INFO);
     return OK;
@@ -2899,18 +2909,15 @@ int HttpCache::Transaction::OnWriteResponseInfoToEntryComplete(int result) {
   return OK;
 }
 
-bool HttpCache::Transaction::StopCachingImpl(bool success) {
-  bool stopped = false;
+void HttpCache::Transaction::ContinueInNetworkReadOnlyMode(bool success) {
   // Let writers know so that it doesn't attempt to write to the cache.
   if (InWriters()) {
-    stopped = entry_->writers->StopCaching(success /* keep_entry */);
-    if (stopped)
-      mode_ = NONE;
+    mode_ = NONE;
+    bool stopped = entry_->writers->StopCaching(success /* keep_entry */);
+    DCHECK(stopped);
   } else if (entry_) {
-    stopped = true;
     DoneWithEntry(success /* entry_is_complete */);
   }
-  return stopped;
 }
 
 void HttpCache::Transaction::DoneWithEntry(bool entry_is_complete) {

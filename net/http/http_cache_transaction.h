@@ -428,9 +428,8 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   int OnWriteResponseInfoToEntryComplete(int result);
 
   // Configures the transaction to read from the network and stop writing to the
-  // entry. It will release the entry if possible. Returns true if caching could
-  // be stopped successfully.
-  bool StopCachingImpl(bool success);
+  // entry. It will release the entry if possible.
+  void ContinueInNetworkReadOnlyMode(bool success);
 
   // Informs the HttpCache that this transaction is done with the entry and
   // changes the mode to NONE. Set |entry_is_complete| to false if the

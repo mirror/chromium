@@ -88,7 +88,7 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   void AddTransaction(Transaction* transaction,
                       bool is_exclusive,
                       RequestPriority priority,
-                      const TransactionInfo& info);
+                      TransactionInfo info);
 
   // Invoked when the transaction is done working with the entry.
   void RemoveTransaction(Transaction* transaction, bool success);
@@ -112,7 +112,7 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   bool CanAddWriters();
 
   // Returns if only one transaction can be a member of writers.
-  bool IsExclusive() const { return is_exclusive_; }
+  bool IsExclusive() { return is_exclusive_; }
 
   // Returns the network transaction which may be nullptr for range requests.
   const HttpTransaction* network_transaction() const {
@@ -121,7 +121,7 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
 
   // Returns the load state of the |network_transaction_| if present else
   // returns LOAD_STATE_IDLE.
-  LoadState GetLoadState() const;
+  LoadState GetLoadState();
 
   // Sets the network transaction argument to |network_transaction_|. Must be
   // invoked before Read can be invoked.
@@ -154,11 +154,10 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
     NETWORK_READ_COMPLETE,
     CACHE_WRITE_DATA,
     CACHE_WRITE_DATA_COMPLETE,
-    // This state is used when an attempt to truncate races with an ongoing
-    // network read/cache write. In this case we transition from
-    // NETWORK_READ_COMPLETE or CACHE_WRITE_DATA_COMPLETE to
-    // ASYNC_OP_COMPLETE_PRE_TRUNCATE. We will then process the truncation
-    // after the ongoing operation completes.
+    // This state is used when attempt to truncate races with an ongoing network
+    // read/cache write. In this case we transition from NETWORK_READ_COMPLETE
+    // or CACHE_WRITE_DATA_COMPLETE to ASYNC_OP_COMPLETE_PRE_TRUNCATE. We will
+    // then process the truncation after the ongoing operation completes.
     ASYNC_OP_COMPLETE_PRE_TRUNCATE,
     CACHE_WRITE_TRUNCATED_RESPONSE,
     CACHE_WRITE_TRUNCATED_RESPONSE_COMPLETE,
@@ -230,14 +229,15 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   // If a network read/cache write operation is still going on, this will not
   // initiate truncation but it will be done after the ongoing operation is
   // complete.
-  // Note that if this function returns a true, its possible that |this| may
-  // have been deleted and thus no members should be touched after this.
   bool InitiateTruncateEntry();
 
   // Remove the transaction.
   void EraseTransaction(Transaction* transaction, int result);
+  TransactionMap::iterator EraseTransaction(TransactionMap::iterator it,
+                                            int result);
+  void ErasedTransaction(Transaction* transaction);
 
-  void SetCacheCallback(bool success, const TransactionSet& make_readers);
+  TransactionSet RemoveTransactionsFromAllWriters();
 
   // IO Completion callback function.
   void OnIOComplete(int result);

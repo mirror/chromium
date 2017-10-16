@@ -65,7 +65,8 @@ class WritersTest : public testing::Test {
         "Last-Modified: Wed, 28 Nov 2007 00:40:09 GMT\n"
         "Content-Length: 22\n"
         "Etag: \"foopy\"\n";
-    request_ = MockHttpRequest(transaction);
+    MockHttpRequest request(transaction);
+    request_ = request;
   }
 
   ~WritersTest() override {
@@ -499,7 +500,7 @@ TEST_F(WritersTest, StopCaching) {
   EXPECT_FALSE(writers_->CanAddWriters());
 }
 
-// Tests StopCaching should be successful when invoked mid-read.
+// Tests StopCaching should be successful when invoked mid-read .
 TEST_F(WritersTest, StopCachingMidRead) {
   CreateWritersAddTransaction();
   EXPECT_FALSE(writers_->IsEmpty());
