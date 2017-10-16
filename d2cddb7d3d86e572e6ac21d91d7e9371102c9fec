@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "962b9c3e_bb529f15",
+        "filename": "tools/chrome_proxy/webdriver/proxy_connection.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1162726
+      },
+      "writtenOn": "2017-10-16T21:29:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67abcc58_7580facb",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "d2cddb7d3d86e572e6ac21d91d7e9371102c9fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dd716b0_d3c6c393",
         "filename": "tools/chrome_proxy/webdriver/proxy_connection.py",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "d2cddb7d3d86e572e6ac21d91d7e9371102c9fec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f4d7dc5_57d4405a",
+        "filename": "tools/chrome_proxy/webdriver/proxy_connection.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1162726
+      },
+      "writtenOn": "2017-10-16T21:29:49Z",
+      "side": 1,
+      "message": "Resolved offline",
+      "parentUuid": "0dd716b0_d3c6c393",
+      "range": {
+        "startLine": 30,
+        "startChar": 11,
+        "endLine": 30,
+        "endChar": 22
+      },
+      "revId": "d2cddb7d3d86e572e6ac21d91d7e9371102c9fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
