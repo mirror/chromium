@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "41ee9691_b4642eb3",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-16T04:25:20Z",
+      "side": 1,
+      "message": "something like..\n\n// BaseBubbleController clears the parent window at the start of the bubble\n// fade animation if it was triggered by the parent window closing or going\n// fullscreen.\nif (![self parentWindow])\n  return;\n\nor\n\n  // Skip layout if the bubble is closing.\n  InfoBubbleWindow* bubbleWindow \u003d\n      base::mac::ObjCCastStrict\u003cInfoBubbleWindow\u003e([self window]);\n  if ([bubbleWindow isClosing])\n    return;",
+      "revId": "baa54bd50be9afd57bb3044b28a75c53f85127a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0287afb_dbd904c7",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 1
