@@ -57,7 +57,7 @@ public class FullscreenActivityTest {
     @Before
     public void setUp() throws InterruptedException {
         mTestServer = EmbeddedTestServer.createAndStartServer(
-                mActivityTestRule.getInstrumentation().getContext());
+                InstrumentationRegistry.getInstrumentation().getContext());
         mActivityTestRule.startMainActivityWithURL(mTestServer.getURL(TEST_PATH));
         mActivity = mActivityTestRule.getActivity();
     }
