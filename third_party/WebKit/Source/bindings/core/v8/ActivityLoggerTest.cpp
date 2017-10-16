@@ -95,11 +95,8 @@ class ActivityLoggerTest : public ::testing::Test {
 
   void ExecuteScriptInIsolatedWorld(const String& script) const {
     v8::HandleScope scope(v8::Isolate::GetCurrent());
-    HeapVector<ScriptSourceCode> sources;
-    sources.push_back(ScriptSourceCode(script));
-    Vector<v8::Local<v8::Value>> results;
-    script_controller_->ExecuteScriptInIsolatedWorld(kIsolatedWorldId, sources,
-                                                     0);
+    script_controller_->ExecuteScriptInIsolatedWorld(kIsolatedWorldId,
+                                                     ScriptSourceCode(script));
     PumpPendingRequestsForFrameToLoad(web_view_helper_.WebView()->MainFrame());
   }
 
