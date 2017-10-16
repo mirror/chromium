@@ -140,6 +140,10 @@ ALWAYS_INLINE uintptr_t RoundDownToSystemPage(uintptr_t address) {
   return address & kSystemPageBaseMask;
 }
 
+// Returns true if the platform doesn't allocate physical memory at the time of
+// allocation, instead waiting until the application actually uses the memory.
+BASE_EXPORT bool HasLazyCommits();
+
 // Reserves (at least) |size| bytes of address space, aligned to
 // |kPageAllocationGranularity|. This can be called early on to make it more
 // likely that large allocations will succeed. Returns true if the reservation

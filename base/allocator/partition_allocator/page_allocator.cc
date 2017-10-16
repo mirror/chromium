@@ -362,6 +362,14 @@ void DiscardSystemPages(void* address, size_t length) {
 #endif
 }
 
+bool HasLazyCommits() {
+#if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_AIX)
+  return true;
+#else
+  return false;
+#endif
+}
+
 bool ReserveAddressSpace(size_t size) {
   // Don't take |s_reserveLock| while allocating, since a failure would invoke
   // ReleaseReservation and deadlock.
