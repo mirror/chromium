@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6c952c1_b2120de1",
+        "filename": "components/password_manager/core/browser/password_manager_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-16T14:55:17Z",
+      "side": 1,
+      "message": "typo, I think. \"... is a sync user without a custom passphrase\" ?",
+      "range": {
+        "startLine": 57,
+        "startChar": 70,
+        "endLine": 57,
+        "endChar": 74
+      },
+      "revId": "968ce96991116aec78455140e491961522bcc516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
