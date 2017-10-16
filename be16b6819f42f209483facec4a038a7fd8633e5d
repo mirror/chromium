@@ -22,6 +22,30 @@
       "revId": "be16b6819f42f209483facec4a038a7fd8633e5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55fff335_865eead8",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4621,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T17:57:42Z",
+      "side": 1,
+      "message": "I planned to do only one thing in this CL: stop certificateChain usage on iOS10. But I don\u0027t mind changing the purpose of this CL. Done.",
+      "parentUuid": "8d8f1362_d40a6d6b",
+      "range": {
+        "startLine": 4621,
+        "startChar": 5,
+        "endLine": 4621,
+        "endChar": 0
+      },
+      "revId": "be16b6819f42f209483facec4a038a7fd8633e5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
