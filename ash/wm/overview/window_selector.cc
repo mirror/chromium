@@ -766,6 +766,9 @@ void WindowSelector::OnSplitViewStateChanged(
     // if overview mode is active.
     CancelSelection();
   }
+
+  for (auto& grid : grid_list_)
+    grid->UpdateCannotSnapWarningVisibility();
 }
 
 void WindowSelector::OnSplitViewDividerPositionChanged() {

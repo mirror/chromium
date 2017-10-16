@@ -134,6 +134,10 @@ bool WindowSelectorController::IsRestoringMinimizedWindows() const {
 
 void WindowSelectorController::OnOverviewButtonTrayLongPressed(
     const gfx::Point& event_location) {
+  // Do nothing if split view is not enabled.
+  if (!SplitViewController::ShouldAllowSplitView())
+    return;
+
   // Depending on the state of the windows and split view, a long press has many
   // different results.
   // 1. Already in split view - exit split view.
@@ -154,11 +158,14 @@ void WindowSelectorController::OnOverviewButtonTrayLongPressed(
 
   auto* active_window = wm::GetActiveWindow();
   // Do nothing if there are no active windows, less than two windows to work
-  // with, or the active window is not snappable.
-  // TODO(sammiequon): Bounce the window if it is not snappable.
+  // with.
   if (!active_window ||
-      Shell::Get()->mru_window_tracker()->BuildMruWindowList().size() < 2u ||
-      !SplitViewController::CanSnap(active_window)) {
+      Shell::Get()->mru_window_tracker()->BuildMruWindowList().size() < 2u) {
+    return;
+  }
+
+  if (!SplitViewController::CanSnap(active_window)) {
+    split_view_controller->ShowAppCannotSnapToast();
     return;
   }
 

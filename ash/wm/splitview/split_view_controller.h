@@ -101,6 +101,8 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   void Resize(const gfx::Point& location_in_screen);
   void EndResize(const gfx::Point& location_in_screen);
 
+  void ShowAppCannotSnapToast();
+
   // Ends the split view mode.
   void EndSplitView();
 

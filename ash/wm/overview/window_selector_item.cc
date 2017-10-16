@@ -10,8 +10,10 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "ash/wm/overview/cleanup_animation_observer.h"
 #include "ash/wm/overview/overview_animation_type.h"
+#include "ash/wm/overview/rounded_rect_view.h"
 #include "ash/wm/overview/scoped_overview_animation_settings.h"
 #include "ash/wm/overview/scoped_transform_overview_window.h"
 #include "ash/wm/overview/window_grid.h"
@@ -34,7 +36,6 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/transform_util.h"
 #include "ui/views/background.h"
-#include "ui/views/border.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/window/non_client_view.h"
 #include "ui/wm/core/coordinate_conversion.h"
@@ -72,6 +73,8 @@ static int kLabelBackgroundRadius = 2;
 
 // Horizontal padding for the label, on both sides.
 static const int kHorizontalLabelPadding = 8;
+
+constexpr SkColor kCannotSnapLabelColor = SkColorSetARGB(200, 0, 0, 0);
 
 // Height of an item header.
 static const int kHeaderHeight = 32;
@@ -405,20 +408,34 @@ class WindowSelectorItem::RoundedContainerView
 class WindowSelectorItem::CaptionContainerView : public views::View {
  public:
   CaptionContainerView(ButtonListener* listener,
-                       views::Label* label,
+                       views::Label* title_label,
+                       views::Label* cannot_snap_label,
                        views::ImageButton* close_button,
                        WindowSelectorItem::RoundedContainerView* background)
-      : listener_button_(new ShieldButton(listener, label->text())),
+      : listener_button_(new ShieldButton(listener, title_label->text())),
         background_(background),
-        label_(label),
+        title_label_(title_label),
+        cannot_snap_label_(cannot_snap_label),
         close_button_(close_button) {
-    background_->AddChildView(label_);
+    background_->AddChildView(title_label_);
     background_->AddChildView(close_button_);
     listener_button_->AddChildView(background_);
     AddChildView(listener_button_);
+
+    auto* layout = new views::BoxLayout(views::BoxLayout::kVertical);
+    cannot_snap_container_ = new RoundedRectView(10, kCannotSnapLabelColor);
+    cannot_snap_container_->AddChildView(cannot_snap_label_);
+    cannot_snap_container_->SetLayoutManager(layout);
+    layout->SetFlexForView(cannot_snap_label_, 1);
+    AddChildView(cannot_snap_container_);
+    cannot_snap_container_->SetVisible(false);
   }
 
   ShieldButton* listener_button() { return listener_button_; }
+
+  void SetCannotSnapLabelVisibility(bool visible) {
+    cannot_snap_container_->SetVisible(visible);
+  }
 
  protected:
   // views::View:
@@ -429,6 +446,14 @@ class WindowSelectorItem::CaptionContainerView : public views::View {
     // The rest of this container view serves as a shield to prevent input
     // events from reaching the transformed window in overview.
     gfx::Rect bounds(GetLocalBounds());
+    const gfx::Size label_size = cannot_snap_label_->CalculatePreferredSize();
+    gfx::Rect cannot_snap_bounds(bounds.width() / 2 - label_size.width() / 2,
+                                 bounds.height() / 2 - label_size.height() / 2,
+                                 label_size.width(), label_size.height());
+    cannot_snap_bounds.Inset(-kHorizontalLabelPadding,
+                             -kHorizontalLabelPadding);
+    cannot_snap_container_->SetBoundsRect(cannot_snap_bounds);
+
     bounds.Inset(kWindowSelectorMargin, kWindowSelectorMargin);
     listener_button_->SetBoundsRect(bounds);
 
@@ -440,7 +465,7 @@ class WindowSelectorItem::CaptionContainerView : public views::View {
     bounds = background_bounds;
     bounds.Inset(kHorizontalLabelPadding, 0,
                  kHorizontalLabelPadding + visible_height, 0);
-    label_->SetBoundsRect(bounds);
+    title_label_->SetBoundsRect(bounds);
 
     bounds = background_bounds;
     bounds.set_x(bounds.width() - visible_height);
@@ -453,7 +478,9 @@ class WindowSelectorItem::CaptionContainerView : public views::View {
  private:
   ShieldButton* listener_button_;
   WindowSelectorItem::RoundedContainerView* background_;
-  views::Label* label_;
+  views::Label* title_label_;
+  views::Label* cannot_snap_label_;
+  RoundedRectView* cannot_snap_container_;
   views::ImageButton* close_button_;
 
   DISALLOW_COPY_AND_ASSIGN(CaptionContainerView);
@@ -588,6 +615,20 @@ void WindowSelectorItem::OnMinimizedStateChanged() {
   transform_window_.UpdateMirrorWindowForMinimizedState();
 }
 
+void WindowSelectorItem::UpdateCannotSnapWarningVisibility() {
+  // Windows which can snap will never show this warning.
+  if (wm::GetWindowState(GetWindow())->CanSnap()) {
+    caption_container_view_->SetCannotSnapLabelVisibility(false);
+    return;
+  }
+
+  const SplitViewController::State state =
+      Shell::Get()->split_view_controller()->state();
+  const bool visible = state == SplitViewController::LEFT_SNAPPED ||
+                       state == SplitViewController::RIGHT_SNAPPED;
+  caption_container_view_->SetCannotSnapLabelVisibility(visible);
+}
+
 void WindowSelectorItem::SetDimmed(bool dimmed) {
   dimmed_ = dimmed;
   SetOpacity(dimmed ? kDimmedItemOpacity : 1.0f);
@@ -695,7 +736,7 @@ void WindowSelectorItem::CreateWindowLabel(const base::string16& title) {
   params_label.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
   params_label.opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
   params_label.visible_on_all_workspaces = true;
-  params_label.layer_type = ui::LAYER_NOT_DRAWN;
+  params_label.layer_type = ui::LAYER_TEXTURED;
   params_label.name = "OverviewModeLabel";
   params_label.activatable =
       views::Widget::InitParams::Activatable::ACTIVATABLE_DEFAULT;
@@ -725,13 +766,20 @@ void WindowSelectorItem::CreateWindowLabel(const base::string16& title) {
   // subpixel rendering. Does not actually set the label's background color.
   label_view_->SetBackgroundColor(kLabelBackgroundColor);
 
-  caption_container_view_ = new CaptionContainerView(
-      this, label_view_, close_button_, background_view_);
+  cannot_snap_label_view_ = new views::Label(title);
+  cannot_snap_label_view_->SetHorizontalAlignment(gfx::ALIGN_CENTER);
+  cannot_snap_label_view_->SetAutoColorReadabilityEnabled(false);
+  cannot_snap_label_view_->SetEnabledColor(kLabelColor);
+  cannot_snap_label_view_->SetBackgroundColor(kLabelBackgroundColor);
+  cannot_snap_label_view_->SetText(
+      l10n_util::GetStringUTF16(IDS_ASH_SPLIT_VIEW_CANNOT_SNAP));
+
+  caption_container_view_ =
+      new CaptionContainerView(this, label_view_, cannot_snap_label_view_,
+                               close_button_, background_view_);
   item_widget_->SetContentsView(caption_container_view_);
   label_view_->SetVisible(false);
-  item_widget_->SetOpacity(0);
   item_widget_->Show();
-  item_widget_->GetLayer()->SetMasksToBounds(false);
 }
 
 void WindowSelectorItem::UpdateHeaderLayout(

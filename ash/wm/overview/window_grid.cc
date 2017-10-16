@@ -580,6 +580,11 @@ void WindowGrid::SetBoundsAndUpdatePositionsIgnoringWindow(
   PositionWindows(true /* animate */, ignored_item);
 }
 
+void WindowGrid::UpdateCannotSnapWarningVisibility() {
+  for (auto& window_selector_item : window_list_)
+    window_selector_item->UpdateCannotSnapWarningVisibility();
+}
+
 void WindowGrid::OnWindowDestroying(aura::Window* window) {
   window_observer_.Remove(window);
   window_state_observer_.Remove(wm::GetWindowState(window));
