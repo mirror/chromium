@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac6cbec_a5177b10",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-10-16T08:51:47Z",
+      "side": 1,
+      "message": "Does this FIXME still apply?",
+      "revId": "f318b4f4b4d638f9ac89b889e2cf6536b439e933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
