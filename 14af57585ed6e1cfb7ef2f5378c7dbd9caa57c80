@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f928ca75_f090ada6",
+        "filename": "ui/views/paint_info.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-16T17:23:40Z",
+      "side": 1,
+      "message": "Should this be gfx::Rect(parent_size) ?",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "14af57585ed6e1cfb7ef2f5378c7dbd9caa57c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
