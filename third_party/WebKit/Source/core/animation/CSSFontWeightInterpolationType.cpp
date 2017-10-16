@@ -5,10 +5,10 @@
 #include "core/animation/CSSFontWeightInterpolationType.h"
 
 #include <memory>
-#include "core/animation/FontWeightConversion.h"
 #include "core/css/CSSPrimitiveValueMappings.h"
 #include "core/css/resolver/StyleResolverState.h"
 #include "core/style/ComputedStyle.h"
+#include "platform/wtf/MathExtras.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {
@@ -111,8 +111,9 @@ void CSSFontWeightInterpolationType::ApplyStandardPropertyValue(
     const InterpolableValue& interpolable_value,
     const NonInterpolableValue*,
     StyleResolverState& state) const {
-  state.GetFontBuilder().SetWeight(
-      DoubleToFontWeight(ToInterpolableNumber(interpolable_value).Value()));
+  state.GetFontBuilder().SetWeight(FontSelectionValue(
+      clampTo(ToInterpolableNumber(interpolable_value).Value(),
+              MinWeightValue(), MaxWeightValue())));
 }
 
 }  // namespace blink
