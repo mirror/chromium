@@ -125,36 +125,56 @@ gfx::Size CalculateSizeForMipLevel(const DrawImage& draw_image, int mip_level) {
 }
 
 // Draws and scales the provided |draw_image| into the |target_pixmap|. If the
-// draw/scale can be done directly, calls directly into SkImage::scalePixels,
+// draw/scale can be done directly, calls directly into PaintImage::Decode.
 // if not, decodes to a compatible temporary pixmap and then converts that into
 // the |target_pixmap|.
 bool DrawAndScaleImage(const DrawImage& draw_image, SkPixmap* target_pixmap) {
-  sk_sp<SkImage> image =
-      draw_image.paint_image().GetSkImageForFrame(draw_image.frame_index());
-  if (image->dimensions() == target_pixmap->bounds().size() ||
-      target_pixmap->info().colorType() == kN32_SkColorType) {
-    // If no scaling is occurring, or if the target colortype is already N32,
-    // just scale directly.
-    return image->scalePixels(*target_pixmap,
-                              CalculateDesiredFilterQuality(draw_image),
-                              SkImage::kDisallow_CachingHint);
+  const PaintImage& paint_image = draw_image.paint_image();
+  if (paint_image.GetSupportedDecodeSize(target_pixmap->bounds().size()) ==
+      target_pixmap->bounds().size()) {
+    SkImageInfo info = target_pixmap->info();
+    return paint_image.Decode(target_pixmap->writable_addr(), &info, nullptr,
+                              draw_image.frame_index());
   }
 
-  // If the target colortype is not N32, it may be impossible to scale
-  // directly. Instead scale into an N32 pixmap, and convert that into the
-  // |target_pixmap|.
+  // If we can't decode/scale directly, we will handle this in up to 3 steps.
+  // Step 1: Decode at full size.
+  SkISize full_bounds =
+      SkISize::Make(paint_image.width(), paint_image.height());
   SkImageInfo decode_info =
-      target_pixmap->info().makeColorType(kN32_SkColorType);
+      paint_image.CreateDecodeImageInfo(full_bounds, kN32_SkColorType);
   SkBitmap decode_bitmap;
   if (!decode_bitmap.tryAllocPixels(decode_info))
     return false;
   SkPixmap decode_pixmap(decode_bitmap.info(), decode_bitmap.getPixels(),
                          decode_bitmap.rowBytes());
-  if (!image->scalePixels(decode_pixmap,
-                          CalculateDesiredFilterQuality(draw_image),
-                          SkImage::kDisallow_CachingHint))
+  if (!paint_image.Decode(decode_pixmap.writable_addr(), &decode_info, nullptr,
+                          draw_image.frame_index())) {
     return false;
-  return decode_pixmap.readPixels(*target_pixmap);
+  }
+
+  // Step 2a: Scale to |target_pixmap| directly if kN32_SkColorType.
+  if (target_pixmap->info().colorType() == kN32_SkColorType) {
+    return decode_pixmap.scalePixels(*target_pixmap,
+                                     CalculateDesiredFilterQuality(draw_image));
+  }
+
+  // Step 2b: Scale to temporary pixmap of kN32_SkColorType.
+  SkImageInfo scaled_info =
+      target_pixmap->info().makeColorType(kN32_SkColorType);
+  SkBitmap scaled_bitmap;
+  if (!scaled_bitmap.tryAllocPixels(scaled_info))
+    return false;
+  SkPixmap scaled_pixmap(scaled_bitmap.info(), scaled_bitmap.getPixels(),
+                         scaled_bitmap.rowBytes());
+  if (!decode_pixmap.scalePixels(scaled_pixmap,
+                                 CalculateDesiredFilterQuality(draw_image))) {
+    return false;
+  }
+
+  // Step 3: Copy the temporary scaled pixmap to |target_pixmap|, performing
+  // color type conversion.
+  return scaled_pixmap.readPixels(*target_pixmap);
 }
 
 // Returns the GL texture ID backing the given SkImage.
@@ -174,14 +194,15 @@ sk_sp<SkImage> TakeOwnershipOfSkImageBacking(GrContext* context,
     return image;
   }
 
+  GrSurfaceOrigin origin;
+  image->getTextureHandle(false /* flushPendingGrContextIO */, &origin);
   sk_sp<SkColorSpace> color_space = image->refColorSpace();
   GrBackendTexture backend_texture;
   SkImage::BackendTextureReleaseProc release_proc;
   SkImage::MakeBackendTextureFromSkImage(context, std::move(image),
                                          &backend_texture, &release_proc);
-  return SkImage::MakeFromTexture(context, backend_texture,
-                                  kTopLeft_GrSurfaceOrigin, kPremul_SkAlphaType,
-                                  std::move(color_space));
+  return SkImage::MakeFromTexture(context, backend_texture, origin,
+                                  kPremul_SkAlphaType, std::move(color_space));
 }
 
 }  // namespace
@@ -375,16 +396,23 @@ void GpuImageDecodeCache::DecodedImageData::Unlock() {
 
 void GpuImageDecodeCache::DecodedImageData::SetLockedData(
     std::unique_ptr<base::DiscardableMemory> data,
+    sk_sp<SkImage> image,
     bool out_of_raster) {
   DCHECK(data);
   DCHECK(!data_);
+  DCHECK(image);
+  DCHECK(!image_);
   data_ = std::move(data);
+  image_ = std::move(image);
   OnSetLockedData(out_of_raster);
 }
 
 void GpuImageDecodeCache::DecodedImageData::ResetData() {
-  if (data_)
+  if (data_) {
+    DCHECK(image_);
     ReportUsageStats();
+  }
+  image_ = nullptr;
   data_ = nullptr;
   OnResetData();
 }
@@ -436,11 +464,13 @@ GpuImageDecodeCache::ImageData::ImageData(
     DecodedDataMode mode,
     size_t size,
     const gfx::ColorSpace& target_color_space,
-    const SkImage::DeferredTextureImageUsageParams& upload_params)
+    SkFilterQuality quality,
+    int mip_level)
     : mode(mode),
       size(size),
       target_color_space(target_color_space),
-      upload_params(upload_params) {}
+      quality(quality),
+      mip_level(mip_level) {}
 
 GpuImageDecodeCache::ImageData::~ImageData() {
   // We should never delete ImageData while it is in use or before it has been
@@ -460,12 +490,11 @@ GpuImageDecodeCache::GpuImageDecodeCache(viz::ContextProvider* context,
       context_(context),
       persistent_cache_(PersistentCache::NO_AUTO_EVICT),
       max_working_set_bytes_(max_working_set_bytes) {
-  // Acquire the context_lock so that we can safely retrieve the
-  // GrContextThreadSafeProxy. This proxy can then be used with no lock held.
+  // Acquire the context_lock so that we can safely retrieve
+  // |max_texture_size_|.
   {
     viz::ContextProvider::ScopedContextLock context_lock(context_);
-    context_threadsafe_proxy_ = sk_sp<GrContextThreadSafeProxy>(
-        context_->GrContext()->threadSafeProxy());
+    max_texture_size_ = context_->GrContext()->caps()->maxTextureSize();
   }
 
   // In certain cases, ThreadTaskRunnerHandle isn't set (Android Webview).
@@ -634,8 +663,8 @@ DecodedDrawImage GpuImageDecodeCache::GetDecodedImageForDraw(
     image_data->upload.mark_used();
   DCHECK(image || image_data->decode.decode_failure);
 
-  SkSize scale_factor = CalculateScaleFactorForMipLevel(
-      draw_image, image_data->upload_params.fPreScaleMipLevel);
+  SkSize scale_factor =
+      CalculateScaleFactorForMipLevel(draw_image, image_data->mip_level);
   DecodedDrawImage decoded_draw_image(
       std::move(image), SkSize(), scale_factor,
       CalculateDesiredFilterQuality(draw_image));
@@ -1166,65 +1195,41 @@ void GpuImageDecodeCache::DecodeImageIfNecessary(const DrawImage& draw_image,
   }
 
   TRACE_EVENT0("cc", "GpuImageDecodeCache::DecodeImage");
-  RecordImageMipLevelUMA(image_data->upload_params.fPreScaleMipLevel);
+  RecordImageMipLevelUMA(image_data->mip_level);
 
   image_data->decode.ResetData();
   std::unique_ptr<base::DiscardableMemory> backing_memory;
+  sk_sp<SkImage> image;
   {
     base::AutoUnlock unlock(lock_);
-
     backing_memory = base::DiscardableMemoryAllocator::GetInstance()
                          ->AllocateLockedDiscardableMemory(image_data->size);
-
-    switch (image_data->mode) {
-      case DecodedDataMode::CPU: {
-        SkImageInfo image_info = CreateImageInfoForDrawImage(
-            draw_image, image_data->upload_params.fPreScaleMipLevel);
-        // In order to match GPU scaling quality (which uses mip-maps at high
-        // quality), we want to use at most medium filter quality for the
-        // scale.
-        SkPixmap image_pixmap(image_info.makeColorSpace(nullptr),
-                              backing_memory->data(), image_info.minRowBytes());
-        // Note that scalePixels falls back to readPixels if the scale is 1x, so
-        // no need to special case that as an optimization.
-        if (!DrawAndScaleImage(draw_image, &image_pixmap)) {
-          DLOG(ERROR) << "scalePixels failed.";
-          backing_memory->Unlock();
-          backing_memory.reset();
-        }
-        break;
-      }
-      case DecodedDataMode::GPU: {
-        // TODO(crbug.com/649167): Params should not have changed since initial
-        // sizing. Somehow this still happens. We should investigate and re-add
-        // DCHECKs here to enforce this.
-        sk_sp<SkImage> image = draw_image.paint_image().GetSkImageForFrame(
-            draw_image.frame_index());
-        if (!image->getDeferredTextureImageData(
-                *context_threadsafe_proxy_.get(), &image_data->upload_params, 1,
-                backing_memory->data(), nullptr, color_type_)) {
-          DLOG(ERROR) << "getDeferredTextureImageData failed despite params "
-                      << "having validated.";
-          backing_memory->Unlock();
-          backing_memory.reset();
-        }
-        break;
-      }
+    SkImageInfo image_info =
+        CreateImageInfoForDrawImage(draw_image, image_data->mip_level);
+    SkPixmap pixmap(image_info.makeColorSpace(nullptr), backing_memory->data(),
+                    image_info.minRowBytes());
+    if (!DrawAndScaleImage(draw_image, &pixmap)) {
+      DLOG(ERROR) << "DrawAndScaleImage failed.";
+      backing_memory->Unlock();
+      backing_memory.reset();
     }
+    image = SkImage::MakeFromRaster(pixmap, [](const void*, void*) {}, nullptr);
   }
 
   if (image_data->decode.data()) {
+    DCHECK(image_data->decode.image());
     // An at-raster task decoded this before us. Ingore our decode.
     return;
   }
 
   if (!backing_memory) {
+    DCHECK(!image);
     // If |backing_memory| was not populated, we had a non-decodable image.
     image_data->decode.decode_failure = true;
     return;
   }
 
-  image_data->decode.SetLockedData(std::move(backing_memory),
+  image_data->decode.SetLockedData(std::move(backing_memory), std::move(image),
                                    task_type == TaskType::kOutOfRaster);
 }
 
@@ -1254,26 +1259,11 @@ void GpuImageDecodeCache::UploadImageIfNecessary(const DrawImage& draw_image,
   DCHECK_GT(image_data->decode.ref_count, 0u);
   DCHECK_GT(image_data->upload.ref_count, 0u);
 
-  sk_sp<SkImage> uploaded_image;
-  {
+  sk_sp<SkImage> uploaded_image = image_data->decode.image();
+  if (image_data->mode == DecodedDataMode::GPU) {
     base::AutoUnlock unlock(lock_);
-    switch (image_data->mode) {
-      case DecodedDataMode::CPU: {
-        SkImageInfo image_info = CreateImageInfoForDrawImage(
-            draw_image, image_data->upload_params.fPreScaleMipLevel);
-        SkPixmap pixmap(image_info, image_data->decode.data()->data(),
-                        image_info.minRowBytes());
-        uploaded_image =
-            SkImage::MakeFromRaster(pixmap, [](const void*, void*) {}, nullptr);
-        break;
-      }
-      case DecodedDataMode::GPU: {
-        uploaded_image = SkImage::MakeFromDeferredTextureImageData(
-            context_->GrContext(), image_data->decode.data()->data(),
-            SkBudgeted::kNo);
-        break;
-      }
-    }
+    uploaded_image =
+        uploaded_image->makeTextureImage(context_->GrContext(), nullptr);
   }
   image_data->decode.mark_used();
 
@@ -1318,30 +1308,22 @@ GpuImageDecodeCache::CreateImageData(const DrawImage& draw_image) {
                "GpuImageDecodeCache::CreateImageData");
   lock_.AssertAcquired();
 
-  DecodedDataMode mode;
-  int upload_scale_mip_level = CalculateUploadScaleMipLevel(draw_image);
-  // TODO(ericrk): Remove the matrix parameter in this call.
-  auto params = SkImage::DeferredTextureImageUsageParams(
-      SkMatrix::I(), CalculateDesiredFilterQuality(draw_image),
-      upload_scale_mip_level);
-  sk_sp<SkImage> image =
-      draw_image.paint_image().GetSkImageForFrame(draw_image.frame_index());
-  size_t data_size = image->getDeferredTextureImageData(
-      *context_threadsafe_proxy_.get(), &params, 1, nullptr, nullptr,
-      color_type_);
+  int mip_level = CalculateUploadScaleMipLevel(draw_image);
+  SkImageInfo image_info = CreateImageInfoForDrawImage(draw_image, mip_level);
 
-  if (data_size == 0) {
-    // Can't upload image, too large or other failure. Try to use SW fallback.
-    SkImageInfo image_info =
-        CreateImageInfoForDrawImage(draw_image, upload_scale_mip_level);
-    data_size = image_info.getSafeSize(image_info.minRowBytes());
+  DecodedDataMode mode;
+  if (image_info.width() > max_texture_size_ ||
+      image_info.height() > max_texture_size_) {
+    // Image too large to upload. Try to use SW fallback.
     mode = DecodedDataMode::CPU;
   } else {
     mode = DecodedDataMode::GPU;
   }
 
+  size_t data_size = image_info.getSafeSize(image_info.minRowBytes());
   return base::WrapRefCounted(
-      new ImageData(mode, data_size, draw_image.target_color_space(), params));
+      new ImageData(mode, data_size, draw_image.target_color_space(),
+                    CalculateDesiredFilterQuality(draw_image), mip_level));
 }
 
 void GpuImageDecodeCache::DeleteImage(ImageData* image_data) {
@@ -1471,11 +1453,11 @@ GpuImageDecodeCache::ImageData* GpuImageDecodeCache::GetImageDataForDrawImage(
 // the provided |draw_image|.
 bool GpuImageDecodeCache::IsCompatible(const ImageData* image_data,
                                        const DrawImage& draw_image) const {
-  bool is_scaled = image_data->upload_params.fPreScaleMipLevel != 0;
-  bool scale_is_compatible = CalculateUploadScaleMipLevel(draw_image) >=
-                             image_data->upload_params.fPreScaleMipLevel;
-  bool quality_is_compatible = CalculateDesiredFilterQuality(draw_image) <=
-                               image_data->upload_params.fQuality;
+  bool is_scaled = image_data->mip_level != 0;
+  bool scale_is_compatible =
+      CalculateUploadScaleMipLevel(draw_image) >= image_data->mip_level;
+  bool quality_is_compatible =
+      CalculateDesiredFilterQuality(draw_image) <= image_data->quality;
   bool color_is_compatible =
       image_data->target_color_space == draw_image.target_color_space();
   if (!color_is_compatible)
