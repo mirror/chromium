@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4ae7af3_55fe7a3d",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-16T18:56:53Z",
+      "side": 1,
+      "message": "Depends - if we implement CRLSet via the revocation checking mechanism, then yes, because we want to hard-block keys.",
+      "revId": "a677afcf5ff06dbec91fd4b585a675a0104a95df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5439d821_d2e61cd0",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-16T18:56:53Z",
+      "side": 1,
+      "message": "Note: If the path has a local anchor, it will never be EV. So I think we can simplify this case here, since the policy only applies to the path.",
+      "revId": "a677afcf5ff06dbec91fd4b585a675a0104a95df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2782074_ba1c383e",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-16T18:56:53Z",
+      "side": 1,
+      "message": "EV isn\u0027t supposed to be hard fail for network errors. Apologies, tried to capture that on the thread. It\u0027s just supposed to strip EV.",
+      "revId": "a677afcf5ff06dbec91fd4b585a675a0104a95df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e5a194_77f372c9",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-16T18:56:53Z",
+      "side": 1,
+      "message": "For future, we should treat EV enablement similar to trust anchors (e.g. can appear anywhere in the path, provided that an intermediate is \u0027enabled\u0027 for EV, regardless of the signer). I don\u0027t think we support that now, which is why our EV metadata contains various legacy roots as being enabled, despite us not expecting paths to those legacy roots (but being unable to prevent it)",
+      "revId": "a677afcf5ff06dbec91fd4b585a675a0104a95df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
