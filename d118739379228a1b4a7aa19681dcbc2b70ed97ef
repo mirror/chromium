@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fc958f8_63945732",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceCode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-16T01:26:03Z",
+      "side": 1,
+      "message": "+explicit",
+      "revId": "d118739379228a1b4a7aa19681dcbc2b70ed97ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ecaa27_0112f3e0",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicScript.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-16T01:26:03Z",
+      "side": 1,
+      "message": "-explicit",
+      "revId": "d118739379228a1b4a7aa19681dcbc2b70ed97ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
