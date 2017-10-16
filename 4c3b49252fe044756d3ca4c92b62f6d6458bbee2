@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "808a95c4_5411626e",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T09:28:37Z",
+      "side": 1,
+      "message": "I decided to keep the task tracker from the TopSitesImpl, since that\u0027s what the DefaultTopSitesProvider also uses.",
+      "parentUuid": "0188a136_af1058ac",
+      "range": {
+        "startLine": 27,
+        "startChar": 1,
+        "endLine": 27,
+        "endChar": 2
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4b1fc4_50ea0f25",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T09:28:37Z",
+      "side": 1,
+      "message": "This wasn\u0027t really initialization - it\u0027s the object doing work - and it didn\u0027t feel right having it in the constructor.",
+      "parentUuid": "ec70195a_74141adf",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3431530c_3056fd43",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630af677_3b878dce",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T09:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3431530c_3056fd43",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 13
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b46ef00b_03824b4b",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T09:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9da3609c_07710e35",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c3336fa_e75ac467",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c6d029_a2059469",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T09:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c3336fa_e75ac467",
+      "range": {
+        "startLine": 33,
+        "startChar": 21,
+        "endLine": 33,
+        "endChar": 22
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,54 @@
     },
     {
       "key": {
+        "uuid": "98cf6c5c_e04bf74a",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T09:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dc29f10_83507b4c",
+      "range": {
+        "startLine": 36,
+        "startChar": 37,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e492555_375dec69",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T09:28:37Z",
+      "side": 1,
+      "message": "We only want to quit the run loop once we have finished |expected_calls|. When we repeatedly call QueryTopSites(), we\u0027re not guaranteed that the first call won\u0027t still be outstanding when the completion callback is run (which would then exit early).\n\nI\u0027ve migrated this to a barrier closure to make it clearer.",
+      "parentUuid": "f12f4fee_c1048e2d",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b2422dd_b4408edd",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
         "patchSetId": 9
@@ -174,6 +342,30 @@
       "writtenOn": "2017-10-16T08:40:07Z",
       "side": 1,
       "message": "How about exposing a vector of MostVisitedURL? You can always use custom matchers like https://cs.chromium.org/chromium/src/components/ntp_tiles/most_visited_sites_unittest.cc?q\u003dmost_visited_sites_unittest.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d90",
+      "range": {
+        "startLine": 53,
+        "startChar": 63,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c97ce3f_d5af94c8",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T09:28:37Z",
+      "side": 1,
+      "message": "That\u0027s a *lot* of refactoring in this test file for possibly not much gain? Do you feel really strongly about it?",
+      "parentUuid": "0b2422dd_b4408edd",
       "range": {
         "startLine": 53,
         "startChar": 63,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "e3fa42dc_4f5a714c",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T09:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31cfaf90_e6eca60d",
+      "range": {
+        "startLine": 124,
+        "startChar": 68,
+        "endLine": 124,
+        "endChar": 0
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "253ae485_a67d4bee",
         "filename": "chrome/browser/history/top_sites_factory.cc",
         "patchSetId": 9
@@ -229,6 +445,30 @@
       "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395bd235_24c210ee",
+        "filename": "chrome/browser/history/top_sites_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T09:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "253ae485_a67d4bee",
+      "range": {
+        "startLine": 139,
+        "startChar": 57,
+        "endLine": 139,
+        "endChar": 0
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "e587389e_0050d230",
+        "filename": "components/history/core/browser/history_types.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T09:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdcccfab_794c3217",
+      "range": {
+        "startLine": 207,
+        "startChar": 54,
+        "endLine": 207,
+        "endChar": 0
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9950299_c6a79489",
         "filename": "components/history/core/browser/history_types.h",
         "patchSetId": 9
@@ -275,6 +539,30 @@
       "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8447b98b_d2cf4740",
+        "filename": "components/history/core/browser/history_types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-16T09:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9950299_c6a79489",
+      "range": {
+        "startLine": 317,
+        "startChar": 57,
+        "endLine": 317,
+        "endChar": 0
+      },
+      "revId": "4c3b49252fe044756d3ca4c92b62f6d6458bbee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
