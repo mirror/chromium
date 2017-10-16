@@ -65,7 +65,7 @@ def main():
 
   written_output_set = set()  # Just for double checking
   written_input_set = set()  # Just for double checking
-  for language_ext in (".cc", ".c", ".mm"):
+  for language_ext in (".cc", ".c", ".mm", ".S"):
     if language_ext == ".cc":
       ext_pattern = (".cc", ".cpp")
     else:
@@ -75,6 +75,7 @@ def main():
     inputs = [x for x in all_inputs if x.endswith(ext_pattern)]
 
     if not outputs:
+      print(inputs, outputs)
       assert not inputs
       continue
 
