@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "304a933a_ec7b6889",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-16T23:19:48Z",
+      "side": 1,
+      "message": "It might not be a terrible idea to keep this as a heuristic\nin order to support content other than just web content.\nFor example, for native UI or for Android apps (ARC++) we\u0027ll\nnever get \"display\".\n\nIn other words, let\u0027s *also* check for the paragraph role as a\nsufficient condition for something being a block - but the\n\"display\" check allows us to catch more.",
+      "revId": "494dccaed58846b3d0cc8e9569c88fa6ca70f6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
