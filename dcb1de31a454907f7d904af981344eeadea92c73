@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9878abc_a1a769a0",
+        "filename": "ui/gfx/animation/slide_animation_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T18:01:21Z",
+      "side": 1,
+      "message": "nit: It seems more intuitive to flip this around. I.e. we expect that the current value is less than 1 since the currentvalue is the thing being tested.\n\nAlso, it would be worth having this test that it does indeed still take less than duration ms to complete. Perhaps just advance another .4*duration and assert that it finishes. Just to ensure that we just dampened but not completely removed the reduction in duration.",
+      "revId": "dcb1de31a454907f7d904af981344eeadea92c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
