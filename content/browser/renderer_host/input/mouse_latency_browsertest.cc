@@ -121,6 +121,7 @@ class MouseLatencyBrowserTest : public ContentBrowserTest {
     base::RunLoop run_loop;
     ASSERT_TRUE(TracingController::GetInstance()->StartTracing(
         trace_config, run_loop.QuitClosure()));
+    run_loop.Run();
   }
 
   const base::Value& StopTracing() {
