@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a49dc5a_63d0aa77",
+        "filename": "third_party/WebKit/Source/core/dom/WorkletModulatorImpl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T04:30:51Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "18a2ddef_f1d03130",
+      "range": {
+        "startLine": 26,
+        "startChar": 47,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "fc3f835235cd470ab584b7e81767b76b6a00c711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0293f9f4_ed9952ee",
         "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
         "patchSetId": 9
@@ -88,6 +112,23 @@
         "endLine": 79,
         "endChar": 30
       },
+      "revId": "fc3f835235cd470ab584b7e81767b76b6a00c711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55238062_a1c05ce6",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T04:30:51Z",
+      "side": 1,
+      "message": "Is the parent always Document? (I think I\u0027ve overheard some conversation about this, but haven\u0027t really made sure this...)",
       "revId": "fc3f835235cd470ab584b7e81767b76b6a00c711",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
