@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c286774_2f145d7e",
+        "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-16T21:35:54Z",
+      "side": 1,
+      "message": "The two branches feel symmetrical to me, I would rather keep the \"else\"",
+      "parentUuid": "4792cdaf_d32f7625",
+      "revId": "9d3aa8dcf2aa461fefe4415922ffa97dfbeb6cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb1328a7_d105374d",
         "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "9d3aa8dcf2aa461fefe4415922ffa97dfbeb6cf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c650809_573ba192",
+        "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-16T21:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb1328a7_d105374d",
+      "revId": "9d3aa8dcf2aa461fefe4415922ffa97dfbeb6cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -120,6 +156,24 @@
       "revId": "9d3aa8dcf2aa461fefe4415922ffa97dfbeb6cf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7566fdf8_48c23b85",
+        "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-16T21:35:54Z",
+      "side": 1,
+      "message": "I wrote this being aware that there is a null check for profile in the client implementation. \nRewrote the test to switch between two valid profiles.",
+      "parentUuid": "6eac6c42_3b90c039",
+      "revId": "9d3aa8dcf2aa461fefe4415922ffa97dfbeb6cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
