@@ -133,6 +133,7 @@ class DiceResponseHandlerTest : public testing::Test,
     signin_client_.SetURLRequestContext(request_context_getter_.get());
     AccountTrackerService::RegisterPrefs(pref_service_.registry());
     SigninManager::RegisterProfilePrefs(pref_service_.registry());
+    signin::RegisterAccountConsistentyProfilePrefs(pref_service_.registry());
     account_tracker_service_.Initialize(&signin_client_);
     account_reconcilor_.AddObserver(this);
   }
