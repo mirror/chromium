@@ -9,7 +9,10 @@
 int main(int argc, char** argv) {
   vr::VrCommonTestSuite test_suite(argc, argv);
 
-  return base::LaunchUnitTests(
+  // Always run the perf tests serially, to avoid distorting
+  // perf measurements with randomness resulting from running
+  // in parallel.
+  return base::LaunchUnitTestsSerially(
       argc, argv,
       base::Bind(&vr::VrCommonTestSuite::Run, base::Unretained(&test_suite)));
 }
