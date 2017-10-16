@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cf9c3f7_069f856f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-16T22:42:08Z",
+      "side": 1,
+      "message": "It\u0027s a bit unfortunate that this kind of behavior is not covered by the unit test. It\u0027s not urgent, but can you provide more unit test coverage to the throttle class (adding a TODO is a good idea)? IIRC arc_external_protocol_dialog_unittest.cc does that already so you can do the same if you want.",
+      "range": {
+        "startLine": 11,
+        "startChar": 65,
+        "endLine": 13,
+        "endChar": 61
+      },
+      "revId": "01a634ef42c795213392f1020c89e5c703f54b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c51cca_b4943b94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-16T22:42:08Z",
+      "side": 1,
+      "message": "In the future, it\u0027s probably better to avoid mixing a bug fix and a refactoring.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "01a634ef42c795213392f1020c89e5c703f54b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b57c95_fbf9d1d4",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-16T22:42:08Z",
+      "side": 1,
+      "message": "Can you add a comment here? something like // Show the intent picker UI even if ...",
+      "revId": "01a634ef42c795213392f1020c89e5c703f54b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
