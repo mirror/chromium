@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "8f6f9e76_c188ff1f",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-16T20:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "043e9ee7_b3a892ef",
+      "range": {
+        "startLine": 35,
+        "startChar": 41,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "399c7198_13c817a9",
         "filename": "content/browser/media/android/media_player_renderer.cc",
         "patchSetId": 6
@@ -306,6 +330,30 @@
       "revId": "9a478029ba99c25840fb6dde05428983de921b65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df66986_47b814b1",
+        "filename": "content/browser/media/android/media_player_renderer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-16T20:59:49Z",
+      "side": 1,
+      "message": "Added class comment to MPRWCO",
+      "parentUuid": "2838ce5d_92982012",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 75
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
