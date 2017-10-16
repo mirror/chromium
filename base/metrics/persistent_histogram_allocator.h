@@ -423,6 +423,20 @@ class BASE_EXPORT GlobalHistogramAllocator
                                         uint64_t id,
                                         StringPiece name);
 
+  // Constructs a filename using a name and optionally timestamp, and pid.
+  // Visible for testing.
+  static FilePath ConstructFilePath(const FilePath& dir, StringPiece name);
+  static FilePath ConstructFilePath(const FilePath& dir,
+                                    StringPiece name,
+                                    base::Time stamp,
+                                    ProcessId pid);
+
+  // Parses a filename to extract name, timestamp, and pid.
+  static bool ParseFilePath(const FilePath& path,
+                            std::string* out_name,
+                            Time* out_stamp,
+                            ProcessId* out_pid);
+
   // Constructs a set of names in |dir| based on name that can be used for a
   // base + active persistent memory mapped location for CreateWithActiveFile().
   // The spare path is a file that can be pre-created and moved to be active
