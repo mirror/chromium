@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e6a5370_f2405ab2",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-16T19:11:21Z",
+      "side": 1,
+      "message": "This comment defines the implementation, but doesn\u0027t give any hint or recommendation as to what the caller is expected to do.\n\nIs the expectation that some core part of the system polls this, or checks it before doing certain actions, for example?",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81291640_e2a10b84",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-16T19:11:21Z",
+      "side": 1,
+      "message": "nit: This doesn\u0027t fit with your diagram, which has no direct transition from Confirmed-\u003eNone. :)",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6850167e_603a7e40",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-16T19:11:21Z",
+      "side": 1,
+      "message": "Do these intervals actually need to be public?",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c568398d_c1682086",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-16T19:11:21Z",
+      "side": 1,
+      "message": "Rather that having this class be partially common and partially platform-specific, consider either having a platform-specific SwapThrashingMonitorDelegate, which you could define a no-op dummy impl for, and then have platform-specific impls as we flesh those out - the impls would be defined in their own .cc/.h and would contain all the platform-specific goop, and the only constraint would be that they would need to implement this set of functions.\n\nYou wouldn\u0027t need an actual C++ interface definition for that; you can rely on compile-time binding to the platform-specific Delegate implementation, and just have the Delegate be a member of this class, for example.\n\nWDYT?\n\nAlternatively, since SwapThrashingMonitor\u0027s impl is just the global setter/getter, you could define it as a C++ interface, and have each platform implement a specialization.",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4cf3a6a_a3423e47",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-16T19:11:21Z",
+      "side": 1,
+      "message": "Why is this Windows-specific? It\u0027s possible to disable swap on other platforms as well - or is the fact that this is inside the OS_WIN check just about the fact these are only need on Windows?",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
