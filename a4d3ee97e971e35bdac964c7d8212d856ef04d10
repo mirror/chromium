@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad4d7a4_2c401797",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T18:00:47Z",
+      "side": 1,
+      "message": "indentation seems off at a few points in this file",
+      "revId": "a4d3ee97e971e35bdac964c7d8212d856ef04d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040e1488_25ec80cb",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/popup.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T18:00:47Z",
+      "side": 1,
+      "message": "nit: indent",
+      "revId": "a4d3ee97e971e35bdac964c7d8212d856ef04d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24a8c67_3a36d3de",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/popup.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T18:00:47Z",
+      "side": 1,
+      "message": "nit: remove this blank line",
+      "revId": "a4d3ee97e971e35bdac964c7d8212d856ef04d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3051c2bc_c59cf4e3",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/popup.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T18:00:47Z",
+      "side": 1,
+      "message": "To confirm: the intent is for the user to only add one word at a time?",
+      "revId": "a4d3ee97e971e35bdac964c7d8212d856ef04d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75bc1098_0e5f9c80",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/popup.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T18:00:47Z",
+      "side": 1,
+      "message": "simpler:\n\nlet newWords \u003d (object.words || []).push(userWords);\nchrome.storage.local.set({words: newWords});",
+      "revId": "a4d3ee97e971e35bdac964c7d8212d856ef04d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
