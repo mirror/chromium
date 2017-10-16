@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40a9cf8d_5865cfb1",
+        "filename": "content/renderer/media/webrtc_audio_device_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-16T15:21:10Z",
+      "side": 1,
+      "message": "please remove this too",
+      "range": {
+        "startLine": 361,
+        "startChar": 2,
+        "endLine": 361,
+        "endChar": 9
+      },
+      "revId": "2be70de2d74f5eb774c65bac5a9544d4f10e0eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
