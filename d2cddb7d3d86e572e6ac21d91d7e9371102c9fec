@@ -16,6 +16,24 @@
       "revId": "d2cddb7d3d86e572e6ac21d91d7e9371102c9fec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a362129_92944696",
+        "filename": "tools/chrome_proxy/webdriver/proxy_connection.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1162726
+      },
+      "writtenOn": "2017-10-16T19:49:07Z",
+      "side": 1,
+      "message": "If I understand your question, the assertEqual will fail since there won\u0027t be any HTTP Responses if Chrome shows an error page.",
+      "parentUuid": "7b37c066_dd00f330",
+      "revId": "d2cddb7d3d86e572e6ac21d91d7e9371102c9fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
