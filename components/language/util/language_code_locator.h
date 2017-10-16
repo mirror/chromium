@@ -1,0 +1,30 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include <string>
+#include <vector>
+
+#include "base/containers/flat_map.h"
+#include "base/macros.h"
+
+namespace language {
+
+class LanguageCodeLocator {
+ public:
+  LanguageCodeLocator();
+  ~LanguageCodeLocator();
+
+  // Find the language code given a coordinate.
+  // If the latitude, longtitude pair is not found, will return an empty vector.
+  std::vector<std::string> GetLanguageCode(double latitude,
+                                           double longtitude) const;
+
+ private:
+  // Map from s2 cellid to ';' delimited list of language codes.
+  const base::flat_map<uint64_t, std::string> district_languages_;
+
+  DISALLOW_COPY_AND_ASSIGN(LanguageCodeLocator);
+};
+
+}  // namespace language
