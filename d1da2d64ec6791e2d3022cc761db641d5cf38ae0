@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d14d9a2_aa3ad16b",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T20:00:21Z",
+      "side": 1,
+      "message": "This is unclear. Do you mean we should try to use the number of paints in the previous frame? It doesn\u0027t seem like we\u0027d want to re-use paints_before_switching_global_scope_.",
+      "range": {
+        "startLine": 73,
+        "startChar": 47,
+        "endLine": 73,
+        "endChar": 75
+      },
+      "revId": "d1da2d64ec6791e2d3022cc761db641d5cf38ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85245cf4_dff7e867",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T20:00:21Z",
+      "side": 1,
+      "message": "nit: Return this value rather then set it so we can keep paints_before_switching_global_scope_ private.",
+      "revId": "d1da2d64ec6791e2d3022cc761db641d5cf38ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f693f84_b3d954d1",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T20:00:21Z",
+      "side": 1,
+      "message": "nit: TestPaintWorklet",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "d1da2d64ec6791e2d3022cc761db641d5cf38ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479be1e1_4207b5f6",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T20:00:21Z",
+      "side": 1,
+      "message": "Please hard-code the values so that we have a deterministic test which tests exactly the cases we want: e.g. switching mid-frame, switching after frame end, and switching immediately?",
+      "revId": "d1da2d64ec6791e2d3022cc761db641d5cf38ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f127f3b_d2a25295",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T20:00:21Z",
+      "side": 1,
+      "message": "What if we never have any global scope switches? The test would assume it is working.\n\nIf you create a virtual function to select a new global scope you could override that as well in PaintWorkletToTest and count the number of actual switches.",
+      "revId": "d1da2d64ec6791e2d3022cc761db641d5cf38ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

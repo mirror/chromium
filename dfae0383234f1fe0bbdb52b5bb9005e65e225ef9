@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ec1a45ae_a5b33c3a",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T20:00:21Z",
+      "side": 1,
+      "message": "But you changed both of them, this means paints_before_switching_global_scope_ is off by one. I.e. a value of 1 means we switch before the first paint. Can you save the old value before it\u0027s switched to return at the end of the function?",
+      "parentUuid": "7ace515e_d84daff3",
+      "revId": "dfae0383234f1fe0bbdb52b5bb9005e65e225ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3eb28e11_e7d10794",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
         "patchSetId": 7
