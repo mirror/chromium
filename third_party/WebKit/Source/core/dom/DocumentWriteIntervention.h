@@ -5,22 +5,53 @@
 #ifndef DocumentWriteIntervention_h
 #define DocumentWriteIntervention_h
 
+#include "core/loader/resource/ScriptResource.h"
 #include "platform/loader/fetch/FetchParameters.h"
+#include "platform/loader/fetch/ResourceOwner.h"
 
 namespace blink {
 
 class Document;
-class ResourceRequest;
 
-// Returns true if the fetch should be blocked due to the document.write
+class FetchBlockedDocWriteScriptClient
+    : public GarbageCollectedFinalized<FetchBlockedDocWriteScriptClient>,
+      public ResourceOwner<ScriptResource> {
+  USING_GARBAGE_COLLECTED_MIXIN(FetchBlockedDocWriteScriptClient);
+
+ public:
+  FetchBlockedDocWriteScriptClient(Document& document,
+                                   const FetchParameters& params)
+      : document_(&document), params_(params) {}
+
+  using ResourceOwner<ScriptResource>::SetResource;
+
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  // If the script was blocked as part of document.write intervention,
+  // then send an asynchronous GET request with an interventions header.
+  void NotifyFinished(Resource*) override;
+  String DebugName() const override {
+    return "FetchBlockedDocWriteScriptClient";
+  }
+
+  WeakMember<Document> document_;
+  FetchParameters params_;
+};
+
+// Returns non-null if the fetch should be blocked due to the document.write
 // intervention. In that case, the request's cache policy is set to
 // kReturnCacheDataDontLoad to ensure a network request is not generated.
 // This function may also set an Intervention header, log the intervention in
 // the console, etc.
+//
 // This only affects scripts added via document.write() in the main frame.
-bool MaybeDisallowFetchForDocWrittenScript(ResourceRequest&,
-                                           FetchParameters::DeferOption,
-                                           Document&);
+// The caller should call SetResource() for the returned client, and then
+// asynchronous GET request to the blocked script will be sent on its
+// NotifyFinished().
+FetchBlockedDocWriteScriptClient* MaybeDisallowFetchForDocWrittenScript(
+    FetchParameters&,
+    Document&);
 
 }  // namespace blink
 
