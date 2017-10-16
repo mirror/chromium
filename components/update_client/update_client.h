@@ -255,6 +255,7 @@ struct CrxComponent {
 
 // Called when a non-blocking call of UpdateClient completes.
 using Callback = base::Callback<void(Error error)>;
+using OnceCallback = base::OnceCallback<void(Error error)>;
 
 // All methods are safe to call only from the browser's main thread. Once an
 // instance of this class is created, the reference to it must be released
@@ -329,7 +330,7 @@ class UpdateClient : public base::RefCounted<UpdateClient> {
   // queued up.
   virtual void Install(const std::string& id,
                        const CrxDataCallback& crx_data_callback,
-                       const Callback& callback) = 0;
+                       OnceCallback callback) = 0;
 
   // Updates the specified CRXs. Calls back on |crx_data_callback| before the
   // update is attempted to give the caller the opportunity to provide the
@@ -340,7 +341,7 @@ class UpdateClient : public base::RefCounted<UpdateClient> {
   // installs are running.
   virtual void Update(const std::vector<std::string>& ids,
                       const CrxDataCallback& crx_data_callback,
-                      const Callback& callback) = 0;
+                      OnceCallback callback) = 0;
 
   // Sends an uninstall ping for the CRX identified by |id| and |version|. The
   // |reason| parameter is defined by the caller. The current implementation of
