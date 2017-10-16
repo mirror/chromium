@@ -62,8 +62,7 @@ class CachedImageFetcherTest : public testing::Test {
     EXPECT_TRUE(database_dir_.CreateUniqueTempDir());
 
     RequestThrottler::RegisterProfilePrefs(pref_service_.registry());
-    database_ =
-        base::MakeUnique<RemoteSuggestionsDatabase>(database_dir_.GetPath());
+    database_ = RemoteSuggestionsDatabase::Create(database_dir_.GetPath());
     request_context_getter_ = scoped_refptr<net::TestURLRequestContextGetter>(
         new net::TestURLRequestContextGetter(
             scoped_task_environment_.GetMainThreadTaskRunner()));
