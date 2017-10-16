@@ -139,8 +139,7 @@ String HTMLOptionElement::text() const {
       .SimplifyWhiteSpace(IsHTMLSpace<UChar>);
 }
 
-void HTMLOptionElement::setText(const String& text,
-                                ExceptionState& exception_state) {
+void HTMLOptionElement::setText(const String& text) {
   // Changing the text causes a recalc of a select's items, which will reset the
   // selected index to the first item if the select is single selection with a
   // menu list.  We attempt to preserve the selected item.
@@ -152,7 +151,7 @@ void HTMLOptionElement::setText(const String& text,
     ToText(firstChild())->setData(text);
   } else {
     RemoveChildren();
-    AppendChild(Text::Create(GetDocument(), text), exception_state);
+    AppendChild(Text::Create(GetDocument(), text));
   }
 
   if (select_is_menu_list && select->selectedIndex() != old_selected_index)
