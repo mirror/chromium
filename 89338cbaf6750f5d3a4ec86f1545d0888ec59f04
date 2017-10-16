@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9fbe6b57_80cd717c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-bypass-for-network-cors.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T06:38:46Z",
+      "side": 1,
+      "message": "No I don\u0027t think so.\n\nTestRunner.callFunctionInPageAsync() in test() is executed in the Inspector, and loadIframe() is called in the page.",
+      "parentUuid": "6fd4f7c8_74741161",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fc6b2ea_17561c09",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-bypass-for-network-cors.html",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5d2cc116_d955d388",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-bypass-for-network-cors.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T06:38:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fc6b2ea_17561c09",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34a41ba5_da092a08",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-bypass-for-network-cors.html",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-16T05:23:38Z",
       "side": 1,
       "message": "how about placing these definitions close to testCorsRequests()?",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf7e1d0_756de78a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-bypass-for-network-cors.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-16T06:38:46Z",
+      "side": 1,
+      "message": "No. These functions are called in the page. testCorsRequests() is called in the inspector.",
+      "parentUuid": "34a41ba5_da092a08",
       "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
