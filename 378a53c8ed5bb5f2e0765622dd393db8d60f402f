@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "fd6bf6bc_e07e3e37",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-16T01:47:45Z",
+      "side": 1,
+      "message": "It just looks like a bug at face value. We should either check it explicitly or add a DCHECK with a comment about why subsequent requests won\u0027t be DEFAULT.",
+      "parentUuid": "2961832a_227832c3",
+      "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea7c0c54_b6db247f",
         "filename": "chrome/browser/permissions/permission_uma_util.cc",
         "patchSetId": 2
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "This is actually consistent.... the metrics that count once are Permissions.Prompt.Accepted/Denied (type -\u003e count, can be \"multiple\"), but we don\u0027t have Permissions.Prompt.Ignored. This code is for logging prior ignore/dismiss count, which for other actions is also split up separately into mic/camera.",
       "parentUuid": "a7116261_eda54456",
+      "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f98e4a7_2db4e3d5",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-16T01:47:45Z",
+      "side": 1,
+      "message": "Ah I see. Ok, that makes sense then. I guess if we do add a Prompt.Ignored we should be careful to be consistent there.",
+      "parentUuid": "dbf1c23f_664ff479",
       "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
