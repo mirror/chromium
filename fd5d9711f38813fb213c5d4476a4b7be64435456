@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22b65f85_9594b15b",
+        "filename": "ui/views/controls/button/image_button_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-16T22:21:30Z",
+      "side": 1,
+      "message": "I think you\u0027d need to change this (DeriveDefaultIconColor) as well. It\u0027s currently set up to spit out #5a5a5a for an input of #000 (black). The call sites for DeriveDefaultIconColor would need to be audited.",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "fd5d9711f38813fb213c5d4476a4b7be64435456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
