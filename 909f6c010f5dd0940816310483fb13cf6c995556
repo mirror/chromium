@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b4a2866_732981e7",
+        "filename": "components/previews/core/previews_io_data.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-16T18:27:51Z",
+      "side": 1,
+      "message": "nit: I *think* \"injected\" is only for passing it in via the normal initialization code (like a constructor). maybe just \"Sets a ...\"",
+      "revId": "909f6c010f5dd0940816310483fb13cf6c995556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
