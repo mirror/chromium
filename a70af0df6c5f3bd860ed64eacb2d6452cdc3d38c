@@ -137,6 +137,52 @@
       "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3848f0f_365c6913",
+        "filename": "media/gpu/windows/d3d11_video_decoder_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-16T23:53:04Z",
+      "side": 1,
+      "message": "Looks like it\u0027s possible to get through this without ever breaking, in which case the CreateVideoDecoder() call is suspect.",
+      "range": {
+        "startLine": 134,
+        "startChar": 6,
+        "endLine": 134,
+        "endChar": 11
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8d28e0_bf791577",
+        "filename": "media/media_options.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-16T23:53:04Z",
+      "side": 1,
+      "message": "Note that this probably conflicts with the standalone CDM service. I understand that xhwang@ is de-tangling this already, so it shouldn\u0027t be a blocking issue.",
+      "range": {
+        "startLine": 232,
+        "startChar": 6,
+        "endLine": 232,
+        "endChar": 21
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
