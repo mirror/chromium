@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b882b83a_e7d7df97",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-16T19:05:33Z",
+      "side": 1,
+      "message": "Nit: MINMUM -\u003e MINIMUM",
+      "revId": "7c955069cf27e57987d91776dd6320efa6ac5f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99aabbd_bc436774",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-16T19:05:33Z",
+      "side": 1,
+      "message": "Nits:\n- MINMUM -\u003e MINIMUM\n- \"higher than\" -\u003e \"higher or equal to\"",
+      "revId": "7c955069cf27e57987d91776dd6320efa6ac5f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
