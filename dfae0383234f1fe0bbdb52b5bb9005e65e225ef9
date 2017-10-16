@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ace515e_d84daff3",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-16T15:39:07Z",
+      "side": 1,
+      "message": "Good catch! Yes, changing |active_global_scope_| is sufficient.",
+      "parentUuid": "b29f9231_eef46e42",
+      "revId": "dfae0383234f1fe0bbdb52b5bb9005e65e225ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3eb28e11_e7d10794",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "dfae0383234f1fe0bbdb52b5bb9005e65e225ef9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31b7e92_637187c9",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-16T15:39:07Z",
+      "side": 1,
+      "message": "Changed to a \"PaintWorkletToTest\" class that is a sub-class of PaintWorklet.",
+      "parentUuid": "3eb28e11_e7d10794",
+      "revId": "dfae0383234f1fe0bbdb52b5bb9005e65e225ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "0a46a3fb_d6159b8c",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-16T15:39:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67faafa8_30eeb0f6",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 33
+      },
+      "revId": "dfae0383234f1fe0bbdb52b5bb9005e65e225ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2fe6c70_6d92c84b",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
         "patchSetId": 7
@@ -73,6 +133,24 @@
       "revId": "dfae0383234f1fe0bbdb52b5bb9005e65e225ef9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ecae403_3b2aab09",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-16T15:39:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2fe6c70_6d92c84b",
+      "revId": "dfae0383234f1fe0bbdb52b5bb9005e65e225ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
