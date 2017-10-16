@@ -22,6 +22,30 @@
       "revId": "14af57585ed6e1cfb7ef2f5378c7dbd9caa57c80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e4ceb0_13c5b61a",
+        "filename": "ui/views/paint_info.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-16T17:25:26Z",
+      "side": 1,
+      "message": "Or gfx::ScaleToRoundedRect(gfx::Rect(parent_size))",
+      "parentUuid": "f928ca75_f090ada6",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "14af57585ed6e1cfb7ef2f5378c7dbd9caa57c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
