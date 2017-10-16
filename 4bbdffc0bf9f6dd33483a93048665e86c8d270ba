@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fc12217_3b714de6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-16T21:35:31Z",
+      "side": 1,
+      "message": "Does this work in newer versions of xz? On Trusty, it doesn\u0027t do anything yet.",
+      "revId": "4bbdffc0bf9f6dd33483a93048665e86c8d270ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
