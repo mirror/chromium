@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f0e9284_f57c38a6",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T16:41:26Z",
+      "side": 1,
+      "message": "nit: is_original_title\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/objective-c/objective-c.md#objective_c_style-matches-the-language\n\nSame comments fir other variables",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 22
+      },
+      "revId": "0f0ff61fe550ba45bf69f78dbd6d27354936e84d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa42437d_b3ab917f",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T16:41:26Z",
+      "side": 1,
+      "message": "nit: kExpectedUrl",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "0f0ff61fe550ba45bf69f78dbd6d27354936e84d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e725161_469ce74d",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T16:41:26Z",
+      "side": 1,
+      "message": "nit: You could make |tab_| ivar protected to avoid casting:\n[tab_ close];\n\nPer C++ Style Guide unit tests ivars are exempted from being private.",
+      "range": {
+        "startLine": 128,
+        "startChar": 44,
+        "endLine": 128,
+        "endChar": 45
+      },
+      "revId": "0f0ff61fe550ba45bf69f78dbd6d27354936e84d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
