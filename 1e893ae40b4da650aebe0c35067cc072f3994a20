@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cc5ea9f_8dfc314d",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1783,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-10-16T20:54:10Z",
+      "side": 1,
+      "message": "Is this TODO now resolved?",
+      "revId": "1e893ae40b4da650aebe0c35067cc072f3994a20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e4d4d5_8372a732",
+        "filename": "content/renderer/media/rtc_peer_connection_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-10-16T20:54:10Z",
+      "side": 1,
+      "message": "I\u0027m not sure if there\u0027s value in testing using GetReceiversForTesting; do you think the tests provide enough coverage without this, just relying on the callbacks?",
+      "revId": "1e893ae40b4da650aebe0c35067cc072f3994a20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805a72f9_fa8efdaa",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpReceiver.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-10-16T20:54:10Z",
+      "side": 1,
+      "message": "This is only called in the DCHECK? May want to make that more clear, and possibly put it in an \"#if DCHECK_IS_ON()\"",
+      "revId": "1e893ae40b4da650aebe0c35067cc072f3994a20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
