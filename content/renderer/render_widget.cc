@@ -1255,6 +1255,8 @@ void RenderWidget::Resize(const ResizeParams& params) {
 
   screen_info_ = params.screen_info;
 
+  fprintf(stderr, ">>>RenderWidget::Resize old: %f new: %f\n",
+          device_scale_factor_, screen_info_.device_scale_factor);
   if (device_scale_factor_ != screen_info_.device_scale_factor) {
     device_scale_factor_ = screen_info_.device_scale_factor;
     OnDeviceScaleFactorChanged();
@@ -1756,6 +1758,7 @@ void RenderWidget::OnImeFinishComposingText(bool keep_selection) {
 }
 
 void RenderWidget::OnDeviceScaleFactorChanged() {
+  fprintf(stderr, ">>>Setting DSF: %f\n", device_scale_factor_);
   if (!compositor_)
     return;
   if (IsUseZoomForDSFEnabled())
@@ -2009,6 +2012,8 @@ void RenderWidget::OnSetDeviceScaleFactor(float device_scale_factor) {
   if (device_scale_factor_ == device_scale_factor)
     return;
 
+  fprintf(stderr, ">>>Old DSF: %f New DSF: %f\n", device_scale_factor_,
+          device_scale_factor);
   device_scale_factor_ = device_scale_factor;
   OnDeviceScaleFactorChanged();
   physical_backing_size_ = gfx::ScaleToCeiledSize(size_, device_scale_factor_);
