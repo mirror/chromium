@@ -16,6 +16,24 @@
       "revId": "92256d8d09e939e670dbd9a2b883aa91ede41f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3086b1_6a4a62a8",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-16T10:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a95757c7_0fc34b29",
+      "revId": "92256d8d09e939e670dbd9a2b883aa91ede41f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
