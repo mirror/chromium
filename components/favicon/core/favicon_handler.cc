@@ -480,7 +480,15 @@ void FaviconHandler::OnGotInitialHistoryDataAndIconURLCandidates() {
     // - The icon URL of the history data matches one of the page's icon URLs.
     // - The icon URL of the history data matches the icon URL of the last
     //   OnFaviconAvailable() notification.
-    // We are done. No additional downloads or history requests are needed.
+    //
+    // We are done with the current page. Progapate mappings to all redirects,
+    // in case the redirect chain is different from the one observed when
+    // SetFavicon() was called.
+    if (page_urls_.size() > 1 && !delegate_->IsOffTheRecord()) {
+      service_->CloneFaviconMappingsForPages(last_page_url_, icon_types_,
+                                             page_urls_);
+    }
+
     // TODO: Store all of the icon URLs associated with a page in history so
     // that we can check whether the page's icon URLs match the page's icon URLs
     // at the time that the favicon data was stored to the history database.
@@ -597,12 +605,6 @@ void FaviconHandler::OnFaviconDataForInitialURLFromFaviconService(
     // url) we'll fetch later on. This way the user doesn't see a flash of the
     // default favicon.
     NotifyFaviconUpdated(favicon_bitmap_results);
-
-    // For strict correctness, we should also set the database icon mappings for
-    // other URLs in |page_urls_| (same-document navigations like fragment
-    // navigations) because there is no guarantee that there is a mapping for
-    // the other page URLs (e.g. |last_page_url_| has a mapping because it's
-    // bookmarked but the rest don't).
   }
 
   if (current_candidate())
