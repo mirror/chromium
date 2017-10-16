@@ -9,10 +9,13 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/statistics_recorder.h"
 #include "base/strings/string_util.h"
-#include "content/common/child_process_messages.h"
+#include "content/common/histogram_fetcher.mojom.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/renderer/render_view_impl.h"
 #include "gin/handle.h"
 #include "gin/object_template_builder.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
@@ -132,8 +135,11 @@ std::string StatsCollectionController::GetBrowserHistogram(
   }
 
   std::string histogram_json;
-  render_view_impl->Send(new ChildProcessHostMsg_GetBrowserHistogram(
-      histogram_name, &histogram_json));
+  content::mojom::BrowserHistogramFetcherPtr fetcher;
+  RenderThread::Get()->GetConnector()->BindInterface(
+      content::mojom::kBrowserServiceName, &fetcher);
+  fetcher->GetBrowserHistogram(histogram_name, &histogram_json);
+
   return histogram_json;
 }
 

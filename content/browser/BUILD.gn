@@ -530,6 +530,8 @@ source_set("browser") {
     # NOTE: These files are here instead of in compositor_browser_sources
     # because the latter is not built on Android, whereas these files are
     # needed on all platforms.
+    "browser_histogram_fetcher_impl.cc",
+    "browser_histogram_fetcher_impl.h",
     "compositor/surface_utils.cc",
     "compositor/surface_utils.h",
     "devtools/browser_devtools_agent_host.cc",
@@ -829,8 +831,6 @@ source_set("browser") {
     "histogram_internals_request_job.h",
     "histogram_internals_url_loader.cc",
     "histogram_internals_url_loader.h",
-    "histogram_message_filter.cc",
-    "histogram_message_filter.h",
     "histogram_subscriber.h",
     "histogram_synchronizer.cc",
     "histogram_synchronizer.h",
