@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35deb653_17dc5341",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-16T21:29:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c701bcba_6c310bf2",
+      "revId": "c5dd84424d34bbb1e54a0f2813be6c694cae6656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb31cb61_ead818dc",
         "filename": "tools/uberblame.py",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c5dd84424d34bbb1e54a0f2813be6c694cae6656",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ca3211_e2ebf015",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-16T21:29:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb31cb61_ead818dc",
+      "revId": "c5dd84424d34bbb1e54a0f2813be6c694cae6656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
