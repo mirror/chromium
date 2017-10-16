@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e4f84ce_7ec5c792",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-16T22:35:11Z",
+      "side": 1,
+      "message": "nit: add_trailing_decoration",
+      "range": {
+        "startLine": 525,
+        "startChar": 7,
+        "endLine": 525,
+        "endChar": 28
+      },
+      "revId": "590d4a921e753580c850ecce507e73176ae2b176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
