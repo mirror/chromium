@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e102c7f_61e38bde",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-16T23:05:13Z",
+      "side": 1,
+      "message": "Mention that this might (will?) cause an audio glitch if the context is already running with non-silent audio output?",
+      "revId": "6da6bfe043382ef12b979aab5cba01d88f73ca8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1203878b_a1176759",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/worklet-context-interaction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-16T23:05:13Z",
+      "side": 1,
+      "message": "Typo: \"addMoudle\"",
+      "revId": "6da6bfe043382ef12b979aab5cba01d88f73ca8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b022b3_aa8615b0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/worklet-context-interaction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-16T23:05:13Z",
+      "side": 1,
+      "message": "Typo: \"addMoudle\"",
+      "revId": "6da6bfe043382ef12b979aab5cba01d88f73ca8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e848214c_9154940e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/worklet-context-interaction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-16T23:05:13Z",
+      "side": 1,
+      "message": "whitespace, here, and line 54.",
+      "revId": "6da6bfe043382ef12b979aab5cba01d88f73ca8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225fbe4d_b83757b1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-16T23:05:13Z",
+      "side": 1,
+      "message": "What if it\u0027s suspended?",
+      "revId": "6da6bfe043382ef12b979aab5cba01d88f73ca8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
