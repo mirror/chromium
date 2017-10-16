@@ -158,6 +158,30 @@
     },
     {
       "key": {
+        "uuid": "f779381c_beac552e",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-16T14:58:54Z",
+      "side": 1,
+      "message": "Commented in ITE declaration and moved active_transaction_ assignment before ITE , although here it is not a concern since we know we are already in do loop.",
+      "parentUuid": "9918cfb8_5fa2de96",
+      "range": {
+        "startLine": 420,
+        "startChar": 2,
+        "endLine": 420,
+        "endChar": 21
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6a2c078_19bb5021",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 60
@@ -388,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "b6e00a49_9a766c93",
+        "filename": "net/http/http_cache_writers_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-16T14:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04377f4d_dbce4827",
+      "range": {
+        "startLine": 69,
+        "startChar": 15,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95cce959_39142148",
         "filename": "net/http/http_cache_writers_unittest.cc",
         "patchSetId": 60
@@ -411,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "4e8d5b96_962a1535",
+        "filename": "net/http/http_cache_writers_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-16T14:58:54Z",
+      "side": 1,
+      "message": "Tricky to check here because the writer and entry would be destroyed but the integration tests (http_cache_unittests) do the checks for truncation like here: https://cs.chromium.org/chromium/src/net/http/http_cache_unittest.cc?type\u003dcs\u0026q\u003dverifytruncated\u0026l\u003d7229",
+      "parentUuid": "95cce959_39142148",
+      "range": {
+        "startLine": 346,
+        "startChar": 20,
+        "endLine": 346,
+        "endChar": 32
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bc49565_fcff0b68",
         "filename": "net/http/http_cache_writers_unittest.cc",
         "patchSetId": 60
@@ -431,6 +503,30 @@
       "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b59bf80_eeb807b0",
+        "filename": "net/http/http_cache_writers_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-16T14:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bc49565_fcff0b68",
+      "range": {
+        "startLine": 503,
+        "startChar": 59,
+        "endLine": 503,
+        "endChar": 63
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
