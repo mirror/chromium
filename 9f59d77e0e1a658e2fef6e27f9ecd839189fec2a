@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bee8a57_2570db4d",
+        "filename": "testing/libfuzzer/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-16T23:23:15Z",
+      "side": 1,
+      "message": "maybe give an example? it\u0027s not clear how to use this argument just from this message.",
+      "range": {
+        "startLine": 114,
+        "startChar": 44,
+        "endLine": 114,
+        "endChar": 63
+      },
+      "revId": "9f59d77e0e1a658e2fef6e27f9ecd839189fec2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
