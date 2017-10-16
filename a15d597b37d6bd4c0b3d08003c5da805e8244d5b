@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "59fa20d3_2f89b128",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/ruleset_matcher_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-16T20:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1054d924_d1626f2b",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 9
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd6983c0_3af13373",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3856301f_8e71e4d3",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-16T20:56:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fd6983c0_3af13373",
+      "range": {
+        "startLine": 42,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "f37c4301_7b8bf6a9",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-16T20:56:08Z",
+      "side": 1,
+      "message": "Changed to PostTask from destructor from OnTaskRunnerDeleter as deletion doesn\u0027t need to happen on a specific sequence but only on one where file IO is allowed. Don\u0027t think we should be blocking shutdown on this.",
+      "parentUuid": "deee7c5f_8ac882d1",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d82854b_dc544d31",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
         "patchSetId": 5
@@ -115,6 +187,30 @@
       "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15150ef2_ebf15003",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-16T20:56:08Z",
+      "side": 1,
+      "message": "Yeah that\u0027s a requirement for MemoryMappedFile.",
+      "parentUuid": "6d82854b_dc544d31",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 31
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "e4287def_5538a901",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-16T20:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f96b4476_99078133",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 19
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "925ba4d4_4be0c5cc",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.h",
         "patchSetId": 5
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "09f1c141_9c737a25",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-16T20:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "925ba4d4_4be0c5cc",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 21
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76892d6d_6fa5fd11",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.h",
         "patchSetId": 5
@@ -178,6 +322,24 @@
       "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbbb69fa_2dc6d579",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-16T20:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76892d6d_6fa5fd11",
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +363,30 @@
       "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6159a64b_41d54922",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 21463,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-16T20:56:08Z",
+      "side": 1,
+      "message": "Oh this was not intended, thanks for catching. And yeah it\u0027s not ok to change histogram names. We should deprecate the old one and add a new one.",
+      "parentUuid": "edec92eb_3889b25a",
+      "range": {
+        "startLine": 21463,
+        "startChar": 50,
+        "endLine": 21463,
+        "endChar": 76
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
