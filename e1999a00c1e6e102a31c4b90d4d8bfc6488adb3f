@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c3b9149_3a80a358",
+        "filename": "components/language/BUILD.gn",
+        "patchSetId": 23
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T22:32:26Z",
+      "side": 1,
+      "message": "nit: since \u0027-o\u0027, \u0027-t\u0027, \u0027-i\u0027 only accept one argument, I would instead use the following to avoid passing multiple values to them\n\n  args \u003d [\n    \"-o\u003d\" + rebase_path(outputs[0], root_build_dir),\n    \"-t\u003d\" + rebase_path(inputs[0], root_build_dir),\n    \"-i\u003d\" + rebase_path(sources[0], root_build_dir),\n  ]",
+      "revId": "e1999a00c1e6e102a31c4b90d4d8bfc6488adb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeeeb8a7_f3e675fc",
+        "filename": "components/language/convert_s2_cell.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T22:32:26Z",
+      "side": 1,
+      "message": "style: Python uses docstrings for commenting code.\n\nhttps://www.python.org/dev/peps/pep-0257/\n\nSo code this should read as such:\n\n  def ParseInputCsv(input_path):\n    \"\"\"Derive cell_id : language_code pairs.\"\"\"\n    ...\n\nSame for the other function.",
+      "revId": "e1999a00c1e6e102a31c4b90d4d8bfc6488adb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9b9aa5_25401ba4",
+        "filename": "components/language/convert_s2_cell.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T22:32:26Z",
+      "side": 1,
+      "message": "You can use destructuring here:\n\n  for language, cell_ids in language_districts:\n    for cell_id in cell_ids.split(\u0027;\u0027):\n      ...",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "e1999a00c1e6e102a31c4b90d4d8bfc6488adb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb3d74d_dd9f663f",
+        "filename": "components/language/convert_s2_cell.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T22:32:26Z",
+      "side": 1,
+      "message": "c → cell_id",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "e1999a00c1e6e102a31c4b90d4d8bfc6488adb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b09df4a6_5f92b4ed",
+        "filename": "components/language/convert_s2_cell.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T22:32:26Z",
+      "side": 1,
+      "message": "No need to initialise the variable to nil, local variables are scoped at a function level, not a block level in python.",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "e1999a00c1e6e102a31c4b90d4d8bfc6488adb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4276adde_a0e50af5",
+        "filename": "components/language/language_code_locator.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T22:32:26Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 21
+      },
+      "revId": "e1999a00c1e6e102a31c4b90d4d8bfc6488adb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5385ba28_9150d977",
+        "filename": "components/language/language_code_locator.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T22:32:26Z",
+      "side": 1,
+      "message": "longtitude → longitude",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "e1999a00c1e6e102a31c4b90d4d8bfc6488adb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2446af61_8f73be20",
+        "filename": "components/language/language_code_locator.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T22:32:26Z",
+      "side": 1,
+      "message": "longtitude → longitude",
+      "range": {
+        "startLine": 24,
+        "startChar": 50,
+        "endLine": 24,
+        "endChar": 60
+      },
+      "revId": "e1999a00c1e6e102a31c4b90d4d8bfc6488adb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d3b8eb2_641df4b2",
+        "filename": "components/language/template/language_code_locator_helper.cc.tmpl",
+        "patchSetId": 23
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T22:32:26Z",
+      "side": 1,
+      "message": "nit: remove trailing whitespace",
+      "revId": "e1999a00c1e6e102a31c4b90d4d8bfc6488adb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
