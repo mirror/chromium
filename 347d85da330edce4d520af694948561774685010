@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "69a3d2ea_26cad3ea",
+        "filename": "build/android/pylib/output/local_output_manager.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-16T13:30:08Z",
+      "side": 1,
+      "message": "In local output, invocations of the test runner get their own output directory based on the time at which they create the LocalOutputManager, so separate runs shouldn\u0027t overwrite each other\u0027s output in most scenarios.\n\n(Two concurrent invocations of the test runner could do so, depending on the time at which they hit this code path, but those would likely have many more problems.)",
+      "revId": "347d85da330edce4d520af694948561774685010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6760b32_075b38eb",
         "filename": "build/android/pylib/results/presentation/test_results_presentation.py",
         "patchSetId": 2
@@ -13,6 +30,24 @@
       "writtenOn": "2017-10-13T21:56:51Z",
       "side": 1,
       "message": "nit: local result detail can have a feedback link too",
+      "revId": "347d85da330edce4d520af694948561774685010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0b5ca1_ff14748a",
+        "filename": "build/android/pylib/results/presentation/test_results_presentation.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-16T13:30:08Z",
+      "side": 1,
+      "message": "Good call. Done.",
+      "parentUuid": "b6760b32_075b38eb",
       "revId": "347d85da330edce4d520af694948561774685010",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -33,6 +68,24 @@
       "revId": "347d85da330edce4d520af694948561774685010",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57198fa0_01ffc035",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-16T13:30:08Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary because of the per-invocation separation (i.e., you\u0027ll always be able to compare different runs) -- see above.",
+      "parentUuid": "ba18de2c_1d28a0d6",
+      "revId": "347d85da330edce4d520af694948561774685010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
