@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "793d08b0_ddb49386",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1665,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-16T20:51:34Z",
+      "side": 0,
+      "message": "Moved into Source/platform/graphics/paint and renamed to DrawingRecorderTest.cpp",
+      "revId": "f5d8deb7b0f3d8ca56601e032314584798e109b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
