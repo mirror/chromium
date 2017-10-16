@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3cebf2e0_6584a844",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-16T19:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68923e03_517ea85a",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4acc75a2_68edd942",
         "filename": "third_party/zlib/google/zip.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-16T17:50:16Z",
       "side": 1,
       "message": "nit: It probably makes sense to push this down into the ZipWriter class.",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 76
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc37268_a7b5c306",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-16T19:08:32Z",
+      "side": 1,
+      "message": "I considered it, but I came to the conclusion that ZipWriter doesn\u0027t really need to know about ZipParams (except for FileAccessor).",
+      "parentUuid": "4acc75a2_68edd942",
       "range": {
         "startLine": 110,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bcac0823_dd37afe7",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-16T19:08:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0b04a1ad_722d9eb0",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 42
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ead31e8_343f8b9b",
         "filename": "third_party/zlib/google/zip.cc",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-16T17:50:16Z",
       "side": 1,
       "message": "nit: Mebbe move all of this logic down to around line 163, where the writer is used?",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 3
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e6a2551_77d84fe6",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-16T19:08:32Z",
+      "side": 1,
+      "message": "My thought here is that it\u0027s better to fail fast given incorrect input params, than to potentially do a bunch of work (the path entries below) that\u0027s not going to be used.",
+      "parentUuid": "1ead31e8_343f8b9b",
       "range": {
         "startLine": 103,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c8e269db_0ea95a40",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-16T19:08:32Z",
+      "side": 1,
+      "message": "Good point on not needing to have AddEntries() and Close() different methods.\nI merged them. Regarding making them a static method, given that I\u0027d like to keep the constructor with FilePath or FD above, it would make the static method ifdef\u0027ed a bit complicated, so I\u0027d rather keep this as an object.",
+      "parentUuid": "0a4190c3_aeb674fe",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 14
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dba4bf8e_8bd214a6",
         "filename": "third_party/zlib/google/zip.h",
         "patchSetId": 5
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9dac958a_398e9fe4",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-16T19:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dba4bf8e_8bd214a6",
+      "range": {
+        "startLine": 38,
+        "startChar": 39,
+        "endLine": 39,
+        "endChar": 17
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47621423_66444f58",
         "filename": "third_party/zlib/google/zip_writer.cc",
         "patchSetId": 5
@@ -151,6 +295,30 @@
       "writtenOn": "2017-10-16T17:50:16Z",
       "side": 1,
       "message": "nit: I believe that std::make_unique() is preferred whenever possible.",
+      "range": {
+        "startLine": 108,
+        "startChar": 20,
+        "endLine": 108,
+        "endChar": 46
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d40978_ff5abafc",
+        "filename": "third_party/zlib/google/zip_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-16T19:08:32Z",
+      "side": 1,
+      "message": "It can\u0027t be done here as the constructor is private.",
+      "parentUuid": "47621423_66444f58",
       "range": {
         "startLine": 108,
         "startChar": 20,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "872795d0_10a103c3",
+        "filename": "third_party/zlib/google/zip_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-16T19:08:32Z",
+      "side": 1,
+      "message": "Ah! Good to know.",
+      "parentUuid": "bf5cabae_9a58e8af",
+      "range": {
+        "startLine": 110,
+        "startChar": 20,
+        "endLine": 110,
+        "endChar": 48
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94592dec_b1c76218",
         "filename": "third_party/zlib/google/zip_writer.cc",
         "patchSetId": 5
@@ -206,6 +398,30 @@
       "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd947f6f_094d61fc",
+        "filename": "third_party/zlib/google/zip_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-16T19:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94592dec_b1c76218",
+      "range": {
+        "startLine": 124,
+        "startChar": 16,
+        "endLine": 124,
+        "endChar": 59
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "e6316617_1ddbf1b8",
+        "filename": "third_party/zlib/google/zip_writer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-16T19:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "820fc12e_2ee9349e",
+      "range": {
+        "startLine": 47,
+        "startChar": 18,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7c4cb15_ffe57aea",
         "filename": "third_party/zlib/google/zip_writer.h",
         "patchSetId": 5
@@ -243,6 +483,30 @@
       "writtenOn": "2017-10-16T17:50:16Z",
       "side": 1,
       "message": "nit: Could this be defined in an anonymous namespace in the impl file?",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 40
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdb9708_5aa15dda",
+        "filename": "third_party/zlib/google/zip_writer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-16T19:08:32Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "f7c4cb15_ffe57aea",
       "range": {
         "startLine": 75,
         "startChar": 0,
