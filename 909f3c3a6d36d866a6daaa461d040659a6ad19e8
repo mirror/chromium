@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca4729ca_b73f06c4",
+        "filename": "components/offline_pages/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-16T19:43:26Z",
+      "side": 1,
+      "message": "line 32 of this file.",
+      "parentUuid": "6b2716a9_b06e7bc0",
+      "revId": "909f3c3a6d36d866a6daaa461d040659a6ad19e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7e6c8e6_3b37a27a",
         "filename": "components/offline_pages/BUILD.gn",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d0bc5eb7_c7389d9d",
+        "filename": "components/offline_pages/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-16T19:43:26Z",
+      "side": 1,
+      "message": "If I knew the reason I would comment but didn\u0027t manage to dig that far.",
+      "parentUuid": "d7e6c8e6_3b37a27a",
+      "revId": "909f3c3a6d36d866a6daaa461d040659a6ad19e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f8189c6_f6298b4e",
         "filename": "components/offline_pages/BUILD.gn",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-16T18:27:39Z",
       "side": 1,
       "message": "Curious: why is this needed and only on android? Can we add a comment?",
+      "revId": "909f3c3a6d36d866a6daaa461d040659a6ad19e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446bc7dc_c94306eb",
+        "filename": "components/offline_pages/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-16T19:43:26Z",
+      "side": 1,
+      "message": "Currently still unknown reason.  This is the minimal set of deps I could use to compile correctly.  I can spend more time discovering and documenting this if you think it\u0027s valuable.",
+      "parentUuid": "8f8189c6_f6298b4e",
       "revId": "909f3c3a6d36d866a6daaa461d040659a6ad19e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
