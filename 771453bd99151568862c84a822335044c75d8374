@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fd3b9f3_67c2cffd",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-16T22:17:25Z",
+      "side": 1,
+      "message": "optional nit: add some debug logging for broken values?",
+      "revId": "771453bd99151568862c84a822335044c75d8374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833433c2_6d5bc755",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-16T22:17:25Z",
+      "side": 1,
+      "message": "nit: s/negative/positive/",
+      "revId": "771453bd99151568862c84a822335044c75d8374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
