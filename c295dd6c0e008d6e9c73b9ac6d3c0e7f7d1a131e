@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8bd4a03f_399ccbd9",
+        "filename": "base/memory/protected_memory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-16T22:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71732cb1_9c2fa707",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "392806a8_a623e0f7",
         "filename": "base/memory/protected_memory.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa7f779_d2b29fd5",
+        "filename": "base/memory/protected_memory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-16T22:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "392806a8_a623e0f7",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "45369c0e_d2133cc8",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-16T22:16:20Z",
+      "side": 1,
+      "message": "The two are still intertwined such that I want to check that ProtectedMemory is implemented if cfi-icall is enabled, but I have moved the error to the CFI-specific code.",
+      "parentUuid": "d1a57235_de22f736",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f99ae44_623e238c",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 2
@@ -102,6 +156,24 @@
       "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093c39cf_71ad89d8",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-16T22:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f99ae44_623e238c",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +227,24 @@
       "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9183d8a_eb32b374",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-16T22:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "705a8e64_f0cc9623",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -300,6 +390,24 @@
     },
     {
       "key": {
+        "uuid": "16d40553_8be6bcb2",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-16T22:16:20Z",
+      "side": 1,
+      "message": "I did some digging and found that I could eliminate the macros entirely by using pointer-to-member. Let me know what you think about the current iteration, it\u0027s design is slightly modified to accommodate that change.",
+      "parentUuid": "c5c2424a_d58c8e71",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5969fb01_9a355eea",
         "filename": "build/config/sanitizers/BUILD.gn",
         "patchSetId": 2
@@ -317,6 +425,24 @@
     },
     {
       "key": {
+        "uuid": "058d6e53_d8656813",
+        "filename": "build/config/sanitizers/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-16T22:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5969fb01_9a355eea",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "279ce987_1656e264",
         "filename": "build/config/sanitizers/BUILD.gn",
         "patchSetId": 2
@@ -331,6 +457,24 @@
       "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c4de33b_7b96e77c",
+        "filename": "build/config/sanitizers/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-16T22:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "279ce987_1656e264",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
