@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "da21d68d_f71e089f",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T16:08:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ccf8aa7_59dbbeec",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd024d52_32880cfd",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 15
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "9e7c4287_2d9c81f6",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T16:08:11Z",
+      "side": 1,
+      "message": "Coverage - the question is if it goes wrong, or has undocumented preconditions, how early does it fail, and how clear is the failure on the bots.",
+      "parentUuid": "ff863b48_6c5dfaae",
+      "range": {
+        "startLine": 19,
+        "startChar": 34,
+        "endLine": 19,
+        "endChar": 42
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef271417_d6273cbc",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 15
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "daa70f60_8a192dab",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T16:08:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ef271417_d6273cbc",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 29
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "941f6bab_2532088c",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 15
@@ -134,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "96ed8d62_7cffd956",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T16:08:11Z",
+      "side": 1,
+      "message": "except that it complicates the garbage collection in a way unlike the final implementations.\n\nEarly on, I agreed.",
+      "parentUuid": "941f6bab_2532088c",
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97d26064_d5efec8c",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 15
@@ -145,6 +235,30 @@
       "writtenOn": "2017-10-13T18:20:57Z",
       "side": 1,
       "message": "nit: need to be snake case. Also I think something like test_time_value is more descriptive.",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 25
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041bda32_54518ad7",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T16:08:11Z",
+      "side": 1,
+      "message": "there is nothing in the plumbing class that links the value with time. It\u0027s just getting passed through.",
+      "parentUuid": "97d26064_d5efec8c",
       "range": {
         "startLine": 84,
         "startChar": 15,
@@ -180,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "f10668c3_31f7fffb",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T16:08:11Z",
+      "side": 1,
+      "message": "If it goes wrong, something is not as expected.\nThere should be no clever ways of going around the callback.",
+      "parentUuid": "00e64dce_5c9f09a4",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 11
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3293a0ae_1744e08d",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 15
@@ -203,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "c6b8b573_0e933788",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T16:08:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3293a0ae_1744e08d",
+      "range": {
+        "startLine": 93,
+        "startChar": 30,
+        "endLine": 93,
+        "endChar": 40
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5e74ad2_288e3113",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 15
@@ -214,6 +376,30 @@
       "writtenOn": "2017-10-13T18:20:57Z",
       "side": 1,
       "message": "not need to check anim2 here given it is not registered at all.",
+      "range": {
+        "startLine": 96,
+        "startChar": 15,
+        "endLine": 96,
+        "endChar": 20
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9aa11e_f1b70c76",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T16:08:11Z",
+      "side": 1,
+      "message": "Unless someone pulls a \u0027register all instances automatically\u0027 pattern.\n\nAll tests are pointless if one assumes the implementation is correct.",
+      "parentUuid": "d5e74ad2_288e3113",
       "range": {
         "startLine": 96,
         "startChar": 15,
@@ -249,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "30a8eb22_7d2a0952",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T16:08:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0ad7590b_a357b5b8",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 102,
+        "endChar": 20
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67cc6633_263436e1",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 15
@@ -272,6 +482,30 @@
     },
     {
       "key": {
+        "uuid": "abe96a8b_306dd2cf",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T16:08:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "67cc6633_263436e1",
+      "range": {
+        "startLine": 127,
+        "startChar": 6,
+        "endLine": 127,
+        "endChar": 34
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed9fe339_44db1614",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 15
@@ -283,6 +517,30 @@
       "writtenOn": "2017-10-13T18:20:57Z",
       "side": 1,
       "message": "I don\u0027t really understand why this is needed.",
+      "range": {
+        "startLine": 129,
+        "startChar": 12,
+        "endLine": 129,
+        "endChar": 16
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78692c3_2bf55da3",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T16:08:11Z",
+      "side": 1,
+      "message": "Looping the counter is an incorrect implementation - there is very little cost to making sure it doesn\u0027t happen.",
+      "parentUuid": "ed9fe339_44db1614",
       "range": {
         "startLine": 129,
         "startChar": 12,
@@ -318,6 +576,30 @@
     },
     {
       "key": {
+        "uuid": "dcdce118_3de19fc3",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T16:08:11Z",
+      "side": 1,
+      "message": "I think that\u0027s better pushed up to the tests themselves if it ever turns into an issue.",
+      "parentUuid": "e61655dd_2d6560b5",
+      "range": {
+        "startLine": 130,
+        "startChar": 40,
+        "endLine": 130,
+        "endChar": 60
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc3343d8_4a5fcbe9",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
         "patchSetId": 15
@@ -329,6 +611,30 @@
       "writtenOn": "2017-10-13T18:20:57Z",
       "side": 1,
       "message": "This assertion is redundant when we are asserting the notifications to be exactly 2.\nI suggest removing .WasNotfied altogether and just verifying the count.",
+      "range": {
+        "startLine": 161,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 37
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635569da_2576ff3d",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T16:08:11Z",
+      "side": 1,
+      "message": "the count is less future useful - what\u0027s more important is that it was notified.  Checking the count is pedantry that could easily be relaxed separately.  I\u0027d be more inclined to remove the count.",
+      "parentUuid": "dc3343d8_4a5fcbe9",
       "range": {
         "startLine": 161,
         "startChar": 2,
@@ -361,6 +667,30 @@
       "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81da1fc6_c2ec9095",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-16T16:08:11Z",
+      "side": 1,
+      "message": "Ack.  (\u0026 Ick. so much less clear what is going on and why).",
+      "parentUuid": "2d39be76_68663f6b",
+      "range": {
+        "startLine": 187,
+        "startChar": 21,
+        "endLine": 187,
+        "endChar": 48
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
