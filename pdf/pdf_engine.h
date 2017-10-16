@@ -61,6 +61,12 @@ class PDFEngine {
   struct DocumentFeatures {
     // Number of pages in document.
     size_t page_count = 0;
+    // Number of files attached to document (see "File Attachment Annotations"
+    // on page 637 of PDF Reference 1.7).
+    unsigned int attachment_count = 0;
+    // Whether the document is linearized (see Appendix F "Linearized PDF" of
+    // PDF Reference 1.7).
+    bool is_linearized = false;
   };
 
   // The interface that's provided to the rendering engine.
