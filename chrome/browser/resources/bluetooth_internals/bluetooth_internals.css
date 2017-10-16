@@ -26,6 +26,15 @@ h1 {
   color: rgb(92, 97, 102);
 }
 
+/* With just class(.show-all-properties) selector,
+ * style "margin" is not applied to the button as
+ * the margin property for button in widgets.css is over-riding.
+ * So, to increase the specifity, Id selector is used.
+ */
+button[id^=show-all-properties-].show-all-properties {
+  margin: 10px;
+}
+
 .toggle-status {
   background-image: url(../../../../ui/webui/resources/images/cancel_red.svg);
   background-repeat: no-repeat;
