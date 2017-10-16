@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "016f21ed_e45ecff8",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "nit: allowed_sweep_.is_null()",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "068e091f_f6c22511",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "nit: no-op (less shouty)",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19af3c98_72f5c5e6",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "nit: It took me a while to fully understand the implications of this. (granted, I\u0027m a bit tired) How about \"After this check, exactly one of the flags must be true.\"",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5bd6fec_65a20b0e",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "nit: this origin hasn\u0027t been swept too recently?",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9e0362_a774df14",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "nit: this origin\u0027s data hasn\u0027t been swept too recently?",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e8006a_353ff766",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "nit: will happen now / will be done now / will be started now",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9233702e_3adc48cc",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "Can you add comments explaining what the knobs do?\n\nIntuitively, the origin sweep limit doesn\u0027t make sense to me. I expect that on a \"normal\" profile, IndexedDB usage would be high on a couple of origins (Docs? Pandora?), and insignificant for all other origins (Pareto\u0027s law). If my intuition holds, we\u0027d want to sweep the active origins often, at least until we\u0027re done removing all the accumulated tombstones.\n\nI\u0027m assuming (based on the variable name) that the limit applies to all sweeps. If it only applies to completed sweeps (i.e. it only kicks in once we know we\u0027ve fully sweeped an origin), then the values seem fine. However, in that case, I\u0027d be concerned that the limit never kicks in for large databases, where a full sweep would run past the time limit.",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56837a2e_bb667421",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "Would it be possible to have the clock passed in the constructor (and factory method if necessary), and have the clock be a const unique_ptr?",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9523b257_d26808e6",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "earliest_sweep_?\n\nallowed_sweep_ makes me expect this to be a boolean.",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ce6e59_54f79fb9",
+        "filename": "content/browser/indexed_db/indexed_db_factory_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "How about creating ScopedFeatureList outside the base::BindOnce call, so it is alive for the whole duration of the test?\n\nI\u0027m fairly sure this doesn\u0027t make a difference now, but it seems more fool-proof to me.",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4caa8a61_572df370",
+        "filename": "content/browser/indexed_db/indexed_db_factory_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "Would it make sense to have one test that verifies no sweeping is done when both feature flags are off? I think this is the common case for production, until sweeping is ready to be turned on by default.",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac924951_afd4417c",
+        "filename": "content/browser/indexed_db/indexed_db_factory_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "We don\u0027t usually embed misc. type information like \"ptr\" in names. (look above and below) Why is this instance different?",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4906d38d_0c4e7cb2",
+        "filename": "content/browser/indexed_db/indexed_db_factory_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "Ah, this pattern seems to repeat itself.\n\nI think I\u0027d prefer that we use _refptr for the local that owns an object, and no suffix for the naked pointer. My reasoning is that we need to reason about ownership when assigning and resetting the scoped_refptr, whereas the naked pointer is used for method calls.",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76737f8b_de9528c6",
+        "filename": "content/browser/indexed_db/indexed_db_leveldb_coding.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "Does this need to end in TypeByte?",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c49a29e_0a37652c",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-16T20:39:44Z",
+      "side": 1,
+      "message": "Can you add a comment here explaining when |on_complete| is called? This CL is making the callback less intuitive, and the reader might guess incorrectly.",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
