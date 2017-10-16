@@ -294,7 +294,6 @@ class MODULES_EXPORT RTCPeerConnection final
   ICEConnectionState ice_connection_state_;
 
   MediaStreamVector local_streams_;
-  MediaStreamVector remote_streams_;
   // A map containing any track that is in use by the peer connection. This
   // includes tracks of |local_streams_|, |remote_streams_|, |rtp_senders_| and
   // |rtp_receivers_|.
