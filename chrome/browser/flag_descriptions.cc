@@ -1613,6 +1613,11 @@ const char kChromeHomeSwipeLogicDescription[] =
 const char kChromeHomeSwipeLogicRestrictArea[] = "Restrict swipable area";
 const char kChromeHomeSwipeLogicButtonOnly[] = "Swipe on expand button";
 
+const char kChromeHomeBottomNavLabelsName[] =
+    "Chrome Home bottom navigation menu item labels.";
+const char kChromeHomeBottomNavLabelsDescription[] =
+    "Enables text labels for Chrome Home bottom navigation menu items.";
+
 const char kChromeHomeName[] = "Chrome Home";
 const char kChromeHomeDescription[] =
     "Enables Chrome Home on Android. You must restart the browser"
