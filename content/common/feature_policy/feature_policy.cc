@@ -84,6 +84,14 @@ bool FeaturePolicy::Whitelist::Contains(const url::Origin& origin) const {
   return false;
 }
 
+bool FeaturePolicy::Whitelist::MatchesAllOrigins() const {
+  return matches_all_origins_;
+}
+
+std::vector<url::Origin> FeaturePolicy::Whitelist::Origins() const {
+  return origins_;
+}
+
 // static
 std::unique_ptr<FeaturePolicy> FeaturePolicy::CreateFromParentPolicy(
     const FeaturePolicy* parent_policy,
@@ -110,6 +118,35 @@ std::unique_ptr<FeaturePolicy> FeaturePolicy::CreateFromPolicyWithOrigin(
 bool FeaturePolicy::IsFeatureEnabled(
     blink::WebFeaturePolicyFeature feature) const {
   return IsFeatureEnabledForOrigin(feature, origin_);
+}
+
+std::vector<url::Origin> FeaturePolicy::GetOriginsForFeature(
+    blink::WebFeaturePolicyFeature feature) const {
+  DCHECK(base::ContainsKey(inherited_policies_, feature));
+  if (!inherited_policies_.at(feature))
+    return std::vector<url::Origin>();
+  auto whitelist = whitelists_.find(feature);
+  if (whitelist != whitelists_.end())
+    return whitelist->second->Origins();
+  const FeaturePolicy::FeatureDefault default_policy =
+      feature_list_.at(feature);
+  DCHECK(default_policy != FeaturePolicy::FeatureDefault::EnableForAll);
+  if (default_policy == FeaturePolicy::FeatureDefault::EnableForSelf)
+    return std::vector<url::Origin>({origin_});
+
+  return std::vector<url::Origin>();
+}
+
+bool FeaturePolicy::IsFeatureEnabledForAll(
+    blink::WebFeaturePolicyFeature feature) const {
+  DCHECK(base::ContainsKey(inherited_policies_, feature));
+  if (!inherited_policies_.at(feature))
+    return false;
+  auto whitelist = whitelists_.find(feature);
+  if (whitelist != whitelists_.end())
+    return whitelist->second->MatchesAllOrigins();
+  return feature_list_.at(feature) ==
+         FeaturePolicy::FeatureDefault::EnableForAll;
 }
 
 bool FeaturePolicy::IsFeatureEnabledForOrigin(
