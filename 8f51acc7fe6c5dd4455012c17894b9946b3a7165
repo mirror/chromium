@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a203b6f_740713e6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPhase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-16T21:31:21Z",
+      "side": 1,
+      "message": "The decimal values were added to make it easy to keep sync with DisplayItem.h and DisplayItem.cpp and I would like to keep them.",
+      "parentUuid": "3df4dcdd_3ff71b61",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 22
+      },
+      "revId": "8f51acc7fe6c5dd4455012c17894b9946b3a7165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cdefcdd_4fb2ebff",
         "filename": "third_party/WebKit/Source/core/paint/PaintPhase.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-16T21:02:47Z",
       "side": 1,
       "message": "nit: adding sentinel values like this to enums is starting to feel undesirable to me as I work with them more, since they aren\u0027t actually a real enum value, but they can be incorrectly referenced as one. We could move to a const value to which we assign kClippingMask?",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 23
+      },
+      "revId": "8f51acc7fe6c5dd4455012c17894b9946b3a7165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423d5d31_6e03ffac",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPhase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-16T21:31:21Z",
+      "side": 1,
+      "message": "I just tried to declare it as a const value, but after reading it I felt it would be easy to forget to update it when we added a new value in PaintPhase, so I still prefer putting it here. Its value is still a valid enum value, so it\u0027s better than adding something like \"kValueCount\" (which is not a valid value) in an enum class. I think no one will use this name to refer to a real paint phase :)",
+      "parentUuid": "0cdefcdd_4fb2ebff",
       "range": {
         "startLine": 90,
         "startChar": 2,
