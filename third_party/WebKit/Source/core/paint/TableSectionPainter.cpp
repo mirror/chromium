@@ -12,11 +12,11 @@
 #include "core/paint/BoxPainter.h"
 #include "core/paint/BoxPainterBase.h"
 #include "core/paint/CollapsedBorderPainter.h"
-#include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/ObjectPainter.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/TableCellPainter.h"
 #include "core/paint/TableRowPainter.h"
+#include "platform/graphics/paint/DrawingRecorder.h"
 
 namespace blink {
 
@@ -182,9 +182,9 @@ void TableSectionPainter::PaintSection(const PaintInfo& paint_info,
   LayoutPoint adjusted_paint_offset =
       paint_offset + layout_table_section_.Location();
 
-  if (paint_info.phase != kPaintPhaseSelfOutlineOnly) {
+  if (paint_info.phase != PaintPhase::kSelfOutlineOnly) {
     Optional<BoxClipper> box_clipper;
-    if (paint_info.phase != kPaintPhaseSelfBlockBackgroundOnly)
+    if (paint_info.phase != PaintPhase::kSelfBlockBackgroundOnly)
       box_clipper.emplace(layout_table_section_, paint_info,
                           adjusted_paint_offset, kForceContentsClip);
     PaintObject(paint_info, adjusted_paint_offset);
@@ -272,7 +272,7 @@ void TableSectionPainter::PaintObject(const PaintInfo& paint_info,
                                  dirtied_columns);
   }
 
-  if (paint_info.phase == kPaintPhaseSelfBlockBackgroundOnly)
+  if (paint_info.phase == PaintPhase::kSelfBlockBackgroundOnly)
     return;
 
   if (ShouldPaintDescendantBlockBackgrounds(paint_info.phase)) {
@@ -376,16 +376,15 @@ void TableSectionPainter::PaintBoxDecorationBackground(
   layout_table_section_.GetMutableForPainting().UpdatePaintResult(
       paint_result, paint_info.GetCullRect());
 
-  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+  if (DrawingRecorder::UseCachedDrawingIfPossible(
           paint_info.context, layout_table_section_,
           DisplayItem::kBoxDecorationBackground))
     return;
 
   LayoutRect bounds = BoxPainter(layout_table_section_)
                           .BoundsForDrawingRecorder(paint_info, paint_offset);
-  LayoutObjectDrawingRecorder recorder(
-      paint_info.context, layout_table_section_,
-      DisplayItem::kBoxDecorationBackground, bounds);
+  DrawingRecorder recorder(paint_info.context, layout_table_section_,
+                           DisplayItem::kBoxDecorationBackground, bounds);
   LayoutRect paint_rect(paint_offset, layout_table_section_.Size());
 
   if (has_box_shadow) {

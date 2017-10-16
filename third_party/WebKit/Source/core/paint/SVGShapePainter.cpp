@@ -10,12 +10,12 @@
 #include "core/layout/svg/SVGMarkerData.h"
 #include "core/layout/svg/SVGResources.h"
 #include "core/layout/svg/SVGResourcesCache.h"
-#include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/ObjectPainter.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/SVGContainerPainter.h"
 #include "core/paint/SVGPaintContext.h"
 #include "platform/graphics/GraphicsContextStateSaver.h"
+#include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/graphics/paint/PaintRecord.h"
 #include "platform/graphics/paint/PaintRecordBuilder.h"
 #include "platform/wtf/Optional.h"
@@ -41,7 +41,7 @@ static SkPath::FillType FillRuleFromStyle(const PaintInfo& paint_info,
 }
 
 void SVGShapePainter::Paint(const PaintInfo& paint_info) {
-  if (paint_info.phase != kPaintPhaseForeground ||
+  if (paint_info.phase != PaintPhase::kForeground ||
       layout_svg_shape_.Style()->Visibility() != EVisibility::kVisible ||
       layout_svg_shape_.IsShapeEmpty())
     return;
@@ -60,10 +60,10 @@ void SVGShapePainter::Paint(const PaintInfo& paint_info) {
     SVGPaintContext paint_context(layout_svg_shape_,
                                   paint_info_before_filtering);
     if (paint_context.ApplyClipMaskAndFilterIfNecessary() &&
-        !LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+        !DrawingRecorder::UseCachedDrawingIfPossible(
             paint_context.GetPaintInfo().context, layout_svg_shape_,
             paint_context.GetPaintInfo().phase)) {
-      LayoutObjectDrawingRecorder recorder(
+      DrawingRecorder recorder(
           paint_context.GetPaintInfo().context, layout_svg_shape_,
           paint_context.GetPaintInfo().phase, bounding_box);
       const SVGComputedStyle& svg_style = layout_svg_shape_.Style()->SvgStyle();
@@ -135,7 +135,7 @@ void SVGShapePainter::Paint(const PaintInfo& paint_info) {
 
   if (layout_svg_shape_.Style()->OutlineWidth()) {
     PaintInfo outline_paint_info(paint_info_before_filtering);
-    outline_paint_info.phase = kPaintPhaseSelfOutlineOnly;
+    outline_paint_info.phase = PaintPhase::kSelfOutlineOnly;
     ObjectPainter(layout_svg_shape_)
         .PaintOutline(outline_paint_info, LayoutPoint(bounding_box.Location()));
   }
