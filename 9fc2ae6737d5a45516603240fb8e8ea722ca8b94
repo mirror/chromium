@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "53a9e537_534cf9f9",
+        "filename": "content/child/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T10:14:45Z",
+      "side": 1,
+      "message": "Content-Type unless it\u0027s intentional",
+      "revId": "9fc2ae6737d5a45516603240fb8e8ea722ca8b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdc15a70_4a612329",
         "filename": "content/child/loader/cors_url_loader_unittest.cc",
         "patchSetId": 4
@@ -36,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "33f7a900_1190a87f",
+        "filename": "content/child/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T10:14:45Z",
+      "side": 1,
+      "message": "what are binding_ and factory_ptr_ here for? no longer used?",
+      "revId": "9fc2ae6737d5a45516603240fb8e8ea722ca8b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0269223_505033e8",
         "filename": "content/child/loader/cors_url_loader_unittest.cc",
         "patchSetId": 4
@@ -53,6 +87,40 @@
     },
     {
       "key": {
+        "uuid": "45870b55_9e42e0dd",
+        "filename": "content/child/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T10:14:45Z",
+      "side": 1,
+      "message": "how about NotifyNetworkClient...?",
+      "revId": "9fc2ae6737d5a45516603240fb8e8ea722ca8b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2a0bfd_bccbe303",
+        "filename": "content/child/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T10:14:45Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9fc2ae6737d5a45516603240fb8e8ea722ca8b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37ca85c9_b095a4d9",
         "filename": "content/child/loader/cors_url_loader_unittest.cc",
         "patchSetId": 4
@@ -64,6 +132,74 @@
       "writtenOn": "2017-10-16T08:36:36Z",
       "side": 1,
       "message": "nit: client().RunUntilComplete() is fine?",
+      "revId": "9fc2ae6737d5a45516603240fb8e8ea722ca8b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77113b00_d831fe0d",
+        "filename": "content/child/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T10:14:45Z",
+      "side": 1,
+      "message": "how about prefixing this to make it aligned with network_factory_ptr_ and network_factory_binding_? e.g. test_network_factory_ or network_test_factory_",
+      "revId": "9fc2ae6737d5a45516603240fb8e8ea722ca8b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c59e0c_a49e0c78",
+        "filename": "content/child/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T10:14:45Z",
+      "side": 1,
+      "message": "maybe test_cors_client_ or cors_test_client_?",
+      "revId": "9fc2ae6737d5a45516603240fb8e8ea722ca8b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b5d831_780424e4",
+        "filename": "content/child/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T10:14:45Z",
+      "side": 1,
+      "message": "does this need to be a member variable?",
+      "revId": "9fc2ae6737d5a45516603240fb8e8ea722ca8b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cae0094_dabbbce3",
+        "filename": "content/child/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T10:14:45Z",
+      "side": 1,
+      "message": "how about cors_factory_ptr_? as this test is about CORSURLLoaderFactory, omitting a prefix also makes sense, but having cors_ might be also good. up to you.",
       "revId": "9fc2ae6737d5a45516603240fb8e8ea722ca8b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
