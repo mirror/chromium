@@ -15,8 +15,8 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "content/browser/accessibility/accessibility_flags.h"
-#include "content/browser/accessibility/ax_platform_position.h"
 #include "content/browser/accessibility/browser_accessibility_event.h"
+#include "content/browser/accessibility/browser_accessibility_position.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/ax_event_notification_details.h"
 #include "third_party/WebKit/public/web/WebAXEnums.h"
@@ -212,7 +212,9 @@ class CONTENT_EXPORT BrowserAccessibilityManager : public ui::AXTreeDelegate {
   void SetValue(
       const BrowserAccessibility& node, const base::string16& value);
   void SetSelection(
-      ui::AXRange<AXPlatformPosition::AXPositionInstance::element_type> range);
+      ui::AXRange<
+          BrowserAccessibilityPosition::AXPositionInstance::element_type>
+          range);
   void ShowContextMenu(const BrowserAccessibility& node);
 
   // Retrieve the bounds of the parent View in screen coordinates.
@@ -390,8 +392,10 @@ class CONTENT_EXPORT BrowserAccessibilityManager : public ui::AXTreeDelegate {
   void CacheHitTestResult(BrowserAccessibility* hit_test_result);
 
  protected:
-  using AXPlatformPositionInstance = AXPlatformPosition::AXPositionInstance;
-  using AXPlatformRange = ui::AXRange<AXPlatformPositionInstance::element_type>;
+  using BrowserAccessibilityPositionInstance =
+      BrowserAccessibilityPosition::AXPositionInstance;
+  using AXPlatformRange =
+      ui::AXRange<BrowserAccessibilityPositionInstance::element_type>;
 
   BrowserAccessibilityManager(
       BrowserAccessibilityDelegate* delegate,
