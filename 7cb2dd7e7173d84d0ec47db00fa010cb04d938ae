@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7baba435_2af13393",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/raster-under-invalidation-checking-expected.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-16T19:11:52Z",
+      "side": 0,
+      "message": "This change doesn\u0027t exist in my local branch. Not sure why gerrit shows this. Perhaps because of the dependency is not updated.",
+      "parentUuid": "593d44a6_3ef82b4c",
+      "revId": "7cb2dd7e7173d84d0ec47db00fa010cb04d938ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "029d6b1c_63f6d262",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 9

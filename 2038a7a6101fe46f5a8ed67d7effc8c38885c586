@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd9b9ab0_16ec8564",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentLifecycle.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-16T19:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b617306d_dfb40517",
+      "revId": "2038a7a6101fe46f5a8ed67d7effc8c38885c586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f3de197_3032a267",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "2038a7a6101fe46f5a8ed67d7effc8c38885c586",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "190897d0_eafeb4b1",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-16T19:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f3de197_3032a267",
+      "revId": "2038a7a6101fe46f5a8ed67d7effc8c38885c586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "25464078_af3e155a",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintControllerTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-16T19:11:52Z",
+      "side": 1,
+      "message": "Added kSlimmingPaintV175 and kSlimmingPaintV175 | kUnderInvalidationChecking configurations. I think we still need to test both SPv175 and SPv2 because there are differences between them.",
+      "parentUuid": "d771787e_41f86401",
+      "revId": "2038a7a6101fe46f5a8ed67d7effc8c38885c586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07ae9723_8d279b86",
         "filename": "third_party/WebKit/Source/platform/testing/PaintTestConfigurations.h",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-16T18:37:50Z",
       "side": 1,
       "message": "The stuff you\u0027re adding here doesn\u0027t seem to be used?",
+      "revId": "2038a7a6101fe46f5a8ed67d7effc8c38885c586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be24e093_bd8da37f",
+        "filename": "third_party/WebKit/Source/platform/testing/PaintTestConfigurations.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-16T19:11:52Z",
+      "side": 1,
+      "message": "kDefaultPaintTestConfigurations is used in various paint tests, e.g. PaintControllerPaintTest. The change here let these tests also test SPv175.",
+      "parentUuid": "07ae9723_8d279b86",
       "revId": "2038a7a6101fe46f5a8ed67d7effc8c38885c586",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
