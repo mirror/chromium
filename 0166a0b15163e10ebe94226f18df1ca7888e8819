@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "410869a2_06d10f82",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-16T16:00:19Z",
+      "side": 1,
+      "message": "Sorry, too many threads. What do you mean by the UI thread? The thread the UI service lives on, or the main thread? My cursory look makes it seem as though it\u0027s the thread the ui service lives on. If that\u0027s the case, then I\u0027m not sure the code you are calling is prepared for that (content::ServiceManagerConnection::GetForProcess and GetAshConfig).",
+      "parentUuid": "03df1339_77697002",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "0166a0b15163e10ebe94226f18df1ca7888e8819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "674b37d1_6ca35a5e",
         "filename": "chrome/browser/embedded_ui_service_info_factory.cc",
         "patchSetId": 12
