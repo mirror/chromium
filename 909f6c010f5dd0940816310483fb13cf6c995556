@@ -16,6 +16,98 @@
       "revId": "909f6c010f5dd0940816310483fb13cf6c995556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5b5369_4b4320aa",
+        "filename": "components/previews/core/previews_io_data.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-16T19:50:58Z",
+      "side": 1,
+      "message": "Is this method called only by test code? If yes, then the method name should end with ForTesting():\nhttps://cs.chromium.org/chromium/src/PRESUBMIT.py?rcl\u003da35501faaac641c8f5683f1015a68c4ca35cc28a\u0026l\u003d496",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 34
+      },
+      "revId": "909f6c010f5dd0940816310483fb13cf6c995556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e4494f_1d206938",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-16T19:50:58Z",
+      "side": 1,
+      "message": "why can we not access these values from |logger|? Then we would not need to store a copy of these data structures here.",
+      "range": {
+        "startLine": 148,
+        "startChar": 5,
+        "endLine": 148,
+        "endChar": 44
+      },
+      "revId": "909f6c010f5dd0940816310483fb13cf6c995556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669e28eb_bdaa9005",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-16T19:50:58Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of this field if it is always going to be the same for all navigation events?",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "909f6c010f5dd0940816310483fb13cf6c995556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b006d25_3886c485",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-16T19:50:58Z",
+      "side": 1,
+      "message": "++i",
+      "range": {
+        "startLine": 161,
+        "startChar": 52,
+        "endLine": 161,
+        "endChar": 56
+      },
+      "revId": "909f6c010f5dd0940816310483fb13cf6c995556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
