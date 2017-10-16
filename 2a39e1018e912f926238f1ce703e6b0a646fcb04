@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7321624e_f9d47d87",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-16T18:21:49Z",
+      "side": 1,
+      "message": "I believe in this file frame generally means the one that this RenderFrameImpl is a client of --\n which would be the LocalFrame root which needs to be scrolled in parent process. I will add more details based on your suggestion.",
+      "parentUuid": "c17b382c_798dc56d",
+      "range": {
+        "startLine": 717,
+        "startChar": 40,
+        "endLine": 717,
+        "endChar": 47
+      },
+      "revId": "2a39e1018e912f926238f1ce703e6b0a646fcb04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce8c7b52_46a78c5c",
         "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
         "patchSetId": 16
@@ -92,6 +116,30 @@
       "revId": "2a39e1018e912f926238f1ce703e6b0a646fcb04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca927eb_cc218e6a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 4530,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-16T18:21:49Z",
+      "side": 1,
+      "message": "Uh thanks for clarifying :) Done.",
+      "parentUuid": "e3d061e3_e1b7e40e",
+      "range": {
+        "startLine": 4529,
+        "startChar": 2,
+        "endLine": 4530,
+        "endChar": 11
+      },
+      "revId": "2a39e1018e912f926238f1ce703e6b0a646fcb04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
