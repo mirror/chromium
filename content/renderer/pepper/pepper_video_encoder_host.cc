@@ -464,6 +464,10 @@ void PepperVideoEncoderHost::NotifyError(
   NotifyPepperError(PP_FromMediaEncodeAcceleratorError(error));
 }
 
+void PepperVideoEncoderHost::NotifyFlushDone() {
+  NOTIMPLEMENTED();
+}
+
 void PepperVideoEncoderHost::GetSupportedProfiles(
     std::vector<PP_VideoProfileDescription>* pp_profiles) {
   DCHECK(RenderThreadImpl::current());
