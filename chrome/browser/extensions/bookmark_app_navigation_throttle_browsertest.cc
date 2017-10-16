@@ -356,7 +356,7 @@ class BookmarkAppNavigationThrottleLinkBrowserTest
 // Tests that navigating to the Web App's app_url doesn't open a new window
 // if features::kDesktopPWAWindowing is disabled before installing the app.
 IN_PROC_BROWSER_TEST_P(BookmarkAppNavigationThrottleLinkBrowserTest,
-                       FeatureDisable_BeforeInstall) {
+                       DISABLED_FeatureDisable_BeforeInstall) {
   ResetFeatureList();
   InstallTestBookmarkApp();
   NavigateToLaunchingPage();
@@ -371,7 +371,7 @@ IN_PROC_BROWSER_TEST_P(BookmarkAppNavigationThrottleLinkBrowserTest,
 // Tests that navigating to the Web App's app_url doesn't open a new window
 // if features::kDesktopPWAWindowing is disabled after installing the app.
 IN_PROC_BROWSER_TEST_P(BookmarkAppNavigationThrottleLinkBrowserTest,
-                       FeatureDisable_AfterInstall) {
+                       DISABLED_FeatureDisable_AfterInstall) {
   InstallTestBookmarkApp();
   ResetFeatureList();
   NavigateToLaunchingPage();

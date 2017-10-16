@@ -150,7 +150,7 @@ const base::Feature kDesktopIOSPromotion{"DesktopIOSPromotion",
 
 // Enables or disables windowing related features for desktop PWAs.
 const base::Feature kDesktopPWAWindowing{"DesktopPWAWindowing",
-                                         base::FEATURE_DISABLED_BY_DEFAULT};
+                                         base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Experiment to display a toggle allowing users to opt-out of persisting a
 // Grant or Deny decision in a permission prompt.
