@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc54dee4_ce1a0c7b",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-16T15:53:02Z",
+      "side": 1,
+      "message": "Can you elaborate one how you know this is the right browser? What if the window is minimized? How is all this code kicked off? Doesn\u0027t it originate from a particular browser?",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 1
+      },
+      "revId": "ef9382dd23d1c2142be8afc4531b65b01f228889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

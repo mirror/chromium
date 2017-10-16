@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8afd2bc3_59d66dc3",
+        "filename": "chrome/browser/ui/views/feature_promos/bookmark_promo_bubble_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-16T15:53:02Z",
+      "side": 1,
+      "message": "It seems like this is only called once. Can the browser be supplied during creation so that FeaturePromoBubble only has a single function, ClosePromoBubble() in it? That said it is preferable if the call site triggering creation actually owns the object. That way you don\u0027t need an explicit close, just delete the object.\n\nWhat happens if the bubble is closed outside of ClosePromoBubble? Say it\u0027s deleted by the os? In that case how does IncognitoWindowPromoBubbleView know to null out the reference?",
+      "range": {
+        "startLine": 22,
+        "startChar": 7,
+        "endLine": 22,
+        "endChar": 23
+      },
+      "revId": "a11095ae8e07929cb349221760366c19c7f319d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9647b124_8715fc6e",
+        "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-16T15:53:02Z",
+      "side": 1,
+      "message": "When is this false?",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 52
+      },
+      "revId": "a11095ae8e07929cb349221760366c19c7f319d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
