@@ -31,6 +31,7 @@ class StateStore : public base::SupportsWeakPtr<StateStore>,
                    public content::NotificationObserver {
  public:
   typedef ValueStoreFrontend::ReadCallback ReadCallback;
+  typedef ValueStoreFrontend::WriteCallback WriteCallback;
 
   // If |deferred_load| is true, we won't load the database until the first
   // page has been loaded.
@@ -61,7 +62,8 @@ class StateStore : public base::SupportsWeakPtr<StateStore>,
   // Sets a value for a given extension and key.
   void SetExtensionValue(const std::string& extension_id,
                          const std::string& key,
-                         std::unique_ptr<base::Value> value);
+                         std::unique_ptr<base::Value> value,
+                         WriteCallback callback);
 
   // Removes a value for a given extension and key.
   void RemoveExtensionValue(const std::string& extension_id,

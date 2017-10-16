@@ -124,7 +124,10 @@ bool AlarmsCreateFunction::RunAsync() {
   return true;
 }
 
-void AlarmsCreateFunction::Callback() {
+void AlarmsCreateFunction::Callback(ValueStore::WriteResult write_result) {
+  LOG_IF(WARNING, !write_result.status().ok())
+      << "Error creating alarm: " << write_result.status().message;
+  // TODO(cmumford): Should this be false on error?
   SendResponse(true);
 }
 
@@ -174,13 +177,15 @@ bool AlarmsClearFunction::RunAsync() {
   std::string name = params->name.get() ? *params->name : kDefaultAlarmName;
   AlarmManager::Get(browser_context())
       ->RemoveAlarm(extension_id(), name,
-                    base::Bind(&AlarmsClearFunction::Callback, this, name));
+                    base::Bind(&AlarmsClearFunction::Callback, this));
 
   return true;
 }
 
-void AlarmsClearFunction::Callback(const std::string& name, bool success) {
-  SetResult(std::make_unique<base::Value>(success));
+void AlarmsClearFunction::Callback(ValueStore::WriteResult write_result) {
+  LOG_IF(WARNING, !write_result.status().ok())
+      << "Error clearing alarm: " << write_result.status().message;
+  SetResult(std::make_unique<base::Value>(write_result.status().ok()));
   SendResponse(true);
 }
 
@@ -191,8 +196,10 @@ bool AlarmsClearAllFunction::RunAsync() {
   return true;
 }
 
-void AlarmsClearAllFunction::Callback() {
-  SetResult(std::make_unique<base::Value>(true));
+void AlarmsClearAllFunction::Callback(ValueStore::WriteResult write_result) {
+  LOG_IF(WARNING, !write_result.status().ok())
+      << "Error clearing all alarms: " << write_result.status().message;
+  SetResult(std::make_unique<base::Value>(write_result.status().ok()));
   SendResponse(true);
 }
 

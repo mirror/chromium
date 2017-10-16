@@ -7,6 +7,7 @@
 
 #include <map>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/callback.h"
@@ -18,6 +19,7 @@
 #include "base/timer/timer.h"
 #include "extensions/browser/browser_context_keyed_api_factory.h"
 #include "extensions/browser/extension_registry_observer.h"
+#include "extensions/browser/value_store/value_store.h"
 #include "extensions/common/api/alarms.h"
 #include "extensions/common/extension_id.h"
 
@@ -78,7 +80,8 @@ class AlarmManager : public BrowserContextKeyedAPI,
   // Override the default delegate. Callee assumes onwership. Used for testing.
   void set_delegate(Delegate* delegate) { delegate_.reset(delegate); }
 
-  typedef base::Callback<void()> AddAlarmCallback;
+  typedef base::Callback<void(ValueStore::WriteResult write_result)>
+      AddAlarmCallback;
   // Adds |alarm| for the given extension, and starts the timer. Invokes
   // |callback| when done.
   void AddAlarm(const std::string& extension_id,
@@ -98,14 +101,14 @@ class AlarmManager : public BrowserContextKeyedAPI,
   void GetAllAlarms(const std::string& extension_id,
                     const GetAllAlarmsCallback& callback);
 
-  typedef base::Callback<void(bool)> RemoveAlarmCallback;
+  typedef base::Callback<void(ValueStore::WriteResult)> RemoveAlarmCallback;
   // Cancels and removes the alarm with the given name. Invokes |callback| when
   // done.
   void RemoveAlarm(const std::string& extension_id,
                    const std::string& name,
                    const RemoveAlarmCallback& callback);
 
-  typedef base::Callback<void()> RemoveAllAlarmsCallback;
+  typedef base::Callback<void(ValueStore::WriteResult)> RemoveAllAlarmsCallback;
   // Cancels and removes all alarms for the given extension. Invokes |callback|
   // when done.
   void RemoveAllAlarms(const std::string& extension_id,
@@ -187,7 +190,8 @@ class AlarmManager : public BrowserContextKeyedAPI,
                     std::unique_ptr<Alarm> alarm);
 
   // Syncs our alarm data for the given extension to/from the state storage.
-  void WriteToStorage(const std::string& extension_id);
+  void WriteToStorage(const std::string& extension_id,
+                      AddAlarmCallback callback);
   void ReadFromStorage(const std::string& extension_id,
                        bool is_unpacked,
                        std::unique_ptr<base::Value> value);

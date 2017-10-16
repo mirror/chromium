@@ -498,8 +498,13 @@ class ExtensionAlarmsSchedulingTest : public ExtensionAlarmsTest {
     EXPECT_EQ(scheduled_time, alarm_manager_->next_poll_time_);
   }
 
-  static void RemoveAlarmCallback(bool success) { EXPECT_TRUE(success); }
-  static void RemoveAllAlarmsCallback() {}
+  static void RemoveAlarmCallback(ValueStore::WriteResult write_result) {
+    EXPECT_TRUE(write_result.status().ok());
+  }
+
+  static void RemoveAllAlarmsCallback(ValueStore::WriteResult write_result) {
+    EXPECT_TRUE(write_result.status().ok());
+  }
 
  public:
   // Get the time that the alarm named is scheduled to run.
