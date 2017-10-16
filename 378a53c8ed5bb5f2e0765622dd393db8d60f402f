@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "154c0121_eb7fbdac",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-16T03:17:35Z",
+      "side": 1,
+      "message": "OK, I changed it to check inside the loop.",
+      "parentUuid": "fd6bf6bc_e07e3e37",
+      "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea7c0c54_b6db247f",
         "filename": "chrome/browser/permissions/permission_uma_util.cc",
         "patchSetId": 2
