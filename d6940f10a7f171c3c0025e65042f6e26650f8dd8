@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c787b73b_e75efc47",
+        "filename": ".vpython",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001907
+      },
+      "writtenOn": "2017-10-16T22:17:42Z",
+      "side": 1,
+      "message": "I don\u0027t think this version is built on all platforms named below:\n  package \"infra/python/wheels/opencv_python/mac-amd64_cp27_cp27m\" doesn\u0027t have instance with version \"version:2.4.13.2\"",
+      "range": {
+        "startLine": 48,
+        "startChar": 20,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "d6940f10a7f171c3c0025e65042f6e26650f8dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
