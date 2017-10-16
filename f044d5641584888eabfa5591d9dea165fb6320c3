@@ -16,6 +16,24 @@
       "revId": "f044d5641584888eabfa5591d9dea165fb6320c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257fb0a7_e85ea54e",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorOptions.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-10-16T13:20:25Z",
+      "side": 1,
+      "message": "this specifier anyway was meaningless, there are checks in code for the given frequency, and in the existing layout tests we check both construction with a given frequency and construction by default (i.e. with no parameters)",
+      "parentUuid": "b5d12125_7b47ba75",
+      "revId": "f044d5641584888eabfa5591d9dea165fb6320c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
