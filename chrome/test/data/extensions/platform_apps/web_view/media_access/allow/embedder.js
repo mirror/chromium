@@ -211,12 +211,14 @@ embedder.tests.list = {
 };
 
 // Entry point for test, called by WebViewTest.
-function startAllowTest(testName) {
+function startAllowTest(testName, variant) {
   chrome.test.getConfig(function(config) {
+    var guest_file = variant == 'getUserMedia'
+        ? '/media_access_guest_getusermedia.html'
+        : '/media_access_guest_speech_recognition.html';
     embedder.baseGuestURL = 'http://localhost:' + config.testServer.port;
     embedder.guestURL = embedder.baseGuestURL +
-        '/extensions/platform_apps/web_view/media_access' +
-        '/media_access_guest.html';
+        '/extensions/platform_apps/web_view/media_access' + guest_file;
     chrome.test.log('Guest url is: ' + embedder.guestURL);
 
     var testFunction = embedder.tests.list[testName];
