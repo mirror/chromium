@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dda9900_f9d21a7e",
+        "filename": "mojo/public/tools/bindings/generators/mojom_c_generator.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-16T17:08:47Z",
+      "side": 1,
+      "message": "This file is not needed any more, right?",
+      "revId": "e8363251f6fd1a5db7c3bc23c8f61c78ef3c468f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
