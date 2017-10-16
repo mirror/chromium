@@ -7,6 +7,7 @@
 #include "base/macros.h"
 #include "components/signin/core/browser/scoped_account_consistency.h"
 #include "components/signin/core/common/signin_features.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace signin {
@@ -21,26 +22,26 @@ TEST(ProfileManagementSwitchesTest, GetAccountConsistencyMethodMirror) {
 }
 #else
 TEST(ProfileManagementSwitchesTest, GetAccountConsistencyMethod) {
+  sync_preferences::TestingPrefServiceSyncable pref_service;
+  signin::RegisterAccountConsistentyProfilePrefs(pref_service.registry());
+
   // By default account consistency is disabled.
   EXPECT_EQ(AccountConsistencyMethod::kDisabled, GetAccountConsistencyMethod());
-  EXPECT_FALSE(IsAccountConsistencyMirrorEnabled());
-  EXPECT_FALSE(IsAccountConsistencyDiceAvailable());
-  EXPECT_FALSE(IsDiceFixAuthErrorsEnabled());
 
-  // Check that feature flags work.
   struct TestCase {
     AccountConsistencyMethod method;
     bool expect_mirror_enabled;
     bool expect_dice_fix_auth_errors;
     bool expect_dice_available;
+    bool expect_dice_enabled;
   };
 
   TestCase test_cases[] = {
-    {AccountConsistencyMethod::kDisabled, false, false, false},
+    {AccountConsistencyMethod::kDisabled, false, false, false, false},
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
-    {AccountConsistencyMethod::kDiceFixAuthErrors, false, true, false},
-    {AccountConsistencyMethod::kDiceMigration, false, true, true},
-    {AccountConsistencyMethod::kDice, false, true, true},
+    {AccountConsistencyMethod::kDiceFixAuthErrors, false, true, false, false},
+    {AccountConsistencyMethod::kDiceMigration, false, true, true, false},
+    {AccountConsistencyMethod::kDice, false, true, true, true},
 #endif
     {AccountConsistencyMethod::kMirror, true, false, false}
   };
@@ -54,6 +55,39 @@ TEST(ProfileManagementSwitchesTest, GetAccountConsistencyMethod) {
               IsDiceFixAuthErrorsEnabled());
     EXPECT_EQ(test_case.expect_dice_available,
               IsAccountConsistencyDiceAvailable());
+    EXPECT_EQ(test_case.expect_dice_enabled,
+              IsAccountConsistencyDiceEnabledForProfile(&pref_service));
+  }
+}
+
+TEST(ProfileManagementSwitchesTest, DiceMigration) {
+  sync_preferences::TestingPrefServiceSyncable pref_service;
+  signin::RegisterAccountConsistentyProfilePrefs(pref_service.registry());
+
+  {
+    ScopedAccountConsistencyDiceMigration scoped_dice_migration;
+    MigrateProfileToDice(&pref_service);
+  }
+
+  struct TestCase {
+    AccountConsistencyMethod method;
+    bool expect_dice_enabled;
+  };
+
+  TestCase test_cases[] = {
+    {AccountConsistencyMethod::kDisabled, false},
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+    {AccountConsistencyMethod::kDiceFixAuthErrors, false},
+    {AccountConsistencyMethod::kDiceMigration, true},
+    {AccountConsistencyMethod::kDice, true},
+#endif
+    {AccountConsistencyMethod::kMirror, false}
+  };
+
+  for (TestCase test_case : test_cases) {
+    ScopedAccountConsistency scoped_method(test_case.method);
+    EXPECT_EQ(test_case.expect_dice_enabled,
+              IsAccountConsistencyDiceEnabledForProfile(&pref_service));
   }
 }
 #endif  // BUILDFLAG(ENABLE_MIRROR)
