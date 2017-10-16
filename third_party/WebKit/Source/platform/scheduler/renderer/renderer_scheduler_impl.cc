@@ -9,6 +9,7 @@
 #include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "base/metrics/histogram.h"
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
@@ -1927,7 +1928,12 @@ void RendererSchedulerImpl::OnTaskStarted(MainThreadTaskQueue* queue,
                                           base::TimeTicks start) {
   main_thread_only().current_task_start_time = start;
   seqlock_queueing_time_estimator_.seqlock.WriteBegin();
-  seqlock_queueing_time_estimator_.data.OnTopLevelTaskStarted(start);
+  // Use QueueType::COUNT if |queue| is null, to get
+  // TaskQueueType::kOther.
+  seqlock_queueing_time_estimator_.data.OnTopLevelTaskStarted(
+      start,
+      GetIndexFromQueueType(queue ? queue->queue_type()
+                                  : MainThreadTaskQueue::QueueType::COUNT));
   seqlock_queueing_time_estimator_.seqlock.WriteEnd();
 }
 
@@ -1944,6 +1950,38 @@ void RendererSchedulerImpl::OnTaskCompleted(MainThreadTaskQueue* queue,
 
   // TODO(altimin): Per-page metrics should also be considered.
   main_thread_only().metrics_helper.RecordTaskMetrics(queue, start, end);
+}
+
+// static
+size_t RendererSchedulerImpl::GetIndexFromQueueType(
+    MainThreadTaskQueue::QueueType queue_type) {
+  switch (queue_type) {
+    case MainThreadTaskQueue::QueueType::DEFAULT:
+      return QueueingTimeEstimator::SplitCalculator::TaskQueueType::kDefault;
+    case MainThreadTaskQueue::QueueType::DEFAULT_LOADING:
+      return QueueingTimeEstimator::SplitCalculator::kDefaultLoading;
+    case MainThreadTaskQueue::QueueType::FRAME_LOADING:
+      return QueueingTimeEstimator::SplitCalculator::TaskQueueType::
+          kFrameLoading;
+    case MainThreadTaskQueue::QueueType::FRAME_THROTTLEABLE:
+      return QueueingTimeEstimator::SplitCalculator::kFrameThrottleable;
+    case MainThreadTaskQueue::QueueType::FRAME_PAUSABLE:
+      return QueueingTimeEstimator::SplitCalculator::kFramePausable;
+    case MainThreadTaskQueue::QueueType::UNTHROTTLED:
+      return QueueingTimeEstimator::SplitCalculator::TaskQueueType::
+          kUnthrottled;
+    case MainThreadTaskQueue::QueueType::COMPOSITOR:
+      return QueueingTimeEstimator::SplitCalculator::TaskQueueType::kCompositor;
+    case MainThreadTaskQueue::QueueType::CONTROL:
+    case MainThreadTaskQueue::QueueType::DEFAULT_TIMER:
+    case MainThreadTaskQueue::QueueType::IDLE:
+    case MainThreadTaskQueue::QueueType::TEST:
+    case MainThreadTaskQueue::QueueType::FRAME_LOADING_CONTROL:
+    case MainThreadTaskQueue::QueueType::FRAME_DEFERRABLE:
+    case MainThreadTaskQueue::QueueType::FRAME_UNPAUSABLE:
+    case MainThreadTaskQueue::QueueType::COUNT:
+      return QueueingTimeEstimator::SplitCalculator::TaskQueueType::kOther;
+  }
 }
 
 void RendererSchedulerImpl::OnBeginNestedRunLoop() {
@@ -2006,6 +2044,14 @@ void RendererSchedulerImpl::OnQueueingTimeForWindowEstimated(
             kExpectedTaskQueueingDuration,
         queueing_time.InMilliseconds());
   }
+}
+
+void RendererSchedulerImpl::OnReportSplitExpectedQueueingTime(
+    const std::string& split_description,
+    base::TimeDelta queueing_time) {
+  base::UmaHistogramTimes(
+      "RendererScheduler.ExpectedQueuingTime." + split_description,
+      queueing_time);
 }
 
 AutoAdvancingVirtualTimeDomain* RendererSchedulerImpl::GetVirtualTimeDomain() {

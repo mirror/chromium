@@ -97732,6 +97732,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       name="RendererScheduler.QueueingDurationWhenExpectedQueueingTime"/>
 </histogram_suffixes>
 
+<histogram_suffixes name="ExpectedQueueingTimebyTaskQueueType" separator=".">
+  <owner>npm@chromium.org</owner>
+  <suffix name="CompositorQueue"/>
+  <suffix name="DefaultQueue"/>
+  <suffix name="DefaultLoadingQueue"/>
+  <suffix name="FrameLoadingQueue"/>
+  <suffix name="FramePausableQueue"/>
+  <suffix name="FrameThrottleableQueue"/>
+  <suffix name="UnthrottledQueue"/>
+  <suffix name="OtherQueue"/>
+  <affected-histogram name="RendererScheduler.ExpectedTaskQueueingDuration"/>
+</histogram_suffixes>
+
 <histogram_suffixes name="ExtensionContextType" separator=".">
   <suffix name="BlessedExtensionContext" label="Blessed Extension Context"/>
   <suffix name="BlessedWebPageContext" label="Blessed Web Page Context"/>

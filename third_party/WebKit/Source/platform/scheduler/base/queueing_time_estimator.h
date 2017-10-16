@@ -22,6 +22,9 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
    public:
     virtual void OnQueueingTimeForWindowEstimated(base::TimeDelta queueing_time,
                                                   bool is_disjoint_window) = 0;
+    virtual void OnReportSplitExpectedQueueingTime(
+        const std::string& split_description,
+        base::TimeDelta queueing_time) = 0;
     Client() {}
     virtual ~Client() {}
 
@@ -43,10 +46,48 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
     base::TimeDelta running_sum_;
   };
 
+  class SplitCalculator {
+   public:
+    explicit SplitCalculator(int steps_per_window);
+    void UpdateSplitIndex(size_t task_type_index);
+    void AddQueueingTime(base::TimeDelta queuing_time);
+    void ReportSplitExpectedQueueingTimes(Client* client);
+    static const char* GetReportingMessageFromIndex(size_t idx);
+
+    enum TaskQueueType : size_t {
+      kDefault = 0,
+      kDefaultLoading = 1,
+      kFrameLoading = 2,
+      kFrameThrottleable = 3,
+      kFramePausable = 4,
+      kUnthrottled = 5,
+      kCompositor = 6,
+      kOther = 7,
+      kCount = 8
+    };
+
+    // static constexpr size_t kDefaultTaskQueueType = 0;
+    // static constexpr size_t kDefaultLoadingTaskQueueType = 1;
+    // static constexpr size_t kFrameLoadingTaskQueueType = 2;
+    // static constexpr size_t kFrameThrottleableTaskQueueType = 3;
+    // static constexpr size_t kFramePausableTaskQueueType = 4;
+    // static constexpr size_t kUnthrottledTaskQueueType = 5;
+    // static constexpr size_t kCompositorTaskQueueType = 6;
+    // static constexpr size_t kOtherTaskQueueType = 7;
+    // static constexpr size_t kEQTSplitBucketCount = 8;
+
+   private:
+    int steps_per_window_;
+    size_t split_index_ = TaskQueueType::kOther;
+    std::vector<base::TimeDelta> split_queueing_times_;
+  };
+
   class State {
    public:
     explicit State(int steps_per_window);
-    void OnTopLevelTaskStarted(Client* client, base::TimeTicks task_start_time);
+    void OnTopLevelTaskStarted(Client* client,
+                               base::TimeTicks task_start_time,
+                               size_t task_type_index);
     void OnTopLevelTaskCompleted(Client* client, base::TimeTicks task_end_time);
     void OnBeginNestedRunLoop();
     void OnRendererStateChanged(Client* client,
@@ -97,6 +138,7 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
     void AdvanceTime(Client* client, base::TimeTicks current_time);
     bool TimePastStepEnd(base::TimeTicks task_end_time);
     bool in_nested_message_loop_ = false;
+    SplitCalculator split_calculator_;
   };
 
   QueueingTimeEstimator(Client* client,
@@ -104,7 +146,8 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
                         int steps_per_window);
   explicit QueueingTimeEstimator(const State& state);
 
-  void OnTopLevelTaskStarted(base::TimeTicks task_start_time);
+  void OnTopLevelTaskStarted(base::TimeTicks task_start_time,
+                             size_t task_type_index);
   void OnTopLevelTaskCompleted(base::TimeTicks task_end_time);
   void OnBeginNestedRunLoop();
   void OnRendererStateChanged(bool backgrounded,
