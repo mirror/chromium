@@ -174,6 +174,8 @@ void PaymentRequestDialogView::OnSpecUpdated() {
 
 void PaymentRequestDialogView::OnGetAllPaymentInstrumentsFinished() {
   HideProcessingSpinner();
+  if (observer_for_testing_)
+    observer_for_testing_->OnDialogOpened();
 }
 
 void PaymentRequestDialogView::Pay() {
@@ -340,8 +342,10 @@ void PaymentRequestDialogView::ShowInitialPaymentSheet() {
                             request_->spec(), request_->state(), this),
                         &controller_map_),
                     /* animate = */ false);
-  if (observer_for_testing_)
+  if (observer_for_testing_ &&
+      request_->state()->is_get_all_instruments_finished()) {
     observer_for_testing_->OnDialogOpened();
+  }
 }
 
 void PaymentRequestDialogView::SetupSpinnerOverlay() {
