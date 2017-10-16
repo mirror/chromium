@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b3754ee_88115529",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-16T21:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cc028b3_2b238156",
+      "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11f30166_0b8a8da2",
         "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
         "patchSetId": 4
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "f09d9315_d8770a82",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-16T21:47:15Z",
+      "side": 1,
+      "message": "Yea that was the point of my comment, sorry it wasn\u0027t clear. Done.",
+      "parentUuid": "8b1f5ec7_52c774d9",
+      "range": {
+        "startLine": 160,
+        "startChar": 9,
+        "endLine": 160,
+        "endChar": 30
+      },
+      "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c2e7e02_03590d1c",
         "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
         "patchSetId": 4
@@ -80,6 +122,24 @@
       "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6aca209_3b903027",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-16T21:47:15Z",
+      "side": 1,
+      "message": "No, we are still reliant on the SubresourceFilter flag for the safe browsing throttle. Ideally we would separate that out of SubresourceFilter but it would be another refactoring effort.\n\nI\u0027ve added a comment here about it.",
+      "parentUuid": "2c2e7e02_03590d1c",
+      "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "35ea02c2_8fa9ab34",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-16T21:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68c8e3c1_8e0086fa",
+      "range": {
+        "startLine": 192,
+        "startChar": 33,
+        "endLine": 192,
+        "endChar": 41
+      },
+      "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44ea7d86_72c57dc1",
         "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
         "patchSetId": 4
@@ -123,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "91f40aa6_1d8fb682",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-16T21:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44ea7d86_72c57dc1",
+      "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2f928f_3157772c",
         "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
         "patchSetId": 4
@@ -137,6 +239,24 @@
       "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a94010_2b9151d4",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-16T21:47:15Z",
+      "side": 1,
+      "message": "Sure, done.",
+      "parentUuid": "5a2f928f_3157772c",
+      "revId": "268df7c8989c65f3d6508c6a867df222edc3081f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
