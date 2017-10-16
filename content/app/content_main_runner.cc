@@ -170,6 +170,7 @@ void InitializeFieldTrialAndFeatureList(
 }
 
 void LoadV8ContextSnapshotFile() {
+#if defined(USE_V8_CONTEXT_SNAPSHOT)
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
   base::FileDescriptorStore& file_descriptor_store =
       base::FileDescriptorStore::GetInstance();
@@ -185,10 +186,11 @@ void LoadV8ContextSnapshotFile() {
 #if !defined(CHROME_MULTIPLE_DLL_BROWSER)
   gin::V8Initializer::LoadV8ContextSnapshot();
 #endif
+#endif  // USE_V8_CONTEXT_SNAPSHOT
 }
 
 void LoadV8SnapshotFile() {
-#if defined(V8_USE_EXTERNAL_STARTUP_DATA)
+#if defined(V8_USE_EXTERNAL_STARTUP_DATA) && !defined(USE_V8_CONTEXT_SNAPSHOT)
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
   base::FileDescriptorStore& file_descriptor_store =
       base::FileDescriptorStore::GetInstance();
@@ -204,7 +206,7 @@ void LoadV8SnapshotFile() {
 #if !defined(CHROME_MULTIPLE_DLL_BROWSER)
   gin::V8Initializer::LoadV8Snapshot();
 #endif
-#endif  // V8_USE_EXTERNAL_STARTUP_DATA
+#endif  // V8_USE_EXTERNAL_STARTUP_DATA && !USE_V8_CONTEXT_SNAPSHOT
 }
 
 void LoadV8NativesFile() {
