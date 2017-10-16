@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48ac7bda_c0b7a9f2",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-16T18:36:11Z",
+      "side": 1,
+      "message": "Can you check/reset layout_has_forced_initial_vertical_scrollbar_ here in all cases, and remove the line at the end of the method?  I find that easier to reason about:\n\nif (l_h_f_i_v_s_) {\n  l_h_f_i_v_s_ \u003d false;\n  s_f_f_f_r \u003d false;\n}",
+      "revId": "f5040d373172c2e042818e6a269f58d4922cbf57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
