@@ -22,6 +22,30 @@
       "revId": "422e60adc05bda1ced64f94510ec0d02ab5acbff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e352e4_59b4d72d",
+        "filename": "chrome/browser/ui/libgtkui/native_theme_gtk3.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-16T23:38:45Z",
+      "side": 1,
+      "message": "I noticed that some cases e.g. \u0027kColorId_ResultsTableSelectedDimmedText\u0027 right above, recurred on SkColorFromColorId. I was wondering if \u0027...InvisibleText\u0027 should recur on another color. I don\u0027t even see a hidden-text so I\u0027ll just nuke the TODO.",
+      "parentUuid": "f58abea9_664209c9",
+      "range": {
+        "startLine": 324,
+        "startChar": 9,
+        "endLine": 324,
+        "endChar": 13
+      },
+      "revId": "422e60adc05bda1ced64f94510ec0d02ab5acbff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
