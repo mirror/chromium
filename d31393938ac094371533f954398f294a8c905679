@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7303f45_d1a56ad9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 13422,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-16T15:09:30Z",
+      "side": 1,
+      "message": "This is adding a new top-level histogram prefix. We generally avoid adding new ones unless it will be widely use. Suggest using an existing prefix, e.g. \"ChromeOS.DetachableBase.ROUpdateMetric\".",
+      "range": {
+        "startLine": 13422,
+        "startChar": 17,
+        "endLine": 13422,
+        "endChar": 31
+      },
+      "revId": "d31393938ac094371533f954398f294a8c905679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
