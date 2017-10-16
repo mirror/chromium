@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a68e435_3d5bfa47",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T03:42:22Z",
+      "side": 1,
+      "message": "nit: |path|",
+      "revId": "f15ea6dbce00903d2ba710a29be65ca5ffe0e7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad292b1_1ff1589d",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T03:42:22Z",
+      "side": 1,
+      "message": "nit: explicit is no longer needed",
+      "revId": "f15ea6dbce00903d2ba710a29be65ca5ffe0e7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bae1918_406bfbeb",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T03:42:22Z",
+      "side": 1,
+      "message": "nit: This assignment (and the if condidition next line) slightly confuses me because it needs a bit of interpretation to get what it means.  Could this be written:\n\nbool have_path \u003d !path_.empty();\nif (!have_path) {\n  DCHECK(create_temp_file_);  // for documentation\n  have_path \u003d ...\n}",
+      "revId": "f15ea6dbce00903d2ba710a29be65ca5ffe0e7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38e6947_c545b184",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T03:42:22Z",
+      "side": 1,
+      "message": "nit: Since we might have already created the file, \u0027Try to initialize the file, by creating it if needed.\u0027 ?",
+      "revId": "f15ea6dbce00903d2ba710a29be65ca5ffe0e7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
