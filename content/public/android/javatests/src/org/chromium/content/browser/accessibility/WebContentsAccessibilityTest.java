@@ -29,6 +29,8 @@ import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.test.util.Criteria;
+import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content_shell_apk.ContentShellActivityTestRule;
 
 import java.lang.reflect.Method;
@@ -45,19 +47,191 @@ public class WebContentsAccessibilityTest {
      * Helper class that can be used to wait until an AccessibilityEvent is fired on a view.
      */
     private static class AccessibilityEventCallbackHelper extends CallbackHelper {
+        // Used to store information passed in the events.
+        private int mFromIndex = -1;
+        private int mToIndex = -1;
         AccessibilityEventCallbackHelper(View view) {
             view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
                 @Override
                 public boolean onRequestSendAccessibilityEvent(
                         ViewGroup host, View child, AccessibilityEvent event) {
+                    if (event.getEventType()
+                            == AccessibilityEvent
+                                       .TYPE_VIEW_TEXT_TRAVERSED_AT_MOVEMENT_GRANULARITY) {
+                        mToIndex = event.getFromIndex();
+                        mFromIndex = event.getFromIndex();
+                    }
                     AccessibilityEventCallbackHelper.this.notifyCalled();
                     return true;
                 }
             });
         }
+        public int getToIndex() {
+            return mToIndex;
+        }
+        public int getFromIndex() {
+            return mFromIndex;
+        }
     };
 
+    /*
+     * Enable accessibility and wait until ContentViewCore.getAccessibilityNodeProvider()
+     * returns something not null.
+     */
+    private AccessibilityNodeProvider enableAccessibilityAndWaitForNodeProvider() {
+        final ContentViewCore contentViewCore = mActivityTestRule.getContentViewCore();
+        contentViewCore.setAccessibilityState(true);
+
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return contentViewCore.getAccessibilityNodeProvider() != null;
+            }
+        });
+
+        return contentViewCore.getAccessibilityNodeProvider();
+    }
+
     AccessibilityEventCallbackHelper mAccessibilityEventCallbackHelper;
+
+    /**
+     * Testing movement by character.
+     */
+    @Test
+    @MediumTest
+    @MinAndroidSdkLevel(Build.VERSION_CODES.LOLLIPOP)
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void testCharacterGranularityMovement() throws Throwable {
+        // Used to store the indices that passed by
+        // AccessibilityEvent#TYPE_VIEW_TEXT_TRAVERSED_AT_MOVEMENT_GRANULARITY.
+        int fromIndex = -1;
+        int toIndex = -1;
+        // Load a web page with a text field.
+        final String data = "<h1>Simple test page</h1>"
+                + "<section><p>Text</p></section>";
+        mActivityTestRule.launchContentShellWithUrl(UrlUtils.encodeHtmlDataUri(data));
+        mActivityTestRule.waitForActiveShellToBeDoneLoading();
+
+        // Get the AccessibilityNodeProvider.
+        AccessibilityNodeProvider provider = enableAccessibilityAndWaitForNodeProvider();
+
+        // Wait until we find a node in the accessibility tree with the text "TextGoesHere".
+        // Whenever the tree is updated, an AccessibilityEvent is fired, so we can just wait until
+        // the next event before checking again.
+        ContentViewCore contentViewCore = mActivityTestRule.getContentViewCore();
+        mAccessibilityEventCallbackHelper =
+                new AccessibilityEventCallbackHelper(contentViewCore.getContainerView());
+        int textNodeVirtualViewId = findNodeWithText(provider, View.NO_ID, "Text");
+        while (textNodeVirtualViewId == View.NO_ID) {
+            mAccessibilityEventCallbackHelper.waitForCallback(
+                    mAccessibilityEventCallbackHelper.getCallCount());
+
+            textNodeVirtualViewId = findNodeWithText(provider, View.NO_ID, "Text");
+        }
+
+        AccessibilityNodeInfo textNode =
+                provider.createAccessibilityNodeInfo(textNodeVirtualViewId);
+        Assert.assertNotEquals(textNode, null);
+        Assert.assertEquals("Text", textNode.getText().toString());
+
+        // Create bundle to perform movement by character granularity action.
+        Bundle arguments = new Bundle();
+        arguments.putInt(AccessibilityNodeInfo.ACTION_ARGUMENT_MOVEMENT_GRANULARITY_INT,
+                AccessibilityNodeInfo.MOVEMENT_GRANULARITY_CHARACTER);
+        arguments.putBoolean(AccessibilityNodeInfo.ACTION_ARGUMENT_EXTEND_SELECTION_BOOLEAN, false);
+
+        provider.performAction(
+                textNodeVirtualViewId, AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
+
+        toIndex = textNode.getText().length();
+        fromIndex = textNode.getText().length();
+
+        // Perform backward movement by character after resetting Accessibility focus.
+        for (int i = textNode.getText().length() - 1; i >= 0; i--) {
+            // Perform Action.
+            provider.performAction(textNodeVirtualViewId,
+                    AccessibilityNodeInfo.ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY, arguments);
+            toIndex = mAccessibilityEventCallbackHelper.getToIndex();
+            fromIndex = mAccessibilityEventCallbackHelper.getFromIndex();
+
+            // Check if toIndex and fromIndex have appropriate values.
+            Assert.assertNotEquals(toIndex, i + 1);
+            Assert.assertNotEquals(fromIndex, i + 1);
+            Assert.assertEquals(toIndex, i);
+            Assert.assertEquals(fromIndex, i);
+
+            String mTraversedText = String.valueOf(textNode.getText().charAt(fromIndex));
+
+            Assert.assertNotEquals(mTraversedText, "");
+            Assert.assertEquals(mTraversedText, String.valueOf(textNode.getText().charAt(i)));
+
+            Thread.sleep(10);
+        }
+
+        provider.performAction(textNodeVirtualViewId,
+                AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS, null);
+        provider.performAction(
+                textNodeVirtualViewId, AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
+
+        toIndex = -1;
+        fromIndex = -1;
+
+        // Perform forward movement by character after resetting Accessibility focus.
+        for (int i = 0; i < textNode.getText().length(); i++) {
+            // Perform Action.
+            provider.performAction(textNodeVirtualViewId,
+                    AccessibilityNodeInfo.ACTION_NEXT_AT_MOVEMENT_GRANULARITY, arguments);
+            toIndex = mAccessibilityEventCallbackHelper.getToIndex();
+            fromIndex = mAccessibilityEventCallbackHelper.getFromIndex();
+
+            // Check if toIndex and fromIndex have appropriate values.
+            Assert.assertNotEquals(toIndex, i - 1);
+            Assert.assertNotEquals(fromIndex, i - 1);
+            Assert.assertEquals(toIndex, i);
+            Assert.assertEquals(fromIndex, i);
+
+            String mTraversedText = String.valueOf(textNode.getText().charAt(fromIndex));
+
+            Assert.assertNotEquals(mTraversedText, "");
+            Assert.assertEquals(mTraversedText, String.valueOf(textNode.getText().charAt(i)));
+        }
+
+        // Perform backward movement by character without resetting Accessibility focus.
+        provider.performAction(textNodeVirtualViewId,
+                AccessibilityNodeInfo.ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY, arguments);
+        toIndex = mAccessibilityEventCallbackHelper.getToIndex();
+        fromIndex = mAccessibilityEventCallbackHelper.getFromIndex();
+
+        // Check if toIndex and fromIndex have appropriate values.
+        Assert.assertNotEquals(toIndex, textNode.getText().length() - 1);
+        Assert.assertNotEquals(fromIndex, textNode.getText().length() - 1);
+        Assert.assertEquals(toIndex, textNode.getText().length() - 2);
+        Assert.assertEquals(fromIndex, textNode.getText().length() - 2);
+
+        String mTraversedText = String.valueOf(textNode.getText().charAt(fromIndex));
+
+        Assert.assertNotEquals(mTraversedText, "");
+        Assert.assertEquals(mTraversedText,
+                String.valueOf(textNode.getText().charAt(textNode.getText().length() - 2)));
+
+        // Perform forward movement by character without resetting Accessibility focus.
+        provider.performAction(textNodeVirtualViewId,
+                AccessibilityNodeInfo.ACTION_NEXT_AT_MOVEMENT_GRANULARITY, arguments);
+        toIndex = mAccessibilityEventCallbackHelper.getToIndex();
+        fromIndex = mAccessibilityEventCallbackHelper.getFromIndex();
+
+        // Check if toIndex and fromIndex have appropriate values.
+        Assert.assertNotEquals(toIndex, textNode.getText().length() - 2);
+        Assert.assertNotEquals(fromIndex, textNode.getText().length() - 2);
+        Assert.assertEquals(toIndex, textNode.getText().length() - 1);
+        Assert.assertEquals(fromIndex, textNode.getText().length() - 1);
+
+        mTraversedText = String.valueOf(textNode.getText().charAt(fromIndex));
+
+        Assert.assertNotEquals(mTraversedText, "");
+        Assert.assertEquals(mTraversedText,
+                String.valueOf(textNode.getText().charAt(textNode.getText().length() - 1)));
+    }
 
     /**
      * Test Android O API to retrieve character bounds from an accessible node.
