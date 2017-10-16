@@ -248,10 +248,10 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestJourneyLoggerMultipleShowTest,
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_COMPLETED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_USER_ABORTED);
   EXPECT_TRUE(buckets[0].min & JourneyLogger::EVENT_OTHER_ABORTED);
-  EXPECT_TRUE(buckets[0].min &
-              JourneyLogger::EVENT_HAD_INITIAL_FORM_OF_PAYMENT);
-  EXPECT_TRUE(buckets[0].min &
-              JourneyLogger::EVENT_HAD_NECESSARY_COMPLETE_SUGGESTIONS);
+  EXPECT_FALSE(buckets[0].min &
+               JourneyLogger::EVENT_HAD_INITIAL_FORM_OF_PAYMENT);
+  EXPECT_FALSE(buckets[0].min &
+               JourneyLogger::EVENT_HAD_NECESSARY_COMPLETE_SUGGESTIONS);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_SHIPPING);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_NAME);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_PHONE);

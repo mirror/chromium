@@ -333,16 +333,16 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestCanMakePaymentQueryPMITest,
   ExpectBodyContains({"NotAllowedError"});
 }
 
-// If the device does not have any payment apps installed, canMakePayment()
-// should return false for them in the incognito mode. However, the query quota
-// is still enforced to avoid incognito mode detection.
+// Querying for payment apps in incognito returns true regardless if the app is
+// installed. Multiple queries for different apps are rejected with
+// NotSupportedError to avoid user fingerprinting.
 IN_PROC_BROWSER_TEST_F(PaymentRequestCanMakePaymentQueryPMITest,
                        QueryQuotaForPaymentAppsInIncognitoMode) {
   SetIncognito();
 
   CallCanMakePayment(CheckFor::ALICE_PAY);
 
-  ExpectBodyContains({"false"});
+  ExpectBodyContains({"true"});
 
   CallCanMakePayment(CheckFor::BOB_PAY);
 
@@ -350,17 +350,17 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestCanMakePaymentQueryPMITest,
 
   CallCanMakePayment(CheckFor::ALICE_PAY);
 
-  ExpectBodyContains({"false"});
+  ExpectBodyContains({"true"});
 
   CallCanMakePayment(CheckFor::BOB_PAY);
 
   ExpectBodyContains({"NotAllowedError"});
 }
 
-// If the device does not have any payment apps installed, canMakePayment()
-// queries for both payment apps and basic-card always return true, even if the
-// user does not have any cards on file. However, the query quota is still
-// enforced to avoid incognito mode detection.
+// Querying for both payment apps and autofill cards in incognito returns true
+// regardless if the app is installed and whether the user has card on file.
+// Multiple queries for different payment methods are rejected with
+// NotSupportedError to avoid user fingerprinting.
 IN_PROC_BROWSER_TEST_F(PaymentRequestCanMakePaymentQueryPMITest,
                        NoQueryQuotaForPaymentAppsAndCardsInIncognito) {
   SetIncognito();
