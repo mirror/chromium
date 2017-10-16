@@ -159,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7a57b5fc_2da75807",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T19:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3ffd96_693a93c4",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "412c1fad_1b395d13",
         "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
         "patchSetId": 18
@@ -275,6 +293,24 @@
       "writtenOn": "2017-10-14T22:46:52Z",
       "side": 1,
       "message": "reinterpret_cast has been the source of errors.\nCould we try replacing the last two arguments with this?\n__uuidof(start.GetAddressOf()) or __uuidof(\u0026start)?",
+      "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bec9503_9dba78e4",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-16T19:01:24Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this has to do with the UUID of something.\n\nIn any case, reinterpret_cast is how the rest of the Chromium code uses AccessibleObjectFromWindow with a ScopedComPtr.",
+      "parentUuid": "8678aa21_28a386bf",
       "revId": "b66fe522df84ce1153da4383e7e7d63bcffea0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
