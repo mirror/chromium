@@ -60,12 +60,12 @@ def _Colorize(text, style=''):
       + colorama.Style.RESET_ALL)
 
 
-def _InstallApk(devices, apk, install_dict):
+def _InstallApk(devices, apk, install_dict, reinstall):
   def install(device):
     if install_dict:
       installer.Install(device, install_dict, apk=apk)
     else:
-      device.Install(apk)
+      device.Install(apk, reinstall=reinstall)
 
   logging.info('Installing %sincremental apk.', '' if install_dict else 'non-')
   device_utils.DeviceUtils.parallel(devices).pMap(install)
@@ -828,9 +828,16 @@ class _InstallCommand(_Command):
   needs_apk_path = True
   supports_incremental = True
 
-  def Run(self):
-    _InstallApk(self.devices, self.apk_helper, self.install_dict)
+  def _RegisterExtraArgs(self, group):
+    group.add_argument('-r', '--reinstall',
+                       action='store_true',
+                       default=False,
+                       help='Reinstall the apk (preserving data). '
+                       'Applies only to non-incremental install.')
 
+  def Run(self):
+    _InstallApk(self.devices, self.apk_helper, self.install_dict,
+                self.args.reinstall)
 
 class _UninstallCommand(_Command):
   name = 'uninstall'
