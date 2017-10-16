@@ -3806,6 +3806,24 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
             scheduler_->GetVirtualTimeDomain());
 }
 
+TEST_F(RendererSchedulerImplTest, EnableVirtualTimeAfterThrottling) {
+  scoped_refptr<MainThreadTaskQueue> timer_tq = scheduler_->NewTimerTaskQueue(
+      MainThreadTaskQueue::QueueType::FRAME_THROTTLEABLE);
+  bool old_value =
+      blink::RuntimeEnabledFeatures::TimerThrottlingForBackgroundTabsEnabled();
+
+  blink::RuntimeEnabledFeatures::SetTimerThrottlingForBackgroundTabsEnabled(
+      true);
+  scheduler_->SetRendererBackgrounded(true);
+  EXPECT_TRUE(scheduler_->task_queue_throttler()->IsThrottled(timer_tq.get()));
+
+  scheduler_->EnableVirtualTime();
+  EXPECT_EQ(timer_tq->GetTimeDomain(), scheduler_->GetVirtualTimeDomain());
+
+  blink::RuntimeEnabledFeatures::SetTimerThrottlingForBackgroundTabsEnabled(
+      old_value);
+}
+
 TEST_F(RendererSchedulerImplTest, DisableVirtualTimeForTesting) {
   scheduler_->EnableVirtualTime();
 
