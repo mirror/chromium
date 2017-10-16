@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b263654_03bb6a2a",
+        "filename": "content/test/mock_widget_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-16T15:18:14Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 2
+      },
+      "revId": "5e250c8d4c0e200ed4e6214b634a748ea3a1097d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48284701_1c8f1ef5",
+        "filename": "content/test/mock_widget_input_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-16T15:18:14Z",
+      "side": 1,
+      "message": "If this is really needed, use a delegating constructor.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "5e250c8d4c0e200ed4e6214b634a748ea3a1097d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
