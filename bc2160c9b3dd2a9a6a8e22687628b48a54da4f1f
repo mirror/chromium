@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31460914_e3588c1e",
+        "filename": "tools/clang/scripts/download_lld_mac.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-16T16:50:36Z",
+      "side": 1,
+      "message": "It\u0027s based on the old gold plugin downloader, but it\u0027s ~50% different (the gold downloader didn\u0027t have the \"only download if needed\" logic).\n\nDone.",
+      "parentUuid": "988dcc84_f5b01fdf",
+      "revId": "bc2160c9b3dd2a9a6a8e22687628b48a54da4f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0dd68978_d5fcd40a",
         "filename": "tools/clang/scripts/download_lld_mac.py",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "093278b1_3e286f8b",
+        "filename": "tools/clang/scripts/download_lld_mac.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-16T16:50:36Z",
+      "side": 1,
+      "message": "I rewrote this script to lean on update.py instead of using gsutil. It reduced the size of the script by 44%, and it will become much shorter still once the package includes the symlink.",
+      "parentUuid": "0dd68978_d5fcd40a",
+      "revId": "bc2160c9b3dd2a9a6a8e22687628b48a54da4f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "038cfbeb_06d81520",
         "filename": "tools/clang/scripts/package.py",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-16T16:27:44Z",
       "side": 1,
       "message": "In an ideal world, this would be committed separately.",
+      "revId": "bc2160c9b3dd2a9a6a8e22687628b48a54da4f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14f27a5_da467290",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-16T16:50:36Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/build/toolchain/win/midl.py?type\u003dcs\u0026q\u003dmidl.py\u0026sq\u003dpackage:chromium\u0026l\u003d87 ? :-)",
+      "parentUuid": "038cfbeb_06d81520",
       "revId": "bc2160c9b3dd2a9a6a8e22687628b48a54da4f1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
