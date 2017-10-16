@@ -18,5 +18,9 @@
 -VirtualKeyboardControllerAutoTest.SuppressedInMaximizedMode
 -VirtualKeyboardControllerTest.RestoreKeyboardDevices
 
+# These fail because screenshots do not work in mus (http://crbug.com/557397)
+-ScreenshotToolTest.EnablingCaptureRegionCallsDelegateAndDisablesTool
+-ScreenshotToolTest.EnablingCaptureScreenCallsDelegateAndDisablesTool
+
 # When adding new exclusions be sure to file bug with reason. Group with the
 # above if applicable.

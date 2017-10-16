@@ -376,3 +376,8 @@
 -PointerWatcherAdapterClassicTest.TouchEvents
 -PointerWatcherdapterClassicTest.Mousevents
 -PointerWatcherdapterClassicTest.Touchvents
+
+# These fail because screenshots do not work in mash (http://crbug.com/557397)
+-ScreenshotToolTest.EnablingCaptureRegionCallsDelegateAndDisablesTool
+-ScreenshotToolTest.EnablingCaptureScreenCallsDelegateAndDisablesTool
+
