@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89e339d6_7f2fda87",
+        "filename": "tools/vim/mojom/syntax/mojom.vim",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-16T22:29:06Z",
+      "side": 0,
+      "message": "We don\u0027t use /// comments.",
+      "range": {
+        "startLine": 25,
+        "startChar": 36,
+        "endLine": 25,
+        "endChar": 39
+      },
+      "revId": "44486b8cf6efba6fb4c46d05bb5b22d1d3d7d8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d68edc5_9aa99449",
+        "filename": "tools/vim/mojom/syntax/mojom.vim",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-16T22:29:06Z",
+      "side": 0,
+      "message": "L\"foo\" is not valid mojom.",
+      "range": {
+        "startLine": 29,
+        "startChar": 30,
+        "endLine": 29,
+        "endChar": 31
+      },
+      "revId": "44486b8cf6efba6fb4c46d05bb5b22d1d3d7d8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb19932f_45708d42",
+        "filename": "tools/vim/mojom/syntax/mojom.vim",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-16T22:29:06Z",
+      "side": 0,
+      "message": "Redundant",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 30
+      },
+      "revId": "44486b8cf6efba6fb4c46d05bb5b22d1d3d7d8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
