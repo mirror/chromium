@@ -1,0 +1,510 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ed5173d_ab033095",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "Why not report NavigationStart up here?",
+      "range": {
+        "startLine": 849,
+        "startChar": 40,
+        "endLine": 849,
+        "endChar": 0
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4df4cc_4b80aa6b",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "Should this be constexpr?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 6
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ce5d1b_a56f4f81",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "constexpr?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8246288a_76c6a048",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "Can we DCHECK that this never happens? We should stop doing things once TTI has been hit, right?",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 10
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc23d66_65789fbb",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "Given the comment, I think this intermediate variable isn\u0027t adding anything.\n\nI\u0027d just:\ntimer_fire_time +\u003d 0.001;",
+      "range": {
+        "startLine": 80,
+        "startChar": 9,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2195ecb8_a9915281",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "This makes me sad, as the timer code ends up computing the current time too.\nLooks like a ton of work to avoid the call though, so this is probably fine...",
+      "range": {
+        "startLine": 88,
+        "startChar": 35,
+        "endLine": 88,
+        "endChar": 62
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee753139_82b9b283",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "Would always passing in the current time be simpler? Using zero as a sentinel value feels a bit clunky here.",
+      "range": {
+        "startLine": 138,
+        "startChar": 11,
+        "endLine": 138,
+        "endChar": 27
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe45404_c228584b",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "It seems a bit weird that there\u0027s no -1 here. Why is this different from OnResourceLoadBegin?",
+      "range": {
+        "startLine": 163,
+        "startChar": 31,
+        "endLine": 163,
+        "endChar": 48
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd5b84f_fd6eb4e6",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "Will this condition (and the one below) ever be false? Should this be a DCHECK?",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 44
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82dd91fb_3c608fbf",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "Feel free to use auto here.",
+      "range": {
+        "startLine": 244,
+        "startChar": 2,
+        "endLine": 244,
+        "endChar": 33
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c74507a_3ee49c03",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "We should be able to throw out a bunch of old windows at this point, right?",
+      "range": {
+        "startLine": 290,
+        "startChar": 49,
+        "endLine": 290,
+        "endChar": 50
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e68a71_2d083c35",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "Link a bug.",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1be20612_2778da0d",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "Requiring the time here would make this API more consistent, and we need it eventually anyways. Any reason not to require it?",
+      "range": {
+        "startLine": 52,
+        "startChar": 26,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c4a264_0334cbc6",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "Should we be able to get rid of sufficiently old windows?\n\nWe should at least clear these once TTI has fired, right?",
+      "range": {
+        "startLine": 94,
+        "startChar": 24,
+        "endLine": 94,
+        "endChar": 50
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d99ae6_75a0b7ae",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "FindConsistentlyInteractiveCandidate.",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 46
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ae8abb_47aaf47f",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "Let\u0027s use one of quiet or quiescent, but not both.",
+      "range": {
+        "startLine": 115,
+        "startChar": 20,
+        "endLine": 115,
+        "endChar": 30
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9783de42_0325f16d",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "constexpr?",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 6
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d0b2ff2_16394f7b",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "I\u0027m not convinced that this general pattern of separating out the establishing of timestamps from calling the Simulate/Run methods is the right approach.\n\nWould it be easier to read if we tried to generally inline the times?",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 49
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75551c13_dd1ccb7b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "I think we want swap_stamp.",
+      "range": {
+        "startLine": 115,
+        "startChar": 57,
+        "endLine": 115,
+        "endChar": 62
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38722143_e4f7d25d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 54502,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "bounded below (or fix grammar some other way)",
+      "range": {
+        "startLine": 54502,
+        "startChar": 4,
+        "endLine": 54502,
+        "endChar": 15
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb4fab9d_3fc53a19",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 54502,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "for the definition of",
+      "range": {
+        "startLine": 54502,
+        "startChar": 50,
+        "endLine": 54502,
+        "endChar": 60
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed76dc4_8d9db972",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 54502,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-16T13:52:02Z",
+      "side": 1,
+      "message": "Would your explainer be a better link here?",
+      "range": {
+        "startLine": 54502,
+        "startChar": 28,
+        "endLine": 54502,
+        "endChar": 49
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
