@@ -150,15 +150,6 @@ TEST_F(TrayActionTest, NormalStateProgression) {
   ASSERT_EQ(1u, observer.observed_states().size());
   EXPECT_EQ(TrayActionState::kActive, observer.observed_states()[0]);
 
-  observer.ClearObservedStates();
-  tray_action->UpdateLockScreenNoteState(TrayActionState::kBackground);
-  EXPECT_EQ(TrayActionState::kBackground,
-            tray_action->GetLockScreenNoteState());
-  EXPECT_FALSE(tray_action->IsLockScreenNoteActive());
-  ASSERT_EQ(1u, observer.observed_states().size());
-  EXPECT_EQ(TrayActionState::kBackground, observer.observed_states()[0]);
-  observer.ClearObservedStates();
-
   tray_action->UpdateLockScreenNoteState(TrayActionState::kNotAvailable);
   EXPECT_EQ(TrayActionState::kNotAvailable,
             tray_action->GetLockScreenNoteState());
