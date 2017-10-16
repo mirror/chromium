@@ -8,18 +8,26 @@
 #include <string>
 #include <utility>
 
+#include "base/json/json_reader.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/ref_counted_memory.h"
 #include "base/stl_util.h"
 #include "base/strings/string_piece.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "chrome/browser/printing/print_preview_dialog_controller.h"
+#include "chrome/browser/printing/print_view_manager.h"
+#include "chrome/browser/ui/webui/print_preview/print_preview_ui.h"
 #include "chrome/browser/ui/webui/print_preview/printer_handler.h"
 #include "chrome/common/cloud_print/cloud_print_cdd_conversion.h"
 #include "chrome/common/crash_keys.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "printing/backend/print_backend.h"
 #include "printing/backend/print_backend_consts.h"
+#include "printing/page_range.h"
 
 #if defined(OS_WIN)
 #include "base/strings/string_split.h"
@@ -118,6 +126,13 @@ void PrintersToValues(const printing::PrinterList& printer_list,
   }
 }
 
+scoped_refptr<base::RefCountedBytes> SendNextPage(PrintPreviewUI* preview_ui,
+                                                  int page_num) {
+  scoped_refptr<base::RefCountedBytes> data;
+  preview_ui->GetPrintPreviewDataForIndex(page_num, &data);
+  return data;
+}
+
 }  // namespace
 
 std::pair<std::string, std::string> GetPrinterNameAndDescription(
@@ -180,5 +195,73 @@ void ConvertPrinterListForCallback(
   if (!printers.empty())
     callback.Run(printers);
   done_callback.Run();
+}
+
+void StartLocalPrint(const PrinterHandler::PrintCallback& callback,
+                     const std::string& ticket_json,
+                     const scoped_refptr<base::RefCountedBytes>& print_data,
+                     content::WebContents* preview_web_contents) {
+  std::unique_ptr<base::DictionaryValue> job_settings =
+      base::DictionaryValue::From(base::JSONReader::Read(ticket_json));
+  if (!job_settings) {
+    callback.Run(false, base::Value("Invalid settings"));
+    return;
+  }
+  job_settings->SetBoolean(printing::kSettingHeaderFooterEnabled, false);
+  job_settings->SetInteger(printing::kSettingMarginsType, printing::NO_MARGINS);
+  int page_count = 0;
+  if (!job_settings->GetInteger("pageCount", &page_count) || page_count == 0) {
+    callback.Run(false, base::Value("Empty page range"));
+    return;
+  }
+
+  // Get print view manager.
+  printing::PrintPreviewDialogController* dialog_controller =
+      printing::PrintPreviewDialogController::GetInstance();
+  content::WebContents* initiator =
+      dialog_controller ? dialog_controller->GetInitiator(preview_web_contents)
+                        : nullptr;
+  printing::PrintViewManager* print_view_manager =
+      printing::PrintViewManager::FromWebContents(initiator);
+  if (!print_view_manager) {
+    callback.Run(false, base::Value("Initiator closed"));
+    return;
+  }
+
+  PrintPreviewUI* preview_ui = static_cast<PrintPreviewUI*>(
+      preview_web_contents->GetWebUI()->GetController());
+#if defined(OS_MACOSX)
+  std::set<int> pages;
+  const base::ListValue* page_range_array = NULL;
+  if (job_settings->GetList(kSettingPageRange, &page_range_array)) {
+    for (size_t index = 0; index < page_range_array->GetSize(); ++index) {
+      const base::DictionaryValue* dict;
+      if (!page_range_array->GetDictionary(index, &dict))
+        continue;
+
+      PageRange range;
+      if (!dict->GetInteger(kSettingPageRangeFrom, &range.from) ||
+          !dict->GetInteger(kSettingPageRangeTo, &range.to)) {
+        continue;
+      }
+
+      // Page numbers are 1-based in the dictionary.
+      // Page numbers are 0-based for the printing context.
+      range.from--;
+      range.to--;
+      for (int i = range.to; i <= range.from; i++)
+        pages.insert(i);
+    }
+  }
+  if (!preview_ui->GetPrintPreviewDataForIndex(pages.begin(), &print_data)) {
+    callback.Run(false, base::Value("Print failed"));
+    return;
+  }
+#endif
+  print_view_manager->PrintForPrintPreview(
+      callback, std::move(job_settings), page_count, print_data,
+      preview_web_contents->GetMainFrame(),
+      preview_web_contents->GetMainFrame()->GetProcess(),
+      base::Bind(&SendNextPage, preview_ui));
 }
 }  // namespace printing
