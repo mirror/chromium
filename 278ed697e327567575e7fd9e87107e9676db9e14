@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea4da6b8_15beaac4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationItemView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-16T21:15:59Z",
+      "side": 1,
+      "message": "nit: Brief description about what is different?",
+      "range": {
+        "startLine": 22,
+        "startChar": 68,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "278ed697e327567575e7fd9e87107e9676db9e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
