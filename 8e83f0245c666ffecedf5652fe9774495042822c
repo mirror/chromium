@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2a37308_816da28a",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3898,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-16T14:38:29Z",
+      "side": 1,
+      "message": "what you\u0027re testing here, I think, is that credit card\u0027s don\u0027t get loaded into memory on startup if the pref is disabled.",
+      "revId": "8e83f0245c666ffecedf5652fe9774495042822c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "222011de_acb272c5",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3936,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-16T14:38:29Z",
+      "side": 1,
+      "message": "nit: add \"were loaded\" to the comment and s/autofilled/credit card/",
+      "revId": "8e83f0245c666ffecedf5652fe9774495042822c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
