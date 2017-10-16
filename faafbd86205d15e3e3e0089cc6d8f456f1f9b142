@@ -22,6 +22,30 @@
       "revId": "faafbd86205d15e3e3e0089cc6d8f456f1f9b142",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006c0882_53a8b0a6",
+        "filename": "headless/lib/browser/headless_browser_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-16T20:52:49Z",
+      "side": 1,
+      "message": "I think that would be dangerous. The UI thread can mutate |browser_contexts_| while the IO thread is reading from it.",
+      "parentUuid": "b81b8410_106975c4",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 242,
+        "endChar": 3
+      },
+      "revId": "faafbd86205d15e3e3e0089cc6d8f456f1f9b142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
