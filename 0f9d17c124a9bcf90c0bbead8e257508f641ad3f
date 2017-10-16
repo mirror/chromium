@@ -16,6 +16,24 @@
       "revId": "0f9d17c124a9bcf90c0bbead8e257508f641ad3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "524bbd5d_c5b215f9",
+        "filename": "content/public/common/network_connection_tracker.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-16T19:40:39Z",
+      "side": 1,
+      "message": "You are correct, we will be in trouble, which is why it needs to be checked again after we grab the lock.  This is a fairly standard when using this pattern (Not saying you should have been familiar with it, just that it may seem a bit unexpected, but it\u0027s a common thing to do).",
+      "parentUuid": "824835c8_a7bd59c1",
+      "revId": "0f9d17c124a9bcf90c0bbead8e257508f641ad3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
