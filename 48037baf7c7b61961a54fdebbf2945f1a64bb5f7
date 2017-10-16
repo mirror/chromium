@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe512024_171ae1c6",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-16T17:24:56Z",
+      "side": 1,
+      "message": "Then can you please describe the function\u0027s precondition without mentioning internal |state_| of AS? To me the original comment (L52-54 left side) was better on this regard.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 40
+      },
+      "revId": "48037baf7c7b61961a54fdebbf2945f1a64bb5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20889d2_c5fd6dcf",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-16T17:24:56Z",
+      "side": 1,
+      "message": "OT: Used only in unittest?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 31
+      },
+      "revId": "48037baf7c7b61961a54fdebbf2945f1a64bb5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77280860_55830a66",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-16T17:24:56Z",
+      "side": 1,
+      "message": "OT: can we remove this is we check if target_mode_ is nullopt in  ArcSessionRunner::RequestStart() instead?",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 37
+      },
+      "revId": "48037baf7c7b61961a54fdebbf2945f1a64bb5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
