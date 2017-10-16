@@ -90,6 +90,7 @@ SkColor GetAuraColor(NativeTheme::ColorId color_id,
   static const SkColor kResultsTableText = SK_ColorBLACK;
   static const SkColor kResultsTableDimmedText =
       SkColorSetRGB(0x64, 0x64, 0x64);
+  static const SkColor kResultsTableInvisibleText = SK_ColorTRANSPARENT;
   static const SkColor kResultsTableHoveredBackground = color_utils::AlphaBlend(
       kTextSelectionBackgroundFocused, kTextfieldDefaultBackground, 0x40);
   const SkColor kPositiveTextColor = SkColorSetRGB(0x0b, 0x80, 0x43);
@@ -284,6 +285,8 @@ SkColor GetAuraColor(NativeTheme::ColorId color_id,
     case NativeTheme::kColorId_ResultsTableHoveredDimmedText:
     case NativeTheme::kColorId_ResultsTableSelectedDimmedText:
       return kResultsTableDimmedText;
+    case NativeTheme::kColorId_ResultsTableInvisibleText:
+      return kResultsTableInvisibleText;
     case NativeTheme::kColorId_ResultsTableNormalUrl:
     case NativeTheme::kColorId_ResultsTableHoveredUrl:
     case NativeTheme::kColorId_ResultsTableSelectedUrl:
