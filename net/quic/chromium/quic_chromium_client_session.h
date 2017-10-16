@@ -61,6 +61,13 @@ namespace test {
 class QuicChromiumClientSessionPeer;
 }  // namespace test
 
+// Result of a session migration attempt.
+enum class MigrationResult {
+  SUCCESS,         // Migration succeeded.
+  NO_NEW_NETWORK,  // Migration failed since no new network was found.
+  FAILURE          // Migration failed for other reasons.
+};
+
 class NET_EXPORT_PRIVATE QuicChromiumClientSession
     : public QuicSpdyClientSessionBase,
       public MultiplexedSession,
@@ -295,6 +302,8 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
       std::unique_ptr<QuicServerInfo> server_info,
       const QuicServerId& server_id,
       bool require_confirmation,
+      bool allow_server_migration,
+      bool migrate_session_early,
       int yield_after_packets,
       QuicTime::Delta yield_after_duration,
       int cert_verify_flags,
@@ -428,6 +437,13 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   // otherwise a PING packet is written.
   void WriteToNewSocket();
 
+  // Migreates session over to use |peer_address| and |network|.
+  // If |network| is kInvalidNetworkHandle, default network is used. If the
+  // migration fails and |close_session_on_error| is true, session will closed.
+  MigrationResult Migrate(NetworkChangeNotifier::NetworkHandle network,
+                          IPEndPoint peer_address,
+                          bool close_session_on_error);
+
   // Migrates session onto new socket, i.e., starts reading from
   // |socket| in addition to any previous sockets, and sets |writer|
   // to be the new default writer. Returns true if socket was
@@ -531,6 +547,14 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
 
   QuicServerId server_id_;
   bool require_confirmation_;
+  bool allow_server_migration_;
+  // Set if early migration should be attempted when the connection experiences
+  // poor connectivity.
+  bool migrate_session_early_;
+  QuicClock* clock_;  // Unowned.
+  int yield_after_packets_;
+  QuicTime::Delta yield_after_duration_;
+
   std::unique_ptr<QuicCryptoClientStream> crypto_stream_;
   QuicStreamFactory* stream_factory_;
   std::vector<std::unique_ptr<DatagramClientSocket>> sockets_;
