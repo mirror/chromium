@@ -215,6 +215,28 @@ class ThreadHeapStats {
   double estimated_marking_time_per_byte_;
 };
 
+class StackRoots final {
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(StackRoots);
+
+ public:
+  explicit StackRoots(ThreadHeap*);
+  ~StackRoots();
+  void Visit(Visitor*);
+
+  void CopyStackUntilMarker();
+  void RecordStackEnd(intptr_t* end_of_stack) { end_of_stack_ = end_of_stack; }
+
+ private:
+  void VisitAsanFakeStackForPointer(Visitor*, Address ptr);
+
+  ThreadHeap* heap_;
+  intptr_t* start_of_stack_;
+  intptr_t* end_of_stack_;
+  Vector<Address> stack_copy_;
+  void* marker_;
+};
+
 class PLATFORM_EXPORT ThreadHeap {
  public:
   explicit ThreadHeap(ThreadState*);

@@ -39,7 +39,6 @@
 #include "platform/heap/HeapCompact.h"
 #include "platform/heap/PageMemory.h"
 #include "platform/heap/PagePool.h"
-#include "platform/heap/SafePoint.h"
 #include "platform/heap/ThreadState.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/instrumentation/tracing/web_memory_allocator_dump.h"
@@ -53,6 +52,151 @@
 #include "public/platform/Platform.h"
 
 namespace blink {
+
+#ifdef ADDRESS_SANITIZER
+// When we are running under AddressSanitizer with
+// detect_stack_use_after_return=1 then stack marker obtained from
+// SafePointScope will point into a fake stack.  Detect this case by checking if
+// it falls in between current stack frame and stack start and use an arbitrary
+// high enough value for it.  Don't adjust stack marker in any other case to
+// match behavior of code running without AddressSanitizer.
+NO_SANITIZE_ADDRESS static void* AdjustScopeMarkerForAdressSanitizer(
+    void* scope_marker) {
+  Address start = reinterpret_cast<Address>(WTF::GetStackStart());
+  Address end = reinterpret_cast<Address>(&start);
+  CHECK_LT(end, start);
+
+  if (end <= scope_marker && scope_marker < start)
+    return scope_marker;
+
+  // 256 is as good an approximation as any else.
+  const size_t kBytesToCopy = sizeof(Address) * 256;
+  if (static_cast<size_t>(start - end) < kBytesToCopy)
+    return start;
+
+  return end + kBytesToCopy;
+}
+#endif
+
+// TODO(haraken): The first void* pointer is unused. Remove it.
+using PushAllRegistersCallback = void (*)(void*, StackRoots*, intptr_t*);
+extern "C" void PushAllRegisters(void*, StackRoots*, PushAllRegistersCallback);
+
+static void DidPushAllRegisters(void*,
+                                StackRoots* stack_roots,
+                                intptr_t* stack_end) {
+  stack_roots->RecordStackEnd(stack_end);
+  stack_roots->CopyStackUntilMarker();
+}
+
+StackRoots::StackRoots(ThreadHeap* heap)
+    : heap_(heap),
+      start_of_stack_(reinterpret_cast<intptr_t*>(WTF::GetStackStart())),
+      end_of_stack_(reinterpret_cast<intptr_t*>(WTF::GetStackStart())) {
+  marker_ = this;
+#ifdef ADDRESS_SANITIZER
+  marker_ = AdjustScopeMarkerForAdressSanitizer(this);
+#endif
+  // DCHECK(IsGCForbidden());
+  PushAllRegisters(nullptr, this, DidPushAllRegisters);
+}
+
+StackRoots::~StackRoots() {
+  stack_copy_.clear();
+  marker_ = nullptr;
+}
+
+NO_SANITIZE_ADDRESS
+void StackRoots::CopyStackUntilMarker() {
+  Address* to = reinterpret_cast<Address*>(marker_);
+  Address* from = reinterpret_cast<Address*>(end_of_stack_);
+  CHECK_LT(from, to);
+  CHECK_LE(to, reinterpret_cast<Address*>(start_of_stack_));
+  size_t slot_count = static_cast<size_t>(to - from);
+// Catch potential performance issues.
+#if defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER)
+  // ASan/LSan use more space on the stack and we therefore
+  // increase the allowed stack copying for those builds.
+  DCHECK_LT(slot_count, 2048u);
+#else
+  DCHECK_LT(slot_count, 1024u);
+#endif
+
+  DCHECK(!stack_copy_.size());
+  stack_copy_.resize(slot_count);
+  for (size_t i = 0; i < slot_count; ++i) {
+    stack_copy_[i] = from[i];
+  }
+}
+
+// Stack scanning may overrun the bounds of local objects and/or race with
+// other threads that use this stack.
+NO_SANITIZE_ADDRESS
+NO_SANITIZE_THREAD
+void StackRoots::Visit(Visitor* visitor) {
+  Address* start = reinterpret_cast<Address*>(start_of_stack_);
+  // If there is a safepoint scope marker we should stop the stack
+  // scanning there to not touch active parts of the stack. Anything
+  // interesting beyond that point is in the safepoint stack copy.
+  // If there is no scope marker the thread is blocked and we should
+  // scan all the way to the recorded end stack pointer.
+  Address* end = reinterpret_cast<Address*>(end_of_stack_);
+  Address* safe_point_scope_marker = reinterpret_cast<Address*>(marker_);
+  Address* current = safe_point_scope_marker ? safe_point_scope_marker : end;
+
+  // Ensure that current is aligned by address size otherwise the loop below
+  // will read past start address.
+  current = reinterpret_cast<Address*>(reinterpret_cast<intptr_t>(current) &
+                                       ~(sizeof(Address) - 1));
+
+  for (; current < start; ++current) {
+    Address ptr = *current;
+#if defined(MEMORY_SANITIZER)
+    // |ptr| may be uninitialized by design. Mark it as initialized to keep
+    // MSan from complaining.
+    // Note: it may be tempting to get rid of |ptr| and simply use |current|
+    // here, but that would be incorrect. We intentionally use a local
+    // variable because we don't want to unpoison the original stack.
+    __msan_unpoison(&ptr, sizeof(ptr));
+#endif
+    heap_->CheckAndMarkPointer(visitor, ptr);
+    VisitAsanFakeStackForPointer(visitor, ptr);
+  }
+
+  for (Address ptr : stack_copy_) {
+#if defined(MEMORY_SANITIZER)
+    // See the comment above.
+    __msan_unpoison(&ptr, sizeof(ptr));
+#endif
+    heap_->CheckAndMarkPointer(visitor, ptr);
+    VisitAsanFakeStackForPointer(visitor, ptr);
+  }
+}
+
+NO_SANITIZE_ADDRESS
+void StackRoots::VisitAsanFakeStackForPointer(Visitor* visitor, Address ptr) {
+#if defined(ADDRESS_SANITIZER)
+  Address* start = reinterpret_cast<Address*>(start_of_stack_);
+  Address* end = reinterpret_cast<Address*>(end_of_stack_);
+  Address* fake_frame_start = nullptr;
+  Address* fake_frame_end = nullptr;
+  Address* maybe_fake_frame = reinterpret_cast<Address*>(ptr);
+  Address* real_frame_for_fake_frame = reinterpret_cast<Address*>(
+      __asan_addr_is_in_fake_stack(asan_fake_stack_, maybe_fake_frame,
+                                   reinterpret_cast<void**>(&fake_frame_start),
+                                   reinterpret_cast<void**>(&fake_frame_end)));
+  if (real_frame_for_fake_frame) {
+    // This is a fake frame from the asan fake stack.
+    if (real_frame_for_fake_frame > end && start > real_frame_for_fake_frame) {
+      // The real stack address for the asan fake frame is
+      // within the stack range that we need to scan so we need
+      // to visit the values in the fake frame.
+      for (Address* p = fake_frame_start; p < fake_frame_end; ++p)
+        heap_->CheckAndMarkPointer(visitor, *p);
+    }
+  }
+#endif
+}
 
 HeapAllocHooks::AllocationHook* HeapAllocHooks::allocation_hook_ = nullptr;
 HeapAllocHooks::FreeHook* HeapAllocHooks::free_hook_ = nullptr;
@@ -537,7 +681,8 @@ void ThreadHeap::VisitPersistentRoots(Visitor* visitor) {
 void ThreadHeap::VisitStackRoots(Visitor* visitor) {
   DCHECK(thread_state_->IsInGC());
   TRACE_EVENT0("blink_gc", "ThreadHeap::visitStackRoots");
-  thread_state_->VisitStack(visitor);
+  StackRoots roots(this);
+  roots.Visit(visitor);
 }
 
 BasePage* ThreadHeap::LookupPageForAddress(Address address) {

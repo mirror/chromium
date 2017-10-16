@@ -363,37 +363,7 @@ class PLATFORM_EXPORT ThreadState {
 
   void FlushHeapDoesNotContainCacheIfNeeded();
 
-  // Safepoint related functionality.
-  //
-  // When a thread attempts to perform GC it needs to stop all other threads
-  // that use the heap or at least guarantee that they will not touch any
-  // heap allocated object until GC is complete.
-  //
-  // We say that a thread is at a safepoint if this thread is guaranteed to
-  // not touch any heap allocated object or any heap related functionality until
-  // it leaves the safepoint.
-  //
-  // Notice that a thread does not have to be paused if it is at safepoint it
-  // can continue to run and perform tasks that do not require interaction
-  // with the heap. It will be paused if it attempts to leave the safepoint and
-  // there is a GC in progress.
-  //
-  // Each thread that has ThreadState attached must:
-  //   - periodically check if GC is requested from another thread by calling a
-  //     safePoint() method;
-  //   - use SafePointScope around long running loops that have no safePoint()
-  //     invocation inside, such loops must not touch any heap object;
-  //
-  // Check if GC is requested by another thread and pause this thread if this is
-  // the case.  Can only be called when current thread is in a consistent state.
   void SafePoint(BlinkGC::StackState);
-
-  // Mark current thread as running inside safepoint.
-  void EnterSafePoint(BlinkGC::StackState, void*);
-  void LeaveSafePoint();
-
-  void RecordStackEnd(intptr_t* end_of_stack) { end_of_stack_ = end_of_stack; }
-  NO_SANITIZE_ADDRESS void CopyStackUntilSafePointScope();
 
   // A region of PersistentNodes allocated on the given thread.
   PersistentRegion* GetPersistentRegion() const {
@@ -524,11 +494,6 @@ class PLATFORM_EXPORT ThreadState {
   ThreadState();
   ~ThreadState();
 
-  void ClearSafePointScopeMarker() {
-    safe_point_stack_copy_.clear();
-    safe_point_scope_marker_ = nullptr;
-  }
-
   // shouldSchedule{Precise,Idle}GC and shouldForceConservativeGC
   // implement the heuristics that are used to determine when to collect
   // garbage.
@@ -576,8 +541,6 @@ class PLATFORM_EXPORT ThreadState {
 
   void ReportMemoryToV8();
 
-  friend class SafePointScope;
-
   friend class BlinkGCObserver;
 
   // Adds the given observer to the ThreadState's observer list. This doesn't
@@ -605,11 +568,7 @@ class PLATFORM_EXPORT ThreadState {
   ThreadIdentifier thread_;
   std::unique_ptr<PersistentRegion> persistent_region_;
   BlinkGC::StackState stack_state_;
-  intptr_t* start_of_stack_;
-  intptr_t* end_of_stack_;
 
-  void* safe_point_scope_marker_;
-  Vector<Address> safe_point_stack_copy_;
   bool sweep_forbidden_;
   size_t no_allocation_count_;
   size_t gc_forbidden_count_;

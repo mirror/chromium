@@ -39,7 +39,6 @@ source_set("heap") {
     "Persistent.h",
     "PersistentNode.cpp",
     "PersistentNode.h",
-    "SafePoint.h",
     "SelfKeepAlive.h",
     "SparseHeapBitmap.cpp",
     "SparseHeapBitmap.h",
