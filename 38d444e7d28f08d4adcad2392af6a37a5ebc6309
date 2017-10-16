@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3f80200_13efff5e",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-16T21:44:39Z",
+      "side": 1,
+      "message": "i think the lock is needed, otherwise i think db_ could deleted part way thru",
+      "revId": "38d444e7d28f08d4adcad2392af6a37a5ebc6309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
