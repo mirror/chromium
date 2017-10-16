@@ -80,7 +80,8 @@ class WheelEndAckWaiter : public content::RenderWidgetHost::InputEventObserver {
         wheel_end_ack_received_(false) {}
   ~WheelEndAckWaiter() override {}
 
-  void OnInputEventAck(const blink::WebInputEvent& event) override {
+  void OnInputEventAck(const blink::WebInputEvent& event,
+                       bool consumed) override {
     if (event.GetType() == blink::WebInputEvent::kMouseWheel) {
       blink::WebMouseWheelEvent received_wheel =
           *static_cast<const blink::WebMouseWheelEvent*>(&event);

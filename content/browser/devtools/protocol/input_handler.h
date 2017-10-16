@@ -125,7 +125,8 @@ class InputHandler : public DevToolsDomainHandler,
  private:
   // InputEventObserver
   void OnInputEvent(const blink::WebInputEvent& event) override;
-  void OnInputEventAck(const blink::WebInputEvent& event) override;
+  void OnInputEventAck(const blink::WebInputEvent& event,
+                       bool consumed) override;
 
   void SynthesizeRepeatingScroll(
       SyntheticSmoothScrollGestureParams gesture_params,

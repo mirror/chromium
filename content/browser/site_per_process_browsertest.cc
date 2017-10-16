@@ -977,7 +977,8 @@ class InputEventAckWaiter
         desired_ack_type_received_(false) {}
   ~InputEventAckWaiter() override {}
 
-  void OnInputEventAck(const blink::WebInputEvent& event) override {
+  void OnInputEventAck(const blink::WebInputEvent& event,
+                       bool consumed) override {
     if (event.GetType() == ack_type_waiting_for_) {
       desired_ack_type_received_ = true;
       if (message_loop_runner_->loop_running())

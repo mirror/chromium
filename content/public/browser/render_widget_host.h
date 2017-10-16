@@ -224,7 +224,7 @@ class CONTENT_EXPORT RenderWidgetHost : public IPC::Sender {
     virtual ~InputEventObserver() {}
 
     virtual void OnInputEvent(const blink::WebInputEvent&) {}
-    virtual void OnInputEventAck(const blink::WebInputEvent&) {}
+    virtual void OnInputEventAck(const blink::WebInputEvent&, bool consumed) {}
   };
 
   // Add/remove an input event observer.
