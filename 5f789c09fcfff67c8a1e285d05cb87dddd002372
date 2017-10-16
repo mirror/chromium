@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "ed8cfc5b_59c7347f",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-16T22:51:28Z",
+      "side": 1,
+      "message": "Created a CL to clean up SystemTrayClient.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/721632\n\nDo you want to rebase on top of the CL? Or you plan to land this in M63?",
+      "parentUuid": "9cdfdd59_71c29142",
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41350f2c_c440612b",
         "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
         "patchSetId": 3
