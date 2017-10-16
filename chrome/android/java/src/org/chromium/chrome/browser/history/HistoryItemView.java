@@ -142,7 +142,9 @@ public class HistoryItemView extends SelectableItemView<HistoryItem> implements 
      */
     public void setRemoveButtonVisible(boolean visible) {
         mRemoveButtonVisible = visible;
-        if (!PrefServiceBridge.getInstance().canDeleteBrowsingHistory()) return;
+        if (!PrefServiceBridge.getInstance().getBoolean(
+                    PrefServiceBridge.ALLOW_DELETING_BROWSER_HISTORY))
+            return;
 
         mRemoveButton.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
@@ -178,9 +180,10 @@ public class HistoryItemView extends SelectableItemView<HistoryItem> implements 
     }
 
     private void updateRemoveButtonVisibility() {
-        int removeButtonVisibility =
-                !PrefServiceBridge.getInstance().canDeleteBrowsingHistory() ? View.GONE
-                        : mRemoveButtonVisible ? View.VISIBLE : View.INVISIBLE;
+        int removeButtonVisibility = !PrefServiceBridge.getInstance().getBoolean(
+                                             PrefServiceBridge.ALLOW_DELETING_BROWSER_HISTORY)
+                ? View.GONE
+                : mRemoveButtonVisible ? View.VISIBLE : View.INVISIBLE;
         mRemoveButton.setVisibility(removeButtonVisibility);
 
         int endPadding = removeButtonVisibility == View.GONE ? mEndPadding : 0;
