@@ -308,7 +308,11 @@ bool InitializeICU() {
 #endif
 
 // To respond to the timezone change properly, the default timezone
-// cache in ICU has to be populated on starting up.
+// cache in ICU has to be populated on starting up. Note that we don't need
+// to call createDefault() on macOS because the macOS sandbox is configured to
+// allow accessing /etc/localtime from a renderer process. On Windows,
+// RendererMainPlatformDelegate::PlatformInitialize() calls createDefault().
+// Android uses JNI to detect the timezone and set the ICU default timezone.
 // TODO(jungshik): Some callers do not care about tz at all. If necessary,
 // add a boolean argument to this function to init'd the default tz only
 // when requested.
