@@ -13,7 +13,6 @@
 #include "base/test/scoped_feature_list.h"
 #include "chrome/browser/feature_engagement/feature_tracker.h"
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
-#include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/pref_names.h"
@@ -52,13 +51,13 @@ class MockTracker : public Tracker {
 class FakeNewTabTracker : public NewTabTracker {
  public:
   FakeNewTabTracker(Tracker* feature_tracker, Profile* profile)
-      : NewTabTracker(
-            feature_engagement::SessionDurationUpdaterFactory::GetInstance()
-                ->GetForProfile(profile)),
+      : NewTabTracker(profile),
         feature_tracker_(feature_tracker),
         pref_service_(
             base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>()) {
-    SessionDurationUpdater::RegisterProfilePrefs(pref_service_->registry());
+    SessionDurationUpdater::RegisterProfilePrefs(
+        pref_service_->registry(),
+        prefs::kNewTabInProductHelpObservedSessionTime);
   }
 
   PrefService* GetPrefs() { return pref_service_.get(); }
@@ -92,8 +91,8 @@ class NewTabTrackerEventTest : public testing::Test {
 
   void TearDown() override {
     new_tab_tracker_->RemoveSessionDurationObserver();
-    metrics::DesktopSessionDurationTracker::CleanupForTesting();
     testing_profile_manager_.reset();
+    metrics::DesktopSessionDurationTracker::CleanupForTesting();
   }
 
  protected:

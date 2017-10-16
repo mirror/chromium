@@ -59,6 +59,11 @@ const char kHomePage[] = "homepage";
 // frequency it has been ignored.
 const char kImportantSitesDialogHistory[] = "important_sites_dialog";
 
+// Stores the total amount of observed active session time for the user while
+// the incognito window in product help is active. Observed time is active
+// session time in seconds.
+const char kObservedSessionTime[] = "profile.observed_session_time";
+
 #if defined(OS_WIN)
 // This is a timestamp of the last time this profile was reset by a third party
 // tool. On Windows, a third party tool may set a registry value that will be
@@ -90,10 +95,6 @@ const char kSessionExitedCleanly[] = "profile.exited_cleanly";
 // one of |kPrefExitTypeNormal| or |kPrefExitTypeSessionEnded| during
 // shutdown. Used to determine the exit type the last time the profile was open.
 const char kSessionExitType[] = "profile.exit_type";
-
-// Stores the total amount of observed active session time for the user.
-// Observed time is active session time.
-const char kObservedSessionTime[] = "profile.observed_time";
 
 // The last time that the site engagement service recorded an engagement event
 // for this profile for any URL. Recorded only during shutdown. Used to prevent
