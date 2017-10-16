@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread.h"
@@ -27,6 +28,8 @@ namespace ui {
 class Gpu : public gpu::GpuChannelHostFactory,
             public gpu::GpuChannelEstablishFactory {
  public:
+  using GpuPtrFactory = base::RepeatingCallback<mojom::GpuPtr(void)>;
+
   ~Gpu() override;
 
   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager() const {
@@ -39,6 +42,9 @@ class Gpu : public gpu::GpuChannelHostFactory,
   static std::unique_ptr<Gpu> Create(
       service_manager::Connector* connector,
       const std::string& service_name,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner = nullptr);
+  static std::unique_ptr<Gpu> Create(
+      GpuPtrFactory factory,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner = nullptr);
 
   scoped_refptr<viz::ContextProvider> CreateContextProvider(
@@ -58,15 +64,23 @@ class Gpu : public gpu::GpuChannelHostFactory,
  private:
   friend class GpuTest;
 
-  using GpuPtrFactory = base::RepeatingCallback<mojom::GpuPtr(void)>;
   Gpu(GpuPtrFactory factory,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   scoped_refptr<gpu::GpuChannelHost> GetGpuChannel();
-  void OnEstablishedGpuChannel(int client_id,
-                               mojo::ScopedMessagePipeHandle channel_handle,
-                               const gpu::GPUInfo& gpu_info,
-                               const gpu::GpuFeatureInfo& gpu_feature_info);
+  void OnEstablishedGpuChannel();
+  void EstablishGpuChannelOnIO();
+  void CreateJpegDecodeAcceleratorOnIO(
+      media::mojom::GpuJpegDecodeAcceleratorRequest jda_request);
+  void CreateVideoEncodeAcceleratorProviderOnIO(
+      media::mojom::VideoEncodeAcceleratorProviderRequest vea_provider_request);
+  void OnEstablishedGpuChannelOnIO(int client_id,
+                                   mojo::ScopedMessagePipeHandle channel_handle,
+                                   const gpu::GPUInfo& gpu_info,
+                                   const gpu::GpuFeatureInfo& gpu_feature_info);
+
+  void SetGpuPtrOnIO(ui::mojom::GpuPtrInfo gpu_info);
+  bool IsIOThread();
 
   // gpu::GpuChannelHostFactory overrides:
   bool IsMainThread() override;
@@ -76,14 +90,22 @@ class Gpu : public gpu::GpuChannelHostFactory,
 
   scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
-  GpuPtrFactory factory_;
+  base::WaitableEvent sync_event_;
   base::WaitableEvent shutdown_event_;
   std::unique_ptr<base::Thread> io_thread_;
   std::unique_ptr<ClientGpuMemoryBufferManager> gpu_memory_buffer_manager_;
 
+  // Bound to |io_task_runner_|.
   ui::mojom::GpuPtr gpu_;
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_;
   std::vector<gpu::GpuChannelEstablishedCallback> establish_callbacks_;
+
+  int client_id_ = 0;
+  gpu::GPUInfo gpu_info_;
+  gpu::GpuFeatureInfo gpu_feature_info_;
+  mojo::ScopedMessagePipeHandle channel_handle_;
+
+  base::WeakPtrFactory<Gpu> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(Gpu);
 };

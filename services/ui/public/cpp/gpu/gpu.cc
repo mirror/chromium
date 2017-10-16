@@ -34,12 +34,16 @@ Gpu::Gpu(GpuPtrFactory factory,
          scoped_refptr<base::SingleThreadTaskRunner> task_runner)
     : main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       io_task_runner_(std::move(task_runner)),
-      factory_(std::move(factory)),
+      sync_event_(base::WaitableEvent::ResetPolicy::MANUAL,
+                  base::WaitableEvent::InitialState::SIGNALED),
       shutdown_event_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
-                      base::WaitableEvent::InitialState::NOT_SIGNALED) {
+                      base::WaitableEvent::InitialState::NOT_SIGNALED),
+      weak_ptr_factory_(this) {
+  TRACE_EVENT0("yyy", __FUNCTION__);
+
   DCHECK(main_task_runner_);
   gpu_memory_buffer_manager_ =
-      base::MakeUnique<ClientGpuMemoryBufferManager>(factory_.Run());
+      base::MakeUnique<ClientGpuMemoryBufferManager>(factory.Run());
   if (!io_task_runner_) {
     io_thread_.reset(new base::Thread("GPUIOThread"));
     base::Thread::Options thread_options(base::MessageLoop::TYPE_IO, 0);
@@ -47,13 +51,27 @@ Gpu::Gpu(GpuPtrFactory factory,
     CHECK(io_thread_->StartWithOptions(thread_options));
     io_task_runner_ = io_thread_->task_runner();
   }
+  io_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&Gpu::SetGpuPtrOnIO, weak_ptr_factory_.GetWeakPtr(),
+                     factory.Run().PassInterface()));
 }
 
 Gpu::~Gpu() {
   DCHECK(IsMainThread());
+  if (gpu_) {
+    io_task_runner_->PostTask(
+        FROM_HERE, base::BindOnce([](ui::mojom::GpuPtr gpu) { gpu.reset(); },
+                                  std::move(gpu_)));
+  }
   shutdown_event_.Signal();
   if (gpu_channel_)
     gpu_channel_->DestroyChannel();
+}
+
+void Gpu::SetGpuPtrOnIO(ui::mojom::GpuPtrInfo gpu_info) {
+  DCHECK(IsIOThread());
+  gpu_.Bind(std::move(gpu_info));
 }
 
 // static
@@ -63,6 +81,13 @@ std::unique_ptr<Gpu> Gpu::Create(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   GpuPtrFactory factory =
       base::BindRepeating(&DefaultFactory, connector, service_name);
+  return base::WrapUnique(new Gpu(std::move(factory), std::move(task_runner)));
+}
+
+// static
+std::unique_ptr<Gpu> Gpu::Create(
+    GpuPtrFactory factory,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   return base::WrapUnique(new Gpu(std::move(factory), std::move(task_runner)));
 }
 
@@ -92,26 +117,26 @@ scoped_refptr<viz::ContextProvider> Gpu::CreateContextProvider(
 
 void Gpu::CreateJpegDecodeAccelerator(
     media::mojom::GpuJpegDecodeAcceleratorRequest jda_request) {
-  DCHECK(IsMainThread());
-  if (!gpu_ || !gpu_.is_bound())
-    gpu_ = factory_.Run();
-  gpu_->CreateJpegDecodeAccelerator(std::move(jda_request));
+  io_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&Gpu::CreateJpegDecodeAcceleratorOnIO,
+                     weak_ptr_factory_.GetWeakPtr(), std::move(jda_request)));
 }
 
 void Gpu::CreateVideoEncodeAcceleratorProvider(
     media::mojom::VideoEncodeAcceleratorProviderRequest vea_provider_request) {
-  DCHECK(IsMainThread());
-  if (!gpu_ || !gpu_.is_bound())
-    gpu_ = factory_.Run();
-  gpu_->CreateVideoEncodeAcceleratorProvider(std::move(vea_provider_request));
+  io_task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&Gpu::CreateVideoEncodeAcceleratorProviderOnIO,
+                                weak_ptr_factory_.GetWeakPtr(),
+                                std::move(vea_provider_request)));
 }
 
 void Gpu::EstablishGpuChannel(
     const gpu::GpuChannelEstablishedCallback& callback) {
+  TRACE_EVENT0("yyy", __FUNCTION__);
   DCHECK(IsMainThread());
-  scoped_refptr<gpu::GpuChannelHost> channel = GetGpuChannel();
-  if (channel) {
-    callback.Run(std::move(channel));
+  if (GetGpuChannel()) {
+    callback.Run(gpu_channel_);
     return;
   }
 
@@ -121,31 +146,30 @@ void Gpu::EstablishGpuChannel(
   if (gpu_channel_request_ongoing)
     return;
 
-  if (!gpu_ || !gpu_.is_bound())
-    gpu_ = factory_.Run();
-  gpu_->EstablishGpuChannel(
-      base::Bind(&Gpu::OnEstablishedGpuChannel, base::Unretained(this)));
+  io_task_runner_->PostTask(FROM_HERE,
+                            base::BindOnce(&Gpu::EstablishGpuChannelOnIO,
+                                           weak_ptr_factory_.GetWeakPtr()));
 }
 
 scoped_refptr<gpu::GpuChannelHost> Gpu::EstablishGpuChannelSync() {
+  TRACE_EVENT0("yyy", __FUNCTION__);
   DCHECK(IsMainThread());
   if (GetGpuChannel())
     return gpu_channel_;
-  if (!gpu_ || !gpu_.is_bound())
-    gpu_ = factory_.Run();
 
-  int client_id = 0;
-  mojo::ScopedMessagePipeHandle channel_handle;
-  gpu::GPUInfo gpu_info;
-  gpu::GpuFeatureInfo gpu_feature_info;
-  mojo::SyncCallRestrictions::ScopedAllowSyncCall allow_sync_call;
-  if (!gpu_->EstablishGpuChannel(&client_id, &channel_handle, &gpu_info,
-                                 &gpu_feature_info)) {
-    DLOG(WARNING) << "Encountered error while establishing gpu channel.";
-    return nullptr;
+  const bool gpu_channel_request_ongoing = !establish_callbacks_.empty();
+  if (!gpu_channel_request_ongoing) {
+    io_task_runner_->PostTask(FROM_HERE,
+                              base::BindOnce(&Gpu::EstablishGpuChannelOnIO,
+                                             weak_ptr_factory_.GetWeakPtr()));
   }
-  OnEstablishedGpuChannel(client_id, std::move(channel_handle), gpu_info,
-                          gpu_feature_info);
+
+  sync_event_.Reset();
+  {
+    TRACE_EVENT0("yyy", "EstablishGpuChannelSync wait");
+    sync_event_.Wait();
+  }
+  OnEstablishedGpuChannel();
 
   return gpu_channel_;
 }
@@ -163,18 +187,18 @@ scoped_refptr<gpu::GpuChannelHost> Gpu::GetGpuChannel() {
   return gpu_channel_;
 }
 
-void Gpu::OnEstablishedGpuChannel(int client_id,
-                                  mojo::ScopedMessagePipeHandle channel_handle,
-                                  const gpu::GPUInfo& gpu_info,
-                                  const gpu::GpuFeatureInfo& gpu_feature_info) {
+void Gpu::OnEstablishedGpuChannel() {
+  TRACE_EVENT0("yyy", __FUNCTION__);
   DCHECK(IsMainThread());
   DCHECK(gpu_.get());
   DCHECK(!gpu_channel_);
 
-  if (client_id && channel_handle.is_valid()) {
+  DCHECK(client_id_);
+  DCHECK(channel_handle_.is_valid());
+  if (client_id_ && channel_handle_.is_valid()) {
     gpu_channel_ = gpu::GpuChannelHost::Create(
-        this, client_id, gpu_info, gpu_feature_info,
-        IPC::ChannelHandle(channel_handle.release()), &shutdown_event_,
+        this, client_id_, gpu_info_, gpu_feature_info_,
+        IPC::ChannelHandle(channel_handle_.release()), &shutdown_event_,
         gpu_memory_buffer_manager_.get());
   }
 
@@ -182,6 +206,55 @@ void Gpu::OnEstablishedGpuChannel(int client_id,
   establish_callbacks_.clear();
   for (const auto& callback : callbacks)
     callback.Run(gpu_channel_);
+}
+
+void Gpu::EstablishGpuChannelOnIO() {
+  TRACE_EVENT0("yyy", __FUNCTION__);
+  DCHECK(IsIOThread());
+  gpu_->EstablishGpuChannel(base::Bind(&Gpu::OnEstablishedGpuChannelOnIO,
+                                       weak_ptr_factory_.GetWeakPtr()));
+}
+
+void Gpu::CreateJpegDecodeAcceleratorOnIO(
+    media::mojom::GpuJpegDecodeAcceleratorRequest jda_request) {
+  DCHECK(IsIOThread());
+  gpu_->CreateJpegDecodeAccelerator(std::move(jda_request));
+}
+
+void Gpu::CreateVideoEncodeAcceleratorProviderOnIO(
+    media::mojom::VideoEncodeAcceleratorProviderRequest vea_provider_request) {
+  DCHECK(IsIOThread());
+  gpu_->CreateVideoEncodeAcceleratorProvider(std::move(vea_provider_request));
+}
+
+void Gpu::OnEstablishedGpuChannelOnIO(
+    int client_id,
+    mojo::ScopedMessagePipeHandle channel_handle,
+    const gpu::GPUInfo& gpu_info,
+    const gpu::GpuFeatureInfo& gpu_feature_info) {
+  TRACE_EVENT0("yyy", __FUNCTION__);
+  DCHECK(IsIOThread());
+
+  client_id_ = client_id;
+  DCHECK(client_id_);
+  channel_handle_ = std::move(channel_handle);
+  DCHECK(channel_handle_.is_valid());
+  gpu_info_ = gpu_info;
+  gpu_feature_info_ = gpu_feature_info;
+
+  if (!sync_event_.IsSignaled()) {
+    LOG(ERROR) << "sync path";
+    sync_event_.Signal();
+  } else {
+    LOG(ERROR) << "async path";
+    main_task_runner_->PostTask(FROM_HERE,
+                                base::BindOnce(&Gpu::OnEstablishedGpuChannel,
+                                               weak_ptr_factory_.GetWeakPtr()));
+  }
+}
+
+bool Gpu::IsIOThread() {
+  return io_task_runner_->BelongsToCurrentThread();
 }
 
 bool Gpu::IsMainThread() {

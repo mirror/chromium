@@ -78,6 +78,7 @@ scoped_refptr<BrowserGpuChannelHostFactory::EstablishRequest>
 BrowserGpuChannelHostFactory::EstablishRequest::Create(
     int gpu_client_id,
     uint64_t gpu_client_tracing_id) {
+  TRACE_EVENT0("xxx", __FUNCTION__);
   scoped_refptr<EstablishRequest> establish_request =
       new EstablishRequest(gpu_client_id, gpu_client_tracing_id);
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
@@ -102,6 +103,7 @@ BrowserGpuChannelHostFactory::EstablishRequest::EstablishRequest(
       main_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
 
 void BrowserGpuChannelHostFactory::EstablishRequest::EstablishOnIO() {
+  TRACE_EVENT0("xxx", __FUNCTION__);
   GpuProcessHost* host = GpuProcessHost::Get();
   if (!host) {
     LOG(ERROR) << "Failed to launch GPU process.";
@@ -125,6 +127,7 @@ void BrowserGpuChannelHostFactory::EstablishRequest::OnEstablishedOnIO(
     const gpu::GPUInfo& gpu_info,
     const gpu::GpuFeatureInfo& gpu_feature_info,
     GpuProcessHost::EstablishChannelStatus status) {
+  TRACE_EVENT0("xxx", __FUNCTION__);
   if (!channel_handle.mojo_handle.is_valid() &&
       status == GpuProcessHost::EstablishChannelStatus::GPU_HOST_INVALID) {
     DVLOG(1) << "Failed to create channel on existing GPU process. Trying to "
@@ -139,6 +142,8 @@ void BrowserGpuChannelHostFactory::EstablishRequest::OnEstablishedOnIO(
 }
 
 void BrowserGpuChannelHostFactory::EstablishRequest::FinishOnIO() {
+  TRACE_EVENT0("xxx", __FUNCTION__);
+  LOG(ERROR) << "signal event";
   event_.Signal();
   main_task_runner_->PostTask(
       FROM_HERE,
@@ -147,6 +152,7 @@ void BrowserGpuChannelHostFactory::EstablishRequest::FinishOnIO() {
 }
 
 void BrowserGpuChannelHostFactory::EstablishRequest::FinishOnMain() {
+  TRACE_EVENT0("xxx", __FUNCTION__);
   if (!finished_) {
     BrowserGpuChannelHostFactory* factory =
         BrowserGpuChannelHostFactory::instance();
@@ -156,6 +162,7 @@ void BrowserGpuChannelHostFactory::EstablishRequest::FinishOnMain() {
 }
 
 void BrowserGpuChannelHostFactory::EstablishRequest::Wait() {
+  TRACE_EVENT0("xxx", __FUNCTION__);
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   {
     // We're blocking the UI thread, which is generally undesirable.
@@ -207,6 +214,8 @@ BrowserGpuChannelHostFactory::BrowserGpuChannelHostFactory()
       gpu_memory_buffer_manager_(
           new BrowserGpuMemoryBufferManager(gpu_client_id_,
                                             gpu_client_tracing_id_)) {
+  TRACE_EVENT0("xxx", __FUNCTION__);
+
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableGpuShaderDiskCache)) {
     DCHECK(GetContentClient());
@@ -223,6 +232,7 @@ BrowserGpuChannelHostFactory::BrowserGpuChannelHostFactory()
 }
 
 BrowserGpuChannelHostFactory::~BrowserGpuChannelHostFactory() {
+  TRACE_EVENT0("xxx", __FUNCTION__);
   DCHECK(IsMainThread());
   if (pending_request_.get())
     pending_request_->Cancel();
@@ -252,6 +262,7 @@ BrowserGpuChannelHostFactory::AllocateSharedMemory(size_t size) {
 
 void BrowserGpuChannelHostFactory::EstablishGpuChannel(
     const gpu::GpuChannelEstablishedCallback& callback) {
+  TRACE_EVENT0("xxx", __FUNCTION__);
 #if defined(USE_AURA)
   DCHECK_EQ(aura::Env::Mode::LOCAL, aura::Env::GetInstance()->mode());
 #endif
@@ -282,14 +293,17 @@ void BrowserGpuChannelHostFactory::EstablishGpuChannel(
 // task on the UI thread first, so we cannot block here.)
 scoped_refptr<gpu::GpuChannelHost>
 BrowserGpuChannelHostFactory::EstablishGpuChannelSync() {
+  TRACE_EVENT0("xxx", __FUNCTION__);
 #if defined(OS_ANDROID)
   NOTREACHED();
   return nullptr;
 #endif
   EstablishGpuChannel(gpu::GpuChannelEstablishedCallback());
 
+  LOG(ERROR) << "wait for pending_request_";
   if (pending_request_.get())
     pending_request_->Wait();
+  LOG(ERROR) << "done waiting for pending_request_";
 
   return gpu_channel_;
 }
@@ -307,12 +321,14 @@ gpu::GpuChannelHost* BrowserGpuChannelHostFactory::GetGpuChannel() {
 }
 
 void BrowserGpuChannelHostFactory::GpuChannelEstablished() {
+  TRACE_EVENT0("xxx", __FUNCTION__);
   DCHECK(IsMainThread());
   DCHECK(pending_request_.get());
   if (!pending_request_->channel_handle().mojo_handle.is_valid()) {
     DCHECK(!gpu_channel_.get());
   } else {
     GetContentClient()->SetGpuInfo(pending_request_->gpu_info());
+    LOG(ERROR) << "set gpu_channel_";
     gpu_channel_ = gpu::GpuChannelHost::Create(
         this, gpu_client_id_, pending_request_->gpu_info(),
         pending_request_->gpu_feature_info(),
