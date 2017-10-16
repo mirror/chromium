@@ -49,6 +49,7 @@ class MostVisitedSitesBridge {
                             const base::android::JavaParamRef<jobject>& obj,
                             jint jindex,
                             jint jtype,
+                            jint jicon_type,
                             jint jtitle_source,
                             jint jsource,
                             jlong jdata_generation_time_ms,
