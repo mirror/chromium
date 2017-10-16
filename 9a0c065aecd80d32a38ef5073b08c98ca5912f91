@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1872cfb6_0d6d86a8",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-16T22:14:43Z",
+      "side": 1,
+      "message": "Just inline this since there\u0027s only 1 use. Prefer to explicitly list out the platforms you want.",
+      "revId": "9a0c065aecd80d32a38ef5073b08c98ca5912f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cebc9805_f93422ff",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-16T22:14:43Z",
+      "side": 1,
+      "message": "Please keep this in the same order as the header. i.e. after |kNewUsbBackendDescription|.",
+      "revId": "9a0c065aecd80d32a38ef5073b08c98ca5912f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d332b8f_0e822c47",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-16T22:14:43Z",
+      "side": 1,
+      "message": "Where you going to make the change here, but then decided to do it elsewhere, leaving a blank line here?",
+      "revId": "9a0c065aecd80d32a38ef5073b08c98ca5912f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24341b0_97e487f0",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-16T22:14:43Z",
+      "side": 1,
+      "message": "Should this be inside #if defined(OS_POSIX) ?",
+      "revId": "9a0c065aecd80d32a38ef5073b08c98ca5912f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d059fa8_b426ce6e",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-16T22:14:43Z",
+      "side": 1,
+      "message": "Maybe also mention disabling NTMLv1 here too?",
+      "revId": "9a0c065aecd80d32a38ef5073b08c98ca5912f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "449964a3_fb703ec5",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-16T22:14:43Z",
+      "side": 1,
+      "message": "Unfortunately, someone removed the corresponding message to say where the Local State section starts. :(\n\nJust to be clear, this is a Local State pref, and not a per-profile pref, right?",
+      "revId": "9a0c065aecd80d32a38ef5073b08c98ca5912f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e365bcbd_007f282b",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-16T22:14:43Z",
+      "side": 1,
+      "message": "Many other os entries are organized in this order:\n\n\"win\", \"linux\", \"mac\", \"chromeos\", \"android\"",
+      "revId": "9a0c065aecd80d32a38ef5073b08c98ca5912f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
