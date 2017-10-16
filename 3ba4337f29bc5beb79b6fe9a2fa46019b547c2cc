@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1f37d42_9937e557",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-16T18:29:11Z",
+      "side": 0,
+      "message": "Can you also keep this info? s/Start()/Start(FULL_INSTANCE)/ would be needed though.",
+      "range": {
+        "startLine": 52,
+        "startChar": 59,
+        "endLine": 53,
+        "endChar": 29
+      },
+      "revId": "3ba4337f29bc5beb79b6fe9a2fa46019b547c2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
