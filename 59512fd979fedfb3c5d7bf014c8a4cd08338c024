@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "f916bd5a_566d8875",
+        "filename": "content/browser/appcache/appcache_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T15:28:27Z",
+      "side": 1,
+      "message": "Wonder if this class could instead have AppCacheJob::CreateRequestJob() and AppCacheJob::CreateLoaderJob(), so that it becomes clearer what parameters are necessary for which one (or both).",
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ba2422_661f566d",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T15:28:27Z",
+      "side": 1,
+      "message": "Now this job class has multiple places where it could get killed, which makes me a little nervous... could this instead have, say, DeleteIfNeeded() method which internally checks if it\u0027s bound and/or if it needs to delete itself etc?",
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d0b885_0911796c",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T15:28:27Z",
+      "side": 1,
+      "message": "DCHECK(job_-\u003eAsURLRequestJob());",
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "408738f5_75822090",
         "filename": "content/browser/appcache/appcache_subresource_url_factory.cc",
         "patchSetId": 2
@@ -19,6 +70,57 @@
         "endLine": 29,
         "endChar": 27
       },
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aecdecc_0a528b0e",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T15:28:27Z",
+      "side": 1,
+      "message": "DCHECK(!IsBound()) ?",
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c875af60_7acd68a1",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T15:28:27Z",
+      "side": 1,
+      "message": "Should this instead do DCHECK(loader_callback_) / could the callers try not to call this if not needed / no loader_callback_ is given?",
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "992af21d_059ea25c",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T15:28:27Z",
+      "side": 1,
+      "message": "nit: can we return here and remove else {} below?",
       "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
