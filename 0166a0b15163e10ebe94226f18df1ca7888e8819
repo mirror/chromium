@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "f62254b5_4c1d9a93",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-16T17:52:22Z",
+      "side": 1,
+      "message": "The main thread (thread\u0027s type is UI). It is not the thread for services/ui.\n\nBelow is the call stack for function arc::VideoAcceleratorFactoryService::CreateDecodeAccelerator\n#0 0x65494e80773c base::debug::StackTrace::StackTrace()\n#1 0x65494d31c6ec arc::VideoAcceleratorFactoryService::CreateDecodeAccelerator()\n#2 0x65494d1c8adc arc::mojom::VideoAcceleratorFactoryStubDispatch::Accept()\n#3 0x65494f684734 mojo::InterfaceEndpointClient::HandleValidatedMessage()\n#4 0x65494f684306 mojo::FilterChain::Accept()\n#5 0x65494f685c42 mojo::InterfaceEndpointClient::HandleIncomingMessage()\n#6 0x65494f68f994 mojo::internal::MultiplexRouter::ProcessIncomingMessage()\n#7 0x65494f68ee69 mojo::internal::MultiplexRouter::Accept()\n#8 0x65494f684306 mojo::FilterChain::Accept()\n#9 0x65494f6833fd mojo::Connector::ReadSingleMessage()\n#10 0x65494f683e94 mojo::Connector::ReadAllAvailableMessages()\n#11 0x65494f683cf6 mojo::Connector::OnHandleReadyInternal()\n#12 0x65494c749b09 mojo::SimpleWatcher::DiscardReadyState()\n#13 0x65494f67cf73 mojo::SimpleWatcher::OnHandleReady()\n#14 0x65494f67d500 _ZN4base8internal7InvokerINS0_9BindStateIMN4mojo13SimpleWatcherEFvijRKNS3_18HandleSignalsStateEEJNS_7WeakPtrIS4_EEijS5_EEEFvvEE7RunImplIRKS9_RKSt5tupleIJSB_ijS5_EEJLm0ELm1ELm2ELm3EEEEvOT_OT0_St16integer_sequenceImJXspT1_EEE\n#15 0x65494e807f9a base::debug::TaskAnnotator::RunTask()\n#16 0x65494e8cb4e6 base::internal::IncomingTaskQueue::RunTask()\n#17 0x65494e82c6ba base::MessageLoop::RunTask()\n#18 0x65494e82ca3b base::MessageLoop::DeferOrRunPendingTask()\n#19 0x65494e82cd06 base::MessageLoop::DoWork()\n#20 0x65494e82eff9 base::MessagePumpLibevent::Run()\n#21 0x65494e82c05e base::MessageLoop::Run()\n#22 0x65494e859acc base::RunLoop::Run()\n#23 0x65494e42bda7 ChromeBrowserMainParts::MainMessageLoopRun()\n#24 0x65494c7a8924 content::BrowserMainLoop::RunMainMessageLoopParts()\n#25 0x65494c7abd03 content::BrowserMainRunnerImpl::Run()\n#26 0x65494c7a44cc content::BrowserMain()\n#27 0x65494e4133cf content::RunNamedProcessTypeMain()\n#28 0x65494e413dae content::ContentMainRunnerImpl::Run()\n#29 0x65494e420058 service_manager::Main()\n#30 0x65494e412a71 content::ContentMain()\n#31 0x65494be13948 ChromeMain\n#32 0x7daa3e5ca736 __libc_start_main\n#33 0x65494be13729 _start",
+      "parentUuid": "410869a2_06d10f82",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "0166a0b15163e10ebe94226f18df1ca7888e8819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "674b37d1_6ca35a5e",
         "filename": "chrome/browser/embedded_ui_service_info_factory.cc",
         "patchSetId": 12
