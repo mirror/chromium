@@ -16,6 +16,24 @@
       "revId": "236e9d9887e4f750294debce3b9e78ba9a9e9867",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca05236_c3c6ebfa",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-10-16T16:52:14Z",
+      "side": 1,
+      "message": "I will use the domAutomationController. Thanks!",
+      "parentUuid": "e2808ab0_c409fa42",
+      "revId": "236e9d9887e4f750294debce3b9e78ba9a9e9867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
