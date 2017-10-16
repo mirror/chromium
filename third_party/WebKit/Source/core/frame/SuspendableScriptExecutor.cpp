@@ -57,7 +57,7 @@ Vector<v8::Local<v8::Value>> WebScriptExecutor::Execute(LocalFrame* frame) {
 
   Vector<v8::Local<v8::Value>> results;
   if (world_id_) {
-    frame->GetScriptController().ExecuteScriptInIsolatedWorld(
+    frame->GetScriptController().ExecuteScriptsInIsolatedWorld(
         world_id_, sources_, &results);
   } else {
     v8::Local<v8::Value> script_value =

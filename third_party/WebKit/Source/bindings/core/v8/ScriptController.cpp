@@ -329,7 +329,7 @@ v8::Local<v8::Value> ScriptController::EvaluateScriptInMainWorld(
   return handle_scope.Escape(object);
 }
 
-void ScriptController::ExecuteScriptInIsolatedWorld(
+void ScriptController::ExecuteScriptsInIsolatedWorld(
     int world_id,
     const HeapVector<ScriptSourceCode>& sources,
     Vector<v8::Local<v8::Value>>* results) {
@@ -367,6 +367,27 @@ void ScriptController::ExecuteScriptInIsolatedWorld(
       results->push_back(value);
     }
   }
+}
+
+v8::Local<v8::Value> ScriptController::ExecuteScriptInIsolatedWorld(
+    int world_id,
+    const ScriptSourceCode& source) {
+  DCHECK_GT(world_id, 0);
+
+  RefPtr<DOMWrapperWorld> world =
+      DOMWrapperWorld::EnsureIsolatedWorld(GetIsolate(), world_id);
+  LocalWindowProxy* isolated_world_window_proxy = WindowProxy(*world);
+  // TODO(dcheng): Context must always be initialized here, due to the call to
+  // windowProxy() on the previous line. Add a helper which makes that obvious?
+  v8::Local<v8::Context> context =
+      isolated_world_window_proxy->ContextIfInitialized();
+  v8::Context::Scope scope(context);
+
+  v8::Local<v8::Value> evaluation_result =
+      ExecuteScriptAndReturnValue(context, source);
+  if (!evaluation_result.IsEmpty())
+    return evaluation_result;
+  return v8::Local<v8::Value>::New(GetIsolate(), v8::Undefined(GetIsolate()));
 }
 
 RefPtr<DOMWrapperWorld> ScriptController::CreateNewInspectorIsolatedWorld(

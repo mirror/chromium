@@ -2687,7 +2687,7 @@ TEST_F(DevToolsAgentTest, CallFramesInIsolatedWorld) {
   LoadHTML("<body>page</body>");
   blink::WebScriptSource source1(
       WebString::FromUTF8("function func1() { debugger; }"));
-  frame()->GetWebFrame()->ExecuteScriptInIsolatedWorld(17, &source1, 1);
+  frame()->GetWebFrame()->ExecuteScriptInIsolatedWorld(17, source1);
 
   Attach();
   DispatchDevToolsMessage("Debugger.enable",
@@ -2696,7 +2696,7 @@ TEST_F(DevToolsAgentTest, CallFramesInIsolatedWorld) {
   ExpectPauseAndResume(3);
   blink::WebScriptSource source2(
       WebString::FromUTF8("function func2() { func1(); }; func2();"));
-  frame()->GetWebFrame()->ExecuteScriptInIsolatedWorld(17, &source2, 1);
+  frame()->GetWebFrame()->ExecuteScriptInIsolatedWorld(17, source2);
 
   EXPECT_FALSE(IsPaused());
   Detach();

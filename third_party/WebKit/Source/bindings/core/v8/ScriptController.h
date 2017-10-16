@@ -108,9 +108,13 @@ class CORE_EXPORT ScriptController final
   // Otherwise, a new world is created.
   //
   // FIXME: We don't want to support multiple scripts.
-  void ExecuteScriptInIsolatedWorld(int world_id,
-                                    const HeapVector<ScriptSourceCode>& sources,
-                                    Vector<v8::Local<v8::Value>>* results);
+  void ExecuteScriptsInIsolatedWorld(
+      int world_id,
+      const HeapVector<ScriptSourceCode>& sources,
+      Vector<v8::Local<v8::Value>>* results);
+
+  v8::Local<v8::Value> ExecuteScriptInIsolatedWorld(int world_id,
+                                                    const ScriptSourceCode&);
 
   // Returns true if argument is a JavaScript URL.
   bool ExecuteScriptIfJavaScriptURL(const KURL&, Element*);
