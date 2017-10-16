@@ -676,6 +676,7 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
 
   PropagateBaselinesFromChildren();
 
+  container_builder_.SetIsInlineBlock();
   return container_builder_.ToBoxFragment();
 }
 
