@@ -306,6 +306,7 @@ public class LibraryLoader {
     @SuppressLint("DefaultLocale")
     private void loadAlreadyLocked(Context appContext) throws ProcessInitException {
         try {
+            TraceEvent.begin("LibraryLoader.loadAlreadyLocked");
             if (!mLoaded) {
                 assert !mInitialized;
 
@@ -373,6 +374,8 @@ public class LibraryLoader {
             }
         } catch (UnsatisfiedLinkError e) {
             throw new ProcessInitException(LoaderErrors.LOADER_ERROR_NATIVE_LIBRARY_LOAD_FAILED, e);
+        } finally {
+            TraceEvent.end("LibraryLoader.loadAlreadyLocked");
         }
     }
 
