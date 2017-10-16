@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d85f8390_2f3e9938",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-16T14:56:38Z",
+      "side": 1,
+      "message": "Thanks! This was a big improvement :)",
+      "parentUuid": "7b96851f_16e3117b",
+      "range": {
+        "startLine": 75,
+        "startChar": 33,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "05fdf38ef553f70591023c122196fdfb28bf32bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "031eb383_2862c02f",
         "filename": "base/trace_event/memory_dump_manager.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "05fdf38ef553f70591023c122196fdfb28bf32bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472e657b_27aae226",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-16T14:56:38Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "031eb383_2862c02f",
+      "range": {
+        "startLine": 291,
+        "startChar": 29,
+        "endLine": 291,
+        "endChar": 46
+      },
+      "revId": "05fdf38ef553f70591023c122196fdfb28bf32bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8ea53036_ee663588",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-16T14:56:38Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "543744d9_193235fa",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "05fdf38ef553f70591023c122196fdfb28bf32bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db1ea375_9a554352",
         "filename": "base/trace_event/process_memory_dump_unittest.cc",
         "patchSetId": 5
@@ -82,6 +154,24 @@
       "writtenOn": "2017-10-13T19:57:28Z",
       "side": 1,
       "message": "nit: Create extra pmd with same token and check if id is equal.",
+      "revId": "05fdf38ef553f70591023c122196fdfb28bf32bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "214ebab2_7200fc32",
+        "filename": "base/trace_event/process_memory_dump_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-16T14:56:38Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m being a bit dense isn\u0027t that the pmd1 pmd2 case?\nSpell it out for me and I will add the case.",
+      "parentUuid": "db1ea375_9a554352",
       "revId": "05fdf38ef553f70591023c122196fdfb28bf32bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
