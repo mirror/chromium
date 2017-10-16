@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cfca33c_1eaee258",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-16T18:54:03Z",
+      "side": 1,
+      "message": "nit: These do not seem needed in this test.",
+      "range": {
+        "startLine": 983,
+        "startChar": 22,
+        "endLine": 983,
+        "endChar": 25
+      },
+      "revId": "785ad376a6e5922c387e77e7bee4fb8b79b39fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f143915_cc5257ce",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-16T18:54:03Z",
+      "side": 1,
+      "message": "nit: Once you removed the four extra ones, you can use 1u instead of 5u here.",
+      "revId": "785ad376a6e5922c387e77e7bee4fb8b79b39fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
