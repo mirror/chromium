@@ -85,7 +85,7 @@ class IndefiniteSizeStrategy final : public GridTrackSizingAlgorithmStrategy {
  private:
   LayoutUnit MinLogicalWidthForChild(LayoutBox&,
                                      Length child_min_size,
-                                     GridTrackSizingDirection) const override;
+                                     LayoutUnit available_size) const override;
   void LayoutGridItemForMinSizeComputation(
       LayoutBox&,
       bool override_size_has_changed) const override;
@@ -109,7 +109,7 @@ class DefiniteSizeStrategy final : public GridTrackSizingAlgorithmStrategy {
  private:
   LayoutUnit MinLogicalWidthForChild(LayoutBox&,
                                      Length child_min_size,
-                                     GridTrackSizingDirection) const override;
+                                     LayoutUnit available_size) const override;
   void LayoutGridItemForMinSizeComputation(
       LayoutBox&,
       bool override_size_has_changed) const override;
@@ -224,16 +224,19 @@ LayoutUnit GridTrackSizingAlgorithm::GridAreaBreadthForChild(
 bool GridTrackSizingAlgorithmStrategy::
     UpdateOverrideContainingBlockContentSizeForChild(
         LayoutBox& child,
-        GridTrackSizingDirection direction) const {
-  LayoutUnit override_size =
-      algorithm_.GridAreaBreadthForChild(child, direction);
+        GridTrackSizingDirection direction,
+        Optional<LayoutUnit> override_size) const {
+  if (!child.GetDocument().View()->IsInPerformLayout())
+    return false;
+  if (!override_size)
+    override_size = algorithm_.GridAreaBreadthForChild(child, direction);
   if (HasOverrideContainingBlockContentSizeForChild(child, direction) &&
       OverrideContainingBlockContentSizeForChild(child, direction) ==
-          override_size)
+          override_size.value())
     return false;
 
   SetOverrideContainingBlockContentSizeForChild(child, direction,
-                                                override_size);
+                                                override_size.value());
   return true;
 }
 
@@ -268,16 +271,6 @@ LayoutUnit GridTrackSizingAlgorithmStrategy::MinContentForChild(
       GridLayoutUtils::FlowAwareDirectionForChild(*GetLayoutGrid(), child,
                                                   kForColumns);
   if (Direction() == child_inline_direction) {
-    // If |child| has a relative inline-axis size, we shouldn't let it override
-    // its intrinsic size, which is what we are interested in here.
-    // Thus we need to set the inline-axis OverrideContainingBlock size to -1
-    // (no possible resolution).
-    if (ShouldClearOverrideContainingBlockContentSizeForChild(
-            *GetLayoutGrid(), child, child_inline_direction)) {
-      SetOverrideContainingBlockContentSizeForChild(
-          child, child_inline_direction, LayoutUnit(-1));
-    }
-
     // FIXME: It's unclear if we should return the intrinsic width or the
     // preferred width.
     // See http://lists.w3.org/Archives/Public/www-style/2013Jan/0245.html
@@ -304,16 +297,6 @@ LayoutUnit GridTrackSizingAlgorithmStrategy::MaxContentForChild(
       GridLayoutUtils::FlowAwareDirectionForChild(*GetLayoutGrid(), child,
                                                   kForColumns);
   if (Direction() == child_inline_direction) {
-    // If |child| has a relative inline-axis size, we shouldn't let it override
-    // its intrinsic size, which is what we are interested in here.
-    // Thus we need to set the inline-axis OverrideContainingBlock size to -1
-    // (no possible resolution).
-    if (ShouldClearOverrideContainingBlockContentSizeForChild(
-            *GetLayoutGrid(), child, child_inline_direction)) {
-      SetOverrideContainingBlockContentSizeForChild(
-          child, child_inline_direction, LayoutUnit(-1));
-    }
-
     // FIXME: It's unclear if we should return the intrinsic width or the
     // preferred width.
     // See http://lists.w3.org/Archives/Public/www-style/2013Jan/0245.html
@@ -345,13 +328,15 @@ LayoutUnit GridTrackSizingAlgorithmStrategy::MinSizeForChild(
   if (!child_size.IsAuto() || (child_min_size.IsAuto() && overflow_is_visible))
     return MinContentForChild(child);
 
-  bool override_size_has_changed =
-      UpdateOverrideContainingBlockContentSizeForChild(child,
-                                                       child_inline_direction);
-  if (is_row_axis)
-    return MinLogicalWidthForChild(child, child_min_size,
-                                   child_inline_direction);
+  LayoutUnit grid_area_size =
+      algorithm_.GridAreaBreadthForChild(child, child_inline_direction);
 
+  if (is_row_axis)
+    return MinLogicalWidthForChild(child, child_min_size, grid_area_size);
+
+  bool override_size_has_changed =
+      UpdateOverrideContainingBlockContentSizeForChild(
+          child, child_inline_direction, grid_area_size);
   LayoutGridItemForMinSizeComputation(child, override_size_has_changed);
 
   return child.ComputeLogicalHeightUsing(kMinSize, child_min_size,
@@ -394,12 +379,9 @@ GridTrackSizingAlgorithmStrategy::ExtentForBaselineAlignment(
 LayoutUnit DefiniteSizeStrategy::MinLogicalWidthForChild(
     LayoutBox& child,
     Length child_min_size,
-    GridTrackSizingDirection child_inline_direction) const {
-  return child.ComputeLogicalWidthUsing(
-             kMinSize, child_min_size,
-             OverrideContainingBlockContentSizeForChild(child,
-                                                        child_inline_direction),
-             GetLayoutGrid()) +
+    LayoutUnit available_size) const {
+  return child.ComputeLogicalWidthUsing(kMinSize, child_min_size,
+                                        available_size, GetLayoutGrid()) +
          GridLayoutUtils::MarginLogicalWidthForChild(*GetLayoutGrid(), child);
 }
 
@@ -441,16 +423,13 @@ double DefiniteSizeStrategy::FindUsedFlexFraction(
 LayoutUnit IndefiniteSizeStrategy::MinLogicalWidthForChild(
     LayoutBox& child,
     Length child_min_size,
-    GridTrackSizingDirection child_inline_direction) const {
+    LayoutUnit available_size) const {
   // TODO(svillar): we should use marginIntrinsicLogicalWidthForChild() instead
   // but it is protected for LayoutObjects. Apparently none of the current tests
   // fail, so we need a test case for this too.
   LayoutUnit margin_logical_width = LayoutUnit();
-  return child.ComputeLogicalWidthUsing(
-             kMinSize, child_min_size,
-             OverrideContainingBlockContentSizeForChild(child,
-                                                        child_inline_direction),
-             GetLayoutGrid()) +
+  return child.ComputeLogicalWidthUsing(kMinSize, child_min_size,
+                                        available_size, GetLayoutGrid()) +
          margin_logical_width;
 }
 
