@@ -126,7 +126,15 @@ NetworkMetricsProvider::NetworkMetricsProvider(
       max_effective_connection_type_(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN),
       weak_ptr_factory_(this) {
   net::NetworkChangeNotifier::AddConnectionTypeObserver(this);
+  LOG(WARNING) << "xxx NetworkMetricsProvider() cp0 this=" << this
+               << " connection_type_=" << connection_type_
+               << " connection_type_is_ambiguous_="
+               << connection_type_is_ambiguous_;
   connection_type_ = net::NetworkChangeNotifier::GetConnectionType();
+  LOG(WARNING) << "xxx NetworkMetricsProvider() cp1 this=" << this
+               << " connection_type_=" << connection_type_
+               << " connection_type_is_ambiguous_="
+               << connection_type_is_ambiguous_;
   ProbeWifiPHYLayerProtocol();
 
   if (network_quality_estimator_provider_) {
@@ -227,6 +235,10 @@ void NetworkMetricsProvider::ProvideSystemProfileMetrics(
 void NetworkMetricsProvider::OnConnectionTypeChanged(
     net::NetworkChangeNotifier::ConnectionType type) {
   DCHECK(thread_checker_.CalledOnValidThread());
+  LOG(WARNING) << "xxx OnConnectionTypeChanged() cp0 type=" << type
+               << " this=" << this << " connection_type_=" << connection_type_
+               << " connection_type_is_ambiguous_="
+               << connection_type_is_ambiguous_;
   // To avoid reporting an ambiguous connection type for users on flaky
   // connections, ignore transitions to the "none" state. Note that the
   // connection type is refreshed in ProvideSystemProfileMetrics() each time a
@@ -240,6 +252,10 @@ void NetworkMetricsProvider::OnConnectionTypeChanged(
       connection_type_ != net::NetworkChangeNotifier::CONNECTION_NONE) {
     connection_type_is_ambiguous_ = true;
   }
+  LOG(WARNING) << "xxx OnConnectionTypeChanged() cp1 type=" << type
+               << " this=" << this << " connection_type_=" << connection_type_
+               << " connection_type_is_ambiguous_="
+               << connection_type_is_ambiguous_;
   connection_type_ = type;
 
   ProbeWifiPHYLayerProtocol();
