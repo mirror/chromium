@@ -100,6 +100,11 @@ Vector<String> Navigator::languages() {
       GetFrame()->GetPage()->GetChromeClient().AcceptLanguages();
   accept_languages.Split(',', languages);
 
+  if (languages.IsEmpty()) {
+    languages.push_back(DefaultLanguage());
+    return languages;
+  }
+
   // Sanitizing tokens. We could do that more extensively but we should assume
   // that the accept languages are already sane and support BCP47. It is
   // likely a waste of time to make sure the tokens matches that spec here.
