@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de8a124c_0db9cc16",
+        "filename": "ios/chrome/common/physical_web/physical_web_scanner.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-16T16:11:36Z",
+      "side": 1,
+      "message": "should these @available be in the #if?",
+      "range": {
+        "startLine": 240,
+        "startChar": 7,
+        "endLine": 240,
+        "endChar": 16
+      },
+      "revId": "7dc972475abb4c5cd12f53d89f4ccb5b011ba95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
