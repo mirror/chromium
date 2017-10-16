@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9e6b00e9_06d43352",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-corner-002-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-16T03:23:22Z",
+      "side": 1,
+      "message": "ack, I think I was using the wrong offsetParent dimensions",
+      "parentUuid": "e08bc80b_d7aeaa57",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "446f6d6c_4b256238",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-corner-002.html",
         "patchSetId": 1

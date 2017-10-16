@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bdc67d8_1842cff7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-corner-005-ref.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-16T03:23:22Z",
+      "side": 1,
+      "message": "is there a reason you\u0027ve switched from comparing using top/left to offset-distance in pixels? i don\u0027t think it matters i\u0027m just curious",
+      "revId": "42bb5e204aabb2effc45895ed9e6d6d4a120a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec711a4_1af28f0e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-corner-005.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-16T03:23:22Z",
+      "side": 1,
+      "message": "nit: is the purpose of this test to confirm that it works with the initial position outside of the containing box? if so i\u0027d remove the \u0027with right-bottom corner closest\u0027 part of this text cause it\u0027s not really relevant.",
+      "revId": "42bb5e204aabb2effc45895ed9e6d6d4a120a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0166a38d_818da5d5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-side-005-ref.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-16T03:23:22Z",
+      "side": 1,
+      "message": "since this offset-position is outside of the containing block, won\u0027t \u0027sides\u0027 mean that this ray distance is 0? as this isn\u0027t a closed path wouldn\u0027t that mean that the offset-distance is clamped at 0?",
+      "revId": "42bb5e204aabb2effc45895ed9e6d6d4a120a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9b011b_4367ec83",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-side-005-ref.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-16T03:23:22Z",
+      "side": 1,
+      "message": "14px is the horizontal distance to the offset-position. since the ray is 180deg don\u0027t we need to use the vertical distance?",
+      "revId": "42bb5e204aabb2effc45895ed9e6d6d4a120a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195040a2_2bd39e7d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/farthest-side-001-ref.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-16T03:23:22Z",
+      "side": 1,
+      "message": "won\u0027t this be clamped at 100% of the ray distance? which would be be 140px? the clamping issue appears in a bunch of these tests. also i think 210px applies to the horizontal distance here too, where 180deg ray should be looking at the vertical distance",
+      "revId": "42bb5e204aabb2effc45895ed9e6d6d4a120a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
