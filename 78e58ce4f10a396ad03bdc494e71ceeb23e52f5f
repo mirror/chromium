@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9527f682_b829e51d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-16T18:17:42Z",
+      "side": 1,
+      "message": "This is a much better summary. I see how the previous description is no longer fitting with some of the later changes we made.",
+      "parentUuid": "8374e3f0_85cb8e4b",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "78e58ce4f10a396ad03bdc494e71ceeb23e52f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c45c6e03_9248d4ca",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "78e58ce4f10a396ad03bdc494e71ceeb23e52f5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ee07bc_4d5e2ddd",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-16T18:17:42Z",
+      "side": 1,
+      "message": "got it. will read through the styleguide to avoid these kinds of mistakes down the line.",
+      "parentUuid": "c45c6e03_9248d4ca",
+      "range": {
+        "startLine": 1069,
+        "startChar": 23,
+        "endLine": 1069,
+        "endChar": 27
+      },
+      "revId": "78e58ce4f10a396ad03bdc494e71ceeb23e52f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
