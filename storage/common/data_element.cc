@@ -19,7 +19,6 @@ DataElement::DataElement()
       offset_(0),
       length_(std::numeric_limits<uint64_t>::max()) {}
 
-
 DataElement::~DataElement() {}
 
 DataElement::DataElement(DataElement&& other) = default;
@@ -62,6 +61,20 @@ void DataElement::SetToDiskCacheEntryRange(uint64_t offset, uint64_t length) {
   type_ = TYPE_DISK_CACHE_ENTRY;
   offset_ = offset;
   length_ = length;
+}
+
+void DataElement::SetToDataPipe(mojo::ScopedDataPipeConsumerHandle handle,
+                                mojom::SizeGetterPtr size_getter) {
+  type_ = TYPE_DATA_PIPE;
+  data_pipe_ = std::move(handle);
+  data_pipe_size_getter_ = std::move(size_getter);
+}
+
+mojo::ScopedDataPipeConsumerHandle DataElement::ReleaseDataPipe(
+    mojom::SizeGetterPtr* size_getter) {
+  if (size_getter)
+    *size_getter = std::move(data_pipe_size_getter_);
+  return std::move(data_pipe_);
 }
 
 void PrintTo(const DataElement& x, std::ostream* os) {

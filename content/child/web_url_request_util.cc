@@ -11,10 +11,18 @@
 
 #include "base/logging.h"
 #include "base/strings/string_util.h"
+#include "base/task_scheduler/post_task.h"
+#include "content/child/child_thread_impl.h"
 #include "content/child/request_extra_data.h"
+#include "content/public/common/content_features.h"
+#include "content/public/common/service_names.mojom.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_util.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
+#include "storage/public/interfaces/blobs.mojom.h"
+#include "storage/public/interfaces/size_getter.mojom.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
 #include "third_party/WebKit/public/platform/WebCachePolicy.h"
 #include "third_party/WebKit/public/platform/WebData.h"
@@ -91,6 +99,72 @@ class HeaderFlattener : public blink::WebHTTPHeaderVisitor {
 
  private:
   std::string buffer_;
+};
+
+// A helper class which allows a holder of a data pipe for a blob to know how
+// big the blob is. It will stay alive until either the caller gets the length
+// or the data pipe is torn down.
+class BlobSizeGetter : public storage::mojom::BlobReaderClient,
+                       public storage::mojom::SizeGetter {
+ public:
+  BlobSizeGetter(
+      storage::mojom::BlobReaderClientRequest blob_reader_client_request,
+      storage::mojom::SizeGetterRequest size_getter_request)
+      : blob_reader_client_binding_(this), size_getter_binding_(this) {
+    // Need to use a background thread for this, since for sync requests the
+    // message loop that made the POST might be blocked.
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner =
+        base::CreateSingleThreadTaskRunnerWithTraits(
+            {base::TaskPriority::USER_VISIBLE,
+             base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
+    task_runner->PostTask(
+        FROM_HERE,
+        base::BindOnce(&BlobSizeGetter::BindInternal,
+                       base::Unretained(this),
+                       std::move(blob_reader_client_request),
+                       std::move(size_getter_request)));
+  }
+
+ private:
+  ~BlobSizeGetter() override {}
+
+  void BindInternal(
+      storage::mojom::BlobReaderClientRequest blob_reader_client_request,
+      storage::mojom::SizeGetterRequest size_getter_request) {
+    blob_reader_client_binding_.Bind(std::move(blob_reader_client_request));
+    size_getter_binding_.Bind(std::move(size_getter_request));
+  }
+
+  // storage::mojom::BlobReaderClient implementation:
+  void OnCalculatedSize(uint64_t total_size,
+                        uint64_t expected_content_size) override {
+    total_size_ = total_size;
+    calculated_size_ = true;
+    if (!callback_.is_null()) {
+      std::move(callback_).Run(total_size);
+      delete this;
+    } else if (!size_getter_binding_.is_bound()) {
+      delete this;
+    }
+  }
+
+  void OnComplete(int32_t status, uint64_t data_length) override {}
+
+  // storage::mojom::SizeGetter implementation:
+  void GetSize(GetSizeCallback callback) override {
+    if (calculated_size_) {
+      std::move(callback).Run(total_size_);
+      delete this;
+    } else {
+      callback_ = std::move(callback);
+    }
+  }
+
+  bool calculated_size_ = false;
+  uint64_t total_size_ = 0;
+  mojo::Binding<storage::mojom::BlobReaderClient> blob_reader_client_binding_;
+  mojo::Binding<storage::mojom::SizeGetter> size_getter_binding_;
+  GetSizeCallback callback_;
 };
 
 }  // namespace
@@ -363,9 +437,34 @@ scoped_refptr<ResourceRequestBody> GetRequestBodyForWebHTTPBody(
             base::Time::FromDoubleT(element.modification_time));
         break;
       }
-      case WebHTTPBody::Element::kTypeBlob:
-        request_body->AppendBlob(element.blob_uuid.Utf8());
+      case WebHTTPBody::Element::kTypeBlob: {
+        if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+          // TODO(jam): cache this somewhere so we don't request it each time?
+          storage::mojom::BlobRegistryPtr blob_registry;
+          // TODO(jam): handle other threads.
+          ChildThreadImpl::current()->GetConnector()->BindInterface(
+              mojom::kBrowserServiceName, MakeRequest(&blob_registry));
+          storage::mojom::BlobPtr blob_ptr;
+          blob_registry->GetBlobFromUUID(MakeRequest(&blob_ptr),
+                                         element.blob_uuid.Utf8());
+
+          storage::mojom::BlobReaderClientPtr blob_reader_client_ptr;
+          storage::mojom::SizeGetterPtr size_getter_ptr;
+          // Object deletes itself.
+          new BlobSizeGetter(
+              MakeRequest(&blob_reader_client_ptr), MakeRequest(&size_getter_ptr));
+
+          mojo::DataPipe data_pipe;
+          request_body->AppendDataPipe(std::move(data_pipe.consumer_handle),
+                                       std::move(size_getter_ptr));
+
+          blob_ptr->ReadAll(std::move(data_pipe.producer_handle),
+                            std::move(blob_reader_client_ptr));
+        } else {
+          request_body->AppendBlob(element.blob_uuid.Utf8());
+        }
         break;
+      }
       default:
         NOTREACHED();
     }

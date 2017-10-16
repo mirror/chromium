@@ -6,6 +6,7 @@
 
 #include <string>
 
+#include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -123,6 +124,51 @@ class FileElementReader : public net::UploadFileElementReader {
   DISALLOW_COPY_AND_ASSIGN(FileElementReader);
 };
 
+// A subclass of net::UploadElementReader to read data pipes.
+class DataPipeElementReader : public net::UploadElementReader {
+ public:
+  DataPipeElementReader(mojo::ScopedDataPipeConsumerHandle data_pipe,
+                        storage::mojom::SizeGetterPtr size_getter)
+      : data_pipe_(std::move(data_pipe)),
+        size_getter_(std::move(size_getter)),
+        weak_factory_(this) {
+    size_getter_->GetSize(
+        base::Bind(&DataPipeElementReader::GetSizeCallback,
+                   weak_factory_.GetWeakPtr()));
+  }
+
+  ~DataPipeElementReader() override {}
+
+ private:
+  void GetSizeCallback(uint64_t size) {
+  }
+
+  // net::UploadElementReader implementation:
+  int Init(const net::CompletionCallback& callback) override {
+    return net::ERR_IO_PENDING;
+  }
+
+  uint64_t GetContentLength() const override {
+    return 0u;
+  }
+
+  uint64_t BytesRemaining() const override {
+    return 0u;
+  }
+
+  int Read(net::IOBuffer* buf,
+           int buf_length,
+           const net::CompletionCallback& callback) {
+    return 0;
+  }
+
+  mojo::ScopedDataPipeConsumerHandle data_pipe_;
+  storage::mojom::SizeGetterPtr size_getter_;
+  base::WeakPtrFactory<DataPipeElementReader> weak_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(DataPipeElementReader);
+};
+
 // TODO: copied from content/browser/loader/upload_data_stream_builder.cc.
 std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
     ResourceRequestBody* body,
@@ -142,7 +188,16 @@ std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
         NOTIMPLEMENTED();
         break;
       case ResourceRequestBody::Element::TYPE_BLOB: {
-        NOTIMPLEMENTED();
+        NOTREACHED();
+        break;
+      }
+      case ResourceRequestBody::Element::TYPE_DATA_PIPE: {
+        storage::mojom::SizeGetterPtr size_getter;
+        mojo::ScopedDataPipeConsumerHandle data_pipe =
+            const_cast<storage::DataElement*>(&element)->ReleaseDataPipe(
+                &size_getter);
+        element_readers.push_back(base::MakeUnique<DataPipeElementReader>(
+            std::move(data_pipe), std::move(size_getter)));
         break;
       }
       case ResourceRequestBody::Element::TYPE_DISK_CACHE_ENTRY:
