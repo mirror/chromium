@@ -20,6 +20,7 @@
 #include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_fragment_builder.h"
 #include "core/layout/ng/ng_layout_result.h"
+#include "core/layout/ng/ng_positioned_float.h"
 #include "core/layout/ng/ng_space_utils.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/style/ComputedStyle.h"
@@ -66,6 +67,8 @@ NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
   if (!is_horizontal_writing_mode_)
     baseline_type_ = FontBaseline::kIdeographicBaseline;
 }
+
+NGInlineLayoutAlgorithm::~NGInlineLayoutAlgorithm() {}
 
 bool NGInlineLayoutAlgorithm::CreateLine(
     NGLineInfo* line_info,
