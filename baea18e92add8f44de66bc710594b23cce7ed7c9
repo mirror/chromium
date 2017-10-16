@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e67b54d1_0a52a518",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_box_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-16T23:01:16Z",
+      "side": 1,
+      "message": "Yeah that makes sense, my internal \"that looks strange\" trigger went off because there is a little bit of tight-coupling between the classes....",
+      "parentUuid": "a969dfe6_b088a845",
+      "range": {
+        "startLine": 247,
+        "startChar": 31,
+        "endLine": 247,
+        "endChar": 49
+      },
+      "revId": "baea18e92add8f44de66bc710594b23cce7ed7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de67b71c_85995817",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.h",
         "patchSetId": 6
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Yeah, thought about it. Block layout algorithm runs by AddChild() and change its offset later, so I chose this pattern to be consistent with block layout algorithm.\n\nWe could make fragment builder consistent and algorithm different. Is that more preferable?\n\nOne more question -- is block layout fine not to do this? It needs to process abspos from LayoutResult, but its offset is not finalized yet, until ToBoxFragment(), correct? Maybe I still don\u0027t understand all about abspos yet...",
       "parentUuid": "de67b71c_85995817",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 4
+      },
+      "revId": "baea18e92add8f44de66bc710594b23cce7ed7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a81a579_331a629e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-16T23:01:16Z",
+      "side": 1,
+      "message": "It might be preferable... block layout doesn\u0027t need to do this shifting. We are able to position fragments logically correctly the first time.\n\nOther layouts might need the ability to shift their children, but it isn\u0027t clear to me if they wouldn\u0027t need other data alongside that, (E.g. like a FlexItem).\n\nE.g. for flex I\u0027d imaging there would be a FlexChild struct which would have all of the information, then at the very end copied into the builder with the final offsets.\n\nUp to you which way we do it. It might be easier with a separate Vector, and could make the box_states easier to reason about if its just mutating a Vector of InlineChild directly.\n\nUp to you :)",
+      "parentUuid": "02b4d9a5_46103fe1",
       "range": {
         "startLine": 44,
         "startChar": 0,
