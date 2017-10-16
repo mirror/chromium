@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "605bac86_d00e79a9",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-16T21:30:43Z",
+      "side": 1,
+      "message": "Just delete this whole block now? First presentation delay doesn\u0027t really matter, so either ignore or grab during Start() ?",
+      "revId": "b257260c8e5e01ffe7e558fe196e2705a9f364b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6684bf0a_52dfc314",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-16T21:30:43Z",
+      "side": 1,
+      "message": "std::max(0, ...) now that you\u0027ve removed the negative check.",
+      "revId": "b257260c8e5e01ffe7e558fe196e2705a9f364b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
