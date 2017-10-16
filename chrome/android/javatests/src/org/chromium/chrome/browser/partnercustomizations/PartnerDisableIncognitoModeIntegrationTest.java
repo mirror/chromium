@@ -55,7 +55,7 @@ public class PartnerDisableIncognitoModeIntegrationTest {
         Bundle bundle = new Bundle();
         bundle.putBoolean(
                 TestPartnerBrowserCustomizationsProvider.INCOGNITO_MODE_DISABLED_KEY, enabled);
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        Context context = InstrumentationRegistry.getTargetContext();
         context.getContentResolver().call(uri, "setIncognitoModeDisabled", null, bundle);
     }
 
@@ -156,8 +156,8 @@ public class PartnerDisableIncognitoModeIntegrationTest {
     @MediumTest
     @Feature({"DisableIncognitoMode"})
     public void testEnabledParentalControlsClosesIncognitoTabs() throws InterruptedException {
-        EmbeddedTestServer testServer = EmbeddedTestServer.createAndStartServer(
-                InstrumentationRegistry.getInstrumentation().getContext());
+        EmbeddedTestServer testServer =
+                EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
 
         try {
             String[] testUrls = {
