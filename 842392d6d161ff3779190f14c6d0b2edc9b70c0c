@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb88eb4a_1c7aac17",
+        "filename": "tools/vim/mojom/syntax/mojom.vim",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-16T23:12:12Z",
+      "side": 1,
+      "message": "This was the only thing I\u0027m not sure about, this is for .md links that are extracted by something else I guess? I might just drop this, but if it\u0027s useful for some reason for you, keeping it is fine too.",
+      "revId": "842392d6d161ff3779190f14c6d0b2edc9b70c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
