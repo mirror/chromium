@@ -148,6 +148,10 @@ class MockCoordinator : public Coordinator, public mojom::Coordinator {
   void RequestGlobalMemoryDump(const MemoryDumpRequestArgs& args,
                                const RequestGlobalMemoryDumpCallback&) override;
 
+  void RequestGlobalDumpAndAppendToTrace(
+      const MemoryDumpRequestArgs& args,
+      const RequestGlobalDumpAndAppendToTraceCallback&) override;
+
   void GetVmRegionsForHeapProfiler(
       const GetVmRegionsForHeapProfilerCallback&) override {}
 
@@ -265,7 +269,14 @@ void MockCoordinator::RequestGlobalMemoryDump(
     const MemoryDumpRequestArgs& args,
     const RequestGlobalMemoryDumpCallback& callback) {
   client_->RequestChromeDump(args.dump_type, args.level_of_detail);
-  callback.Run(args.dump_guid, true, mojom::GlobalMemoryDumpPtr());
+  callback.Run(true, mojom::GlobalMemoryDumpPtr());
+}
+
+void MockCoordinator::RequestGlobalDumpAndAppendToTrace(
+    const MemoryDumpRequestArgs& args,
+    const RequestGlobalDumpAndAppendToTraceCallback& callback) {
+  client_->RequestChromeDump(args.dump_type, args.level_of_detail);
+  callback.Run(args.dump_guid, true);
 }
 
 // Tests that the MemoryDumpProvider(s) are invoked even if tracing has not
