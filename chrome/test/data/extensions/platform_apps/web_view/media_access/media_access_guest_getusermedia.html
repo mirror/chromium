@@ -6,7 +6,7 @@
 <html>
   <head>
     <script type="text/javascript">
-      // A guest that requests media access.
+      // A guest that requests media access using getUserMedia().
       // Notifies the embedder about the result of the request (success/fail)
       // via post message. Note that the embedder has to initiate a postMessage
       // first so that guest has a reference to the embedder's window.
@@ -45,6 +45,6 @@
     </script>
   </head>
   <body>
-    <div>This is a guest that requests audio media.</div>
+    <div>This is a guest that requests audio media with the getUserMedia API.</div>
   </body>
 </html>
