@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f3e8a0c_1b702590",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T05:55:08Z",
+      "side": 1,
+      "message": "Didn\u0027t know spec also mentions this.  Can we have a link to https://fetch.spec.whatwg.org/#http-redirect-fetch here too with a brief comment about that?",
+      "revId": "e85e4fd768e745bdad5b12e236de75dee6698680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "138a97c7_5e66e360",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T05:55:08Z",
+      "side": 1,
+      "message": "(Super tiny nit and not really relevant to this CL alone, but thought that it might be better to use resource names like \"foo.png\" or \"bar.js\" or something more common for subresources as \".html\" files are mostly only fetched for main-resource.)",
+      "revId": "e85e4fd768e745bdad5b12e236de75dee6698680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
