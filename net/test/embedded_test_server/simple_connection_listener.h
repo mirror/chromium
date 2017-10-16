@@ -43,7 +43,7 @@ class SimpleConnectionListener : public EmbeddedTestServerConnectionListener {
   ~SimpleConnectionListener() override;
 
   void AcceptedSocket(const StreamSocket& socket) override;
-  void ReadFromSocket(const StreamSocket& socket, int rv) override;
+  void ReadFromSocket(const StreamSocket& socket, int* rv) override;
 
   // Wait until the expected number of connections have been seen.
   void WaitForConnections();

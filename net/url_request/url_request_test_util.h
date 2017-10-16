@@ -314,6 +314,11 @@ class TestNetworkDelegate : public NetworkDelegateImpl {
     will_be_intercepted_on_next_error_ = can_be_intercepted_on_error;
   }
 
+  void set_will_be_restarted_after_bytes_sent(
+      bool will_be_restarted_after_bytes_sent) {
+    will_be_restarted_after_bytes_sent_ = will_be_restarted_after_bytes_sent;
+  }
+
   void set_before_start_transaction_fails() {
     before_start_transaction_fails_ = true;
   }
@@ -409,6 +414,7 @@ class TestNetworkDelegate : public NetworkDelegateImpl {
   bool experimental_cookie_features_enabled_;           // false by default
   bool cancel_request_with_policy_violating_referrer_;  // false by default
   bool will_be_intercepted_on_next_error_;
+  bool will_be_restarted_after_bytes_sent_;  // false by default
   bool before_start_transaction_fails_;
 };
 
