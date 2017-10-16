@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3727e60_9428ce15",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-16T20:35:35Z",
+      "side": 1,
+      "message": "+1",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076e68e9_46c5d4c9",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-16T20:35:35Z",
+      "side": 1,
+      "message": "super-nit: This makes it sound (at least to me) like we\u0027re getting the image from the task. Maybe DecodeImageInTask?",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 31
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70856716_6d93d835",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-16T20:35:35Z",
+      "side": 1,
+      "message": "When can the paint_image be null?",
+      "range": {
+        "startLine": 379,
+        "startChar": 7,
+        "endLine": 379,
+        "endChar": 18
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02472078_ca6a49e2",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-16T20:35:35Z",
+      "side": 1,
+      "message": "This comment feels like it should be at line 411?",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 12
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9a64a8_aed30774",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-16T20:35:35Z",
+      "side": 1,
+      "message": "It feels like this should be two functions - the candidate image one and the full-sized mip one - other than some dchecks and the discardable allocation (which could be factored into a helper), these run distinct code? WDYT?",
+      "range": {
+        "startLine": 457,
+        "startChar": 26,
+        "endLine": 457,
+        "endChar": 39
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa1bf9f_e1427736",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-16T20:35:35Z",
+      "side": 1,
+      "message": "So do we not support scaled subrects?",
+      "range": {
+        "startLine": 498,
+        "startChar": 18,
+        "endLine": 498,
+        "endChar": 25
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982169aa_5b67c87d",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-16T20:35:35Z",
+      "side": 1,
+      "message": "why not just check decoded_images_.size() \u003c limit? efficiency?",
+      "range": {
+        "startLine": 577,
+        "startChar": 7,
+        "endLine": 577,
+        "endChar": 20
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26147744_94b371a9",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-16T20:35:35Z",
+      "side": 1,
+      "message": "Do we want to DCHECK that we don\u0027t move memory from an entry that has refs? maybe DCHECK(!is_budgeted) DCHECK(ref_count \u003d\u003d 0)?",
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
