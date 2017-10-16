@@ -473,7 +473,8 @@ class DelayHelper : public EmbeddedWorkerTestHelper {
     EmbeddedWorkerTestHelper::OnStartWorker(
         embedded_worker_id_, service_worker_version_id_, scope_, script_url_,
         pause_after_download_, std::move(start_worker_request_),
-        std::move(start_worker_instance_host_), std::move(provider_info_));
+        std::move(controller_request_), std::move(start_worker_instance_host_),
+        std::move(provider_info_));
   }
 
   void Respond() {
@@ -500,7 +501,8 @@ class DelayHelper : public EmbeddedWorkerTestHelper {
       const GURL& scope,
       const GURL& script_url,
       bool pause_after_download,
-      mojom::ServiceWorkerEventDispatcherRequest request,
+      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+      mojom::ControllerServiceWorkerRequest controller_request,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
       mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info)
       override {
@@ -509,7 +511,8 @@ class DelayHelper : public EmbeddedWorkerTestHelper {
     scope_ = scope;
     script_url_ = script_url;
     pause_after_download_ = pause_after_download;
-    start_worker_request_ = std::move(request);
+    start_worker_request_ = std::move(dispatcher_request);
+    controller_request_ = std::move(controller_request);
     start_worker_instance_host_ = std::move(instance_host);
     provider_info_ = std::move(provider_info);
   }
@@ -533,6 +536,7 @@ class DelayHelper : public EmbeddedWorkerTestHelper {
   GURL script_url_;
   bool pause_after_download_;
   mojom::ServiceWorkerEventDispatcherRequest start_worker_request_;
+  mojom::ControllerServiceWorkerRequest controller_request_;
   mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo
       start_worker_instance_host_;
   mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info_;
