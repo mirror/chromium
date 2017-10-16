@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fa92132_b58b9e24",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-16T04:46:17Z",
+      "side": 1,
+      "message": "We should add a bit about the motivation for this change. In my view, it\u0027s an incremental step toward Onion Soup: having less dependence on content types for service worker.",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959c143d_5debe771",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-16T04:46:17Z",
+      "side": 1,
+      "message": "Some comment like:\n\n// |handle_id| and |version_id| are internal state not exposed to the web. |handle_id| is used for interprocess reference counting to keep the content::ServiceWorkerVersion in the browser process alive while an object refers to it; it will be removed when Mojofication is complete. |version_id| identifies the service worker.",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d391dda9_8210ca29",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-16T04:46:17Z",
+      "side": 1,
+      "message": "add new line here",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
