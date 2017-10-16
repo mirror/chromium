@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e1cd4fd_f2dc1a0e",
+        "filename": "media/base/media_switches.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-16T11:53:52Z",
+      "side": 1,
+      "message": "Could we just use the RuntimeFeatures mechanism from Blink without linking to a feature flag?",
+      "revId": "9ebb0b369202cccd59c9c6fa6cb6b124f706f09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ffc9ce_2071b863",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2148,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-16T11:53:52Z",
+      "side": 1,
+      "message": "We should probably just have the `ThrowDOMException` wrapped around the runtime check as we would want to record data without turning the feature on.",
+      "revId": "9ebb0b369202cccd59c9c6fa6cb6b124f706f09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
