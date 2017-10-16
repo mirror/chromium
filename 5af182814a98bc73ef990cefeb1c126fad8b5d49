@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbc3b7ff_e25307fe",
+        "filename": "third_party/WebKit/public/web/WebSandboxFlags.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-16T21:21:53Z",
+      "side": 1,
+      "message": "Assuming these are no longer needed (I see no references), please revert.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "5af182814a98bc73ef990cefeb1c126fad8b5d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
