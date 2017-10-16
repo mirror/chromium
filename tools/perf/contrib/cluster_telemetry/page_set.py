@@ -12,12 +12,14 @@ from telemetry import story
 class CTPage(page_module.Page):
 
   def __init__(self, url, page_set, shared_page_state_class, archive_data_file,
-               traffic_setting, run_page_interaction_callback):
+               traffic_setting, run_page_interaction_callback,
+               cache_temperature=None):
     super(CTPage, self).__init__(
         url=url,
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
         traffic_setting=traffic_setting,
+        cache_temperature=cache_temperature,
         name=url)
     self.archive_data_file = archive_data_file
     self._run_page_interaction_callback = run_page_interaction_callback
@@ -35,7 +37,8 @@ class CTPageSet(story.StorySet):
 
   def __init__(self, urls_list, user_agent, archive_data_file,
                traffic_setting=traffic_setting_module.NONE,
-               run_page_interaction_callback=None):
+               run_page_interaction_callback=None,
+               cache_temperatures=None):
     if user_agent == 'mobile':
       shared_page_state_class = shared_page_state.SharedMobilePageState
     elif user_agent == 'desktop':
@@ -45,9 +48,13 @@ class CTPageSet(story.StorySet):
 
     super(CTPageSet, self).__init__(archive_data_file=archive_data_file)
 
-    for url in urls_list.split(','):
-      self.AddStory(
-          CTPage(url, self, shared_page_state_class=shared_page_state_class,
-                 archive_data_file=archive_data_file,
-                 traffic_setting=traffic_setting,
-                 run_page_interaction_callback=run_page_interaction_callback))
+    if not cache_temperatures:
+      cache_temperatures = [None]
+    for temperature in cache_temperatures:
+      for url in urls_list.split(','):
+        self.AddStory(
+            CTPage(url, self, shared_page_state_class=shared_page_state_class,
+                  archive_data_file=archive_data_file,
+                  traffic_setting=traffic_setting,
+                  run_page_interaction_callback=run_page_interaction_callback,
+                  cache_temperature=temperature))
