@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eec7bc4_c4e71d6f",
+        "filename": "ios/web/web_state/web_view_internal_creation_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-16T16:45:41Z",
+      "side": 1,
+      "message": "I would remove this comment, because //ios/web is not suppose to know about //ios/web_view. Mentioning this in CL description would be useful.",
+      "range": {
+        "startLine": 60,
+        "startChar": 34,
+        "endLine": 60,
+        "endChar": 42
+      },
+      "revId": "7966766169310fc1f0e03e256c0a109c19f58f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
