@@ -550,14 +550,27 @@ void VolumeManager::OnDiskEvent(
       bool mounting = false;
       if (disk->mount_path().empty() && disk->has_media() &&
           !profile_->GetPrefs()->GetBoolean(prefs::kExternalStorageDisabled)) {
+        // TODO(klemenko): Remove |mount_label| when http://crbug/774890 gets
+        // resolved. Currently we suggest a mount point name, because in case
+        // when disk's name contains '#', content will not load in Files App.
+        // Valid mount point name could also be just one character long, If name
+        // is '#' it will be sanitized to an empty string which will result in
+        // '#' as mount point name (if third argument to MountPath is an empty
+        // string then mount point name will be derived from the name). To
+        // address that issue we also add an arbitrary prefix to the final mount
+        // point name (in our case 'd').
+        std::string mount_label = "d" + disk->device_label();
+        mount_label.erase(
+            std::remove(mount_label.begin(), mount_label.end(), '#'),
+            mount_label.end());
+
         // If disk is not mounted yet and it has media and there is no policy
         // forbidding external storage, give it a try.
         // Initiate disk mount operation. MountPath auto-detects the filesystem
         // format if the second argument is empty. The third argument (mount
         // label) is not used in a disk mount operation.
         disk_mount_manager_->MountPath(disk->device_path(), std::string(),
-                                       std::string(),
-                                       chromeos::MOUNT_TYPE_DEVICE,
+                                       mount_label, chromeos::MOUNT_TYPE_DEVICE,
                                        GetExternalStorageAccessMode(profile_));
         mounting = true;
       }
