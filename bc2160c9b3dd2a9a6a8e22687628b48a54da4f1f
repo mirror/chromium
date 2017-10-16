@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "988dcc84_f5b01fdf",
+        "filename": "tools/clang/scripts/download_lld_mac.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-16T16:27:44Z",
+      "side": 1,
+      "message": "might as well put 2017\n\nI assume you copied this from some earlier download script?",
+      "revId": "bc2160c9b3dd2a9a6a8e22687628b48a54da4f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd68978_d5fcd40a",
+        "filename": "tools/clang/scripts/download_lld_mac.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-16T16:27:44Z",
+      "side": 1,
+      "message": "Bah, gsutil. I like https downloads better, but I guess we use gsutil for most other blobs..",
+      "revId": "bc2160c9b3dd2a9a6a8e22687628b48a54da4f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038cfbeb_06d81520",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-16T16:27:44Z",
+      "side": 1,
+      "message": "In an ideal world, this would be committed separately.",
+      "revId": "bc2160c9b3dd2a9a6a8e22687628b48a54da4f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
