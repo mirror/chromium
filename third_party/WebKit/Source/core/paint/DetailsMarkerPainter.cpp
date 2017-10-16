@@ -6,22 +6,22 @@
 
 #include "core/layout/LayoutDetailsMarker.h"
 #include "core/paint/BlockPainter.h"
-#include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/PaintInfo.h"
 #include "platform/geometry/LayoutPoint.h"
 #include "platform/graphics/Path.h"
+#include "platform/graphics/paint/DrawingRecorder.h"
 
 namespace blink {
 
 void DetailsMarkerPainter::Paint(const PaintInfo& paint_info,
                                  const LayoutPoint& paint_offset) {
-  if (paint_info.phase != kPaintPhaseForeground ||
+  if (paint_info.phase != PaintPhase::kForeground ||
       layout_details_marker_.Style()->Visibility() != EVisibility::kVisible) {
     BlockPainter(layout_details_marker_).Paint(paint_info, paint_offset);
     return;
   }
 
-  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+  if (DrawingRecorder::UseCachedDrawingIfPossible(
           paint_info.context, layout_details_marker_, paint_info.phase))
     return;
 
@@ -32,9 +32,9 @@ void DetailsMarkerPainter::Paint(const PaintInfo& paint_info,
   if (!paint_info.GetCullRect().IntersectsCullRect(overflow_rect))
     return;
 
-  LayoutObjectDrawingRecorder layout_drawing_recorder(
-      paint_info.context, layout_details_marker_, paint_info.phase,
-      overflow_rect);
+  DrawingRecorder layout_drawing_recorder(paint_info.context,
+                                          layout_details_marker_,
+                                          paint_info.phase, overflow_rect);
   const Color color(layout_details_marker_.ResolveColor(CSSPropertyColor));
   paint_info.context.SetFillColor(color);
 

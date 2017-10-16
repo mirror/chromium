@@ -9,12 +9,12 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/paint/BoxBorderPainter.h"
-#include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/PaintInfo.h"
 #include "core/style/BorderEdge.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/geometry/LayoutPoint.h"
 #include "platform/graphics/GraphicsContextStateSaver.h"
+#include "platform/graphics/paint/DrawingRecorder.h"
 
 namespace blink {
 
@@ -243,7 +243,7 @@ void ObjectPainter::PaintOutline(const PaintInfo& paint_info,
   if (outline_rects.IsEmpty())
     return;
 
-  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+  if (DrawingRecorder::UseCachedDrawingIfPossible(
           paint_info.context, layout_object_, paint_info.phase))
     return;
 
@@ -268,8 +268,8 @@ void ObjectPainter::PaintOutline(const PaintInfo& paint_info,
       UnionRectEvenIfEmpty(pixel_snapped_outline_rects);
   IntRect bounds = united_outline_rect;
   bounds.Inflate(layout_object_.StyleRef().OutlineOutsetExtent());
-  LayoutObjectDrawingRecorder recorder(paint_info.context, layout_object_,
-                                       paint_info.phase, bounds);
+  DrawingRecorder recorder(paint_info.context, layout_object_, paint_info.phase,
+                           bounds);
 
   Color color =
       layout_object_.ResolveColor(style_to_use, CSSPropertyOutlineColor);
@@ -323,14 +323,13 @@ void ObjectPainter::AddPDFURLRectIfNeeded(const PaintInfo& paint_info,
   if (rect.IsEmpty())
     return;
 
-  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+  if (DrawingRecorder::UseCachedDrawingIfPossible(
           paint_info.context, layout_object_,
           DisplayItem::kPrintedContentPDFURLRect))
     return;
 
-  LayoutObjectDrawingRecorder recorder(paint_info.context, layout_object_,
-                                       DisplayItem::kPrintedContentPDFURLRect,
-                                       rect);
+  DrawingRecorder recorder(paint_info.context, layout_object_,
+                           DisplayItem::kPrintedContentPDFURLRect, rect);
   if (url.HasFragmentIdentifier() &&
       EqualIgnoringFragmentIdentifier(url,
                                       layout_object_.GetDocument().BaseURL())) {
@@ -683,23 +682,23 @@ void ObjectPainter::PaintAllPhasesAtomically(const PaintInfo& paint_info,
   // Pass PaintPhaseSelection and PaintPhaseTextClip to the descendants so that
   // they will paint for selection and text clip respectively. We don't need
   // complete painting for these phases.
-  if (paint_info.phase == kPaintPhaseSelection ||
-      paint_info.phase == kPaintPhaseTextClip) {
+  if (paint_info.phase == PaintPhase::kSelection ||
+      paint_info.phase == PaintPhase::kTextClip) {
     layout_object_.Paint(paint_info, paint_offset);
     return;
   }
 
-  if (paint_info.phase != kPaintPhaseForeground)
+  if (paint_info.phase != PaintPhase::kForeground)
     return;
 
   PaintInfo info(paint_info);
-  info.phase = kPaintPhaseBlockBackground;
+  info.phase = PaintPhase::kBlockBackground;
   layout_object_.Paint(info, paint_offset);
-  info.phase = kPaintPhaseFloat;
+  info.phase = PaintPhase::kFloat;
   layout_object_.Paint(info, paint_offset);
-  info.phase = kPaintPhaseForeground;
+  info.phase = PaintPhase::kForeground;
   layout_object_.Paint(info, paint_offset);
-  info.phase = kPaintPhaseOutline;
+  info.phase = PaintPhase::kOutline;
   layout_object_.Paint(info, paint_offset);
 }
 

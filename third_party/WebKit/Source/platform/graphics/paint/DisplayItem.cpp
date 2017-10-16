@@ -46,7 +46,7 @@ static WTF::String PaintPhaseAsDebugString(int paint_phase) {
       return "PaintPhaseTextClip";
     case 10:
       return "PaintPhaseMask";
-    case DisplayItem::kPaintPhaseMax:
+    case DisplayItem::PaintPhase::kMax:
       return "PaintPhaseClippingMask";
     default:
       NOTREACHED();
