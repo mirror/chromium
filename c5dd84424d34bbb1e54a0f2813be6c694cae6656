@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c701bcba_6c310bf2",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-16T20:12:17Z",
+      "side": 1,
+      "message": "nit: I would\u0027ve broken this out into a separate CL, since it\u0027s independent of the other stuff in this.",
+      "revId": "c5dd84424d34bbb1e54a0f2813be6c694cae6656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb31cb61_ead818dc",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-16T20:12:17Z",
+      "side": 1,
+      "message": "You should use named placeholders here; it is hard to track the correctness of positional ones. \n\nSee https://pyformat.info/#named_placeholders for more.",
+      "revId": "c5dd84424d34bbb1e54a0f2813be6c694cae6656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
