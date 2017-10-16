@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a79ebff9_b0d851a7",
+        "filename": "components/autofill/content/renderer/form_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-16T22:02:57Z",
+      "side": 1,
+      "message": "keep as const char* const",
+      "range": {
+        "startLine": 393,
+        "startChar": 4,
+        "endLine": 393,
+        "endChar": 15
+      },
+      "revId": "d912bac4ef80bf57421afa4dc8403c0760543a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca381101_3b457ac4",
+        "filename": "components/autofill/content/renderer/page_form_analyser_logger.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-16T22:02:57Z",
+      "side": 1,
+      "message": "a brief foray into micro-optimization territory...\n\nyou\u0027re trying to reuse the previously allocated memory attached to text while only copying each string once. operator+ isn\u0027t your friend here ... it constructs (alloc and copy) and returns a temporary string then moves that string (throwing away the alloc you\u0027re trying to reuse).\n\nYou want to append/operator+\u003d here to reuse the allocation.",
+      "range": {
+        "startLine": 38,
+        "startChar": 22,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "d912bac4ef80bf57421afa4dc8403c0760543a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c8cee1_b021a41e",
+        "filename": "components/autofill/content/renderer/page_form_analyser_logger.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-16T22:02:57Z",
+      "side": 1,
+      "message": "this std::move isn\u0027t avoiding the copy because WebConsoleMessage\u0027s constructor takes it be const ref. If you want to avoid the copy, you need to make the message a named var and std::move entry.nodes into its nodes member.",
+      "range": {
+        "startLine": 43,
+        "startChar": 51,
+        "endLine": 43,
+        "endChar": 73
+      },
+      "revId": "d912bac4ef80bf57421afa4dc8403c0760543a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
