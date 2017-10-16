@@ -324,7 +324,7 @@ void ServiceWorkerSubresourceLoader::StartResponse(
 
     mojom::URLLoaderClientPtr blob_loader_client;
     blob_client_binding_.Bind(mojo::MakeRequest(&blob_loader_client));
-    default_loader_factory_getter_->GetBlobLoaderFactory()
+    default_loader_factory_getter_->GetNonNetworkLoaderFactory()
         ->CreateLoaderAndStart(mojo::MakeRequest(&blob_loader_), routing_id_,
                                request_id_, options_, resource_request_,
                                std::move(blob_loader_client),

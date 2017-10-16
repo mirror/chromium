@@ -23,7 +23,7 @@ class ChildURLLoaderFactoryGetter
   class Info {
    public:
     Info(mojom::URLLoaderFactoryPtrInfo network_loader_factory_info,
-         mojom::URLLoaderFactoryPtrInfo blob_loader_factory_info);
+         mojom::URLLoaderFactoryPtrInfo non_network_loader_factory_info);
     Info(Info&& other);
     ~Info();
 
@@ -31,21 +31,22 @@ class ChildURLLoaderFactoryGetter
 
    private:
     mojom::URLLoaderFactoryPtrInfo network_loader_factory_info_;
-    mojom::URLLoaderFactoryPtrInfo blob_loader_factory_info_;
+    mojom::URLLoaderFactoryPtrInfo non_network_loader_factory_info_;
   };
 
   virtual Info GetClonedInfo() = 0;
 
-  // Returns the URLLoaderFactory that can handle the given |request_url| (e.g.
-  // returns BlobURLLoader factory for blob: URL requests). When an appropriate
-  // factory cannot be determined, |default_factory| is returned if non-null
-  // factory is given, or Network URLLoaderFactory is returned otherwise.
+  // Returns the URLLoaderFactory that can handle the given |request_url|. If
+  // the request is a non-network URL and a non-network loader factory has been
+  // established, that factory will be returned. Otherwise, if non-null,
+  // |default_factory| is returned. Finally if all else fails, the established
+  // network loader factory is returned.
   virtual mojom::URLLoaderFactory* GetFactoryForURL(
       const GURL& request_url,
       mojom::URLLoaderFactory* default_factory = nullptr) = 0;
 
   virtual mojom::URLLoaderFactory* GetNetworkLoaderFactory() = 0;
-  virtual mojom::URLLoaderFactory* GetBlobLoaderFactory() = 0;
+  virtual mojom::URLLoaderFactory* GetNonNetworkLoaderFactory() = 0;
 
  protected:
   friend class base::RefCounted<ChildURLLoaderFactoryGetter>;

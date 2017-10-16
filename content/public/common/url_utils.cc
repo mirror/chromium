@@ -53,4 +53,10 @@ bool IsURLHandledByNetworkStack(const GURL& url) {
   return true;
 }
 
+bool ShouldUseNetworkURLLoaderFactory(const GURL& url) {
+  // TODO(NetworkService): Refine this condition. Specifically, should ws:// and
+  // wss:// schemes also use a network URLLoaderFactory?
+  return url.SchemeIsHTTPOrHTTPS();
+}
+
 }  // namespace content

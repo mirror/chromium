@@ -6,7 +6,7 @@
 
 #include "base/guid.h"
 #include "base/optional.h"
-#include "content/browser/blob_storage/blob_url_loader_factory.h"
+#include "content/browser/blob_storage/blob_url_loader.h"
 #include "content/browser/service_worker/service_worker_fetch_dispatcher.h"
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/browser/url_loader_factory_getter.h"
@@ -374,7 +374,7 @@ void ServiceWorkerURLLoaderJob::StartResponse(
     mojom::URLLoaderRequest request;
     mojom::URLLoaderClientPtr client;
     blob_client_binding_.Bind(mojo::MakeRequest(&client));
-    BlobURLLoaderFactory::CreateLoaderAndStart(
+    BlobURLLoader::CreateAndStart(
         std::move(request), resource_request_, std::move(client),
         std::move(blob_data_handle), nullptr /* file_system_context */);
     return;

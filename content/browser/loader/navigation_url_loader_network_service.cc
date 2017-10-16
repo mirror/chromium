@@ -38,6 +38,7 @@
 #include "content/public/common/referrer.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_loader_factory.mojom.h"
+#include "content/public/common/url_utils.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_content_disposition.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
@@ -246,8 +247,9 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
     mojom::URLLoaderFactory* factory = nullptr;
     DCHECK_EQ(handlers_.size(), handler_index_);
-    if (resource_request_->url.SchemeIs(url::kBlobScheme)) {
-      factory = default_url_loader_factory_getter_->GetBlobFactory()->get();
+    if (!ShouldUseNetworkURLLoaderFactory(resource_request_->url)) {
+      factory =
+          default_url_loader_factory_getter_->GetNonNetworkFactory()->get();
     } else {
       factory = default_url_loader_factory_getter_->GetNetworkFactory()->get();
       default_loader_used_ = true;

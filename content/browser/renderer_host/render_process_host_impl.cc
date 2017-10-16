@@ -65,7 +65,6 @@
 #include "content/browser/bad_message.h"
 #include "content/browser/blob_storage/blob_dispatcher_host.h"
 #include "content/browser/blob_storage/blob_registry_wrapper.h"
-#include "content/browser/blob_storage/blob_url_loader_factory.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/broadcast_channel/broadcast_channel_provider.h"
 #include "content/browser/browser_child_process_host_impl.h"
@@ -99,6 +98,7 @@
 #include "content/browser/memory/memory_coordinator_impl.h"
 #include "content/browser/mime_registry_impl.h"
 #include "content/browser/net/reporting_service_proxy.h"
+#include "content/browser/non_network_url_loader_factory.h"
 #include "content/browser/notifications/notification_message_filter.h"
 #include "content/browser/notifications/platform_notification_context_impl.h"
 #include "content/browser/payments/payment_manager.h"
@@ -1971,13 +1971,13 @@ void RenderProcessHostImpl::GetAssociatedInterface(
     listener->OnAssociatedInterfaceRequest(name, request.PassHandle());
 }
 
-void RenderProcessHostImpl::GetBlobURLLoaderFactory(
+void RenderProcessHostImpl::GetNonNetworkURLLoaderFactory(
     mojom::URLLoaderFactoryRequest request) {
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     NOTREACHED();
     return;
   }
-  storage_partition_impl_->GetBlobURLLoaderFactory()->HandleRequest(
+  storage_partition_impl_->GetNonNetworkURLLoaderFactory()->BindRequest(
       std::move(request));
 }
 

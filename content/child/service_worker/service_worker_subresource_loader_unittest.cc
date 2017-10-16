@@ -238,7 +238,7 @@ class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
                             MakeRequest(&fake_loader_factory));
     loader_factory_getter_ =
         base::MakeRefCounted<ChildURLLoaderFactoryGetterImpl>(
-            std::move(fake_loader_factory), nullptr);
+            std::move(fake_loader_factory), nullptr, nullptr);
     controller_connector_ =
         base::MakeRefCounted<ControllerServiceWorkerConnector>(
             &fake_container_host_);

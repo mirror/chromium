@@ -445,7 +445,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
       mojom::AssociatedInterfaceAssociatedRequest request) override;
 
   // mojom::RendererHost
-  void GetBlobURLLoaderFactory(mojom::URLLoaderFactoryRequest request) override;
+  void GetNonNetworkURLLoaderFactory(
+      mojom::URLLoaderFactoryRequest request) override;
 
   void BindRouteProvider(mojom::RouteProviderAssociatedRequest request);
 
