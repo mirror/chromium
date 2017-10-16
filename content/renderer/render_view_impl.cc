@@ -1172,7 +1172,6 @@ bool RenderViewImpl::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(PageMsg_UpdateWindowScreenRect,
                         OnUpdateWindowScreenRect)
     IPC_MESSAGE_HANDLER(PageMsg_SetZoomLevel, OnSetZoomLevel)
-    IPC_MESSAGE_HANDLER(PageMsg_SetDeviceScaleFactor, OnSetDeviceScaleFactor);
     IPC_MESSAGE_HANDLER(PageMsg_WasHidden, OnPageWasHidden)
     IPC_MESSAGE_HANDLER(PageMsg_WasShown, OnPageWasShown)
     IPC_MESSAGE_HANDLER(PageMsg_SetHistoryOffsetAndLength,
@@ -2227,13 +2226,6 @@ void RenderViewImpl::DidCompletePageScaleAnimation() {
     if (focused_frame->AutofillClient())
       focused_frame->AutofillClient()->DidCompleteFocusChangeInFrame();
   }
-}
-
-void RenderViewImpl::OnDeviceScaleFactorChanged() {
-  RenderWidget::OnDeviceScaleFactorChanged();
-  UpdateWebViewWithDeviceScaleFactor();
-  if (auto_resize_mode_)
-    AutoResizeCompositor();
 }
 
 void RenderViewImpl::SetScreenMetricsEmulationParameters(

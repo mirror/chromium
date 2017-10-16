@@ -707,6 +707,7 @@ void GetScreenInfoForWindow(ScreenInfo* results,
   results->depth_per_component = display.depth_per_component();
   results->is_monochrome = display.is_monochrome();
   results->device_scale_factor = display.device_scale_factor();
+  fprintf(stderr, ">>>DSF: %f\n", display.device_scale_factor());
   results->color_space = display.color_space();
   results->color_space.GetICCProfile(&results->icc_profile);
 
