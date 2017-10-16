@@ -397,8 +397,28 @@ WebInputEventResult ScrollManager::HandleGestureScrollUpdate(
   DCHECK_EQ(gesture_event.GetType(), WebInputEvent::kGestureScrollUpdate);
 
   Node* node = scroll_gesture_handling_node_.Get();
-  if (!node || !node->GetLayoutObject())
-    return WebInputEventResult::kNotHandled;
+  if (!node || !node->GetLayoutObject()) {
+    if (previous_gesture_scrolled_element_) {
+      // When the scroll_gesture_handling_node_ gets deleted in the middle of
+      // scrolling call HandleGestureScrollEvent to start scrolling a new node
+      // if possible.
+      ClearGestureScrollState();
+      WebGestureEvent scroll_begin(gesture_event);
+      scroll_begin.SetType(WebInputEvent::kGestureScrollBegin);
+      scroll_begin.data.scroll_begin.delta_x_hint =
+          gesture_event.data.scroll_update.delta_x;
+      scroll_begin.data.scroll_begin.delta_y_hint =
+          gesture_event.data.scroll_update.delta_y;
+      scroll_begin.data.scroll_begin.delta_hint_units =
+          gesture_event.data.scroll_update.delta_units;
+      HandleGestureScrollEvent(scroll_begin);
+      node = scroll_gesture_handling_node_.Get();
+      if (!node || !node->GetLayoutObject())
+        return WebInputEventResult::kNotHandled;
+    } else {
+      return WebInputEventResult::kNotHandled;
+    }
+  }
 
   // Negate the deltas since the gesture event stores finger movement and
   // scrolling occurs in the direction opposite the finger's movement

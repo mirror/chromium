@@ -99,6 +99,7 @@ void InputHandlerWrapper::GenerateScrollBeginAndSendToMainThread(
   DCHECK_EQ(update_event.GetType(), blink::WebInputEvent::kGestureScrollUpdate);
   blink::WebGestureEvent scroll_begin(update_event);
   scroll_begin.SetType(blink::WebInputEvent::kGestureScrollBegin);
+  scroll_begin.source_device = update_event.source_device;
   scroll_begin.data.scroll_begin.inertial_phase =
       update_event.data.scroll_update.inertial_phase;
   scroll_begin.data.scroll_begin.delta_x_hint =
