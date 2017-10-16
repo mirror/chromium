@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2da2a561_b2893f9d",
+        "filename": "components/autofill/content/renderer/form_cache.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-16T15:37:18Z",
+      "side": 1,
+      "message": "returning const char* here, and keeping it const char* until the final string is built, skips building a std::string instance and copying/moving it around.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 11
+      },
+      "revId": "9f510a6083ee7a90c84997e91f69fa2822c89a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5c5266_865f2333",
+        "filename": "components/autofill/content/renderer/form_cache.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-16T15:37:18Z",
+      "side": 1,
+      "message": "this parsing is a little too primitive to do quite what you want. For example, name is a substring of may other autocomplete types.",
+      "revId": "9f510a6083ee7a90c84997e91f69fa2822c89a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534cc617_993846f8",
+        "filename": "components/autofill/content/renderer/form_cache.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-16T15:37:18Z",
+      "side": 1,
+      "message": "logger.Send(base::Stringprintf(\"... %s ...\", predicted_autocomplete_attribute), ...);\n\nor\n\nstd::string msg;\nmsg.reserve(...);\nmsg.append(\"Input elements...\");  // or +\u003d\nmsg.append(predicted_autocomplete_attribute);\nmsg.append(\"\u0027, confirm at...\");\nlogger.Send(std::move(msg), ...);",
+      "revId": "9f510a6083ee7a90c84997e91f69fa2822c89a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8163380d_7debb762",
+        "filename": "components/autofill/content/renderer/page_form_analyser_logger.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-16T15:37:18Z",
+      "side": 1,
+      "message": "std::move(messsage)",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 14
+      },
+      "revId": "9f510a6083ee7a90c84997e91f69fa2822c89a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87baeafd_896ef526",
+        "filename": "components/autofill/content/renderer/page_form_analyser_logger.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-16T15:37:18Z",
+      "side": 1,
+      "message": "nits:\n\n-  declare/allocate text at the start of the method (outside the loops), maybe reserve() if you\u0027ve got a guestimate of how large a buffer will suffice.\n\n- // Inner-most loop...\n  text.clear();\n  text +\u003d \"[DOM] \";\n  text +\u003d entry.message;\n  for (...)\n    text +\u003d \" %o\";\n  WebConsoleMessage message(level, WebString::FromUtf8(text));\n  message.nodes \u003d std::move(nodes);  // avoids copying node vectors\n  frame_-\u003eAddMessageToConsole(message);",
+      "revId": "9f510a6083ee7a90c84997e91f69fa2822c89a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
