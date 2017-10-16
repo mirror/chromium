@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df349bc3_92569644",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-16T06:57:58Z",
+      "side": 1,
+      "message": "Move after brackets.",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 21
+      },
+      "revId": "0eb6409459c65a4afd1e31eaef83c6da2bdb99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9d0ff3_63b41141",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-16T06:57:58Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 13,
+        "startChar": 19,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "0eb6409459c65a4afd1e31eaef83c6da2bdb99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176a3f60_900644c0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-16T06:57:58Z",
+      "side": 1,
+      "message": "I am not familiar with this notation, what about \"1.\" or just \"- \" (the order does not matter)? The same below.",
+      "range": {
+        "startLine": 1204,
+        "startChar": 5,
+        "endLine": 1204,
+        "endChar": 7
+      },
+      "revId": "0eb6409459c65a4afd1e31eaef83c6da2bdb99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed12010_056c393d",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-16T06:57:58Z",
+      "side": 1,
+      "message": "Use capital letter please. The same below.",
+      "range": {
+        "startLine": 1205,
+        "startChar": 8,
+        "endLine": 1205,
+        "endChar": 9
+      },
+      "revId": "0eb6409459c65a4afd1e31eaef83c6da2bdb99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c70fe58_155309ab",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-16T06:57:58Z",
+      "side": 1,
+      "message": "Overall I suggest:\n\nIgnore the pushed suggestion if:\n- Incomplete.\n- Has been dismissed.\n- Present in the current suggestions.\n- Possibly shown on older surfaces (i.e. archived).\n\nWe do not check the database, because it just persists current suggestions.",
+      "range": {
+        "startLine": 1210,
+        "startChar": 69,
+        "endLine": 1210,
+        "endChar": 70
+      },
+      "revId": "0eb6409459c65a4afd1e31eaef83c6da2bdb99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0a009c_dbef8b3d",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3317,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-16T06:57:58Z",
+      "side": 1,
+      "message": "EXPECT_THAT",
+      "range": {
+        "startLine": 3317,
+        "startChar": 2,
+        "endLine": 3317,
+        "endChar": 13
+      },
+      "revId": "0eb6409459c65a4afd1e31eaef83c6da2bdb99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0e2626_7c524dcd",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3367,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-16T06:57:58Z",
+      "side": 1,
+      "message": "Please use base::Time::FromUTCString (e.g. like GetDummyNow here https://cs.chromium.org/chromium/src/components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc?q\u003dbreakingNews+file:%5Esrc/components/ntp_snippets/+package:%5Echromium$\u0026dr\u003dCSs\u0026l\u003d181)\n\nAnd please have variables of type base::Time instead of rebuilding them each time.\n\nAlso do not use 1 and 2 in names, rather first_ or second_, because of typos :)",
+      "range": {
+        "startLine": 3366,
+        "startChar": 2,
+        "endLine": 3367,
+        "endChar": 28
+      },
+      "revId": "0eb6409459c65a4afd1e31eaef83c6da2bdb99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba188780_a2fb230e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3388,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-16T06:57:58Z",
+      "side": 1,
+      "message": "the same",
+      "range": {
+        "startLine": 3388,
+        "startChar": 13,
+        "endLine": 3388,
+        "endChar": 16
+      },
+      "revId": "0eb6409459c65a4afd1e31eaef83c6da2bdb99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a8889c_d4c3aca9",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3419,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-16T06:57:58Z",
+      "side": 1,
+      "message": "previous?",
+      "range": {
+        "startLine": 3419,
+        "startChar": 17,
+        "endLine": 3419,
+        "endChar": 25
+      },
+      "revId": "0eb6409459c65a4afd1e31eaef83c6da2bdb99f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
