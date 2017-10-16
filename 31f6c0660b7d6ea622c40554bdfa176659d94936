@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45dd8a70_a569abcb",
+        "filename": "cc/trees/target_property.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T15:08:38Z",
+      "side": 1,
+      "message": "You\u0027re mixing bits and bytes here; this should be % (8 * sizeof(uint32_t))\n\nnit: Can you add a comment that just explains this briefly, e.g.\n// bitset will use a multiple of the architecture int size, which is at least 32 bits so make\n// it explicit to have as many properties as fit into the memory used.",
+      "revId": "31f6c0660b7d6ea622c40554bdfa176659d94936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
