@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb4d5fe9_ec543f8c",
+        "filename": "ui/keyboard/container_behavior.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-10-16T08:00:11Z",
+      "side": 1,
+      "message": "Yes, quite a bit. Basically anything that makes the floating keyboard different from the full width keyboard ought to eventually go into this class.\n\nThe prototype so far uses this for the various bounds setting and the drag handle definitions. The drag handles aren\u0027t ready to be added yet without the floating keyboard implementation and the bounds setting code felt a little too specific for \"standalone-refactoring\" and the way they exactly will manifest are still contingent on some issues that need to be worked out with the extension.",
+      "parentUuid": "9f2d73bf_24fc8d8d",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "29f8f91662c900c907524cfb6f6908df226e1498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15777bc9_75366e99",
         "filename": "ui/keyboard/container_behavior.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "29f8f91662c900c907524cfb6f6908df226e1498",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2738a9d_32a6fb8a",
+        "filename": "ui/keyboard/container_behavior.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-10-16T08:00:11Z",
+      "side": 1,
+      "message": "Since the creation of this will be common amongst the other implementations and would otherwise be duplicated inside the function, I figured creating it outside would be easier. Also because it\u0027s a scope-end-triggered object, it\u0027d be less to worry about if that was still managed by keyboard controller.",
+      "parentUuid": "15777bc9_75366e99",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 58
+      },
+      "revId": "29f8f91662c900c907524cfb6f6908df226e1498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "52787979_838cf270",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-10-16T08:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24b7eed6_f439d829",
+      "range": {
+        "startLine": 366,
+        "startChar": 28,
+        "endLine": 366,
+        "endChar": 33
+      },
+      "revId": "29f8f91662c900c907524cfb6f6908df226e1498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6983e3d_248fdaa0",
         "filename": "ui/keyboard/keyboard_controller.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6ba9c8dc_a2996212",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-10-16T08:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6983e3d_248fdaa0",
+      "range": {
+        "startLine": 576,
+        "startChar": 25,
+        "endLine": 576,
+        "endChar": 31
+      },
+      "revId": "29f8f91662c900c907524cfb6f6908df226e1498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efff7ba8_67e72f48",
         "filename": "ui/keyboard/keyboard_controller.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "29f8f91662c900c907524cfb6f6908df226e1498",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1acaf2_c5ab6cb6",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-10-16T08:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efff7ba8_67e72f48",
+      "range": {
+        "startLine": 601,
+        "startChar": 21,
+        "endLine": 601,
+        "endChar": 26
+      },
+      "revId": "29f8f91662c900c907524cfb6f6908df226e1498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
