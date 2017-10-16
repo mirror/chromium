@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4177ca9a_bcdfc743",
+        "filename": "components/content_settings/core/browser/content_settings_policy_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-16T19:01:39Z",
+      "side": 1,
+      "message": "Drive by: \"DCHECK(cond1 \u0026\u0026 cond2);\" can be written as \"DCHECK(cond1); DCHECK(cond2);\". Then if the DCHECK fails, one can easily tell which condition failed.",
+      "revId": "a12f08001af67413c4571e6e9e974196789783dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
