@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef3c29c9_64cbfb53",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4228,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-16T21:03:19Z",
+      "side": 0,
+      "message": "You can remove ShowFileSelectionDialog() altogether. There\u0027s no other callers.",
+      "range": {
+        "startLine": 4228,
+        "startChar": 38,
+        "endLine": 4228,
+        "endChar": 61
+      },
+      "revId": "c6b03b773923a7e84398dc8ebf5ff7615bbda122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
