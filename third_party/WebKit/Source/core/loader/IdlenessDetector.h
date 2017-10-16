@@ -29,9 +29,13 @@ class CORE_EXPORT IdlenessDetector
   explicit IdlenessDetector(LocalFrame*);
 
   void Shutdown();
+  void WillCommitLoad();
   void DomContentLoadedEventFired();
   void OnWillSendRequest();
   void OnDidLoadResource();
+
+  double GetNetworkAlmostIdleTime();
+  double GetNetworkIdleTime();
 
   DECLARE_TRACE();
 
@@ -57,8 +61,8 @@ class CORE_EXPORT IdlenessDetector
   double network_0_quiet_ = 0;
   double network_2_quiet_ = 0;
   // Record the actual start time of network quiet.
-  double network_0_quiet_start_time_;
-  double network_2_quiet_start_time_;
+  double network_0_quiet_start_time_ = 0;
+  double network_2_quiet_start_time_ = 0;
   TaskRunnerTimer<IdlenessDetector> network_quiet_timer_;
 };
 
