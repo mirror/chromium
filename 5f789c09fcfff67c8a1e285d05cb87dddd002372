@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2040d29c_8e45b59c",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/first_app_run_toast_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-16T21:34:23Z",
+      "side": 1,
+      "message": "nit: user -\u003e use",
+      "range": {
+        "startLine": 76,
+        "startChar": 11,
+        "endLine": 76,
+        "endChar": 15
+      },
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b7cf0c_0afb5b1d",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/first_app_run_toast_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-16T21:34:23Z",
+      "side": 1,
+      "message": "nit: Isvisible -\u003e IsVisible",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 33
+      },
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a191124f_28c08e3e",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/first_app_run_toast_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-16T21:34:23Z",
+      "side": 1,
+      "message": "nit: drop \"// namespace extensions\" or add similar to L18 to be consistent.",
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19616d58_948f2830",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/first_app_run_toast_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-16T21:34:23Z",
+      "side": 1,
+      "message": "nit: frist -\u003e first",
+      "range": {
+        "startLine": 61,
+        "startChar": 31,
+        "endLine": 61,
+        "endChar": 36
+      },
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17cc671_54cbbe4c",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-16T21:34:23Z",
+      "side": 1,
+      "message": "What breaks if we don\u0027t add this?",
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41350f2c_c440612b",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-16T21:34:23Z",
+      "side": 1,
+      "message": "The unit test should run without ash, right? Why do we need this?",
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91090512_d6cb4f87",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/toast_dialog_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-16T21:34:23Z",
+      "side": 1,
+      "message": "nit: move this to cc file ?",
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9db540_0ba8a1d3",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/toast_dialog_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-16T21:34:23Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
