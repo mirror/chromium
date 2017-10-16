@@ -57,6 +57,14 @@ WKWebView* BuildWKWebView(CGRect frame,
   // reasonable value.
   web_view.scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
 
+  // //ios/web_view requires this property to be |never| (crbug.com/774876).
+  // Chromium doesn't depend on the automated adjustment, so it's safe to always
+  // set this to |never|.
+  if (@available(iOS 11.0, *)) {
+    web_view.scrollView.contentInsetAdjustmentBehavior =
+        UIScrollViewContentInsetAdjustmentNever;
+  }
+
   if (context_menu_delegate) {
     CRWContextMenuController* context_menu_controller = [
         [CRWContextMenuController alloc] initWithWebView:web_view
