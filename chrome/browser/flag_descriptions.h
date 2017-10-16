@@ -537,6 +537,11 @@ extern const char kNewRemotePlaybackPipelineDescription[];
 extern const char kNewUsbBackendName[];
 extern const char kNewUsbBackendDescription[];
 
+#if defined(OS_POSIX)
+extern const char kNtlmV2EnabledName[];
+extern const char kNtlmV2EnabledDescription[];
+#endif
+
 extern const char kNostatePrefetchName[];
 extern const char kNostatePrefetchDescription[];
 

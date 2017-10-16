@@ -313,6 +313,7 @@ IOThread::IOThread(
       prefs::kEnableAuthNegotiatePort, local_state,
       base::Bind(&IOThread::UpdateNegotiateEnablePort, base::Unretained(this)));
   negotiate_enable_port_.MoveToThread(io_thread_proxy);
+
   auth_server_whitelist_.Init(
       prefs::kAuthServerWhitelist, local_state,
       base::Bind(&IOThread::UpdateServerWhitelist, base::Unretained(this)));
@@ -363,6 +364,18 @@ IOThread::IOThread(
                            base::Bind(&IOThread::UpdateDnsClientEnabled,
                                       base::Unretained(this)));
   dns_client_enabled_.MoveToThread(io_thread_proxy);
+
+#if defined(OS_POSIX)
+  base::Value* ntlm_v2_enabled_default =
+      new base::Value(base::FeatureList::IsEnabled(features::kNtlmV2Enabled));
+  local_state->SetDefaultPrefValue(prefs::kNtlmV2Enabled,
+                                   ntlm_v2_enabled_default);
+
+  ntlm_v2_enabled_.Init(
+      prefs::kNtlmV2Enabled, local_state,
+      base::Bind(&IOThread::UpdateNtlmV2Enabled, base::Unretained(this)));
+  ntlm_v2_enabled_.MoveToThread(io_thread_proxy);
+#endif
 
   quick_check_enabled_.Init(prefs::kQuickCheckEnabled,
                             local_state);
@@ -642,6 +655,13 @@ void IOThread::UpdateNegotiateEnablePort() {
       negotiate_enable_port_.GetValue());
 }
 
+#if defined(OS_POSIX)
+void IOThread::UpdateNtlmV2Enabled() {
+  globals_->http_auth_preferences->set_ntlm_v2_enabled(
+      ntlm_v2_enabled_.GetValue());
+}
+#endif
+
 std::unique_ptr<net::HttpAuthHandlerFactory>
 IOThread::CreateDefaultAuthHandlerFactory(net::HostResolver* host_resolver) {
   std::vector<std::string> supported_schemes = base::SplitString(
@@ -661,6 +681,9 @@ IOThread::CreateDefaultAuthHandlerFactory(net::HostResolver* host_resolver) {
   UpdateDelegateWhitelist();
   UpdateNegotiateDisableCnameLookup();
   UpdateNegotiateEnablePort();
+#if defined(OS_POSIX)
+  UpdateNtlmV2Enabled();
+#endif
 #if defined(OS_ANDROID)
   UpdateAndroidAuthNegotiateAccountType();
 #endif
