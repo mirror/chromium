@@ -46,6 +46,30 @@
       "revId": "abe2f256326d2847ee53eb8f8218aeeb8c72df41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f91f06_ff9ec977",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-16T10:41:51Z",
+      "side": 1,
+      "message": "Sorry, by the getter I meant \"isUMAEnabled\". I would expect a function named like that to give me the value of one boolean without modifying any state - in this case, clearing the ID. That sounds like the responsibility of the caller.",
+      "parentUuid": "7e2d6ad9_2540bcc8",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 51
+      },
+      "revId": "abe2f256326d2847ee53eb8f8218aeeb8c72df41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
