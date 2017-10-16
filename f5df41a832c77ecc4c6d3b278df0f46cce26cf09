@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f4ec2ee_ee999ffc",
+        "filename": "chrome/browser/sync/test/integration/bookmarks_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T05:40:21Z",
+      "side": 1,
+      "message": "Done, in https://chromium-review.googlesource.com/c/chromium/src/+/704737\n\nI\u0027ve now used this for the preexisting OnGotFaviconForExpiryCheck() too.\n\nNote that the initial upload contains this snapshot such that you can more easily inspect the diff.",
+      "parentUuid": "b9bb057d_f60ffc93",
+      "range": {
+        "startLine": 279,
+        "startChar": 5,
+        "endLine": 279,
+        "endChar": 32
+      },
+      "revId": "f5df41a832c77ecc4c6d3b278df0f46cce26cf09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32645d8e_db5f192f",
         "filename": "components/sync_bookmarks/bookmark_change_processor.cc",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "f5df41a832c77ecc4c6d3b278df0f46cce26cf09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e36346_1be4af26",
+        "filename": "components/sync_bookmarks/bookmark_change_processor.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T05:40:21Z",
+      "side": 1,
+      "message": "Done, also in https://chromium-review.googlesource.com/c/chromium/src/+/704737\n\nNote however that this is relevant for versions prior to M25.",
+      "parentUuid": "32645d8e_db5f192f",
+      "range": {
+        "startLine": 937,
+        "startChar": 0,
+        "endLine": 937,
+        "endChar": 28
+      },
+      "revId": "f5df41a832c77ecc4c6d3b278df0f46cce26cf09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
