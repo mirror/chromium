@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61d662e2_74db3ee8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/media/ui/PictureInPictureControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-16T22:07:19Z",
+      "side": 1,
+      "message": "clang-format did this?",
+      "revId": "342c903bdb141eedafbd4e79037ffa1ccf317d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a8c582b_cf4a2eb9",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeTabbedActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-16T22:07:19Z",
+      "side": 1,
+      "message": "Do we need this as a separate rule any more?",
+      "revId": "342c903bdb141eedafbd4e79037ffa1ccf317d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
