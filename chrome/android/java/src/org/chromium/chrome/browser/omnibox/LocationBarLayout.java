@@ -1602,7 +1602,7 @@ public class LocationBarLayout extends FrameLayout
         // Only called from onSuggestionsReceived(), which is a callback from a listener set up by
         // onNativeLibraryReady(), so this assert is safe.
         assert mNativeInitialized || mShowCachedZeroSuggestResults
-                : "Trying to initialize native suggestions list before native init";
+            : "Trying to initialize native suggestions list before native init";
         if (mSuggestionList != null) return;
         mSuggestionListAdapter.setUseModernDesign(mBottomSheet != null);
 
@@ -1976,7 +1976,7 @@ public class LocationBarLayout extends FrameLayout
         // so can only be called once the native side is set up unless we are showing
         // cached java-only suggestions.
         assert mNativeInitialized || mShowCachedZeroSuggestResults
-                : "Native suggestions received before native side intialialized";
+            : "Native suggestions received before native side intialialized";
 
         if (mDeferredOnSelection != null) {
             mDeferredOnSelection.setShouldLog(newSuggestions.size() > mDeferredOnSelection.mPosition
