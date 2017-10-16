@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf02bf70_8544901d",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-16T21:48:09Z",
+      "side": 1,
+      "message": "Can you rename this constant as well to make it clear that it\u0027s specific to getVRDisplays failing?",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 45
+      },
+      "revId": "9de48b6dc0dbc612ca50d0fc55a2727e09e8013e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
