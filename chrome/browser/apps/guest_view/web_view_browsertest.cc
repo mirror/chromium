@@ -728,11 +728,13 @@ class WebViewTestBase : public extensions::PlatformAppBrowserTest {
   }
 
   // Runs media_access/allow tests.
-  void MediaAccessAPIAllowTestHelper(const std::string& test_name);
+  void MediaAccessAPIAllowTestHelper(const std::string& test_name,
+                                     const std::string& test_variant);
 
   // Runs media_access/deny tests, each of them are run separately otherwise
   // they timeout (mostly on Windows).
-  void MediaAccessAPIDenyTestHelper(const std::string& test_name) {
+  void MediaAccessAPIDenyTestHelper(const std::string& test_name,
+                                    const std::string& test_variant) {
     ASSERT_TRUE(StartEmbeddedTestServer());  // For serving guest pages.
     LoadAndLaunchPlatformApp("web_view/media_access/deny", "loaded");
 
@@ -742,10 +744,10 @@ class WebViewTestBase : public extensions::PlatformAppBrowserTest {
 
     ExtensionTestMessageListener test_run_listener("PASSED", false);
     test_run_listener.set_failure_message("FAILED");
-    EXPECT_TRUE(
-        content::ExecuteScript(
-            embedder_web_contents,
-            base::StringPrintf("startDenyTest('%s')", test_name.c_str())));
+    EXPECT_TRUE(content::ExecuteScript(
+        embedder_web_contents,
+        base::StringPrintf("startDenyTest('%s', '%s')", test_name.c_str(),
+                           test_variant.c_str())));
     ASSERT_TRUE(test_run_listener.WaitUntilSatisfied());
   }
 
@@ -880,9 +882,6 @@ INSTANTIATE_TEST_CASE_P(WebViewTests, WebViewSizeTest, testing::Bool());
 
 class WebViewVisibilityTest : public WebViewTest {};
 INSTANTIATE_TEST_CASE_P(WebViewTests, WebViewVisibilityTest, testing::Bool());
-
-class WebViewSpeechAPITest : public WebViewTest {};
-INSTANTIATE_TEST_CASE_P(WebViewTests, WebViewSpeechAPITest, testing::Bool());
 
 // The following test suites are created to group tests based on specific
 // features of <webview>.
@@ -2035,32 +2034,68 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, CloseOnLoadcommit) {
                            "done-close-on-loadcommit");
 }
 
-IN_PROC_BROWSER_TEST_P(WebViewTest, MediaAccessAPIDeny_TestDeny) {
-  MediaAccessAPIDenyTestHelper("testDeny");
+IN_PROC_BROWSER_TEST_P(WebViewTest, MediaAccessAPIDeny_TestDenyGetUserMedia) {
+  MediaAccessAPIDenyTestHelper("testDeny", "getUserMedia");
 }
 
 IN_PROC_BROWSER_TEST_P(WebViewTest,
-                       MediaAccessAPIDeny_TestDenyThenAllowThrows) {
-  MediaAccessAPIDenyTestHelper("testDenyThenAllowThrows");
+                       MediaAccessAPIDeny_TestDenyThenAllowThrowsGetUserMedia) {
+  MediaAccessAPIDenyTestHelper("testDenyThenAllowThrows", "getUserMedia");
+}
+
+IN_PROC_BROWSER_TEST_P(
+    WebViewTest,
+    MediaAccessAPIDeny_TestDenyWithPreventDefaultGetUserMedia) {
+  MediaAccessAPIDenyTestHelper("testDenyWithPreventDefault", "getUserMedia");
+}
+
+IN_PROC_BROWSER_TEST_P(
+    WebViewTest,
+    MediaAccessAPIDeny_TestNoListenersImplyDenyGetUserMedia) {
+  MediaAccessAPIDenyTestHelper("testNoListenersImplyDeny", "getUserMedia");
+}
+
+IN_PROC_BROWSER_TEST_P(
+    WebViewTest,
+    MediaAccessAPIDeny_TestNoPreventDefaultImpliesDenyGetUserMedia) {
+  MediaAccessAPIDenyTestHelper("testNoPreventDefaultImpliesDeny",
+                               "getUserMedia");
 }
 
 IN_PROC_BROWSER_TEST_P(WebViewTest,
-                       MediaAccessAPIDeny_TestDenyWithPreventDefault) {
-  MediaAccessAPIDenyTestHelper("testDenyWithPreventDefault");
+                       MediaAccessAPIDeny_TestDenySpeechRecognition) {
+  MediaAccessAPIDenyTestHelper("testDeny", "speechRecognition");
 }
 
-IN_PROC_BROWSER_TEST_P(WebViewTest,
-                       MediaAccessAPIDeny_TestNoListenersImplyDeny) {
-  MediaAccessAPIDenyTestHelper("testNoListenersImplyDeny");
+IN_PROC_BROWSER_TEST_P(
+    WebViewTest,
+    MediaAccessAPIDeny_TestDenyThenAllowThrowsSpeechRecognition) {
+  MediaAccessAPIDenyTestHelper("testDenyThenAllowThrows", "speechRecognition");
 }
 
-IN_PROC_BROWSER_TEST_P(WebViewTest,
-                       MediaAccessAPIDeny_TestNoPreventDefaultImpliesDeny) {
-  MediaAccessAPIDenyTestHelper("testNoPreventDefaultImpliesDeny");
+IN_PROC_BROWSER_TEST_P(
+    WebViewTest,
+    MediaAccessAPIDeny_TestDenyWithPreventDefaultSpeechRecognition) {
+  MediaAccessAPIDenyTestHelper("testDenyWithPreventDefault",
+                               "speechRecognition");
+}
+
+IN_PROC_BROWSER_TEST_P(
+    WebViewTest,
+    MediaAccessAPIDeny_TestNoListenersImplyDenySpeechRecognition) {
+  MediaAccessAPIDenyTestHelper("testNoListenersImplyDeny", "speechRecognition");
+}
+
+IN_PROC_BROWSER_TEST_P(
+    WebViewTest,
+    MediaAccessAPIDeny_TestNoPreventDefaultImpliesDenySpeechRecognition) {
+  MediaAccessAPIDenyTestHelper("testNoPreventDefaultImpliesDeny",
+                               "speechRecognition");
 }
 
 void WebViewTestBase::MediaAccessAPIAllowTestHelper(
-    const std::string& test_name) {
+    const std::string& test_name,
+    const std::string& test_variant) {
   ASSERT_TRUE(StartEmbeddedTestServer());  // For serving guest pages.
   LoadAndLaunchPlatformApp("web_view/media_access/allow", "Launched");
 
@@ -2071,11 +2106,10 @@ void WebViewTestBase::MediaAccessAPIAllowTestHelper(
 
   ExtensionTestMessageListener done_listener("TEST_PASSED", false);
   done_listener.set_failure_message("TEST_FAILED");
-  EXPECT_TRUE(
-      content::ExecuteScript(
-          embedder_web_contents,
-          base::StringPrintf("startAllowTest('%s')",
-                             test_name.c_str())));
+  EXPECT_TRUE(content::ExecuteScript(
+      embedder_web_contents,
+      base::StringPrintf("startAllowTest('%s', '%s')", test_name.c_str(),
+                         test_variant.c_str())));
   ASSERT_TRUE(done_listener.WaitUntilSatisfied());
 
   mock->WaitForRequestMediaPermission();
@@ -2305,20 +2339,44 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, TestContextMenu) {
   menu_observer.Wait();
 }
 
-IN_PROC_BROWSER_TEST_P(WebViewTest, MediaAccessAPIAllow_TestAllow) {
-  MediaAccessAPIAllowTestHelper("testAllow");
+IN_PROC_BROWSER_TEST_P(WebViewTest, MediaAccessAPIAllow_TestAllowGetUserMedia) {
+  MediaAccessAPIAllowTestHelper("testAllow", "getUserMedia");
 }
 
-IN_PROC_BROWSER_TEST_P(WebViewTest, MediaAccessAPIAllow_TestAllowAndThenDeny) {
-  MediaAccessAPIAllowTestHelper("testAllowAndThenDeny");
+IN_PROC_BROWSER_TEST_P(WebViewTest,
+                       MediaAccessAPIAllow_TestAllowAsyncGetUserMedia) {
+  MediaAccessAPIAllowTestHelper("testAllowAsync", "getUserMedia");
 }
 
-IN_PROC_BROWSER_TEST_P(WebViewTest, MediaAccessAPIAllow_TestAllowTwice) {
-  MediaAccessAPIAllowTestHelper("testAllowTwice");
+IN_PROC_BROWSER_TEST_P(WebViewTest,
+                       MediaAccessAPIAllow_TestAllowTwiceGetUserMedia) {
+  MediaAccessAPIAllowTestHelper("testAllowTwice", "getUserMedia");
 }
 
-IN_PROC_BROWSER_TEST_P(WebViewTest, MediaAccessAPIAllow_TestAllowAsync) {
-  MediaAccessAPIAllowTestHelper("testAllowAsync");
+IN_PROC_BROWSER_TEST_P(WebViewTest,
+                       MediaAccessAPIAllow_TestAllowAndThenDenyGetUserMedia) {
+  MediaAccessAPIAllowTestHelper("testAllowAndThenDeny", "getUserMedia");
+}
+
+IN_PROC_BROWSER_TEST_P(WebViewTest,
+                       MediaAccessAPIAllow_TestAllowSpeechRecognition) {
+  MediaAccessAPIAllowTestHelper("testAllow", "speechRecognition");
+}
+
+IN_PROC_BROWSER_TEST_P(
+    WebViewTest,
+    MediaAccessAPIAllow_TestAllowAndThenDenySpeechRecognition) {
+  MediaAccessAPIAllowTestHelper("testAllowAndThenDeny", "speechRecognition");
+}
+
+IN_PROC_BROWSER_TEST_P(WebViewTest,
+                       MediaAccessAPIAllow_TestAllowTwiceSpeechRecognition) {
+  MediaAccessAPIAllowTestHelper("testAllowTwice", "speechRecognition");
+}
+
+IN_PROC_BROWSER_TEST_P(WebViewTest,
+                       MediaAccessAPIAllow_TestAllowAsyncSpeechRecognition) {
+  MediaAccessAPIAllowTestHelper("testAllowAsync", "speechRecognition");
 }
 
 IN_PROC_BROWSER_TEST_P(WebViewTest, MediaAccessAPIAllow_TestCheck) {
@@ -3048,30 +3106,6 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, SetPropertyOnDocumentReady) {
 IN_PROC_BROWSER_TEST_P(WebViewTest, SetPropertyOnDocumentInteractive) {
   ASSERT_TRUE(RunPlatformAppTest("platform_apps/web_view/document_interactive"))
                   << message_;
-}
-
-IN_PROC_BROWSER_TEST_P(WebViewSpeechAPITest,
-                       SpeechRecognitionAPI_HasPermissionAllow) {
-  ASSERT_TRUE(
-      RunPlatformAppTestWithArg("platform_apps/web_view/speech_recognition_api",
-                                "allowTest"))
-          << message_;
-}
-
-IN_PROC_BROWSER_TEST_P(WebViewSpeechAPITest,
-                       SpeechRecognitionAPI_HasPermissionDeny) {
-  ASSERT_TRUE(
-      RunPlatformAppTestWithArg("platform_apps/web_view/speech_recognition_api",
-                                "denyTest"))
-          << message_;
-}
-
-IN_PROC_BROWSER_TEST_P(WebViewSpeechAPITest,
-                       SpeechRecognitionAPI_NoPermission) {
-  ASSERT_TRUE(
-      RunPlatformAppTestWithArg("platform_apps/web_view/common",
-                                "speech_recognition_api_no_permission"))
-          << message_;
 }
 
 // Tests overriding user agent.
