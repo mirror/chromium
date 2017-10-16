@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "55d166fa_af0252b0",
+        "filename": "components/autofill/core/browser/data_driven_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-16T15:03:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de749c79_e5dd6f95",
+      "range": {
+        "startLine": 57,
+        "startChar": 25,
+        "endLine": 57,
+        "endChar": 31
+      },
+      "revId": "1fca7a81089c3fe7341bb8d300236f2c3d36c49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00d5c98a_39598580",
         "filename": "ios/chrome/browser/autofill/BUILD.gn",
         "patchSetId": 5
@@ -83,6 +107,24 @@
       "writtenOn": "2017-10-13T18:01:56Z",
       "side": 1,
       "message": "is there a way to store this as metadata in the build tree vs in the source code. Some other platforms have test expectations, for example.",
+      "revId": "1fca7a81089c3fe7341bb8d300236f2c3d36c49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38cfe46a_27693dfc",
+        "filename": "ios/chrome/browser/autofill/form_structure_browsertest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-16T15:03:49Z",
+      "side": 1,
+      "message": "This list is supposed to be removed as soon as possible.",
+      "parentUuid": "d423f7fa_b2b09e05",
       "revId": "1fca7a81089c3fe7341bb8d300236f2c3d36c49d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
