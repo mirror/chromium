@@ -2,28 +2,30 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef WebRTCRtpContributingSource_h
-#define WebRTCRtpContributingSource_h
+#ifndef WebRTCRtpSource_h
+#define WebRTCRtpSource_h
 
 #include "WebCommon.h"
 
 namespace blink {
 
-enum class WebRTCRtpContributingSourceType {
+enum class WebRTCRtpSourceType {
   SSRC,
   CSRC,
 };
 
 // https://w3c.github.io/webrtc-pc/#dom-rtcrtpcontributingsource
-class BLINK_PLATFORM_EXPORT WebRTCRtpContributingSource {
+class BLINK_PLATFORM_EXPORT WebRTCRtpSource {
  public:
-  virtual ~WebRTCRtpContributingSource();
+  virtual ~WebRTCRtpSource();
 
-  virtual WebRTCRtpContributingSourceType SourceType() const = 0;
+  virtual WebRTCRtpSourceType SourceType() const = 0;
   virtual double TimestampMs() const = 0;
   virtual uint32_t Source() const = 0;
+  virtual uint8_t AudioLevel() const = 0;
+  virtual bool HasAudioLevel() const = 0;
 };
 
 }  // namespace blink
 
-#endif  // WebRTCRtpContributingSource_h
+#endif  // WebRTCRtpSource_h
