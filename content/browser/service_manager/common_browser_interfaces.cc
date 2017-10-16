@@ -12,6 +12,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/task_runner.h"
 #include "components/discardable_memory/service/discardable_shared_memory_manager.h"
+#include "content/browser/browser_histogram_fetcher_impl.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/public/common/connection_filter.h"
 #include "content/public/common/service_manager_connection.h"
@@ -28,6 +29,7 @@ class ConnectionFilterImpl : public ConnectionFilter {
   ConnectionFilterImpl()
       : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
     RegisterMainThreadInterface(base::Bind(&device::GeolocationConfig::Create));
+    registry_.AddInterface(base::Bind(&BrowserHistogramFetcherImpl::Create));
 
     auto* browser_main_loop = BrowserMainLoop::GetInstance();
     if (browser_main_loop) {
