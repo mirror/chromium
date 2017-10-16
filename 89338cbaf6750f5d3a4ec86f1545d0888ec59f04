@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "295b1287_7f48ffdd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/resources/service-workers-bypass-for-network-cors-iframe.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T07:17:15Z",
+      "side": 1,
+      "message": "optional: can be const",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7685266_725049fd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/resources/service-workers-bypass-for-network-cors-iframe.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T07:17:15Z",
+      "side": 1,
+      "message": "omit e?",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dac75764_704cf870",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/resources/service-workers-bypass-for-network-cors-iframe.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T07:17:15Z",
+      "side": 1,
+      "message": "optional: can be const",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cfc4082_f74c1255",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/resources/service-workers-bypass-for-network-cors-target.php",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T07:17:15Z",
+      "side": 1,
+      "message": "move this to the else-if case?",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af53060_2d3716c1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/resources/service-workers-bypass-for-network-cors-worker.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T07:17:15Z",
+      "side": 1,
+      "message": "let?",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fd4f7c8_74741161",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-bypass-for-network-cors.html",
         "patchSetId": 7
@@ -31,6 +116,24 @@
       "side": 1,
       "message": "No I don\u0027t think so.\n\nTestRunner.callFunctionInPageAsync() in test() is executed in the Inspector, and loadIframe() is called in the page.",
       "parentUuid": "6fd4f7c8_74741161",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77373469_8c61df95",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-bypass-for-network-cors.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T07:17:15Z",
+      "side": 1,
+      "message": "ah, right. So, this is the only way to pass the obtained object. ok.\n\nExplored SDK.RemoteObject a bit but it looks there\u0027s no way to utilize it.",
+      "parentUuid": "9fbe6b57_80cd717c",
       "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -101,6 +204,24 @@
       "side": 1,
       "message": "No. These functions are called in the page. testCorsRequests() is called in the inspector.",
       "parentUuid": "34a41ba5_da092a08",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79db7d51_cff8ae7d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-bypass-for-network-cors.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T07:17:15Z",
+      "side": 1,
+      "message": "Oops, sorry.\n\nSo, things referred by the page are listed above, while things used by test() are enclosed inside it?",
+      "parentUuid": "bdf7e1d0_756de78a",
       "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

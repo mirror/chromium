@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "580fc312_039a8795",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-bypass-for-network-redirect.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T07:17:15Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "74a28cac9d56c9cff3278dd6b74e3fc1ed907a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c38f810_ce0dde05",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-navigation-preload.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T07:17:15Z",
+      "side": 1,
+      "message": "added by accident?",
+      "range": {
+        "startLine": 9,
+        "startChar": 49,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "74a28cac9d56c9cff3278dd6b74e3fc1ed907a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32534882_e27b3c9f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-navigation-preload.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T07:17:15Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "74a28cac9d56c9cff3278dd6b74e3fc1ed907a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ca77fa_14af27f0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-navigation-preload.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T07:17:15Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "74a28cac9d56c9cff3278dd6b74e3fc1ed907a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6299af4_56fc740b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-redundant.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T07:17:15Z",
+      "side": 1,
+      "message": "const",
+      "revId": "74a28cac9d56c9cff3278dd6b74e3fc1ed907a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd421b13_438b565b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-redundant.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-16T07:17:15Z",
+      "side": 1,
+      "message": "const",
+      "revId": "74a28cac9d56c9cff3278dd6b74e3fc1ed907a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
