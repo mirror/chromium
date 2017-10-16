@@ -22,6 +22,30 @@
       "revId": "f0333c897aa64065b83a931b472e3adb6cf60ebb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464e01b2_1a94e6f7",
+        "filename": "ios/chrome/browser/ui/payments/cells/payments_text_item.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-16T14:29:21Z",
+      "side": 1,
+      "message": "/facepalm. Done. :)",
+      "parentUuid": "962271fe_5f542403",
+      "range": {
+        "startLine": 24,
+        "startChar": 23,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "f0333c897aa64065b83a931b472e3adb6cf60ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
