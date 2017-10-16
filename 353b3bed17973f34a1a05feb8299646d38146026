@@ -16,6 +16,24 @@
       "revId": "353b3bed17973f34a1a05feb8299646d38146026",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690aa619_0ec9f492",
+        "filename": "net/cert/ev_root_ca_metadata.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-16T23:05:49Z",
+      "side": 1,
+      "message": "We have precedent for this with AddEVCA() and RemoveEVCA() which are no-ops on unsupported platforms.\n\nThe reason I want stubs is having it as a compile-time dependency means I either need to add additional ifdefs into CertVerifyProcBuiltin (which needs to check EV oids), or I need to change the build files to stop compiling that on other platforms.\n\nThe coupling of those dependencies doesn\u0027t really seem right - CertVerifyProcBuiltin should just take a EVRootCAMetadata. This is a general problem we have faced with other things like the test roots dependency or cert store dependency, since existing code has expressed them in a way that is tightly coupled to the platform cert representation and platform cert verifier implementation.",
+      "parentUuid": "d5e29cb8_d0efc63d",
+      "revId": "353b3bed17973f34a1a05feb8299646d38146026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
