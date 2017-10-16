@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbac869f_732b0b9c",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T10:16:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24d758cb_da0cbf6d",
+      "range": {
+        "startLine": 135,
+        "startChar": 77,
+        "endLine": 135,
+        "endChar": 0
+      },
+      "revId": "a94a642a78f0f7663d6b9377a48791b7cad4d7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49adfef2_b3b7cd53",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8b3f3b21_bc29d00c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 49113,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T10:16:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49adfef2_b3b7cd53",
+      "range": {
+        "startLine": 49113,
+        "startChar": 80,
+        "endLine": 49113,
+        "endChar": 0
+      },
+      "revId": "a94a642a78f0f7663d6b9377a48791b7cad4d7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5791fd94_ea9ab7c3",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-25T15:40:02Z",
       "side": 1,
       "message": "I think this is in the wrong place; looks like you want the TileVisualType suffix, not the provider one?",
+      "range": {
+        "startLine": 99062,
+        "startChar": 57,
+        "endLine": 99062,
+        "endChar": 0
+      },
+      "revId": "a94a642a78f0f7663d6b9377a48791b7cad4d7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab292357_5269361e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 99062,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T10:16:07Z",
+      "side": 1,
+      "message": "I\u0027m interested in splitting TopSites vs server-side Suggestions.",
+      "parentUuid": "5791fd94_ea9ab7c3",
       "range": {
         "startLine": 99062,
         "startChar": 57,
