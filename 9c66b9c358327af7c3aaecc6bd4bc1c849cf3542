@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ccdb67b_8bb0dc4c",
+        "filename": "media/gpu/vaapi_video_encode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-10-16T08:36:23Z",
+      "side": 1,
+      "message": "How about add a function?\n if (encode_job-\u003eIsFlush())",
+      "revId": "9c66b9c358327af7c3aaecc6bd4bc1c849cf3542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1cd808b_48d961c2",
+        "filename": "media/gpu/vaapi_video_encode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-10-16T08:36:23Z",
+      "side": 1,
+      "message": "Move this line after line 599. That is, reset() after CreateCodedBuffer() succeeded.\nThen the logic will be more clear, current_encode_job_ won\u0027t be \"flush\".",
+      "revId": "9c66b9c358327af7c3aaecc6bd4bc1c849cf3542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388c4259_85915df9",
+        "filename": "media/gpu/vaapi_video_encode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-10-16T08:36:23Z",
+      "side": 1,
+      "message": "remove this line?",
+      "range": {
+        "startLine": 768,
+        "startChar": 2,
+        "endLine": 768,
+        "endChar": 16
+      },
+      "revId": "9c66b9c358327af7c3aaecc6bd4bc1c849cf3542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd80f2b_0380cb40",
+        "filename": "media/gpu/vaapi_video_encode_accelerator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-10-16T08:36:23Z",
+      "side": 1,
+      "message": "Add comment about special EncodeJob for flush.",
+      "revId": "9c66b9c358327af7c3aaecc6bd4bc1c849cf3542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
