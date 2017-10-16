@@ -89,6 +89,10 @@ mojom("mojo_bindings") {
     "message_port/message_port.mojom",
   ]
 
+  public_deps = [
+    "//storage/public/interfaces",
+  ]
+
   export_class_attribute = "BLINK_COMMON_EXPORT"
   export_define = "BLINK_COMMON_IMPLEMENTATION=1"
   export_header = "third_party/WebKit/common/common_export.h"
