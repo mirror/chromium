@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b39c8dea_5c7257fa",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T15:25:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05d1a930_59a17f26",
+      "range": {
+        "startLine": 51,
+        "startChar": 33,
+        "endLine": 51,
+        "endChar": 38
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ac6fe54_cbbe880c",
         "filename": "components/favicon_base/favicon_types.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1bcd6d2_0501133e",
+        "filename": "components/favicon_base/favicon_types.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T15:25:17Z",
+      "side": 1,
+      "message": "Done, added comment and notreached.",
+      "parentUuid": "0ac6fe54_cbbe880c",
+      "range": {
+        "startLine": 67,
+        "startChar": 11,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "03e6f52b_976cf076",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T15:25:17Z",
+      "side": 1,
+      "message": "Done. Right, moved to GetUmaFaviconType\u0027s impl.",
+      "parentUuid": "02d5d071_6a00b718",
+      "range": {
+        "startLine": 30,
+        "startChar": 24,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "100e45be_295a4559",
         "filename": "components/ntp_tiles/metrics.cc",
         "patchSetId": 13
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "aebb1f12_9b4c5fdd",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T15:25:17Z",
+      "side": 1,
+      "message": "You\u0027re right, thanks for catching. I mixed up my other recent metric, should be fixed now.",
+      "parentUuid": "100e45be_295a4559",
+      "range": {
+        "startLine": 147,
+        "startChar": 62,
+        "endLine": 147,
+        "endChar": 78
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66dd22a8_ba579cd2",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 13
@@ -114,6 +210,30 @@
       "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde8d186_e1090ef0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 50337,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T15:25:17Z",
+      "side": 1,
+      "message": "Done, recorded without suffix too.",
+      "parentUuid": "66dd22a8_ba579cd2",
+      "range": {
+        "startLine": 50337,
+        "startChar": 64,
+        "endLine": 50337,
+        "endChar": 0
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -160,6 +280,54 @@
       "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "613445bb_475ed217",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 50342,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T15:25:17Z",
+      "side": 1,
+      "message": "Done, the first part. Wrt the second, I know it\u0027s been specified for some metrics, but what\u0027s the value of describing whether it\u0027s Android-only, unless the semantics of a metric are by definition applicable to a subset of platforms?",
+      "parentUuid": "e369c5b8_6ca13aac",
+      "range": {
+        "startLine": 50342,
+        "startChar": 46,
+        "endLine": 50342,
+        "endChar": 0
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3655dc6b_fcdd6262",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 50342,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-16T15:25:17Z",
+      "side": 1,
+      "message": "Done, clarified.",
+      "parentUuid": "44a4b09d_8e4d4177",
+      "range": {
+        "startLine": 50341,
+        "startChar": 25,
+        "endLine": 50342,
+        "endChar": 19
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
