@@ -544,7 +544,8 @@ class CC_EXPORT LayerTreeImpl {
   void HandleScrollbarShowRequestsFromMain();
 
   void InvalidateRegionForImages(
-      const PaintImageIdFlatSet& images_to_invalidate);
+      const PaintImageIdFlatSet& checkered_images,
+      const ImageAnimationController::Invalidations& animated_images);
 
   LayerTreeLifecycle& lifecycle() { return lifecycle_; }
 

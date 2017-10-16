@@ -13,6 +13,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/trace_event/trace_event.h"
+#include "cc/base/region.h"
 #include "cc/paint/paint_op_buffer.h"
 #include "third_party/skia/include/utils/SkNoDrawCanvas.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -20,6 +21,8 @@
 
 namespace cc {
 namespace {
+const int kMaxRegionComplexity = 256;
+const Region kEmptyRegion;
 
 SkRect MapRect(const SkMatrix& matrix, const SkRect& src) {
   SkRect dst;
@@ -88,8 +91,8 @@ class DiscardableImageGenerator {
   std::vector<std::pair<DrawImage, gfx::Rect>> TakeImages() {
     return std::move(image_set_);
   }
-  base::flat_map<PaintImage::Id, gfx::Rect> TakeImageIdToRectMap() {
-    return std::move(image_id_to_rect_);
+  base::flat_map<PaintImage::Id, Region> TakeImageIdToRegionMap() {
+    return std::move(image_id_to_region_);
   }
   std::vector<DiscardableImageMap::AnimatedImageMetadata>
   TakeAnimatedImagesMetadata() {
@@ -290,7 +293,10 @@ class DiscardableImageGenerator {
       color_stats_srgb_image_count_++;
     }
 
-    image_id_to_rect_[paint_image.stable_id()].Union(image_rect);
+    auto& region = image_id_to_region_[paint_image.stable_id()];
+    if (region.GetRegionComplexity() >= kMaxRegionComplexity)
+      region = region.bounds();
+    region.Union(image_rect);
 
     if (paint_image.ShouldAnimate()) {
       animated_images_metadata_.emplace_back(
@@ -305,7 +311,7 @@ class DiscardableImageGenerator {
   }
 
   std::vector<std::pair<DrawImage, gfx::Rect>> image_set_;
-  base::flat_map<PaintImage::Id, gfx::Rect> image_id_to_rect_;
+  base::flat_map<PaintImage::Id, Region> image_id_to_region_;
   std::vector<DiscardableImageMap::AnimatedImageMetadata>
       animated_images_metadata_;
 
@@ -332,7 +338,7 @@ void DiscardableImageMap::Generate(const PaintOpBuffer* paint_op_buffer,
   DiscardableImageGenerator generator(bounds.right(), bounds.bottom(),
                                       paint_op_buffer);
   generator.RecordColorHistograms();
-  image_id_to_rect_ = generator.TakeImageIdToRectMap();
+  image_id_to_region_ = generator.TakeImageIdToRegionMap();
   animated_images_metadata_ = generator.TakeAnimatedImagesMetadata();
   all_images_are_srgb_ = generator.all_images_are_srgb();
   auto images = generator.TakeImages();
@@ -350,14 +356,15 @@ void DiscardableImageMap::GetDiscardableImagesInRect(
   *images = images_rtree_.SearchRefs(rect);
 }
 
-gfx::Rect DiscardableImageMap::GetRectForImage(PaintImage::Id image_id) const {
-  const auto& it = image_id_to_rect_.find(image_id);
-  return it == image_id_to_rect_.end() ? gfx::Rect() : it->second;
+const Region& DiscardableImageMap::GetRegionForImage(
+    PaintImage::Id image_id) const {
+  auto it = image_id_to_region_.find(image_id);
+  return it == image_id_to_region_.end() ? kEmptyRegion : it->second;
 }
 
 void DiscardableImageMap::Reset() {
-  image_id_to_rect_.clear();
-  image_id_to_rect_.shrink_to_fit();
+  image_id_to_region_.clear();
+  image_id_to_region_.shrink_to_fit();
   images_rtree_.Reset();
 }
 
