@@ -5,11 +5,15 @@
 #include "modules/media_controls/elements/MediaControlSliderElement.h"
 
 #include "core/dom/ElementShadow.h"
+#include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLDivElement.h"
 #include "core/input_type_names.h"
 #include "core/layout/LayoutBoxModelObject.h"
+#include "core/page/ChromeClient.h"
+#include "core/page/Page.h"
 #include "core/resize_observer/ResizeObserver.h"
 #include "core/resize_observer/ResizeObserverEntry.h"
+#include "platform/geometry/IntRect.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace {
@@ -19,7 +23,6 @@ void SetSegmentDivPosition(blink::HTMLDivElement* segment,
                            int width) {
   int segment_width = int(position.width * width);
   int segment_left = int(position.left * width);
-
   StringBuilder builder;
   builder.Append("width: ");
   builder.AppendNumber(segment_width);
@@ -131,8 +134,18 @@ void MediaControlSliderElement::SetAfterSegmentPosition(
 }
 
 int MediaControlSliderElement::Width() {
-  if (LayoutBoxModelObject* box = GetLayoutBoxModelObject())
-    return box->OffsetWidth().Round();
+  if (LayoutBoxModelObject* box = GetLayoutBoxModelObject()) {
+    // Width in CSS pixels * pageZoomFactor
+    return GetDocument().GetPage()
+               ? GetDocument()
+                     .GetPage()
+                     ->GetChromeClient()
+                     .ViewportToScreen(
+                         IntRect(0, 0, box->OffsetWidth().Round(), 0),
+                         GetDocument().View())
+                     .Width()
+               : box->OffsetWidth().Round();
+  }
   return 0;
 }
 
