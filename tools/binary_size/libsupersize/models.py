@@ -83,6 +83,9 @@ DIFF_STATUS_REMOVED = 3
 DIFF_PREFIX_BY_STATUS = ['= ', '~ ', '+ ', '- ']
 
 
+STRING_LITERAL_NAME_PREFIX = 'string literal '
+
+
 class SizeInfo(object):
   """Represents all size information for a single binary.
 
