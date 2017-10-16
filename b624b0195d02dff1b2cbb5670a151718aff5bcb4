@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20c5ae2c_da57bfad",
+        "filename": "device/vr/vr_device_base_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-16T17:04:15Z",
+      "side": 1,
+      "message": "This is never called?",
+      "revId": "b624b0195d02dff1b2cbb5670a151718aff5bcb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
