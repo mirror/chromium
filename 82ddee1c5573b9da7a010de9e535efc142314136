@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6fb1be5_3789575f",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-10-16T12:39:40Z",
+      "side": 1,
+      "message": "In that case, can we split this into two methods?\nFirst: _UpdateSysHealthCSV(input_api, output_api): does the run args for generate_system_health_csv\nSecond: _CheckNoUncommittedFiles(input_api, output_api): does the cmd diff_text and if anything is in diff text then results.append the Presubmit Error of Please add the following changed files to your git client: diff_text or something along those lines\nThanks!",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 27
+      },
+      "revId": "82ddee1c5573b9da7a010de9e535efc142314136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
