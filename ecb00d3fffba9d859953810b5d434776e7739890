@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "69cc4624_5c15e064",
+        "filename": "ios/chrome/app/application_delegate/metrics_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "Tab -lastCommittedURL would crash if tab.webState was null (because it does self.navigationManager-\u003eGetLastCommittedItem()). Still make sense to change the code to check for non-null WebState though (so that it can will be ready once Tab is removed).\n\nDone.",
+      "parentUuid": "4167d687_6e9917a4",
+      "range": {
+        "startLine": 149,
+        "startChar": 19,
+        "endLine": 149,
+        "endChar": 27
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6720b2b2_c033fdf4",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 2
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "965bd5d4_407d5f5c",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6720b2b2_c033fdf4",
+      "range": {
+        "startLine": 870,
+        "startChar": 14,
+        "endLine": 870,
+        "endChar": 30
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a713612_ce8fa7c4",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "The current function starts with \"self.webState-\u003eGetContentsMimeType()\" so by this point self.webState is guaranteed to be non-null (otherwise the app would have crashed earlier).",
+      "parentUuid": "c34c9363_cc9fa855",
+      "range": {
+        "startLine": 870,
+        "startChar": 33,
+        "endLine": 870,
+        "endChar": 37
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "641a63ed_80549a9d",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "767bfaee_ee845f26",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "641a63ed_80549a9d",
+      "range": {
+        "startLine": 1034,
+        "startChar": 7,
+        "endLine": 1034,
+        "endChar": 23
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b58dafb_bd1ad24e",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f23054_98a2b546",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b58dafb_bd1ad24e",
+      "range": {
+        "startLine": 1082,
+        "startChar": 7,
+        "endLine": 1082,
+        "endChar": 23
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,54 @@
     },
     {
       "key": {
+        "uuid": "9fedcfdf_4b1e3fc8",
+        "filename": "ios/chrome/browser/tabs/tab_model.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ba26fe0_66ab88f5",
+      "range": {
+        "startLine": 542,
+        "startChar": 16,
+        "endLine": 542,
+        "endChar": 32
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0af8f2e5_2c883c46",
+        "filename": "ios/chrome/browser/tabs/tab_model.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "All Tabs are removed from TabModel before their WebState is set to null. So this is guaranteed.",
+      "parentUuid": "e77a62ec_c74bbd81",
+      "range": {
+        "startLine": 542,
+        "startChar": 39,
+        "endLine": 542,
+        "endChar": 47
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "219d05c7_bc0e7380",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8f1add_b5936615",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "Added check for null webState in all callers and added a DCHECK.",
+      "parentUuid": "219d05c7_bc0e7380",
+      "range": {
+        "startLine": 125,
+        "startChar": 23,
+        "endLine": 125,
+        "endChar": 24
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "67eb6343_a1b0bd1f",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "249b1d46_28e2e01a",
+      "range": {
+        "startLine": 1174,
+        "startChar": 14,
+        "endLine": 1174,
+        "endChar": 17
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18c32a2b_ad83e953",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "98bf6053_94c0a26a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2848,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18c32a2b_ad83e953",
+      "range": {
+        "startLine": 2848,
+        "startChar": 14,
+        "endLine": 2848,
+        "endChar": 30
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5956b033_e8d622fc",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -246,6 +486,24 @@
       "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81346a7a_2dd8bab8",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2849,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5956b033_e8d622fc",
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "71726776_274886a1",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 3435,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "I think the code here explicitly wants to compare currentTab.webState with webState to support the case where they are different (at least this is how I understand the comment above). Leaving currentTab.webState.",
+      "parentUuid": "ac5de344_941d0748",
+      "range": {
+        "startLine": 3435,
+        "startChar": 21,
+        "endLine": 3435,
+        "endChar": 40
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8df42a15_304049df",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -292,6 +574,30 @@
       "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01312bfa_e41650cf",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4673,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "The Tab\u0027s WebState is destroyed after the Tab is removed from TabModel. So any Tab obtained from TabModel has a non-null WebState.",
+      "parentUuid": "8df42a15_304049df",
+      "range": {
+        "startLine": 4673,
+        "startChar": 37,
+        "endLine": 4673,
+        "endChar": 38
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "ead7efb7_8257b3ca",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4981,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "ditto :-)",
+      "parentUuid": "1dca28ce_6dfc365d",
+      "range": {
+        "startLine": 4981,
+        "startChar": 40,
+        "endLine": 4981,
+        "endChar": 41
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe42eb69_0f9aa0d6",
         "filename": "ios/chrome/browser/ui/side_swipe/card_side_swipe_view.mm",
         "patchSetId": 2
@@ -338,6 +668,30 @@
       "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca3ebcc_2af50d6e",
+        "filename": "ios/chrome/browser/ui/side_swipe/card_side_swipe_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T16:47:57Z",
+      "side": 1,
+      "message": "ditto :-)",
+      "parentUuid": "fe42eb69_0f9aa0d6",
+      "range": {
+        "startLine": 233,
+        "startChar": 20,
+        "endLine": 233,
+        "endChar": 39
+      },
+      "revId": "ecb00d3fffba9d859953810b5d434776e7739890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
