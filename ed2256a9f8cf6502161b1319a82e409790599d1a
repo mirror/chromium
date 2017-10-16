@@ -122,6 +122,41 @@
       "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81cac95d_9ae3a6d5",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T07:43:58Z",
+      "side": 1,
+      "message": "Looked into the other CL a little bit more. It looks saving origin_ there in the throttle is probably a bit wrong, because at that point we don\u0027t really know we follow the redirect or not... so the current throttle interface is not enough anyways.\n\nFor our purpose probably I imagine the easiest could be to stash the necessary info within ThrottlingURLLoader and extend (once again) URLLoaderThrottle::WillProcessResponse() to take additional URL.  We could save the redirected URL in OnReceiveRedirect and commit it in OnFollowRedirect to make sure that we pass the URL in URLLoaderThrottle::WillProcessResponse.\n\nAlternatively we can continue pursuing the current approach, while in that case we also probably need to code same/similar thing in some of each URLLoader implementation.",
+      "parentUuid": "85329884_3c213878",
+      "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "976791f2_e1bf0de6",
+        "filename": "content/public/common/resource_response_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-16T07:43:58Z",
+      "side": 1,
+      "message": "response_url ?\n\nThis *could* be identical to request URL, right?",
+      "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
