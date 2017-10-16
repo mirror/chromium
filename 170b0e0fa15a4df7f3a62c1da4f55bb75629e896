@@ -153,6 +153,30 @@
       "revId": "170b0e0fa15a4df7f3a62c1da4f55bb75629e896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8374bc70_50dba06e",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-16T16:41:32Z",
+      "side": 1,
+      "message": "\u003e However, as an aside, I would like to point out that typemapping is not just for legacy IPC; there are legitimate reasons to want to map C++ structs to the Mojo struct that transports them: in particular, it allows us to do data validation in a way that pure Mojo structs would not (for example, checking that the valid bit and the URL spec serialized by url.mojom.Url actually agree with each other).\n\nAh, I see! Interesting point, thanks, noted!",
+      "parentUuid": "f20b6e35_d46fab2c",
+      "range": {
+        "startLine": 1219,
+        "startChar": 0,
+        "endLine": 1226,
+        "endChar": 3
+      },
+      "revId": "170b0e0fa15a4df7f3a62c1da4f55bb75629e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
