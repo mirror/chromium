@@ -16,6 +16,24 @@
       "revId": "add35853f7615557d48facb9a497ec354e4d084b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb74b5a_e12126ee",
+        "filename": "third_party/WebKit/LayoutTests/transitions/transitions-parsing-001.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-16T23:22:14Z",
+      "side": 1,
+      "message": "The initial value is being checked. Rephrased.",
+      "parentUuid": "4bf9bc86_ff73d76e",
+      "revId": "add35853f7615557d48facb9a497ec354e4d084b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
