@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "bbbf96af_1a976c58",
+        "filename": "chrome/browser/extensions/api/extension_action/action_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T18:20:21Z",
+      "side": 1,
+      "message": "instead of an API test that only tests loading the extension, let\u0027s have a manifest unittest.",
+      "revId": "a71b7309a7c54e29e12d75c9e3982c9759df8eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760836b6_128c5bee",
+        "filename": "chrome/common/extensions/api/action.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T18:20:21Z",
+      "side": 1,
+      "message": "nit: we\u0027re pretty inconsistent about json styling, but let\u0027s go for this:\n\n\"functions\": [{\n  ...\n}, {\n  ...\n}, {\n  ...\n}]\n\ninstead of:\n\n\"function\": [\n  {\n    ...\n  },\n  {\n    ...\n  },\n  {\n    ...\n  }\n]",
+      "revId": "a71b7309a7c54e29e12d75c9e3982c9759df8eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67329d13_4ce8d874",
+        "filename": "chrome/common/extensions/api/action.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T18:20:21Z",
+      "side": 1,
+      "message": "we should probably have this minimum in all tabId entries in this file.",
+      "revId": "a71b7309a7c54e29e12d75c9e3982c9759df8eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f771d9e_c5a4a84a",
+        "filename": "chrome/common/extensions/api/extension_action/action_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T18:20:21Z",
+      "side": 1,
+      "message": "nit: constexpr char",
+      "revId": "a71b7309a7c54e29e12d75c9e3982c9759df8eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6433671b_9680f1e6",
+        "filename": "chrome/common/extensions/api/extension_action/action_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T18:20:21Z",
+      "side": 1,
+      "message": "I think we should also disallow this for page/browser action entries.",
+      "revId": "a71b7309a7c54e29e12d75c9e3982c9759df8eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2892e591_e0e4ad66",
+        "filename": "chrome/common/extensions/api/extension_action/action_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T18:20:21Z",
+      "side": 1,
+      "message": "nit: prefer nullptr",
+      "revId": "a71b7309a7c54e29e12d75c9e3982c9759df8eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6157140_b046349f",
         "filename": "chrome/common/extensions/api/extension_action/action_info.h",
         "patchSetId": 4
@@ -42,6 +144,64 @@
         "endLine": 51,
         "endChar": 42
       },
+      "revId": "a71b7309a7c54e29e12d75c9e3982c9759df8eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94cdb406_e2fd966b",
+        "filename": "chrome/common/extensions/api/extension_action/action_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T18:20:21Z",
+      "side": 1,
+      "message": "I\u0027d say either SetActionInfo or SetExtensionActionInfo.  ExtensionActionAction sounds a bit odd.",
+      "parentUuid": "85b3cc9e_abd48fbf",
+      "range": {
+        "startLine": 51,
+        "startChar": 14,
+        "endLine": 51,
+        "endChar": 42
+      },
+      "revId": "a71b7309a7c54e29e12d75c9e3982c9759df8eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb7db81_01685950",
+        "filename": "chrome/common/extensions/api/extension_action/action_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T18:20:21Z",
+      "side": 1,
+      "message": "instead of a string, could we use an enum here?  It makes it cheaper to construct and compare, and means that comparing to an invalid state won\u0027t compile.\n\nWe should also either comment that this only applies to the \"action\" key, or should populate values for page/browser action entries.",
+      "revId": "a71b7309a7c54e29e12d75c9e3982c9759df8eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df131783_d912c078",
+        "filename": "chrome/common/extensions/manifest_handlers/extension_action_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-16T18:20:21Z",
+      "side": 1,
+      "message": "nit: nullptr in new code",
       "revId": "a71b7309a7c54e29e12d75c9e3982c9759df8eda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
