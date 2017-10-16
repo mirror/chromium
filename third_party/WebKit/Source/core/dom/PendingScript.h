@@ -95,10 +95,6 @@ class CORE_EXPORT PendingScript
   virtual bool StartStreamingIfPossible(ScriptStreamer::Type, WTF::Closure) = 0;
   virtual bool IsCurrentlyStreaming() const = 0;
 
-  // The following two methods are used for document.write() intervention and
-  // have effects only for classic scripts.
-  virtual KURL UrlForClassicScript() const = 0;
-
   // Used for DCHECK()s.
   bool IsExternalOrModule() const {
     return IsExternal() || GetScriptType() == ScriptType::kModule;
