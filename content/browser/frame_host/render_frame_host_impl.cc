@@ -127,6 +127,7 @@
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
+#include "net/http/http_request_headers.h"
 #include "services/device/public/cpp/device_features.h"
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/device/public/interfaces/sensor_provider.mojom.h"
@@ -2153,6 +2154,10 @@ bool RenderFrameHostImpl::IsFeatureEnabled(
     blink::WebFeaturePolicyFeature feature) {
   return feature_policy_ && feature_policy_->IsFeatureEnabledForOrigin(
                                 feature, GetLastCommittedOrigin());
+}
+
+void RenderFrameHostImpl::ViewSource() {
+  delegate_->ViewSource(this);
 }
 
 void RenderFrameHostImpl::OnDidAccessInitialDocument() {
