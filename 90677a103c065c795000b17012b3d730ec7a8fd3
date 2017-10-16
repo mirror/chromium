@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c47602df_7072a5e1",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-10-16T11:14:08Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this method be used ONLY for kForRows direction ? If that\u0027s the case, could we just remove the \u0027direction\u0027 argument ? IF we need it, because of the Strategy abstraction, perhaps we would just need to add a new assertion to verify it\u0027s kForRows.",
+      "revId": "90677a103c065c795000b17012b3d730ec7a8fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
