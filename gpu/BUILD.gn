@@ -24,6 +24,12 @@ component("gpu") {
   ]
 }
 
+component("gpu_util") {
+  public_deps = [
+    "//gpu/ipc/common:gpu_preferences_util_sources",
+  ]
+}
+
 shared_library("command_buffer_gles2") {
   sources = [
     # TODO(hendrikw): Move egl out of gles2_conform_support.
@@ -325,6 +331,7 @@ test("gpu_unittests") {
     "config/gpu_util_unittest.cc",
     "ipc/client/gpu_memory_buffer_impl_shared_memory_unittest.cc",
     "ipc/client/gpu_memory_buffer_impl_test_template.h",
+    "ipc/common/gpu_preferences_util_unittest.cc",
     "ipc/common/struct_traits_unittest.cc",
     "ipc/host/shader_disk_cache_unittest.cc",
   ]
@@ -356,6 +363,7 @@ test("gpu_unittests") {
 
   deps = [
     ":gpu",
+    ":gpu_util",
     ":test_support",
     "//base",
     "//base/test:test_support",
