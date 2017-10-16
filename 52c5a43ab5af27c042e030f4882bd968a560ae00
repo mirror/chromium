@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b88543fa_5a94df5b",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/clip-with-layout-delta-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-16T19:38:47Z",
+      "side": 1,
+      "message": "Why is this changed? I thought this CL would only kick matched chunk from the \"internal change\" category to \"reorder\" category, but won\u0027t change the matched/unmatched status.",
+      "revId": "52c5a43ab5af27c042e030f4882bd968a560ae00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
