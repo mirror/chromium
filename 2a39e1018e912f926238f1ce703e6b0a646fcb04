@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "46589e47_7c2dad19",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-16T21:04:58Z",
+      "side": 1,
+      "message": "Thanks for the clear explanation! I figured GetProxyToParent might be doing something like that but looked inside and saw frame_tree_node_-\u003eparent() and assumed otherwise. Now that I take a closer look I see it\u0027s getting the SiteInstance from the parent so it all makes sense :). Thanks!",
+      "parentUuid": "fff90dc6_1dcbb7e7",
+      "range": {
+        "startLine": 354,
+        "startChar": 2,
+        "endLine": 354,
+        "endChar": 58
+      },
+      "revId": "2a39e1018e912f926238f1ce703e6b0a646fcb04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3d061e3_e1b7e40e",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 16
