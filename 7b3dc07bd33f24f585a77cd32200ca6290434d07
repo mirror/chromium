@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "de8bba0d_4e117db4",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2027,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-16T21:30:37Z",
+      "side": 1,
+      "message": "You can always wait for DidAttachInterstitialPage on WebContentsObserver.",
+      "parentUuid": "c2966fbc_fbaf3fae",
+      "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a520682_69e0b9df",
         "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
         "patchSetId": 18
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "874c1c9d_50f96a52",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-16T21:30:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "17969751_eb46a4f4",
+      "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "319f4fef_c02e6c0b",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 18
@@ -171,6 +207,24 @@
       "side": 1,
       "message": "The interstitial HTML comes from the same place it used to: InterstitialPageDelegate::GetHTMLContents(). This in turn is implemented by classes in //chrome.\n\nhttps://cs.chromium.org/chromium/src/components/security_interstitials/content/security_interstitial_page.h?l\u003d59\u0026rcl\u003de934f77651be6f73736c54a69830dacc4259e70a",
       "parentUuid": "319f4fef_c02e6c0b",
+      "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f574838_f59daaa8",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2543,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-16T21:30:37Z",
+      "side": 1,
+      "message": "Ok, so it is a bit of a change, but we aren\u0027t explicitly removing functionality. Thanks for clarifying!",
+      "parentUuid": "7a4f8b47_e371279f",
       "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
