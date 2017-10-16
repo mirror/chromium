@@ -63,13 +63,11 @@ public class OAuth2TokenServiceIntegrationTest {
     @Before
     public void setUp() throws Exception {
         mapAccountNamesToIds();
-        ApplicationData.clearAppData(
-                InstrumentationRegistry.getInstrumentation().getTargetContext());
+        ApplicationData.clearAppData(InstrumentationRegistry.getTargetContext());
 
         // loadNativeLibraryAndInitBrowserProcess will access AccountManagerFacade, so it should
         // be initialized beforehand.
-        mContext = new AdvancedMockContext(
-                InstrumentationRegistry.getInstrumentation().getTargetContext());
+        mContext = new AdvancedMockContext(InstrumentationRegistry.getTargetContext());
         mAccountManager = new FakeAccountManagerDelegate(
                 FakeAccountManagerDelegate.DISABLE_PROFILE_DATA_SOURCE);
         AccountManagerFacade.overrideAccountManagerFacadeForTests(mAccountManager);
