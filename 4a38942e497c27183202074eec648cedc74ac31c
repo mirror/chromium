@@ -16,6 +16,24 @@
       "revId": "4a38942e497c27183202074eec648cedc74ac31c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4828ca62_110f4a18",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-16T18:59:14Z",
+      "side": 1,
+      "message": "The mapping z, x, y -\u003e alpha, beta, gamma is correct according to the spec:\n\nhttps://w3c.github.io/deviceorientation/spec-source-orientation.html#deviceorientation\n\nIt also matches the logic in the old Android sensors code:\n\nhttps://cs.chromium.org/chromium/src/device/sensors/android/java/src/org/chromium/device/sensors/DeviceSensors.java?l\u003d359",
+      "parentUuid": "45dc2b27_3ce22e7e",
+      "revId": "4a38942e497c27183202074eec648cedc74ac31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
