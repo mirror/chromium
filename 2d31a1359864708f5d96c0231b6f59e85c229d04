@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aac49eb_e657c80d",
+        "filename": "media/video/video_encode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-16T13:35:39Z",
+      "side": 1,
+      "message": "What about:\n\nvirtual void Flush(base::OnceCallback flush_done_callback) \u003d 0; \n\nand removing NotifyFlushDone() ?\n\nThis is trivially mapped to mojo callbacks and will leave untouched\nclients of VEA that don\u0027t need to flush.",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 0
+      },
+      "revId": "2d31a1359864708f5d96c0231b6f59e85c229d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
