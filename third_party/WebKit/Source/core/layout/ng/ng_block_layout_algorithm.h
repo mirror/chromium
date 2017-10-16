@@ -26,6 +26,7 @@ struct NGPreviousInflowPosition {
   LayoutUnit logical_block_offset;
   NGMarginStrut margin_strut;
   bool empty_block_affected_by_clearance;
+  RefPtr<NGBreakToken> break_token;
 };
 
 // This strut holds information for the current inflow child. The data is not
@@ -35,11 +36,6 @@ struct NGInflowChildData {
   NGMarginStrut margin_strut;
   NGBoxStrut margins;
 };
-
-// Updates the fragment's BFC offset if it's not already set.
-bool MaybeUpdateFragmentBfcOffset(const NGConstraintSpace&,
-                                  LayoutUnit bfc_block_offset,
-                                  NGFragmentBuilder* builder);
 
 // Positions pending floats starting from {@origin_block_offset} and relative
 // to container's BFC offset.
@@ -93,7 +89,8 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
       const NGLogicalOffset& logical_offset,
       const NGLayoutResult& layout_result,
       const NGFragment& fragment,
-      bool empty_block_affected_by_clearance);
+      bool empty_block_affected_by_clearance,
+      RefPtr<NGBreakToken> break_token);
 
   // Positions the fragment that knows its BFC offset.
   WTF::Optional<NGBfcOffset> PositionWithBfcOffset(
@@ -179,6 +176,9 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   bool AddBaseline(const NGBaselineRequest&,
                    const NGPhysicalFragment*,
                    LayoutUnit child_offset);
+
+  // Updates the fragment's BFC offset if it's not already set.
+  bool MaybeUpdateFragmentBfcOffset(LayoutUnit bfc_block_offset);
 
   // Calculates logical offset for the current fragment using either {@code
   // intrinsic_block_size_} when the fragment doesn't know it's offset or

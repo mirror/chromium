@@ -10,6 +10,7 @@
 #include "core/layout/ng/inline/ng_inline_box_state.h"
 #include "core/layout/ng/inline/ng_inline_item_result.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
+#include "core/layout/ng/inline/ng_line_box_fragment_builder.h"
 #include "core/layout/ng/ng_constraint_space_builder.h"
 #include "core/layout/ng/ng_fragment_builder.h"
 #include "core/layout/ng/ng_layout_algorithm.h"
@@ -32,7 +33,7 @@ class NGTextFragmentBuilder;
 // Uses NGLineBreaker to find NGInlineItems to form a line.
 class CORE_EXPORT NGInlineLayoutAlgorithm final
     : public NGLayoutAlgorithm<NGInlineNode,
-                               NGFragmentBuilder,
+                               NGLineBoxFragmentBuilder,
                                NGInlineBreakToken> {
  public:
   NGInlineLayoutAlgorithm(NGInlineNode,
@@ -41,12 +42,7 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
 
   ~NGInlineLayoutAlgorithm() override;
 
-  // Create a line.
-  // @return false if the line does not fit in the constraint space in block
-  //         direction.
-  bool CreateLine(NGLineInfo*,
-                  NGExclusionSpace*,
-                  RefPtr<NGInlineBreakToken> = nullptr);
+  void CreateLine(NGLineInfo*, NGExclusionSpace*);
 
   RefPtr<NGLayoutResult> Layout() override;
 
@@ -55,9 +51,7 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
 
   void BidiReorder(NGInlineItemResults*);
 
-  bool PlaceItems(NGLineInfo*,
-                  const NGExclusionSpace&,
-                  RefPtr<NGInlineBreakToken>);
+  bool PlaceItems(NGLineInfo*, const NGExclusionSpace&);
   void PlaceText(RefPtr<const ShapeResult>,
                  RefPtr<const ComputedStyle>,
                  LayoutUnit* position,
@@ -94,14 +88,7 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
                                 const NGExclusionSpace&,
                                 LayoutUnit line_bottom);
 
-  void PropagateBaselinesFromChildren();
-  bool AddBaseline(const NGBaselineRequest&,
-                   const NGPhysicalFragment*,
-                   LayoutUnit child_offset);
-
-  NGInlineLayoutStateStack box_states_;
-  LayoutUnit content_size_;
-  LayoutUnit max_inline_size_;
+  std::unique_ptr<NGInlineLayoutStateStack> box_states_;
   FontBaseline baseline_type_ = FontBaseline::kAlphabeticBaseline;
 
   unsigned is_horizontal_writing_mode_ : 1;
