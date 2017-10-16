@@ -22,6 +22,30 @@
       "revId": "f3d06391779e45f66a68798a7ae60f1014e37e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06dd1efd_2656d3ef",
+        "filename": "net/dns/dns_config_service_posix_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-16T22:16:02Z",
+      "side": 1,
+      "message": "run_loop_ is nullptr when ExpectChange() was never called.\n\nThis test can\u0027t call ExpectChange() because a change will only be seen when the DnsConfig is actually different. In the absence of the bug it\u0027s testing for, that\u0027s only true on the first config read when there are nameservers configured, and never true when there aren\u0027t. In the nameservers configured case, OnConfigChanged() will be called once, and it will crash because run_loop_ is nullptr. In the no nameservers configured case, which is what\u0027s running on the bots, OnConfigChanged() will never be called, so there\u0027s no problem.\n\nOnConfigChanged isn\u0027t visible in the call stack because it\u0027s called as a callback, and whatever tool generated that call stack doesn\u0027t know how to handle callbacks. It\u0027s one of the calls listed as \"\u003cunknown\u003e\".",
+      "parentUuid": "02aef0d4_ae31ab0d",
+      "range": {
+        "startLine": 216,
+        "startChar": 18,
+        "endLine": 216,
+        "endChar": 0
+      },
+      "revId": "f3d06391779e45f66a68798a7ae60f1014e37e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -22,6 +22,30 @@
       "revId": "790547a4a79c7b604fb4d2e4dd704b88725794dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ec0f5f_a9a0190b",
+        "filename": "net/dns/dns_config_service_posix_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-16T22:16:02Z",
+      "side": 0,
+      "message": "Ugh, right, I forgot that wasn\u0027t just there to let WorkerPool work. Done.",
+      "parentUuid": "4fa4fd0c_118f79c4",
+      "range": {
+        "startLine": 311,
+        "startChar": 71,
+        "endLine": 311,
+        "endChar": 0
+      },
+      "revId": "790547a4a79c7b604fb4d2e4dd704b88725794dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
