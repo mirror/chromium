@@ -70,6 +70,30 @@
       "revId": "abe2f256326d2847ee53eb8f8218aeeb8c72df41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "901e3314_3f3fc512",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-16T15:17:22Z",
+      "side": 1,
+      "message": "Thank you for the clarification. I definitely agree. This chunk of code should be moving out of this function (to the Java preference that allows users to disable metrics reporting).",
+      "parentUuid": "30f91f06_ff9ec977",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 51
+      },
+      "revId": "abe2f256326d2847ee53eb8f8218aeeb8c72df41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
