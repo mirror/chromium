@@ -22,6 +22,30 @@
       "revId": "b3d554f873f245695b68a078c3eb35d835e2f152",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4cb61c_10197981",
+        "filename": "third_party/minizip/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-16T07:20:13Z",
+      "side": 1,
+      "message": "Moved to https://chromium-review.googlesource.com/c/chromium/src/+/718102/2",
+      "parentUuid": "93a7704d_173b7db7",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 1
+      },
+      "revId": "b3d554f873f245695b68a078c3eb35d835e2f152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
