@@ -29,6 +29,7 @@
 #include <windows.ui.viewmanagement.h>
 #include <winstring.h>
 #include <wrl/wrappers/corewrappers.h>
+#include <wrl/client.h>
 
 #include <memory>
 
@@ -45,7 +46,6 @@
 #include "base/win/core_winrt_util.h"
 #include "base/win/registry.h"
 #include "base/win/scoped_co_mem.h"
-#include "base/win/scoped_comptr.h"
 #include "base/win/scoped_handle.h"
 #include "base/win/scoped_hstring.h"
 #include "base/win/scoped_propvariant.h"
@@ -132,13 +132,14 @@ bool IsWindows10TabletMode(HWND hwnd) {
 
   ScopedHString view_settings_guid = ScopedHString::Create(
       RuntimeClass_Windows_UI_ViewManagement_UIViewSettings);
-  ScopedComPtr<IUIViewSettingsInterop> view_settings_interop;
+  Microsoft::WRL::ComPtr<IUIViewSettingsInterop> view_settings_interop;
   HRESULT hr = base::win::RoGetActivationFactory(
       view_settings_guid.get(), IID_PPV_ARGS(&view_settings_interop));
   if (FAILED(hr))
     return false;
 
-  ScopedComPtr<ABI::Windows::UI::ViewManagement::IUIViewSettings> view_settings;
+  Microsoft::WRL::ComPtr<ABI::Windows::UI::ViewManagement::IUIViewSettings>
+      view_settings;
   // TODO(ananta)
   // Avoid using GetForegroundWindow here and pass in the HWND of the window
   // intiating the request to display the keyboard.
