@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c16898c4_e16865c9",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T17:55:05Z",
+      "side": 1,
+      "message": "DCHECK_GT(main_thread_animations_count_, 0) just in case for some reason the number you\u0027re getting from main thread doesn\u0027t correspond to the number of compositor animations. I.e. is it possible that one main thread animation causes us to create multiple composited animations?",
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff21ba95_978509ca",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T17:55:05Z",
+      "side": 1,
+      "message": "DCHECK_GE(main_thread_animations_count, main_thread_compositable_animations_count);\n\nThere might be a better place to have this check (i.e. closer to where it is set).",
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb6b0c5_984900c4",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T17:55:05Z",
+      "side": 1,
+      "message": "nit: Just advance_ms",
+      "range": {
+        "startLine": 46,
+        "startChar": 32,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b496a1e8_ab7a6448",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T17:55:05Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 63,
+        "startChar": 32,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1f179c_d94a52c8",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T17:55:05Z",
+      "side": 1,
+      "message": "Is this normally 0 or would it continue to report the value from the last main frame (1)?",
+      "range": {
+        "startLine": 401,
+        "startChar": 40,
+        "endLine": 401,
+        "endChar": 41
+      },
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94f87013_5b18a5a2",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T17:55:05Z",
+      "side": 1,
+      "message": "A better explanation is that we report it because the previous main frame had a main thread animation with the time between main frame draws.",
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11f85b7_729632bd",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T17:55:05Z",
+      "side": 1,
+      "message": "can_composite should be true if we have just chosen not to composite.\n\nIt seems like it\u0027d make more sense to invert and rename / repurpose element_does_not_paint_into_own_backing as will_composite and return that, and then if can_composite \u0026\u0026 !will_composite we know that it is one of the cases where we chose not to composite.",
+      "range": {
+        "startLine": 78,
+        "startChar": 29,
+        "endLine": 78,
+        "endChar": 42
+      },
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28fbb12_0514ab59",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimationsTest.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T17:55:05Z",
+      "side": 1,
+      "message": "Would this be a good place to verify that the count was set correctly? Or is there a better place to test the animation counts?",
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e0a288_8b915254",
+        "filename": "third_party/WebKit/Source/core/animation/DocumentAnimations.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-16T17:55:05Z",
+      "side": 1,
+      "message": "Since these two functions will always be called together we should have a single function, maybe SetMainThreadAnimationCounts",
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
