@@ -16,6 +16,24 @@
       "revId": "b425bf2e81ca2d5075a409ef56af9f4046da3375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09412add_14ce8bf1",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-16T04:05:46Z",
+      "side": 1,
+      "message": "It\u0027s meant to check that mic/camera were actually requested. For pepper they are actually always requested. So I turned this into a DCHECK as suggested :)",
+      "parentUuid": "03982f1f_1e265bea",
+      "revId": "b425bf2e81ca2d5075a409ef56af9f4046da3375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
