@@ -128,6 +128,11 @@
 #define USE_BUILTIN_CERT_VERIFIER
 #endif
 
+#if defined(OS_LINUX)
+// TODO(eroman): Temporary hack for testing.
+#define USE_BUILTIN_CERT_VERIFIER
+#endif
+
 #if !BUILDFLAG(DISABLE_FILE_SUPPORT)
 #include "net/base/filename_util.h"
 #include "net/url_request/file_protocol_handler.h"
@@ -10433,7 +10438,7 @@ class HTTPSOCSPTest : public HTTPSRequestTest {
 };
 
 static CertStatus ExpectedCertStatusForFailedOnlineRevocationCheck() {
-#if defined(OS_WIN) || defined(OS_MACOSX)
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(USE_BUILTIN_CERT_VERIFIER)
   // Windows can return CERT_STATUS_UNABLE_TO_CHECK_REVOCATION but we don't
   // have that ability on other platforms.
   return CERT_STATUS_UNABLE_TO_CHECK_REVOCATION;
@@ -10450,8 +10455,8 @@ static CertStatus ExpectedCertStatusForFailedOnlineRevocationCheck() {
 // If it does not, then tests which rely on 'hard fail' behaviour should be
 // skipped.
 static bool SystemSupportsHardFailRevocationChecking() {
-#if defined(OS_WIN) || defined(USE_NSS_CERTS)
-  // TODO(crbug.com/762380): Enable on Fuchsia once it's implemented.
+#if defined(OS_WIN) || defined(USE_NSS_CERTS) || \
+    defined(USE_BUILTIN_CERT_VERIFIER)
   return true;
 #else
   return false;
@@ -10463,12 +10468,10 @@ static bool SystemSupportsHardFailRevocationChecking() {
 // several tests are effected because our testing EV certificate won't be
 // recognised as EV.
 static bool SystemUsesChromiumEVMetadata() {
-#if defined(OS_ANDROID)
-  // On Android, we use the system to tell us whether a certificate is EV or not
-  // and the system won't recognise our testing root.
-  return false;
-#else
+#if defined(PLATFORM_USES_CHROMIUM_EV_METADATA)
   return true;
+#else
+  return false;
 #endif
 }
 
@@ -10486,9 +10489,8 @@ static CertStatus ExpectedCertStatusForFailedOnlineEVRevocationCheck() {
 }
 
 static bool SystemSupportsOCSP() {
-#if defined(OS_ANDROID) || defined(USE_BUILTIN_CERT_VERIFIER)
+#if defined(OS_ANDROID)
   // TODO(jnd): http://crbug.com/117478 - EV verification is not yet supported.
-  // TODO(crbug.com/762380): Enable on Fuchsia once it's implemented.
   return false;
 #else
   return true;
@@ -10496,8 +10498,8 @@ static bool SystemSupportsOCSP() {
 }
 
 static bool SystemSupportsOCSPStapling() {
-#if defined(USE_NSS_CERTS) || defined(OS_WIN)
-  // TODO(crbug.com/762380): Enable on Fuchsia once it's implemented.
+#if defined(USE_NSS_CERTS) || defined(OS_WIN) || \
+    defined(USE_BUILTIN_CERT_VERIFIER)
   return true;
 #else
   return false;
@@ -11218,10 +11220,17 @@ TEST_F(HTTPSHardFailTest, FailsOnOCSPInvalid) {
   CertStatus cert_status;
   DoConnection(ssl_options, &cert_status);
 
-  EXPECT_EQ(CERT_STATUS_REVOKED,
-            cert_status & CERT_STATUS_REVOKED);
+#if defined(USE_BUILTIN_CERT_VERIFIER)
+  // TODO(crbug.com/649017): Should we consider invalid response as
+  //                         affirmatively revoked?
+  EXPECT_EQ(CERT_STATUS_UNABLE_TO_CHECK_REVOCATION,
+            cert_status & CERT_STATUS_UNABLE_TO_CHECK_REVOCATION);
+#else
+  EXPECT_EQ(CERT_STATUS_REVOKED, cert_status & CERT_STATUS_REVOKED);
+#endif
 
   // Without a positive OCSP response, we shouldn't show the EV status.
+  EXPECT_FALSE(cert_status & CERT_STATUS_IS_EV);
   EXPECT_TRUE(cert_status & CERT_STATUS_REV_CHECKING_ENABLED);
 }
 

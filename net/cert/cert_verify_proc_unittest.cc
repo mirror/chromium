@@ -125,7 +125,10 @@ enum CertVerifyProcType {
 // CertVerifyProc::CreateDefault() returns. This needs to be kept in sync with
 // CreateDefault().
 CertVerifyProcType GetDefaultCertVerifyProcType() {
-#if defined(USE_NSS_CERTS)
+#if defined(OS_LINUX)
+  // TODO(eroman): Temporary hack for testing.
+  return CERT_VERIFY_PROC_BUILTIN;
+#elif defined(USE_NSS_CERTS)
   return CERT_VERIFY_PROC_NSS;
 #elif defined(OS_ANDROID)
   return CERT_VERIFY_PROC_ANDROID;
@@ -181,7 +184,7 @@ const std::vector<CertVerifyProcType> kAllCertVerifiers = {
 // TODO(crbug.com/649017): Enable this everywhere. Right now this is
 // gated on having CertVerifyProcBuiltin understand the roots added
 // via TestRootCerts.
-#if defined(USE_NSS_CERTS)
+#if defined(USE_NSS_CERTS) && !defined(OS_LINUX)
         ,
     CERT_VERIFY_PROC_BUILTIN
 #endif
@@ -286,11 +289,11 @@ class CertVerifyProcInternalTest
   }
 
   bool SupportsEV() const {
-    // TODO(crbug.com/649017): CertVerifyProcBuiltin does not support EV.
     // TODO(crbug.com/117478): Android and iOS do not support EV.
     return verify_proc_type() == CERT_VERIFY_PROC_NSS ||
            verify_proc_type() == CERT_VERIFY_PROC_WIN ||
-           verify_proc_type() == CERT_VERIFY_PROC_MAC;
+           verify_proc_type() == CERT_VERIFY_PROC_MAC ||
+           verify_proc_type() == CERT_VERIFY_PROC_BUILTIN;
   }
 
   CertVerifyProc* verify_proc() const { return verify_proc_.get(); }
