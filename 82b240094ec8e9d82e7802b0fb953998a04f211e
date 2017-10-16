@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fba0939c_b314f061",
+        "filename": "chrome/browser/resources/bluetooth_internals/bluetooth_internals.css",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-16T20:17:51Z",
+      "side": 1,
+      "message": "Can you specify which widgets.css file exactly is this referring to? Is it referring to ui/webui/resources/css/widgets.css? Also have you tried something like the following?\n\n.info-container h4 button {\n  ...\n}\n\nIt would be nice if we can eliminate the need for this comment and the identical comment in the JS file.",
+      "revId": "82b240094ec8e9d82e7802b0fb953998a04f211e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
