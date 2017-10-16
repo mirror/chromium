@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "150cce83_8b54c451",
+        "filename": "ios/chrome/browser/ui/payments/cells/payments_text_item_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-16T17:22:40Z",
+      "side": 1,
+      "message": "Can you also add test to check trailing image works?",
+      "revId": "120895c7fd42dc7bee2eafa7c314017a2d16d830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
