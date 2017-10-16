@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6165ef2b_e1c42f4d",
+        "filename": "third_party/WebKit/LayoutTests/fast/text/mac-system-ui-trak.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-16T08:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1724e24_a8fc268f",
+      "revId": "48b8676627e0f2bc83cd82b3fb3b3c774dd4594a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67b1b7c0_1790d0c4",
         "filename": "third_party/WebKit/LayoutTests/fast/text/mac-system-ui-trak.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "48b8676627e0f2bc83cd82b3fb3b3c774dd4594a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b568092_a0a8ec60",
+        "filename": "third_party/WebKit/LayoutTests/fast/text/mac-system-ui-trak.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-16T08:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67b1b7c0_1790d0c4",
+      "revId": "48b8676627e0f2bc83cd82b3fb3b3c774dd4594a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "48b8676627e0f2bc83cd82b3fb3b3c774dd4594a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58fb83b1_21545d26",
+        "filename": "third_party/WebKit/LayoutTests/fast/text/mac-system-ui-trak.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-16T08:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27a408ed_35817823",
+      "range": {
+        "startLine": 49,
+        "startChar": 21,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "48b8676627e0f2bc83cd82b3fb3b3c774dd4594a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
