@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "419792f7_a6736282",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-16T23:04:21Z",
+      "side": 1,
+      "message": "I don\u0027t think this will go to 63 (given that it has a string change), so I think I can wait for that cl.",
+      "parentUuid": "ed8cfc5b_59c7347f",
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41350f2c_c440612b",
         "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
         "patchSetId": 3
