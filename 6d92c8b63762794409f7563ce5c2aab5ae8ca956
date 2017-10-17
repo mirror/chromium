@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7675d344_afb18a6d",
+        "filename": "chrome/browser/vr/elements/vector_icon.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-17T20:02:45Z",
+      "side": 1,
+      "message": "Sounds like the icon param will need to be plumbed in via a SetIcon fn?",
+      "revId": "6d92c8b63762794409f7563ce5c2aab5ae8ca956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
