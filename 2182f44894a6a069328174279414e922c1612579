@@ -277,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "9e36c76c_498cf704",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-17T01:30:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b85fbdc0_09224595",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3eaf3f1_0c789769",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 4
@@ -327,6 +345,24 @@
       "revId": "2182f44894a6a069328174279414e922c1612579",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52036ee_8a9f69fc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-17T01:30:15Z",
+      "side": 1,
+      "message": "Done, sorry i missed that.",
+      "parentUuid": "675fc23e_2fb4711c",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
