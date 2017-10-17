@@ -8,15 +8,29 @@
 #ifndef GPU_IPC_SERVICE_GPU_MEMORY_BUFFER_FACTORY_TEST_TEMPLATE_H_
 #define GPU_IPC_SERVICE_GPU_MEMORY_BUFFER_FACTORY_TEST_TEMPLATE_H_
 
+#include "base/command_line.h"
+#include "build/build_config.h"
 #include "gpu/ipc/common/gpu_memory_buffer_support.h"
 #include "gpu/ipc/service/gpu_memory_buffer_factory.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/buffer_format_util.h"
+#include "ui/gl/gl_switches.h"
+#include "ui/gl/test/gl_surface_test_support.h"
 
 namespace gpu {
 
 template <typename GpuMemoryBufferFactoryType>
 class GpuMemoryBufferFactoryTest : public testing::Test {
+ public:
+  void SetUp() override {
+#ifdef OS_WIN
+    // This test only works with hardware rendering.
+    DCHECK(base::CommandLine::ForCurrentProcess()->HasSwitch(
+        switches::kUseGpuInTests));
+    gl::GLSurfaceTestSupport::InitializeOneOff();
+#endif
+  }
+
  protected:
   GpuMemoryBufferFactoryType factory_;
 };
