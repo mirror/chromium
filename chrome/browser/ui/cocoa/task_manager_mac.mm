@@ -20,6 +20,7 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #import "chrome/browser/ui/cocoa/window_size_autosaver.h"
 #include "chrome/browser/ui/task_manager/task_manager_columns.h"
+#include "chrome/browser/ui/views/task_manager_view.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/generated_resources.h"
@@ -652,13 +653,13 @@ namespace chrome {
 // Declared in browser_dialogs.h.
 task_manager::TaskManagerTableModel* ShowTaskManager(Browser* browser) {
   if (ShouldUseViewsTaskManager())
-    return chrome::ShowTaskManagerViews(browser);
+    return task_manager::TaskManagerView::Show(browser);
   return task_manager::TaskManagerMac::Show();
 }
 
 void HideTaskManager() {
   if (ShouldUseViewsTaskManager())
-    return chrome::HideTaskManagerViews();
+    return task_manager::TaskManagerView::Hide();
   task_manager::TaskManagerMac::Hide();
 }
 

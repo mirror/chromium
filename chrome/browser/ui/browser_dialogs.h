@@ -132,10 +132,6 @@ void ShowFirstRunBubble(Browser* browser);
 
 #if defined(OS_MACOSX)
 
-// Bridging methods that show/hide the toolkit-views based Task Manager on Mac.
-task_manager::TaskManagerTableModel* ShowTaskManagerViews(Browser* browser);
-void HideTaskManagerViews();
-
 // Show the Views "Chrome Update" dialog.
 void ShowUpdateChromeDialogViews(gfx::NativeWindow parent);
 

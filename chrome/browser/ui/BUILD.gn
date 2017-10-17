@@ -2343,8 +2343,6 @@ split_static_library("ui") {
         "cocoa/tabs/tab_view.mm",
         "cocoa/tabs/tab_window_controller.h",
         "cocoa/tabs/tab_window_controller.mm",
-        "cocoa/task_manager_mac.h",
-        "cocoa/task_manager_mac.mm",
         "cocoa/themed_window.h",
         "cocoa/themed_window.mm",
         "cocoa/toolbar/app_toolbar_button.h",
@@ -2381,8 +2379,6 @@ split_static_library("ui") {
         "cocoa/web_contents_modal_dialog_manager_views_mac.mm",
         "cocoa/web_textfield_touch_bar_controller.h",
         "cocoa/web_textfield_touch_bar_controller.mm",
-        "cocoa/window_size_autosaver.h",
-        "cocoa/window_size_autosaver.mm",
 
         # TODO(estade): this class should be deleted in favor of a combobox model.
         # See crbug.com/590850
@@ -2599,6 +2595,10 @@ split_static_library("ui") {
       "autofill/save_card_bubble_controller_impl.h",
       "autofill/save_card_bubble_view.h",
       "bubble_anchor_util.h",
+      "cocoa/task_manager_mac.h",
+      "cocoa/task_manager_mac.mm",
+      "cocoa/window_size_autosaver.h",
+      "cocoa/window_size_autosaver.mm",
       "desktop_ios_promotion/desktop_ios_promotion_footnote_delegate.h",
 
       # This test header is included because it contains forward declarations
