@@ -20,6 +20,7 @@ class HighContrastImageClassifierTest : public ::testing::Test {
                                     std::vector<float>* features) {
     SCOPED_TRACE(file_name);
     RefPtr<BitmapImage> image = LoadImage(file_name);
+    classifier_.SetRandomGeneratorForTesting();
     classifier_.ComputeImageFeaturesForTesting(*image.get(), features);
     return classifier_.ShouldApplyHighContrastFilterToImage(*image.get());
   }
@@ -66,7 +67,7 @@ TEST_F(HighContrastImageClassifierTest, FeaturesAndClassification) {
   EXPECT_FALSE(GetFeaturesAndClassification(
       "/LayoutTests/images/resources/blue-wheel-srgb-color-profile.png",
       &features));
-  EXPECT_TRUE(AreFeaturesEqual(features, {1.0f, 0.0336914f}));
+  EXPECT_TRUE(AreFeaturesEqual(features, {1.0f, 0.0300293f}));
 
   // Test Case 2:
   EXPECT_TRUE(GetFeaturesAndClassification(
