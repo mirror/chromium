@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.KeyboardShortcutGroup;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -123,7 +124,9 @@ import org.chromium.chrome.browser.widget.OverviewListLayout;
 import org.chromium.chrome.browser.widget.ViewHighlighter;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.StateChangeReason;
+import org.chromium.chrome.browser.widget.bottomsheet.ChromeHomeIphMenuHeader;
 import org.chromium.chrome.browser.widget.bottomsheet.ChromeHomePromoDialog;
+import org.chromium.chrome.browser.widget.bottomsheet.ChromeHomePromoMenuHeader;
 import org.chromium.chrome.browser.widget.emptybackground.EmptyBackgroundViewWrapper;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.components.feature_engagement.EventConstants;
@@ -1558,7 +1561,7 @@ public class ChromeTabbedActivity
     @Override
     protected AppMenuPropertiesDelegate createAppMenuPropertiesDelegate() {
         return new AppMenuPropertiesDelegate(this) {
-            private boolean mDismissChromeHomeIPHOnMenuDismissed;
+            private ChromeHomeIphMenuHeader mChromeHomeIphMenuHeader;
 
             private boolean showDataSaverFooter() {
                 return getBottomSheet() == null
@@ -1570,11 +1573,9 @@ public class ChromeTabbedActivity
             public void onMenuDismissed() {
                 super.onMenuDismissed();
 
-                if (mDismissChromeHomeIPHOnMenuDismissed) {
-                    Tracker tracker =
-                            TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
-                    tracker.dismissed(FeatureConstants.CHROME_HOME_MENU_HEADER_FEATURE);
-                    mDismissChromeHomeIPHOnMenuDismissed = false;
+                if (mChromeHomeIphMenuHeader != null) {
+                    mChromeHomeIphMenuHeader.onMenuDismissed();
+                    mChromeHomeIphMenuHeader = null;
                 }
             }
 
@@ -1585,18 +1586,24 @@ public class ChromeTabbedActivity
                     return R.layout.icon_row_menu_footer;
                 }
 
-                return showDataSaverFooter() ? R.layout.data_reduction_main_menu_footer : 0;
+                return showDataSaverFooter() ? R.layout.data_reduction_main_menu_item : 0;
             }
 
             @Override
-            public int getHeaderResourceId() {
+            public View getHeaderView() {
                 if (getBottomSheet() == null
                         || !getAppMenuPropertiesDelegate().shouldShowPageMenu()) {
-                    return 0;
+                    return null;
                 }
 
+                LayoutInflater inflater = LayoutInflater.from(ChromeTabbedActivity.this);
+
                 if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
-                    return R.layout.chrome_home_promo_header;
+                    ChromeHomePromoMenuHeader menuHeader =
+                            (ChromeHomePromoMenuHeader) inflater.inflate(
+                                    R.layout.chrome_home_promo_header, null);
+                    menuHeader.initialize(ChromeTabbedActivity.this);
+                    return menuHeader;
                 }
 
                 if (mControlContainer.getVisibility() == View.VISIBLE
@@ -1605,40 +1612,17 @@ public class ChromeTabbedActivity
                             TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
                     if (tracker.shouldTriggerHelpUI(
                                 FeatureConstants.CHROME_HOME_MENU_HEADER_FEATURE)) {
-                        mDismissChromeHomeIPHOnMenuDismissed = true;
-                        return R.layout.chrome_home_iph_header;
+                        tracker.notifyEvent(EventConstants.CHROME_HOME_MENU_HEADER_SHOWN);
+                        mChromeHomeIphMenuHeader = (ChromeHomeIphMenuHeader) inflater.inflate(
+                                R.layout.chrome_home_iph_header, null);
+                        mChromeHomeIphMenuHeader.initialize(ChromeTabbedActivity.this);
+                        return mChromeHomeIphMenuHeader;
                     }
                 }
 
-                return 0;
-            }
-
-            @Override
-            public OnClickListener getHeaderOnClickListener() {
-                return new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (getBottomSheet() != null
-                                && ChromeFeatureList.isEnabled(
-                                           ChromeFeatureList.CHROME_HOME_PROMO)) {
-                            new ChromeHomePromoDialog(ChromeTabbedActivity.this,
-                                    ChromeHomePromoDialog.ShowReason.MENU)
-                                    .show();
-                            return;
-                        }
-
-                        mDismissChromeHomeIPHOnMenuDismissed = false;
-
-                        Tracker tracker =
-                                TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
-                        tracker.notifyEvent(EventConstants.CHROME_HOME_MENU_HEADER_CLICKED);
-
-                        getBottomSheet()
-                                .getBottomSheetMetrics()
-                                .recordInProductHelpMenuItemClicked();
-                        getBottomSheet().showHelpBubble(true);
-                    }
-                };
+                return DataReductionProxySettings.getInstance().shouldUseDataReductionMainMenuItem()
+                        ? inflater.inflate(R.layout.data_reduction_main_menu_item, null)
+                        : null;
             }
 
             @Override
