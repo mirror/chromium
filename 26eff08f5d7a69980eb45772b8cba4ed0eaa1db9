@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9d875e41_0aaace68",
+        "filename": "cc/paint/discardable_image_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T22:02:48Z",
+      "side": 1,
+      "message": "Looks like Reset is unused now. And Generate is only used by the RecordingSource. Since we call it unconditionally, I think DisplayItemList::Finalize should do the Generate step.\n\nIt felt odd because this method is used from the RasterSource at which point the DisplayItemList should be const (https://cs.chromium.org/chromium/src/cc/raster/raster_source.h?l\u003d128). I don\u0027t think this map will have a significant memory footprint. But I don\u0027t feel strongly either way. If we wanna keep it this way, please add a comment that this should only be used on the compositor thread.",
+      "parentUuid": "4a404f74_b097b3aa",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 21
+      },
+      "revId": "26eff08f5d7a69980eb45772b8cba4ed0eaa1db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7cda801_36579fc9",
         "filename": "cc/paint/display_item_list.h",
         "patchSetId": 3
@@ -153,6 +177,30 @@
       "side": 1,
       "message": "\u003e I think we\u0027ll need to manage the case where the decision for an image we were asyncing has to be flipped now. Here\u0027s a suggestion for it:\n\u003e \n\u003e 1) Check the |image_async_decode_state_| map to query the current state for it. If it is async then we have tiles without this image that we are responsible for invalidating.\n\nI\u0027m not sure I understand. Are you suggesting doing the checker imaging decision for each image at the time that we update the hints? That is, what do we do if there is no state in image_async_decode_state_ for a given image id? Inserting it as ASYNC seems wrong since then it would indicate that we\u0027ve decided this should be async, but the reality is that we haven\u0027t made the decision yet.\n\nThe way I\u0027m trying to stage this is that this map is an extra input to the decision logic, not the decision itself. The decision algorithm would still run at the regular time it runs, but it would consider this as an extra input.\n\nI can clear this map in the same spot we clear the decode state. Does that make sense?\n\nBasically, I\u0027m trying not to conflate the stages of checker imaging together. This Update runs at commit and contains all images in the layer. However, the decision only happens for images we are scheduling at prepare tiles time. \n\n\u003e \n\u003e 2) Add these image ids to |images_pending_invalidation_|. Since the method only runs during commit, we\u0027ll be taking the set of images to invalidate as the next step, so these images will be invalidated on the incoming pending tree that flipped the mode. Also update the policy for them in |image_async_decode_state_| to SYNC.\n\u003e \n\u003e 3) This decode might have already started so just need to avoid invalidating it again in DidFinishImageDecode. May be add a DCHECK there that the only case where we see an entry in image_async_decode_state_ with SYNC policy is if the decode_mode_map_ is set to kSync for this image.",
       "parentUuid": "b56f0bd6_1850551b",
+      "range": {
+        "startLine": 441,
+        "startChar": 2,
+        "endLine": 449,
+        "endChar": 3
+      },
+      "revId": "26eff08f5d7a69980eb45772b8cba4ed0eaa1db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6086e89_82f592ca",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T22:02:48Z",
+      "side": 1,
+      "message": "\u003e \u003e I think we\u0027ll need to manage the case where the decision for an image we were asyncing has to be flipped now. Here\u0027s a suggestion for it:\n\u003e \u003e \n\u003e \u003e 1) Check the |image_async_decode_state_| map to query the current state for it. If it is async then we have tiles without this image that we are responsible for invalidating.\n\u003e \n\u003e I\u0027m not sure I understand. Are you suggesting doing the checker imaging decision for each image at the time that we update the hints? That is, what do we do if there is no state in image_async_decode_state_ for a given image id? Inserting it as ASYNC seems wrong since then it would indicate that we\u0027ve decided this should be async, but the reality is that we haven\u0027t made the decision yet.\n\nNo, I wasn\u0027t suggesting doing the decision at hint update time. I\u0027m saying that the decision might have already been made to ASYNC when we get an update with a more conservative hint. For instance, the following scenario:\n\n1) We have PaintImage with hint unspecified, we decide to go async.\n2) Before we could display this image, we get a commit with hint sync.\n\nIn order to respect sync, we need to undo the decision that was made earlier.\n\n\u003e \n\u003e The way I\u0027m trying to stage this is that this map is an extra input to the decision logic, not the decision itself. The decision algorithm would still run at the regular time it runs, but it would consider this as an extra input.\n\u003e \n\u003e I can clear this map in the same spot we clear the decode state. Does that make sense?\n\nYup, this makes sense. I forgot that the presence of an entry in |image_async_decode_state_| means the decision has been made. So the mode should live in a separate map. Clearing it at the same spot sounds great.\n\n\u003e \n\u003e Basically, I\u0027m trying not to conflate the stages of checker imaging together. This Update runs at commit and contains all images in the layer. However, the decision only happens for images we are scheduling at prepare tiles time. \n\u003e \n\u003e \u003e \n\u003e \u003e 2) Add these image ids to |images_pending_invalidation_|. Since the method only runs during commit, we\u0027ll be taking the set of images to invalidate as the next step, so these images will be invalidated on the incoming pending tree that flipped the mode. Also update the policy for them in |image_async_decode_state_| to SYNC.\n\u003e \u003e \n\u003e \u003e 3) This decode might have already started so just need to avoid invalidating it again in DidFinishImageDecode. May be add a DCHECK there that the only case where we see an entry in image_async_decode_state_ with SYNC policy is if the decode_mode_map_ is set to kSync for this image.",
+      "parentUuid": "176717f8_09efdf5c",
       "range": {
         "startLine": 441,
         "startChar": 2,
