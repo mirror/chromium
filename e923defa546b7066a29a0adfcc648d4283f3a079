@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "12347e4e_487cd72a",
+        "filename": "chrome/browser/shell_integration_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-17T18:47:27Z",
+      "side": 1,
+      "message": "\u003e To try to make this work I think I need to see if CoreServicesUIAgent is already running before issuing launchApplication:. rsesek@ mentioned LaunchServices API (I think) for checking but I can\u0027t find anything that looks helpful.\n\nRight, I was thinking of +[NSApplication runningApplications] and then telling the agent to -activateWithOptions:. That\u0027s basically the equivalent of |tell application \"Foo\" to activate|.",
+      "parentUuid": "62dc01ee_6911939a",
+      "revId": "e923defa546b7066a29a0adfcc648d4283f3a079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdbb317d_cb4415b5",
         "filename": "chrome/browser/shell_integration_mac.mm",
         "patchSetId": 1
