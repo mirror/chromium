@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0542057e_765de942",
+        "filename": "components/dom_distiller/ios/distiller_page_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-17T23:56:45Z",
+      "side": 1,
+      "message": "Note that here (and in all other instances) I had to change \"web_state()\" to \"web_state\" because the function from the super class is hidden by the parameter with the same name. Both should be equal.\n\nAn alternative is to use WebStateObserver::web_state() instead (i.e. use the fully qualified name that is not hidden by the local variable) but I think it is too verbose (and will have to be eventually changed to web_state anyway when the function is removed in order to allow the Observer to observe multiple WebStates).",
+      "range": {
+        "startLine": 155,
+        "startChar": 6,
+        "endLine": 155,
+        "endChar": 15
+      },
+      "revId": "3337b03a98726376a4ac6888c71bb2e28da71c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
