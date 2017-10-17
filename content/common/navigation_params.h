@@ -401,6 +401,7 @@ struct NavigationParams {
   CommonNavigationParams common_params;
   StartNavigationParams start_params;
   RequestNavigationParams request_params;
+  bool consumed = false;
 };
 
 }  // namespace content

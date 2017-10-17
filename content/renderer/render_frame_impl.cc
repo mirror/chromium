@@ -6746,6 +6746,8 @@ void RenderFrameImpl::PopulateDocumentStateFromPending(
 
 NavigationState* RenderFrameImpl::CreateNavigationStateFromPending() {
   if (IsBrowserInitiated(pending_navigation_params_.get())) {
+    CHECK(!pending_navigation_params_->consumed);
+    pending_navigation_params_->consumed = true;
     return NavigationStateImpl::CreateBrowserInitiated(
         pending_navigation_params_->common_params,
         pending_navigation_params_->start_params,
