@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6df912c3_a73f93c1",
+        "filename": "chrome/browser/engagement/top_sites/OWNERS",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-17T06:47:46Z",
+      "side": 1,
+      "message": "BTW this is kind of redundant as noparent isn\u0027t on. Once engagement is a service, and this is moved somewhere out of engagement/, would you be an owner?",
+      "revId": "4b6c5c24d21170ebdb53a5ebc7d566f6db8fb249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
