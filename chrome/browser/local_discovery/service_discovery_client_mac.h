@@ -45,11 +45,11 @@ class ServiceDiscoveryClientMac : public ServiceDiscoverySharedClient {
       const ServiceWatcher::UpdatedCallback& callback) override;
   std::unique_ptr<ServiceResolver> CreateServiceResolver(
       const std::string& service_name,
-      const ServiceResolver::ResolveCompleteCallback& callback) override;
+      ServiceResolver::ResolveCompleteCallback callback) override;
   std::unique_ptr<LocalDomainResolver> CreateLocalDomainResolver(
       const std::string& domain,
       net::AddressFamily address_family,
-      const LocalDomainResolver::IPAddressCallback& callback) override;
+      LocalDomainResolver::IPAddressCallback callback) override;
 
   void StartThreadIfNotStarted();
 
@@ -130,7 +130,7 @@ class ServiceResolverImplMac : public ServiceResolver {
    public:
     NetServiceContainer(
         const std::string& service_name,
-        const ServiceResolver::ResolveCompleteCallback& callback,
+        ServiceResolver::ResolveCompleteCallback callback,
         scoped_refptr<base::SingleThreadTaskRunner> service_discovery_runner);
 
     virtual ~NetServiceContainer();
@@ -165,7 +165,7 @@ class ServiceResolverImplMac : public ServiceResolver {
 
   ServiceResolverImplMac(
       const std::string& service_name,
-      const ServiceResolver::ResolveCompleteCallback& callback,
+      ServiceResolver::ResolveCompleteCallback callback,
       scoped_refptr<base::SingleThreadTaskRunner> service_discovery_runner);
 
   // Testing methods.
