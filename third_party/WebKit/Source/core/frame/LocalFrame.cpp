@@ -1145,10 +1145,15 @@ void LocalFrame::ForceSynchronousDocumentInstall(const AtomicString& mime_type,
 }
 
 void LocalFrame::NotifyUserActivation() {
-  bool had_gesture = HasReceivedUserGesture();
-  if (!had_gesture)
+  if (RuntimeEnabledFeatures::UserActivationWoTokenEnabled()) {
     UpdateUserActivationInFrameTree();
-  Client()->SetHasReceivedUserGesture(had_gesture);
+    Client()->SetHasReceivedUserGesture(false);
+  } else {
+    bool had_gesture = HasReceivedUserGesture();
+    if (!had_gesture)
+      UpdateUserActivationInFrameTree();
+    Client()->SetHasReceivedUserGesture(had_gesture);
+  }
 }
 
 // static
@@ -1158,6 +1163,36 @@ std::unique_ptr<UserGestureIndicator> LocalFrame::CreateUserGesture(
   if (frame)
     frame->NotifyUserActivation();
   return WTF::MakeUnique<UserGestureIndicator>(status);
+}
+
+// static
+bool LocalFrame::HasTransientUserActivation(LocalFrame* frame,
+                                            bool checkIfMainThread) {
+  if (RuntimeEnabledFeatures::UserActivationWoTokenEnabled()) {
+    return frame ? static_cast<Frame*>(frame)->HasTransientUserActivation()
+                 : false;
+  }
+
+  return checkIfMainThread
+             ? UserGestureIndicator::ProcessingUserGestureThreadSafe()
+             : UserGestureIndicator::ProcessingUserGesture();
+}
+
+// static
+bool LocalFrame::ConsumeTransientUserActivation(LocalFrame* frame,
+                                                bool checkIfMainThread) {
+  if (RuntimeEnabledFeatures::UserActivationWoTokenEnabled()) {
+    // TODO(mustaq): During our first phase of experiments, we will see if
+    // consumption of user activation is really necessary or not.  If it turns
+    // out to be unavoidable, we will replace the following call with
+    // |ConsumeTransientUserActivation()|.
+    return frame ? static_cast<Frame*>(frame)->HasTransientUserActivation()
+                 : false;
+  }
+
+  return checkIfMainThread
+             ? UserGestureIndicator::ConsumeUserGestureThreadSafe()
+             : UserGestureIndicator::ConsumeUserGesture();
 }
 
 }  // namespace blink
