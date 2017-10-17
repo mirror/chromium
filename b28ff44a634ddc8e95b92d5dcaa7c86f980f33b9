@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35a24a0e_9c382fcb",
+        "filename": "ash/message_center/message_center_style.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-17T18:10:15Z",
+      "side": 1,
+      "message": "nit: VectorIcon is too generic. Can you use more specific name?",
+      "revId": "b28ff44a634ddc8e95b92d5dcaa7c86f980f33b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86f3440_800e6b39",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-17T18:10:15Z",
+      "side": 1,
+      "message": "no_notifiers_height ?",
+      "revId": "b28ff44a634ddc8e95b92d5dcaa7c86f980f33b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d7aa0df_78b0a925",
+        "filename": "ash/message_center/notifier_settings_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-17T18:10:15Z",
+      "side": 1,
+      "message": "nit: true/*enabled*/",
+      "revId": "b28ff44a634ddc8e95b92d5dcaa7c86f980f33b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
