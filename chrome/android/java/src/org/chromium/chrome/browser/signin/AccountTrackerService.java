@@ -12,6 +12,7 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.components.signin.AccountManagerFacade;
+import org.chromium.components.signin.AccountsChangeObserver;
 
 /**
 * Android wrapper of AccountTrackerService which provides access from the java layer.
@@ -26,6 +27,7 @@ public class AccountTrackerService {
     private SystemAccountsSeedingStatus mSystemAccountsSeedingStatus;
     private boolean mSystemAccountsChanged;
     private boolean mSyncForceRefreshedForTest;
+    private AccountsChangeObserver mAccountsChangeObserver;
 
     private enum SystemAccountsSeedingStatus {
         SEEDING_NOT_STARTED,
@@ -104,6 +106,13 @@ public class AccountTrackerService {
         ThreadUtils.assertOnUiThread();
         mSystemAccountsChanged = false;
         mSyncForceRefreshedForTest = false;
+
+        if (mAccountsChangeObserver == null) {
+            mAccountsChangeObserver =
+                    () -> invalidateAccountSeedStatus(false /* don't reseed right now */);
+            AccountManagerFacade.get().addObserver(mAccountsChangeObserver);
+        }
+
         final AccountIdProvider accountIdProvider = AccountIdProvider.getInstance();
         if (accountIdProvider.canBeUsed()) {
             mSystemAccountsSeedingStatus = SystemAccountsSeedingStatus.SEEDING_IN_PROGRESS;
@@ -163,6 +172,7 @@ public class AccountTrackerService {
     public void syncForceRefreshForTest(String[] accountIds, String[] accountNames) {
         ThreadUtils.assertOnUiThread();
         mSystemAccountsSeedingStatus = SystemAccountsSeedingStatus.SEEDING_IN_PROGRESS;
+        mSystemAccountsChanged = false;
         mSyncForceRefreshedForTest = true;
         nativeSeedAccountsInfo(accountIds, accountNames);
         mSystemAccountsSeedingStatus = SystemAccountsSeedingStatus.SEEDING_DONE;
