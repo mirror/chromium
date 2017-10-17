@@ -4,12 +4,16 @@
 
 #include "modules/media_controls/elements/MediaControlElementsHelper.h"
 
+#include "core/dom/DOMTokenList.h"
 #include "core/dom/events/Event.h"
+#include "core/html/HTMLDivElement.h"
 #include "core/html/media/HTMLMediaElement.h"
 #include "core/layout/LayoutSlider.h"
+#include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutSliderItem.h"
 #include "modules/media_controls/elements/MediaControlDivElement.h"
 #include "modules/media_controls/elements/MediaControlInputElement.h"
+#include "public/platform/WebSize.h"
 
 namespace blink {
 
@@ -73,6 +77,35 @@ const HTMLMediaElement* MediaControlElementsHelper::ToParentMediaElement(
 
   return IsHTMLMediaElement(shadow_host) ? ToHTMLMediaElement(shadow_host)
                                          : nullptr;
+}
+
+// static
+HTMLDivElement* MediaControlElementsHelper::CreateDiv(const AtomicString& id,
+                                                      ContainerNode* parent) {
+  HTMLDivElement* element = HTMLDivElement::Create(parent->GetDocument());
+  element->SetShadowPseudoId(id);
+  parent->AppendChild(element);
+  return element;
+}
+
+WebSize MediaControlElementsHelper::GetSizeOrDefault(const Element* element,
+                                                     int default_width,
+                                                     int default_height) {
+  float zoom_factor = 1.0;
+  int width = default_width;
+  int height = default_height;
+
+  if (element) {
+    if (LayoutBox* box = element->GetLayoutBox()) {
+      width = ceil(box->LogicalWidth().Round());
+      height = ceil(box->LogicalHeight().Round());
+    }
+
+    if (element->GetDocument().GetLayoutView())
+      zoom_factor = element->GetDocument().GetLayoutView()->ZoomFactor();
+  }
+
+  return WebSize(ceil(width / zoom_factor), ceil(height / zoom_factor));
 }
 
 }  // namespace blink
