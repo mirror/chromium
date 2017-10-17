@@ -13,6 +13,8 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/callback.h"
+#include "base/cancelable_callback.h"
 #include "base/i18n/char_iterator.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -202,12 +204,18 @@ void InputMethodChromeOS::OnCaretBoundsChanged(const TextInputClient* client) {
     composition_head = caret_rect;
   candidate_window->SetCursorBounds(caret_rect, composition_head);
 
-  gfx::Range text_range;
-  gfx::Range selection_range;
-  base::string16 surrounding_text;
-  if (!client->GetTextRange(&text_range) ||
-      !client->GetTextFromRange(text_range, &surrounding_text) ||
-      !client->GetSelectionRange(&selection_range)) {
+  client->GetTextAndSelectionRange(
+      base::Bind(&InputMethodChromeOS::GetTextAndSelectionRangeCallBack,
+                 base::Unretained(this)));
+}
+
+void InputMethodChromeOS::GetTextAndSelectionRangeCallBack(
+    bool success,
+    const gfx::Range& text_range,
+    const base::string16& surrounding_text,
+    const gfx::Range& selection_range) {
+  LOG(ERROR) << __PRETTY_FUNCTION__ << " -- success: " << success;
+  if (!success) {
     previous_surrounding_text_.clear();
     previous_selection_range_ = gfx::Range::InvalidRange();
     return;
