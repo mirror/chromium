@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c041e198_dd4dc71f",
+        "filename": "content/common/sandbox_linux/sandbox_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-17T16:23:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a217c46c_8b000d53",
+      "range": {
+        "startLine": 283,
+        "startChar": 39,
+        "endLine": 283,
+        "endChar": 48
+      },
+      "revId": "57365575c42ba9334abaafaeedc29b3e47dd6f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dddaa1fe_601fe7e1",
         "filename": "content/common/sandbox_linux/sandbox_linux.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "57365575c42ba9334abaafaeedc29b3e47dd6f8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f34f78f_65cf4c7a",
+        "filename": "content/common/sandbox_linux/sandbox_linux.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-17T16:23:19Z",
+      "side": 1,
+      "message": "The next CL makes this a move-only type, which is why these are the way they are, but yes, I\u0027ll make these const refs for now and lose the moves ...",
+      "parentUuid": "dddaa1fe_601fe7e1",
+      "range": {
+        "startLine": 99,
+        "startChar": 32,
+        "endLine": 99,
+        "endChar": 58
+      },
+      "revId": "57365575c42ba9334abaafaeedc29b3e47dd6f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cb54de8c_36041397",
+        "filename": "content/common/sandbox_linux/sandbox_linux.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-17T16:23:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "495e1030_4b3cca2f",
+      "range": {
+        "startLine": 127,
+        "startChar": 23,
+        "endLine": 127,
+        "endChar": 49
+      },
+      "revId": "57365575c42ba9334abaafaeedc29b3e47dd6f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f4e03f6_dfe77289",
         "filename": "content/common/sandbox_linux/sandbox_linux.h",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b6943b67_cf962ce2",
+        "filename": "content/common/sandbox_linux/sandbox_linux.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-17T16:23:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f4e03f6_dfe77289",
+      "range": {
+        "startLine": 154,
+        "startChar": 29,
+        "endLine": 154,
+        "endChar": 55
+      },
+      "revId": "57365575c42ba9334abaafaeedc29b3e47dd6f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1887d91_2b92f201",
         "filename": "content/gpu/gpu_main.cc",
         "patchSetId": 1
@@ -108,6 +204,24 @@
       "revId": "57365575c42ba9334abaafaeedc29b3e47dd6f8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2958c359_d3bff2b5",
+        "filename": "content/gpu/gpu_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-17T16:23:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1887d91_2b92f201",
+      "revId": "57365575c42ba9334abaafaeedc29b3e47dd6f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
