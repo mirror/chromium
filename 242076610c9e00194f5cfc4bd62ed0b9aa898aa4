@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd00e66e_e934d6a7",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorSession.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T17:13:24Z",
+      "side": 1,
+      "message": "Why do you call back into dispatcher, and not send an error yourself?\nAnother way would be for getCommandName to send error itself, since it\u0027s only used here.\n\nAlso, since you already parse it here once, perhaps getCommandName could operate on protocol::Value instead, so you don\u0027t reparse in line 85?",
+      "revId": "242076610c9e00194f5cfc4bd62ed0b9aa898aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
