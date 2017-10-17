@@ -685,9 +685,10 @@ HeadlessDevToolsManagerDelegate::EmulateNetworkConditions(
     int command_id,
     const base::DictionaryValue* params) {
   // Associate NetworkConditions to context
-  HeadlessBrowserContextImpl* browser_context =
-      static_cast<HeadlessBrowserContextImpl*>(
-          browser_->GetDefaultBrowserContext());
+  std::vector<HeadlessBrowserContext*> browser_contexts =
+      browser_->GetAllBrowserContexts();
+  if (browser_contexts.empty())
+    return CreateSuccessResponse(command_id, nullptr);
   bool offline = false;
   double latency = 0, download_throughput = 0, upload_throughput = 0;
   params->GetBoolean("offline", &offline);
@@ -697,7 +698,13 @@ HeadlessDevToolsManagerDelegate::EmulateNetworkConditions(
   HeadlessNetworkConditions conditions(HeadlessNetworkConditions(
       offline, std::max(latency, 0.0), std::max(download_throughput, 0.0),
       std::max(upload_throughput, 0.0)));
-  browser_context->SetNetworkConditions(conditions);
+  for (std::vector<HeadlessBrowserContext*>::iterator it =
+           browser_contexts.begin();
+       it != browser_contexts.end(); ++it) {
+    HeadlessBrowserContextImpl* context =
+        static_cast<HeadlessBrowserContextImpl*>(*it);
+    context->SetNetworkConditions(conditions);
+  }
   return CreateSuccessResponse(command_id, nullptr);
 }
 
@@ -707,10 +714,17 @@ HeadlessDevToolsManagerDelegate::NetworkDisable(
     int session_id,
     int command_id,
     const base::DictionaryValue* params) {
-  HeadlessBrowserContextImpl* browser_context =
-      static_cast<HeadlessBrowserContextImpl*>(
-          browser_->GetDefaultBrowserContext());
-  browser_context->SetNetworkConditions(HeadlessNetworkConditions());
+  std::vector<HeadlessBrowserContext*> browser_contexts =
+      browser_->GetAllBrowserContexts();
+  if (browser_contexts.empty())
+    return CreateSuccessResponse(command_id, nullptr);
+  for (std::vector<HeadlessBrowserContext*>::iterator it =
+           browser_contexts.begin();
+       it != browser_contexts.end(); ++it) {
+    HeadlessBrowserContextImpl* context =
+        static_cast<HeadlessBrowserContextImpl*>(*it);
+    context->SetNetworkConditions(HeadlessNetworkConditions());
+  }
   return CreateSuccessResponse(command_id, nullptr);
 }
 
