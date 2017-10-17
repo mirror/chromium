@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8e1bf563_31ed6b6e",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-10-17T20:52:26Z",
+      "side": 1,
+      "message": "Ideally, I\u0027d prefer to add it directly to the CQ config: https://chromium.googlesource.com/chromium/src/+/master/infra/config/cq.cfg#66\nand let the builder figure out if it needs to run (so it quits quickly if not). This keeps all the CQ bots in one config, and is easy to review what we test and what we don\u0027t.\n\nThat said, it\u0027s more work to configure the bot properly (unless it already is configured that way), and I\u0027m OK with adding it through presubmit for now, and filing a bug to add it to cq.cfg later.",
+      "parentUuid": "659f82a7_f957dc44",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "bff87798cd2bb311bf96eb94a5c30bd699021f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7459c0d8_1c93e16c",
         "filename": "ios/web/public/BUILD.gn",
         "patchSetId": 4
