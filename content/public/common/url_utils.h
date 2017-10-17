@@ -24,6 +24,10 @@ CONTENT_EXPORT bool IsSavableURL(const GURL& url);
 // about:blank. In these cases, no request needs to be sent.
 bool CONTENT_EXPORT IsURLHandledByNetworkStack(const GURL& url);
 
+// Indicates based on scheme whether a URLLoader for |url| should be obtained
+// for a network URLLoaderFactory or a non-network URLLoaderFactory.
+bool CONTENT_EXPORT ShouldUseNetworkURLLoaderFactory(const GURL& url);
+
 }  // namespace content
 
 #endif  // CONTENT_PUBLIC_COMMON_URL_UTILS_H_

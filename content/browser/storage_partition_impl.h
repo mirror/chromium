@@ -18,7 +18,6 @@
 #include "base/process/process_handle.h"
 #include "content/browser/appcache/chrome_appcache_service.h"
 #include "content/browser/background_sync/background_sync_context.h"
-#include "content/browser/blob_storage/blob_url_loader_factory.h"
 #include "content/browser/bluetooth/bluetooth_allowed_devices_map.h"
 #include "content/browser/broadcast_channel/broadcast_channel_provider.h"
 #include "content/browser/cache_storage/cache_storage_context_impl.h"
@@ -45,7 +44,7 @@ namespace content {
 
 class BackgroundFetchContext;
 class BlobRegistryWrapper;
-class BlobURLLoaderFactory;
+class NonNetworkURLLoaderFactory;
 
 class CONTENT_EXPORT StoragePartitionImpl
     : public StoragePartition,
@@ -123,7 +122,7 @@ class CONTENT_EXPORT StoragePartitionImpl
   PaymentAppContextImpl* GetPaymentAppContext();
   BroadcastChannelProvider* GetBroadcastChannelProvider();
   BluetoothAllowedDevicesMap* GetBluetoothAllowedDevicesMap();
-  BlobURLLoaderFactory* GetBlobURLLoaderFactory();
+  NonNetworkURLLoaderFactory* GetNonNetworkURLLoaderFactory();
   BlobRegistryWrapper* GetBlobRegistry();
 
   // mojom::StoragePartitionService interface.
@@ -259,7 +258,7 @@ class CONTENT_EXPORT StoragePartitionImpl
   scoped_refptr<PaymentAppContextImpl> payment_app_context_;
   scoped_refptr<BroadcastChannelProvider> broadcast_channel_provider_;
   scoped_refptr<BluetoothAllowedDevicesMap> bluetooth_allowed_devices_map_;
-  scoped_refptr<BlobURLLoaderFactory> blob_url_loader_factory_;
+  scoped_refptr<NonNetworkURLLoaderFactory> non_network_url_loader_factory_;
   scoped_refptr<BlobRegistryWrapper> blob_registry_;
 
   // BindingSet for StoragePartitionService, using the process id as the
