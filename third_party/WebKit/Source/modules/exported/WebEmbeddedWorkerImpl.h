@@ -104,6 +104,7 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
   void ResumeStartup() override;
   WebDevToolsAgentClient::WebKitClientMessageLoop* CreateClientMessageLoop()
       override;
+  WebString GetInstrumentationToken() override;
 
   void OnScriptLoaderFinished();
   void StartWorkerThread();
@@ -137,6 +138,7 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
   } pause_after_download_state_;
 
   WaitingForDebuggerState waiting_for_debugger_state_;
+  WebString instrumentation_token_;
 
   service_manager::mojom::blink::InterfaceProviderPtrInfo
       interface_provider_info_;

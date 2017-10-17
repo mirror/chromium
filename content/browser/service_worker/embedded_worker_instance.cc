@@ -89,6 +89,7 @@ void SetupOnUIThread(
     mojom::EmbeddedWorkerInstanceClientAssociatedRequest request,
     ServiceWorkerContextCore* context,
     base::WeakPtr<ServiceWorkerContextCore> weak_context,
+    const base::UnguessableToken& devtools_worker_token,
     SetupProcessCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   auto process_info =
@@ -135,7 +136,7 @@ void SetupOnUIThread(
           process_id, routing_id,
           ServiceWorkerDevToolsManager::ServiceWorkerIdentifier(
               context, weak_context, params->service_worker_version_id,
-              params->script_url, params->scope),
+              params->script_url, params->scope, devtools_worker_token),
           params->is_installed);
   params->worker_devtools_agent_route_id = routing_id;
   // Create DevToolsProxy here to ensure that the WorkerCreated() call is
@@ -361,7 +362,7 @@ class EmbeddedWorkerInstance::StartTask {
                        instance_->context_->process_manager()->AsWeakPtr(),
                        can_use_existing_process, std::move(params),
                        std::move(request_), instance_->context_.get(),
-                       instance_->context_,
+                       instance_->context_, instance_->devtools_worker_token_,
                        base::BindOnce(&StartTask::OnSetupCompleted,
                                       weak_factory_.GetWeakPtr())));
   }
@@ -501,6 +502,7 @@ void EmbeddedWorkerInstance::Start(
   params->embedded_worker_id = embedded_worker_id_;
   params->worker_devtools_agent_route_id = MSG_ROUTING_NONE;
   params->wait_for_debugger = false;
+  params->devtools_worker_token = devtools_worker_token_;
   params->settings.v8_cache_options = GetV8CacheOptions();
 
   mojom::EmbeddedWorkerInstanceClientAssociatedRequest request =
@@ -588,6 +590,7 @@ EmbeddedWorkerInstance::EmbeddedWorkerInstance(
       thread_id_(kInvalidEmbeddedWorkerThreadId),
       instance_host_binding_(this),
       devtools_attached_(false),
+      devtools_worker_token_(base::UnguessableToken::Create()),
       network_accessed_for_script_(false),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
