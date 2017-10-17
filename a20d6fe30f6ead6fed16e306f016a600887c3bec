@@ -22,6 +22,30 @@
       "revId": "a20d6fe30f6ead6fed16e306f016a600887c3bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6140a64c_d2548a0e",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadDispatcher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-17T20:58:24Z",
+      "side": 1,
+      "message": "If you absolutely need to you can use Platform::Current()-\u003eGetBrowserServiceName().\n\nHowever, if possible you can also avoid using the Connector interface by calling Platform::Current()-\u003eGetInterfaceProvider()-\u003eGetInterface() instead.",
+      "parentUuid": "281bed50_2906d2bc",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 22
+      },
+      "revId": "a20d6fe30f6ead6fed16e306f016a600887c3bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
