@@ -10,10 +10,14 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/timer/elapsed_timer.h"
 #include "base/trace_event/trace_event.h"
+#include "cc/base/math_util.h"
+#include "cc/base/simple_enclosed_region.h"
 #include "cc/benchmarks/benchmark_instrumentation.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
 #include "components/viz/common/quads/compositor_frame.h"
+#include "components/viz/common/quads/draw_quad.h"
+#include "components/viz/common/quads/shared_quad_state.h"
 #include "components/viz/service/display/direct_renderer.h"
 #include "components/viz/service/display/display_client.h"
 #include "components/viz/service/display/display_scheduler.h"
@@ -28,6 +32,7 @@
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/vulkan/features.h"
 #include "ui/gfx/buffer_types.h"
+#include "ui/gfx/geometry/rect_conversions.h"
 
 #if BUILDFLAG(ENABLE_VULKAN)
 #include "cc/output/vulkan_renderer.h"
@@ -308,6 +313,14 @@ bool Display::DrawAndSwap() {
   client_->DisplayWillDrawAndSwap(should_draw, frame.render_pass_list);
 
   if (should_draw) {
+    if (settings_.enable_draw_occlusion) {
+      base::ElapsedTimer draw_occlusion_timer;
+      RemoveDrawQuad(&frame);
+      UMA_HISTOGRAM_COUNTS_1000(
+          "Compositing.Display.Draw.Occlusion",
+          draw_occlusion_timer.Elapsed().InMicroseconds());
+    }
+
     bool disable_image_filtering =
         frame.metadata.is_resourceless_software_draw_with_scroll_or_animation;
     if (software_renderer_) {
@@ -449,6 +462,69 @@ void Display::ForceImmediateDrawAndSwapIfPossible() {
 void Display::SetNeedsOneBeginFrame() {
   if (scheduler_)
     scheduler_->SetNeedsOneBeginFrame();
+}
+
+void Display::RemoveDrawQuad(CompositorFrame* frame) {
+  if (frame->render_pass_list.empty()) {
+    return;
+  }
+
+  const SharedQuadState* current_sqs = nullptr;
+  const SharedQuadState* last_sqs = nullptr;
+  cc::SimpleEnclosedRegion* occlusion_rect = new cc::SimpleEnclosedRegion();
+  gfx::RectF rect_to_add;
+  gfx::Rect clipped_rect;
+  gfx::Transform transform;
+  for (const auto& pass : frame->render_pass_list) {
+    // TODO(yiyix): Add filter effects to draw occlusion calculation.
+    if (!pass->filters.IsEmpty() || !pass->background_filters.IsEmpty())
+      continue;
+
+    // Skip render pass that have transparent background.
+    if (pass->has_transparent_background)
+      continue;
+
+    // TODO(yiyix): Perform draw occlusion inside the render pass containing the
+    // copy request.
+    if (!pass->copy_requests.empty())
+      continue;
+
+    for (auto quad = pass->quad_list.begin(); quad != pass->quad_list.end();) {
+      // RenderPassDrawQuad is a special type of DrawQuad where the visible_rect
+      // of shared quad state is not entirely covered by draw quads in it.
+      if (quad->material == ContentDrawQuadBase::Material::RENDER_PASS) {
+        quad++;
+        continue;
+      }
+
+      if (!last_sqs)
+        last_sqs = quad->shared_quad_state;
+
+      if (last_sqs != quad->shared_quad_state && last_sqs->opacity == 1 &&
+          last_sqs->are_contents_opaque) {
+        current_sqs = last_sqs;
+        rect_to_add = gfx::RectF((current_sqs->visible_quad_layer_rect));
+        transform = current_sqs->quad_to_target_transform;
+        transform.FlattenTo2d();
+        transform.TransformRect(&rect_to_add);
+        clipped_rect = gfx::ToEnclosingRect(rect_to_add);
+        if (current_sqs->is_clipped) {
+          clipped_rect.Intersect(current_sqs->clip_rect);
+        }
+        occlusion_rect->Union(clipped_rect);
+      }
+      gfx::RectF draw_quad(quad->visible_rect);
+      transform = quad->shared_quad_state->quad_to_target_transform;
+      transform.FlattenTo2d();
+      transform.TransformRect(&draw_quad);
+      last_sqs = quad->shared_quad_state;
+      if (occlusion_rect->Contains(gfx::ToEnclosedRect(draw_quad))) {
+        quad = pass->quad_list.EraseAndInvalidateAllPointers(quad);
+      } else {
+        quad++;
+      }
+    }
+  }
 }
 
 }  // namespace viz
