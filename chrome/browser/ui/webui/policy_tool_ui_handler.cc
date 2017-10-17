@@ -48,6 +48,9 @@ void PolicyToolUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "resetSession", base::Bind(&PolicyToolUIHandler::HandleResetSession,
                                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "deleteSession", base::Bind(&PolicyToolUIHandler::HandleDeleteSession,
+                                  base::Unretained(this)));
 }
 
 void PolicyToolUIHandler::OnJavascriptDisallowed() {
@@ -253,6 +256,36 @@ void PolicyToolUIHandler::HandleResetSession(const base::ListValue* args) {
       base::BindOnce(&PolicyToolUIHandler::DoUpdateSession,
                      base::Unretained(this), "{}"),
       base::BindOnce(&PolicyToolUIHandler::OnSessionUpdated,
+                     callback_weak_ptr_factory_.GetWeakPtr()));
+}
+
+void PolicyToolUIHandler::OnSessionDeleted(bool is_successful) {
+  if (!is_successful) {
+    ShowErrorMessageToUser("errorLoggingDisabled");
+  } else {
+    ImportFile();
+  }
+}
+
+void PolicyToolUIHandler::HandleDeleteSession(const base::ListValue* args) {
+  DCHECK_EQ(args->GetSize(), 1U);
+  base::FilePath::StringType name =
+      base::FilePath::FromUTF8Unsafe(args->GetList()[0].GetString()).value();
+
+  if (!IsValidSessionName(name)) {
+    ShowErrorMessageToUser("errorDeleteFailed");
+    return;
+  }
+
+  // Clear the current session name to ensure that we force a reload of the
+  // active session. This is important in case the user has deleted the current
+  // active session, in which case a new one is selected.
+  session_name_.clear();
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
+      base::BindOnce(&base::DeleteFile, GetSessionPath(name),
+                     /*recursive=*/false),
+      base::BindOnce(&PolicyToolUIHandler::OnSessionDeleted,
                      callback_weak_ptr_factory_.GetWeakPtr()));
 }
 
