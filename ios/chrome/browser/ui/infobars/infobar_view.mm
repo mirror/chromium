@@ -614,9 +614,9 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
       requiredHeight += heightOfButtons + kButtonMargin;
   }
   // Take into account the account the bottom safe area.
-  // The top inset should be 0 because the infobar is bottom aligned and does
-  // not reach anywhere near the top of the screen.
-  DCHECK(SafeAreaInsetsForView(self).top == 0);
+  // The top inset is ignored because at rest (i.e. not during animations) the
+  // infobar is aligned to the bottom of the screen, and thus should not have
+  // its top intersect whith any safe area.
   CGFloat bottomSafeAreaInset = SafeAreaInsetsForView(self).bottom;
   requiredHeight += bottomSafeAreaInset;
 
