@@ -151,6 +151,18 @@ class AppMenuModel : public ui::SimpleMenuModel,
   // Calculates |zoom_label_| in response to a zoom change.
   void UpdateZoomControls();
 
+ protected:
+  // Appends everything needed for the clipboard menu: a menu break, the
+  // clipboard menu content and the finalizing menu break.
+  void CreateCutCopyPasteMenu();
+
+  // Add a menu item for the browser action icons.
+  void CreateActionToolbarOverflowMenu();
+
+  // Appends everything needed for the zoom menu: a menu break, then the zoom
+  // menu content and then another menu break.
+  void CreateZoomMenu();
+
  private:
   class HelpMenuModel;
   // Testing constructor used for mocking.
@@ -164,17 +176,6 @@ class AppMenuModel : public ui::SimpleMenuModel,
   // Examples: Extension permissions and sign in errors.
   // Returns a boolean indicating whether any menu items were added.
   bool AddGlobalErrorMenuItems();
-
-  // Appends everything needed for the clipboard menu: a menu break, the
-  // clipboard menu content and the finalizing menu break.
-  void CreateCutCopyPasteMenu();
-
-  // Add a menu item for the browser action icons.
-  void CreateActionToolbarOverflowMenu();
-
-  // Appends everything needed for the zoom menu: a menu break, then the zoom
-  // menu content and then another menu break.
-  void CreateZoomMenu();
 
   void OnZoomLevelChanged(const content::HostZoomMap::ZoomLevelChange& change);
 

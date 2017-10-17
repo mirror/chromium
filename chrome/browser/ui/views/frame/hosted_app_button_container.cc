@@ -5,7 +5,7 @@
 #include "chrome/browser/ui/views/frame/hosted_app_button_container.h"
 
 #include "chrome/app/vector_icons/vector_icons.h"
-#include "chrome/browser/ui/toolbar/app_menu_model.h"
+#include "chrome/browser/ui/extensions/hosted_app_menu_model.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/toolbar/app_menu.h"
 #include "ui/gfx/color_palette.h"
@@ -41,7 +41,7 @@ class HostedAppMenuButton : public views::MenuButton,
     Browser* browser = browser_view_->browser();
     menu_.reset(new AppMenu(browser, 0));
     // TODO(calamity): Use custom menu model here.
-    menu_model_.reset(new AppMenuModel(browser_view_, browser));
+    menu_model_.reset(new HostedAppMenuModel(browser_view_, browser));
     menu_->Init(menu_model_.get());
 
     menu_->RunMenu(this);
@@ -53,7 +53,7 @@ class HostedAppMenuButton : public views::MenuButton,
   // App model and menu.
   // Note that the menu should be destroyed before the model it uses, so the
   // menu should be listed later.
-  std::unique_ptr<AppMenuModel> menu_model_;
+  std::unique_ptr<HostedAppMenuModel> menu_model_;
   std::unique_ptr<AppMenu> menu_;
 
   DISALLOW_COPY_AND_ASSIGN(HostedAppMenuButton);
