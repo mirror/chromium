@@ -2242,9 +2242,24 @@ void Document::UpdateStyle() {
     if (document_element->ShouldCallRecalcStyle(change)) {
       TRACE_EVENT0("blink,blink_style", "Document::recalcStyle");
       Element* viewport_defining = ViewportDefiningElement();
-      document_element->RecalcStyle(change);
+      Element* recalc_root = style_recalc_ancestors_.PopElement();
+      if (!recalc_root)
+        recalc_root = document_element;
+      const HeapVector<Member<Node>> ancestors =
+          style_recalc_ancestors_.AncestorVector();
+      for (auto node : ancestors) {
+        if (node.Get()->IsElementNode())
+          resolver.GetSelectorFilter().PushParent(ToElement(*node));
+      }
+      recalc_root->RecalcStyle(change);
       if (viewport_defining != ViewportDefiningElement())
         ViewportDefiningElementDidChange();
+      for (auto it = ancestors.rbegin(); it != ancestors.rend(); ++it) {
+        Node* node = *it;
+        node->ClearChildNeedsStyleRecalc();
+        if (node->IsElementNode())
+          resolver.GetSelectorFilter().PopParent(ToElement(*node));
+      }
     }
     GetStyleEngine().MarkForWhitespaceReattachment();
     PropagateStyleToViewport();
@@ -2256,6 +2271,7 @@ void Document::UpdateStyle() {
     }
   }
   GetStyleEngine().ClearWhitespaceReattachSet();
+  style_recalc_ancestors_.Clear();
 
   View()->UpdateCountersAfterStyleChange();
   View()->RecalcOverflowAfterStyleChange();
@@ -7104,6 +7120,7 @@ DEFINE_TRACE(Document) {
   visitor->Trace(parser_);
   visitor->Trace(context_features_);
   visitor->Trace(style_sheet_list_);
+  visitor->Trace(style_recalc_ancestors_);
   visitor->Trace(document_timing_);
   visitor->Trace(media_query_matcher_);
   visitor->Trace(scripted_animation_controller_);

@@ -809,9 +809,14 @@ inline void Node::SetStyleChange(StyleChangeType change_type) {
 }
 
 void Node::MarkAncestorsWithChildNeedsStyleRecalc() {
-  for (ContainerNode* p = ParentOrShadowHostNode();
-       p && !p->ChildNeedsStyleRecalc(); p = p->ParentOrShadowHostNode())
+  ContainerNode* parent = ParentOrShadowHostNode();
+  ContainerNode* p = parent;
+  for (; p && !p->ChildNeedsStyleRecalc(); p = p->ParentOrShadowHostNode())
     p->SetChildNeedsStyleRecalc();
+  if (IsDocumentNode())
+    parent = ToContainerNode(this);
+  if (parent)
+    GetDocument().StyleRecalcAncestors().Reduce(p ? p : parent);
   GetDocument().ScheduleLayoutTreeUpdateIfNeeded();
 }
 

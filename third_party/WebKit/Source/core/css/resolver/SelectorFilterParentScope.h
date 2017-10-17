@@ -12,7 +12,7 @@
 
 namespace blink {
 
-// Maintains the parent element stack (and bloom filter) inside recalcStyle.
+// Maintains the parent element stack (and bloom filter) inside RecalcStyle.
 class SelectorFilterParentScope final {
   STACK_ALLOCATED();
 

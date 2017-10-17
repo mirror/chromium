@@ -1422,6 +1422,7 @@ jumbo_source_set("unit_tests") {
     "dom/ScriptedAnimationControllerTest.cpp",
     "dom/ScriptedIdleTaskControllerTest.cpp",
     "dom/ShadowDOMV0Test.cpp",
+    "dom/ShadowIncludingAncestorsTest.cpp",
     "dom/SpaceSplitStringTest.cpp",
     "dom/StaticRangeTest.cpp",
     "dom/SuspendableObjectTest.cpp",

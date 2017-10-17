@@ -50,6 +50,7 @@
 #include "core/dom/LiveNodeListRegistry.h"
 #include "core/dom/MutationObserver.h"
 #include "core/dom/ScriptedIdleTaskController.h"
+#include "core/dom/ShadowIncludingAncestors.h"
 #include "core/dom/SynchronousMutationNotifier.h"
 #include "core/dom/SynchronousMutationObserver.h"
 #include "core/dom/Text.h"
@@ -468,6 +469,10 @@ class CORE_EXPORT Document : public ContainerNode,
   StyleEngine& GetStyleEngine() {
     DCHECK(style_engine_.Get());
     return *style_engine_.Get();
+  }
+
+  ShadowIncludingAncestors& StyleRecalcAncestors() {
+    return style_recalc_ancestors_;
   }
 
   bool GotoAnchorNeededAfterStylesheetsLoad() {
@@ -1568,6 +1573,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   TraceWrapperMember<StyleEngine> style_engine_;
   TraceWrapperMember<StyleSheetList> style_sheet_list_;
+  ShadowIncludingAncestors style_recalc_ancestors_;
 
   Member<FormController> form_controller_;
 
