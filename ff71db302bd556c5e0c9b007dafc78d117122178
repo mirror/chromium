@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7ede7a9_fc7e38b7",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_overview.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-17T21:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0452944_ab7296e2",
+      "revId": "ff71db302bd556c5e0c9b007dafc78d117122178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27e71614_ed29e246",
         "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_overview.md",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "d6f4c379_4093a265",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_overview.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-17T21:10:25Z",
+      "side": 1,
+      "message": "Done.\n\nThank you very much for the recommendation!",
+      "parentUuid": "29ecb2b0_500774fb",
+      "revId": "ff71db302bd556c5e0c9b007dafc78d117122178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64b574bf_4b45ca86",
         "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_overview.md",
         "patchSetId": 1
@@ -67,6 +103,24 @@
       "revId": "ff71db302bd556c5e0c9b007dafc78d117122178",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd72224_2278016a",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_overview.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-17T21:10:25Z",
+      "side": 1,
+      "message": "I wasn\u0027t aware of this, and it hasn\u0027t prevented me from doing my job yet :)\n\nCan you please give me a pointer to some reading about the subtlety? I can add it in a follow-up if it seems important or interesting.",
+      "parentUuid": "64b574bf_4b45ca86",
+      "revId": "ff71db302bd556c5e0c9b007dafc78d117122178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
