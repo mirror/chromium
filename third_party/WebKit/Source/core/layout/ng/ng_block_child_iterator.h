@@ -28,7 +28,7 @@ class CORE_EXPORT NGBlockChildIterator {
   // Returns the next input node which should be laid out, along with its
   // respective break token.
   struct Entry;
-  Entry NextChild();
+  Entry NextChild(NGBreakToken* previous_inline_break_token = nullptr);
 
  private:
   NGLayoutInputNode child_;
