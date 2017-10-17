@@ -94,6 +94,53 @@
     },
     {
       "key": {
+        "uuid": "d79511ec_40da7952",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-17T17:18:00Z",
+      "side": 1,
+      "message": "Some people much prefer this pattern, even in tests.  I have a slight preference for it, but I\u0027ve received enough comments either way that I generally just live with whatever the CL author does.",
+      "parentUuid": "1c689886_95c51bb7",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e9d3b9_cc47887d",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-17T17:18:00Z",
+      "side": 1,
+      "message": "Since these aren\u0027t related to maximum addressible amount of memory, these should probably just be ints.",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 9
+      },
+      "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1ad328b_102364f4",
         "filename": "components/safe_browsing/browser/base_parallel_resource_throttle_unittest.cc",
         "patchSetId": 5
