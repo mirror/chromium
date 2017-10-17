@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a67cd32_8636500a",
+        "filename": "chromeos/components/tether/ble_scanner_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-17T23:50:48Z",
+      "side": 1,
+      "message": "If the Factory is public, perhaps the constructor should be protected or private?",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 16
+      },
+      "revId": "d74563ff35d0012ee8071722c896f300e3837339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4313b3_62564317",
+        "filename": "chromeos/components/tether/ble_scanner_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-17T23:50:48Z",
+      "side": 1,
+      "message": "nit: end with a colon :",
+      "range": {
+        "startLine": 66,
+        "startChar": 31,
+        "endLine": 66,
+        "endChar": 39
+      },
+      "revId": "d74563ff35d0012ee8071722c896f300e3837339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
