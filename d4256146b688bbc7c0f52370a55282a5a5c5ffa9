@@ -34,6 +34,24 @@
       "revId": "d4256146b688bbc7c0f52370a55282a5a5c5ffa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "536c8d93_6d100c0e",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-17T23:14:54Z",
+      "side": 1,
+      "message": "I\u0027d prefer to not log the data (end users \u003e developers) in a follow-up. IIUC, we can update the histogram description to explain that not receiving data is normal.",
+      "parentUuid": "11773a02_761fc3fd",
+      "revId": "d4256146b688bbc7c0f52370a55282a5a5c5ffa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
