@@ -6,6 +6,7 @@
 interface RTCRtpReceiver {
     readonly attribute MediaStreamTrack track;
     sequence<RTCRtpContributingSource> getContributingSources();
+    sequence<RTCRtpSynchronizationSource> getSynchronizationSources();
 
     // TODO(hbos): Support every member of the spec. https://crbug.com/700916
 };
