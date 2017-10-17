@@ -22,6 +22,30 @@
       "revId": "be451cf2624a6422c57be9307289255f549836c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ed0e18_b3e88cea",
+        "filename": "components/cronet/tools/hide_symbols.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-17T00:04:35Z",
+      "side": 0,
+      "message": "Fixed",
+      "parentUuid": "e7c65d7d_e1e0516f",
+      "range": {
+        "startLine": 89,
+        "startChar": 45,
+        "endLine": 89,
+        "endChar": 0
+      },
+      "revId": "be451cf2624a6422c57be9307289255f549836c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
