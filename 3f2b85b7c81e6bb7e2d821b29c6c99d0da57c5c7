@@ -22,6 +22,30 @@
       "revId": "3f2b85b7c81e6bb7e2d821b29c6c99d0da57c5c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a616a7a_a22d1bb9",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-17T22:29:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e63cc074_16a020e9",
+      "range": {
+        "startLine": 333,
+        "startChar": 53,
+        "endLine": 333,
+        "endChar": 0
+      },
+      "revId": "3f2b85b7c81e6bb7e2d821b29c6c99d0da57c5c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
