@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1504c36_16c29951",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-17T21:38:54Z",
+      "side": 1,
+      "message": "I considered that and was flip-flopping on which would be best. I\u0027ll send a new patch with it that way.",
+      "parentUuid": "38f9a73b_4144e003",
+      "revId": "10247e9f7a08b9d83ca42e98e199c68d14323b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b76fc469_1b1a1f29",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-17T21:15:13Z",
       "side": 1,
       "message": "Please also add the following checks:\n  EXPECT_EQ(0, bytes_read());\n  EXPECT_FALSE(offline_page_tab_helper()-\u003eGetOfflinePageForTest());",
+      "revId": "10247e9f7a08b9d83ca42e98e199c68d14323b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7d0012_6c20566f",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-17T21:38:54Z",
+      "side": 1,
+      "message": "I\u0027ll send a new patch in a new CL.",
+      "parentUuid": "b76fc469_1b1a1f29",
       "revId": "10247e9f7a08b9d83ca42e98e199c68d14323b8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
