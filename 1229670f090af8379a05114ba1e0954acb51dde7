@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6b1b8e7_78f0d932",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-17T21:33:51Z",
+      "side": 0,
+      "message": "Can we just leave these here? Then we don\u0027t need the DEPS change. It\u0027s fine that the definitions are in a weird place -- that\u0027s how these files work :/",
+      "revId": "1229670f090af8379a05114ba1e0954acb51dde7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
