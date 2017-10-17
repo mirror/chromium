@@ -400,6 +400,30 @@
       "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "830db261_3da5713a",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-17T22:08:44Z",
+      "side": 1,
+      "message": "So, I was using CalculatePreferredSize() to get the window size. However it was returning height \u003d 0, and the dialog was not being properly rendered. This is much simpler now.",
+      "parentUuid": "d2a3aefd_8eb7731e",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
