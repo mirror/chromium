@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f0dc8b7_d1e41dd8",
+        "filename": "third_party/opus/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-17T00:09:18Z",
+      "side": 1,
+      "message": "nit: Do we want a TODO here with a link to the bug, so it\u0027s obvious why !is_fuchsia?",
+      "revId": "edcacfb60d76383863df1bc37bd426b5ce4fc50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
