@@ -129,8 +129,9 @@ void CSSFontWeightInterpolationType::ApplyStandardPropertyValue(
     const InterpolableValue& interpolable_value,
     const NonInterpolableValue*,
     StyleResolverState& state) const {
-  state.GetFontBuilder().SetWeight(
-      DoubleToFontWeight(ToInterpolableNumber(interpolable_value).Value()));
+  state.GetFontBuilder().SetWeight(FontSelectionValue(
+      clampTo(ToInterpolableNumber(interpolable_value).Value(),
+              MinWeightValue(), MaxWeightValue())));
 }
 
 }  // namespace blink
