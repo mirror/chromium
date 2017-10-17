@@ -16,6 +16,24 @@
       "revId": "8fe572ea5b15f29c5710150e57399db98194e6af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f630b3a_2543ed9d",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-17T14:58:56Z",
+      "side": 1,
+      "message": "I thought I saw a comment elsewhere that these are here because they can never be allowed to change after the initial load. ie. the library has already been loaded so changing them wouldn\u0027t do anything anyway (with current implementation)",
+      "parentUuid": "7de66185_63454966",
+      "revId": "8fe572ea5b15f29c5710150e57399db98194e6af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
