@@ -45,19 +45,11 @@ class MirroringScreenPositionClient
                             gfx::Point* point) override {
     const aura::Window* root = window->GetRootWindow();
     aura::Window::ConvertPointToTarget(window, root, point);
-    const display::Display& display =
-        controller_->GetDisplayForRootWindow(root);
-    const gfx::Point display_origin = display.bounds().origin();
-    point->Offset(display_origin.x(), display_origin.y());
   }
 
   void ConvertPointFromScreen(const aura::Window* window,
                               gfx::Point* point) override {
     const aura::Window* root = window->GetRootWindow();
-    const display::Display& display =
-        controller_->GetDisplayForRootWindow(root);
-    const gfx::Point display_origin = display.bounds().origin();
-    point->Offset(-display_origin.x(), -display_origin.y());
     aura::Window::ConvertPointToTarget(root, window, point);
   }
 
@@ -123,7 +115,8 @@ MirrorWindowController::MirroringHostInfo::MirroringHostInfo() {}
 MirrorWindowController::MirroringHostInfo::~MirroringHostInfo() {}
 
 MirrorWindowController::MirrorWindowController()
-    : multi_display_mode_(display::DisplayManager::EXTENDED),
+    : current_event_targeter_src_host_(nullptr),
+      multi_display_mode_(display::DisplayManager::EXTENDED),
       screen_position_client_(new MirroringScreenPositionClient(this)) {}
 
 MirrorWindowController::~MirrorWindowController() {
