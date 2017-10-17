@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "744db5b9_836149ca",
+        "filename": "gpu/perftests/run_all_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-17T18:18:49Z",
+      "side": 1,
+      "message": "Removed leftover cruft.",
+      "revId": "afc7d5d7a4deedcb0978280191923ae785bdb11c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd93740_d58def11",
+        "filename": "gpu/perftests/run_all_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-17T18:18:49Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be necessary, because the message loop already does this.",
+      "revId": "afc7d5d7a4deedcb0978280191923ae785bdb11c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
