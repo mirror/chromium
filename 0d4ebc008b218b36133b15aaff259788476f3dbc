@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "128ccd68_4ce0d1dc",
+        "filename": "components/viz/service/display/software_output_device_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:48:07Z",
+      "side": 1,
+      "message": "These are platform-specific impls of interfaces injected into display, so they should be in display_embedder. I think display/ should remain platform-agnostic. Would \u003c3 some prose in the README.md to that effect.",
+      "revId": "0d4ebc008b218b36133b15aaff259788476f3dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
