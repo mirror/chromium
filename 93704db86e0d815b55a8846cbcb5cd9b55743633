@@ -22,6 +22,30 @@
       "revId": "93704db86e0d815b55a8846cbcb5cd9b55743633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72242cf_9288e5c5",
+        "filename": "services/service_manager/sandbox/mac/renderer.sb",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-10-17T16:57:42Z",
+      "side": 1,
+      "message": "If statements in tinyscheme only accept two parts: what to evaluate if true, and what to valuate if false. So without the |begin| statement, it winds up evaluating (allow file-read-data (subpath \"/usr/share/zoneinfo.default\") for 10.12.\n\nIt could be re-written as:\n\n(if (param-true? macos-1013)\n  (allow file-read-metadata (path \"/foo\"))\n(if (param-true? macos-1013)\n  (allow file-read-path (path \"/baz\"))\n(if (not (param-true? macos-1013))\n  (allow file-read-path \"/usr/share/zoneinfo\"))\n\nBut I don\u0027t like how verbose and repetitive that is.",
+      "parentUuid": "0f4f9469_f5a7d213",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 8
+      },
+      "revId": "93704db86e0d815b55a8846cbcb5cd9b55743633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
