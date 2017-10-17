@@ -781,11 +781,12 @@ bool ImageData::ImageDataInCanvasColorSettings(
                                         converted_pixels);
 }
 
-void ImageData::Trace(Visitor* visitor) {
+DEFINE_TRACE(ImageData) {
   visitor->Trace(data_);
   visitor->Trace(data_u16_);
   visitor->Trace(data_f32_);
   visitor->Trace(data_union_);
+  ScriptWrappable::Trace(visitor);
 }
 
 ImageData::ImageData(const IntSize& size,

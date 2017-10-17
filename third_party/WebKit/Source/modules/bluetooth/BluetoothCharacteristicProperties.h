@@ -6,7 +6,6 @@
 #define BluetoothCharacteristicProperties_h
 
 #include "platform/bindings/ScriptWrappable.h"
-#include "platform/heap/Handle.h"
 
 namespace blink {
 
@@ -14,8 +13,7 @@ namespace blink {
 // through a BluetoothCharacteristicProperties object. These properties express
 // what operations are valid on the characteristic.
 class BluetoothCharacteristicProperties final
-    : public GarbageCollected<BluetoothCharacteristicProperties>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -31,8 +29,6 @@ class BluetoothCharacteristicProperties final
   bool authenticatedSignedWrites() const;
   bool reliableWrite() const;
   bool writableAuxiliaries() const;
-
-  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit BluetoothCharacteristicProperties(uint32_t properties);

@@ -38,6 +38,7 @@ String WorkerNavigator::userAgent() const {
 }
 
 DEFINE_TRACE(WorkerNavigator) {
+  ScriptWrappable::Trace(visitor);
   Supplementable<WorkerNavigator>::Trace(visitor);
 }
 

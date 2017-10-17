@@ -62,6 +62,7 @@ bool StyleMedia::matchMedium(const String& query) const {
 }
 
 DEFINE_TRACE(StyleMedia) {
+  ScriptWrappable::Trace(visitor);
   ContextClient::Trace(visitor);
 }
 

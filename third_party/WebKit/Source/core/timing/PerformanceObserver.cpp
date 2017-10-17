@@ -124,11 +124,12 @@ void PerformanceObserver::Deliver() {
 }
 
 DEFINE_TRACE(PerformanceObserver) {
-  ContextClient::Trace(visitor);
   visitor->Trace(execution_context_);
   visitor->Trace(callback_);
   visitor->Trace(performance_);
   visitor->Trace(performance_entries_);
+  ScriptWrappable::Trace(visitor);
+  ContextClient::Trace(visitor);
 }
 
 DEFINE_TRACE_WRAPPERS(PerformanceObserver) {

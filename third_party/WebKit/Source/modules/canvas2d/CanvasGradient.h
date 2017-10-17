@@ -38,8 +38,7 @@ namespace blink {
 class ExceptionState;
 
 class MODULES_EXPORT CanvasGradient final
-    : public GarbageCollectedFinalized<CanvasGradient>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -58,8 +57,6 @@ class MODULES_EXPORT CanvasGradient final
   void addColorStop(float value, const String& color, ExceptionState&);
 
   bool IsZeroSize() const { return is_zero_size_; }
-
-  DEFINE_INLINE_TRACE() {}
 
  private:
   CanvasGradient(const FloatPoint& p0, const FloatPoint& p1);

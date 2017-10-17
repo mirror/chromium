@@ -16,8 +16,7 @@ class ScriptPromise;
 class ScriptState;
 
 class ServiceWorkerClients final
-    : public GarbageCollected<ServiceWorkerClients>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -28,8 +27,6 @@ class ServiceWorkerClients final
   ScriptPromise matchAll(ScriptState*, const ClientQueryOptions&);
   ScriptPromise openWindow(ScriptState*, const String& url);
   ScriptPromise claim(ScriptState*);
-
-  DEFINE_INLINE_TRACE() {}
 
  private:
   ServiceWorkerClients();

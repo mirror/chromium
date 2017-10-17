@@ -84,6 +84,7 @@ ScriptValue PerformanceNavigation::toJSONForBinding(
 }
 
 DEFINE_TRACE(PerformanceNavigation) {
+  ScriptWrappable::Trace(visitor);
   DOMWindowClient::Trace(visitor);
 }
 

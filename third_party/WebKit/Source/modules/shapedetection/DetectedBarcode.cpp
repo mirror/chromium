@@ -42,6 +42,7 @@ DetectedBarcode::DetectedBarcode(String raw_value,
 DEFINE_TRACE(DetectedBarcode) {
   visitor->Trace(bounding_box_);
   visitor->Trace(corner_points_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

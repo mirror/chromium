@@ -187,7 +187,7 @@ template <>
 inline void DOMWrapperMap<ScriptWrappable>::PersistentValueMapTraits::Dispose(
     v8::Isolate*,
     v8::Global<v8::Object>,
-    ScriptWrappable*) {
+    ImplKeyType) {
   WrapperTypeInfo::WrapperDestroyed();
 }
 

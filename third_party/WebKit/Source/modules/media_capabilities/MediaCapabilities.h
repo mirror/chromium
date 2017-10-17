@@ -16,8 +16,7 @@ class ScriptPromise;
 class ScriptState;
 
 class MediaCapabilities final
-    : public GarbageCollectedFinalized<MediaCapabilities>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -25,8 +24,6 @@ class MediaCapabilities final
 
   ScriptPromise decodingInfo(ScriptState*, const MediaDecodingConfiguration&);
   ScriptPromise encodingInfo(ScriptState*, const MediaEncodingConfiguration&);
-
-  DECLARE_VIRTUAL_TRACE();
 };
 
 }  // namespace blink

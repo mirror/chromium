@@ -147,6 +147,7 @@ void SyncManager::GetRegistrationsCallback(
 
 DEFINE_TRACE(SyncManager) {
   visitor->Trace(registration_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

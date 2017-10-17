@@ -26,8 +26,7 @@ class AudioWorkletProcessorDefinition;
 // This is constructed and destroyed on a worker thread, and all methods also
 // must be called on the worker thread.
 class MODULES_EXPORT AudioWorkletProcessor
-    : public GarbageCollectedFinalized<AudioWorkletProcessor>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

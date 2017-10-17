@@ -284,6 +284,7 @@ DEFINE_TRACE(Database) {
   visitor->Trace(sqlite_database_);
   visitor->Trace(database_authorizer_);
   visitor->Trace(creation_callback_);
+  ScriptWrappable::Trace(visitor);
 }
 
 DEFINE_TRACE_WRAPPERS(Database) {

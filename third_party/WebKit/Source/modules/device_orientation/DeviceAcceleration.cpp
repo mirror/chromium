@@ -33,6 +33,7 @@ DeviceAcceleration::DeviceAcceleration(
 
 DEFINE_TRACE(DeviceAcceleration) {
   visitor->Trace(acceleration_);
+  ScriptWrappable::Trace(visitor);
 }
 
 double DeviceAcceleration::x(bool& is_null) const {

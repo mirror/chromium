@@ -45,6 +45,8 @@ namespace blink {
 // For example, see SVGFEDropShadowElement::stdDeviation{X,Y}()
 class SVGAnimatedIntegerOptionalInteger
     : public SVGAnimatedPropertyCommon<SVGIntegerOptionalInteger> {
+  DEFINE_WRAPPERTYPEINFO_UNREACHABLE();
+
  public:
   static SVGAnimatedIntegerOptionalInteger* Create(
       SVGElement* context_element,

@@ -154,6 +154,7 @@ DEFINE_TRACE(ResizeObserver) {
   visitor->Trace(observations_);
   visitor->Trace(active_observations_);
   visitor->Trace(controller_);
+  ScriptWrappable::Trace(visitor);
 }
 
 DEFINE_TRACE_WRAPPERS(ResizeObserver) {

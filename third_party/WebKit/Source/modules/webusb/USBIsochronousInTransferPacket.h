@@ -13,8 +13,7 @@
 namespace blink {
 
 class USBIsochronousInTransferPacket final
-    : public GarbageCollectedFinalized<USBIsochronousInTransferPacket>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -32,7 +31,10 @@ class USBIsochronousInTransferPacket final
   String status() const { return status_; }
   DOMDataView* data() const { return data_; }
 
-  DEFINE_INLINE_TRACE() { visitor->Trace(data_); }
+  DEFINE_INLINE_TRACE() {
+    visitor->Trace(data_);
+    ScriptWrappable::Trace(visitor);
+  }
 
  private:
   USBIsochronousInTransferPacket(const String& status, DOMDataView* data)

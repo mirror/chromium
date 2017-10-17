@@ -220,6 +220,7 @@ ScriptPromise Bluetooth::requestDevice(ScriptState* script_state,
 
 DEFINE_TRACE(Bluetooth) {
   visitor->Trace(device_instance_map_);
+  ScriptWrappable::Trace(visitor);
 }
 
 Bluetooth::Bluetooth() {}

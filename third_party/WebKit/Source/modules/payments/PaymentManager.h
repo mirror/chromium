@@ -17,8 +17,7 @@ class PaymentInstruments;
 class ServiceWorkerRegistration;
 
 class MODULES_EXPORT PaymentManager final
-    : public GarbageCollectedFinalized<PaymentManager>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
   WTF_MAKE_NONCOPYABLE(PaymentManager);
 

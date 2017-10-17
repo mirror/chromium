@@ -33,13 +33,11 @@
 
 #include "core/svg/SVGPreserveAspectRatioTearOff.h"
 #include "core/svg/properties/SVGAnimatedProperty.h"
-#include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
 
 class SVGAnimatedPreserveAspectRatio
-    : public SVGAnimatedProperty<SVGPreserveAspectRatio>,
-      public ScriptWrappable {
+    : public SVGAnimatedProperty<SVGPreserveAspectRatio> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -47,11 +45,6 @@ class SVGAnimatedPreserveAspectRatio
       SVGElement* context_element,
       const QualifiedName& attribute_name) {
     return new SVGAnimatedPreserveAspectRatio(context_element, attribute_name);
-  }
-
-  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
-    SVGAnimatedProperty<SVGPreserveAspectRatio>::TraceWrappers(visitor);
-    ScriptWrappable::TraceWrappers(visitor);
   }
 
  protected:

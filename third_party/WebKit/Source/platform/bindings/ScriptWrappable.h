@@ -48,11 +48,13 @@ namespace blink {
 // a ScriptWrappable.  v8::Object as platform object is called "wrapper object".
 // The wrapper object for the main world is stored in ScriptWrappable.  Wrapper
 // objects for other worlds are stored in DOMWrapperMap.
-class PLATFORM_EXPORT ScriptWrappable : public TraceWrapperBase {
+class PLATFORM_EXPORT ScriptWrappable : public GarbageCollectedFinalized<ScriptWrappable>, public TraceWrapperBase {
   WTF_MAKE_NONCOPYABLE(ScriptWrappable);
 
  public:
-  ScriptWrappable() {}
+  virtual ~ScriptWrappable() = default;
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   bool IsScriptWrappable() const override { return true; }
 
@@ -144,6 +146,9 @@ class PLATFORM_EXPORT ScriptWrappable : public TraceWrapperBase {
   //  ScriptWrappableVisitor::markWrapper(ScriptWrappable*, v8::Isolate*)
   void MarkWrapper(const ScriptWrappableVisitor*) const;
 
+ protected:
+  ScriptWrappable() = default;
+
  private:
   // These classes are exceptionally allowed to use MainWorldWrapper().
   friend class DOMDataStore;
@@ -181,6 +186,17 @@ class PLATFORM_EXPORT ScriptWrappable : public TraceWrapperBase {
  private:                                                      \
   static const WrapperTypeInfo& wrapper_type_info_
 
+// 
+#define DEFINE_WRAPPERTYPEINFO_UNREACHABLE()                   \
+ public:                                                       \
+  const WrapperTypeInfo* GetWrapperTypeInfo() const override { \
+    NOTREACHED();                                              \
+    return nullptr;                                            \
+  }                                                            \
+                                                               \
+ private:                                                      \
+  typedef void end_of_define_wrappertypeinfo_unreachable_t
+
 // Declares 'wrapperTypeInfo' method without definition.
 //
 // This macro is used for template classes. e.g. DOMTypedArray<>.
@@ -196,7 +212,7 @@ class PLATFORM_EXPORT ScriptWrappable : public TraceWrapperBase {
   const WrapperTypeInfo* GetWrapperTypeInfo() const override; \
                                                               \
  private:                                                     \
-  typedef void end_of_define_wrappertypeinfo_not_reached_t
+  typedef void end_of_declare_wrappertypeinfo_t
 
 }  // namespace blink
 

@@ -139,6 +139,7 @@ int Screen::availWidth() const {
 }
 
 DEFINE_TRACE(Screen) {
+  ScriptWrappable::Trace(visitor);
   DOMWindowClient::Trace(visitor);
   Supplementable<Screen>::Trace(visitor);
 }

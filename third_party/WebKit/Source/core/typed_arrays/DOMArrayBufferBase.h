@@ -13,8 +13,7 @@
 namespace blink {
 
 class CORE_EXPORT DOMArrayBufferBase
-    : public GarbageCollectedFinalized<DOMArrayBufferBase>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
  public:
   virtual ~DOMArrayBufferBase() {}
 
@@ -32,8 +31,6 @@ class CORE_EXPORT DOMArrayBufferBase
     NOTREACHED();
     return v8::Local<v8::Object>();
   }
-
-  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   explicit DOMArrayBufferBase(RefPtr<WTF::ArrayBuffer> buffer)

@@ -22,8 +22,7 @@ class NFCPushOptions;
 using NFCPushMessage = StringOrArrayBufferOrNFCMessage;
 class NFCWatchOptions;
 
-class NFC final : public GarbageCollectedFinalized<NFC>,
-                  public ScriptWrappable,
+class NFC final : public ScriptWrappable,
                   public PageVisibilityObserver,
                   public ContextLifecycleObserver,
                   public device::mojom::blink::NFCClient {

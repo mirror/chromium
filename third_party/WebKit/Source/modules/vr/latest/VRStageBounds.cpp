@@ -8,6 +8,7 @@ namespace blink {
 
 DEFINE_TRACE(VRStageBounds) {
   visitor->Trace(geometry_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink
