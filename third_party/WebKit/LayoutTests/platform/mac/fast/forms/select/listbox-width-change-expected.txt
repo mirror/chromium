@@ -7,8 +7,8 @@ layer at (0,0) size 800x600
         text run at (0,0) width 665: "This tests that when a list box's options get updated, the list box will recalculate its width, and relayout. "
       LayoutBR {BR} at (0,0) size 0x0
       LayoutText {#text} at (0,0) size 0x0
-layer at (8,26) size 186x59 clip at (9,27) size 173x57
-  LayoutListBox {SELECT} at (0,18) size 186.39x58.75 [bgcolor=#FFFFFF] [border: (1px solid #999999)]
-    LayoutBlockFlow {OPTION} at (1,1) size 173.39x14.19
-      LayoutText {#text} at (2,0) size 170x13
-        text run at (2,0) width 170: "This text should fit in the list box"
+layer at (8,26) size 176x59 clip at (9,27) size 163x57
+  LayoutListBox {SELECT} at (0,18) size 176.30x58.75 [bgcolor=#FFFFFF] [border: (1px solid #999999)]
+    LayoutBlockFlow {OPTION} at (1,1) size 163.30x14.19
+      LayoutText {#text} at (2,0) size 160x13
+        text run at (2,0) width 160: "This text should fit in the list box"

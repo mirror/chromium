@@ -18,12 +18,12 @@
         },
         {
           "object": "LayoutText #text",
-          "rect": [146, 11, 43, 13],
+          "rect": [146, 11, 41, 13],
           "reason": "full"
         },
         {
           "object": "LayoutText #text",
-          "rect": [11, 11, 43, 13],
+          "rect": [11, 11, 41, 13],
           "reason": "full"
         }
       ]

@@ -1,8 +1,8 @@
 Name: harfbuzz-ng
 Short Name: harfbuzz-ng
 URL: http://harfbuzz.org
-Version: 1.5.1
-Date: 20170905
+Version: 1.6.0
+Date: 20171013
 Security Critical: yes
 License: MIT
 License File: COPYING
@@ -18,3 +18,8 @@ hb-fallback-shape.cc) from the tarball's src folder over to src, then checking
 for removed or added files and update our build recipes in BUILD.gn and
 harfbuzz.gyp accordingly, update the NEWS file from HarfBuzz' release notes, and
 bump the version numbers in README.chromium.
+
+Locally patching the default CoreText font size to 18 (which it was before the
+roll) in order to avoid layout test breakage with this setting until the
+subsequent CL lands, which sets calls hb_font_set_ptem to set the ptem size on
+hb_font.

@@ -4,10 +4,10 @@ layer at (0,0) size 800x600
   LayoutBlockFlow {HTML} at (0,0) size 800x600
     LayoutBlockFlow {BODY} at (8,8) size 784x584
       LayoutBlockFlow {FORM} at (0,0) size 784x18
-        LayoutButton {INPUT} at (0,0) size 40.25x18 [bgcolor=#FFFFFF]
-          LayoutBlockFlow (anonymous) at (8,2) size 24.25x13
-            LayoutText {#text} at (0,0) size 25x13
-              text run at (0,0) width 25: "form"
+        LayoutButton {INPUT} at (0,0) size 39.06x18 [bgcolor=#FFFFFF]
+          LayoutBlockFlow (anonymous) at (8,2) size 23.06x13
+            LayoutText {#text} at (0,0) size 24x13
+              text run at (0,0) width 24: "form"
         LayoutText {#text} at (0,0) size 0x0
       LayoutBlockFlow {DIV} at (0,34) size 784x36
         LayoutText {#text} at (0,0) size 773x36
