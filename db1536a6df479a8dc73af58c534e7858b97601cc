@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d49df63_d44c5f9a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-17T02:12:53Z",
+      "side": 1,
+      "message": "nit: s/Bug:/Bug: 388681/\n\nWe use the bug[1] for tracking temporary Range removal.\n\n[1] http://crbug.com/388681 void registering temporary Range object for updating on the Document",
+      "revId": "db1536a6df479a8dc73af58c534e7858b97601cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da1db9e5_a788a26d",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-17T02:12:53Z",
+      "side": 1,
+      "message": "Following tests are crashed:\n- editing/execCommand/remove-foramt-mixed-editable-crash.html\nCheck failed: IsOffsetInAnchor()\n- editing/style/make-text-writing-direction-inline-win-crash.html\nheck failed: start_position_ \u003c\u003d end_position_ (DIV (editable)@offsetInAnchor[2] vs. DIV (editable)@offsetInAnchor[1])\n- remove-foramt-mixed-editable-crash-crash.html\n\nSee https://storage.googleapis.com/chromium-layout-test-archives/mac_chromium_rel_ng/566711/layout-test-results/results.html\nfor details.",
+      "revId": "db1536a6df479a8dc73af58c534e7858b97601cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
