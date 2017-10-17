@@ -16,13 +16,13 @@ namespace {
 
 const double kDuckVolume = 0.2f;
 
+}  // anonymous namespace
+
 bool ShouldDuckFlash() {
   return base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
              switches::kEnableAudioFocus) ==
          switches::kEnableAudioFocusDuckFlash;
 }
-
-}  // anonymous namespace
 
 const int PepperPlayerDelegate::kPlayerId = 0;
 

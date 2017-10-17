@@ -12,6 +12,8 @@
 
 namespace content {
 
+bool ShouldDuckFlash();
+
 class RenderFrameHost;
 
 class PepperPlayerDelegate : public MediaSessionPlayerObserver {

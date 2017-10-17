@@ -15,16 +15,6 @@
 
 namespace content {
 
-namespace {
-
-bool ShouldDuckFlash() {
-  return base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-             switches::kEnableAudioFocus) ==
-         switches::kEnableAudioFocusDuckFlash;
-}
-
-}  // anonymous namespace
-
 PepperPlaybackObserver::PepperPlaybackObserver(WebContents* contents)
     : contents_(contents) {}
 
