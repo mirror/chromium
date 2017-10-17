@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25eb3997_5d48952a",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-10-17T15:11:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bf63467_fea365a8",
+      "revId": "c1db97f9ee28e6a75944fa4991ca3e49cbe11d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e6cfcc1_354c6b2a",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-16T21:42:38Z",
       "side": 1,
       "message": "Why do we need to pause the navigation and resume it? Cant we skip this part and wait go directly to response.WaitForRequest?",
+      "revId": "c1db97f9ee28e6a75944fa4991ca3e49cbe11d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf2c479_3e5edefb",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-10-17T15:11:44Z",
+      "side": 1,
+      "message": "In the description of TestNavigationManager, it is stated that: \"Navigations are paused automatically before hitting the network\". It means that its internal NavigationThrottle will return DEFER in the OnWillStartRequest() event. I need to resume the navigation, otherwise the network request will not be made. respones.WaitForRequest() will wait forever.",
+      "parentUuid": "1e6cfcc1_354c6b2a",
       "revId": "c1db97f9ee28e6a75944fa4991ca3e49cbe11d2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
