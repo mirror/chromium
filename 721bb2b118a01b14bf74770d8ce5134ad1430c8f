@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5f1afd2_9c2d4c6e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-17T13:11:56Z",
+      "side": 1,
+      "message": "I believe that we need to plumb RendererSchedulerImpl::OnTraceLogEnabled through WebFrameScheduler to these TraceableStates.",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 16
+      },
+      "revId": "721bb2b118a01b14bf74770d8ce5134ad1430c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
