@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a00a7c56_17171526",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-17T01:16:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49dd7eb1_19c3926d",
+      "range": {
+        "startLine": 19,
+        "startChar": 40,
+        "endLine": 19,
+        "endChar": 45
+      },
+      "revId": "7b18b3579aa5b269b807e86a3eb7d78f9496c914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a45ee9d_f9b465c2",
         "filename": "base/memory/protected_memory.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "7b18b3579aa5b269b807e86a3eb7d78f9496c914",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be1390a_15f8b90d",
+        "filename": "base/memory/protected_memory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-17T01:16:00Z",
+      "side": 1,
+      "message": "Originally I was hoping to see what the separate implementations would look like before factoring them out, but on reconsideration it seems like that\u0027s just as easy to do after splitting them up.",
+      "parentUuid": "1a45ee9d_f9b465c2",
+      "range": {
+        "startLine": 18,
+        "startChar": 12,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "7b18b3579aa5b269b807e86a3eb7d78f9496c914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "258d8a68_b33f6b09",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-17T01:16:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29ae03d6_01232b7c",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "7b18b3579aa5b269b807e86a3eb7d78f9496c914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1d85c9f_b0e1990a",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "7b18b3579aa5b269b807e86a3eb7d78f9496c914",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5fd3bf1_e26d0a6a",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-17T01:16:00Z",
+      "side": 1,
+      "message": "I\u0027ve added more, let me know if you think it\u0027s still missing anything.",
+      "parentUuid": "f1d85c9f_b0e1990a",
+      "range": {
+        "startLine": 7,
+        "startChar": 35,
+        "endLine": 7,
+        "endChar": 65
+      },
+      "revId": "7b18b3579aa5b269b807e86a3eb7d78f9496c914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
