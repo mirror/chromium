@@ -16,6 +16,24 @@
       "revId": "8a6e182deec7aab9fc4aa3fec47ab1d94355eb86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3247da3_e35ade55",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-17T18:47:49Z",
+      "side": 1,
+      "message": "It\u0027s probably redundant, but it wouldn\u0027t hurt (belts and suspenders!).\n\nI can do that in a follow up CL to keep things clear.",
+      "parentUuid": "27770bb2_3c1e9a4b",
+      "revId": "8a6e182deec7aab9fc4aa3fec47ab1d94355eb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
