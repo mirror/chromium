@@ -22,6 +22,30 @@
       "revId": "7807b4b85128482980eb269db8efa39cf897c0c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3697adf_69c14833",
+        "filename": "device/geolocation/location_arbitrator_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-17T22:26:11Z",
+      "side": 1,
+      "message": "Cool! Thanks for pointing this out. I\u0027ve made the switch.",
+      "parentUuid": "b4fb3ca2_2b8cb484",
+      "range": {
+        "startLine": 204,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 26
+      },
+      "revId": "7807b4b85128482980eb269db8efa39cf897c0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
