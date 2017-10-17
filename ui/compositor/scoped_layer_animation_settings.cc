@@ -16,14 +16,13 @@ namespace {
 
 const int kDefaultTransitionDurationMs = 200;
 
-class CacheRenderSurfaceObserver : public ui::ImplicitAnimationObserver,
-                                   public ui::LayerObserver {
+class ScopedLayerAnimationObserver : public ui::ImplicitAnimationObserver,
+                                     public ui::LayerObserver {
  public:
-  CacheRenderSurfaceObserver(ui::Layer* layer) : layer_(layer) {
+  ScopedLayerAnimationObserver(ui::Layer* layer) : layer_(layer) {
     layer_->AddObserver(this);
-    layer_->AddCacheRenderSurfaceRequest();
   }
-  ~CacheRenderSurfaceObserver() override {
+  ~ScopedLayerAnimationObserver() override {
     if (layer_)
       layer_->RemoveObserver(this);
   }
@@ -31,10 +30,10 @@ class CacheRenderSurfaceObserver : public ui::ImplicitAnimationObserver,
   // ui::ImplicitAnimationObserver overrides:
   void OnImplicitAnimationsCompleted() override {
     // If animation finishes before |layer_| is destoyed, we will reset the
-    // cache and remove |this| from the |layer_| observer list when deleting
-    // |this|.
+    // operation applied on the layer and remove |this| from the |layer_|
+    // observer list when deleting |this|.
     if (layer_) {
-      layer_->RemoveCacheRenderSurfaceRequest();
+      RemoveLayerOperationRequest();
       layer_->GetAnimator()->RemoveAndDestroyOwnedObserver(this);
     }
   }
@@ -42,100 +41,92 @@ class CacheRenderSurfaceObserver : public ui::ImplicitAnimationObserver,
   // ui::LayerObserver overrides:
   void LayerDestroyed(ui::Layer* layer) override {
     // If the animation is still going past layer destruction then we want the
-    // layer too keep being cached until the animation has finished. We will
-    // defer deleting |this| until the animation finishes.
+    // layer to keep being applied the operation until the animation has
+    // finished. We will defer deleting |this| until the animation finishes.
     layer_->RemoveObserver(this);
     layer_ = nullptr;
   }
 
+  virtual void AddLayerOperationRequest() {}
+
+  virtual void RemoveLayerOperationRequest() {}
+
+ protected:
+  ui::Layer* layer() { return layer_; }
+
  private:
   ui::Layer* layer_;
 
+  DISALLOW_COPY_AND_ASSIGN(ScopedLayerAnimationObserver);
+};
+
+class CacheRenderSurfaceObserver : public ScopedLayerAnimationObserver {
+ public:
+  CacheRenderSurfaceObserver(ui::Layer* layer)
+      : ScopedLayerAnimationObserver(layer) {}
+  ~CacheRenderSurfaceObserver() override = default;
+
+  // ScopedLayerAnimationObserver:
+  void AddLayerOperationRequest() override {
+    layer()->AddCacheRenderSurfaceRequest();
+  }
+  void RemoveLayerOperationRequest() override {
+    layer()->RemoveCacheRenderSurfaceRequest();
+  }
+
+ private:
   DISALLOW_COPY_AND_ASSIGN(CacheRenderSurfaceObserver);
 };
 
-class DeferredPaintObserver : public ui::ImplicitAnimationObserver,
-                              public ui::LayerObserver {
+class DeferredPaintObserver : public ScopedLayerAnimationObserver {
  public:
-  DeferredPaintObserver(ui::Layer* layer) : layer_(layer) {
-    layer_->AddObserver(this);
-    layer_->AddDeferredPaintRequest();
-  }
-  ~DeferredPaintObserver() override {
-    if (layer_)
-      layer_->RemoveObserver(this);
-  }
+  DeferredPaintObserver(ui::Layer* layer)
+      : ScopedLayerAnimationObserver(layer) {}
+  ~DeferredPaintObserver() override = default;
 
-  // ui::ImplicitAnimationObserver overrides:
-  void OnImplicitAnimationsCompleted() override {
-    // If animation finishes before |layer_| is destoyed, we will remove the
-    // request of deferred painting and remove |this| from the |layer_|
-    // observer list when deleting |this|.
-    if (layer_) {
-      layer_->RemoveDeferredPaintRequest();
-      layer_->GetAnimator()->RemoveAndDestroyOwnedObserver(this);
-    }
+  // ScopedLayerAnimationObserver:
+  void AddLayerOperationRequest() override {
+    layer()->AddDeferredPaintRequest();
   }
-
-  // ui::LayerObserver overrides:
-  void LayerDestroyed(ui::Layer* layer) override {
-    // If the animation is still going past layer destruction then we want the
-    // layer too keep being deferred paint until the animation has finished. We
-    // will defer deleting |this| until the animation finishes.
-    layer_->RemoveObserver(this);
-    layer_ = nullptr;
+  void RemoveLayerOperationRequest() override {
+    layer()->RemoveDeferredPaintRequest();
   }
 
  private:
-  ui::Layer* layer_;
-
   DISALLOW_COPY_AND_ASSIGN(DeferredPaintObserver);
 };
 
-class TrilinearFilteringObserver : public ui::ImplicitAnimationObserver,
-                                   public ui::LayerObserver {
+class TrilinearFilteringObserver : public ScopedLayerAnimationObserver {
  public:
-  TrilinearFilteringObserver(ui::Layer* layer) : layer_(layer) {
-    layer_->AddObserver(this);
-    layer_->AddTrilinearFilteringRequest();
-  }
-  ~TrilinearFilteringObserver() override {
-    if (layer_)
-      layer_->RemoveObserver(this);
-  }
+  TrilinearFilteringObserver(ui::Layer* layer)
+      : ScopedLayerAnimationObserver(layer) {}
+  ~TrilinearFilteringObserver() override = default;
 
-  // ui::ImplicitAnimationObserver overrides:
-  void OnImplicitAnimationsCompleted() override {
-    // If animation finishes before |layer_| is destoyed, we will remove the
-    // trilinear filtering request and remove |this| from the |layer_| observer
-    // list when deleting |this|.
-    if (layer_) {
-      layer_->RemoveTrilinearFilteringRequest();
-      layer_->GetAnimator()->RemoveAndDestroyOwnedObserver(this);
-    }
+  // ScopedLayerAnimationObserver:
+  void AddLayerOperationRequest() override {
+    layer()->AddTrilinearFilteringRequest();
   }
-
-  // ui::LayerObserver overrides:
-  void LayerDestroyed(ui::Layer* layer) override {
-    // If the animation is still going past layer destruction then we want the
-    // layer too keep being filtered until the animation has finished. We will
-    // defer deleting |this| until the animation finishes.
-    layer_->RemoveObserver(this);
-    layer_ = nullptr;
+  void RemoveLayerOperationRequest() override {
+    layer()->RemoveTrilinearFilteringRequest();
   }
 
  private:
-  ui::Layer* layer_;
-
   DISALLOW_COPY_AND_ASSIGN(TrilinearFilteringObserver);
 };
+
+void AddLayerOperationRequestAndAddToSettings(
+    ui::ScopedLayerAnimationSettings* settings,
+    std::unique_ptr<ScopedLayerAnimationObserver> observer) {
+  observer->AddLayerOperationRequest();
+  settings->AddObserver(observer.get());
+  settings->GetAnimator()->AddOwnedObserver(std::move(observer));
+}
 
 void AddDeferredPaintObserverRecursive(
     ui::Layer* layer,
     ui::ScopedLayerAnimationSettings* settings) {
   auto observer = std::make_unique<DeferredPaintObserver>(layer);
-  settings->AddObserver(observer.get());
-  settings->GetAnimator()->AddOwnedObserver(std::move(observer));
+  AddLayerOperationRequestAndAddToSettings(settings, std::move(observer));
   for (auto* child : layer->children())
     AddDeferredPaintObserverRecursive(child, settings);
 }
@@ -217,8 +208,7 @@ ScopedLayerAnimationSettings::GetPreemptionStrategy() const {
 void ScopedLayerAnimationSettings::CacheRenderSurface() {
   auto observer = std::make_unique<CacheRenderSurfaceObserver>(
       animator_->delegate()->GetLayer());
-  AddObserver(observer.get());
-  animator_->AddOwnedObserver(std::move(observer));
+  AddLayerOperationRequestAndAddToSettings(this, std::move(observer));
 }
 
 void ScopedLayerAnimationSettings::DeferPaint() {
@@ -228,8 +218,7 @@ void ScopedLayerAnimationSettings::DeferPaint() {
 void ScopedLayerAnimationSettings::TrilinearFiltering() {
   auto observer = std::make_unique<TrilinearFilteringObserver>(
       animator_->delegate()->GetLayer());
-  AddObserver(observer.get());
-  animator_->AddOwnedObserver(std::move(observer));
+  AddLayerOperationRequestAndAddToSettings(this, std::move(observer));
 }
 
 }  // namespace ui
