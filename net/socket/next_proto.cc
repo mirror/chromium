@@ -3,8 +3,21 @@
 // found in the LICENSE file.
 
 #include "net/socket/next_proto.h"
+#include "base/metrics/field_trial.h"
+#include "base/strings/string_util.h"
 
 namespace net {
+
+namespace {
+
+bool IsIetfQuicAltSvcFormatSupported() {
+  const std::string group_name =
+      base::FieldTrialList::FindFullName("SupportIetfQuicAltSvcFormat");
+  return base::StartsWith(group_name, "Enabled",
+                          base::CompareCase::INSENSITIVE_ASCII);
+}
+
+}  // namespace
 
 NextProto NextProtoFromString(base::StringPiece proto_string) {
   if (proto_string == "http1.1" || proto_string == "http/1.1")
@@ -12,7 +25,8 @@ NextProto NextProtoFromString(base::StringPiece proto_string) {
   if (proto_string == "h2") {
     return kProtoHTTP2;
   }
-  if (proto_string == "quic")
+  if (proto_string == "quic" ||
+      (proto_string == "hq" && IsIetfQuicAltSvcFormatSupported()))
     return kProtoQUIC;
 
   return kProtoUnknown;

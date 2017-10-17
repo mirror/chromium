@@ -27,6 +27,12 @@ NET_EXPORT std::unique_ptr<base::Value> QuicRequestNetLogCallback(
     SpdyPriority priority,
     NetLogCaptureMode capture_mode);
 
+// Parses |alt_svc_versions| into a QuicTransportVersionVector and removes
+// all entries that aren't found in |supported_versions|.
+NET_EXPORT QuicTransportVersionVector FilterSupportedAltSvcVersions(
+    const SpdyAltSvcWireFormat::AlternativeService& quic_alt_svc,
+    const QuicTransportVersionVector& supported_versions);
+
 }  // namespace net
 
 #endif  // NET_QUIC_CHROMIUM_QUIC_HTTP_UTILS_H_

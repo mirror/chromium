@@ -9,11 +9,19 @@
 #include <limits>
 
 #include "base/logging.h"
+#include "base/metrics/field_trial.h"
 #include "net/spdy/platform/api/spdy_string_utils.h"
 
 namespace net {
 
 namespace {
+
+bool IsIetfQuicAltSvcFormatSupported() {
+  const std::string group_name =
+      base::FieldTrialList::FindFullName("SupportIetfQuicAltSvcFormat");
+  return base::StartsWith(group_name, "Enabled",
+                          base::CompareCase::INSENSITIVE_ASCII);
+}
 
 template <class T>
 bool ParsePositiveIntegerImpl(SpdyStringPiece::const_iterator c,
@@ -78,7 +86,8 @@ bool SpdyAltSvcWireFormat::ParseHeaderFieldValue(
     }
     // Check for IETF format for advertising QUIC:
     // hq=":443";quic=51303338;quic=51303334
-    const bool is_ietf_format_quic = (protocol_id.compare("hq") == 0);
+    const bool is_ietf_format_quic =
+        (protocol_id.compare("hq") == 0) && IsIetfQuicAltSvcFormatSupported();
     c = percent_encoded_protocol_id_end;
     if (c == value.end()) {
       return false;
@@ -223,7 +232,8 @@ SpdyString SpdyAltSvcWireFormat::SerializeHeaderFieldValue(
       value.push_back(',');
     }
     // Check for IETF format for advertising QUIC.
-    const bool is_ietf_format_quic = (altsvc.protocol_id.compare("hq") == 0);
+    const bool is_ietf_format_quic = (altsvc.protocol_id.compare("hq") == 0) &&
+                                     IsIetfQuicAltSvcFormatSupported();
     // Percent escape protocol id according to
     // http://tools.ietf.org/html/rfc7230#section-3.2.6.
     for (char c : altsvc.protocol_id) {
