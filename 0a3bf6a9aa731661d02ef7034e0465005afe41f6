@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a749f56_58b2c06d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T20:49:00Z",
+      "side": 1,
+      "message": "I\u0027d change this whole block to a bunch of:\n\nthis._appendGroup(Common.UIString(\u0027message\u0027), Console.ConsoleFilter.allLevelsFilterValue(), UI.Icon.create(\u0027largeicon-navigator-folder\u0027));\n\n... and let _appendGroup do the work.",
+      "revId": "0a3bf6a9aa731661d02ef7034e0465005afe41f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add69778_103a1f53",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T20:49:00Z",
+      "side": 1,
+      "message": "Let\u0027s remove ConsoleFilter.incrementCounters.",
+      "revId": "0a3bf6a9aa731661d02ef7034e0465005afe41f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c73814c_8a3b2057",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T20:49:00Z",
+      "side": 1,
+      "message": "Let\u0027s make counter not change on filter, and move this back.",
+      "revId": "0a3bf6a9aa731661d02ef7034e0465005afe41f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
