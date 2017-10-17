@@ -233,7 +233,8 @@ public class AwActivityTestRule extends ActivityTestRule<AwTestRunnerActivity> {
             final boolean isBase64Encoded, final String charset) throws Exception {
         int currentCallCount = onPageFinishedHelper.getCallCount();
         ThreadUtils.runOnUiThreadBlocking(
-                () -> awContents.loadUrl(LoadUrlParams.createLoadDataParams(
+                ()
+                        -> awContents.loadUrl(LoadUrlParams.createLoadDataParams(
                                 data, mimeType, isBase64Encoded, charset)));
         onPageFinishedHelper.waitForCallback(
                 currentCallCount, 1, WAIT_TIMEOUT_MS, TimeUnit.MILLISECONDS);
@@ -261,7 +262,8 @@ public class AwActivityTestRule extends ActivityTestRule<AwTestRunnerActivity> {
     public void loadDataWithBaseUrlAsync(final AwContents awContents, final String data,
             final String mimeType, final boolean isBase64Encoded, final String baseUrl,
             final String historyUrl) throws Throwable {
-        runOnUiThread(() -> awContents.loadDataWithBaseURL(baseUrl, data, mimeType,
+        runOnUiThread(()
+                              -> awContents.loadDataWithBaseURL(baseUrl, data, mimeType,
                                       isBase64Encoded ? "base64" : null, historyUrl));
     }
 
@@ -310,8 +312,10 @@ public class AwActivityTestRule extends ActivityTestRule<AwTestRunnerActivity> {
     // as visual state callback only indicates that *something* has appeared in WebView.
     public void waitForPixelColorAtCenterOfView(final AwContents awContents,
             final AwTestContainerView testContainerView, final int expectedColor) throws Exception {
-        pollUiThread(() -> GraphicsTestUtils.getPixelColorAtCenterOfView(
-                    awContents, testContainerView) == expectedColor);
+        pollUiThread(()
+                             -> GraphicsTestUtils.getPixelColorAtCenterOfView(
+                                        awContents, testContainerView)
+                        == expectedColor);
     }
 
     public AwTestContainerView createAwTestContainerView(final AwContentsClient awContentsClient) {
@@ -374,8 +378,10 @@ public class AwActivityTestRule extends ActivityTestRule<AwTestRunnerActivity> {
 
     public AwTestContainerView createAwTestContainerViewOnMainSync(final AwContentsClient client,
             final boolean supportsLegacyQuirks, final TestDependencyFactory testDependencyFactory) {
-        return ThreadUtils.runOnUiThreadBlockingNoException(() -> createAwTestContainerView(
-                    client, supportsLegacyQuirks, testDependencyFactory));
+        return ThreadUtils.runOnUiThreadBlockingNoException(
+                ()
+                        -> createAwTestContainerView(
+                                client, supportsLegacyQuirks, testDependencyFactory));
     }
 
     public void destroyAwContentsOnMainSync(final AwContents awContents) {

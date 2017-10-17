@@ -173,10 +173,11 @@ using namespace WTF;
     void* operator new(size_t, void*) = delete;
 
 #define DISALLOW_NEW_EXCEPT_PLACEMENT_NEW() \
-    public:                                 \
-    void* operator new(size_t, void*);      \
-    private:                                \
-    void* operator new(size_t) = delete;
+ public:                                    \
+  void* operator new(size_t, void*);        \
+                                            \
+ private:                                   \
+  void* operator new(size_t) = delete;
 
 #define GC_PLUGIN_IGNORE(bug)                           \
     __attribute__((annotate("blink_gc_plugin_ignore")))

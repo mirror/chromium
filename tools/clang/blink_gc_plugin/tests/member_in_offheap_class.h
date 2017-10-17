@@ -37,11 +37,13 @@ private:
 };
 
 class InlineObject {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    void Trace(Visitor*);
-private:
-    Member<HeapObject> m_obj; // OK
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+
+ public:
+  void Trace(Visitor*);
+
+ private:
+  Member<HeapObject> m_obj;  // OK
 };
 
 }

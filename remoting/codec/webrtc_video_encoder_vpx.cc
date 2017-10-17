@@ -326,12 +326,12 @@ void WebrtcVideoEncoderVpx::Encode(std::unique_ptr<webrtc::DesktopFrame> frame,
       codec_.get(), image_.get(), 0, params.duration.InMicroseconds(),
       (params.key_frame) ? VPX_EFLAG_FORCE_KF : 0, VPX_DL_REALTIME);
   if (ret != VPX_CODEC_OK) {
-      LOG(ERROR) << "Encoding error: " << vpx_codec_err_to_string(ret) << "\n"
-                 << "Details: " << vpx_codec_error(codec_.get()) << "\n"
-                 << vpx_codec_error_detail(codec_.get());
-      // TODO(zijiehe): A more exact error type is preferred.
-      std::move(done).Run(EncodeResult::UNKNOWN_ERROR, nullptr);
-      return;
+    LOG(ERROR) << "Encoding error: " << vpx_codec_err_to_string(ret) << "\n"
+               << "Details: " << vpx_codec_error(codec_.get()) << "\n"
+               << vpx_codec_error_detail(codec_.get());
+    // TODO(zijiehe): A more exact error type is preferred.
+    std::move(done).Run(EncodeResult::UNKNOWN_ERROR, nullptr);
+    return;
   }
 
   if (!lossless_encode_) {
