@@ -265,6 +265,7 @@ source_set("blink_headers") {
     "platform/WebMemoryCoordinator.h",
     "platform/WebMemoryPressureLevel.h",
     "platform/WebMemoryState.h",
+    "platform/WebMemoryThreadState.h",
     "platform/WebMenuSourceType.h",
     "platform/WebMixedContent.h",
     "platform/WebMixedContentContextType.h",

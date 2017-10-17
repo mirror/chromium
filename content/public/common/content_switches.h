@@ -263,6 +263,7 @@ CONTENT_EXPORT extern const char kValidateInputEventStream[];
 CONTENT_EXPORT extern const char kWaitForDebuggerChildren[];
 CONTENT_EXPORT extern const char kZygoteCmdPrefix[];
 CONTENT_EXPORT extern const char kZygoteProcess[];
+CONTENT_EXPORT extern const char kForceMemoryPressureThresholdsMb[];
 
 #if BUILDFLAG(ENABLE_WEBRTC)
 CONTENT_EXPORT extern const char kDisableWebRtcEncryption[];
