@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47fc2949_f3c94fa7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-17T02:01:10Z",
+      "side": 1,
+      "message": "Grate! (^_^)b",
+      "revId": "fe724dc760d8fbc3d194a2ab53f7a2a4e865e959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b158854_d4c7b2cf",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-17T02:01:10Z",
+      "side": 1,
+      "message": "nit: s/id\u003d\u0027target\u0027//",
+      "revId": "fe724dc760d8fbc3d194a2ab53f7a2a4e865e959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ac2a72_363bb489",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-17T02:01:10Z",
+      "side": 1,
+      "message": "Could you record following cases?\n\u003cpre\u003efoo   |  bar\u003c/pre\u003e\n\u003cpre\u003efoo\\n|bar\u003c/pre\u003e",
+      "revId": "fe724dc760d8fbc3d194a2ab53f7a2a4e865e959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
