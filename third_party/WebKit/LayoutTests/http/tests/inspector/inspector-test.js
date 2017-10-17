@@ -170,6 +170,7 @@ self.DataGridTestRunner = InspectorTest;
 self.DeviceModeTestRunner = InspectorTest;
 self.ElementsTestRunner = InspectorTest;
 self.ExtensionsTestRunner = InspectorTest;
+self.HeapSnapshotTestRunner = InspectorTest;
 self.LayersTestRunner = InspectorTest;
 self.NetworkTestRunner = InspectorTest;
 self.PerformanceTestRunner = InspectorTest;

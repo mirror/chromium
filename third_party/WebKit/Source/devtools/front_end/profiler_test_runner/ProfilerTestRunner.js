@@ -7,14 +7,14 @@
  * @suppress {accessControls}
  */
 
-ProfilerTestRunner.startProfilerTest = function(callback) {
+HeapSnapshotTestRunner.startProfilerTest = function(callback) {
   TestRunner.addResult('Profiler was enabled.');
   TestRunner.addSniffer(UI.panels.js_profiler, '_addProfileHeader', ProfilerTestRunner._profileHeaderAdded, true);
   TestRunner.addSniffer(Profiler.ProfileView.prototype, 'refresh', ProfilerTestRunner._profileViewRefresh, true);
   TestRunner.safeWrap(callback)();
 };
 
-ProfilerTestRunner.completeProfilerTest = function() {
+HeapSnapshotTestRunner.completeProfilerTest = function() {
   TestRunner.addResult('');
   TestRunner.addResult('Profiler was disabled.');
   TestRunner.completeTest();
@@ -25,7 +25,7 @@ ProfilerTestRunner.runProfilerTestSuite = function(testSuite) {
 
   function runner() {
     if (!testSuiteTests.length) {
-      ProfilerTestRunner.completeProfilerTest();
+      HeapSnapshotTestRunner.completeProfilerTest();
       return;
     }
 
@@ -37,7 +37,7 @@ ProfilerTestRunner.runProfilerTestSuite = function(testSuite) {
     TestRunner.safeWrap(nextTest)(runner, runner);
   }
 
-  ProfilerTestRunner.startProfilerTest(runner);
+  HeapSnapshotTestRunner.startProfilerTest(runner);
 };
 
 ProfilerTestRunner.showProfileWhenAdded = function(title) {
