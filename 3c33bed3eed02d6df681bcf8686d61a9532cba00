@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b5f5782_ca423f5f",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-17T18:33:29Z",
+      "side": 1,
+      "message": "Seems that my original code is broken...\n\nAnyway, let\u0027s remove this check, otherwise it can\u0027t jump out of first-level directory. For example, it can\u0027t jump out from \u0027accessibility\u0027 (of depth 0) into \u0027css3/filters\u0027 (of depth 1).",
+      "revId": "3c33bed3eed02d6df681bcf8686d61a9532cba00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
