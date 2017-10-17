@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad0bfa04_3ddae4af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManagerToolbar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-17T00:10:23Z",
+      "side": 1,
+      "message": "The Incognito preference is a little different. It is int value and has 3 states. Seems like this can\u0027t be accessed by simple getBoolean:/\n\nhttps://cs.chromium.org/chromium/src/chrome/common/pref_names.cc?l\u003d388",
+      "parentUuid": "156012d6_eb32efef",
+      "range": {
+        "startLine": 102,
+        "startChar": 13,
+        "endLine": 102,
+        "endChar": 69
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d53c2b5_8adf9e6d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd5df93_46a89a45",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-17T00:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d53c2b5_8adf9e6d",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 9
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4c63cade_5038c3be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-17T00:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f12073c7_c330b910",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 53
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dab2a277_38bf0f49",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "dded11e6_64c14186",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-17T00:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dab2a277_38bf0f49",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 19
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a6b1ab7_8157ae36",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-16T20:58:22Z",
       "side": 1,
       "message": "The idea here is that we have one PrefChangeRegistrar for each client that wants to be notified of changes? So there may be multiple active PrefChangeRegistrar\u0027s?",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 40,
+        "endChar": 82
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45291f8e_7ea43134",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-17T00:10:23Z",
+      "side": 1,
+      "message": "Yes we would have one PrefChangeRegistrar for each client, so there will be multiple active PrefChangeRegistar if there are multiple clients. This matches the functionality of the native PrefChangeRegistrar since the native one doesn\u0027t support multiple observers to the same preference in a single PrefChangeRegistrar either. \n\nhttps://cs.chromium.org/chromium/src/components/prefs/pref_change_registrar.cc?l\u003d37",
+      "parentUuid": "5a6b1ab7_8157ae36",
       "range": {
         "startLine": 39,
         "startChar": 15,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c679a2a4_c149e22d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-17T00:10:23Z",
+      "side": 1,
+      "message": "Wow great to know! But I have questions on how we should map char* to presumably int in enum. \n\nIf we have both the enum and the char* array we currently have, we can easily get pref name but then again we need to keep sync the array and the c++ enum. So is it worth having this c++ enum?\n\nCan\u0027t think of a better way to map them...",
+      "parentUuid": "98f8c5be_38a1715f",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 57
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "406f5889_a063a201",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2017-10-16T20:58:22Z",
       "side": 1,
       "message": "Can we set this, then wait for the callbacks we expect to occur when the preference state changes? That will give us some extra coverage over the registrar.\n\nAlso, Yoland was seeing flakiness without the !mRecyclerView.isAnimating() checks.. if the adapter items change as a result of this call, we may need another wait after this.",
+      "range": {
+        "startLine": 705,
+        "startChar": 10,
+        "endLine": 705,
+        "endChar": 84
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c16413_000a98cd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-17T00:10:23Z",
+      "side": 1,
+      "message": "Sounds good to wait for onPreferenceChange.\n\nI\u0027ve added a !mRecyclerView.isAnimating() above to wait for recycler view changes when signed in, and the one below now serves for setting supervised user. Do we still need another one?",
+      "parentUuid": "406f5889_a063a201",
       "range": {
         "startLine": 705,
         "startChar": 10,
