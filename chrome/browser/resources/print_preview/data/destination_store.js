@@ -1111,6 +1111,15 @@ cr.define('print_preview', function() {
       if (origin !== print_preview.DestinationOrigin.PRIVET) {
         var key = this.getDestinationKey_(origin, id, '');
         dest = this.destinationMap_[key];
+        if (dest &&
+            (origin === print_preview.DestinationOrigin.LOCAL ||
+             origin === print_preview.DestinationOrigin.CROS) &&
+            dest.capabilities) {
+          // If capabilities are already set for this destination ignore new
+          // results. This prevents custom margins from being cleared as long
+          // as the user does not change to a new non-recent destination.
+          return;
+        }
       }
       if (!dest) {
         // Ignore unrecognized extension printers
