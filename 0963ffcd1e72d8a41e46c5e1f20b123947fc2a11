@@ -87,6 +87,24 @@
       "revId": "0963ffcd1e72d8a41e46c5e1f20b123947fc2a11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04f8129d_eced89c0",
+        "filename": "chrome/renderer/media/chrome_key_systems.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-17T19:08:10Z",
+      "side": 1,
+      "message": "Yeah, the count should be always small. In most cases it will be called once per render process, so it\u0027s not very often. Also, this code will go away soon (in a few releases, as in the CL description), so I don\u0027t really care to much about it :)",
+      "parentUuid": "c429bada_0f45ceb8",
+      "revId": "0963ffcd1e72d8a41e46c5e1f20b123947fc2a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
