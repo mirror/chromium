@@ -103,6 +103,8 @@ class ArcCertStoreBridgeTest : public InProcessBrowserTest {
                                     kFakeUserName);
     command_line->AppendSwitchASCII(chromeos::switches::kLoginProfile,
                                     TestingProfile::kTestUserProfileDir);
+    command_line->AppendSwitchASCII(chromeos::switches::kProfileRequiresPolicy,
+                                    "false");
   }
 
   void SetUpOnMainThread() override {
