@@ -133,7 +133,6 @@ ClientGpuMemoryBufferManager::CreateGpuMemoryBuffer(
     gpu::SurfaceHandle surface_handle) {
   // Note: this can be called from multiple threads at the same time. Some of
   // those threads may not have a TaskRunner set.
-  DCHECK_EQ(gpu::kNullSurfaceHandle, surface_handle);
   CHECK(!thread_.task_runner()->BelongsToCurrentThread());
   gfx::GpuMemoryBufferHandle gmb_handle;
   base::WaitableEvent wait(base::WaitableEvent::ResetPolicy::AUTOMATIC,

@@ -36,8 +36,8 @@ class CONTENT_EXPORT BrowserGpuChannelHostFactory
   scoped_refptr<base::SingleThreadTaskRunner> GetIOThreadTaskRunner() override;
   std::unique_ptr<base::SharedMemory> AllocateSharedMemory(
       size_t size) override;
+  scoped_refptr<gpu::GpuChannelHost> GetGpuChannel() override;
 
-  gpu::GpuChannelHost* GetGpuChannel();
   int GetGpuChannelId() { return gpu_client_id_; }
 
   // Closes the channel to the GPU process. This should be called before the IO

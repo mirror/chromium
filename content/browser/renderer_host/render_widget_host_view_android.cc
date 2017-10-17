@@ -44,6 +44,7 @@
 #include "content/browser/android/selection_popup_controller.h"
 #include "content/browser/android/synchronous_compositor_host.h"
 #include "content/browser/android/text_suggestion_host_android.h"
+#include "content/browser/browser_main_loop.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
 #include "content/browser/gpu/browser_gpu_channel_host_factory.h"
@@ -177,8 +178,10 @@ GLHelperHolder* GLHelperHolder::Create() {
 }
 
 void GLHelperHolder::Initialize() {
-  auto* factory = BrowserGpuChannelHostFactory::instance();
-  scoped_refptr<gpu::GpuChannelHost> gpu_channel_host(factory->GetGpuChannel());
+  auto* factory =
+      BrowserMainLoop::GetInstance()->gpu_channel_establish_factory();
+  scoped_refptr<gpu::GpuChannelHost> gpu_channel_host =
+      factory->GetGpuChannel();
 
   // The Browser Compositor is in charge of reestablishing the channel if its
   // missing.
