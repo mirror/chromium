@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1f18587_a027beb7",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-17T22:08:01Z",
+      "side": 1,
+      "message": "nit, suggestion: RequestState?  and request_state_ below?\n\nThis suggestion is driven by the many state_-\u003e additions in the PS, which feel vestigial and I suspect is part of what you\u0027re not completely happy with the change.  Paradoxically, I feel like making the string longer but more description might make those additions less jarring in that it answers the question \"Why the indirection?\" right at the point of indirection.  If you don\u0027t feel the same way, I\u0027d recommend you ignore the suggestion.",
+      "range": {
+        "startLine": 593,
+        "startChar": 9,
+        "endLine": 593,
+        "endChar": 14
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745e74ae_82db6a97",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-17T22:08:01Z",
+      "side": 1,
+      "message": "nit, suggestion: Make part of State?  (I don\u0027t have strong feelings, just noting that as best I can tell this is per-request.)",
+      "range": {
+        "startLine": 674,
+        "startChar": 22,
+        "endLine": 674,
+        "endChar": 33
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "722c40f3_fbee4c69",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-17T22:08:01Z",
+      "side": 1,
+      "message": "nit: Per-request.",
+      "range": {
+        "startLine": 676,
+        "startChar": 8,
+        "endLine": 676,
+        "endChar": 9
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b88b291_66de1888",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-17T22:08:01Z",
+      "side": 1,
+      "message": "Worth a DCHECK to enforce the interface contract that this is called before a request is started?",
+      "range": {
+        "startLine": 789,
+        "startChar": 26,
+        "endLine": 789,
+        "endChar": 41
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b1b42c_48fe0f26",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-17T22:08:01Z",
+      "side": 1,
+      "message": "Why is this necessary?  If we\u0027re creating a State structure from scratch, I\u0027m pretty sure the default construction of any unique pointers in it is null.",
+      "range": {
+        "startLine": 898,
+        "startChar": 10,
+        "endLine": 898,
+        "endChar": 23
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd10596_ac4be5cb",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-17T22:08:01Z",
+      "side": 1,
+      "message": "nit: I\u0027d like the vertical whitespace separation between test cases to be consistent (i.e. I\u0027d like a blank line before this line).",
+      "range": {
+        "startLine": 1229,
+        "startChar": 12,
+        "endLine": 1229,
+        "endChar": 17
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d0d7d9_4816b8a3",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-17T22:08:01Z",
+      "side": 1,
+      "message": "nit: Not quite sure how to parse this comment; \u0027as allowed\" maybe?  Also below in the network change test.",
+      "range": {
+        "startLine": 1232,
+        "startChar": 25,
+        "endLine": 1232,
+        "endChar": 31
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2305989_4d753429",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1328,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-17T22:08:01Z",
+      "side": 1,
+      "message": "A bit more comment framing the use of this list?  \"Each test case will be tried against each of these event sequences\" is probably enough--the other things that are relevant (that each sequence will repeated num_network_changes times and then suffixed with a success) is pretty clear below, though it also wouldn\u0027t be out of place in a test-top-level comment.",
+      "range": {
+        "startLine": 1328,
+        "startChar": 7,
+        "endLine": 1328,
+        "endChar": 24
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9121e8ef_6971961d",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-17T22:08:01Z",
+      "side": 1,
+      "message": "nit: Prefer a blank line before this one as above.",
+      "range": {
+        "startLine": 1369,
+        "startChar": 18,
+        "endLine": 1369,
+        "endChar": 20
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
