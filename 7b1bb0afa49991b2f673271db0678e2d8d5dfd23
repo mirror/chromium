@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e9faccbe_18d9c261",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_dxgi_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-17T20:23:50Z",
+      "side": 1,
+      "message": "hm, why does InitializeOneOff cause SharedMemory test to fail?",
+      "parentUuid": "0c13d288_2977f76c",
+      "revId": "7b1bb0afa49991b2f673271db0678e2d8d5dfd23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6fa0095_5a74537b",
         "filename": "ui/gl/gl_image_dxgi.cc",
         "patchSetId": 15
