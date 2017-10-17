@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e69d708_7db8ac63",
+        "filename": "chromecast/media/cma/backend/alsa/audio_output_stream_alsa.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-17T18:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d2c1799_a8c54b04",
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5411f948_ae1e21c0",
         "filename": "chromecast/media/cma/backend/alsa/audio_output_stream_alsa.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "0deeea9c3514788af575c96796ad84f457160a52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae327980_508953e8",
+        "filename": "chromecast/media/cma/backend/alsa/audio_output_stream_alsa.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-17T18:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5411f948_ae1e21c0",
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "544bf114_65ce8ec6",
+        "filename": "chromecast/media/cma/backend/alsa/audio_output_stream_alsa.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-17T18:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf8e3f2f_7a5885e4",
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "713a4338_76c17613",
         "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-17T14:13:30Z",
       "side": 1,
       "message": "this seems different to the old calculation.",
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "becda39f_21697f32",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-17T18:01:27Z",
+      "side": 1,
+      "message": "Yes. There was a bug. InterlevavedSize() returns size of the frames in the format used for the ALSA stream (which is usually integer, not float). LoopbackObserver receives these samples in float. It worked because BytesPerOutputFormatSample() normally returns 4 (for 24-bit or 32-bit streams), i.e. the result was still the same. It wouldn\u0027t work properly with 16-bit output streams.",
+      "parentUuid": "713a4338_76c17613",
       "revId": "0deeea9c3514788af575c96796ad84f457160a52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "66df1273_0023e86b",
+        "filename": "chromecast/media/cma/backend/audio_output_stream.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-17T18:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5a6114f_c17d6cbb",
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "946dc62b_cfdb29c9",
         "filename": "chromecast/media/cma/backend/audio_output_stream.h",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "0deeea9c3514788af575c96796ad84f457160a52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ed7aa0_d0ef5ac6",
+        "filename": "chromecast/media/cma/backend/audio_output_stream.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-17T18:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "946dc62b_cfdb29c9",
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "c2f18deb_3603420d",
+        "filename": "chromecast/media/cma/backend/audio_output_stream.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-17T18:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "361e86ac_b574d6f9",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9feabf7f_979b6d7f",
         "filename": "chromecast/media/cma/backend/audio_output_stream.h",
         "patchSetId": 7
@@ -141,6 +273,24 @@
       "revId": "0deeea9c3514788af575c96796ad84f457160a52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f017a36_0bac247e",
+        "filename": "chromecast/media/cma/backend/audio_output_stream.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-17T18:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9feabf7f_979b6d7f",
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
