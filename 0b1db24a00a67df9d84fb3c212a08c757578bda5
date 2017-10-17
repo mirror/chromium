@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e8b9e91_4ceab8f0",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-17T21:38:07Z",
+      "side": 1,
+      "message": "Why do we need a fake tablet mode controller here? AshTestBase has a Shell with a real one, can you bind to that one?",
+      "revId": "0b1db24a00a67df9d84fb3c212a08c757578bda5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
