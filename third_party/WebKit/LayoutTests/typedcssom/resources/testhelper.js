@@ -1,4 +1,5 @@
 const style_value_attributes = {
+  'CSSKeywordValue': ['value'],
   'CSSUnitValue': ['unit', 'value'],
 };
 
