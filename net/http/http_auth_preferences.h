@@ -23,14 +23,21 @@ class URLSecurityManager;
 // them accessible from the IO thread.
 class NET_EXPORT HttpAuthPreferences {
  public:
+  // Simplified ctor with empty |auth_schemes|, empty |gssapi_library_name|, and
+  // |allow_gssapi_library_load| set to true.
+  HttpAuthPreferences();
+
+  // Simplified ctor with empty |gssapi_library_name| and
+  // |allow_gssapi_library_load| set to true.
+  explicit HttpAuthPreferences(const std::vector<std::string>& auth_schemes);
+
   HttpAuthPreferences(const std::vector<std::string>& auth_schemes
-#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
-                      ,
-                      const std::string& gssapi_library_name
-#endif
 #if defined(OS_CHROMEOS)
                       ,
                       bool allow_gssapi_library_load
+#elif defined(OS_POSIX) && !defined(OS_ANDROID)
+                      ,
+                      const std::string& gssapi_library_name
 #endif
                       );
   virtual ~HttpAuthPreferences();
@@ -40,12 +47,10 @@ class NET_EXPORT HttpAuthPreferences {
   virtual bool NegotiateEnablePort() const;
 #if defined(OS_ANDROID)
   virtual std::string AuthAndroidNegotiateAccountType() const;
-#endif
-#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
-  virtual std::string GssapiLibraryName() const;
-#endif
-#if defined(OS_CHROMEOS)
+#elif defined(OS_CHROMEOS)
   virtual bool AllowGssapiLibraryLoad() const;
+#elif defined(OS_POSIX)
+  virtual std::string GssapiLibraryName() const;
 #endif
   virtual bool CanUseDefaultCredentials(const GURL& auth_origin) const;
   virtual bool CanDelegate(const GURL& auth_origin) const;
