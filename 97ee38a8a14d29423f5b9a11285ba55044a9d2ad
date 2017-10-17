@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd14d155_c2a1106e",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-getRemoteStreams.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T23:37:48Z",
+      "side": 1,
+      "message": "This is a fast/peerconnection/ test and not a external/wpt/webrtc/ test because getLocalStreams(), getRemoteStreams() and their order are non-spec behavior.",
+      "revId": "97ee38a8a14d29423f5b9a11285ba55044a9d2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcf3be7a_d1d95c95",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-getRemoteStreams.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T23:37:48Z",
+      "side": 1,
+      "message": "This test unfortunately is not guaranteed to fail when a HeapHashMap is used instead of a HeapVector because whenever a new object is created it seems to get a higher memory address (higher uintptr_t Id() value, which is the key to the map) and is thus added \"at the end\" of the map, resulting in the same iteration order as with vector and push_back(), but I can\u0027t think of a way to make it fail without some crazy mocking that I don\u0027t think is worth dealing with.\n\nAnyway, if the order does change in the test it will fail.",
+      "revId": "97ee38a8a14d29423f5b9a11285ba55044a9d2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
