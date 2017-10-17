@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2c3665f0_08d42dfc",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-17T17:02:13Z",
+      "side": 1,
+      "message": "I agree with moving into renderer/ but that can be a followup CL. Regarding using MainThreadTaskQueue::NameForQueueType, I don\u0027t see how to do it without falling back into the problem you pointed out of creating new object strings. That is, I\u0027d have to add \"ExpectedQueueingTimeByTaskQueueType.\" to the MainThreadTaskQueue::NameForQueueType to get the string I want for UMA reporting.",
+      "parentUuid": "21b60e5c_eb49faea",
+      "revId": "8aebd96f0769746efedc09b75b457941dcf18afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5d66cc6_2be2fc01",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
         "patchSetId": 6
