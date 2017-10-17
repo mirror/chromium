@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05de83e9_6ef38832",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-17T23:59:12Z",
+      "side": 1,
+      "message": "AFAICT you don\u0027t add any child views. Is this necessary?",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 44
+      },
+      "revId": "ae1e93f5d5918d439ea7790c5f82b60a0fbd428b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
