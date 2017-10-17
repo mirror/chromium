@@ -560,6 +560,71 @@ test(() => {
     assert_throws({name: 'TypeError'}, () => { req.clone(); });
   }, 'Used => clone');
 
+test(() => {
+  // We implement RequestInit manually so we need to test the functionality
+  // here.
+  function undefined_nonpresent(property_name) {
+    assert_not_equals(property_name, 'referrer', 'property_name');
+    const request = new Request('/', {referrer: '/'});
+    let init = {};
+    init[property_name] = undefined;
+    return (new Request(request, init)).referrer === request.url;
+  }
+
+  assert_true(undefined_nonpresent('method'), 'method');
+  assert_true(undefined_nonpresent('headers'), 'headers');
+  assert_true(undefined_nonpresent('body'), 'body');
+  assert_true(undefined_nonpresent('referrerPolicy'), 'referrerPolicy');
+  assert_true(undefined_nonpresent('mode'), 'mode');
+  assert_true(undefined_nonpresent('credentials'), 'credentials');
+  assert_true(undefined_nonpresent('cache'), 'cache');
+  assert_true(undefined_nonpresent('redirect'), 'redirect');
+  assert_true(undefined_nonpresent('integrity'), 'integrity');
+  assert_true(undefined_nonpresent('keepalive'), 'keepalive');
+  assert_true(undefined_nonpresent('signal'), 'signal');
+  assert_true(undefined_nonpresent('window'), 'window');
+
+  // |undefined_nonpresent| uses referrer for testing, so we need to test
+  // the property manually.
+  const request = new Request('/', {referrerPolicy: 'same-origin'});
+  assert_equals(new Request(request, {referrer: undefined}).referrerPolicy,
+                'same-origin', 'referrer');
+}, 'An undefined member should be treated as non-present');
+
+test(() => {
+  // We implement RequestInit manually so we need to test the functionality
+  // here.
+  const e = Error();
+  assert_throws(e, () => {
+    new Request('/', {get method() { throw e; }})}, 'method');
+  assert_throws(e, () => {
+    new Request('/', {get headers() { throw e; }})}, 'headers');
+  assert_throws(e, () => {
+    new Request('/', {get body() { throw e; }})}, 'body');
+  assert_throws(e, () => {
+    new Request('/', {get referrer() { throw e; }})}, 'referrer');
+  assert_throws(e, () => {
+    new Request('/', {get referrerPolicy() { throw e; }})}, 'referrerPolicy');
+  assert_throws(e, () => {
+    new Request('/', {get mode() { throw e; }})}, 'mode');
+  assert_throws(e, () => {
+    new Request('/', {get credentials() { throw e; }})}, 'credentials');
+  assert_throws(e, () => {
+    new Request('/', {get cache() { throw e; }})}, 'cache');
+  assert_throws(e, () => {
+    new Request('/', {get redirect() { throw e; }})}, 'redirect');
+  assert_throws(e, () => {
+    new Request('/', {get integrity() { throw e; }})}, 'integrity');
+
+  // Not implemented
+  // assert_throws(e, () => {
+  //  new Request('/', {get keepalive() { throw e; }})}, 'keepalive');
+  // assert_throws(e, () => {
+  //  new Request('/', {get signal() { throw e; }})}, 'signal');
+  // assert_throws(e, () => {
+  //  new Request('/', {get window() { throw e; }})}, 'window');
+}, 'Getter exceptions should not be silently ignored');
+
 promise_test(function() {
     var headers = new Headers;
     headers.set('Content-Language', 'ja');
