@@ -79,8 +79,6 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
 
   void UpdateRendererWebPrefs(WebPreferences* prefs) const;
 
-  void UpdateGpuPreferences(gpu::GpuPreferences* gpu_preferences) const;
-
   std::string GetBlacklistVersion() const;
   std::string GetDriverBugListVersion() const;
 
@@ -222,6 +220,8 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
   GpuDataManagerImpl::DomainBlockStatus Are3DAPIsBlockedAtTime(
       const GURL& url, base::Time at_time) const;
   int64_t GetBlockAllDomainsDurationInMs() const;
+
+  void UpdateGpuPreferences(gpu::GpuPreferences* gpu_preferences) const;
 
   bool complete_gpu_info_already_requested_;
 
