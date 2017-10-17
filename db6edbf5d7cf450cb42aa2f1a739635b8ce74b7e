@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f9130fe_24a9c3d9",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-17T02:15:02Z",
+      "side": 1,
+      "message": "Done. This restores the previous behavior (before https://chromium-review.googlesource.com/c/chromium/src/+/683599). I am not sure if this is the best mechanism to prevent custom margins from being overwritten, but thought it would be best to restore the feature first and then investigate to see if there is a better way of doing this.",
+      "parentUuid": "81334890_f6bab71f",
+      "revId": "db6edbf5d7cf450cb42aa2f1a739635b8ce74b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "948f55d6_a1b0fd0b",
         "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "db6edbf5d7cf450cb42aa2f1a739635b8ce74b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1309ef_4fca72ac",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-17T02:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "948f55d6_a1b0fd0b",
+      "revId": "db6edbf5d7cf450cb42aa2f1a739635b8ce74b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "268c7072_d9ed3396",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-17T02:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6603392_f4aad4f0",
+      "revId": "db6edbf5d7cf450cb42aa2f1a739635b8ce74b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf31b215_160d00ef",
         "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "db6edbf5d7cf450cb42aa2f1a739635b8ce74b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8292c75d_b268c2e2",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-17T02:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf31b215_160d00ef",
+      "revId": "db6edbf5d7cf450cb42aa2f1a739635b8ce74b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
