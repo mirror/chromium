@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d2c1799_a8c54b04",
+        "filename": "chromecast/media/cma/backend/alsa/audio_output_stream_alsa.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-17T14:13:30Z",
+      "side": 1,
+      "message": "constexpr here and below",
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5411f948_ae1e21c0",
+        "filename": "chromecast/media/cma/backend/alsa/audio_output_stream_alsa.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-17T14:13:30Z",
+      "side": 1,
+      "message": "include vector, cstdint",
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8e3f2f_7a5885e4",
+        "filename": "chromecast/media/cma/backend/alsa/audio_output_stream_alsa.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-17T14:13:30Z",
+      "side": 1,
+      "message": "include base/macros.h",
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713a4338_76c17613",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-17T14:13:30Z",
+      "side": 1,
+      "message": "this seems different to the old calculation.",
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a6114f_c17d6cbb",
+        "filename": "chromecast/media/cma/backend/audio_output_stream.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-17T14:13:30Z",
+      "side": 1,
+      "message": "string not used",
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946dc62b_cfdb29c9",
+        "filename": "chromecast/media/cma/backend/audio_output_stream.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-17T14:13:30Z",
+      "side": 1,
+      "message": "can forward-declare TimeDelta instead",
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "361e86ac_b574d6f9",
+        "filename": "chromecast/media/cma/backend/audio_output_stream.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-17T14:13:30Z",
+      "side": 1,
+      "message": "scope it to the class?\nAlso, static constexpr",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9feabf7f_979b6d7f",
+        "filename": "chromecast/media/cma/backend/audio_output_stream.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-17T14:13:30Z",
+      "side": 1,
+      "message": "This name may be confusing given existing ::media::AudioOutputStream.\nPerhaps MixerOutputStream?",
+      "revId": "0deeea9c3514788af575c96796ad84f457160a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
