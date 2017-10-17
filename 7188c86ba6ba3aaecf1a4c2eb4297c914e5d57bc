@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a98d96f2_8131ea0e",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-17T16:38:43Z",
+      "side": 1,
+      "message": "nit: even though this is const-correct since you don\u0027t need the instance to be mutable to get a non-const pointer, we tend to omit const here and require that the instance is mutable. From https://google.github.io/styleguide/cppguide.html#Use_of_const :\n\n Other methods should be const if they do not modify any data members, do not call any non-const methods, and do not return a non-const pointer or non-const reference to a data member.",
+      "revId": "7188c86ba6ba3aaecf1a4c2eb4297c914e5d57bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e110abb_f366dc5a",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-17T16:38:43Z",
+      "side": 1,
+      "message": "You need to mention why this is safe in a comment (or bring the weak_factory_ back).",
+      "range": {
+        "startLine": 62,
+        "startChar": 19,
+        "endLine": 62,
+        "endChar": 41
+      },
+      "revId": "7188c86ba6ba3aaecf1a4c2eb4297c914e5d57bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
