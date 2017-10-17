@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f330fbe_b28b4067",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4623,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-17T17:36:36Z",
+      "side": 1,
+      "message": "s/0/ISOLATED_WORLD_ID_GLOBAL/",
+      "range": {
+        "startLine": 4623,
+        "startChar": 19,
+        "endLine": 4623,
+        "endChar": 20
+      },
+      "revId": "fec504e674d980a54c1997ba263ebd23b35b0963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96ea165d_fd52ef56",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4630,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-17T17:36:36Z",
+      "side": 1,
+      "message": "To confirm my understanding, this didn\u0027t happen prior to this CL because of LAYOUT_TEST was a separate binding?\n\nI am really really wary of activating test-only code in WebUI pages. A WebUI renderer is too important for that; I don\u0027t expect test-only code to have undergone security review.\n\nIf it sounds like this response is overly paranoid, help me understand why this is safe.",
+      "revId": "fec504e674d980a54c1997ba263ebd23b35b0963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
