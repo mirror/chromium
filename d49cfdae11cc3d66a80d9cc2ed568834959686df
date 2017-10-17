@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f4693f5_7a632417",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-17T03:43:46Z",
+      "side": 1,
+      "message": "Here is inside an unnamed namespace so \"static\" is not needed.",
+      "revId": "d49cfdae11cc3d66a80d9cc2ed568834959686df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7498b105_3f572c11",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5813,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-17T03:43:46Z",
+      "side": 1,
+      "message": "dup",
+      "revId": "d49cfdae11cc3d66a80d9cc2ed568834959686df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74430c90_b02451d2",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5816,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-17T03:43:46Z",
+      "side": 1,
+      "message": "dup",
+      "revId": "d49cfdae11cc3d66a80d9cc2ed568834959686df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
