@@ -5,4 +5,6 @@ per-file *mus*=fsamuel@chromium.org
 per-file *mus*=sadrul@chromium.org
 per-file *mus*=rjkroege@chromium.org
 
+per-file viz_process_transport_factory*=kylechar@chromium.org
+
 # COMPONENT: Internals>Compositing
