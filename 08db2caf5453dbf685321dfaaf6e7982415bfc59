@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "78c0675b_110dadc2",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-17T19:13:19Z",
+      "side": 1,
+      "message": "We should also determine if the document is an AcroForm (but not XFA) and collapse this information into one single log.",
+      "range": {
+        "startLine": 1279,
+        "startChar": 4,
+        "endLine": 1279,
+        "endChar": 60
+      },
+      "revId": "08db2caf5453dbf685321dfaaf6e7982415bfc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82bdf4cd_c6d88b6c",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
@@ -36,6 +59,30 @@
       "writtenOn": "2017-10-17T16:07:04Z",
       "side": 1,
       "message": "Instead of XFADocumentTypes can we change this to PDF document types and have below something like:\n\n0  PDF\n1  AcroForm\n2  XFA - Full\n3  XFA - Forground Only\n\n(I think those are the only available types?)",
+      "range": {
+        "startLine": 42278,
+        "startChar": 12,
+        "endLine": 42278,
+        "endChar": 28
+      },
+      "revId": "08db2caf5453dbf685321dfaaf6e7982415bfc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac8c612_16bba21e",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 42278,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-17T19:13:19Z",
+      "side": 1,
+      "message": "0  NotForm",
+      "parentUuid": "82bdf4cd_c6d88b6c",
       "range": {
         "startLine": 42278,
         "startChar": 12,
