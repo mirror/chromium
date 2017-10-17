@@ -76,6 +76,7 @@
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/service_manager/runner/common/client_util.h"
+#include "services/service_manager/sandbox/sandbox_type.h"
 
 #if defined(OS_POSIX)
 #include "base/posix/global_descriptors.h"
@@ -505,14 +506,25 @@ void ChildThreadImpl::Init(const Options& options) {
   channel_->AddFilter(notification_dispatcher_->GetFilter());
   channel_->AddFilter(service_worker_message_filter_->GetFilter());
 
+  // In single process mode, browser-side tracing and memory will cover the
+  // whole process including renderers.
   if (!IsInBrowserProcess()) {
-    // In single process mode, browser-side tracing and memory will cover the
-    // whole process including renderers.
-    channel_->AddFilter(new tracing::ChildTraceMessageFilter(
-        ChildProcess::current()->io_task_runner()));
+    // Tracing adds too much overhead to the profiling service. The only
+    // way to determine if this is the profiling service is by checking the
+    // sandbox type.
+    service_manager::SandboxType sandbox_type =
+        service_manager::SandboxTypeFromCommandLine(
+            *base::CommandLine::ForCurrentProcess());
+    bool enable_tracing =
+        sandbox_type != service_manager::SANDBOX_TYPE_PROFILING;
 
-    chrome_trace_event_agent_ =
-        base::MakeUnique<tracing::ChromeTraceEventAgent>(GetConnector());
+    if (enable_tracing) {
+      channel_->AddFilter(new tracing::ChildTraceMessageFilter(
+          ChildProcess::current()->io_task_runner()));
+
+      chrome_trace_event_agent_ =
+          base::MakeUnique<tracing::ChromeTraceEventAgent>(GetConnector());
+    }
 
     if (service_manager_connection_) {
       std::string process_type_str =
