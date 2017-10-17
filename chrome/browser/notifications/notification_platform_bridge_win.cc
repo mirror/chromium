@@ -7,7 +7,7 @@
 #include <activation.h>
 #include <windows.ui.notifications.h>
 #include <wrl/client.h>
-#include <wrl/wrappers/corewrappers.h>
+
 #include <memory>
 #include <set>
 #include <utility>
@@ -25,16 +25,42 @@
 #include "ui/message_center/notification.h"
 
 namespace mswr = Microsoft::WRL;
-namespace mswrw = Microsoft::WRL::Wrappers;
 
-namespace winfoundtn = ABI::Windows::Foundation;
 namespace winui = ABI::Windows::UI;
 namespace winxml = ABI::Windows::Data::Xml;
 
 using base::win::ScopedHString;
 using message_center::RichNotificationData;
 
+// Hold related data for a notification.
+struct NotificationData {
+  NotificationData(NotificationCommon::Type notification_type,
+                   const std::string& notification_id,
+                   const std::string& profile_id,
+                   bool incognito,
+                   const GURL& origin_url)
+      : notification_type(notification_type),
+        notification_id(notification_id),
+        profile_id(profile_id),
+        incognito(incognito),
+        origin_url(origin_url) {}
+
+  // Same parameters used by NotificationPlatformBridge::Display().
+  NotificationCommon::Type notification_type;
+  const std::string notification_id;
+  const std::string profile_id;
+  const bool incognito;
+
+  // A copy of the origin_url from the underlying message_center::Notification.
+  // Used to pass back to NotificationDisplayService.
+  const GURL origin_url;
+
+  DISALLOW_COPY_AND_ASSIGN(NotificationData);
+};
+
 namespace {
+
+constexpr base::TimeDelta kDelay = base::TimeDelta::FromMilliseconds(2000);
 
 // Templated wrapper for winfoundtn::GetActivationFactory().
 template <unsigned int size, typename T>
@@ -168,7 +194,26 @@ void NotificationPlatformBridgeWin::Display(
 void NotificationPlatformBridgeWin::Close(const std::string& profile_id,
                                           const std::string& notification_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  // TODO(peter): Implement the ability to close notifications.
+
+  // TODO(chengx): Maybe run this via SequencedTaskRunner or similar.
+
+  // We may find more than one matching notification with different incognito
+  // values.
+  std::vector<NotificationData*> to_close;
+
+  for (const auto& item : notifications_) {
+    NotificationData* data = item.first;
+    if (data->notification_id == notification_id &&
+        data->profile_id == profile_id) {
+      to_close.push_back(data);
+    }
+  }
+
+  for (NotificationData* data : to_close) {
+    // TODO(chengx): hide the toast via IToastNotifier::Hide(ToastNotification),
+    // but we don't have ToastNotification in memory...
+    notifications_.erase(data);
+  }
 }
 
 void NotificationPlatformBridgeWin::GetDisplayed(
@@ -187,4 +232,19 @@ void NotificationPlatformBridgeWin::SetReadyCallback(
     NotificationBridgeReadyCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   std::move(callback).Run(com_functions_initialized_);
+}
+
+NotificationData* NotificationPlatformBridgeWin::FindNotificationData(
+    const std::string& notification_id,
+    const std::string& profile_id,
+    bool incognito) {
+  for (const auto& item : notifications_) {
+    NotificationData* data = item.first;
+    if (data->notification_id == notification_id &&
+        data->profile_id == profile_id && data->incognito == incognito) {
+      return data;
+    }
+  }
+
+  return nullptr;
 }
