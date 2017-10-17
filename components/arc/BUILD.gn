@@ -80,6 +80,7 @@ static_library("arc") {
     "//components/session_manager/core",
     "//components/signin/core/account_id",
     "//components/user_manager",
+    "//content/public/common:common_sources",
     "//device/bluetooth",
     "//google_apis",
     "//mojo/edk/system",
