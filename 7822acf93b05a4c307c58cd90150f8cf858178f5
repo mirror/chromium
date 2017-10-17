@@ -22,6 +22,30 @@
       "revId": "7822acf93b05a4c307c58cd90150f8cf858178f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc5a0b3_353ea23d",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1745,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-17T16:32:18Z",
+      "side": 1,
+      "message": "By symmetry with other tests above.\nAnd if somebody adds something below.",
+      "parentUuid": "b392397c_d7e6c167",
+      "range": {
+        "startLine": 1745,
+        "startChar": 6,
+        "endLine": 1745,
+        "endChar": 30
+      },
+      "revId": "7822acf93b05a4c307c58cd90150f8cf858178f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
