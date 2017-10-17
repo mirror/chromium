@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "2bcb5f19_8c0bc6cf",
+        "filename": "ash/system/ime_menu/ime_menu_tray.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-17T18:13:10Z",
+      "side": 1,
+      "message": "It might be worth adding a helper method to Shelf so that these can just do:\n\nshelf()-\u003eRecordClick(LoginMetricsRecorder::LockScreenUserClickTarget::kVirtualKeyboardTray);\n\nAlso, the method called here is RecordUserClickEventOnLockScreen, but there is no logic here testing whther the lock screen is active, which is confusing.\n\nAssuming that logic is in RecordUserClickEventOnLockScreen(), then the method called from here should just be something like RecordUserClick() - if we only care about clicks in the lock screen that\u0027s an implementaiton detail.",
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf7939dd_e65363b2",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 3
