@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36f35004_3a80b09c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-17T10:42:29Z",
+      "side": 1,
+      "message": "This is no longer needed as per comment #3.",
+      "parentUuid": "0b664193_34d48281",
+      "revId": "219ac43fe77a0ebed70984da1548fc481ec0e320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a17ae08_f3bd2f44",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b431422a_ba264cde",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-17T10:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a17ae08_f3bd2f44",
+      "revId": "219ac43fe77a0ebed70984da1548fc481ec0e320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "add70ef3_a2851939",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-13T09:41:36Z",
       "side": 1,
       "message": "This is going to be simpler indeed but what we will do if the element is like 100px wide?",
+      "revId": "219ac43fe77a0ebed70984da1548fc481ec0e320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdc60df_af600c3e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-17T10:42:29Z",
+      "side": 1,
+      "message": "I have updated the function to take into account vertical and horizontal space.",
+      "parentUuid": "add70ef3_a2851939",
       "revId": "219ac43fe77a0ebed70984da1548fc481ec0e320",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "dbb8fa19_135059e9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementBase.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-17T10:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c04b43e2_79653c32",
+      "revId": "219ac43fe77a0ebed70984da1548fc481ec0e320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "630eaee4_8f0aa9ce",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlModernPlayButtonElement.cpp",
         "patchSetId": 6
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2c9141d3_40c0ebec",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlModernPlayButtonElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-17T10:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "630eaee4_8f0aa9ce",
+      "revId": "219ac43fe77a0ebed70984da1548fc481ec0e320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e63f7d1d_c2adb511",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlModernPlayButtonElement.h",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "219ac43fe77a0ebed70984da1548fc481ec0e320",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3dc663_83fecb87",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlModernPlayButtonElement.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-17T10:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e63f7d1d_c2adb511",
+      "revId": "219ac43fe77a0ebed70984da1548fc481ec0e320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
