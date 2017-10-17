@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5aec5b4_376d8293",
+        "filename": "ios/chrome/browser/ui/qr_scanner/camera_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-17T13:52:04Z",
+      "side": 1,
+      "message": "Do we really need this guard?",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 10
+      },
+      "revId": "2ac99049ab9004ba0c49257d1565f86ab2419ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
