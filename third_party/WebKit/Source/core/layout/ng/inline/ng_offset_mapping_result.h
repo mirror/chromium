@@ -10,9 +10,11 @@
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
+class LayoutNGBlockFlow;
 class Node;
 
 enum class NGOffsetMappingUnitType { kIdentity, kCollapsed, kExpanded };
@@ -122,7 +124,19 @@ class CORE_EXPORT NGOffsetMappingResult {
 
   // Returns true if the character at the position is non-collapsed. If the
   // offset is at the end of the node, returns false.
+  // TODO(xiaochengh): Rename to IsBeforeNonCollapsedCharacter().
   bool IsNonCollapsedCharacter(const Node&, unsigned offset) const;
+
+  // Returns true if the offset is right after a non-collapsed character. If the
+  // offset is at the beginning of the node, returns false.
+  bool IsAfterNonCollapsedCharacter(const Node&, unsigned offset) const;
+
+  // Maps the given DOM offset to text content, and then returns the text
+  // content character before the offset. Returns 0 if it does not exist.
+  // TODO(xiaochengh): Store the |LayoutNGBlockFlow*| instead of passing it.
+  UChar GetCharacterBefore(const Node&,
+                           unsigned offset,
+                           LayoutNGBlockFlow*) const;
 
   // TODO(xiaochengh): Add APIs for reverse mapping.
 
