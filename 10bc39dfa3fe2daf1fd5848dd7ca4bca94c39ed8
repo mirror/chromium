@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ede700e8_9b0132bc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T23:39:25Z",
+      "side": 1,
+      "message": "let\u0027s add a todo to remove later.",
+      "range": {
+        "startLine": 1165,
+        "startChar": 60,
+        "endLine": 1165,
+        "endChar": 105
+      },
+      "revId": "10bc39dfa3fe2daf1fd5848dd7ca4bca94c39ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
