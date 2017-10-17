@@ -309,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "e3ea3466_31b6fcda",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-17T17:01:21Z",
+      "side": 1,
+      "message": "Why crash --- or potentially corrupt memory in browser --- when one can completely gracefully recover?",
+      "parentUuid": "d6cff3ca_2c7a03e9",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb781a56_261271b1",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 34
