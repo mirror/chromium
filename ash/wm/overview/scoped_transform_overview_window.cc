@@ -533,7 +533,8 @@ void ScopedTransformOverviewWindow::CreateMirrorWindowForMinimizedState() {
   minimized_widget_->set_focus_on_creation(false);
   minimized_widget_->Init(params);
 
-  views::View* mirror_view = new wm::WindowMirrorView(window_);
+  views::View* mirror_view =
+      new wm::WindowMirrorView(window_, /*trilinear_filtering=*/false);
   mirror_view->SetVisible(true);
   mirror_view->SetTargetHandler(this);
   minimized_widget_->SetContentsView(mirror_view);

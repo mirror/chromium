@@ -70,7 +70,8 @@ class WindowPreviewView : public views::View, public aura::WindowObserver {
   explicit WindowPreviewView(aura::Window* window)
       : window_title_(new views::Label),
         preview_background_(new views::View),
-        mirror_view_(new wm::WindowMirrorView(window)),
+        mirror_view_(
+            new wm::WindowMirrorView(window, /*trilinear_filtering=*/true)),
         window_observer_(this) {
     window_observer_.Add(window);
     window_title_->SetText(window->GetTitle());
