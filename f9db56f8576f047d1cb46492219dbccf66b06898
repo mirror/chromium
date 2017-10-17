@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6986dcb_39d23264",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-17T14:06:41Z",
+      "side": 1,
+      "message": "Given that we can have multiple WebFrameSchedulers let\u0027s avoid adding necessary observers and just call WebFrameSchedulerImpl::OnTraceLogEnabled from RendererSchedulerImpl::OnTraceLogEnabled directly.",
+      "range": {
+        "startLine": 115,
+        "startChar": 10,
+        "endLine": 115,
+        "endChar": 21
+      },
+      "revId": "f9db56f8576f047d1cb46492219dbccf66b06898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
