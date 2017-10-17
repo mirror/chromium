@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b146d6b8_a9bc207a",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-17T22:35:30Z",
+      "side": 1,
+      "message": "Either add a blank line before this and make it a subsection w/ ###, or remove it entirely. As-is, it gets appended to the preceding sentence.",
+      "revId": "ab0642f927c58553a7c761aa09acce82d594666e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a3d8b3_848408d2",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-17T22:35:30Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "ab0642f927c58553a7c761aa09acce82d594666e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829f7729_7d0834a0",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-17T22:35:30Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to retain the blank rows.",
+      "revId": "ab0642f927c58553a7c761aa09acce82d594666e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "731feb42_c4ead086",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-17T22:35:30Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "ab0642f927c58553a7c761aa09acce82d594666e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6da14eb_cc6bd815",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-17T22:35:30Z",
+      "side": 1,
+      "message": "Given the TOC issues, it\u0027s probably better to not use a code font here for now.",
+      "revId": "ab0642f927c58553a7c761aa09acce82d594666e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
