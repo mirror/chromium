@@ -4,6 +4,7 @@
 
 #include "ash/wm/splitview/split_view_divider.h"
 
+#include <cmath>
 #include <memory>
 
 #include "ash/ash_constants.h"

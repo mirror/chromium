@@ -4,6 +4,7 @@
 
 #include "ash/wm/splitview/split_view_controller.h"
 
+#include <cmath>
 #include <memory>
 
 #include "ash/display/screen_orientation_controller_chromeos.h"
@@ -674,9 +675,17 @@ void SplitViewController::SplitRect(const gfx::Rect& work_area_rect,
 void SplitViewController::MoveDividerToClosestFixedPostion() {
   DCHECK(IsSplitViewModeActive());
 
-  float ratio =
-      FindClosestFixedPositionRatio(divider_position_, GetDividerEndPosition());
-  divider_position_ = GetDividerEndPosition() * ratio;
+  const gfx::Rect work_area_bounds_in_screen =
+      GetDisplayWorkAreaBoundsInScreen(GetDefaultSnappedWindow());
+  const gfx::Size divider_size = SplitViewDivider::GetDividerSize(
+      work_area_bounds_in_screen, screen_orientation_, false /* is_dragging */);
+  const int divider_thickness = IsCurrentScreenOrientationLandscape()
+                                    ? divider_size.width()
+                                    : divider_size.height();
+
+  float ratio = FindClosestFixedPositionRatio(
+      divider_position_ + divider_thickness / 2.f, GetDividerEndPosition());
+  divider_position_ = GetDividerEndPosition() * ratio - divider_thickness / 2.f;
 }
 
 bool SplitViewController::ShouldEndSplitViewAfterResizing() {
