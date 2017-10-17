@@ -4,6 +4,7 @@
 
 #include "content/common/resource_messages.h"
 
+#include "content/common/content_param_traits.h"
 #include "net/base/load_timing_info.h"
 #include "net/http/http_response_headers.h"
 
@@ -404,6 +405,7 @@ void ParamTraits<scoped_refptr<content::ResourceRequestBody>>::Write(
   WriteParam(m, p.get() != NULL);
   if (p.get()) {
     WriteParam(m, *p->elements());
+    WriteParam(m, p->blob());
     WriteParam(m, p->identifier());
     WriteParam(m, p->contains_sensitive_info());
   }
@@ -421,6 +423,9 @@ bool ParamTraits<scoped_refptr<content::ResourceRequestBody>>::Read(
   std::vector<storage::DataElement> elements;
   if (!ReadParam(m, iter, &elements))
     return false;
+  scoped_refptr<storage::BlobHandle> blob;
+  if (!ReadParam(m, iter, &blob))
+    return false;
   int64_t identifier;
   if (!ReadParam(m, iter, &identifier))
     return false;
@@ -429,6 +434,9 @@ bool ParamTraits<scoped_refptr<content::ResourceRequestBody>>::Read(
     return false;
   *r = new content::ResourceRequestBody;
   (*r)->swap_elements(&elements);
+  if (blob) {
+    (*r)->SetBlob(blob->TakeBlobPtr());
+  }
   (*r)->set_identifier(identifier);
   (*r)->set_contains_sensitive_info(contains_sensitive_info);
   return true;

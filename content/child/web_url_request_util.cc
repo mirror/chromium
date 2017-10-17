@@ -12,6 +12,7 @@
 #include "base/logging.h"
 #include "base/strings/string_util.h"
 #include "content/child/request_extra_data.h"
+#include "content/public/common/content_features.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_util.h"
@@ -329,6 +330,16 @@ scoped_refptr<ResourceRequestBody> GetRequestBodyForWebURLRequest(
 scoped_refptr<ResourceRequestBody> GetRequestBodyForWebHTTPBody(
     const blink::WebHTTPBody& httpBody) {
   scoped_refptr<ResourceRequestBody> request_body = new ResourceRequestBody();
+
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    auto blob_pipe = httpBody.AsMessagePipe();
+    storage::mojom::BlobPtr blob_ptr;
+    blob_ptr.Bind(storage::mojom::BlobPtrInfo(std::move(blob_pipe),
+                                              storage::mojom::Blob::Version_));
+    request_body->SetBlob(std::move(blob_ptr));
+    return request_body;
+  }
+
   size_t i = 0;
   WebHTTPBody::Element element;
   while (httpBody.ElementAt(i++, element)) {

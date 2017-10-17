@@ -6,6 +6,7 @@
 
 #include "base/atomic_sequence_num.h"
 #include "base/callback.h"
+#include "base/guid.h"
 #include "base/optional.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/child/service_worker/controller_service_worker_connector.h"
@@ -182,10 +183,15 @@ void ServiceWorkerSubresourceLoader::DeleteSoon() {
 
 void ServiceWorkerSubresourceLoader::StartRequest(
     const ResourceRequest& resource_request) {
-  // TODO(kinuko): Implement request.request_body handling.
-  DCHECK(!resource_request.request_body);
   std::unique_ptr<ServiceWorkerFetchRequest> request =
       ServiceWorkerLoaderHelpers::CreateFetchRequest(resource_request);
+  if (resource_request.request_body) {
+    request->blob_uuid = base::GenerateGUID();
+    // Hopefully no one looks at the size when we have a Mojo Blob?
+    request->blob_size = 0;
+    request->blob = resource_request.request_body->blob();
+  }
+
   DCHECK_EQ(Status::kNotStarted, status_);
   status_ = Status::kStarted;
 
