@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "3e861872_91bdf1ec",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSStyleImageValue.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-17T16:11:51Z",
+      "side": 1,
+      "message": "Thinking some more about, maybe it might be worth calling it IntrinsicSize and then listing the exception in the \"documentation\" (comment.) Since most of the users actually want to have the intrinsic size (ImageElementBase being the exception I think, but it already DTRT regardless so doesn\u0027t really care), we should work towards removing the exception proper (much easier with the scaling and other stuff out of the way.) I added some tests for crbug.com/396955, and I realized that some of those are still failing. I\u0027ll make a note to add an interface/change this method to produce fully fledged set of \"intrinsic dimensions\" (i.e also include the intrinsic ratio.)\n\nSo, TL;DR, I think I\u0027ll go with IntrinsicSize anyway. Sorry for the flip-flop (but thanks for making me think twice about it!)",
+      "parentUuid": "a5a6b48d_03924a46",
+      "range": {
+        "startLine": 63,
+        "startChar": 35,
+        "endLine": 63,
+        "endChar": 46
+      },
+      "revId": "d0c5138e4cb946173211d9c23b67a095bec3435c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "997aaaf9_5e32c5ad",
         "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.h",
         "patchSetId": 3
