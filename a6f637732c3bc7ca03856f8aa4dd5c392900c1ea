@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0754aa0c_63316639",
+        "filename": "ios/web/public/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-17T21:15:44Z",
+      "side": 1,
+      "message": "Please add a comment explaining this is a separate target for Cronet.",
+      "revId": "a6f637732c3bc7ca03856f8aa4dd5c392900c1ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
