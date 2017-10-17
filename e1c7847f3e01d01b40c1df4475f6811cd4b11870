@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "fe454020_f81132c3",
+        "filename": "DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-17T15:39:38Z",
+      "side": 1,
+      "message": "Did you went through procedure at https://chromium.googlesource.com/chromium/src.git/+/master/docs/adding_to_third_party.md to get this new third_party dependency approved?",
+      "revId": "e1c7847f3e01d01b40c1df4475f6811cd4b11870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93164357_8ada1774",
+        "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-17T15:39:38Z",
+      "side": 1,
+      "message": "Why build this target as a framework?",
+      "range": {
+        "startLine": 17,
+        "startChar": 22,
+        "endLine": 17,
+        "endChar": 65
+      },
+      "revId": "e1c7847f3e01d01b40c1df4475f6811cd4b11870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "536b1bd7_a3db7434",
         "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
         "patchSetId": 5
@@ -19,6 +59,47 @@
         "endLine": 59,
         "endChar": 105
       },
+      "revId": "e1c7847f3e01d01b40c1df4475f6811cd4b11870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c963e17f_36b881dd",
+        "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-17T15:39:38Z",
+      "side": 1,
+      "message": "This is because you\u0027ve built it as a framework instead of a source_set. $framework+link add the correct flag to the compiler and linker to allow access to the framework (framework path, ...).\n\nFrom the template comments:\n\n  # This template provides two targets for the resulting framework bundle. The\n  # link-time behavior varies depending on which of the two targets below is\n  # added as a dependency:\n  #   - $target_name only adds a build-time dependency. Targets that depend on\n  #     it will not link against the framework.\n  #   - $target_name+link adds a build-time and link-time dependency. Targets\n  #     that depend on it will link against the framework.\n\nIt is not necessary to add the other dependency then, nor the \"libs\" dependency (this is handled by the $framework+link dependency). But then you should not need the separate target if you build this as a framework (the \"source_set\").\n\nSo, the whole file should only define a single target \"material_internationalization_ios\":\n\n  ios_framework_bundle(\"material_internationalization_ios\") {\n    output_name \u003d \"MDFInternationalization\"\n    info_plist \u003d \"Info.plist\"\n\n    sources \u003d [\n      \"src/Sources/MDFRTL.h\",\n      \"src/Sources/MDFRTL.m\",\n      \"src/Sources/UIImage+MaterialRTL.h\",\n      \"src/Sources/UIImage+MaterialRTL.m\",\n      \"src/Sources/UIView+MaterialRTL.h\",\n      \"src/Sources/UIView+MaterialRTL.m\",\n    ]\n    public_headers \u003d [\n      \"src/Sources/MDFRTL.h\",\n      \"src/Sources/UIImage+MaterialRTL.h\",\n      \"src/Sources/UIView+MaterialRTL.h\",\n      \"src/Sources/MDFInternationalization.h\",\n    ]\n\n    libs \u003d [\n      \"UIKit.framework\",\n      \"CoreImage.framework\",\n    ]\n\n    public_configs \u003d [ \":config\" ]\n\n    configs -\u003d [\n      \"//build/config/gcc:symbol_visibility_hidden\",\n      \"//build/config/compiler:chromium_code\",\n    ]\n    configs +\u003d [\n      \"//build/config/compiler:no_chromium_code\",\n      \"//build/config/compiler:enable_arc\",\n      \"//build/config/gcc:symbol_visibility_default\",\n    ]\n  }\n\nThen code will have dependency on \"//ios/third_party/material_internationalization_ios:material_internationalization_ios+link\" if it needs to use the framework code, or \"//ios/third_party/material_internationalization_ios\" if it needs to copy the framework bundle in the application.\n\nBut all of this only applies if we need to build this as a framework and we can\u0027t build it as a source_set. IMO, it should be possible to build all our dependencies as source_set unless they have to be dynamically injected in the app (i.e. test frameworks).",
+      "parentUuid": "536b1bd7_a3db7434",
+      "range": {
+        "startLine": 59,
+        "startChar": 100,
+        "endLine": 59,
+        "endChar": 105
+      },
+      "revId": "e1c7847f3e01d01b40c1df4475f6811cd4b11870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a200ef25_e14b7284",
+        "filename": "ios/third_party/material_internationalization_ios/Info.plist",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-17T15:39:38Z",
+      "side": 1,
+      "message": "The library needs to provide an Info.plist if it wants to be build as a framework. So either we should use the upstream Info.plist file or we should not build this as a framework.",
       "revId": "e1c7847f3e01d01b40c1df4475f6811cd4b11870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
