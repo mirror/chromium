@@ -15,6 +15,7 @@ static_library("arc") {
     "bluetooth/bluetooth_type_converters.h",
     "clipboard/arc_clipboard_bridge.cc",
     "clipboard/arc_clipboard_bridge.h",
+    "content/public/common/url_constants.h",
     "crash_collector/arc_crash_collector_bridge.cc",
     "crash_collector/arc_crash_collector_bridge.h",
     "file_system/file_system_struct_traits.cc",
