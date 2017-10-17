@@ -46,6 +46,8 @@ class CC_PAINT_EXPORT PaintImage {
   // images, this would imply the first frame of the animation.
   static const size_t kDefaultFrameIndex;
 
+  static const Id kInvalidId;
+
   class CC_PAINT_EXPORT FrameKey {
    public:
     FrameKey(ContentId content_id, size_t frame_index, gfx::Rect subset_rect);
