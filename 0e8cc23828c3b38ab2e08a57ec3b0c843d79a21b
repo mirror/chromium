@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19b490a2_c32c462b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCRtpReceiver-getSynchronizationSources.https-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-17T22:13:19Z",
+      "side": 1,
+      "message": "I\u0027m guessing it is a timing issue (packets aren\u0027t flowing yet). Made a bug: crbug.com/775608.",
+      "parentUuid": "fb55a065_525d0514",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7187dea1_eee7bf56",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpContributingSource.cpp",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3421f00e_de03f42b",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpContributingSource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-17T22:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7187dea1_eee7bf56",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "08566866_8f5df5d7",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-17T22:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f96736c2_70d31ecc",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13d7df96_fb6dc465",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453ca8b5_22ad4ac1",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-17T22:13:19Z",
+      "side": 1,
+      "message": "I think it is fine to write this value unconditionally because it will only be returned if has_audio_level_ is true (meaning it was valid for the last right). I should set has_audio_level_ in the constructor though.",
+      "parentUuid": "13d7df96_fb6dc465",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c1d54df3_64a10e49",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-17T22:13:19Z",
+      "side": 1,
+      "message": "https://crbug.com/775668",
+      "parentUuid": "7e8fd162_aaef61a1",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20f20548_3993c789",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
         "patchSetId": 9
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "b8d5bd9c_bf38db55",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-17T22:13:19Z",
+      "side": 1,
+      "message": "https://crbug.com/775668",
+      "parentUuid": "20f20548_3993c789",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb7e0785_27fc7e7e",
         "filename": "third_party/WebKit/public/platform/WebRTCRtpSource.h",
         "patchSetId": 9
@@ -118,6 +226,24 @@
       "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334409f5_bfd10f26",
+        "filename": "third_party/WebKit/public/platform/WebRTCRtpSource.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-17T22:13:19Z",
+      "side": 1,
+      "message": "Using optional gives me:\n\n** Presubmit ERRORS **\nDo not use Chromium class from namespace base inside Blink core:\nthird_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.h:39\n\nAnd there is still an ugly conversion from rtc::Optional to base::Optional elsewhere.",
+      "parentUuid": "eb7e0785_27fc7e7e",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
