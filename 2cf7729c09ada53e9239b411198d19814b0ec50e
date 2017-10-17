@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "487403f3_15e4b875",
+        "filename": "tools/battor_agent/battor_connection_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-10-17T20:13:39Z",
+      "side": 0,
+      "message": "I\u0027m not the best at C++, but something feels wrong about LogSerial not being actually implemented anywhere. But if that feeling is wrong let me know.",
+      "range": {
+        "startLine": 106,
+        "startChar": 7,
+        "endLine": 106,
+        "endChar": 16
+      },
+      "revId": "2cf7729c09ada53e9239b411198d19814b0ec50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
