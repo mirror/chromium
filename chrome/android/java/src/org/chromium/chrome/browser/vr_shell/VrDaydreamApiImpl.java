@@ -14,7 +14,7 @@ import android.os.StrictMode;
 import com.google.vr.ndk.base.DaydreamApi;
 import com.google.vr.ndk.base.GvrApi;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.chromium.ui.base.WindowAndroid;
 
