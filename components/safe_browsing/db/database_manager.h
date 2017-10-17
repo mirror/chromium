@@ -200,6 +200,10 @@ class SafeBrowsingDatabaseManager
   // Returns the lists that this DatabaseManager should get full hashes for.
   virtual StoresToCheck GetStoresForFullHashRequests();
 
+  // Returns the client_state of each of the lists that this DatabaseManager
+  // syncs.
+  virtual std::unique_ptr<StoreStateMap> GetStoreStateMap();
+
   // Returns the ThreatSource for this implementation.
   virtual ThreatSource GetThreatSource() const = 0;
 

@@ -82,6 +82,12 @@ class V4LocalDatabaseManager : public SafeBrowsingDatabaseManager {
                        const V4ProtocolConfig& config) override;
   void StopOnIOThread(bool shutdown) override;
 
+  // The stores/lists to always get full hashes for, regardless of which store
+  // the hash prefix matched.
+  StoresToCheck GetStoresForFullHashRequests() override;
+
+  std::unique_ptr<StoreStateMap> GetStoreStateMap() override;
+
   //
   // End: SafeBrowsingDatabaseManager implementation
   //
@@ -181,10 +187,6 @@ class V4LocalDatabaseManager : public SafeBrowsingDatabaseManager {
   };
 
   typedef std::vector<std::unique_ptr<PendingCheck>> QueuedChecks;
-
-  // The stores/lists to always get full hashes for, regardless of which store
-  // the hash prefix matched.
-  StoresToCheck GetStoresForFullHashRequests() override;
 
  private:
   friend class V4LocalDatabaseManagerTest;
