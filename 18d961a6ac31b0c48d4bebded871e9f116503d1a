@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "fa68d05a_e4ffc6b7",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-17T00:24:59Z",
+      "side": 1,
+      "message": "It turns out the test I was doing was wrong. The win_clang bot gets this error: https://chromium-review.googlesource.com/c/chromium/src/+/722110\n\nPatch #3 includes the fix, and should be good to go.",
+      "parentUuid": "e2f0aa2c_c239dfa6",
+      "range": {
+        "startLine": 374,
+        "startChar": 12,
+        "endLine": 374,
+        "endChar": 0
+      },
+      "revId": "18d961a6ac31b0c48d4bebded871e9f116503d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a8deda6_0a7b408a",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
         "patchSetId": 2
@@ -117,6 +141,30 @@
       "revId": "18d961a6ac31b0c48d4bebded871e9f116503d1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06aae6a2_397df294",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-17T00:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac90065d_82824759",
+      "range": {
+        "startLine": 402,
+        "startChar": 12,
+        "endLine": 402,
+        "endChar": 0
+      },
+      "revId": "18d961a6ac31b0c48d4bebded871e9f116503d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
