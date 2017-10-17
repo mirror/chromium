@@ -7,12 +7,12 @@
 
 #include <portabledeviceapi.h>
 #include <map>
+#include <wrl/client.h>
 
 #include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
 #include "base/synchronization/lock.h"
-#include "base/win/scoped_comptr.h"
 
 // PortableDeviceMapService keeps track of initialized portable device
 // interfaces. PortableDeviceMapService owns the portable device interfaces.
@@ -56,7 +56,7 @@ class PortableDeviceMapService {
     ~PortableDeviceInfo();
 
     // The portable device interface.
-    base::win::ScopedComPtr<IPortableDevice> portable_device;
+    Microsoft::WRL::ComPtr<IPortableDevice> portable_device;
 
     // Set to true if the |portable_device| is marked for deletion.
     bool scheduled_to_delete;
