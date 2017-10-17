@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54840f47_394ea3c9",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:32:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b3727e60_9428ce15",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "076e68e9_46c5d4c9",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a2c6d93e_700b322c",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:32:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "076e68e9_46c5d4c9",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 31
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cbe7dbc_230d52b8",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27368e06_5259da76",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:32:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cbe7dbc_230d52b8",
+      "range": {
+        "startLine": 361,
+        "startChar": 2,
+        "endLine": 361,
+        "endChar": 35
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "97bfc2d8_6951bf20",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:32:14Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "22ea1f33_b9d44961",
+      "range": {
+        "startLine": 379,
+        "startChar": 7,
+        "endLine": 379,
+        "endChar": 18
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e9813ff_bf20bb65",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -138,6 +234,30 @@
       "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e53c6ea_244ab6fc",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:32:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e9813ff_bf20bb65",
+      "range": {
+        "startLine": 398,
+        "startChar": 2,
+        "endLine": 398,
+        "endChar": 9
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -188,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "b5217201_02e53baf",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:32:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0a490c5_a736357d",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 12
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6a9643_b483a0bc",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -208,6 +352,30 @@
       "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaea6492_dbfcf6d0",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:32:14Z",
+      "side": 1,
+      "message": "Here we will loop over and try to lock a candidate which we will then pass to DoDecodeImage. Which part are you referring to that locks existing entry?\n\nBasically this part gets a candidate from the full image, but it doesn\u0027t have to get the candidate from that: it can get the candidate from any other size/decoded image.",
+      "parentUuid": "da6a9643_b483a0bc",
+      "range": {
+        "startLine": 421,
+        "startChar": 6,
+        "endLine": 421,
+        "endChar": 77
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -234,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "b3c2c4f0_29497a42",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:32:14Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "714f8bc5_f1301756",
+      "range": {
+        "startLine": 444,
+        "startChar": 36,
+        "endLine": 444,
+        "endChar": 76
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae9a64a8_aed30774",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -254,6 +446,30 @@
       "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711bf94d_6b7d3d98",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:32:14Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "ae9a64a8_aed30774",
+      "range": {
+        "startLine": 457,
+        "startChar": 26,
+        "endLine": 457,
+        "endChar": 39
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -280,6 +496,30 @@
     },
     {
       "key": {
+        "uuid": "dcc5c7a8_64af7c46",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:32:14Z",
+      "side": 1,
+      "message": "Yeah that\u0027s correct. There\u0027s an issue that if we scale then we might bleed neighbouring colors into an otherwise strict subrect. The key generation right now only decides to subrect if we would use the original decode.",
+      "parentUuid": "1aa1bf9f_e1427736",
+      "range": {
+        "startLine": 498,
+        "startChar": 18,
+        "endLine": 498,
+        "endChar": 25
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "982169aa_5b67c87d",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -303,6 +543,30 @@
     },
     {
       "key": {
+        "uuid": "d19c00f5_2fddb47b",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:32:14Z",
+      "side": 1,
+      "message": "I guess. I don\u0027t really remember :P I changed this.",
+      "parentUuid": "982169aa_5b67c87d",
+      "range": {
+        "startLine": 577,
+        "startChar": 7,
+        "endLine": 577,
+        "endChar": 20
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26147744_94b371a9",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -317,6 +581,24 @@
       "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33f0f2d_487690ad",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:32:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26147744_94b371a9",
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
