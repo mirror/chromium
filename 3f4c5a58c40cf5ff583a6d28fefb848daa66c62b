@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c02a2331_3d8d61ee",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-17T17:31:07Z",
+      "side": 1,
+      "message": "super nit: s/attemp/attempt/",
+      "revId": "3f4c5a58c40cf5ff583a6d28fefb848daa66c62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fbb5a2b_3eab88a1",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-17T17:31:07Z",
+      "side": 1,
+      "message": "Should this pass self._env.blacklist?",
+      "revId": "3f4c5a58c40cf5ff583a6d28fefb848daa66c62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
