@@ -1624,8 +1624,9 @@ int QuicStreamFactory::CreateSession(const QuicSessionKey& key,
   *session = new QuicChromiumClientSession(
       connection, std::move(socket), this, quic_crypto_client_stream_factory_,
       clock_, transport_security_state_, std::move(server_info), server_id,
-      require_confirmation, yield_after_packets_, yield_after_duration_,
-      cert_verify_flags, config, &crypto_config_,
+      require_confirmation, migrate_sessions_early_,
+      migrate_sessions_on_network_change_, yield_after_packets_,
+      yield_after_duration_, cert_verify_flags, config, &crypto_config_,
       network_connection_.connection_description(), dns_resolution_start_time,
       dns_resolution_end_time, &push_promise_index_, push_delegate_,
       task_runner_, std::move(socket_performance_watcher), net_log.net_log());

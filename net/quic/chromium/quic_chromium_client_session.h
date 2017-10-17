@@ -302,6 +302,8 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
       std::unique_ptr<QuicServerInfo> server_info,
       const QuicServerId& server_id,
       bool require_confirmation,
+      bool migrate_sesion_early,
+      bool migrate_session_on_network_change,
       int yield_after_packets,
       QuicTime::Delta yield_after_duration,
       int cert_verify_flags,
@@ -435,9 +437,15 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   // otherwise a PING packet is written.
   void WriteToNewSocket();
 
-  // Migreates session over to use |peer_address| and |network|.
+  // Migrates session over to use alternate network if such is available.
+  // If the migrate fails and |close_session_on_error| is true, session will
+  // be closed.
+  MigrationResult MigrateToAlternateNetwork(bool close_session_on_error);
+
+  // Migrates session over to use |peer_address| and |network|.
   // If |network| is kInvalidNetworkHandle, default network is used. If the
-  // migration fails and |close_session_on_error| is true, session will closed.
+  // migration fails and |close_session_on_error| is true, session will be
+  // closed.
   MigrationResult Migrate(NetworkChangeNotifier::NetworkHandle network,
                           IPEndPoint peer_address,
                           bool close_sesion_on_error);
@@ -545,6 +553,8 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
 
   QuicServerId server_id_;
   bool require_confirmation_;
+  bool migrate_session_early_;
+  bool migrate_session_on_network_change_;
   QuicClock* clock_;  // Unowned.
   int yield_after_packets_;
   QuicTime::Delta yield_after_duration_;

@@ -469,17 +469,6 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
                                const QuicServerId& server_id,
                                bool was_session_active);
 
-  // Internal method that migrates |session| over to using
-  // |peer_address| and |network|. If |network| is
-  // kInvalidNetworkHandle, default network is used. If the migration
-  // fails and |close_session_on_error| is true, connection is closed.
-  MigrationResult MigrateSessionInner(
-      QuicChromiumClientSession* session,
-      IPEndPoint peer_address,
-      NetworkChangeNotifier::NetworkHandle network,
-      bool close_session_on_error,
-      const NetLogWithSource& net_log);
-
   bool require_confirmation_;
   NetLog* net_log_;
   HostResolver* host_resolver_;
