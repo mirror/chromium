@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4709c9c0_0a496e5c",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-17T15:19:49Z",
+      "side": 1,
+      "message": "nit: remove \"which\", s/send/sends",
+      "range": {
+        "startLine": 89,
+        "startChar": 31,
+        "endLine": 89,
+        "endChar": 36
+      },
+      "revId": "5b075e3a46605f32860b54543170c2f85420e1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e53fdf_83ad8375",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-17T15:19:49Z",
+      "side": 1,
+      "message": "nit: remove \"will\" and move some text from the next line to this one.",
+      "range": {
+        "startLine": 93,
+        "startChar": 47,
+        "endLine": 93,
+        "endChar": 51
+      },
+      "revId": "5b075e3a46605f32860b54543170c2f85420e1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2a6ba3_49fcfd28",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-17T15:19:49Z",
+      "side": 1,
+      "message": "Add a comment explaining what the int represents.",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 124,
+        "endChar": 21
+      },
+      "revId": "5b075e3a46605f32860b54543170c2f85420e1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb3d1b2c_5f3e1bd8",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-17T15:19:49Z",
+      "side": 1,
+      "message": "s/NULL/null",
+      "range": {
+        "startLine": 183,
+        "startChar": 13,
+        "endLine": 183,
+        "endChar": 17
+      },
+      "revId": "5b075e3a46605f32860b54543170c2f85420e1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d494ea2_129188b7",
+        "filename": "media/audio/audio_input_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-17T15:19:49Z",
+      "side": 1,
+      "message": "This comment appears to contradict the previous comment.\nAID cannot call EventHandler in its constructor, but if OnStreamCreated is called when construction is finished does that mean that it should be called from the constructor?\nPlease rephrase.",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 13
+      },
+      "revId": "5b075e3a46605f32860b54543170c2f85420e1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
