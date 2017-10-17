@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf89435a_40daff2e",
+        "filename": "chrome/browser/chromeos/policy/device_cloud_policy_manager_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-17T14:29:05Z",
+      "side": 1,
+      "message": "Note: this is also a fix of the behavior change which I accidentally introduced in the previous CL (https://chromium-review.googlesource.com/c/chromium/src/+/718716)\ndevice_settings_test_helper_.FlushStore() did no-op on ToT, because the RunUntilIdle() above runs the callback already, so \"if (done_) return;\" at L589 in Base returned unexpectedly.\nThis revives the check.",
+      "revId": "228c0be25fd8b2d03ad46c20519313f9b29e4933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
