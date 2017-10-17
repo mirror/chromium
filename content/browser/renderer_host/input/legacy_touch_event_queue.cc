@@ -28,22 +28,6 @@ namespace {
 // scrolling is active and possible.
 const double kAsyncTouchMoveIntervalSec = .2;
 
-// Compare all properties of touch points to determine the state.
-bool HasPointChanged(const WebTouchPoint& point_1,
-                     const WebTouchPoint& point_2) {
-  DCHECK_EQ(point_1.id, point_2.id);
-  if (point_1.PositionInScreen() != point_2.PositionInScreen() ||
-      point_1.PositionInWidget() != point_2.PositionInWidget() ||
-      point_1.radius_x != point_2.radius_x ||
-      point_1.radius_y != point_2.radius_y ||
-      point_1.rotation_angle != point_2.rotation_angle ||
-      point_1.force != point_2.force || point_1.tilt_x != point_2.tilt_x ||
-      point_1.tilt_y != point_2.tilt_y) {
-    return true;
-  }
-  return false;
-}
-
 }  // namespace
 
 // This class represents a single coalesced touch event. However, it also keeps
