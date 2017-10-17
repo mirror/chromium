@@ -58,4 +58,40 @@ void TextInputClientImpl::DispatchKeyEventPostIME(
   }
 }
 
+void TextInputClientImpl::GetTextAndSelectionRange(
+    GetTextAndSelectionRangeCallback callback) {
+  if (!callback || callback.is_null())
+    return;
+
+  gfx::Range text_range;
+  gfx::Range selection_range;
+  base::string16 surrounding_text;
+
+  if (!text_input_client_->GetTextRange(&text_range) ||
+      !text_input_client_->GetTextFromRange(text_range, &surrounding_text) ||
+      !text_input_client_->GetSelectionRange(&selection_range)) {
+    std::move(callback).Run(false, text_range, surrounding_text,
+                            selection_range);
+  }
+  std::move(callback).Run(true, text_range, surrounding_text, selection_range);
+}
+
+void TextInputClientImpl::OnInputMethodChanged() {
+  text_input_client_->OnInputMethodChanged();
+}
+
+void TextInputClientImpl::EnsureCaretNotInRect(const gfx::Rect& rect) {
+  text_input_client_->EnsureCaretNotInRect(rect);
+}
+
+void TextInputClientImpl::GetTextRange(const gfx::Range& range) {
+  text_input_client_->GetTextRange(const_cast<gfx::Range*>(&range));
+}
+
+void TextInputClientImpl::HasCompositionText(
+    HasCompositionTextCallback callback) {
+  if (callback && !callback.is_null())
+    std::move(callback).Run(text_input_client_->HasCompositionText());
+}
+
 }  // namespace aura
