@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dbc3273_b35168ba",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-17T23:00:20Z",
+      "side": 1,
+      "message": "It looks like every time we\u0027re setting |_isActive| to NO, we\u0027re immediately clearing the internal state.  How about we convert it to a property and handle calling |-clearInternalState| in the setter when it\u0027s being set to NO?",
+      "revId": "b34b63a3c020cbbde991a63aab1909f589399111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
