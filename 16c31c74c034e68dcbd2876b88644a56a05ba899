@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f8358ab_344a1f7f",
+        "filename": "services/ui/manifest.json",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-17T17:53:48Z",
+      "side": 1,
+      "message": "nit: 80 cols",
+      "range": {
+        "startLine": 20,
+        "startChar": 1,
+        "endLine": 20,
+        "endChar": 2
+      },
+      "revId": "16c31c74c034e68dcbd2876b88644a56a05ba899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
