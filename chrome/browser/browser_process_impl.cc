@@ -856,6 +856,9 @@ void BrowserProcessImpl::RegisterPrefs(PrefRegistrySimple* registry) {
                                 net::kDefaultMaxSocketsPerProxyServer);
 
   registry->RegisterBooleanPref(prefs::kAllowCrossOriginAuthPrompt, false);
+#if defined(OS_POSIX)
+  registry->RegisterBooleanPref(prefs::kNtlmV2Enabled, false);
+#endif
 
 #if defined(OS_CHROMEOS) || defined(OS_ANDROID)
   registry->RegisterBooleanPref(prefs::kEulaAccepted, false);

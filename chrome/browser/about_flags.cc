@@ -3547,6 +3547,13 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(TabUnderNavigationThrottle::kBlockTabUnders)},
 #endif  // defined(OS_ANDROID)
 
+#if defined(OS_POSIX)
+    {"enable-ntlm-v2", flag_descriptions::kNtlmV2EnabledName,
+     flag_descriptions::kNtlmV2EnabledDescription,
+     kOsMac | kOsLinux | kOsCrOS | kOsAndroid,
+     FEATURE_VALUE_TYPE(features::kNtlmV2Enabled)},
+#endif  // defined(OS_POSIX)
+
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the
