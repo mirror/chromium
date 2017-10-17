@@ -376,6 +376,30 @@
       "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2a3aefd_8eb7731e",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-17T21:10:32Z",
+      "side": 1,
+      "message": "What do you want to have happen? You shouldn\u0027t need to override anything, just call widget-\u003eSetBounds() before Show, e.g.\nviews::Widget* widget \u003d DialogDelegate::CreateDialogWidget(this, nullptr,\n                                     browser-\u003ewindow()-\u003eGetNativeWindow());\nwidget-\u003eSetBounds(whatever bounds you want);\nwidget-\u003eShow();\n\nAlternatively you could override GetSavedWindowPlacement() and return the initial bounds. You could also call GetDialogWidgetInitParams supplying a bounds you want followed by creating the widget...",
+      "parentUuid": "ea6cae4d_8733691f",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
