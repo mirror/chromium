@@ -1374,9 +1374,6 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 }
 
 - (UIView*)view {
-  // Kick off the process of lazily creating the view and starting the load if
-  // necessary; this creates _containerView if it doesn't exist.
-  [self triggerPendingLoad];
   DCHECK(_containerView);
   return _containerView;
 }
