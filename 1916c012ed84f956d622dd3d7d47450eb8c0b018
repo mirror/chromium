@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3adedbaf_0647d14f",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 3971,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-17T16:12:16Z",
+      "side": 1,
+      "message": "I am guessing that we could fix https://crbug.com/774691 by copying data from |frame_entry| into |last_cloned_entry|:\n- last_cloned_entry-\u003eSetPostData(frame_entry-\u003e...)\n- last_cloned_entry-\u003eset_extra_headers(frame_entry-\u003e...)\n- last_cloned_entry-\u003eSetReferrer(frame_entry-\u003e...)\n- last_cloned_entry-\u003e???SetUniqueId???(...) // to avoid hitting the network\n\nBut...\n- This is only a guess\n- This feels very ad-hoc\nSo - let\u0027s not do it in *this* CL yet.",
+      "range": {
+        "startLine": 3971,
+        "startChar": 2,
+        "endLine": 3971,
+        "endChar": 19
+      },
+      "revId": "1916c012ed84f956d622dd3d7d47450eb8c0b018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

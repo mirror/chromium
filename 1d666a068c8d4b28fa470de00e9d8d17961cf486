@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a23b8252_106df45b",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-17T16:12:16Z",
+      "side": 1,
+      "message": "https://crbug.com/770946 (wrong SiteIsolation for view-frame-source) is fixed by patchset #13",
+      "parentUuid": "567df39e_8766a3be",
+      "revId": "1d666a068c8d4b28fa470de00e9d8d17961cf486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24c4cd35_685c7dec",
         "filename": "chrome/browser/ui/browser_commands.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "caaf7373_01703d4c",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-17T16:12:16Z",
+      "side": 1,
+      "message": "Correct - in this case view page source stops working for pages retrieved after a http post request.  Patchset #13 adds a browser test for this.",
+      "parentUuid": "24c4cd35_685c7dec",
+      "revId": "1d666a068c8d4b28fa470de00e9d8d17961cf486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "856e1502_bbd3e87d",
         "filename": "content/public/browser/web_contents_delegate.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "1d666a068c8d4b28fa470de00e9d8d17961cf486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c3f640_a24ef69f",
+        "filename": "content/public/browser/web_contents_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-17T16:12:16Z",
+      "side": 1,
+      "message": "This method is removed entirely in patchset #13.",
+      "parentUuid": "856e1502_bbd3e87d",
+      "revId": "1d666a068c8d4b28fa470de00e9d8d17961cf486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

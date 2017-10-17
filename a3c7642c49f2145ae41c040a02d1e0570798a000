@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d321b329_61d704fe",
+        "filename": "content/public/browser/web_contents_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-17T16:12:16Z",
+      "side": 0,
+      "message": "Ack.  Patchset #13 adds a test for this.",
+      "parentUuid": "5715f384_f09c23ac",
+      "revId": "a3c7642c49f2145ae41c040a02d1e0570798a000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d7dfc63_e3591485",
         "filename": "content/public/common/page_state.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a3c7642c49f2145ae41c040a02d1e0570798a000",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae45f253_70cd7ebb",
+        "filename": "content/public/common/page_state.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-17T16:12:16Z",
+      "side": 0,
+      "message": "Errr... I am resurrecting this in patchset #13... :-/",
+      "parentUuid": "3d7dfc63_e3591485",
+      "revId": "a3c7642c49f2145ae41c040a02d1e0570798a000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
