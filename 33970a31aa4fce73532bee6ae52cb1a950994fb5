@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46a4d20a_c670a616",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifierTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-17T15:07:54Z",
+      "side": 1,
+      "message": "This is probably not going to be as precise now that you\u0027re doing\nrandom sampling. I think bounding it would be fine, like test\nthat feature 1 is within 0.005 of 0.03.",
+      "revId": "33970a31aa4fce73532bee6ae52cb1a950994fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
