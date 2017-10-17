@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c7263da_d3ab8bb0",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-17T05:10:30Z",
+      "side": 1,
+      "message": "// OS_POSIX \u0026\u0026 !OS_MACOSX",
+      "revId": "469b5dd745176d6b3bdbe22ce362dc7bd739fb1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e0191e_f9152c51",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-17T05:10:30Z",
+      "side": 1,
+      "message": "// !CHROME_MULTIPLE_DLL_BROWSER",
+      "revId": "469b5dd745176d6b3bdbe22ce362dc7bd739fb1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8f92e9_023f1d84",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-17T05:10:30Z",
+      "side": 1,
+      "message": "What is the expected behavior when both V8_USE_EXTERNAL_STARTUP_DATA and USE_V8_CONTEXT_SNAPSHOT are defined? Should USE_V8_CONTEXT_SNAPSHOT be prioritized? Are there any documentation/comments about it?",
+      "revId": "469b5dd745176d6b3bdbe22ce362dc7bd739fb1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d0dfa2d_80a9ad06",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-17T05:10:30Z",
+      "side": 1,
+      "message": "// !CHROME_MULTIPLE_DLL_BROWSER",
+      "revId": "469b5dd745176d6b3bdbe22ce362dc7bd739fb1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
