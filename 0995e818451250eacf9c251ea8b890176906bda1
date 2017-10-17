@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "156954b7_9a3b750a",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-17T23:59:42Z",
+      "side": 1,
+      "message": "optional nit: remove app_id1 and app_id2, inline shelf_id usage:\nconst ash::ShelfID shelf_id1(ArcAppTest::GetAppId(arc_test().fake_apps()[0]));\nconst ash::ShelfID shelf_id2(ArcAppTest::GetAppId(arc_test().fake_apps()[1]));\n... \narc::LaunchApp(profile(), shelf_id1.app_id, ui::EF_LEFT_MOUSE_BUTTON);\narc::LaunchApp(profile(), shelf_id2.app_id, ui::EF_LEFT_MOUSE_BUTTON);",
+      "revId": "0995e818451250eacf9c251ea8b890176906bda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac96cfc3_9bee0970",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-17T23:59:42Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be a static_cast? Optionally avoid casting altogether by re-implementing IsItemPresentInMenu using MenuModel, maybe via GetModelAndIndexForCommandId kinda like this?:\n\nbool IsItemPresentInMenu(ui::MenuModel* menu, int command_id) {\n  ui::MenuModel* model \u003d menu;\n  int index \u003d 0;\n  return ui::MenuModel::GetModelAndIndexForCommandId(command_id, \u0026model, \u0026index);\n}",
+      "range": {
+        "startLine": 276,
+        "startChar": 6,
+        "endLine": 276,
+        "endChar": 22
+      },
+      "revId": "0995e818451250eacf9c251ea8b890176906bda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
