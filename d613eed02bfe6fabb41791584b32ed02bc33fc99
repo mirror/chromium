@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e4ff821_86722410",
+        "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-17T23:49:30Z",
+      "side": 1,
+      "message": "Let\u0027s call this \"config\". The full name will be \"//ios/third_party/material_internationalization_ios:config\" so it is unambiguous.",
+      "range": {
+        "startLine": 8,
+        "startChar": 8,
+        "endLine": 8,
+        "endChar": 48
+      },
+      "revId": "d613eed02bfe6fabb41791584b32ed02bc33fc99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5292480_4580a0bb",
+        "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-17T23:49:30Z",
+      "side": 1,
+      "message": ":config",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 63
+      },
+      "revId": "d613eed02bfe6fabb41791584b32ed02bc33fc99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d2f496_c0c4c217",
+        "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-17T23:49:30Z",
+      "side": 1,
+      "message": ":config",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 46
+      },
+      "revId": "d613eed02bfe6fabb41791584b32ed02bc33fc99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
