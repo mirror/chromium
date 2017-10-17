@@ -52,6 +52,7 @@
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
 #include "core/loader/IdlenessDetector.h"
+#include "core/loader/InteractiveDetector.h"
 #include "core/loader/MixedContentChecker.h"
 #include "core/loader/NetworkHintsInterface.h"
 #include "core/loader/PingLoader.h"
@@ -463,6 +464,13 @@ void FrameFetchContext::DispatchWillSendRequest(
                          initiator_info);
   if (IdlenessDetector* idleness_detector = GetFrame()->GetIdlenessDetector())
     idleness_detector->OnWillSendRequest();
+  if (document_) {
+    InteractiveDetector* interactive_detector(
+        InteractiveDetector::From(*document_));
+    if (interactive_detector) {
+      interactive_detector->OnResourceLoadBegin();
+    }
+  }
   if (GetFrame()->FrameScheduler())
     GetFrame()->FrameScheduler()->DidStartLoading(identifier);
 }
@@ -669,6 +677,12 @@ void FrameFetchContext::DidLoadResource(Resource* resource) {
             local_frame->GetIdlenessDetector()) {
       idleness_detector->OnDidLoadResource();
     }
+  }
+
+  InteractiveDetector* interactive_detector(
+      InteractiveDetector::From(*document_));
+  if (interactive_detector) {
+    interactive_detector->OnResourceLoadEnd(resource->LoadFinishTime());
   }
 
   if (resource->IsLoadEventBlockingResourceType())
