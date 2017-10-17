@@ -93,6 +93,30 @@
       "revId": "fb64ded4b5bb4cac32e39e24b7325976d439812a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f049262_ecdaf8bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-17T17:59:49Z",
+      "side": 1,
+      "message": "I think keeping it here for now for this CL is OK, but I agree we need a designated place for attachX line of calls. Right now they are kind of scattered through TabCreator and TabModelSelector depending on implementation and having a designated place would help with adding more examples.",
+      "parentUuid": "1d983142_f9ef78df",
+      "range": {
+        "startLine": 214,
+        "startChar": 16,
+        "endLine": 214,
+        "endChar": 22
+      },
+      "revId": "fb64ded4b5bb4cac32e39e24b7325976d439812a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
