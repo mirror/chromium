@@ -461,7 +461,6 @@ ManagePasswordsBubbleView::PendingView::PendingView(
 
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnablePasswordSelection) &&
-      !parent_->model()->hide_eye_icon() &&
       parent_->model()->pending_password().federation_origin.unique()) {
     password_view_button_ = CreatePasswordViewButton(this).release();
   }
@@ -547,6 +546,10 @@ void ManagePasswordsBubbleView::PendingView::CreatePasswordField() {
 }
 
 void ManagePasswordsBubbleView::PendingView::TogglePasswordVisibility() {
+  if (!password_visible_ && parent_->model()->lock_eye_icon()) {
+    if (!parent_->model()->AuthenticateUser())
+      return;
+  }
   UpdateUsernameAndPasswordInModel();
   password_visible_ = !password_visible_;
   password_view_button_->SetToggled(password_visible_);

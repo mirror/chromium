@@ -113,10 +113,10 @@ class ManagePasswordsBubbleModel {
   }
 
 #if defined(UNIT_TEST)
-  void set_hide_eye_icon(bool hide) { hide_eye_icon_ = hide; }
+  void set_lock_eye_icon(bool hide) { lock_eye_icon_ = hide; }
 #endif
 
-  bool hide_eye_icon() const { return hide_eye_icon_; }
+  bool lock_eye_icon() const { return lock_eye_icon_; }
 
   Profile* GetProfile() const;
   content::WebContents* GetWebContents() const;
@@ -131,6 +131,10 @@ class ManagePasswordsBubbleModel {
   bool ReplaceToShowPromotionIfNeeded();
 
   void SetClockForTesting(std::unique_ptr<base::Clock> clock);
+
+  // Requests an authentication to view passwords in a prompt and returns true
+  // if the user is authenticated successfully.
+  bool AuthenticateUser() const;
 
  private:
   enum UserBehaviorOnUpdateBubble {
@@ -166,8 +170,8 @@ class ManagePasswordsBubbleModel {
   // A bridge to ManagePasswordsUIController instance.
   base::WeakPtr<PasswordsModelDelegate> delegate_;
 
-  // True iff the eye icon should be hidden for privacy reasons.
-  bool hide_eye_icon_;
+  // True iff password viewing should require re-auth for privacy reasons.
+  bool lock_eye_icon_;
 
   DISALLOW_COPY_AND_ASSIGN(ManagePasswordsBubbleModel);
 };
