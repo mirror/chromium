@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "034e0f09_d6e1b132",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-17T00:26:57Z",
+      "side": 1,
+      "message": "same, please use \u0027\u003d default;\u0027 for new code.",
+      "range": {
+        "startLine": 28,
+        "startChar": 24,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18995ea_eda1d530",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-17T00:26:57Z",
+      "side": 1,
+      "message": "same.",
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943bcee5_3fcd3c2a",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-17T00:26:57Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 72,
+        "startChar": 31,
+        "endLine": 72,
+        "endChar": 33
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b83f448_af97c1aa",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-17T00:26:57Z",
+      "side": 1,
+      "message": "Since production code cannot call *ForTesting() functions (I think CQ fails if someone does that), moving this to public: should be safe. Please also delete L109 (friend) if you move this to public:.",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 58
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea6c9fc_dc6ba977",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-17T00:26:57Z",
+      "side": 1,
+      "message": "I\u0027m not really sure why this had to be moved here, but can we rather move this to L294 to use the anonymous namespace for the entire test code?",
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b14425_2f35de2e",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-17T00:26:57Z",
+      "side": 1,
+      "message": "same, \u003d default; please.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 38
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388e2602_3a95d9f7",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-17T00:26:57Z",
+      "side": 1,
+      "message": "Can you add a comment like\n\n TestOpenUrlDelegate* test_open_url_delegate_;  // owned by |instance_|\n\n?",
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
