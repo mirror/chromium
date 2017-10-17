@@ -62,6 +62,9 @@ class CC_PAINT_EXPORT DiscardableImageMap {
   void Reset();
   void Generate(const PaintOpBuffer* paint_op_buffer, const gfx::Rect& bounds);
 
+  base::flat_map<PaintImage::Id, PaintImage::DecodingMode>
+  TakeDecodingModeMap();
+
  private:
   friend class ScopedMetadataGenerator;
   friend class DiscardableImageMapTest;
@@ -74,6 +77,7 @@ class CC_PAINT_EXPORT DiscardableImageMap {
 
   base::flat_map<PaintImage::Id, gfx::Rect> image_id_to_rect_;
   std::vector<AnimatedImageMetadata> animated_images_metadata_;
+  base::flat_map<PaintImage::Id, PaintImage::DecodingMode> decoding_mode_map_;
   bool all_images_are_srgb_ = false;
 
   RTree<DrawImage> images_rtree_;
