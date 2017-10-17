@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+
+<style>
+div {
+	overflow: scroll;
+	height: 260px;
+	width: 420px;
+}
+iframe {
+  height: 250px;
+  width: 400px;
+  margin-top: 400px;
+}
+</style>
+
+<div id="div">
+  <iframe id="iframe" src="scroll-iframe-into-view-twice-iframe.html"></iframe>
+</div>
+
+<script>
+promise_test(t => {
+  var iframe = document.getElementById("iframe");
+  return new Promise(function (resolve) {
+  	iframe.addEventListener("load", function() {
+  		var div = document.getElementById("div");
+		  assert_greater_than(div.scrollTop, 380);
+  		resolve();
+  	});
+  });
+});
+</script>
