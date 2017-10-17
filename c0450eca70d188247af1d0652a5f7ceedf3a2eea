@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aae2cbda_7acc83f5",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-17T19:32:05Z",
+      "side": 1,
+      "message": "You\u0027re probably okay with a sequenced task runner, but up to you.",
+      "revId": "c0450eca70d188247af1d0652a5f7ceedf3a2eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e82e0ee_700d75a0",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-17T19:32:05Z",
+      "side": 1,
+      "message": "Generally we just check fail on out of threads, but up to you.",
+      "revId": "c0450eca70d188247af1d0652a5f7ceedf3a2eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b2d387_b1f140dd",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-17T19:32:05Z",
+      "side": 1,
+      "message": "std::move(vaapi_wrapper). Also just pass in an error and frame ready callback prebound to the WeakPtr as suggested in the header.",
+      "revId": "c0450eca70d188247af1d0652a5f7ceedf3a2eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94844eb3_7059b377",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-17T19:32:05Z",
+      "side": 1,
+      "message": "As suggested on API, just have Initialize return a status code instead to avoid taking an Error*.",
+      "revId": "c0450eca70d188247af1d0652a5f7ceedf3a2eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34494357_1d09d25b",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-17T19:32:05Z",
+      "side": 1,
+      "message": "Why are you hopping to the encoder thread for this? Just post to task_runner_ for NotifyError directly? Alternatively move this failure check into EncodeTask() to let it handle this.\n\nSeems like it might be worthwhile to have Encode() delivered directly to your encoder thread too in the future. That\u0027s probably a larger refactoring though.",
+      "revId": "c0450eca70d188247af1d0652a5f7ceedf3a2eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caedb66c_d37550c1",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-17T19:32:05Z",
+      "side": 1,
+      "message": "First shouldn\u0027t be base::Passed, should be base::Unretained() since you\u0027re going to ensure ownership until all tasks on encode task runner finish.",
+      "revId": "c0450eca70d188247af1d0652a5f7ceedf3a2eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424ff925_f5517595",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-17T19:32:05Z",
+      "side": 1,
+      "message": "Comment is out of date now.",
+      "revId": "c0450eca70d188247af1d0652a5f7ceedf3a2eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f12c226_00611ff4",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-17T19:32:05Z",
+      "side": 1,
+      "message": "No need to fully define this here; put it in the .cc file and just have a forward declaration here \"class Encoder;\"",
+      "revId": "c0450eca70d188247af1d0652a5f7ceedf3a2eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10bf1e34_7ceee734",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-17T19:32:05Z",
+      "side": 1,
+      "message": "Try to remove if you can. If you make it a CC level class no need for private constructor.",
+      "revId": "c0450eca70d188247af1d0652a5f7ceedf3a2eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc46f29_137c843d",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-17T19:32:05Z",
+      "side": 1,
+      "message": "No_, this class also shouldn\u0027t know about this if you take prebound callbacks as I suggest in the next comment.",
+      "revId": "c0450eca70d188247af1d0652a5f7ceedf3a2eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4fa5184_d547804a",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-17T19:32:05Z",
+      "side": 1,
+      "message": "This isn\u0027t a weak_this; instead of passing a WeakPtr around pass in prebound base::RepeatingCallbacks.",
+      "revId": "c0450eca70d188247af1d0652a5f7ceedf3a2eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ff65cc_23c60bf0",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-17T19:32:05Z",
+      "side": 1,
+      "message": "static here and below on all of these that are unchanging.",
+      "revId": "c0450eca70d188247af1d0652a5f7ceedf3a2eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1201dbe2_7be9cc73",
+        "filename": "media/gpu/vaapi_wrapper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-17T19:32:05Z",
+      "side": 1,
+      "message": "scoped_refptr? Seems this should be raw pointer or std::unique_ptr, this class is not ref counted. Who is calling this? Did you mean UploadVideoFrameToSurface like you use in the VAAPI encoder here?",
+      "revId": "c0450eca70d188247af1d0652a5f7ceedf3a2eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
