@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "635adbc8_17c9c928",
+        "filename": "chromecast/media/cma/backend/fuchsia/fuchsia_volume_control.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-10-17T21:10:35Z",
+      "side": 1,
+      "message": "what\u0027s this used for? it\u0027s fairly easy for us to expose",
+      "revId": "b4cb58b2bdfb9e831405259b972d0a378ee863c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4ec57b_2838a9ba",
+        "filename": "chromecast/media/cma/backend/fuchsia/mixer_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-10-17T21:10:35Z",
+      "side": 1,
+      "message": "wait, why? what benefit does blocking this thread here provide?",
+      "revId": "b4cb58b2bdfb9e831405259b972d0a378ee863c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930bbe2e_08f2398c",
+        "filename": "chromecast/media/cma/backend/fuchsia/mixer_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-10-17T21:10:35Z",
+      "side": 1,
+      "message": "typo \u0027Presentatio\u0027 -\u003e \u0027Presentation\u0027",
+      "range": {
+        "startLine": 172,
+        "startChar": 47,
+        "endLine": 172,
+        "endChar": 49
+      },
+      "revId": "b4cb58b2bdfb9e831405259b972d0a378ee863c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
