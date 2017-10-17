@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bca59bd9_d9be24a9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console-completions-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T22:57:02Z",
+      "side": 1,
+      "message": "Does not work!",
+      "revId": "3265e7650e2331f7b97ced7abe5f689bf9c592df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
