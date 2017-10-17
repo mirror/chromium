@@ -20,10 +20,6 @@ namespace base {
 class SharedMemory;
 }
 
-namespace ui {
-class Compositor;
-}
-
 namespace content {
 class SoftwareOutputDeviceWin;
 
@@ -50,7 +46,7 @@ class OutputDeviceBacking {
 class SoftwareOutputDeviceWin : public viz::SoftwareOutputDevice {
  public:
   SoftwareOutputDeviceWin(OutputDeviceBacking* backing,
-                          ui::Compositor* compositor);
+                          gfx::AcceleratedWidget widget);
   ~SoftwareOutputDeviceWin() override;
 
   void Resize(const gfx::Size& viewport_pixel_size,
