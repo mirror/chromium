@@ -76,13 +76,6 @@ class QuicStreamFactoryPeer;
 // When a connection is idle for 30 seconds it will be closed.
 const int kIdleConnectionTimeoutSeconds = 30;
 
-// Result of a session migration attempt.
-enum class MigrationResult {
-  SUCCESS,         // Migration succeeded.
-  NO_NEW_NETWORK,  // Migration failed since no new network was found.
-  FAILURE          // Migration failed for other reasons.
-};
-
 enum QuicConnectionMigrationStatus {
   MIGRATION_STATUS_NO_MIGRATABLE_STREAMS,
   MIGRATION_STATUS_ALREADY_MIGRATED,
@@ -310,19 +303,6 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
       bool close_if_cannot_migrate,
       const NetLogWithSource& net_log);
 
-  // Method that attempts migration of |session| on write error with
-  // |error_code| if |session| is active and if there is an alternate network
-  // than the one to which |session| is currently bound.
-  MigrationResult MaybeMigrateSingleSessionOnWriteError(
-      QuicChromiumClientSession* session,
-      int error_code);
-
-  // Method that attempts migration of |session| on path degrading if |session|
-  // is active and if there is an alternate network than the one to which
-  // |session| is currently bound.
-  MigrationResult MaybeMigrateSingleSessionOnPathDegrading(
-      QuicChromiumClientSession* session);
-
   // Migrates |session| over to using |network|. If |network| is
   // kInvalidNetworkHandle, default network is used.
   MigrationResult MigrateSessionToNewNetwork(
@@ -336,6 +316,10 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   void MigrateSessionToNewPeerAddress(QuicChromiumClientSession* session,
                                       IPEndPoint peer_address,
                                       const NetLogWithSource& net_log);
+
+  std::unique_ptr<DatagramClientSocket> CreateDatagramClientSocketForMigration(
+      NetLog* net_log,
+      const NetLogSource& source);
 
   // NetworkChangeNotifier::IPAddressObserver methods:
 
@@ -425,13 +409,6 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   void ActivateSession(const QuicSessionKey& key,
                        QuicChromiumClientSession* session);
 
-  // Method that initiates migration of |session| if |session| is
-  // active and if there is an alternate network than the one to which
-  // |session| is currently bound.
-  MigrationResult MaybeMigrateSingleSession(QuicChromiumClientSession* session,
-                                            bool close_session_on_error,
-                                            const NetLogWithSource& net_log);
-
   void ConfigureInitialRttEstimate(const QuicServerId& server_id,
                                    QuicConfig* config);
 
@@ -471,17 +448,6 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   void ProcessGoingAwaySession(QuicChromiumClientSession* session,
                                const QuicServerId& server_id,
                                bool was_session_active);
-
-  // Internal method that migrates |session| over to using
-  // |peer_address| and |network|. If |network| is
-  // kInvalidNetworkHandle, default network is used. If the migration
-  // fails and |close_session_on_error| is true, connection is closed.
-  MigrationResult MigrateSessionInner(
-      QuicChromiumClientSession* session,
-      IPEndPoint peer_address,
-      NetworkChangeNotifier::NetworkHandle network,
-      bool close_session_on_error,
-      const NetLogWithSource& net_log);
 
   bool require_confirmation_;
   NetLog* net_log_;
