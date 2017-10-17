@@ -45,6 +45,7 @@ class ChromeosInfoPrivateSetFunction : public UIThreadExtensionFunction {
   ResponseAction Run() override;
 
  private:
+
   DECLARE_EXTENSION_FUNCTION("chromeosInfoPrivate.set", CHROMEOSINFOPRIVATE_SET)
 };
 

@@ -2,7 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <utility>
+
 #include "ash/public/cpp/ash_pref_names.h"
+#include "ash/shell.h"
+#include "ash/test/ash_test_base.h"
 #include "base/sys_info.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"
@@ -10,11 +14,18 @@
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/stub_install_attributes.h"
 #include "chrome/browser/extensions/extension_apitest.h"
+#include "chrome/browser/ui/browser_window.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/test/base/in_process_browser_test.h"
 #include "chromeos/settings/cros_settings_names.h"
 #include "components/arc/arc_util.h"
 #include "components/prefs/pref_service.h"
+#include "ui/events/devices/touchscreen_device.h"
+#include "ui/events/event.h"
+#include "ui/events/event_constants.h"
+#include "ui/events/test/device_data_manager_test_api.h"
+#include "ui/events/test/event_generator.h"
 
 namespace {
 
@@ -24,8 +35,16 @@ const char kTestAppId[] = "ljoammodoonkhnehlncldjelhidljdpi";
 
 class ChromeOSInfoPrivateTest : public ExtensionApiTest {
  public:
-  ChromeOSInfoPrivateTest() {}
+  ChromeOSInfoPrivateTest()
+      // :   event_generator_(std::make_unique<ui::test::EventGenerator>(browser()->window()->GetNativeWindow()))
+  {
+    }
   ~ChromeOSInfoPrivateTest() override {}
+
+  void SetUpOnMainThread() override {
+    ExtensionApiTest::SetUpOnMainThread();
+    event_generator_ = std::make_unique<ui::test::EventGenerator>(browser()->window()->GetNativeWindow());
+  }
 
  protected:
   void EnableKioskSession() {
@@ -40,6 +59,8 @@ class ChromeOSInfoPrivateTest : public ExtensionApiTest {
     base::SysInfo::SetChromeOSVersionInfoForTest(lsb_release,
                                                  base::Time::Now());
   }
+
+  std::unique_ptr<ui::test::EventGenerator> event_generator_;
 };
 
 IN_PROC_BROWSER_TEST_F(ChromeOSInfoPrivateTest, TestGetAndSet) {
@@ -124,6 +145,58 @@ IN_PROC_BROWSER_TEST_F(ChromeOSInfoPrivateTest, UnknownDeviceType) {
   SetDeviceType("UNKNOWN");
   ASSERT_TRUE(RunPlatformAppTestWithArg("chromeos_info_private/extended",
                                         "unknown device type"))
+      << message_;
+}
+
+IN_PROC_BROWSER_TEST_F(ChromeOSInfoPrivateTest, StylusNotAvailable) {
+  ui::test::DeviceDataManagerTestAPI test_api;
+    test_api.SetTouchscreenDevices({});
+  ASSERT_TRUE(RunPlatformAppTestWithArg("chromeos_info_private/extended",
+                                        "stylus not available"))
+      << message_;
+}
+
+IN_PROC_BROWSER_TEST_F(ChromeOSInfoPrivateTest, StylusAvailable) {
+  ui::test::DeviceDataManagerTestAPI test_api;
+  ui::TouchscreenDevice stylus(1, ui::InputDeviceType::INPUT_DEVICE_INTERNAL,
+                        "Touchscreen", gfx::Size(1024, 768), 0);
+  stylus.is_stylus = true;
+  test_api.SetTouchscreenDevices({stylus});
+
+  ASSERT_TRUE(RunPlatformAppTestWithArg("chromeos_info_private/extended",
+                                        "stylus available"))
+      << message_;
+}
+
+IN_PROC_BROWSER_TEST_F(ChromeOSInfoPrivateTest, StylusSeen) {
+  ui::test::DeviceDataManagerTestAPI test_api;
+  ui::TouchscreenDevice stylus(1, ui::InputDeviceType::INPUT_DEVICE_INTERNAL,
+                        "Touchscreen", gfx::Size(1024, 768), 0);
+  stylus.is_stylus = true;
+  test_api.SetTouchscreenDevices({stylus});
+
+  // ui::PointerEvent stylus_event(
+  //     ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0,
+  //     ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_PEN, 0),
+  //     base::TimeTicks());
+  // event_generator_->Dispatch(&stylus_event);
+  
+  DCHECK(ash::Shell::GetPrimaryRootWindow()) << "Shell window doesn't exist.";
+  ui::test::EventGenerator generator(ash::Shell::GetPrimaryRootWindow());
+
+  // AshEventGeneratorDelegate is private.
+  // new ui::test::EventGenerator(new AshEventGeneratorDelegate());
+  LOG(ERROR) << "Dispatching enter.";
+  generator.EnterPenPointerMode();
+  LOG(ERROR) << "Dispatching press.";
+  generator.PressTouch();
+  LOG(ERROR) << "Dispatching release.";
+  generator.ReleaseTouch();
+  LOG(ERROR) << "Dispatching exit.";
+  generator.ExitPenPointerMode();
+
+  ASSERT_TRUE(RunPlatformAppTestWithArg("chromeos_info_private/extended",
+                                        "stylus seen"))
       << message_;
 }
 

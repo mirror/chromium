@@ -152,18 +152,26 @@ class PaletteTray::StylusWatcher : public views::PointerWatcher {
       : local_state_pref_service_(pref_service) {
     ShellPort::Get()->AddPointerWatcher(this,
                                         views::PointerWatcherEventTypes::BASIC);
+
+    LOG(ERROR) << "Stylus watcher created.";
   }
 
-  ~StylusWatcher() override { ShellPort::Get()->RemovePointerWatcher(this); }
+  ~StylusWatcher() override {
+    ShellPort::Get()->RemovePointerWatcher(this);
+    LOG(ERROR) << "Stylus watcher destroyed.";
+  }
 
   // views::PointerWatcher:
   void OnPointerEventObserved(const ui::PointerEvent& event,
                               const gfx::Point& location_in_screen,
                               gfx::NativeView target) override {
+    LOG(ERROR) << "PaletteTray::OnPointerEventObserved";
     if (event.pointer_details().pointer_type ==
         ui::EventPointerType::POINTER_TYPE_PEN) {
-      if (local_state_pref_service_)
+      if (local_state_pref_service_) {
+        LOG(ERROR) << "Setting local state pref";
         local_state_pref_service_->SetBoolean(prefs::kHasSeenStylus, true);
+      }
     }
   }
 
@@ -179,6 +187,7 @@ PaletteTray::PaletteTray(Shelf* shelf)
       welcome_bubble_(std::make_unique<PaletteWelcomeBubble>(this)),
       scoped_session_observer_(this),
       weak_factory_(this) {
+  LOG(ERROR) << "PaletteTray created";
   PaletteTool::RegisterToolInstances(palette_tool_manager_.get());
 
   SetInkDropMode(InkDropMode::ON);
@@ -247,6 +256,7 @@ void PaletteTray::OnLockStateChanged(bool locked) {
 
 void PaletteTray::OnLocalStatePrefServiceInitialized(
     PrefService* pref_service) {
+LOG(ERROR) << "void PaletteTray::OnLocalStatePrefServiceInitialized(";
   local_state_pref_service_ = pref_service;
 
   // If a device has an internal stylus or the flag to force stylus is set, mark

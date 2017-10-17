@@ -8,7 +8,11 @@
 
 #include <utility>
 
+#include "ash/shell.h"
+#include "ash/shell_port.h"
+#include "ash/shell_port_classic.h"
 #include "ash/public/cpp/ash_pref_names.h"
+#include "ash/public/cpp/stylus_utils.h"
 #include "base/memory/ptr_util.h"
 #include "base/sys_info.h"
 #include "base/values.h"
@@ -34,6 +38,10 @@
 #include "extensions/browser/extensions_browser_client.h"
 #include "extensions/common/error_utils.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
+#include "ui/events/event.h"
+#include "ui/views/mus/mus_client.h"
+#include "ui/views/mus/pointer_watcher_event_router.h"
+#include "ui/views/pointer_watcher.h"
 
 using chromeos::NetworkHandler;
 
@@ -164,6 +172,20 @@ const char kDeviceTypeChromebox[] = "chromebox";
 
 // Value to which deviceType property is set when the specific type is unknown.
 const char kDeviceTypeChromedevice[] = "chromedevice";
+
+// Key which corresponds to the stylusInfo property in JS.
+const char kPropertyStylusInfo[] = "stylusInfo";
+
+// Value to which stylusInfo property is set when stylus is not available.
+const char kStylusInfoNotAvailable[] = "not available";
+
+// Value to which stylusInfo property is set when stylus is available but has
+// not been used after reboot.
+const char kStylusInfoAvailable[] = "available";
+
+// Value to which stylusInfo property is set when stylus is available and has
+// been used after reboot.
+const char kStylusInfoSeen[] = "seen";
 
 const struct {
   const char* api_name;
@@ -322,6 +344,19 @@ std::unique_ptr<base::Value> ChromeosInfoPrivateGetFunction::GetValue(
         return base::MakeUnique<base::Value>(kDeviceTypeChromebook);
       default:
         return base::MakeUnique<base::Value>(kDeviceTypeChromedevice);
+    }
+  }
+
+  if (property_name == kPropertyStylusInfo) {
+    if (!ash::stylus_utils::HasStylusInput()) {
+      return base::MakeUnique<base::Value>(kStylusInfoNotAvailable);
+    }
+
+    bool seen = ash::Shell::Get()->GetLocalStatePrefService()->HasPrefPath(ash::prefs::kHasSeenStylus);
+    if (seen) {
+      return base::MakeUnique<base::Value>(kStylusInfoSeen);
+    } else {
+      return base::MakeUnique<base::Value>(kStylusInfoAvailable);
     }
   }
 
