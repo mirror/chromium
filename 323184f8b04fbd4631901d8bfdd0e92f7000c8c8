@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "974edf89_1c7611e7",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T18:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46367fd0_42d23ab9",
+      "range": {
+        "startLine": 79,
+        "startChar": 11,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "323184f8b04fbd4631901d8bfdd0e92f7000c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "003a209a_e86e20d3",
         "filename": "cc/paint/paint_image.h",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "da685cc2_db2961a9",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T18:49:34Z",
+      "side": 1,
+      "message": "I removed this state. The more I thought about it, I think its going to be complicated to use this state effectively. We would essentially need to go sync each time there is a pending tree with a recording that has this image and a kContentTransitionSync state. Unless such image ids were committed with the frame where the veto needs to be applied, having it on the recording is as good as using kSync.",
+      "parentUuid": "003a209a_e86e20d3",
+      "range": {
+        "startLine": 82,
+        "startChar": 41,
+        "endLine": 82,
+        "endChar": 48
+      },
+      "revId": "323184f8b04fbd4631901d8bfdd0e92f7000c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59601d9a_41084522",
         "filename": "cc/paint/paint_image.h",
         "patchSetId": 9
@@ -62,6 +110,24 @@
       "revId": "323184f8b04fbd4631901d8bfdd0e92f7000c8c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb23f67_78a12505",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T18:49:34Z",
+      "side": 1,
+      "message": "Discussed offline. For the web API, using sync does not mean we have to strictly respect that but when it is used on PaintImage, cc should respect the decision made in blink. For instance, this change is using it for the src change veto.",
+      "parentUuid": "59601d9a_41084522",
+      "revId": "323184f8b04fbd4631901d8bfdd0e92f7000c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "8691e7fe_575c7c0e",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T18:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d4628b9_07aea951",
+      "revId": "323184f8b04fbd4631901d8bfdd0e92f7000c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96fb04df_98cf186f",
         "filename": "third_party/WebKit/Source/core/html/canvas/ImageElementBase.h",
         "patchSetId": 9
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "2cfcedc3_5b816974",
+        "filename": "third_party/WebKit/Source/core/html/canvas/ImageElementBase.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T18:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96fb04df_98cf186f",
+      "revId": "323184f8b04fbd4631901d8bfdd0e92f7000c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b6f9abf_32e6f479",
         "filename": "third_party/WebKit/Source/platform/graphics/Image.h",
         "patchSetId": 9
@@ -113,6 +215,24 @@
       "revId": "323184f8b04fbd4631901d8bfdd0e92f7000c8c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec80cb2c_75d43e3c",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T18:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b6f9abf_32e6f479",
+      "revId": "323184f8b04fbd4631901d8bfdd0e92f7000c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
