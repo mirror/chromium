@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d00bef2_65051f44",
+        "filename": "ui/views/paint_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-17T16:50:50Z",
+      "side": 1,
+      "message": "I had removed the size when cleaning up the original patch. I updated the unit test to catch this error. PTAL.",
+      "revId": "6ef0c1de3a87a04b3fa669b58cd822479d037ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
