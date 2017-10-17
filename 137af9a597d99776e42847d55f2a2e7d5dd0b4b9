@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33696b4a_63a0a848",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1002294
+      },
+      "writtenOn": "2017-10-17T22:42:37Z",
+      "side": 1,
+      "message": "I\u0027m confused, why would there be no warning here?",
+      "range": {
+        "startLine": 1455,
+        "startChar": 42,
+        "endLine": 1455,
+        "endChar": 0
+      },
+      "revId": "137af9a597d99776e42847d55f2a2e7d5dd0b4b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
