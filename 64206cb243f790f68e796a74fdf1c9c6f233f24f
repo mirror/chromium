@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "236d1905_967c4064",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-17T19:20:47Z",
+      "side": 1,
+      "message": "I am not sure why \"default\" is being added here? Why not just enumerate all possibilities?",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 11
+      },
+      "revId": "64206cb243f790f68e796a74fdf1c9c6f233f24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
