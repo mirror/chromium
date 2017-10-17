@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20b5dd9b_22c54ff3",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/Dictionary.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-17T05:33:04Z",
+      "side": 1,
+      "message": "nit: r -\u003e success?",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 8
+      },
+      "revId": "1818dff8d0bedda907a06277c2e51f977139474b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
