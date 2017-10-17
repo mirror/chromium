@@ -22,6 +22,7 @@
 
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "core/ComputedStyleBaseConstants.h"
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/events/Event.h"
@@ -29,6 +30,7 @@
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/RemoteFrameView.h"
+#include "core/geometry/DOMRect.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/loader/DocumentLoader.h"
@@ -36,7 +38,9 @@
 #include "core/loader/FrameLoader.h"
 #include "core/page/Page.h"
 #include "core/plugins/PluginView.h"
+#include "core/style/ComputedStyle.h"
 #include "platform/heap/HeapAllocator.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/WebCachePolicy.h"
 
@@ -48,6 +52,12 @@ using PluginSet = PersistentHeapHashSet<Member<PluginView>>;
 PluginSet& PluginsPendingDispose() {
   DEFINE_STATIC_LOCAL(PluginSet, set, ());
   return set;
+}
+
+bool ShouldDeferFrame(const ComputedStyle* style) {
+  return style && style->Display() != EDisplay::kNone &&
+         style->Visibility() != EVisibility::kHidden &&
+         !style->Width().IsZero() && !style->Height().IsZero();
 }
 
 }  // namespace
@@ -305,14 +315,78 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     request.SetCachePolicy(WebCachePolicy::kBypassingCache);
   }
 
-  child_frame->Loader().Load(FrameLoadRequest(&GetDocument(), request),
-                             child_load_type);
+  if (RuntimeEnabledFeatures::LazyFrameLoadingEnabled() &&
+      !(url.IsAboutBlankURL() || url.IsAboutSrcdocURL() || url.IsEmpty() ||
+        url.IsLocalFile() || url.IsNull()) &&
+      url.IsValid() && url.ProtocolIsInHTTPFamily() &&
+      HasNonEmptyLayoutSize() && VisibleBoundsInVisualViewport().IsEmpty() &&
+      ShouldDeferFrame(EnsureComputedStyle())) {
+    DOMRect* rect = getBoundingClientRect();
+    LOG(WARNING) << "Deferred frame: "
+                    "has_non_empty_layout_size="
+                 << HasNonEmptyLayoutSize() << " rect=("
+                 << (rect ? rect->x() : -42.0) << ','
+                 << (rect ? rect->y() : -42.0) << ") "
+                 << (rect ? rect->width() : -42.0) << 'x'
+                 << (rect ? rect->height() : -42.0)
+                 << " url=" << (const String&)url;
+
+    deferred_resource_request_ = request;
+    deferred_child_load_type_ = child_load_type;
+
+    visibility_observer_ = new ElementVisibilityObserver(
+        this,
+        WTF::Bind(&HTMLFrameOwnerElement::FrameVisible,
+                  WrapWeakPersistent(this), WrapWeakPersistent(child_frame)));
+    visibility_observer_->Start();
+  } else {
+    DOMRect* rect = getBoundingClientRect();
+    LOG(WARNING) << "Did not defer frame: "
+                    "has_non_empty_layout_size="
+                 << HasNonEmptyLayoutSize() << " rect=("
+                 << (rect ? rect->x() : -42.0) << ','
+                 << (rect ? rect->y() : -42.0) << ") "
+                 << (rect ? rect->width() : -42.0) << 'x'
+                 << (rect ? rect->height() : -42.0)
+                 << " url=" << (const String&)url;
+
+    child_frame->Loader().Load(FrameLoadRequest(&GetDocument(), request),
+                               child_load_type);
+  }
   return true;
+}
+
+void HTMLFrameOwnerElement::FrameVisible(LocalFrame* local_frame,
+                                         bool is_visible) {
+  if (!is_visible)
+    return;
+
+  visibility_observer_->Stop();
+  visibility_observer_.Clear();
+
+  if (local_frame) {
+    DOMRect* rect = getBoundingClientRect();
+
+    LOG(WARNING) << "Loading now-visible frame: "
+                    "has_non_empty_layout_size="
+                 << HasNonEmptyLayoutSize() << " rect=("
+                 << (rect ? rect->x() : -42.0) << ','
+                 << (rect ? rect->y() : -42.0) << ") "
+                 << (rect ? rect->width() : -42.0) << 'x'
+                 << (rect ? rect->height() : -42.0)
+                 << " url=" << (const String&)deferred_resource_request_.Url();
+
+    local_frame->Loader().Load(
+        FrameLoadRequest(&GetDocument(), deferred_resource_request_),
+        deferred_child_load_type_);
+  }
+  deferred_resource_request_ = ResourceRequest();
 }
 
 DEFINE_TRACE(HTMLFrameOwnerElement) {
   visitor->Trace(content_frame_);
   visitor->Trace(embedded_content_view_);
+  visitor->Trace(visibility_observer_);
   HTMLElement::Trace(visitor);
   FrameOwner::Trace(visitor);
 }
