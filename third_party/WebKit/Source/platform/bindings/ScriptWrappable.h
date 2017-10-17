@@ -48,11 +48,13 @@ namespace blink {
 // a ScriptWrappable.  v8::Object as platform object is called "wrapper object".
 // The wrapper object for the main world is stored in ScriptWrappable.  Wrapper
 // objects for other worlds are stored in DOMWrapperMap.
-class PLATFORM_EXPORT ScriptWrappable : public TraceWrapperBase {
+class PLATFORM_EXPORT ScriptWrappable : public GarbageCollectedFinalized<ScriptWrappable>, public TraceWrapperBase {
   WTF_MAKE_NONCOPYABLE(ScriptWrappable);
 
  public:
-  ScriptWrappable() {}
+  virtual ~ScriptWrappable() = default;
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   bool IsScriptWrappable() const override { return true; }
 
@@ -143,6 +145,9 @@ class PLATFORM_EXPORT ScriptWrappable : public TraceWrapperBase {
   //  wrapper in the main world. To mark wrappers in all worlds call
   //  ScriptWrappableVisitor::markWrapper(ScriptWrappable*, v8::Isolate*)
   void MarkWrapper(const ScriptWrappableVisitor*) const;
+
+ protected:
+  ScriptWrappable() = default;
 
  private:
   // These classes are exceptionally allowed to use MainWorldWrapper().

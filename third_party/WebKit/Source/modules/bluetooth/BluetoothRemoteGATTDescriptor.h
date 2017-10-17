@@ -26,8 +26,7 @@ class ScriptState;
 // a basic data element that provides further information about a peripheral's
 // characteristic.
 class BluetoothRemoteGATTDescriptor final
-    : public GarbageCollectedFinalized<BluetoothRemoteGATTDescriptor>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

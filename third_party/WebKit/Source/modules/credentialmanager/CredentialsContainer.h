@@ -19,8 +19,7 @@ class ScriptPromise;
 class ScriptState;
 
 class MODULES_EXPORT CredentialsContainer final
-    : public GarbageCollected<CredentialsContainer>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -34,8 +33,6 @@ class MODULES_EXPORT CredentialsContainer final
                        ExceptionState&);
   ScriptPromise preventSilentAccess(ScriptState*);
   ScriptPromise requireUserMediation(ScriptState*);
-
-  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  private:
   CredentialsContainer();

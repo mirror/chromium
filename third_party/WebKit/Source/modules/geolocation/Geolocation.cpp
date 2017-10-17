@@ -109,6 +109,7 @@ DEFINE_TRACE(Geolocation) {
   visitor->Trace(one_shots_);
   visitor->Trace(watchers_);
   visitor->Trace(last_position_);
+  ScriptWrappable::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);
   PageVisibilityObserver::Trace(visitor);
 }

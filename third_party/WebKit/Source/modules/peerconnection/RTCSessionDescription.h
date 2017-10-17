@@ -43,8 +43,7 @@ class ScriptState;
 class ScriptValue;
 
 class RTCSessionDescription final
-    : public GarbageCollectedFinalized<RTCSessionDescription>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -61,8 +60,6 @@ class RTCSessionDescription final
   ScriptValue toJSONForBinding(ScriptState*);
 
   WebRTCSessionDescription WebSessionDescription();
-
-  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit RTCSessionDescription(WebRTCSessionDescription);

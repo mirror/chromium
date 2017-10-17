@@ -76,6 +76,7 @@ IDBObjectStore::IDBObjectStore(RefPtr<IDBObjectStoreMetadata> metadata,
 DEFINE_TRACE(IDBObjectStore) {
   visitor->Trace(transaction_);
   visitor->Trace(index_map_);
+  ScriptWrappable::Trace(visitor);
 }
 
 void IDBObjectStore::setName(const String& name,

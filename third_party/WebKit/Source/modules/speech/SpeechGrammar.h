@@ -37,8 +37,7 @@ namespace blink {
 class ScriptState;
 
 class MODULES_EXPORT SpeechGrammar final
-    : public GarbageCollectedFinalized<SpeechGrammar>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -52,8 +51,6 @@ class MODULES_EXPORT SpeechGrammar final
 
   double weight() const { return weight_; }
   void setWeight(double weight) { weight_ = weight; }
-
-  DEFINE_INLINE_TRACE() {}
 
  private:
   SpeechGrammar();

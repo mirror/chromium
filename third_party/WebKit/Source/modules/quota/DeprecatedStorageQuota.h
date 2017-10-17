@@ -42,8 +42,7 @@ class StorageQuotaCallback;
 class StorageUsageCallback;
 
 class DeprecatedStorageQuota final
-    : public GarbageCollected<DeprecatedStorageQuota>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -64,8 +63,6 @@ class DeprecatedStorageQuota final
                     unsigned long long new_quota_in_bytes,
                     StorageQuotaCallback*,
                     StorageErrorCallback*);
-
-  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit DeprecatedStorageQuota(Type);

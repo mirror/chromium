@@ -55,6 +55,7 @@ MojoResult MojoWatcher::cancel() {
 
 DEFINE_TRACE(MojoWatcher) {
   visitor->Trace(callback_);
+  ScriptWrappable::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);
 }
 

@@ -45,6 +45,7 @@ SQLResultSet::SQLResultSet()
 
 DEFINE_TRACE(SQLResultSet) {
   visitor->Trace(rows_);
+  ScriptWrappable::Trace(visitor);
 }
 
 int64_t SQLResultSet::insertId(ExceptionState& exception_state) const {

@@ -353,6 +353,7 @@ AudioParam* AudioParam::Create(BaseAudioContext& context,
 
 DEFINE_TRACE(AudioParam) {
   visitor->Trace(context_);
+  ScriptWrappable::Trace(visitor);
 }
 
 float AudioParam::value() const {

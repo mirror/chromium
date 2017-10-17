@@ -33,14 +33,12 @@
 
 #include "core/svg/SVGPoint.h"
 #include "core/svg/properties/SVGPropertyTearOff.h"
-#include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
 
 class SVGMatrixTearOff;
 
-class SVGPointTearOff : public SVGPropertyTearOff<SVGPoint>,
-                        public ScriptWrappable {
+class SVGPointTearOff : public SVGPropertyTearOff<SVGPoint> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

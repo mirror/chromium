@@ -41,8 +41,7 @@ class SVGTransformTearOff;
 
 class SVGTransformListTearOff final
     : public SVGListPropertyTearOffHelper<SVGTransformListTearOff,
-                                          SVGTransformList>,
-      public ScriptWrappable {
+                                          SVGTransformList> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

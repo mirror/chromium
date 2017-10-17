@@ -43,6 +43,7 @@ DEFINE_TRACE(GamepadList) {
   for (unsigned index = 0; index < device::Gamepads::kItemsLengthCap; index++) {
     visitor->Trace(items_[index]);
   }
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

@@ -197,6 +197,7 @@ bool CanvasRenderingContext::WouldTaintOrigin(
 
 DEFINE_TRACE(CanvasRenderingContext) {
   visitor->Trace(host_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

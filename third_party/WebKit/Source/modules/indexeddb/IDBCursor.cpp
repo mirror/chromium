@@ -82,6 +82,7 @@ DEFINE_TRACE(IDBCursor) {
   visitor->Trace(transaction_);
   visitor->Trace(key_);
   visitor->Trace(primary_key_);
+  ScriptWrappable::Trace(visitor);
 }
 
 // Keep the request's wrapper alive as long as the cursor's wrapper is alive,

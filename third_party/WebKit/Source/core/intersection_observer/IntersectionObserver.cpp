@@ -357,6 +357,7 @@ DEFINE_TRACE(IntersectionObserver) {
   visitor->Trace(delegate_);
   visitor->Trace(observations_);
   visitor->Trace(entries_);
+  ScriptWrappable::Trace(visitor);
 }
 
 DEFINE_TRACE_WRAPPERS(IntersectionObserver) {

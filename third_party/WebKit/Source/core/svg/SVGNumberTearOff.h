@@ -33,12 +33,10 @@
 
 #include "core/svg/SVGNumber.h"
 #include "core/svg/properties/SVGPropertyTearOff.h"
-#include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
 
-class SVGNumberTearOff : public SVGPropertyTearOff<SVGNumber>,
-                         public ScriptWrappable {
+class SVGNumberTearOff : public SVGPropertyTearOff<SVGNumber> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

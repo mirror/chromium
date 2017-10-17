@@ -33,12 +33,10 @@
 
 #include "core/svg/SVGLength.h"
 #include "core/svg/properties/SVGPropertyTearOff.h"
-#include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
 
-class SVGLengthTearOff final : public SVGPropertyTearOff<SVGLength>,
-                               public ScriptWrappable {
+class SVGLengthTearOff final : public SVGPropertyTearOff<SVGLength> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

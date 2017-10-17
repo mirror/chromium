@@ -20,8 +20,7 @@ class ScriptPromiseResolver;
 class ScriptState;
 
 class MODULES_EXPORT ServiceWorkerClient
-    : public GarbageCollectedFinalized<ServiceWorkerClient>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -45,8 +44,6 @@ class MODULES_EXPORT ServiceWorkerClient
                    ExceptionState&);
 
   static bool CanTransferArrayBuffersAndImageBitmaps() { return false; }
-
-  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   explicit ServiceWorkerClient(const WebServiceWorkerClientInfo&);

@@ -42,8 +42,7 @@ class InspectorFrontendClient;
 class LocalFrame;
 
 class CORE_EXPORT DevToolsHost final
-    : public GarbageCollectedFinalized<DevToolsHost>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

@@ -32,7 +32,6 @@
 #define DOMFileSystemSync_h
 
 #include "modules/filesystem/DOMFileSystemBase.h"
-#include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -43,8 +42,7 @@ class FileEntrySync;
 class FileWriterSync;
 class ExceptionState;
 
-class DOMFileSystemSync final : public DOMFileSystemBase,
-                                public ScriptWrappable {
+class DOMFileSystemSync final : public DOMFileSystemBase {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

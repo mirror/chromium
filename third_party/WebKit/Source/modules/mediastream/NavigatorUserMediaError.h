@@ -31,8 +31,7 @@
 namespace blink {
 
 class NavigatorUserMediaError final
-    : public GarbageCollectedFinalized<NavigatorUserMediaError>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -50,8 +49,6 @@ class NavigatorUserMediaError final
   String name() const { return name_; }
   const String& message() const { return message_; }
   const String& constraintName() const { return constraint_name_; }
-
-  DEFINE_INLINE_TRACE() {}
 
  private:
   NavigatorUserMediaError(const String& name,

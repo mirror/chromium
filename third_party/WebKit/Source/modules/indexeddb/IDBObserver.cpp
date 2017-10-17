@@ -101,6 +101,7 @@ void IDBObserver::unobserve(IDBDatabase* database,
 DEFINE_TRACE(IDBObserver) {
   visitor->Trace(callback_);
   visitor->Trace(observer_ids_);
+  ScriptWrappable::Trace(visitor);
 }
 
 DEFINE_TRACE_WRAPPERS(IDBObserver) {

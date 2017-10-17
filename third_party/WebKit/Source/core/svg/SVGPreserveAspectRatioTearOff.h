@@ -33,14 +33,12 @@
 
 #include "core/svg/SVGPreserveAspectRatio.h"
 #include "core/svg/properties/SVGPropertyTearOff.h"
-#include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
 class SVGPreserveAspectRatioTearOff final
-    : public SVGPropertyTearOff<SVGPreserveAspectRatio>,
-      public ScriptWrappable {
+    : public SVGPropertyTearOff<SVGPreserveAspectRatio> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

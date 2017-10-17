@@ -12,9 +12,8 @@
 namespace blink {
 
 class CORE_EXPORT AudioTrack final
-    : public GarbageCollectedFinalized<AudioTrack>,
-      public TrackBase,
-      public ScriptWrappable {
+    : public ScriptWrappable,
+      public TrackBase {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(AudioTrack);
 
