@@ -16,6 +16,46 @@
       "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf2d7a9_7b149f1b",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentWriteIntervention.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-17T03:56:44Z",
+      "side": 1,
+      "message": "If the intention is only to send GET, Can we avoid full ScriptResource::Fetch?\n(If so, please just leave a comment)",
+      "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a9a7b2_4b28d393",
+        "filename": "third_party/WebKit/Source/core/html/parser/PreloadRequest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-17T03:56:44Z",
+      "side": 1,
+      "message": "Why is this code (L113-117) needed?",
+      "range": {
+        "startLine": 114,
+        "startChar": 48,
+        "endLine": 114,
+        "endChar": 49
+      },
+      "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
