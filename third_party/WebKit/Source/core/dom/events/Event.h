@@ -241,6 +241,8 @@ class CORE_EXPORT Event : public GarbageCollectedFinalized<Event>,
     return prevent_default_called_on_uncancelable_event_;
   }
 
+  void SetRelatedTargetIfExists(EventTarget* related_target);
+
   DECLARE_VIRTUAL_TRACE();
 
  protected:
