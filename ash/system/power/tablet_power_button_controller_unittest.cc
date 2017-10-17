@@ -719,9 +719,9 @@ using NoTabletModePowerButtonControllerTest = NoTabletModePowerButtonTestBase;
 TEST_F(NoTabletModePowerButtonControllerTest,
        HasAccelerometerUpdateButNoTabletModeSwitch) {
   InitPowerButtonControllerMembers(true /* send_accelerometer_update */);
-  ASSERT_TRUE(tablet_controller_);
   ASSERT_FALSE(base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kAshEnableTabletMode));
+  EXPECT_FALSE(tablet_controller_);
 
   // Advance a long duration from initialized last resume time in
   // |tablet_controller_| to avoid cross interference.
