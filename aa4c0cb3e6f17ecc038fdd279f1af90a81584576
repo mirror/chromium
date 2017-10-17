@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "788fd86c_fb787df5",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-17T07:51:51Z",
+      "side": 1,
+      "message": "Why do we need this? I\u0027m not really happy about adding a mechanism to override the result of CanExecuteScripts().\n\n\"Pause\" is a standardized concept in the spec. I\u0027d prefer just using the \"Pause\" mechanism for the intervention (instead of introducing another mechanism like \"Stop\").",
+      "revId": "aa4c0cb3e6f17ecc038fdd279f1af90a81584576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
