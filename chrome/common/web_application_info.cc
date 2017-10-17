@@ -13,8 +13,8 @@ WebApplicationInfo::IconInfo::~IconInfo() {
 WebApplicationInfo::WebApplicationInfo()
     : mobile_capable(MOBILE_CAPABLE_UNSPECIFIED),
       generated_icon_color(SK_ColorTRANSPARENT),
-      open_as_window(false) {
-}
+      open_as_window(false),
+      installable(INSTALLABLE_UNKNOWN) {}
 
 WebApplicationInfo::WebApplicationInfo(const WebApplicationInfo& other) =
     default;
