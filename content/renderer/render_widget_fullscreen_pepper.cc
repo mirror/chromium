@@ -377,9 +377,4 @@ GURL RenderWidgetFullscreenPepper::GetURLForGraphicsContext3D() {
   return active_url_;
 }
 
-void RenderWidgetFullscreenPepper::OnDeviceScaleFactorChanged() {
-  if (compositor_)
-    compositor_->SetDeviceScaleFactor(device_scale_factor_);
-}
-
 }  // namespace content

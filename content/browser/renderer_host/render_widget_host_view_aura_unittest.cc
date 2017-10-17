@@ -232,9 +232,10 @@ class MockRenderWidgetHostDelegate : public RenderWidgetHostDelegate {
   }
 
   double get_last_device_scale_factor() { return last_device_scale_factor_; }
-  void UpdateDeviceScaleFactor(double device_scale_factor) override {
-    last_device_scale_factor_ = device_scale_factor;
-  }
+  // TODO(fsamuel): Make this ScreenInfoChanged.
+  // void UpdateDeviceScaleFactor(double device_scale_factor) override {
+  //  last_device_scale_factor_ = device_scale_factor;
+  //}
   void set_pre_handle_keyboard_event_result(
       KeyboardEventProcessingResult result) {
     pre_handle_keyboard_event_result_ = result;
