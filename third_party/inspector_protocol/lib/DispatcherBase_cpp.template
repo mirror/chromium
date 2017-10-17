@@ -119,20 +119,20 @@ void DispatcherBase::markFallThrough(int callbackId)
 }
 
 // static
-bool DispatcherBase::getCommandName(const String& message, String* result)
+DispatchResponse DispatcherBase::getCommandName(const String& message, String* result)
 {
     std::unique_ptr<protocol::Value> value = StringUtil::parseJSON(message);
     if (!value)
-        return false;
+        return Response::Error("Message must be a valid JSON");
 
     protocol::DictionaryValue* object = DictionaryValue::cast(value.get());
     if (!object)
-        return false;
+        return Response::Error("Message must be an object");
 
     if (!object->getString("method", result))
-        return false;
+        return Response::Error("Message must have string 'method' porperty");
 
-    return true;
+    return Response::OK();
 }
 
 void DispatcherBase::sendResponse(int callId, const DispatchResponse& response, std::unique_ptr<protocol::DictionaryValue> result)
@@ -306,6 +306,11 @@ DispatchResponse::Status UberDispatcher::dispatch(std::unique_ptr<Value> parsedM
         return DispatchResponse::kError;
     }
     return it->second->dispatch(callId, method, std::move(messageObject));
+}
+
+void UberDispatcher::reportProtocolError(DispatchResponse::ErrorCode code, const String& errorMessage, ErrorSupport* errors)
+{
+    reportProtocolErrorTo(m_frontendChannel, 0, code, errorMessage, errors);
 }
 
 UberDispatcher::~UberDispatcher() = default;

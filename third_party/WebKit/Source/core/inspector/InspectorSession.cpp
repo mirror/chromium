@@ -86,6 +86,19 @@ void InspectorSession::DispatchProtocolMessage(const String& method,
   }
 }
 
+void InspectorSession::DispatchProtocolMessage(const String& message) {
+  DCHECK(!disposed_);
+  String method;
+  protocol::Response response =
+      protocol::DispatcherBase::getCommandName(message, &method);
+  if (!response.isSuccess()) {
+    inspector_backend_dispatcher_->reportProtocolError(
+        response.errorCode(), response.errorMessage(), nullptr);
+    return;
+  }
+  DispatchProtocolMessage(method, message);
+}
+
 void InspectorSession::DidCommitLoadForLocalFrame(LocalFrame* frame) {
   for (size_t i = 0; i < agents_.size(); i++)
     agents_[i]->DidCommitLoadForLocalFrame(frame);

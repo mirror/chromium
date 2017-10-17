@@ -85,7 +85,7 @@ public:
     explicit DispatcherBase(FrontendChannel*);
     virtual ~DispatcherBase();
 
-    static bool getCommandName(const String& message, String* result);
+    static DispatchResponse getCommandName(const String& message, String* result);
 
     virtual DispatchResponse::Status dispatch(int callId, const String& method, std::unique_ptr<protocol::DictionaryValue> messageObject) = 0;
 
@@ -118,6 +118,7 @@ public:
     FrontendChannel* channel() { return m_frontendChannel; }
     bool fallThroughForNotFound() { return m_fallThroughForNotFound; }
     void setFallThroughForNotFound(bool);
+    void reportProtocolError(DispatchResponse::ErrorCode, const String& errorMessage, ErrorSupport* errors);
     virtual ~UberDispatcher();
 
 private:
