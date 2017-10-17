@@ -76,13 +76,6 @@ class QuicStreamFactoryPeer;
 // When a connection is idle for 30 seconds it will be closed.
 const int kIdleConnectionTimeoutSeconds = 30;
 
-// Result of a session migration attempt.
-enum class MigrationResult {
-  SUCCESS,         // Migration succeeded.
-  NO_NEW_NETWORK,  // Migration failed since no new network was found.
-  FAILURE          // Migration failed for other reasons.
-};
-
 enum QuicConnectionMigrationStatus {
   MIGRATION_STATUS_NO_MIGRATABLE_STREAMS,
   MIGRATION_STATUS_ALREADY_MIGRATED,
@@ -336,6 +329,10 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   void MigrateSessionToNewPeerAddress(QuicChromiumClientSession* session,
                                       IPEndPoint peer_address,
                                       const NetLogWithSource& net_log);
+
+  std::unique_ptr<DatagramClientSocket> CreateDatagramClientSocketForMigration(
+      NetLog* net_log,
+      const NetLogSource& source);
 
   // NetworkChangeNotifier::IPAddressObserver methods:
 
