@@ -16,6 +16,24 @@
       "revId": "bdc0dbeef87369e5bbd67e244672005c8498ac5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a2a419_09781685",
+        "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLMediaElementCapture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-17T23:55:00Z",
+      "side": 1,
+      "message": "The passed-in ScriptState* will always be valid here, won\u0027t it? The element was created in a now-detached frame, but is being accessed from a different frame, and the ScriptState will be associated with the calling context, not the context that originally created the HTMLMediaElement. Or have I misunderstood how ScriptState works?",
+      "parentUuid": "d68aaca9_8f971ecd",
+      "revId": "bdc0dbeef87369e5bbd67e244672005c8498ac5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
