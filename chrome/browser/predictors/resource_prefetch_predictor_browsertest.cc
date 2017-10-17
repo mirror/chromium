@@ -11,12 +11,14 @@
 #include "base/run_loop.h"
 #include "base/strings/string_util.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/scoped_feature_list.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
 #include "chrome/browser/predictors/loading_data_collector.h"
 #include "chrome/browser/predictors/loading_predictor.h"
 #include "chrome/browser/predictors/loading_predictor_factory.h"
 #include "chrome/browser/predictors/loading_stats_collector.h"
 #include "chrome/browser/predictors/loading_test_util.h"
+#include "chrome/browser/predictors/resource_prefetch_common.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -323,14 +325,18 @@ class ResourcePrefetchPredictorBrowserTest : public InProcessBrowserTest {
   using URLRequestSummary = URLRequestSummary;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII("force-fieldtrials", "trial/group");
+    command_line->AppendSwitchASCII(
+        "force-fieldtrials",
+        "scoped_feature_list_trial_name/scoped_feature_list_trial_group");
     std::string params = base::StringPrintf(
-        "trial.group:%s/%s/%s/%s", kModeParamName, kExternalPrefetchingMode,
-        kEnableUrlLearningParamName, "true");
+        "scoped_feature_list_trial_name.scoped_feature_list_trial_group:%s/%s/"
+        "%s/%s",
+        kModeParamName, kExternalPrefetchingMode, kEnableUrlLearningParamName,
+        "true");
     command_line->AppendSwitchASCII("force-fieldtrial-params", params);
-    std::string enabled_feature = base::StringPrintf(
-        "%s<trial", kSpeculativeResourcePrefetchingFeatureName);
-    command_line->AppendSwitchASCII("enable-features", enabled_feature);
+    std::map<std::string, std::string> parameters;
+    scoped_feature_list_.InitAndEnableFeatureWithParameters(
+        predictors::kSpeculativeResourcePrefetchingFeature, parameters);
   }
 
   void SetUpOnMainThread() override {
@@ -725,6 +731,7 @@ class ResourcePrefetchPredictorBrowserTest : public InProcessBrowserTest {
   std::map<GURL, RedirectEdge> redirects_;
   std::map<GURL, size_t> visit_count_;
   std::set<NavigationID> navigation_id_history_;
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 // Subclass to test HintOrigin::NAVIGATION.

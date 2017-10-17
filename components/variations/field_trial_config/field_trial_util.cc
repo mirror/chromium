@@ -131,7 +131,13 @@ bool AssociateParamsFromString(const std::string& varations_string) {
       std::string value = UnescapeValue(key_values[i + 1]);
       params[key] = value;
     }
-    AssociateVariationParams(trial, group, params);
+    bool result = AssociateVariationParams(trial, group, params);
+    if (!result) {
+      DLOG(ERROR) << base::StringPrintf(
+          "A (trial, group) pair insert failed. (%s, %s)", trial.c_str(),
+          group.c_str());
+      return false;
+    }
   }
   return true;
 }
