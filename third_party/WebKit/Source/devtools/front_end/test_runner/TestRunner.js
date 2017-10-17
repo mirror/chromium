@@ -1153,12 +1153,17 @@ TestRunner.waitForUISourceCodeRemoved = function(callback) {
 };
 
 /**
- * @param {string} relativeURL
+ * @param {string} url
  * @return {string}
  */
-TestRunner.url = function(relativeURL) {
-  var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
-  return new URL(testScriptURL + '/../' + relativeURL).href;
+TestRunner.url = function(url) {
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:'))
+    return url;
+
+  // Only new-style tests will have a test queryParam
+  var testScriptURL =
+      /** @type {string} */ (Runtime.queryParam('test')) || SDK.targetManager.mainTarget().inspectedURL();
+  return new URL(testScriptURL + '/../' + url).href;
 };
 
 /**
