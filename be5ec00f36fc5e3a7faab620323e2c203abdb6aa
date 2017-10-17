@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b69eea45_07d4f379",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-17T21:56:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8f7ff23a_7b6143a4",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 5
+      },
+      "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3175df0d_cba2e471",
         "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fd120b52_434a525d",
+        "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-17T21:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3175df0d_cba2e471",
+      "range": {
+        "startLine": 93,
+        "startChar": 11,
+        "endLine": 93,
+        "endChar": 31
+      },
+      "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a598092f_2ab40924",
         "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf9d015_80952ff8",
+        "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-17T21:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a598092f_2ab40924",
+      "range": {
+        "startLine": 80,
+        "startChar": 18,
+        "endLine": 80,
+        "endChar": 38
+      },
+      "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "c8eba35e_f370535c",
+        "filename": "ios/chrome/browser/ui/gr_search/features.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-17T21:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f56b0907_5ec991f7",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a968ac1_5a296ad4",
         "filename": "ios/chrome/browser/ui/gr_search/gr_search_coordinator.mm",
         "patchSetId": 2
@@ -128,6 +224,30 @@
       "writtenOn": "2017-10-17T08:57:37Z",
       "side": 1,
       "message": "gr? Really?",
+      "range": {
+        "startLine": 41,
+        "startChar": 55,
+        "endLine": 41,
+        "endChar": 57
+      },
+      "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c834aa_3997444e",
+        "filename": "ios/chrome/browser/ui/gr_search/gr_search_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-17T21:56:06Z",
+      "side": 1,
+      "message": "For the time being. Let\u0027s continue the discussion on the discussion doc, cf Mark\u0027s feedback.",
+      "parentUuid": "0a968ac1_5a296ad4",
       "range": {
         "startLine": 41,
         "startChar": 55,
@@ -160,6 +280,30 @@
       "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbb25ed_47ea25fb",
+        "filename": "ios/chrome/browser/ui/gr_search/gr_search_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-17T21:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19cadbf0_cc622094",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
