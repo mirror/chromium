@@ -1,6 +1,7 @@
 include_rules = [
   "+apps",
   "+chrome/browser/apps",
+  "+chrome/browser/ui/views/frame",
   "+components/about_handler",
   "+components/guest_view/common",
   "+device/hid",
