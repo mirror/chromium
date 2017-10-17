@@ -64,6 +64,7 @@ class GlobalConfirmInfoBarWithInfoBarDisabledTest
 
  protected:
   void SetUpDefaultCommandLine(base::CommandLine* command_line) override {
+    InProcessBrowserTest::SetUpDefaultCommandLine(command_line);
     command_line->AppendSwitch(infobars::switches::kDisableInfoBars);
   }
 
