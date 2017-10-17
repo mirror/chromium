@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81688c46_34375c7d",
+        "filename": "chrome/browser/resources/chromeos/input_method/google_xkb_manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-10-17T00:41:32Z",
+      "side": 1,
+      "message": "Pls keep the naming convention consistent.\ns/gu_phonetic/gu_phone/g",
+      "range": {
+        "startLine": 1549,
+        "startChar": 17,
+        "endLine": 1549,
+        "endChar": 28
+      },
+      "revId": "d18a30c25574a1c929a2238c16c5d9dd1c42a7fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
