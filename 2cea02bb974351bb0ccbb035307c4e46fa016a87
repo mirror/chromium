@@ -16,6 +16,24 @@
       "revId": "2cea02bb974351bb0ccbb035307c4e46fa016a87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b9a107a_96199cc5",
+        "filename": "android_webview/tools/apk_merger.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-10-17T15:26:18Z",
+      "side": 1,
+      "message": "From: https://docs.python.org/2/library/sys.html#sys.exit\n\nThis prints the error message to stderr and returns an exit code of 1.\n\nWould it be ok if I just add \u0027ERROR: zipaling ...\u0027? Or would you prefer to actually use logging.error?",
+      "parentUuid": "94495157_df3e88b4",
+      "revId": "2cea02bb974351bb0ccbb035307c4e46fa016a87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
