@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "3cbe7dbc_230d52b8",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T07:40:24Z",
+      "side": 1,
+      "message": "Could you add a comment that its not possible for the refcount to be zero here since the cache internally keeps a ref until the decode task is alive, and releases it in OnTaskCompleted?",
+      "range": {
+        "startLine": 361,
+        "startChar": 2,
+        "endLine": 361,
+        "endChar": 35
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70856716_6d93d835",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -71,6 +94,53 @@
     },
     {
       "key": {
+        "uuid": "22ea1f33_b9d44961",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T07:40:24Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be. We don\u0027t expect to see null images in recordings. PaintOpBuffer already dereferences the image in AnalyzeAddedOp.",
+      "parentUuid": "70856716_6d93d835",
+      "range": {
+        "startLine": 379,
+        "startChar": 7,
+        "endLine": 379,
+        "endChar": 18
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e9813ff_bf20bb65",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T07:40:24Z",
+      "side": 1,
+      "message": "nit: const these things?",
+      "range": {
+        "startLine": 398,
+        "startChar": 2,
+        "endLine": 398,
+        "endChar": 9
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02472078_ca6a49e2",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -87,6 +157,76 @@
         "startChar": 2,
         "endLine": 404,
         "endChar": 12
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a490c5_a736357d",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T07:40:24Z",
+      "side": 1,
+      "message": "+1.",
+      "parentUuid": "02472078_ca6a49e2",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 12
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6a9643_b483a0bc",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T07:40:24Z",
+      "side": 1,
+      "message": "I\u0027m trying to understand how this will change when we start attempting to find a better candidate. Should the part above that attempts to lock the existing entry be moved to a separate method? So we can use it here to query for a candidate if it already exists but not decode it if it doesn\u0027t?",
+      "range": {
+        "startLine": 421,
+        "startChar": 6,
+        "endLine": 421,
+        "endChar": 77
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714f8bc5_f1301756",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T07:40:24Z",
+      "side": 1,
+      "message": "Could we DCHECK that entry has a non-zero refcount at the beginning of the function?",
+      "range": {
+        "startLine": 444,
+        "startChar": 36,
+        "endLine": 444,
+        "endChar": 76
       },
       "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
