@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5774397_e3ab541f",
+        "filename": "services/resource_coordinator/tracing/agent_registry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-17T16:50:01Z",
+      "side": 1,
+      "message": "nit: I think generally in-line initialization and constructor initialization isn\u0027t supposed to be mixed (i.e. shouldn\u0027t have to look for initialization in two different places).",
+      "revId": "dac0f2eb9d85eb226cb5e5e3c4f251d9b1d7903d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
