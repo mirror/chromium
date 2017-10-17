@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aa4114e_60c80e4b",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T19:33:15Z",
+      "side": 1,
+      "message": "This only works under \"private:\" section.",
+      "revId": "60d4cf15668e9111f6c9a837611086d76056af6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
