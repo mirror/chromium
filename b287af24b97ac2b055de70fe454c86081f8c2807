@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9dcd9bc4_269fc477",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-17T08:51:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c435ec16_db3d5c86",
+      "revId": "b287af24b97ac2b055de70fe454c86081f8c2807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fe4eba0_bc1f2f50",
         "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2e117172_d51bfb49",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-17T08:51:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fe4eba0_bc1f2f50",
+      "revId": "b287af24b97ac2b055de70fe454c86081f8c2807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "902d2fca_c04e29cd",
         "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-16T20:08:45Z",
       "side": 1,
       "message": "Possible additional keyboard shortcuts:\n\n - Esc could deselect text (right now there\u0027s no very simple way to do this without clicking somewhere else on the page).\n - \"/\" could focus the filter text field.\n - I know you considered this before, but I still think j/k could be alternate shortcuts for up/down (currently Tab/Shift+Tab). I think this would be nice because almost all other tools (including Gerrit, Monorail, Code search, Gmail, Calendar, etc.) all have j/k set meaning up/down.",
+      "revId": "b287af24b97ac2b055de70fe454c86081f8c2807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c5e6fa_d3e273a6",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-17T08:51:35Z",
+      "side": 1,
+      "message": "- Esc deselect text done\n- I\u0027ve tried implementing j/k, it turns out it is not trivial, there is no way to just simulate tab/shift tab. The breaking point was that even when I implemented it, focus ring would still not move, because calling element.focus() on a div makes div focussed, but the ring does not appear.",
+      "parentUuid": "902d2fca_c04e29cd",
       "revId": "b287af24b97ac2b055de70fe454c86081f8c2807",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "014dc5ca_6d071617",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-17T08:51:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c8a9caf_0f7f0bfe",
+      "revId": "b287af24b97ac2b055de70fe454c86081f8c2807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51a89c11_c235e565",
         "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
         "patchSetId": 3
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0af9389f_c01c1b80",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-17T08:51:35Z",
+      "side": 1,
+      "message": "I think none of the options are great. There is no standard to toggle all checkboxes.\n\nFeel free to implement any shortcuts that work well for you. I am not a keyboard only user, so can\u0027t make solid judgements about what the right thing to do is.",
+      "parentUuid": "51a89c11_c235e565",
+      "revId": "b287af24b97ac2b055de70fe454c86081f8c2807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1077ae8d_74fb243c",
         "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
         "patchSetId": 3
@@ -98,6 +188,30 @@
       "writtenOn": "2017-10-16T19:46:29Z",
       "side": 1,
       "message": "We should calculate relative directory here.\n\nIt is producing something like:\n\nmkdir -p https://storage.googleapis.com/chromium-layout-test-archives/linux_chromium_rel_ng/10680/layout-test-results/css3/filters;\ncd https://storage.googleapis.com/chromium-layout-test-archives/linux_chromium_rel_ng/10680/layout-test-results/css3/filters;\n\nWhile it should be:\n\nmkdir -p css3/filters;\ncd css3/filters;",
+      "range": {
+        "startLine": 586,
+        "startChar": 43,
+        "endLine": 586,
+        "endChar": 51
+      },
+      "revId": "b287af24b97ac2b055de70fe454c86081f8c2807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c6291d_f5e9c36e",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-17T08:51:35Z",
+      "side": 1,
+      "message": "I was trying to replicate what the original code was doing, see \nhttps://storage.googleapis.com/chromium-layout-test-archives/linux_chromium_rel_ng/566716/layout-test-results/test-expectations.html\n\nBut I was the one who probably broke your original code when I created new toolbars.\n\nI think I\u0027ve fixed this, please take a look.",
+      "parentUuid": "1077ae8d_74fb243c",
       "range": {
         "startLine": 586,
         "startChar": 43,
