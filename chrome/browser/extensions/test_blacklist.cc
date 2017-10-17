@@ -80,8 +80,7 @@ void TestBlacklist::Detach() {
 }
 
 void TestBlacklist::SetBlacklistState(const std::string& extension_id,
-                                      BlacklistState state,
-                                      bool notify) {
+                                      BlacklistState state) {
   state_fetcher_mock_.SetState(extension_id, state);
 
   switch (state) {
@@ -99,16 +98,11 @@ void TestBlacklist::SetBlacklistState(const std::string& extension_id,
     default:
       break;
   }
-
-  if (notify)
-    blacklist_db_->NotifyUpdate();
 }
 
-void TestBlacklist::Clear(bool notify) {
+void TestBlacklist::Clear() {
   state_fetcher_mock_.Clear();
   blacklist_db_->ClearUnsafe();
-  if (notify)
-    blacklist_db_->NotifyUpdate();
 }
 
 BlacklistState TestBlacklist::GetBlacklistState(
@@ -126,10 +120,6 @@ void TestBlacklist::DisableSafeBrowsing() {
 
 void TestBlacklist::EnableSafeBrowsing() {
   blacklist_db_->Enable();
-}
-
-void TestBlacklist::NotifyUpdate() {
-  blacklist_db_->NotifyUpdate();
 }
 
 }  // namespace extensions

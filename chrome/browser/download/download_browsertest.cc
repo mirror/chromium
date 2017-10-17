@@ -84,6 +84,7 @@
 #include "components/infobars/core/infobar.h"
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
+#include "components/safe_browsing/db/test_database_manager.h"
 #include "components/safe_browsing/proto/csd.pb.h"
 #include "content/public/browser/download_danger_type.h"
 #include "content/public/browser/download_interrupt_reasons.h"
@@ -1146,7 +1147,16 @@ class TestSafeBrowsingServiceFactory
   safe_browsing::SafeBrowsingService* CreateSafeBrowsingService() override {
     DCHECK(!fake_safe_browsing_service_);
     fake_safe_browsing_service_ = new FakeSafeBrowsingService();
+    if (test_database_manager_) {
+      fake_safe_browsing_service_->SetDatabaseManager(
+          test_database_manager_.get());
+    }
     return fake_safe_browsing_service_.get();
+  }
+
+  void SetTestDatabaseManager(
+      safe_browsing::TestSafeBrowsingDatabaseManager* database_manager) {
+    test_database_manager_ = database_manager;
   }
 
   scoped_refptr<FakeSafeBrowsingService> fake_safe_browsing_service() {
@@ -1155,6 +1165,8 @@ class TestSafeBrowsingServiceFactory
 
  private:
   scoped_refptr<FakeSafeBrowsingService> fake_safe_browsing_service_;
+  scoped_refptr<safe_browsing::TestSafeBrowsingDatabaseManager>
+      test_database_manager_;
 };
 
 class DownloadTestWithFakeSafeBrowsing : public DownloadTest {
@@ -1163,6 +1175,8 @@ class DownloadTestWithFakeSafeBrowsing : public DownloadTest {
       : test_safe_browsing_factory_(new TestSafeBrowsingServiceFactory()) {}
 
   void SetUp() override {
+    test_db_manager_ = new safe_browsing::TestSafeBrowsingDatabaseManager();
+    test_safe_browsing_factory_->SetTestDatabaseManager(test_db_manager_.get());
     safe_browsing::SafeBrowsingService::RegisterFactory(
         test_safe_browsing_factory_.get());
     DownloadTest::SetUp();
@@ -1175,6 +1189,8 @@ class DownloadTestWithFakeSafeBrowsing : public DownloadTest {
 
  protected:
   std::unique_ptr<TestSafeBrowsingServiceFactory> test_safe_browsing_factory_;
+  scoped_refptr<safe_browsing::TestSafeBrowsingDatabaseManager>
+      test_db_manager_;
 };
 
 }  // namespace

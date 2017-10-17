@@ -15,7 +15,6 @@
 #include "base/strings/string_split.h"
 #include "base/values.h"
 #include "components/safe_browsing/db/metadata.pb.h"
-#include "components/safe_browsing/db/util.h"
 
 namespace safe_browsing {
 namespace {

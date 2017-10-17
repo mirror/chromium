@@ -36,7 +36,7 @@ static_library("browser") {
   deps = [
     "//base",
     "//components/safe_browsing/db:database_manager",
-    "//components/safe_browsing/db:util",
+    "//components/safe_browsing/db:v4_protocol_manager_util",
     "//components/subresource_filter/content/common",
     "//components/subresource_filter/core/browser",
     "//components/subresource_filter/core/common",
@@ -64,6 +64,7 @@ static_library("test_support") {
   deps = [
     ":browser",
     "//base/test:test_support",
+    "//components/safe_browsing/db:v4_protocol_manager_util",
     "//components/subresource_filter/core/common",
     "//content/public/browser",
     "//testing/gtest:gtest",
@@ -71,7 +72,6 @@ static_library("test_support") {
   ]
   public_deps = [
     "//components/safe_browsing/db:test_database_manager",
-    "//components/safe_browsing/db:util",
   ]
 }
 
@@ -90,7 +90,6 @@ source_set("unit_tests") {
     ":browser",
     ":test_support",
     "//base/test:test_support",
-    "//components/safe_browsing/db:util",
     "//components/subresource_filter/content/common",
     "//components/subresource_filter/core/browser",
     "//components/subresource_filter/core/browser:test_support",

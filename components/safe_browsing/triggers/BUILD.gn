@@ -20,6 +20,7 @@ source_set("triggers") {
     "//components/prefs:prefs",
     "//components/safe_browsing:safe_browsing",
     "//components/safe_browsing/browser:browser",
+    "//components/safe_browsing/common:safe_browsing_prefs",
     "//net:net",
   ]
 }
