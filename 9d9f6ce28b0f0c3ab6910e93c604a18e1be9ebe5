@@ -22,6 +22,30 @@
       "revId": "9d9f6ce28b0f0c3ab6910e93c604a18e1be9ebe5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee30908_c5af5d2a",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-17T23:04:38Z",
+      "side": 1,
+      "message": "Good point. Done in next patch set.",
+      "parentUuid": "ad5e9cb6_240ac94a",
+      "range": {
+        "startLine": 703,
+        "startChar": 4,
+        "endLine": 703,
+        "endChar": 13
+      },
+      "revId": "9d9f6ce28b0f0c3ab6910e93c604a18e1be9ebe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
