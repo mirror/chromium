@@ -16,6 +16,24 @@
       "revId": "139a3be6f5ccc8b46b2a9fb4146b2b56f0cc68c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e060a32c_dd0e6b45",
+        "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-10-17T02:05:13Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d9c9d6dd_061547e1",
+      "revId": "139a3be6f5ccc8b46b2a9fb4146b2b56f0cc68c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
