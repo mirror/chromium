@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "130d00ef_32ebfa0a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-17T08:12:50Z",
+      "side": 1,
+      "message": "In the previous line, either add // or delete it at all,",
+      "range": {
+        "startLine": 1210,
+        "startChar": 2,
+        "endLine": 1210,
+        "endChar": 4
+      },
+      "revId": "e268e6b6db8e679a2319a538cf985a49f9939427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
