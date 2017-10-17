@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "57ec6076_8c47a4e8",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "I didn\u0027t want to instantiate InteractiveDetector until the navigation committed.",
+      "parentUuid": "8ed5173d_ab033095",
+      "range": {
+        "startLine": 849,
+        "startChar": 40,
+        "endLine": 849,
+        "endChar": 0
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a4df4cc_4b80aa6b",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-16T13:52:02Z",
       "side": 1,
       "message": "Should this be constexpr?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 6
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32744021_3ce90745",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "Yup. Done.",
+      "parentUuid": "9a4df4cc_4b80aa6b",
       "range": {
         "startLine": 15,
         "startChar": 0,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "b14d2239_8da70c07",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "8246288a_76c6a048",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 10
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdc23d66_65789fbb",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 2
@@ -105,6 +177,30 @@
       "writtenOn": "2017-10-16T13:52:02Z",
       "side": 1,
       "message": "Given the comment, I think this intermediate variable isn\u0027t adding anything.\n\nI\u0027d just:\ntimer_fire_time +\u003d 0.001;",
+      "range": {
+        "startLine": 80,
+        "startChar": 9,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b0b3a60_709a15f8",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "bdc23d66_65789fbb",
       "range": {
         "startLine": 80,
         "startChar": 9,
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "d5120343_90183182",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "The function API will be slightly simpler, but I will have to either increase the number of calls to MonotonicallyIncreasingTime (I will end up calling it even when request_count goes from 5 to 6, which does not affect network quiet state), or I will have to duplicate the logic in UpdateNetworkQuietState here (which feels clunkier to me because there are four conditionals there and I\u0027d rather have them all consolidated in the same place.)",
+      "parentUuid": "ee753139_82b9b283",
+      "range": {
+        "startLine": 138,
+        "startChar": 11,
+        "endLine": 138,
+        "endChar": 27
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fe45404_c228584b",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 2
@@ -174,6 +294,30 @@
       "writtenOn": "2017-10-16T13:52:02Z",
       "side": 1,
       "message": "It seems a bit weird that there\u0027s no -1 here. Why is this different from OnResourceLoadBegin?",
+      "range": {
+        "startLine": 163,
+        "startChar": 31,
+        "endLine": 163,
+        "endChar": 48
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f6060db_127884dd",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "This is the timeline of events: \n\n1. OnResourceLoadBegin is called\n2. ActiveConnections() gets incremented to n+1\n3. ActiveConnections() gets back to n\n4. OnResourceLoadEnd is called",
+      "parentUuid": "1fe45404_c228584b",
       "range": {
         "startLine": 163,
         "startChar": 31,
@@ -209,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "260f9f5a_3d06c6d1",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "They can be false. Currently active intervals are only added to the vector of intervals if they are long enough. I could have two bits to tracks whether we actually added the currently active interval to the two interval vectors, but that state management felt more error prone.",
+      "parentUuid": "ddd5b84f_fd6eb4e6",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 44
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82dd91fb_3c608fbf",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 2
@@ -220,6 +388,30 @@
       "writtenOn": "2017-10-16T13:52:02Z",
       "side": 1,
       "message": "Feel free to use auto here.",
+      "range": {
+        "startLine": 244,
+        "startChar": 2,
+        "endLine": 244,
+        "endChar": 33
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed0364c_9dd13e94",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "82dd91fb_3c608fbf",
       "range": {
         "startLine": 244,
         "startChar": 2,
@@ -255,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "6c4bab63_5441fcd3",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "I\u0027m Keeping the windows for now because I want to reuse the same windows when I have an FCP version.",
+      "parentUuid": "4c74507a_3ee49c03",
+      "range": {
+        "startLine": 290,
+        "startChar": 49,
+        "endLine": 290,
+        "endChar": 50
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27e68a71_2d083c35",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
         "patchSetId": 2
@@ -278,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "076f5568_0022e81f",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27e68a71_2d083c35",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1be20612_2778da0d",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
         "patchSetId": 2
@@ -289,6 +529,30 @@
       "writtenOn": "2017-10-16T13:52:02Z",
       "side": 1,
       "message": "Requiring the time here would make this API more consistent, and we need it eventually anyways. Any reason not to require it?",
+      "range": {
+        "startLine": 52,
+        "startChar": 26,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b56690_a2b10325",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "Saves us a call to MonotonicallyIncreasingTime unless we really have to. We call MonotonicallyIncreadingTime when we\u0027re closing or opening a network quiet window, which only happens when request count crosses the 2 request threshold. For resource end time, the finish time was already available on the resource so there was no extra call, but I can\u0027t find a resource load begin time anywhere.",
+      "parentUuid": "1be20612_2778da0d",
       "range": {
         "startLine": 52,
         "startChar": 26,
@@ -324,6 +588,30 @@
     },
     {
       "key": {
+        "uuid": "462f9e59_89c6ba9d",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "You\u0027re right. I\u0027m keeping them until I fire TTI for now because I want to reuse the same window for an FCP based TTI (to be implemented soon), but I can definitely clear them once all TTI\u0027s have fired. Done in latest patch.",
+      "parentUuid": "43c4a264_0334cbc6",
+      "range": {
+        "startLine": 94,
+        "startChar": 24,
+        "endLine": 94,
+        "endChar": 50
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30d99ae6_75a0b7ae",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
         "patchSetId": 2
@@ -335,6 +623,30 @@
       "writtenOn": "2017-10-16T13:52:02Z",
       "side": 1,
       "message": "FindConsistentlyInteractiveCandidate.",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 46
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da977f28_2915ed9c",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "30d99ae6_75a0b7ae",
       "range": {
         "startLine": 104,
         "startChar": 5,
@@ -370,6 +682,30 @@
     },
     {
       "key": {
+        "uuid": "0b1bd072_f34ee815",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "Updated to quiet everywhere.",
+      "parentUuid": "08ae8abb_47aaf47f",
+      "range": {
+        "startLine": 115,
+        "startChar": 20,
+        "endLine": 115,
+        "endChar": 30
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9783de42_0325f16d",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
         "patchSetId": 2
@@ -390,6 +726,30 @@
       "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2f6168_6de26ae0",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9783de42_0325f16d",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 6
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -416,6 +776,30 @@
     },
     {
       "key": {
+        "uuid": "7de30065_e9e0c0a1",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "You\u0027re right the variables are not really adding much. Inlined everything.",
+      "parentUuid": "2d0b2ff2_16394f7b",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 49
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75551c13_dd1ccb7b",
         "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
         "patchSetId": 2
@@ -427,6 +811,30 @@
       "writtenOn": "2017-10-16T13:52:02Z",
       "side": 1,
       "message": "I think we want swap_stamp.",
+      "range": {
+        "startLine": 115,
+        "startChar": 57,
+        "endLine": 115,
+        "endChar": 62
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28fc3cf_4ba8f3d9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-17T20:29:18Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "75551c13_dd1ccb7b",
       "range": {
         "startLine": 115,
         "startChar": 57,
