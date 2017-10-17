@@ -16,6 +16,24 @@
       "revId": "85d5e9c06ea3d581480433589422fe357f277c22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd405fc_28f17fa2",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-17T10:18:55Z",
+      "side": 1,
+      "message": "Done and Thanks!",
+      "parentUuid": "bcbe1037_8007bb8e",
+      "revId": "85d5e9c06ea3d581480433589422fe357f277c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
