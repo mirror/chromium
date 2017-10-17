@@ -16,6 +16,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/test/scoped_feature_list.h"
+#include "base/test/test_discardable_memory_allocator.h"
 #include "base/test/trace_to_file.h"
 #include "build/build_config.h"
 
@@ -94,6 +95,7 @@ class TestSuite {
   XmlUnitTestResultPrinter* printer_ = nullptr;
 
   std::unique_ptr<logging::ScopedLogAssertHandler> assert_handler_;
+  base::TestDiscardableMemoryAllocator discardable_memory_allocator_;
 
   DISALLOW_COPY_AND_ASSIGN(TestSuite);
 };

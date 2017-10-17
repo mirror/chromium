@@ -404,9 +404,12 @@ void TestSuite::Initialize() {
   trace_to_file_.BeginTracingFromCommandLineOptions();
 
   base::debug::StartProfiling(GetProfileName());
+
+  base::DiscardableMemoryAllocator::SetInstance(&discardable_memory_allocator_);
 }
 
 void TestSuite::Shutdown() {
+  base::DiscardableMemoryAllocator::SetInstance(nullptr);
   base::debug::StopProfiling();
 }
 
