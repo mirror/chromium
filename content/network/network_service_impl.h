@@ -18,6 +18,7 @@
 namespace net {
 class URLRequestContext;
 class URLRequestContextBuilder;
+class LoggingNetworkChangeObserver;
 }  // namespace net
 
 namespace content {
@@ -27,8 +28,11 @@ class NetworkContext;
 class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
                                           public NetworkService {
  public:
+  // The NetworkServiceImpl will create its own NetLog if |net_log| is nullptr.
+  // TODO(mmenke): Remove the |net_log| parameter.
   explicit NetworkServiceImpl(
-      std::unique_ptr<service_manager::BinderRegistry> registry);
+      std::unique_ptr<service_manager::BinderRegistry> registry,
+      net::NetLog* net_log = nullptr);
 
   ~NetworkServiceImpl() override;
 
@@ -69,6 +73,13 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   void Create(mojom::NetworkServiceRequest request);
 
   std::unique_ptr<MojoNetLog> net_log_;
+  // TODO(mmenke): Remove this, once Chrome no longer creates its own NetLog.
+  net::NetLog* unowned_net_log_;
+
+  // Observer that logs network changes to the NetLog. Must be below the NetLog
+  // and the NetworkChangeNotifier (Once this class creates it), so it's
+  // destroyed before them.
+  std::unique_ptr<net::LoggingNetworkChangeObserver> network_change_observer_;
 
   std::unique_ptr<service_manager::BinderRegistry> registry_;
 
