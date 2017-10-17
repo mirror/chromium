@@ -255,6 +255,9 @@ class CC_EXPORT LayerImpl {
   // The following are shortcut accessors to get various information from
   // draw_properties_
   float draw_opacity() const { return draw_properties_.opacity; }
+  float draw_color_temperature() const {
+    return draw_properties_.color_temperature;
+  }
   bool screen_space_transform_is_animating() const {
     return draw_properties_.screen_space_transform_is_animating;
   }

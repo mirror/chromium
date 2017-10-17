@@ -109,8 +109,8 @@ TEST_F(SoftwareRendererTest, SolidColorQuad) {
   SharedQuadState* shared_quad_state =
       root_render_pass->CreateAndAppendSharedQuadState();
   shared_quad_state->SetAll(gfx::Transform(), outer_rect, outer_rect,
-                            outer_rect, false, true, 1.0, SkBlendMode::kSrcOver,
-                            0);
+                            outer_rect, false, true, 1.0, 1.0f,
+                            SkBlendMode::kSrcOver, 0);
   auto* inner_quad =
       root_render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
   inner_quad->SetNew(shared_quad_state, inner_rect, inner_rect, SK_ColorCYAN,
@@ -177,8 +177,8 @@ TEST_F(SoftwareRendererTest, TileQuad) {
   SharedQuadState* shared_quad_state =
       root_render_pass->CreateAndAppendSharedQuadState();
   shared_quad_state->SetAll(gfx::Transform(), outer_rect, outer_rect,
-                            outer_rect, false, true, 1.0, SkBlendMode::kSrcOver,
-                            0);
+                            outer_rect, false, true, 1.0, 0.f,
+                            SkBlendMode::kSrcOver, 0);
   auto* inner_quad = root_render_pass->CreateAndAppendDrawQuad<TileDrawQuad>();
   inner_quad->SetNew(shared_quad_state, inner_rect, inner_rect, needs_blending,
                      resource_cyan, gfx::RectF(gfx::SizeF(inner_size)),
@@ -236,7 +236,7 @@ TEST_F(SoftwareRendererTest, TileQuadVisibleRect) {
   SharedQuadState* shared_quad_state =
       root_render_pass->CreateAndAppendSharedQuadState();
   shared_quad_state->SetAll(gfx::Transform(), tile_rect, tile_rect, tile_rect,
-                            false, true, 1.0, SkBlendMode::kSrcOver, 0);
+                            false, true, 1.0, 0.f, SkBlendMode::kSrcOver, 0);
   auto* quad = root_render_pass->CreateAndAppendDrawQuad<TileDrawQuad>();
   quad->SetNew(shared_quad_state, tile_rect, tile_rect, needs_blending,
                resource_cyan, gfx::RectF(gfx::SizeF(tile_size)), tile_size,
