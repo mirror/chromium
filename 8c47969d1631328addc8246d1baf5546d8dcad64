@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "fb763108_f2e49c17",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-17T12:00:50Z",
+      "side": 1,
+      "message": "s/complie/compile/",
+      "range": {
+        "startLine": 23,
+        "startChar": 45,
+        "endLine": 23,
+        "endChar": 53
+      },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0d67953_ce4c5714",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 24
@@ -93,6 +116,76 @@
     },
     {
       "key": {
+        "uuid": "74be4eee_c255b348",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-17T12:00:50Z",
+      "side": 1,
+      "message": "Hmm... I\u0027m not sure how to proceed. Hoping Rob knows. I\u0027ll comment on the doc.",
+      "parentUuid": "8962d305_38467f94",
+      "range": {
+        "startLine": 221,
+        "startChar": 2,
+        "endLine": 223,
+        "endChar": 72
+      },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8abd5e3_c3fa17d7",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-17T12:00:50Z",
+      "side": 1,
+      "message": "s/has_reg/has_registered_/",
+      "range": {
+        "startLine": 250,
+        "startChar": 7,
+        "endLine": 250,
+        "endChar": 15
+      },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb359f8d_97ab119b",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-17T12:00:50Z",
+      "side": 1,
+      "message": "Wondering if this can this be returned back to the caller of PrepareForNativeNotification for ownership somewhere. Or does that break everything?\n\nAlso:\ns/activator_reg/activator_register/",
+      "range": {
+        "startLine": 253,
+        "startChar": 34,
+        "endLine": 253,
+        "endChar": 35
+      },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51994dd6_6f58f511",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 24
@@ -127,6 +220,47 @@
       "writtenOn": "2017-10-17T11:06:07Z",
       "side": 1,
       "message": "I guess we\u0027d want to add this to core_winrt_util.h?",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6346ef8d_905f10f3",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-17T12:00:50Z",
+      "side": 1,
+      "message": "I suspect Rob Liao has some construct in mind to use here that does the same thing, but if not then I think we should add an Initialize function in core_winrt_utils.h that does the LoadLib/GetProcAddress dance. Then we can think about whether to add a RoInitializeWrapper either there or as a separate .h/.cc pair.\n\nOnce you move it into base, you can use base::RoInitializeWrapper (and drop the \u00272\u0027 suffix).",
+      "parentUuid": "00683d52_94838ffc",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281c33d8_5c645454",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-17T12:00:50Z",
+      "side": 1,
+      "message": "Don\u0027t you need to initialize _hr? \nAlso:\ns/_hr/hr_/",
+      "range": {
+        "startLine": 260,
+        "startChar": 10,
+        "endLine": 260,
+        "endChar": 13
+      },
       "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
