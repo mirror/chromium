@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57080e08_09bd4a29",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T00:56:34Z",
+      "side": 1,
+      "message": "nit: Can you change this back to \u0027setRemoteDescription\u0027 to underline the fact that the SRD promise is key to what this tests?",
+      "revId": "a6ee8fddf2aa9e15401b245143969eb4a2678868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285e43ce_ec2840bf",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T00:56:34Z",
+      "side": 1,
+      "message": "nit: Maybe createOfferAndSetRemoteDescription or setRemoteDescription are more appropriate names now.",
+      "revId": "a6ee8fddf2aa9e15401b245143969eb4a2678868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

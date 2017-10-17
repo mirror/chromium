@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8fe8842c_17e60b47",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T00:56:34Z",
+      "side": 1,
+      "message": "Now that connect_pcs() resolve on SRD we get the original expectedEventSequence, which was the same for both mock and real impl. This is correct.",
+      "parentUuid": "af683a5f_5430b250",
+      "revId": "009da222f66670a49d44402be08a49ed70fede13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4625e7e_e0032851",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
         "patchSetId": 4
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "6f10cfc4_3bcde808",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T00:56:34Z",
+      "side": 1,
+      "message": "OK that\u0027s fine by me!",
+      "parentUuid": "f02c37d4_a96dea62",
+      "revId": "009da222f66670a49d44402be08a49ed70fede13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3efdfd40_a3b4e00c",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
         "patchSetId": 4
@@ -104,6 +140,24 @@
       "revId": "009da222f66670a49d44402be08a49ed70fede13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82dcf669_7a8139cd",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T00:56:34Z",
+      "side": 1,
+      "message": "Ack. setLocalDescription is only needed if you connect_pcs() multiple times and expect the SSRCs to remain the same for tracks that exist in both offers. It turns out none of these tests call connect_pcs() more than once, but I believe that if such test was added we would need to setLocalDescription before SRD.\n\nOptional if you want to add it or not for a future-proof helper function.",
+      "parentUuid": "110488f7_38661544",
+      "revId": "009da222f66670a49d44402be08a49ed70fede13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
