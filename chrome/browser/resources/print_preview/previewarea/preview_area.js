@@ -535,6 +535,7 @@ cr.define('print_preview', function() {
       }
       previewRequest.request.then(
           previewUid => {
+            this.cancelTimeout();
             this.previewGenerator_.onPreviewGenerationDone(
                 previewRequest.id, previewUid);
           },
@@ -548,6 +549,7 @@ cr.define('print_preview', function() {
               cr.dispatchSimpleEvent(
                   this, PreviewArea.EventType.SETTINGS_INVALID);
             } else {
+              this.cancelTimeout();
               this.onPreviewGenerationFail_();
             }
           });
