@@ -5,6 +5,7 @@
 #include "platform/scheduler/renderer/web_frame_scheduler_impl.h"
 
 #include <memory>
+#include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/blame_context.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/base/real_time_domain.h"
@@ -20,6 +21,42 @@
 
 namespace blink {
 namespace scheduler {
+
+namespace {
+
+const char* VisibilityStateToString(bool is_visible) {
+  if (is_visible) {
+    return "visible";
+  } else {
+    return "hidden";
+  }
+}
+
+const char* PausedStateToString(bool is_paused) {
+  if (is_paused) {
+    return "paused";
+  } else {
+    return "running";
+  }
+}
+
+const char* StoppedStateToString(bool is_stopped) {
+  if (is_stopped) {
+    return "stopped";
+  } else {
+    return "running";
+  }
+}
+
+const char* CrossOriginStateToString(bool is_cross_origin) {
+  if (is_cross_origin) {
+    return "cross-origin";
+  } else {
+    return "same-origin";
+  }
+}
+
+}  // namespace
 
 WebFrameSchedulerImpl::ActiveConnectionHandleImpl::ActiveConnectionHandleImpl(
     WebFrameSchedulerImpl* frame_scheduler)
@@ -42,15 +79,42 @@ WebFrameSchedulerImpl::WebFrameSchedulerImpl(
       parent_web_view_scheduler_(parent_web_view_scheduler),
       blame_context_(blame_context),
       throttling_state_(WebFrameScheduler::ThrottlingState::kNotThrottled),
-      frame_visible_(true),
-      page_visible_(true),
-      page_stopped_(false),
-      frame_paused_(false),
-      cross_origin_(false),
+      frame_visible_(
+          true,
+          "WebFrameScheduler.FrameVisible",
+          this,
+          VisibilityStateToString),
+      page_visible_(
+          true,
+          "WebFrameScheduler.PageVisible",
+          this,
+          VisibilityStateToString),
+      page_stopped_(
+          false,
+          "WebFrameScheduler.PageStopped",
+          this,
+          StoppedStateToString),
+      frame_paused_(
+          false,
+          "WebFrameScheduler.FramePaused",
+          this,
+          PausedStateToString),
+      cross_origin_(
+          false,
+          "WebFrameScheduler.Origin",
+          this,
+          CrossOriginStateToString),
       frame_type_(frame_type),
       active_connection_count_(0),
       weak_factory_(this) {
   DCHECK_EQ(throttling_state_, CalculateThrottlingState());
+
+  // Register a tracing state observer unless we're running in a test without a
+  // task runner. Note that it's safe to remove a non-existent observer.
+  if (base::ThreadTaskRunnerHandle::IsSet()) {
+    base::trace_event::TraceLog::GetInstance()->AddAsyncEnabledStateObserver(
+        this->AsWeakPtr());
+  }
 }
 
 namespace {
@@ -83,6 +147,9 @@ WebFrameSchedulerImpl::~WebFrameSchedulerImpl() {
     if (active_connection_count_)
       parent_web_view_scheduler_->OnConnectionUpdated();
   }
+
+  base::trace_event::TraceLog::GetInstance()->RemoveAsyncEnabledStateObserver(
+      this);
 }
 
 void WebFrameSchedulerImpl::DetachFromWebViewScheduler() {
@@ -472,6 +539,16 @@ base::WeakPtr<WebFrameSchedulerImpl> WebFrameSchedulerImpl::AsWeakPtr() {
 bool WebFrameSchedulerImpl::IsExemptFromThrottling() const {
   return has_active_connection();
 }
+
+void WebFrameSchedulerImpl::OnTraceLogEnabled() {
+  frame_visible_.OnTraceLogEnabled();
+  page_visible_.OnTraceLogEnabled();
+  page_stopped_.OnTraceLogEnabled();
+  frame_paused_.OnTraceLogEnabled();
+  cross_origin_.OnTraceLogEnabled();
+}
+
+void WebFrameSchedulerImpl::OnTraceLogDisabled() {}
 
 }  // namespace scheduler
 }  // namespace blink
