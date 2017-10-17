@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "de64e86e_0029057f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/generic-sensor/generic-sensor-tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-17T19:31:05Z",
+      "side": 1,
+      "message": "Why not both? Use the string method and put it all into a single file.",
+      "parentUuid": "9908b17e_db15c741",
+      "revId": "ae3080a9fb0a3525f5dd8912889e0722840ab265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5706b5a7_3f04f9d0",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/generic-sensor/generic-sensor-tests.js",
         "patchSetId": 2
