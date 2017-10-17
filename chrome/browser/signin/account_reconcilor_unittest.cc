@@ -666,7 +666,7 @@ INSTANTIATE_TEST_CASE_P(DiceTable,
 // Tests that the AccountReconcilor is enabled when Dice is enabled.
 TEST_F(AccountReconcilorTest, EnabledWithDice) {
   signin::ScopedAccountConsistencyDice scoped_dice;
-  ASSERT_TRUE(signin::IsAccountConsistencyDiceEnabled());
+  ASSERT_TRUE(signin::IsAccountConsistencyDiceAvailable());
   AccountReconcilor* reconcilor =
       AccountReconcilorFactory::GetForProfile(profile());
   ASSERT_TRUE(reconcilor);
