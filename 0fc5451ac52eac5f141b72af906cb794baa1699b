@@ -22,6 +22,30 @@
       "revId": "0fc5451ac52eac5f141b72af906cb794baa1699b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16a8690_aad0b4af",
+        "filename": "ui/file_manager/file_manager/background/js/device_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-17T06:07:23Z",
+      "side": 0,
+      "message": "These string are removed in separate CL:722460 to ease the merge back to m63.",
+      "parentUuid": "70117c86_904bdde6",
+      "range": {
+        "startLine": 206,
+        "startChar": 20,
+        "endLine": 206,
+        "endChar": 52
+      },
+      "revId": "0fc5451ac52eac5f141b72af906cb794baa1699b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
