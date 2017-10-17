@@ -8,6 +8,7 @@ include_rules = [
 
 specific_include_rules = {
   "ash_window_tree_host.cc": [
+    "+ash/shell.h",
     "+ash/shell_port.h",
   ],
   "ash_window_tree_host_platform.cc": [
@@ -16,5 +17,10 @@ specific_include_rules = {
     # AshWindowTreeHostPlatform is only used in classic ash, so it can use
     # ozone.
     "+ui/events/ozone/chromeos/cursor_controller.h",
+  ],
+  "ash_window_tree_host_unified.cc": [
+    "+ash/display/mirror_window_controller.h",
+    "+ash/display/window_tree_host_manager.h",
+    "+ash/shell.h",
   ],
 }
