@@ -603,14 +603,14 @@ cr.define('cr.ui', function() {
         var listItem = this.getListItemByIndex(change.index);
         if (listItem) {
           listItem.selected = change.selected;
-          if (change.selected) {
-            listItem.setAttribute('aria-posinset', change.index + 1);
-            listItem.setAttribute('aria-setsize', this.dataModel.length);
+          // TODO(crbug.com/775493): Set aria-posinset on item creation.
+          // Currently the item index is not propagated to that function. So
+          // we do here instead. As a known issue with this approach, items
+          // that haven't selected yet will not be read with the right
+          // position number by ChromeVox.
+          listItem.setAttribute('aria-posinset', change.index + 1);
+          if (change.index == sm.leadIndex)
             this.setAttribute('aria-activedescendant', listItem.id);
-          } else {
-            listItem.removeAttribute('aria-posinset');
-            listItem.removeAttribute('aria-setsize');
-          }
         }
       }, this);
 
@@ -842,6 +842,8 @@ cr.define('cr.ui', function() {
     createItem: function(value) {
       var item = new this.itemConstructor_(value);
       item.label = value;
+      item.setAttribute('aria-setsize', this.dataModel.length);
+      // We cannot know the position of the item in the set at this point.
       if (typeof item.decorate == 'function')
         item.decorate();
       return item;
