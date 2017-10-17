@@ -3,7 +3,10 @@
 // found in the LICENSE file.
 
 Console.ConsoleSidebar = class extends UI.VBox {
-  constructor() {
+  /**
+   * @param {!ProductRegistry.BadgePool} badgePool
+   */
+  constructor(badgePool) {
     super(true);
     this.setMinimumSize(125, 0);
     this._enabled = Runtime.experiments.isEnabled('logManagement');
@@ -26,10 +29,15 @@ Console.ConsoleSidebar = class extends UI.VBox {
       new Console.ConsoleFilter(
           Common.UIString('verbose'), [], null, Console.ConsoleFilter.singleLevelMask(Levels.Verbose))
     ];
+    var icons = [
+      UI.Icon.create('largeicon-navigator-folder'), UI.Icon.create('smallicon-clear-error'),
+      UI.Icon.create('smallicon-clear-warning', 'icon-warning'), UI.Icon.create('smallicon-clear-info'),
+      UI.Icon.create('smallicon-clear-warning')
+    ];
     /** @type {!Array<!Console.ConsoleSidebar.FilterTreeElement>} */
     this._treeElements = [];
-    for (var filter of filters) {
-      var treeElement = new Console.ConsoleSidebar.FilterTreeElement(filter);
+    for (var i = 0; i < filters.length; i++) {
+      var treeElement = new Console.ConsoleSidebar.FilterTreeElement(filters[i], icons[i], badgePool);
       this._tree.appendChild(treeElement);
       this._treeElements.push(treeElement);
     }
@@ -42,6 +50,13 @@ Console.ConsoleSidebar = class extends UI.VBox {
       return;
     for (var treeElement of this._treeElements)
       treeElement.clear();
+  }
+
+  resetCounters() {
+    if (!this._enabled)
+      return;
+    for (var treeElement of this._treeElements)
+      treeElement.resetCounters();
   }
 
   /**
@@ -81,28 +96,64 @@ Console.ConsoleSidebar.Events = {
 Console.ConsoleSidebar.URLGroupTreeElement = class extends UI.TreeElement {
   /**
    * @param {!Console.ConsoleFilter} filter
+   * @param {?Element=} badge
    */
-  constructor(filter) {
+  constructor(filter, badge) {
     super(filter.name);
     this._filter = filter;
+    this._countElement = this.listItemElement.createChild('span', 'count');
+    var leadingIcons = [UI.Icon.create('largeicon-navigator-file')];
+    if (badge)
+      leadingIcons.push(badge);
+    this.setLeadingIcons(leadingIcons);
+  }
+
+  resetCounters() {
+    this._filter.resetCounters();
+    this.updateCounters();
+  }
+
+  updateCounters() {
+    var totalCount = this._filter.errorCount + this._filter.warningCount + this._filter.infoCount;
+    this._countElement.textContent = totalCount > 0 ? totalCount : '';
   }
 };
 
 Console.ConsoleSidebar.FilterTreeElement = class extends UI.TreeElement {
   /**
    * @param {!Console.ConsoleFilter} filter
+   * @param {!Element} icon
+   * @param {!ProductRegistry.BadgePool} badgePool
    */
-  constructor(filter) {
-    super(filter.name);
+  constructor(filter, icon, badgePool) {
+    super(filter.name, true /* expandable */);
     this._filter = filter;
-    this.setExpandable(true);
+    this._badgePool = badgePool;
     /** @type {!Map<?string, !Console.ConsoleSidebar.URLGroupTreeElement>} */
     this._urlTreeElements = new Map();
+    this.setLeadingIcons([icon]);
   }
 
   clear() {
     this._urlTreeElements.clear();
     this.removeChildren();
+    this._updateCounters();
+  }
+
+  resetCounters() {
+    this._filter.resetCounters();
+    this._updateCounters();
+    for (var child of this.children())
+      child.resetCounters();
+  }
+
+  _updateCounters() {
+    var totalCount = this._filter.errorCount + this._filter.warningCount + this._filter.infoCount;
+    var titleText = `${totalCount ? totalCount : 'No'} ${this._filter.name}`;
+    if (this._filter.name !== ConsoleModel.ConsoleMessage.MessageLevel.Info &&
+        this._filter.name !== ConsoleModel.ConsoleMessage.MessageLevel.Verbose)
+      titleText += `${totalCount !== 1 ? 's' : ''}`;
+    this.title = titleText;
   }
 
   /**
@@ -113,6 +164,7 @@ Console.ConsoleSidebar.FilterTreeElement = class extends UI.TreeElement {
       return;
     var url = viewMessage.consoleMessage().url || null;
     this._filter.incrementCounters(viewMessage.consoleMessage());
+    this._updateCounters();
 
     var child = this._urlTreeElements.get(url);
     if (!child) {
@@ -123,12 +175,16 @@ Console.ConsoleSidebar.FilterTreeElement = class extends UI.TreeElement {
       else
         filter.name = Common.UIString('<other>');
       filter.parsedFilters.push({key: Console.ConsoleFilter.FilterType.Url, text: url, negative: false});
-      child = new Console.ConsoleSidebar.URLGroupTreeElement(filter);
+      var badge = null;
+      if (parsedURL)
+        badge = this._badgePool.badgeForURL(parsedURL);
+      child = new Console.ConsoleSidebar.URLGroupTreeElement(filter, badge);
       if (url)
         child.tooltip = url;
       this._urlTreeElements.set(url, child);
       this.appendChild(child);
     }
     child._filter.incrementCounters(viewMessage.consoleMessage());
+    child.updateCounters();
   }
 };

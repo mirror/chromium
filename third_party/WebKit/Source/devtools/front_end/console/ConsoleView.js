@@ -40,7 +40,8 @@ Console.ConsoleView = class extends UI.VBox {
     this._searchableView = new UI.SearchableView(this);
     this._searchableView.setPlaceholder(Common.UIString('Find string in logs'));
     this._searchableView.setMinimalSearchQuerySize(0);
-    this._sidebar = new Console.ConsoleSidebar();
+    this._badgePool = new ProductRegistry.BadgePool();
+    this._sidebar = new Console.ConsoleSidebar(this._badgePool);
     this._sidebar.addEventListener(Console.ConsoleSidebar.Events.FilterSelected, this._updateMessageList.bind(this));
 
     var toolbar = new UI.Toolbar('', this.element);
@@ -161,7 +162,6 @@ Console.ConsoleView = class extends UI.VBox {
     this._messagesElement.addEventListener('contextmenu', this._handleContextMenuEvent.bind(this), false);
 
     this._linkifier = new Components.Linkifier(Console.ConsoleViewMessage.MaxLengthForLinks);
-    this._badgePool = new ProductRegistry.BadgePool();
 
     /** @type {!Array.<!Console.ConsoleViewMessage>} */
     this._consoleMessages = [];
@@ -448,7 +448,6 @@ Console.ConsoleView = class extends UI.VBox {
       this._urlToMessageCount[message.url] = 1;
 
     this._filter.onMessageAdded(message);
-    this._sidebar.onMessageAdded(viewMessage);
     if (!insertedInMiddle) {
       this._appendMessageToEnd(viewMessage);
       this._updateFilterStatus();
@@ -492,6 +491,7 @@ Console.ConsoleView = class extends UI.VBox {
    * @param {!Console.ConsoleViewMessage} viewMessage
    */
   _appendMessageToEnd(viewMessage) {
+    this._sidebar.onMessageAdded(viewMessage);
     if (!this._filter.shouldBeVisible(viewMessage) || !this._sidebar.shouldBeVisible(viewMessage)) {
       this._hiddenByFilterCount++;
       return;
@@ -666,6 +666,7 @@ Console.ConsoleView = class extends UI.VBox {
     this._currentGroup = this._topGroup;
     this._regexMatchRanges = [];
     this._hiddenByFilterCount = 0;
+    this._sidebar.resetCounters();
     for (var i = 0; i < this._visibleViewMessages.length; ++i) {
       this._visibleViewMessages[i].resetCloseGroupDecorationCount();
       this._visibleViewMessages[i].resetIncrementRepeatCount();
