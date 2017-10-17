@@ -25,6 +25,8 @@ class CORE_EXPORT NGPhysicalBoxFragment final
                         unsigned,  // NGBorderEdges::Physical
                         RefPtr<NGBreakToken> break_token = nullptr);
 
+  bool IsBlockLayoutBoundary() const;
+
   const NGBaseline* Baseline(const NGBaselineRequest&) const;
 
   // Visual rect of this box in the local coordinate. Does not include children

@@ -58,6 +58,8 @@ class CORE_EXPORT LayoutNGBlockFlow : public LayoutBlockFlow {
 
   const NGPaintFragment* PaintFragment() const { return paint_fragment_.get(); }
 
+  static bool LocalVisualRectFor(const LayoutObject*, NGPhysicalOffsetRect*);
+
  protected:
   bool IsOfType(LayoutObjectType) const override;
 
