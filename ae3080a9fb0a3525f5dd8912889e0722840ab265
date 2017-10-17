@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cc8568a4_46b4b7b7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/generic-sensor/generic-sensor-tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-10-17T15:58:43Z",
+      "side": 1,
+      "message": "wouldn\u0027t ${sensorType} throw ReferenceError here since it is undefined (it was the reason for not making a unique message:/ )?\n\nI\u0027ll convert it all to a single file as proposed by Reilly",
+      "parentUuid": "dd1e54ec_f5bfc365",
+      "revId": "ae3080a9fb0a3525f5dd8912889e0722840ab265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5706b5a7_3f04f9d0",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/generic-sensor/generic-sensor-tests.js",
         "patchSetId": 2
