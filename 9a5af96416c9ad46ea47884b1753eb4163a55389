@@ -22,6 +22,30 @@
       "revId": "9a5af96416c9ad46ea47884b1753eb4163a55389",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "027bfdb7_5211cbe3",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-17T01:05:57Z",
+      "side": 1,
+      "message": "Yes, I got linker errors without including this lib for the two files I added. I\u0027ve pasted them into the doc.",
+      "parentUuid": "845d05d6_fe8259ac",
+      "range": {
+        "startLine": 220,
+        "startChar": 13,
+        "endLine": 220,
+        "endChar": 26
+      },
+      "revId": "9a5af96416c9ad46ea47884b1753eb4163a55389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

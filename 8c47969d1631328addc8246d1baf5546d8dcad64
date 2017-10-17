@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8962d305_38467f94",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-17T01:05:57Z",
+      "side": 1,
+      "message": "The code commented out in RegisterActivator() and UnregisterActivator() below generated the linker errors. Note that any single line of them generates all those linker errors. The Module class is in \\winrt\\wrl\\module.h",
+      "range": {
+        "startLine": 221,
+        "startChar": 2,
+        "endLine": 223,
+        "endChar": 72
+      },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51994dd6_6f58f511",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-17T01:05:57Z",
+      "side": 1,
+      "message": "This fixed the linker errors #1 and #2 in the shared google doc.",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 72
+      },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
