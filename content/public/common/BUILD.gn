@@ -47,6 +47,14 @@ source_set("content_descriptors") {
   ]
 }
 
+# This target allows other targets to depend on previews_state.h which is a
+# header-only dependency, without bringing in all of content.
+source_set("previews_state") {
+  sources = [
+    "previews_state.h",
+  ]
+}
+
 source_set("content_descriptor_keys") {
   sources = [
     "content_descriptor_keys.cc",
