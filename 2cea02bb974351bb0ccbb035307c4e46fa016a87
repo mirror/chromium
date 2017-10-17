@@ -70,6 +70,24 @@
       "revId": "2cea02bb974351bb0ccbb035307c4e46fa016a87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76bb2344_61da0f03",
+        "filename": "android_webview/tools/apk_merger.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-10-17T15:34:58Z",
+      "side": 1,
+      "message": "If you don\u0027t object I\u0027m going to land this is as-is to unblock the internal builders which have been red most of the day.\n\nI\u0027ll send tomorrow a follow up CL to make these exit error conditions consistent.",
+      "parentUuid": "ca15ae74_c4f3b45f",
+      "revId": "2cea02bb974351bb0ccbb035307c4e46fa016a87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
