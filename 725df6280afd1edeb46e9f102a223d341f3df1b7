@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f10735cf_7e12bcc8",
+        "filename": "chrome/browser/android/preferences/website_preference_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-17T18:31:00Z",
+      "side": 1,
+      "message": "Ugh, I think this whole thing should be rewritten at some point… that\u0027s probably not a yak for you to shave though.",
+      "range": {
+        "startLine": 526,
+        "startChar": 13,
+        "endLine": 526,
+        "endChar": 61
+      },
+      "revId": "725df6280afd1edeb46e9f102a223d341f3df1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91fa38a8_928e6c71",
+        "filename": "chrome/browser/android/preferences/website_preference_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-17T18:31:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure this Big Honkin\u0027 Warning is necessary anymore if we\u0027re releasing this delayed – not that is was very _effective_ before earlier ;-)",
+      "range": {
+        "startLine": 590,
+        "startChar": 4,
+        "endLine": 590,
+        "endChar": 54
+      },
+      "revId": "725df6280afd1edeb46e9f102a223d341f3df1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
