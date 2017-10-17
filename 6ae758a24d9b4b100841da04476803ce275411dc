@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ebaf7b2_178c911d",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-10-17T16:21:11Z",
+      "side": 1,
+      "message": "I think we should check the event that is required, for example, whether there is cancel here isn\u0027t critical, it should be removed, otherwise, the developer will confused, why there must 2 cancel event required here.",
+      "range": {
+        "startLine": 590,
+        "startChar": 40,
+        "endLine": 590,
+        "endChar": 55
+      },
+      "revId": "6ae758a24d9b4b100841da04476803ce275411dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4110c5_85cff364",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-10-17T16:21:11Z",
+      "side": 1,
+      "message": "the event sequences AUTOFILL_VIEW_EXITED, AUTOFILL_VIEW_ENTERED are caused by our implementation limitation, they are not required.",
+      "range": {
+        "startLine": 596,
+        "startChar": 51,
+        "endLine": 596,
+        "endChar": 73
+      },
+      "revId": "6ae758a24d9b4b100841da04476803ce275411dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
