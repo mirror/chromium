@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c41bb512_848e23cd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappNavigationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-17T06:17:56Z",
+      "side": 1,
+      "message": "Nitty nit: \"it\u0027s\" or \"it is\"",
+      "range": {
+        "startLine": 325,
+        "startChar": 14,
+        "endLine": 325,
+        "endChar": 17
+      },
+      "revId": "aab86b7f39ced80f9ee8ec9f43059e9aa34a9434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca821485_030b2ca6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappNavigationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-17T06:17:56Z",
+      "side": 1,
+      "message": "Nit: can you do an assertTrue of the exact same arguments but with isPost \u003d false?",
+      "range": {
+        "startLine": 326,
+        "startChar": 15,
+        "endLine": 326,
+        "endChar": 26
+      },
+      "revId": "aab86b7f39ced80f9ee8ec9f43059e9aa34a9434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
