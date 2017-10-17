@@ -16,6 +16,24 @@
       "revId": "c5738ca191803ea95e5e01b8310f2f66e43b24d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604dcf10_97712b53",
+        "filename": "components/language/DEPS",
+        "patchSetId": 25
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-10-17T09:04:25Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "239c19bb_f44d9775",
+      "revId": "c5738ca191803ea95e5e01b8310f2f66e43b24d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
