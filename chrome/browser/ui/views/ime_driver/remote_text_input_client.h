@@ -5,8 +5,10 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_IME_DRIVER_REMOTE_TEXT_INPUT_CLIENT_H_
 #define CHROME_BROWSER_UI_VIEWS_IME_DRIVER_REMOTE_TEXT_INPUT_CLIENT_H_
 
+#include "base/bind.h"
+#include "base/callback.h"
+#include "base/strings/string16.h"
 #include "services/ui/public/interfaces/ime/ime.mojom.h"
-#include "ui/base/ime/chromeos/ime_candidate_window_handler_interface.h"
 #include "ui/base/ime/input_method_delegate.h"
 #include "ui/base/ime/text_input_client.h"
 
@@ -14,8 +16,7 @@
 // a remote client. This is intended to be passed to the overrides of
 // ui::InputMethod::SetFocusedTextInputClient().
 class RemoteTextInputClient : public ui::TextInputClient,
-                              public ui::internal::InputMethodDelegate,
-                              chromeos::IMECandidateWindowHandlerInterface {
+                              public ui::internal::InputMethodDelegate {
  public:
   RemoteTextInputClient(ui::mojom::TextInputClientPtr remote_client,
                         ui::TextInputType text_input_type,
@@ -43,8 +44,24 @@ class RemoteTextInputClient : public ui::TextInputClient,
   gfx::Rect GetCaretBounds() const override;
   bool GetCompositionCharacterBounds(uint32_t index,
                                      gfx::Rect* rect) const override;
+
   bool HasCompositionText() const override;
   bool GetTextRange(gfx::Range* range) const override;
+  bool GetTextAndSelectionRange(
+      base::OnceCallback<void(bool, gfx::Range, base::string16, gfx::Range)>
+          callback) const override;
+  void GetTextAndSelectionRangeCallBack(
+      bool success,
+      gfx::Range text_range,
+      base::string16 text_from_range,
+      gfx::Range selection_range,
+      base::OnceCallback<void(bool, gfx::Range, base::string16, gfx::Range)>
+          callback);
+
+  void EnsureCaretNotInRect(const gfx::Rect& rect) override;
+  // void GetTextRange1(gfx::Range range, base::OnceCallback<void(gfx::Range)>
+  // TextRangeCallback);
+
   bool GetCompositionTextRange(gfx::Range* range) const override;
   bool GetSelectionRange(gfx::Range* range) const override;
   bool SetSelectionRange(const gfx::Range& range) override;
@@ -55,7 +72,6 @@ class RemoteTextInputClient : public ui::TextInputClient,
   bool ChangeTextDirectionAndLayoutAlignment(
       base::i18n::TextDirection direction) override;
   void ExtendSelectionAndDelete(size_t before, size_t after) override;
-  void EnsureCaretNotInRect(const gfx::Rect& rect) override;
   bool IsTextEditCommandEnabled(ui::TextEditCommand command) const override;
   void SetTextEditCommandForNextKeyEvent(ui::TextEditCommand command) override;
 
@@ -63,15 +79,9 @@ class RemoteTextInputClient : public ui::TextInputClient,
   ui::EventDispatchDetails DispatchKeyEventPostIME(
       ui::KeyEvent* event) override;
 
-  // chromeos::IMECandidateWindowHandlerInterface:
-  void UpdateLookupTable(const ui::CandidateWindow& candidate_window,
-                         bool visible) override;
-  void UpdatePreeditText(const base::string16& text,
-                         uint32_t cursor_pos,
-                         bool visible) override;
-  void SetCursorBounds(const gfx::Rect& cursor_bounds,
-                       const gfx::Rect& composition_head) override;
-  void OnCandidateWindowVisibilityChanged(bool visible) override;
+  bool ImeEditingAllowed() const;
+
+  bool has_composition_text_ = false;
 
   ui::mojom::TextInputClientPtr remote_client_;
   ui::TextInputType text_input_type_;
@@ -81,6 +91,8 @@ class RemoteTextInputClient : public ui::TextInputClient,
   gfx::Rect caret_bounds_;
   std::deque<std::unique_ptr<base::OnceCallback<void(bool)>>>
       pending_callbacks_;
+  base::WeakPtr<RemoteTextInputClient> weak_ptr_;
+  base::WeakPtrFactory<RemoteTextInputClient> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoteTextInputClient);
 };

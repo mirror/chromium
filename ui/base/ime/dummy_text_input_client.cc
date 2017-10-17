@@ -76,6 +76,12 @@ bool DummyTextInputClient::GetTextRange(gfx::Range* range) const {
   return false;
 }
 
+bool DummyTextInputClient::GetTextAndSelectionRange(
+    base::OnceCallback<void(bool, gfx::Range, base::string16, gfx::Range)>
+        callback) const {
+  return false;
+}
+
 bool DummyTextInputClient::GetCompositionTextRange(gfx::Range* range) const {
   return false;
 }

@@ -58,8 +58,19 @@ void TextInputClientImpl::DispatchKeyEventPostIME(
   }
 }
 
-void TextInputClientImpl::SetCandidateWindowVisible(bool visible) {
-  is_candidate_window_visible_ = visible;
+void TextInputClientImpl::GetTextAndSelectionRange(
+    GetTextAndSelectionRangeCallback callback) {
+  gfx::Range text_range;
+  gfx::Range selection_range;
+  base::string16 surrounding_text;
+
+  if (!text_input_client_->GetTextRange(&text_range) ||
+      !text_input_client_->GetTextFromRange(text_range, &surrounding_text) ||
+      !text_input_client_->GetSelectionRange(&selection_range)) {
+    std::move(callback).Run(false, text_range, surrounding_text,
+                            selection_range);
+  }
+  std::move(callback).Run(true, text_range, surrounding_text, selection_range);
 }
 
 }  // namespace aura

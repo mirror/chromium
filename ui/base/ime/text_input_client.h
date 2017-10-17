@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "base/callback.h"
 #include "base/i18n/rtl.h"
 #include "base/strings/string16.h"
 #include "ui/base/ime/composition_text.h"
@@ -103,6 +104,10 @@ class UI_BASE_IME_EXPORT TextInputClient {
   // the View. It must cover the composition and selection range.
   // Returns false if the information cannot be retrieved right now.
   virtual bool GetTextRange(gfx::Range* range) const = 0;
+
+  virtual bool GetTextAndSelectionRange(
+      base::OnceCallback<void(bool, gfx::Range, base::string16, gfx::Range)>
+          callback) const = 0;
 
   // Retrieves the UTF-16 based character range of current composition text.
   // Returns false if the information cannot be retrieved right now.

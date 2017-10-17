@@ -1334,6 +1334,12 @@ bool RenderWidgetHostViewAura::GetTextRange(gfx::Range* range) const {
   return true;
 }
 
+bool RenderWidgetHostViewAura::GetTextAndSelectionRange(
+    base::OnceCallback<void(bool, gfx::Range, base::string16, gfx::Range)>
+        callback) const {
+  return false;
+}
+
 bool RenderWidgetHostViewAura::GetCompositionTextRange(
     gfx::Range* range) const {
   // TODO(suzhe): implement this method when fixing http://crbug.com/55130.

@@ -394,6 +394,12 @@ bool ArcImeService::GetTextRange(gfx::Range* range) const {
   return true;
 }
 
+bool ArcImeService::GetTextAndSelectionRange(
+    base::OnceCallback<void(bool, gfx::Range, base::string16, gfx::Range)>
+        callback) const {
+  return false;
+}
+
 bool ArcImeService::GetSelectionRange(gfx::Range* range) const {
   if (!selection_range_.IsValid())
     return false;

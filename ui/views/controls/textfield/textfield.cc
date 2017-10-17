@@ -1439,6 +1439,12 @@ bool Textfield::GetTextRange(gfx::Range* range) const {
   return true;
 }
 
+bool Textfield::GetTextAndSelectionRange(
+    base::OnceCallback<void(bool, gfx::Range, base::string16, gfx::Range)>
+        callback) const {
+  return false;
+}
+
 bool Textfield::GetCompositionTextRange(gfx::Range* range) const {
   if (!ImeEditingAllowed())
     return false;

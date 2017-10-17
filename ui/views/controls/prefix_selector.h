@@ -45,6 +45,9 @@ class VIEWS_EXPORT PrefixSelector : public ui::TextInputClient {
                                      gfx::Rect* rect) const override;
   bool HasCompositionText() const override;
   bool GetTextRange(gfx::Range* range) const override;
+  bool GetTextAndSelectionRange(
+      base::OnceCallback<void(bool, gfx::Range, base::string16, gfx::Range)>
+          callback) const override;
   bool GetCompositionTextRange(gfx::Range* range) const override;
   bool GetSelectionRange(gfx::Range* range) const override;
   bool SetSelectionRange(const gfx::Range& range) override;
