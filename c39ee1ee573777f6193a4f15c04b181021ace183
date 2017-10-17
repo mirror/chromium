@@ -22,6 +22,30 @@
       "revId": "c39ee1ee573777f6193a4f15c04b181021ace183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9620c385_1828e3a2",
+        "filename": "components/prefs/pref_registry.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T21:12:55Z",
+      "side": 1,
+      "message": "I\u0027m trying to follow what base/values.h recommends as much as possible. It too uses this technique internally for adding key/value pairs to DictionaryValues. Trying to update everything at once is a Herculean task. So I\u0027m drawing the line here.",
+      "parentUuid": "e334fb9e_9e753669",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 46
+      },
+      "revId": "c39ee1ee573777f6193a4f15c04b181021ace183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
