@@ -16,6 +16,24 @@
       "revId": "4b6c5c24d21170ebdb53a5ebc7d566f6db8fb249",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f19b568_8000de47",
+        "filename": "chrome/browser/engagement/top_sites/OWNERS",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-17T23:08:58Z",
+      "side": 1,
+      "message": "This is clarifying that of the engagement/ OWNERs, I\u0027m the one best able to look at things here. At this stage it\u0027s a bit early to guess if I\u0027d own this once it\u0027s out of engagement.",
+      "parentUuid": "6df912c3_a73f93c1",
+      "revId": "4b6c5c24d21170ebdb53a5ebc7d566f6db8fb249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
