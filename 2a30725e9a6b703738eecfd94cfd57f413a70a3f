@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37fb9d57_9bebc1ab",
+        "filename": "third_party/WebKit/Source/core/animation/CSSDefaultInterpolationType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-17T19:47:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure we should be inlining the constructor given the base class and potentially non-trivial member:\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-When-you-CAN-inline-constructors-and-destructors",
+      "revId": "2a30725e9a6b703738eecfd94cfd57f413a70a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee4e6a5_997529ef",
+        "filename": "third_party/WebKit/Source/core/animation/EffectStackTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-17T19:47:18Z",
+      "side": 1,
+      "message": "Can we cause this indirectly by calling something like GetDocument().EnsureStyleResolver().StyleForElement(element)?",
+      "revId": "2a30725e9a6b703738eecfd94cfd57f413a70a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9acb99f_d235202b",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectModelTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-17T19:47:18Z",
+      "side": 1,
+      "message": "nit: This looks the same as in the other test class. Can we share a helper method? Though I\u0027m hoping we can use a simpler call which replicates what we do in real cases.",
+      "revId": "2a30725e9a6b703738eecfd94cfd57f413a70a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
