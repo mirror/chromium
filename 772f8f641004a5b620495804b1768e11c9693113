@@ -140,6 +140,30 @@
     },
     {
       "key": {
+        "uuid": "729aadb3_eddfa9b4",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T20:52:12Z",
+      "side": 1,
+      "message": "(Forgot to remove; please ignore this comment).",
+      "parentUuid": "65ca4567_2830f16c",
+      "range": {
+        "startLine": 175,
+        "startChar": 73,
+        "endLine": 175,
+        "endChar": 74
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03025cd5_9bbfd58d",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 6
