@@ -19,6 +19,125 @@
     },
     {
       "key": {
+        "uuid": "99a7e8b0_df7c1bb9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-17T21:24:18Z",
+      "side": 1,
+      "message": "not used",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638010ef_43783414",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-17T21:24:18Z",
+      "side": 1,
+      "message": "let\u0027s subscribe to the events only when we\u0027re enabled",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a26b9e_621bdca2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-17T21:24:18Z",
+      "side": 1,
+      "message": "bindings work 1-to-1; mapping the same file system uiSourceCode to multiple network uiSourceCodes won\u0027t work. (Check out the Persistence._establishBinding method)",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423c46c5_19345683",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-17T21:24:18Z",
+      "side": 1,
+      "message": "both _removeNetworkBinding and _removeFileSystemBinding should become a single _unbind(): there\u0027s no difference between the two",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89498450_773b4d13",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-17T21:24:18Z",
+      "side": 1,
+      "message": "why do you want to rebind? Can we just do nothing in this case?",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eea5011_901bd9df",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-17T21:24:18Z",
+      "side": 1,
+      "message": "this will be just persistence.addBinding(binding);",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f423f5e3_8bbadb96",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-17T21:24:18Z",
+      "side": 1,
+      "message": "\u003e this._fileSystemUISourceCodeForUrlMap.keys()\n\nAre these the same as urls on line #216?",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df9d5a9d_fff0b554",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/module.json",
         "patchSetId": 1
@@ -30,6 +149,23 @@
       "writtenOn": "2017-10-16T20:58:50Z",
       "side": 1,
       "message": "nit: we get it through bindings anyways, so fine.",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d3d1d0_a3a28ac4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-17T21:24:18Z",
+      "side": 1,
+      "message": "The \"Map To ...\" / \"Remove mapping\" statements here resemble the old workspaces UI. This will be confusing.\n\nHow about:\n- Start serving this folder for domain\n- Stop serving this folder for domain",
       "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
