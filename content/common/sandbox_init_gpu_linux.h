@@ -5,15 +5,20 @@
 #ifndef CONTENT_COMMON_SANDBOX_INIT_GPU_LINUX_H_
 #define CONTENT_COMMON_SANDBOX_INIT_GPU_LINUX_H_
 
+#include "base/callback.h"
+
+namespace sandbox {
+namespace bpf_dsl {
+
+class Policy;
+
+}  // namespace bpf_dsl
+}  // namespace sandbox
+
 namespace content {
 
-class GpuProcessPolicy;
-
-// Provide calllbacks into GPU code for the sandbox to use to warm up the
-// libraries and files required by GPU drivers prior to engaging the sandbox.
-bool GpuPreSandboxHook(GpuProcessPolicy* policy);
-bool CrosArmGpuPreSandboxHook(GpuProcessPolicy* policy);
-bool CrosAmdGpuPreSandboxHook(GpuProcessPolicy* policy);
+base::OnceCallback<bool(sandbox::bpf_dsl::Policy*)> GetGpuProcessPreSandboxHook(
+    bool use_amd_specific_policies);
 
 }  // namespace content
 
