@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5d27210_6f677ab3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_margin_strut.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-17T18:28:49Z",
+      "side": 1,
+      "message": "s/Retruns/Returns/\n\nor, better yet:\n// Whether there have been no margins appended to this margin strut.\n\n(even that though isn\u0027t really true. HasNoMargins or IsEmpty might be better?)",
+      "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a8bb936_8024324c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_break_token.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-17T18:28:49Z",
+      "side": 1,
+      "message": "Add a comment indicating that this takes ownership of the state_stack.",
+      "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9496ddc_e8cdebcc",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-17T18:28:49Z",
+      "side": 1,
+      "message": "+1",
+      "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e374f4_c89c1381",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-17T18:28:49Z",
+      "side": 1,
+      "message": "Please add comment explaining why we can share the state stack if there is no break.",
+      "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b93a9a_9bfff721",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-17T18:28:49Z",
+      "side": 1,
+      "message": "Looks reasonable to me but let\u0027s make sure before landing.",
+      "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c62eb49_a454bdff",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_child_iterator.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-17T18:28:49Z",
+      "side": 1,
+      "message": "Should this take a block break token as well or is break_token_ sufficient?",
+      "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
