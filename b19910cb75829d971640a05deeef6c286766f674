@@ -16,6 +16,24 @@
       "revId": "b19910cb75829d971640a05deeef6c286766f674",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48fc3d5a_7d4c38d8",
+        "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-10-17T19:40:35Z",
+      "side": 1,
+      "message": "In an upcoming CL, the (already existing) RTCPeerConnectionHandler::Observer will implement the RtcEventLogOutputSink interface. The lifetime of that Observer is intended to exceed the lifetime of the RtcEventLogOutputSinkProxy.",
+      "parentUuid": "af221208_1f456f59",
+      "revId": "b19910cb75829d971640a05deeef6c286766f674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
