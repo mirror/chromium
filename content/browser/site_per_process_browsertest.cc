@@ -11987,7 +11987,8 @@ IN_PROC_BROWSER_TEST_F(TouchSelectionControllerClientAndroidSiteIsolationTest,
   EXPECT_TRUE(ExecuteScriptAndExtractString(child->current_frame_host(),
                                             "get_point_inside_text()", &str));
   ConvertJSONToPoint(str, &point_f);
-  gfx::Point origin = child_view->GetViewOriginInRoot();
+  gfx::PointF origin =
+      child_view->TransformPointToRootCoordSpaceF(gfx::PointF());
   gfx::Vector2dF origin_vec(origin.x(), origin.y());
   point_f += origin_vec;
   point_f.Scale(page_scale_factor);
