@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70803c2a_60660169",
+        "filename": "third_party/WebKit/LayoutTests/fast/borders/thin-dotted-horizontal-borders.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-17T21:19:36Z",
+      "side": 1,
+      "message": "Can you change these tests to draw a border all the way around the box? I think this will help catch bugs where the border logic looks bad in the common case.",
+      "revId": "3010b5a73499671f92f48cdee94db9d698284cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
