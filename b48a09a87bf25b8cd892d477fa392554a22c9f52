@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e77b1fd_d0fc0a0f",
+        "filename": "testing/libfuzzer/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-17T16:34:27Z",
+      "side": 1,
+      "message": "Could you please replace krasin@ with metzman@, since you\u0027ve touched this already :)",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 19
+      },
+      "revId": "b48a09a87bf25b8cd892d477fa392554a22c9f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
