@@ -201,7 +201,7 @@ std::vector<int> LinuxSandbox::GetFileDescriptorsToClose() {
 }
 
 bool LinuxSandbox::InitializeSandbox(SandboxSeccompBPF::Options options) {
-  return LinuxSandbox::GetInstance()->InitializeSandboxImpl(options);
+  return LinuxSandbox::GetInstance()->InitializeSandboxImpl(std::move(options));
 }
 
 void LinuxSandbox::StopThread(base::Thread* thread) {
@@ -357,7 +357,7 @@ bool LinuxSandbox::InitializeSandboxImpl(SandboxSeccompBPF::Options options) {
   // Attempt to limit the future size of the address space of the process.
   LimitAddressSpace(process_type);
 
-  return StartSeccompBPF(sandbox_type, options);
+  return StartSeccompBPF(sandbox_type, std::move(options));
 }
 
 void LinuxSandbox::StopThreadImpl(base::Thread* thread) {
