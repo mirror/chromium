@@ -1,0 +1,13 @@
+<html>
+<body>
+<iframe style="position: absolute; margin-left: 110%; margin-top: 110%;">
+</iframe>
+<script>
+  function sendBoundingClientRect(element) {
+    var rect = element.getBoundingClientRect();
+    window.domAutomationController.send(
+        [rect.x | 0, rect.y | 0, rect.width | 0, rect.height | 0].join(','));
+  }
+</script>
+</body>
+</html>
