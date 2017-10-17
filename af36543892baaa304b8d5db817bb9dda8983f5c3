@@ -16,6 +16,24 @@
       "revId": "af36543892baaa304b8d5db817bb9dda8983f5c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91b79e9_a2b1ae5e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2101,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-17T14:49:51Z",
+      "side": 1,
+      "message": "No, main_thread_only() suggests that it can be called only on the main thread. Both main_thread_only() and any_thread() have DCHECKs that either this function is called on the main thread or the relevant lock is acquired.",
+      "parentUuid": "e65afb03_786986f0",
+      "revId": "af36543892baaa304b8d5db817bb9dda8983f5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
