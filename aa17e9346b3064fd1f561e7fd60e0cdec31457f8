@@ -52,6 +52,24 @@
       "revId": "aa17e9346b3064fd1f561e7fd60e0cdec31457f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ed9cc0_7b062616",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-17T07:35:38Z",
+      "side": 1,
+      "message": "What do you think about us having a flag to be able to switch between \"strict\" and \"relaxed\" mode for the loopback server. In strict mode it will fail early and DCHECK on those issues in relaxed more it will do best effort and continue. This way we can turn strict mode on for testing through the FakeServer wrapper class and keep it off for release. Since strict mode is strictly doing the same as relaxed but with more checks it should help us catch bugs.\n\nEventually you are right that the more tests we produce on that the fewer undefined conditions we will have to worry about.",
+      "parentUuid": "5147be3e_a4ecd20d",
+      "revId": "aa17e9346b3064fd1f561e7fd60e0cdec31457f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
