@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "432943f4_2eaba02c",
+        "filename": "content/common/sandbox_init_gpu_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-17T14:22:15Z",
+      "side": 1,
+      "message": "BindOnce ?",
+      "range": {
+        "startLine": 388,
+        "startChar": 15,
+        "endLine": 388,
+        "endChar": 19
+      },
+      "revId": "b6c23a61c0d03d178c2eb4daa839d117d2be39aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
