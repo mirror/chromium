@@ -24,30 +24,13 @@
     background-color: green;
     text-align: center;
     font-size: 50pt;
-    transition: transform 10s linear;
+    transform: rotate(45deg) translateZ(0);
   }
 
-  .rotated {
-    transform: rotate(90deg);
-  }
   .composited {
     transform: translateZ(0);
   }
   </style>
-  <script src="../../animations/resources/animation-test-helpers.js" type="text/javascript" charset="utf-8"></script>
-  <script type="text/javascript" charset="utf-8">
-
-    const expectedValues = [
-      // [time, element-id, property, expected-value, tolerance]
-      [5, 'inner', '-webkit-transform.1', 0.707107, 0.000001],
-    ];
-
-    function setupTest()
-    {
-      document.getElementById('inner').className = 'rotated';
-    }
-    runTransitionTest(expectedValues, setupTest, undefined, true /* pixel test */);
-  </script>
   </head>
 <body>
   <div class="outer composited">
@@ -57,6 +40,6 @@
       </div>
     </div>
   </div>
-  <div id="result"></div>
+  <div id="result">PASS - "-webkit-transform.1" property for "inner" element at 5s saw something close to: 0.707107</div>
 </body>
 </html>
