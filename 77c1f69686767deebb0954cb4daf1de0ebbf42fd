@@ -22,6 +22,122 @@
       "revId": "77c1f69686767deebb0954cb4daf1de0ebbf42fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57683c1_f274306b",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-17T05:29:41Z",
+      "side": 1,
+      "message": "How about removing the id if it\u0027s not used?",
+      "parentUuid": "80a8ccd1_c54e174d",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "77c1f69686767deebb0954cb4daf1de0ebbf42fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993af126_c92538a8",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-17T05:29:41Z",
+      "side": 1,
+      "message": "I think it can be close instead of onBackToFileList",
+      "range": {
+        "startLine": 21,
+        "startChar": 50,
+        "endLine": 21,
+        "endChar": 66
+      },
+      "revId": "77c1f69686767deebb0954cb4daf1de0ebbf42fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0667c5f5_45f86f20",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-17T05:29:41Z",
+      "side": 1,
+      "message": "No need of id?",
+      "range": {
+        "startLine": 21,
+        "startChar": 25,
+        "endLine": 21,
+        "endChar": 41
+      },
+      "revId": "77c1f69686767deebb0954cb4daf1de0ebbf42fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde58d99_40f1e1e0",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-17T05:29:41Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we always show the button? i.e. remove hidden\u003d... ?",
+      "range": {
+        "startLine": 21,
+        "startChar": 66,
+        "endLine": 21,
+        "endChar": 89
+      },
+      "revId": "77c1f69686767deebb0954cb4daf1de0ebbf42fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "925f79f0_3e50f8fe",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-17T05:29:41Z",
+      "side": 1,
+      "message": "Remove id if not used?",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 31
+      },
+      "revId": "77c1f69686767deebb0954cb4daf1de0ebbf42fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
