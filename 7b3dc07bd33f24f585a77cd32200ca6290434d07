@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ddf631f1_bf627a6f",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2027,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-17T22:13:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de8bba0d_4e117db4",
+      "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a520682_69e0b9df",
         "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
         "patchSetId": 18
@@ -122,6 +140,24 @@
       "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20889e97_1cee55ce",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2032,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-17T22:13:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21ece54a_4369d222",
+      "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +214,24 @@
     },
     {
       "key": {
+        "uuid": "0f7a1335_62627827",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-17T22:13:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "874c1c9d_50f96a52",
+      "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "319f4fef_c02e6c0b",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 18
@@ -225,6 +279,24 @@
       "side": 1,
       "message": "Ok, so it is a bit of a change, but we aren\u0027t explicitly removing functionality. Thanks for clarifying!",
       "parentUuid": "7a4f8b47_e371279f",
+      "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "076a3df3_ad447aef",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2543,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-17T22:13:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f574838_f59daaa8",
       "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
