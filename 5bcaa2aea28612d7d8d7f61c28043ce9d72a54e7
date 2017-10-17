@@ -34,6 +34,24 @@
       "revId": "5bcaa2aea28612d7d8d7f61c28043ce9d72a54e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17ff3328_6699f6c5",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventDispatcher.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-17T05:47:36Z",
+      "side": 1,
+      "message": "Hmm, that\u0027s a bit complicated to choose from.  Initially I thought it would be in\nsome header file as an inline function (or inline static method for some class).\n\nBut to inline, you need to include header files for MouseEvent, FocusEvent, PointerEvent,\nfor \"SetRelatedTarget()\" declaraion,  which might slow down the compilation a bit\n(we generally don\u0027t pay much care, where performance or maintenance cost benefit wins :).\n\nAlso, there are two distinct directories for events: core/dom/events and core/events.\nWe try to exclude non dom-specific events stuff in core/dom/events, but if we do,\nwe pull some specifics of core/events into core/dom/events.\n\nThese are not completely compatible constraints, so making a balanced decision is not easy\nhere... but I\u0027d choose making it a method for Event class (i.e. core/dom/event.h) and\nwrite out-of-line definition (i.e. function body in .cpp).",
+      "parentUuid": "59a262ee_4e93c222",
+      "revId": "5bcaa2aea28612d7d8d7f61c28043ce9d72a54e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
