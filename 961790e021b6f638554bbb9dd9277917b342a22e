@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83fb1826_9eb3df20",
+        "filename": "chrome/browser/shell_integration_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-17T22:19:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cc86405d_470cb45f",
+      "revId": "961790e021b6f638554bbb9dd9277917b342a22e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c5f2461_b5d195e1",
         "filename": "chrome/browser/shell_integration_mac.mm",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "961790e021b6f638554bbb9dd9277917b342a22e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd325cb1_2a13f65e",
+        "filename": "chrome/browser/shell_integration_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-17T22:19:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4c5f2461_b5d195e1",
+      "range": {
+        "startLine": 77,
+        "startChar": 31,
+        "endLine": 77,
+        "endChar": 46
+      },
+      "revId": "961790e021b6f638554bbb9dd9277917b342a22e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
