@@ -42,6 +42,7 @@
 #include "core/input_type_names.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
+#include "platform/HTTPNames.h"
 #include "platform/heap/Handle.h"
 #include "platform/network/EncodedFormData.h"
 #include "platform/network/FormDataEncoder.h"
@@ -293,7 +294,7 @@ FrameLoadRequest FormSubmission::CreateFrameLoadRequest(
     frame_request.SetFrameName(target_);
 
   if (method_ == FormSubmission::kPostMethod) {
-    frame_request.GetResourceRequest().SetHTTPMethod("POST");
+    frame_request.GetResourceRequest().SetHTTPMethod(HTTPNames::POST);
     frame_request.GetResourceRequest().SetHTTPBody(form_data_);
 
     // construct some user headers if necessary
