@@ -6,7 +6,7 @@
 #define AnimationTestHelper_h
 
 #include "core/animation/InterpolableValue.h"
-#include "core/animation/LegacyStyleInterpolation.h"
+#include "core/animation/InvalidatableInterpolation.h"
 #include "platform/wtf/text/StringView.h"
 #include "platform/wtf/text/WTFString.h"
 #include "v8/include/v8.h"
@@ -22,7 +22,8 @@ void SetV8ObjectPropertyAsNumber(v8::Isolate*,
                                  const StringView& name,
                                  double value);
 
-class SampleTestInterpolation : public LegacyStyleInterpolation {
+/*
+class SampleTestInterpolation : public InvalidatableInterpolation {
  public:
   static RefPtr<LegacyStyleInterpolation> Create(
       std::unique_ptr<InterpolableValue> start,
@@ -38,6 +39,7 @@ class SampleTestInterpolation : public LegacyStyleInterpolation {
                                  std::move(end),
                                  CSSPropertyBackgroundColor) {}
 };
+*/
 
 }  // namespace blink
 
