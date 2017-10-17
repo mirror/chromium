@@ -408,6 +408,24 @@
     },
     {
       "key": {
+        "uuid": "3c4e4333_9deb895e",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-17T20:10:04Z",
+      "side": 1,
+      "message": "The new API looks good. It still seems possible to save an UnsanitizedCfiCall on the stack with auto, but as I mentioned I\u0027m not too concerned about that.",
+      "parentUuid": "16d40553_8be6bcb2",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5969fb01_9a355eea",
         "filename": "build/config/sanitizers/BUILD.gn",
         "patchSetId": 2
