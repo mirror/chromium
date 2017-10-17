@@ -370,10 +370,11 @@ void GLManager::InitializeWithWorkaroundsImpl(
 
   ASSERT_TRUE(context_->MakeCurrent(surface_.get()));
 
-  if (!decoder_->Initialize(surface_.get(), context_.get(), true,
-                            ::gpu::gles2::DisallowedFeatures(), attribs)) {
+  auto result =
+      decoder_->Initialize(surface_.get(), context_.get(), true,
+                           ::gpu::gles2::DisallowedFeatures(), attribs);
+  if (result != gpu::ContextResult::kSuccess)
     return;
-  }
   // Client side Capabilities queries return reference, service side return
   // value. Here two sides are joined together.
   capabilities_ = decoder_->GetCapabilities();
