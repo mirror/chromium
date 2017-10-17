@@ -69,6 +69,24 @@
       "revId": "0963ffcd1e72d8a41e46c5e1f20b123947fc2a11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c429bada_0f45ceb8",
+        "filename": "chrome/renderer/media/chrome_key_systems.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T18:55:07Z",
+      "side": 1,
+      "message": "How often this function gets called? If there\u0027s only 2 entries and you expect the entry count to always remain small, you could have just pushed back and left it as is. :)",
+      "parentUuid": "d30cbb07_0fd17aa6",
+      "revId": "0963ffcd1e72d8a41e46c5e1f20b123947fc2a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
