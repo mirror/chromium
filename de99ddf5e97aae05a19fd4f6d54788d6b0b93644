@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7c527ee_6affb6eb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/Automapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-17T18:05:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34a54ccf_312442ae",
+      "revId": "de99ddf5e97aae05a19fd4f6d54788d6b0b93644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1d1396c_76da981d",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/Automapping.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "de99ddf5e97aae05a19fd4f6d54788d6b0b93644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "697d043f_8dc23eb8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/Automapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-17T18:05:42Z",
+      "side": 1,
+      "message": "It was to ensure if a project gets remove it removes the project from the map (to keep it from growing out of control). I changed, so now the client must remove it always.",
+      "parentUuid": "a1d1396c_76da981d",
+      "revId": "de99ddf5e97aae05a19fd4f6d54788d6b0b93644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +121,24 @@
       "revId": "de99ddf5e97aae05a19fd4f6d54788d6b0b93644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3b05a5_6a02c37d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/Automapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-17T18:05:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58df0727_8447d5f8",
+      "revId": "de99ddf5e97aae05a19fd4f6d54788d6b0b93644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
