@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70d6195e_c658eb70",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-17T09:02:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this comment is about. Maybe you should detail?",
+      "revId": "29d7dbeba19e6b140948a51997338d3285bce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0c484f_d7d5fbc2",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-17T09:02:58Z",
+      "side": 1,
+      "message": "I can\u0027t find where this is called from.",
+      "revId": "29d7dbeba19e6b140948a51997338d3285bce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb1ad91_500fc84c",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-17T09:02:58Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "29d7dbeba19e6b140948a51997338d3285bce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c689e663_148b3ef9",
+        "filename": "third_party/WebKit/Source/core/frame/UserActivationState.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-17T09:02:58Z",
+      "side": 1,
+      "message": "Could you move the implementation to a cpp file?\n\n... and add a class-level comment.",
+      "revId": "29d7dbeba19e6b140948a51997338d3285bce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39dd40c6_c04f7854",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-17T09:02:58Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think there is much benefit in adding the bug number.",
+      "revId": "29d7dbeba19e6b140948a51997338d3285bce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
