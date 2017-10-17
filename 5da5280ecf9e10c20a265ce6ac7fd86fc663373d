@@ -93,6 +93,30 @@
       "revId": "5da5280ecf9e10c20a265ce6ac7fd86fc663373d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38983406_26e54649",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 7733,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-17T17:11:21Z",
+      "side": 0,
+      "message": "Got these lines back after the recent changes of copying the headers before network transaction is destroyed.",
+      "parentUuid": "2394c388_7bd5b0c9",
+      "range": {
+        "startLine": 7733,
+        "startChar": 6,
+        "endLine": 7733,
+        "endChar": 29
+      },
+      "revId": "5da5280ecf9e10c20a265ce6ac7fd86fc663373d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
