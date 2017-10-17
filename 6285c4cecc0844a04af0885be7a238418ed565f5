@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbac1e84_a15be266",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3964,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-17T20:00:08Z",
+      "side": 1,
+      "message": "FWIW, my original goal was to try to remove the page state cloning, and only copy over the bits that were needed to the new page state. It would probably be nice to keep a TODO for that still: it seems unnecessary that view-source would require cloning the entire page state.",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
