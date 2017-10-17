@@ -28,6 +28,7 @@
 
 #include "core/dom/events/Event.h"
 #include "core/events/PageTransitionEventInit.h"
+#include "core/page/PageLifecycleState.h"
 
 namespace blink {
 
@@ -51,14 +52,21 @@ class PageTransitionEvent final : public Event {
 
   bool persisted() const { return persisted_; }
 
+  AtomicString reason() const;
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
   PageTransitionEvent();
   PageTransitionEvent(const AtomicString& type, bool persisted);
+  PageTransitionEvent(const AtomicString& type,
+                      bool persisted,
+                      const PageLifecycleState reason);
   PageTransitionEvent(const AtomicString&, const PageTransitionEventInit&);
 
   bool persisted_;
+  // TODO: This enum should be separate enum from PageLifecycleState.
+  PageLifecycleState reason_ = kPageLifecycleStateUnknown;
 };
 
 }  // namespace blink

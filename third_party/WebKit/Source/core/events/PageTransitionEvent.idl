@@ -25,9 +25,16 @@
 
 // https://html.spec.whatwg.org/multipage/browsers.html#the-pagetransitionevent-interface
 
+enum TransitionReason {
+    "unknown",
+    "discarded",
+    "stopped",
+};
+
 [
     Constructor(DOMString type, optional PageTransitionEventInit eventInitDict)
     // TODO(foolip): Exposed=(Window,Worker)
 ] interface PageTransitionEvent : Event {
     readonly attribute boolean persisted;
+    readonly attribute TransitionReason reason;
 };
