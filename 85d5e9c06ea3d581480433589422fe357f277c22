@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcbe1037_8007bb8e",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-17T09:27:06Z",
+      "side": 1,
+      "message": "caller_task_runner_-\u003eDeleteSoon(FROM_HERE, std::move(responder_)) would work?",
+      "revId": "85d5e9c06ea3d581480433589422fe357f277c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
