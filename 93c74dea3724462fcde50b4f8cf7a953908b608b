@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af1921a3_ee50d0da",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fetch/script-tests/request.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-10-17T12:54:45Z",
+      "side": 1,
+      "message": "English nit: \"nonpresent\" sounds odd. I think \"notpresent\" would be better.",
+      "revId": "93c74dea3724462fcde50b4f8cf7a953908b608b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba720f8_b9334203",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fetch/script-tests/request.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-10-17T12:54:45Z",
+      "side": 1,
+      "message": "You could make this simpler by changing the last line of undefined_nonpresent() to:\nassert_equals(new Request(request, init)).referrer, request.url, property_name);\n\nThen this line would just need to be undefined_nonpresent(\u0027method\u0027);",
+      "revId": "93c74dea3724462fcde50b4f8cf7a953908b608b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107ba41a_4f4580b4",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-10-17T12:54:45Z",
+      "side": 1,
+      "message": "I think there should be a blank line here.",
+      "revId": "93c74dea3724462fcde50b4f8cf7a953908b608b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cbff32c_4ec59527",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-10-17T12:54:45Z",
+      "side": 1,
+      "message": "No need for () around *v8_credentials.",
+      "range": {
+        "startLine": 180,
+        "startChar": 42,
+        "endLine": 180,
+        "endChar": 43
+      },
+      "revId": "93c74dea3724462fcde50b4f8cf7a953908b608b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a897ae0b_6624bff1",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-10-17T12:54:45Z",
+      "side": 1,
+      "message": "You could just return if this condition was false. Then the rest of the function wouldn\u0027t need to be indented and it might be easier to read the if ... else if chain.",
+      "revId": "93c74dea3724462fcde50b4f8cf7a953908b608b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a03b0fef_d6f2bf68",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-10-17T12:54:45Z",
+      "side": 1,
+      "message": "I\u0027m sure there\u0027s a good reason why these need to be class-scoped instead of being in a anonymous namespace in the .cc file, but I really can\u0027t see what it is. Perhaps a comment would help?",
+      "revId": "93c74dea3724462fcde50b4f8cf7a953908b608b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
