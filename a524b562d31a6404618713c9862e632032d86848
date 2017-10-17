@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a8ebf1a_fe1de3ab",
+        "filename": "third_party/WebKit/Source/core/css/StyleRule.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-17T05:26:13Z",
+      "side": 1,
+      "message": "Hmm, does this still work if you used ParsedProperties()-\u003eMutableCopy()? The current code will share the same parsed properties between two different style rules which might break things (not 100% sure).",
+      "revId": "a524b562d31a6404618713c9862e632032d86848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
