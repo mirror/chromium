@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55d842a2_f6a2bbed",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/invalid-image-paint-error.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-17T20:31:54Z",
+      "side": 1,
+      "message": "Can we instead define a second valid painter which is painted underneath?",
+      "revId": "2eac6cb942656a33049e17c23f5b6c6996d110e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "242b36e7_73eee7cd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/invalid-image-pending-script.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-17T20:31:54Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2eac6cb942656a33049e17c23f5b6c6996d110e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210566cf_1b54e3c2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/parse-input-arguments-018.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-17T20:31:54Z",
+      "side": 1,
+      "message": "paint would never be called even if the arguments were the same given that we don\u0027t have anything that paints foo. I think to make this test correct you need to have paint(foo) paint(geometry) on an element.",
+      "revId": "2eac6cb942656a33049e17c23f5b6c6996d110e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
