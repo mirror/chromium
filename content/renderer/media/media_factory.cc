@@ -301,14 +301,19 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
           base::Bind(&MediaFactory::CreateVideoDecodeStatsRecorder,
                      base::Unretained(this)),
           base::Bind(&blink::WebSurfaceLayerBridge::Create, layer_tree_view),
-          base::BindRepeating(
-              &PostMediaContextProviderToCallback,
-              RenderThreadImpl::current()->GetCompositorMainThreadTaskRunner()),
           RenderThreadImpl::current()->SharedMainThreadContextProvider()));
 
   media::WebMediaPlayerImpl* media_player = new media::WebMediaPlayerImpl(
       web_frame, client, encrypted_client, GetWebMediaPlayerDelegate(),
-      std::move(factory_selector), url_index_.get(), std::move(params));
+      std::move(factory_selector), url_index_.get(),
+      base::MakeUnique<media::VideoFrameCompositor>(
+          params->vfc_task_runner(),
+          base::BindRepeating(
+              &PostMediaContextProviderToCallback,
+              RenderThreadImpl::current()->GetCompositorMainThreadTaskRunner()),
+          RenderThreadImpl::current()->GetSharedBitmapManager(),
+          RenderThreadImpl::current()->GetGpuMemoryBufferManager()),
+      std::move(params));
 
 #if defined(OS_ANDROID)  // WMPI_CAST
   media_player->SetMediaPlayerManager(GetMediaPlayerManager());
