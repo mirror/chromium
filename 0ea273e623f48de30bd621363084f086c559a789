@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "14d1687b_7fc08e56",
+        "filename": "chromecast/media/cma/backend/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-17T18:22:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0d62e1a_a07afbf4",
+      "revId": "0ea273e623f48de30bd621363084f086c559a789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77f4191c_cef5568b",
         "filename": "chromecast/media/cma/backend/desktop/audio_decoder_desktop.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "0ea273e623f48de30bd621363084f086c559a789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e58230d_2a656c1a",
+        "filename": "chromecast/media/cma/backend/desktop/audio_decoder_desktop.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-17T18:22:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77f4191c_cef5568b",
+      "revId": "0ea273e623f48de30bd621363084f086c559a789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
