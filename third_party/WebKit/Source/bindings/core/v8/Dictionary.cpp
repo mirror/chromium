@@ -128,24 +128,14 @@ bool Dictionary::GetInternal(const v8::Local<v8::Value>& key,
   if (dictionary_object_.IsEmpty())
     return false;
 
-  v8::TryCatch try_catch(GetIsolate());
-  bool has_key = false;
-  if (!dictionary_object_->Has(V8Context(), key).To(&has_key)) {
-    DCHECK(try_catch.HasCaught());
-    exception_state.RethrowV8Exception(try_catch.Exception());
-    return false;
-  }
-  DCHECK(!try_catch.HasCaught());
-  if (!has_key)
+  if (!V8CallBoolean(dictionary_object_->Has(V8Context(), key)))
     return false;
 
-  if (!dictionary_object_->Get(V8Context(), key).ToLocal(&result)) {
-    DCHECK(try_catch.HasCaught());
+  v8::TryCatch try_catch(GetIsolate());
+  bool success = dictionary_object_->Get(V8Context(), key).ToLocal(&result);
+  if (try_catch.HasCaught())
     exception_state.RethrowV8Exception(try_catch.Exception());
-    return false;
-  }
-  DCHECK(!try_catch.HasCaught());
-  return true;
+  return success;
 }
 
 WARN_UNUSED_RESULT static v8::MaybeLocal<v8::String> GetStringValueInArray(
