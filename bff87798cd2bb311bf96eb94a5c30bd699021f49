@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "676b9989_d5c686fb",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-17T21:30:58Z",
+      "side": 1,
+      "message": "SGTM, but I\u0027ve no experience with CQ config, so if somebody from infra team can convert this and components/cronet/PRESUBMIT.py into CQ config, that would be great.\n\nBonus points if it gets triggered on base/ and net/ as well.",
+      "parentUuid": "16dc9bfd_acc47b0e",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "bff87798cd2bb311bf96eb94a5c30bd699021f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7459c0d8_1c93e16c",
         "filename": "ios/web/public/BUILD.gn",
         "patchSetId": 4
