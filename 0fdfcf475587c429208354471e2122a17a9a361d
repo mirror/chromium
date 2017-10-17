@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee20371a_19e12fae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleFilter.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-17T17:43:55Z",
+      "side": 1,
+      "message": "Right, done as `map(TextUtils.FilterParser.cloneFilter)`",
+      "parentUuid": "e9c20fba_f8deb53a",
+      "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89bb2a9c_5b4d8505",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleFilter.js",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "97c5410f_41a05106",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleFilter.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-17T17:43:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89bb2a9c_5b4d8505",
+      "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59cee997_97567558",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-17T04:07:26Z",
       "side": 1,
       "message": "for (var treeElement of this._treeElements)\n  treeElement.onMessagedAdded(viewMessage);",
+      "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56166ecd_3edcac61",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-17T17:43:55Z",
+      "side": 1,
+      "message": "Done, with clear() as well for consistency.",
+      "parentUuid": "59cee997_97567558",
       "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "90166b6e_154efad9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-17T17:43:55Z",
+      "side": 1,
+      "message": "I agree, that\u0027d be more consistent.  I\u0027ve introduced an \u0027\u003cother\u003e\u0027 group that appears for this case, and added a check in ConsoleFilter.  When filter.text is falsy, it is treated as \"find all messages whose url is falsy as well\".",
+      "parentUuid": "e01a69c0_c402f1fe",
+      "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da17716c_d6b23503",
         "filename": "third_party/WebKit/Source/devtools/front_end/externs.js",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-17T04:07:26Z",
       "side": 1,
       "message": "I think this should be in standard externs.",
+      "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ada605_b6bc50d2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/externs.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-17T17:43:55Z",
+      "side": 1,
+      "message": "Removed since I no longer need to copy a regex.  What are standard externs?",
+      "parentUuid": "da17716c_d6b23503",
       "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -101,6 +191,24 @@
       "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e86c7c0e_d836aa20",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-17T17:43:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "472eb2dc_89ca2bf3",
+      "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
