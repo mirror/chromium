@@ -15,6 +15,9 @@
 #include "platform/loader/fetch/fetch_initiator_type_names.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "public/platform/InterfaceProvider.h"
+#include "public/platform/Platform.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -64,9 +67,18 @@ BytesConsumer::Result BlobBytesConsumer::BeginRead(const char** buffer,
     if (blob_url_.IsEmpty()) {
       GetError();
     } else {
-      BlobRegistry::RegisterPublicBlobURL(
-          GetExecutionContext()->GetSecurityOrigin(), blob_url_,
-          blob_data_handle_);
+      if (storage::mojom::blink::BlobPtr blob =
+              blob_data_handle_->CloneBlobPtr()) {
+        storage::mojom::blink::BlobRegistryPtr blob_registry;
+        Platform::Current()->GetInterfaceProvider()->GetInterface(
+            MakeRequest(&blob_registry));
+        blob_registry->RegisterURL(std::move(blob), blob_url_,
+                                   &blob_url_handle_);
+      } else {
+        BlobRegistry::RegisterPublicBlobURL(
+            GetExecutionContext()->GetSecurityOrigin(), blob_url_,
+            blob_data_handle_);
+      }
 
       // m_loader is non-null only in tests.
       if (!loader_)
