@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "8d543761_98365282",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_box_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-17T02:41:15Z",
+      "side": 1,
+      "message": "Thanks, yeah, this is really a part of NGInlineLayoutAlgorithm, but in the past reviews, we wanted to move OnBegin/OnOpenTag/OnCloseTag/OnEnd events from NGInlineLayoutAlgorithm to this class and then this grew. They\u0027re so tight and apart from other classes that moving between these two classes shouldn\u0027t be hard. If this keeps confusing more, I might try to merge it back and make state stack more POD-like.",
+      "parentUuid": "e67b54d1_0a52a518",
+      "range": {
+        "startLine": 247,
+        "startChar": 31,
+        "endLine": 247,
+        "endChar": 49
+      },
+      "revId": "baea18e92add8f44de66bc710594b23cce7ed7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de67b71c_85995817",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.h",
         "patchSetId": 6
@@ -141,6 +165,30 @@
       "revId": "baea18e92add8f44de66bc710594b23cce7ed7c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8e9444_30e08a12",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-17T02:41:15Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t notice MutableOffsets() is gone from NGFragmentBuilder.\n\nSounds reasonable and thank you for the explanation. I\u0027ll split this out from NGLineBoxFragmentBuilder.",
+      "parentUuid": "4a81a579_331a629e",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 4
+      },
+      "revId": "baea18e92add8f44de66bc710594b23cce7ed7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
