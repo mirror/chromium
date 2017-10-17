@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb55a065_525d0514",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCRtpReceiver-getSynchronizationSources.https-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T17:28:26Z",
+      "side": 1,
+      "message": "Our LayoutTests now use the real RTCPeerConnectionHandler (meaning it uses the entire stack down to third_party/webrtc).\n\nWhy does this fail? https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCRtpReceiver-getSynchronizationSources.https.html?l\u003d51\n\nIs it a problem with the design of the test (test not set up so that packets are flowing yet or timing issue), a problem with using fake media devices, or a bug in our code?\n\nCan we fix the test/impl to make this pass, or file a bug?",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7187dea1_eee7bf56",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpContributingSource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T17:28:26Z",
+      "side": 1,
+      "message": "DCHECK type \u003d\u003d CSRC",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f96736c2_70d31ecc",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T17:28:26Z",
+      "side": 1,
+      "message": "DCHECK type \u003d\u003d SSRC",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13d7df96_fb6dc465",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T17:28:26Z",
+      "side": 1,
+      "message": "You need to HasAudioLevel() ? AudioLevel() : 127 or not update it.\nBut can you use base::Optional\u003cuint8_t\u003e instead? Then you can assign unconditionally.",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e8fd162_aaef61a1",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T17:28:26Z",
+      "side": 1,
+      "message": "Can you file/link a bug?",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f20548_3993c789",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T17:28:26Z",
+      "side": 1,
+      "message": "Can you file/link a bug?",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7e0785_27fc7e7e",
+        "filename": "third_party/WebKit/public/platform/WebRTCRtpSource.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T17:28:26Z",
+      "side": 1,
+      "message": "Is it possible to use base::Optional\u003cuint8_t\u003e instead of HasAudioLevel()?",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
