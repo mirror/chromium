@@ -470,12 +470,28 @@ GLES2Decoder::Error GLES2DecoderPassthroughImpl::DoCommandsImpl(
   const volatile CommandBufferEntry* cmd_data = begin_data;
 
   error::Error result = error::kNoError;
+
+  // Bootstrap first iteration, still do the check
+  auto header = CommandHeader::FromVolatile(cmd_data->value_header);
+  unsigned int next_size = header.size;
+  unsigned int next_command = header.command;
+
   unsigned int current_size = 0;
 
-  while (result == error::kNoError && cmd_data < end_data && num_commands--) {
-    auto header = CommandHeader::FromVolatile(cmd_data->value_header);
-    current_size = header.size;
-    unsigned int current_command = header.command;
+  do {
+    // Next becomes current, no check as it was done for next already
+    current_size = next_size;
+    const unsigned int current_command = next_command;
+
+    // Compute next again use sentinel value for end
+    const volatile CommandBufferEntry* next_data = cmd_data + current_size;
+    if (next_data < end_data && num_commands--) {
+      auto header = CommandHeader::FromVolatile(next_data->value_header);
+      next_size = header.size;
+      next_command = header.command;
+    } else {
+      next_command = ~0u;
+    }
 
     // Call the command
     if (current_command < arraysize(command_info)) {
@@ -495,7 +511,7 @@ GLES2Decoder::Error GLES2DecoderPassthroughImpl::DoCommandsImpl(
     // }
 
     cmd_data += current_size;
-  }
+  } while (result == error::kNoError && ~next_command != 0);
 
   // Fixup command pos to be the correct value if we have a defer
   if (result == error::kDeferCommandUntilLater) {
