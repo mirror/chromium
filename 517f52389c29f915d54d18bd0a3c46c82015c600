@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3f943b0_de511fe9",
+        "filename": "tools/binary_size/libsupersize/console.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-17T16:35:14Z",
+      "side": 1,
+      "message": "I debated this a bit, and am mostly unsure as to the most useful thing to do here :P.\nAdded in the symbols at least to make it (maybe) more useful.",
+      "parentUuid": "cbf9963a_bc12e3f3",
+      "revId": "517f52389c29f915d54d18bd0a3c46c82015c600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7b48f8c_845f0055",
         "filename": "tools/binary_size/libsupersize/testdata/Archive.golden",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-17T14:59:35Z",
       "side": 1,
       "message": "This seems rather unusual?",
+      "range": {
+        "startLine": 7,
+        "startChar": 23,
+        "endLine": 7,
+        "endChar": 29
+      },
+      "revId": "517f52389c29f915d54d18bd0a3c46c82015c600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9e7bc1_eee2a055",
+        "filename": "tools/binary_size/libsupersize/testdata/Archive.golden",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-17T16:35:14Z",
+      "side": 1,
+      "message": "The test data has become quite unusual :P. This happened because it would be a lot of work to shift all of the offsets to shrink the .rodata section",
+      "parentUuid": "c7b48f8c_845f0055",
       "range": {
         "startLine": 7,
         "startChar": 23,
