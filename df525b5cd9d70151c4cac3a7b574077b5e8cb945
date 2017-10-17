@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dda59490_ad4a32d9",
+        "filename": "ios/chrome/browser/autofill/form_structure_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-17T16:00:06Z",
+      "side": 0,
+      "message": "you can use this bug",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "df525b5cd9d70151c4cac3a7b574077b5e8cb945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
