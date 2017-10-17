@@ -370,25 +370,41 @@ HistoryURLProvider::VisitClassifier::VisitClassifier(
     : provider_(provider),
       db_(db),
       type_(INVALID) {
-  const GURL& url = input.canonicalized_url();
   // Detect email addresses.  These cases will look like "http://user@site/",
   // and because the history backend strips auth creds, we'll get a bogus exact
   // match below if the user has visited "site".
-  if (!url.is_valid() ||
-      ((input.type() == metrics::OmniboxInputType::UNKNOWN) &&
-       input.parts().username.is_nonempty() &&
-       !input.parts().password.is_nonempty() &&
-       !input.parts().path.is_nonempty()))
+  if ((input.type() == metrics::OmniboxInputType::UNKNOWN) &&
+      input.parts().username.is_nonempty() &&
+      !input.parts().password.is_nonempty() &&
+      !input.parts().path.is_nonempty())
     return;
 
-  if (db_->GetRowForURL(url, &url_row_)) {
-    type_ = VISITED;
+  // If the input can be canonicalized to a valid URL, we lookup all
+  // prefix+input combinations in the url database to determine if the input
+  // corresponds to any visited URL.
+  const GURL& url = input.canonicalized_url();
+  if (!url.is_valid())
     return;
+
+  // Iterate over all prefixes in ascending number of components (i.e. from the
+  // empty prefix to those that have most components).
+  const std::string& desired_tld = input.desired_tld();
+  const URLPrefixes& url_prefixes = URLPrefix::GetURLPrefixes();
+  for (auto prefix_it = url_prefixes.rbegin(); prefix_it != url_prefixes.rend();
+       ++prefix_it) {
+    const GURL url_with_prefix = url_formatter::FixupURL(
+        base::UTF16ToUTF8(prefix_it->prefix + input.text()), desired_tld);
+    if (url_with_prefix.is_valid() &&
+        db_->GetRowForURL(url_with_prefix, &url_row_)) {
+      type_ = VISITED;
+      return;
+    }
   }
 
+  // If the input does not correspond to a visited URL, we check if the
+  // canonical URL has an intranet hostname that the user visited (albeit with a
+  // different port and/or path) before.
   if (provider_->CanFindIntranetURL(db_, input)) {
-    // The user typed an intranet hostname that they've visited (albeit with a
-    // different port and/or path) before.
     url_row_ = history::URLRow(url);
     type_ = UNVISITED_INTRANET;
   }
@@ -882,6 +898,7 @@ bool HistoryURLProvider::FixupExactSuggestion(
     const VisitClassifier& classifier,
     HistoryURLProviderParams* params) const {
   MatchType type = INLINE_AUTOCOMPLETE;
+
   switch (classifier.type()) {
     case VisitClassifier::INVALID:
       return false;
@@ -893,6 +910,7 @@ bool HistoryURLProvider::FixupExactSuggestion(
       // We have data for this match, use it.
       params->what_you_typed_match.deletable = true;
       params->what_you_typed_match.description = classifier.url_row().title();
+      params->what_you_typed_match.destination_url = classifier.url_row().url();
       RecordAdditionalInfoFromUrlRow(classifier.url_row(),
                                      &params->what_you_typed_match);
       params->what_you_typed_match.description_class = ClassifyDescription(
@@ -968,11 +986,22 @@ bool HistoryURLProvider::CanFindIntranetURL(
     return false;
   const std::string host(base::UTF16ToUTF8(
       input.text().substr(input.parts().host.begin, input.parts().host.len)));
-  const bool has_registry_domain =
-      net::registry_controlled_domains::HostHasRegistryControlledDomain(
+
+  // Check if the host has registry domain.
+  if (net::registry_controlled_domains::HostHasRegistryControlledDomain(
           host, net::registry_controlled_domains::EXCLUDE_UNKNOWN_REGISTRIES,
-          net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES);
-  return !has_registry_domain && db->IsTypedHost(host);
+          net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES))
+    return false;
+
+  // Check if the host of the canonical URL can be found in the database.
+  if (db->IsTypedHost(host))
+    return true;
+
+  // Check if appending "www." to the canonicalized URL generates a URL found in
+  // the database.
+  return !base::StartsWith(host, "www.",
+                           base::CompareCase::INSENSITIVE_ASCII) &&
+         db->IsTypedHost("www." + host);
 }
 
 bool HistoryURLProvider::PromoteOrCreateShorterSuggestion(
