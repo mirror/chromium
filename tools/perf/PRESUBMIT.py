@@ -9,7 +9,7 @@ for more details about the presubmit API built into depot_tools.
 """
 
 import os
-
+import subprocess
 
 def _CommonChecks(input_api, output_api):
   """Performs common checks, which includes running pylint."""
@@ -19,6 +19,8 @@ def _CommonChecks(input_api, output_api):
   results.extend(_CheckJson(input_api, output_api))
   results.extend(_CheckPerfJsonUpToDate(input_api, output_api))
   results.extend(_CheckExpectations(input_api, output_api))
+  results.extend(_UpdateSysHealthCSV(input_api, output_api))
+  results.extend(_CheckNoUncomittedFiles(input_api, output_api))
   results.extend(input_api.RunTests(input_api.canned_checks.GetPylint(
       input_api, output_api, extra_paths_list=_GetPathsToPrepend(input_api),
       pylintrc='pylintrc')))
@@ -75,8 +77,8 @@ def _CheckPerfJsonUpToDate(input_api, output_api):
       input_api.os_path.join(perf_dir, 'generate_perf_data'),
       '--validate-only'], input_api)
   if return_code:
-      results.append(output_api.PresubmitError(
-          'Validating Perf JSON configs failed.', long_text=out))
+    results.append(output_api.PresubmitError(
+        'Validating Perf JSON configs failed.', long_text=out))
   return results
 
 
@@ -114,6 +116,28 @@ def _CheckJson(input_api, output_api):
     except ValueError:
       return [output_api.PresubmitError('Error parsing JSON in %s!' % filename)]
   return []
+
+
+def _CheckNoUncomittedFiles(_, output_api):
+  results = []
+  cmd = ['git', 'diff', '--name-only']
+  diff_text = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
+
+  if diff_text != "":
+    results.append(output_api.PresubmitError(
+        ('Please add the following changed files to your git client: %s' %
+             diff_text)))
+  return results
+
+def _UpdateSysHealthCSV(input_api, _):
+  """Update go/csh-stories"""
+  results = []
+  perf_dir = input_api.PresubmitLocalPath()
+  _ = _RunArgs([
+      input_api.python_executable,
+      input_api.os_path.join(
+          perf_dir, 'generate_system_health_csv')], input_api)
+  return results
 
 
 def CheckChangeOnUpload(input_api, output_api):
