@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3175df0d_cba2e471",
+        "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-17T08:57:37Z",
+      "side": 1,
+      "message": "alphabetical order in this file please.",
+      "range": {
+        "startLine": 93,
+        "startChar": 11,
+        "endLine": 93,
+        "endChar": 31
+      },
+      "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a598092f_2ab40924",
+        "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-17T08:57:37Z",
+      "side": 1,
+      "message": "Alphabetical order in this file please.",
+      "range": {
+        "startLine": 80,
+        "startChar": 18,
+        "endLine": 80,
+        "endChar": 38
+      },
+      "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56b0907_5ec991f7",
+        "filename": "ios/chrome/browser/ui/gr_search/features.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-17T08:57:37Z",
+      "side": 1,
+      "message": "There is no ned for namespaces in ios/chrome.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a968ac1_5a296ad4",
+        "filename": "ios/chrome/browser/ui/gr_search/gr_search_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-17T08:57:37Z",
+      "side": 1,
+      "message": "gr? Really?",
+      "range": {
+        "startLine": 41,
+        "startChar": 55,
+        "endLine": 41,
+        "endChar": 57
+      },
+      "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19cadbf0_cc622094",
+        "filename": "ios/chrome/browser/ui/gr_search/gr_search_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-17T08:57:37Z",
+      "side": 1,
+      "message": "Please do me a favor and wrap the else in \n\n#if !defined(__IPHONE_10_0) || __IPHONE_OS_VERSION_MIN_REQUIRED \u003c __IPHONE_10_0\n\nso it compiles when the deployment target is set to 10.\n\nSee go/bumping-the-deployment-target-to-10 for an example (at the bottom)",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
