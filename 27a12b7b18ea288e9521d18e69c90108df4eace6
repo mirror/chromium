@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3df2928f_2c8b799e",
+        "filename": "third_party/opus/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-17T20:53:14Z",
+      "side": 1,
+      "message": "Is this actually a Fuchsia-specific issue, or a Clang-ism..?",
+      "revId": "27a12b7b18ea288e9521d18e69c90108df4eace6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
