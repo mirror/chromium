@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "453fec9e_adcf80e5",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-17T10:44:45Z",
+      "side": 1,
+      "message": "Basically this CL is refactoring (except for changing the relationship between WebTaskRunner and TaskQueue from 1:1 to n:1) and should not break the current behavior as much as possible.",
+      "parentUuid": "089d69f9_9fec8298",
+      "revId": "19aaad22117e1bb44c1c3d1a26f23bc01b3475f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ea0cdad_b97a1061",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
         "patchSetId": 5
@@ -51,6 +69,24 @@
       "revId": "19aaad22117e1bb44c1c3d1a26f23bc01b3475f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d9564c_80da2ffa",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-17T10:44:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ea0cdad_b97a1061",
+      "revId": "19aaad22117e1bb44c1c3d1a26f23bc01b3475f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +121,24 @@
       "revId": "19aaad22117e1bb44c1c3d1a26f23bc01b3475f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad5d0bb8_30915bea",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-17T10:44:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92cdd1d7_76f51f27",
+      "revId": "19aaad22117e1bb44c1c3d1a26f23bc01b3475f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
