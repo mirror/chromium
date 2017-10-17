@@ -50,6 +50,29 @@
       "revId": "07bd4a8a053707d9bd0bb9e90c279b461b68e815",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e30846_2e6cd41e",
+        "filename": "third_party/WebKit/Source/core/html/canvas/ImageElementBase.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:49:10Z",
+      "side": 1,
+      "message": "Can you mention that this refers to HTMLImageElement and SVGImageElement somewhere in the comment?",
+      "range": {
+        "startLine": 61,
+        "startChar": 65,
+        "endLine": 61,
+        "endChar": 77
+      },
+      "revId": "07bd4a8a053707d9bd0bb9e90c279b461b68e815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
