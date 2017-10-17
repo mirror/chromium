@@ -53,6 +53,8 @@ void AudioOutputStreamFuchsia::Start(AudioSourceCallback* callback) {
   DCHECK(started_time_.is_null());
   callback_ = callback;
 
+  UpdatePresentationDelay();
+
   PumpSamples();
 }
 
@@ -114,9 +116,6 @@ void AudioOutputStreamFuchsia::PumpSamples() {
   //  1. The stream wasn't previously running.
   //  2. We missed timer deadline, e.g. after the system was suspended.
   if (started_time_.is_null() || now > GetCurrentStreamTime()) {
-    if (!UpdatePresentationDelay())
-      return;
-
     started_time_ = base::TimeTicks();
   }
 
@@ -133,14 +132,14 @@ void AudioOutputStreamFuchsia::PumpSamples() {
       audio_bus_->frames(), buffer_.data());
 
   do {
-    zx_time_t presentation_time = 0;
+    zx_time_t presentation_time = FUCHSIA_AUDIO_NO_TIMESTAMP;
     if (started_time_.is_null()) {
       // Presentation time (PTS) needs to be specified only for the first frame
       // after stream is started or restarted. Mixer will calculate PTS for all
       // following frames. 1us is added to account for the time passed between
       // zx_time_get() and fuchsia_audio_output_stream_write().
       zx_time_t zx_now = zx_time_get(ZX_CLOCK_MONOTONIC);
-      presentation_time = zx_now + presentation_delay_ns_ + 1000;
+      presentation_time = zx_now + presentation_delay_ns_ + ZX_USEC(1);
       started_time_ = base::TimeTicks::FromZxTime(zx_now);
       stream_position_samples_ = 0;
     }
@@ -160,9 +159,12 @@ void AudioOutputStreamFuchsia::PumpSamples() {
 
   stream_position_samples_ += frames_filled;
 
-  timer_.Start(FROM_HERE,
-               GetCurrentStreamTime() - base::TimeTicks::Now() -
-                   parameters_.GetBufferDuration() / 2,
+  auto timer_delay = GetCurrentStreamTime() - base::TimeTicks::Now() -
+                     parameters_.GetBufferDuration() / 2;
+  if (timer_delay < base::TimeDelta())
+    timer_delay = base::TimeDelta();
+
+  timer_.Start(FROM_HERE, timer_delay,
                base::Bind(&AudioOutputStreamFuchsia::PumpSamples,
                           base::Unretained(this)));
 }
