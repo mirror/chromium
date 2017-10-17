@@ -16,6 +16,24 @@
       "revId": "9ce8e085391d43426f86bf104c328440d05ad0a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f89ad1c_a8fe5b1c",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-10-17T21:25:57Z",
+      "side": 1,
+      "message": "Daniele, are you talking about the 210T? It has the primaries in the right order AFAIU. But maybe I don\u0027t understand what you want to do. Or maybe the \"specific issue\" is another issue.\n\n\nIn any case, I\u0027m not sure that the \"fBX \u003c fGX\" is a good heuristic. Looking at X on this diagram:\nhttps://upload.wikimedia.org/wikipedia/commons/thumb/6/60/CIE1931xy_CIERGB.svg/325px-CIE1931xy_CIERGB.svg.png\nit\u0027s not far fetched to imagine a green and blue with the same X value, or a green point with a smaller X than the blue point; the more recent standards have been pushing the green point further to the left while blue is mostly unchanged.\n\n\nIntuitively, I would remove the \"fBX \u003c fGX\" check but also add something which checks that the triangle area is big enough. For example it should be at least 80% of the size of the BT709 one or something like that.",
+      "parentUuid": "3bd7f37d_f1fdf6b3",
+      "revId": "9ce8e085391d43426f86bf104c328440d05ad0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
