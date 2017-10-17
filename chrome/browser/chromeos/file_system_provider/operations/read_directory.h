@@ -12,6 +12,8 @@
 #include "chrome/browser/chromeos/file_system_provider/operations/operation.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
 #include "chrome/browser/chromeos/file_system_provider/request_value.h"
+#include "chromeos/dbus/dbus_method_call_status.h"
+#include "chromeos/dbus/smb_client_client.h"
 #include "storage/browser/fileapi/async_file_util.h"
 
 namespace base {
@@ -36,6 +38,13 @@ class ReadDirectory : public Operation {
                 const storage::AsyncFileUtil::ReadDirectoryCallback& callback);
   ~ReadDirectory() override;
 
+  //  void static Test(chromeos::DBusMethodCallStatus call_status, const
+  //  std::string& result);
+  void static HandleEntriesCallback(chromeos::DBusMethodCallStatus call_status,
+                                    std::vector<std::string> entries);
+
+  void static HandleStructCallback(chromeos::DBusMethodCallStatus call_status,
+                                   std::vector<chromeos::EntryData> entries);
   // Operation overrides.
   bool Execute(int request_id) override;
   void OnSuccess(int request_id,
