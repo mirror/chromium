@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05441e47_36107d68",
+        "filename": "testing/libfuzzer/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-17T21:58:17Z",
+      "side": 1,
+      "message": "The warning sounds better to me when written like this:\n\n\"The target binary is quite large. Generating the full coverage report may take a while. To generate the report faster, consider using the \"--filter\" argument to specify the source code files and directories shown in the report.\"",
+      "revId": "f140901d1df12be566f58e3813eb06c9f22cd660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a83402_20290cde",
+        "filename": "testing/libfuzzer/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-17T21:58:17Z",
+      "side": 1,
+      "message": "Nit: changing \"to be shown\" to \"shown\" sounds better to me but I\u0027m not sure if one or the other is more correct.\nYour call.",
+      "revId": "f140901d1df12be566f58e3813eb06c9f22cd660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
