@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2f4a8d7_2ad70d23",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-17T02:26:36Z",
+      "side": 1,
+      "message": "nit: /*trilinear_filtering\u003d*/false",
+      "range": {
+        "startLine": 536,
+        "startChar": 63,
+        "endLine": 536,
+        "endChar": 68
+      },
+      "revId": "571f907acd0574ae17f75f5ae53cf7aae04dd93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f06f2c_62bea65e",
+        "filename": "ash/wm/window_cycle_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-17T02:26:36Z",
+      "side": 1,
+      "message": "nit: /*trilinear_filtering\u003d*/true",
+      "range": {
+        "startLine": 73,
+        "startChar": 54,
+        "endLine": 73,
+        "endChar": 58
+      },
+      "revId": "571f907acd0574ae17f75f5ae53cf7aae04dd93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
