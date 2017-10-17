@@ -16,6 +16,24 @@
       "revId": "329593290c8f5fcf7f69510217b8b1a40103059c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9236267_abe4c982",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-17T08:31:44Z",
+      "side": 1,
+      "message": "Yes, SG.",
+      "parentUuid": "9605e8f3_3d0fd36f",
+      "revId": "329593290c8f5fcf7f69510217b8b1a40103059c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
