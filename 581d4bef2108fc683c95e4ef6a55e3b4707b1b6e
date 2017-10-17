@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34adb00f_c29cbc81",
+        "filename": "components/language/BUILD.gn",
+        "patchSetId": 24
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-17T00:08:01Z",
+      "side": 1,
+      "message": "I think the file need the copyright notice (you can use tools/boilerplate.py to create file with the proper header):\n\n  // Copyright 2017 The Chromium Authors. All rights reserved.\n  // Use of this source code is governed by a BSD-style license that can be\n  // found in the LICENSE file.",
+      "revId": "581d4bef2108fc683c95e4ef6a55e3b4707b1b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
