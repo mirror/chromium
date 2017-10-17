@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "397c062c_f850e3ee",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-17T02:08:12Z",
+      "side": 1,
+      "message": "This feels a bit hacky. Instead of reading back RGB, why not use YuvReadbackInterface? I know it\u0027s deprecated, but we discussed a longer-term strategy for future clean-up; so, feel free to use it. :)\n\nUsing YuvReadbackInterface would clean-up a lot of this client-side code, and would be much more performant (12bpp instead of 32bpp being downloaded from the GPU). In addition, it would automatically leverage ccameron@\u0027s current efforts to improve color accuracy.",
+      "range": {
+        "startLine": 238,
+        "startChar": 1,
+        "endLine": 239,
+        "endChar": 55
+      },
+      "revId": "e07873256d6f2d3291e0e3aa62d050ef813211c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1778edc_e060bb46",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-17T02:08:12Z",
+      "side": 1,
+      "message": "Creating and destroying GLHelper for each frame is very expensive. GLHelper caches a lot of things that latency intensive (e.g., it probes the implementation for readback strategy, and other things.)\n\nYou should create it once, upon first use. Perhaps GLHelper should be added to RenderThreadImpl?",
+      "revId": "e07873256d6f2d3291e0e3aa62d050ef813211c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

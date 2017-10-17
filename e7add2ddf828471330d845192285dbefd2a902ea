@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a19354f3_bf93adbf",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-17T02:08:12Z",
+      "side": 1,
+      "message": "See my other comment (I think GLHelper should be created on-demand and global to the RenderThreadImpl.)\n\nFurthermore, you have to be careful about context losses. Something will need to implement viz::ContextFactoryObserver::OnLostResources() and destroy the GLHelper (and YuvReadback instance) when that happens. (A new GLHelper could be instantiated on the next canvas capture frame, when the new context provider is available.)",
+      "parentUuid": "60263d5a_e908867a",
+      "range": {
+        "startLine": 248,
+        "startChar": 6,
+        "endLine": 248,
+        "endChar": 16
+      },
+      "revId": "e7add2ddf828471330d845192285dbefd2a902ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e86487b2_792900a5",
         "filename": "third_party/WebKit/public/platform/WebCanvasCaptureHandler.h",
         "patchSetId": 8
