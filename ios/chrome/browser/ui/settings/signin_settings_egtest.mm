@@ -125,4 +125,22 @@ id<GREYMatcher> NavigationBarDoneButton() {
       assertWithMatcher:grey_notNil()];
 }
 
+- (void)testDissmissSigninPromo {
+  [ChromeEarlGreyUI openSettingsMenu];
+  // Check the sign-in promo view is visible.
+  [SigninEarlGreyUtils
+      checkSigninPromoVisibleWithMode:SigninPromoViewModeColdState];
+  // Tap on dismiss button.
+  [[EarlGrey
+      selectElementWithMatcher:grey_accessibilityID(kSigninPromoCloseButtonId)]
+      performAction:grey_tap()];
+  // Check that the sign-in promo is not visible anymore.
+  [SigninEarlGreyUtils checkSigninPromoNotVisible];
+  [[EarlGrey
+      selectElementWithMatcher:grey_allOf(
+                                   grey_accessibilityID(kSettingsSignInCellId),
+                                   grey_sufficientlyVisible(), nil)]
+      assertWithMatcher:grey_notNil()];
+}
+
 @end
