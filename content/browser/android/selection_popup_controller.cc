@@ -160,8 +160,9 @@ bool SelectionPopupController::ShowSelectionMenu(
       env, obj, params.selection_rect.x(), params.selection_rect.y(),
       params.selection_rect.right(),
       params.selection_rect.bottom() + handle_height, params.is_editable,
-      is_password_type, jselected_text, can_select_all, can_edit_richly,
-      should_suggest, from_selection_adjustment);
+      is_password_type, jselected_text, params.selection_offset, can_select_all,
+      can_edit_richly, should_suggest, from_selection_reset,
+      from_selection_adjustment);
   return true;
 }
 

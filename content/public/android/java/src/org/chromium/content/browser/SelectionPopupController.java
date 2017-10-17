@@ -46,6 +46,7 @@ import org.chromium.content.browser.input.PastePopupMenu;
 import org.chromium.content.browser.input.PastePopupMenu.PastePopupMenuDelegate;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
 import org.chromium.content_public.browser.SelectionClient;
+import org.chromium.content_public.browser.SelectionMetricsLogger;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.base.WindowAndroid;
@@ -124,6 +125,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
     private boolean mUnselectAllOnDismiss;
     private String mLastSelectedText;
+    private int mLastSelectionOffset;
 
     // Tracks whether a touch selection is currently active.
     private boolean mHasSelection;
@@ -133,9 +135,14 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private PastePopupMenu mPastePopupMenu;
     private boolean mWasPastePopupShowingOnInsertionDragStart;
 
-    /** The {@link SelectionClient} that processes textual selection, or {@code null} if none
-     * exists. */
+    /**
+     * The {@link SelectionClient} that processes textual selection, or {@code null} if none
+     * exists.
+     */
     private SelectionClient mSelectionClient;
+
+    // SelectionMetricsLogger, could be null.
+    private SelectionMetricsLogger mSelectionMetricsLogger;
 
     // The classificaton result of the selected text if the selection exists and
     // SelectionClient was able to classify it, otherwise null.
@@ -259,17 +266,33 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     @VisibleForTesting
     @CalledByNative
     public void showSelectionMenu(int left, int top, int right, int bottom, boolean isEditable,
-            boolean isPasswordType, String selectionText, boolean canSelectAll,
-            boolean canRichlyEdit, boolean shouldSuggest, boolean fromSelectionAdjustment) {
+            boolean isPasswordType, String selectionText, int selectionOffset, boolean canSelectAll,
+            boolean canRichlyEdit, boolean shouldSuggest, boolean fromSelectionReset,
+            boolean fromSelectionAdjustment) {
         mSelectionRect.set(left, top, right, bottom);
         mEditable = isEditable;
         mLastSelectedText = selectionText;
+        mLastSelectionOffset = selectionOffset;
         mHasSelection = selectionText.length() != 0;
         mIsPasswordType = isPasswordType;
         mCanSelectAllForPastePopup = canSelectAll;
         mCanEditRichly = canRichlyEdit;
         mUnselectAllOnDismiss = true;
+
         if (hasSelection()) {
+            if (mSelectionMetricsLogger != null) {
+                if (fromSelectionAdjustment) {
+                    mSelectionMetricsLogger.logSelectionModified(
+                            selectionText, selectionOffset, mClassificationResult);
+                } else if (fromSelectionReset) {
+                    mSelectionMetricsLogger.logSelectionAction(selectionText, selectionOffset,
+                            SelectionMetricsLogger.ActionType.RESET,
+                            /* SelectionClient.Result = */ null);
+                } else {
+                    mSelectionMetricsLogger.logSelectionStarted(
+                            selectionText, selectionOffset, isEditable);
+                }
+            }
             // From selection adjustment, show menu directly.
             if (fromSelectionAdjustment) {
                 showActionModeOrClearOnFailure();
@@ -697,6 +720,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         int groupId = item.getGroupId();
 
         if (BuildInfo.isAtLeastO() && id == android.R.id.textAssist) {
+            // Logging inside of doAssistAction()
             doAssistAction();
             mode.finish();
         } else if (id == R.id.select_action_menu_select_all) {
@@ -725,6 +749,11 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
             // TextView in Android M.
         } else {
             return false;
+        }
+
+        if (mHasSelection && mSelectionMetricsLogger != null) {
+            mSelectionMetricsLogger.logSelectionAction(mLastSelectedText, mLastSelectionOffset,
+                    getActionType(id), mClassificationResult);
         }
         return true;
     }
@@ -764,6 +793,29 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         // coordinates relative to the containing View.
         viewSelectionRect.offset(0, (int) mRenderCoordinates.getContentOffsetYPix());
         return viewSelectionRect;
+    }
+
+    private int getActionType(int menuItemId) {
+        if (menuItemId == R.id.select_action_menu_select_all) {
+            return SelectionMetricsLogger.ActionType.SELECT_ALL;
+        }
+        if (menuItemId == R.id.select_action_menu_cut) {
+            return SelectionMetricsLogger.ActionType.CUT;
+        }
+        if (menuItemId == R.id.select_action_menu_copy) {
+            return SelectionMetricsLogger.ActionType.COPY;
+        }
+        if (menuItemId == R.id.select_action_menu_paste
+                || menuItemId == R.id.select_action_menu_paste_as_plain_text) {
+            return SelectionMetricsLogger.ActionType.PASTE;
+        }
+        if (menuItemId == R.id.select_action_menu_share) {
+            return SelectionMetricsLogger.ActionType.SHARE;
+        }
+        if (menuItemId == R.id.select_action_menu_assist_items) {
+            return SelectionMetricsLogger.ActionType.SMART_SHARE;
+        }
+        return SelectionMetricsLogger.ActionType.OTHER;
     }
 
     /**
@@ -1108,6 +1160,9 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      */
     void setSelectionClient(@Nullable SelectionClient selectionClient) {
         mSelectionClient = selectionClient;
+        if (mSelectionClient != null) {
+            mSelectionMetricsLogger = mSelectionClient.getSelectionMetricsLogger();
+        }
 
         mClassificationResult = null;
 
