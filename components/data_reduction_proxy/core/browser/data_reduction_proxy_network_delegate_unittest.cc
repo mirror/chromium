@@ -668,6 +668,7 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
   void VerifyBrotliPresent(net::URLRequest* request, bool expect_brotli) {
     net::HttpRequestHeaders request_headers_sent;
     EXPECT_TRUE(request->GetFullRequestHeaders(&request_headers_sent));
+
     std::string accept_encoding_value;
     EXPECT_TRUE(request_headers_sent.GetHeader("Accept-Encoding",
                                                &accept_encoding_value));
@@ -1817,7 +1818,8 @@ TEST_F(DataReductionProxyNetworkDelegateTest,
   EXPECT_NE(0, request->GetTotalSentBytes());
   EXPECT_NE(0, request->GetTotalReceivedBytes());
   EXPECT_FALSE(request->was_cached());
-  // Brotli should be added to Accept Encoding header only if secure proxy is in
+  // Brotli should be added to Accept Encoding header only if secure
+  // proxy is in
   VerifyBrotliPresent(request.get(), false);
 }
 
