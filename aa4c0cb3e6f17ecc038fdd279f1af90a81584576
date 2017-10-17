@@ -52,6 +52,24 @@
       "revId": "aa4c0cb3e6f17ecc038fdd279f1af90a81584576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f3fa7d_bedb6d0d",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-17T08:49:44Z",
+      "side": 1,
+      "message": "Yes, I meant event listeners. Sorry for the confusion.\n\nI thought that making CanExecuteScripts() return false is the way you mentioned in the original proposal. Am I missing something?\nhttps://docs.google.com/document/d/1UwCeNQa0Q3tomra120_-N2cOg_LGniUKuX5rc5ccje0/edit#heading\u003dh.9tydbgvd9wp1",
+      "parentUuid": "81764a9a_232238f2",
+      "revId": "aa4c0cb3e6f17ecc038fdd279f1af90a81584576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
