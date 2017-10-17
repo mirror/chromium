@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea0d0e58_f9ea7210",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-17T10:25:33Z",
+      "side": 1,
+      "message": "As you noted, we cannot rely on the presence of this data for the start-up path. Could we instead encode it in the notification\u0027s \u003ctoast launch\u003d\"\"\u003e to have a common path?\n\nI realise it\u0027d end up being a long value, especially since we have to include the origin too, but that\u0027s probably fine. Do you happen to know the maximum length? We can find out in either case.",
+      "revId": "13d5f5d342b3b7069b804b3a8abbcd84f16a29f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
