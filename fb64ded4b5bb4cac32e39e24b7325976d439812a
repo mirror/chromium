@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de2b7415_14a558e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-17T09:11:51Z",
+      "side": 1,
+      "message": "let\u0027s add javadoc",
+      "range": {
+        "startLine": 207,
+        "startChar": 11,
+        "endLine": 207,
+        "endChar": 15
+      },
+      "revId": "fb64ded4b5bb4cac32e39e24b7325976d439812a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273d3888_1b2faf90",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-17T09:11:51Z",
+      "side": 1,
+      "message": "I think we don\u0027t want to use the vanilla TabDelegateFactory.  I think we want to do:\n\n((ChromeTabCreator) activity.getTabCreator(false)).createDefaultTabDelegateFactory();\n\nespecially for Tabbed mode it has it\u0027s own creator type.\n\nI wonder if long term if we should have the attach logic live in the TabModel.add call.  It could potentially check if Tab.isDetached() and call attach as needed.  I don\u0027t honestly know if that helps anything here though.",
+      "range": {
+        "startLine": 214,
+        "startChar": 16,
+        "endLine": 214,
+        "endChar": 22
+      },
+      "revId": "fb64ded4b5bb4cac32e39e24b7325976d439812a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
