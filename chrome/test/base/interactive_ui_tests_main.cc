@@ -4,6 +4,7 @@
 
 #include "chrome/test/base/chrome_test_launcher.h"
 
+#include "base/test/test_discardable_memory_allocator.h"
 #include "build/build_config.h"
 #include "chrome/test/base/chrome_test_suite.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -66,6 +67,9 @@ class InteractiveUITestSuite : public ChromeTestSuite {
     ui_controls::InstallUIControlsAura(aura::test::CreateUIControlsAura(NULL));
 #endif  // defined(OS_LINUX)
 #endif  // defined(USE_AURA)
+
+    base::DiscardableMemoryAllocator::SetInstance(
+        &discardable_memory_allocator_);
   }
 
   void Shutdown() override {
@@ -79,6 +83,7 @@ class InteractiveUITestSuite : public ChromeTestSuite {
 #if defined(OS_WIN)
   std::unique_ptr<base::win::ScopedCOMInitializer> com_initializer_;
 #endif
+  base::TestDiscardableMemoryAllocator discardable_memory_allocator_;
 };
 
 class InteractiveUITestSuiteRunner : public ChromeTestSuiteRunner {

@@ -52,6 +52,8 @@ void ViewsTestSuite::Initialize() {
   base::FilePath ui_test_pak_path;
   ASSERT_TRUE(PathService::Get(ui::UI_TEST_PAK, &ui_test_pak_path));
   ui::ResourceBundle::InitSharedInstanceWithPakPath(ui_test_pak_path);
+
+  base::DiscardableMemoryAllocator::SetInstance(&discardable_memory_allocator_);
 #if defined(USE_AURA)
   InitializeEnv();
 #endif

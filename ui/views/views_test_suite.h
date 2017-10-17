@@ -5,6 +5,7 @@
 #ifndef UI_VIEWS_VIEWS_TEST_SUITE_H_
 #define UI_VIEWS_VIEWS_TEST_SUITE_H_
 
+#include "base/test/test_discardable_memory_allocator.h"
 #include "base/test/test_suite.h"
 
 #if defined(USE_AURA)
@@ -37,6 +38,7 @@ class ViewsTestSuite : public base::TestSuite {
 #endif
 
  private:
+  base::TestDiscardableMemoryAllocator discardable_memory_allocator_;
 #if defined(USE_AURA)
   std::unique_ptr<aura::Env> env_;
 #endif
