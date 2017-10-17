@@ -146,7 +146,7 @@ arguments:
 
 To `#ifdef` code for specific platforms, use the macros defined in
 `build/build_config.h` and in the Chromium build config files, not other macros
-set by specific compilers or build environments (e.g. `WIN32`). 
+set by specific compilers or build environments (e.g. `WIN32`).
 
 Place platform-specific #includes in their own section below the "normal"
 `#includes`. Repeat the standard `#include` order within this section:
@@ -162,7 +162,7 @@ Place platform-specific #includes in their own section below the "normal"
 
   #if defined(OS_WIN)
   #include <windows.h>
-  #include "base/win/scoped_comptr.h"
+  #include "base/win/com_init_util.h"
   #elif defined(OS_POSIX)
   #include "base/posix/global_descriptors.h"
   #endif
