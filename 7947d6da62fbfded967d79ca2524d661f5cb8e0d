@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "773557d5_e236530a",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-17T08:57:36Z",
+      "side": 1,
+      "message": "https://groups.google.com/a/chromium.org/d/msg/blink-dev/MuCMcXn_9h4/hGbRL1R9AQAJ\n\n:)",
+      "parentUuid": "484a8399_13ade76e",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "648dabbc_381b06cb",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
         "patchSetId": 2
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "0dd50755_8a918b6a",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-17T08:57:36Z",
+      "side": 1,
+      "message": "Just wondered if directly calling source_info.IsValid() is fine, while I can also imagine you probably wanted to have this and the one below next to each other.",
+      "parentUuid": "7a956298_85c9ce6b",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f086daf1_019ce48b",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
         "patchSetId": 2
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "I thought about that, but keep it here seems make the code clearly. I am not sure, but if it\u0027s not in this class, where do you think is better?",
       "parentUuid": "f086daf1_019ce48b",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8cd6d3_3c4f509f",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-17T08:57:36Z",
+      "side": 1,
+      "message": "Again, just wondered is having these in an anon space could be good enough, as they don\u0027t seem to be really related to ServiceWorkerDispatcherHost.  Not too strongly though, I could live with this too.",
+      "parentUuid": "80177383_6b8283c0",
       "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
