@@ -585,6 +585,14 @@ class PLATFORM_EXPORT ThreadState {
 
   int GcAge() const { return gc_age_; }
 
+  static void SetForceMemoryPressureThreshold(size_t threshold) {
+    force_memory_pressure_threshold_ = threshold;
+  }
+
+  static size_t GetForceMemoryPressureThreshold() {
+    return force_memory_pressure_threshold_;
+  }
+
  private:
   template <typename T>
   friend class PrefinalizerRegistration;
@@ -696,6 +704,8 @@ class PLATFORM_EXPORT ThreadState {
   size_t mixins_being_constructed_count_;
   double accumulated_sweeping_time_;
   bool object_resurrection_forbidden_;
+
+  static size_t force_memory_pressure_threshold_;
 
   BaseArena* arenas_[BlinkGC::kNumberOfArenas];
   int vector_backing_arena_index_;
