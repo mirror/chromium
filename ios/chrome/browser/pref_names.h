@@ -15,7 +15,6 @@ extern const char kBrowserStatesLastActive[];
 extern const char kBrowserStatesNumCreated[];
 extern const char kBrowsingDataMigrationHasBeenPossible[];
 extern const char kClearBrowsingDataHistoryNoticeShownTimes[];
-extern const char kContextualSearchEnabled[];
 extern const char kDataSaverEnabled[];
 extern const char kDefaultCharset[];
 extern const char kEnableDoNotTrack[];

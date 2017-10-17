@@ -36,12 +36,6 @@ const char kBrowsingDataMigrationHasBeenPossible[] =
 const char kClearBrowsingDataHistoryNoticeShownTimes[] =
     "browser.clear_data.history_notice_shown_times";
 
-// String indicating the Contextual Search enabled state.
-// "false" - opt-out (disabled)
-// "" (empty string) - undecided
-// "true" - opt-in (enabled)
-const char kContextualSearchEnabled[] = "search.contextual_search_enabled";
-
 // Boolean that is true when Data Saver is enabled.
 // TODO(bengr): Migrate the preference string to "data_saver.enabled"
 // (crbug.com/564207).
