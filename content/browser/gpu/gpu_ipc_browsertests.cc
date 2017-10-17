@@ -60,6 +60,7 @@ class EstablishGpuChannelHelper {
   ~EstablishGpuChannelHelper() {}
 
   scoped_refptr<gpu::GpuChannelHost> EstablishGpuChannelSyncRunLoop() {
+    LOG(ERROR) << "EstablishGpuChannelSyncRunLoop";
     gpu::GpuChannelEstablishFactory* factory =
         content::BrowserMainLoop::GetInstance()
             ->gpu_channel_establish_factory();
@@ -68,6 +69,8 @@ class EstablishGpuChannelHelper {
     factory->EstablishGpuChannel(base::Bind(
         &OnEstablishedGpuChannel, run_loop.QuitClosure(), &gpu_channel_host_));
     run_loop.Run();
+    LOG(ERROR) << "EstablishGpuChannelHelper done with gpu_channel_host_="
+               << gpu_channel_host_.get();
     return std::move(gpu_channel_host_);
   }
 
@@ -190,11 +193,13 @@ IN_PROC_BROWSER_TEST_F(BrowserGpuChannelHostFactoryTest, MAYBE_Basic) {
 IN_PROC_BROWSER_TEST_F(BrowserGpuChannelHostFactoryTest,
                        MAYBE_AlreadyEstablished) {
   DCHECK(!IsChannelEstablished());
+  LOG(ERROR) << "Test calls EstablishGpuChannelSync";
   scoped_refptr<gpu::GpuChannelHost> gpu_channel =
       GetFactory()->EstablishGpuChannelSync();
 
   // Expect established callback immediately.
   bool event = false;
+  LOG(ERROR) << "Test calls EstablishGpuChannel";
   GetFactory()->EstablishGpuChannel(
       base::Bind(&BrowserGpuChannelHostFactoryTest::Signal,
                  base::Unretained(this), &event));

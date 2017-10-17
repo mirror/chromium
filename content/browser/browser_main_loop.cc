@@ -64,6 +64,7 @@
 #include "content/browser/download/download_resource_handler.h"
 #include "content/browser/download/save_file_manager.h"
 #include "content/browser/gpu/browser_gpu_channel_host_factory.h"
+#include "content/browser/gpu/browser_gpu_client.h"
 #include "content/browser/gpu/browser_gpu_memory_buffer_manager.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
@@ -87,6 +88,7 @@
 #include "content/browser/utility_process_host_impl.h"
 #include "content/browser/webui/content_web_ui_controller_factory.h"
 #include "content/browser/webui/url_data_manager.h"
+#include "content/common/child_process_host_impl.h"
 #include "content/common/content_switches_internal.h"
 #include "content/common/service_manager/service_manager_connection_impl.h"
 #include "content/common/task_scheduler.h"
@@ -121,6 +123,7 @@
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 #include "services/resource_coordinator/public/interfaces/service_constants.mojom.h"
 #include "services/service_manager/runner/common/client_util.h"
+#include "services/ui/public/cpp/gpu/gpu.h"
 #include "skia/ext/event_tracer_impl.h"
 #include "skia/ext/skia_memory_dump_provider.h"
 #include "sql/sql_memory_dump_provider.h"
@@ -987,6 +990,9 @@ BrowserMainLoop::GetResizeTaskRunner() {
 
 gpu::GpuChannelEstablishFactory*
 BrowserMainLoop::gpu_channel_establish_factory() const {
+  if (gpu_)
+    return gpu_.get();
+
   return BrowserGpuChannelHostFactory::instance();
 }
 
@@ -1287,6 +1293,9 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
   device_monitor_mac_.reset();
 #endif
 
+  LOG(ERROR) << "Destroy gpu_";
+  gpu_.reset();
+
   if (BrowserGpuChannelHostFactory::instance()) {
     BrowserGpuChannelHostFactory::instance()->CloseChannel();
   }
@@ -1498,10 +1507,38 @@ int BrowserMainLoop::BrowserThreadsStarted() {
         host_frame_sink_manager_.get(), frame_sink_manager_impl_.get());
 
     // Initialize GpuChannelHostFactory and ImageTransportFactory.
-    BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
-    ImageTransportFactory::SetFactory(
-        std::make_unique<GpuProcessTransportFactory>(
-            BrowserGpuChannelHostFactory::instance(), GetResizeTaskRunner()));
+    if (true) {
+      const int browser_client_id =
+          ChildProcessHostImpl::GenerateChildProcessUniqueId();
+      BrowserGpuClient::Create(browser_client_id);
+      LOG(ERROR) << "create gpu_";
+      gpu_ = ::ui::Gpu::Create(
+          base::BindRepeating([]() -> ui::mojom::GpuPtr {
+            // Creates |gpu_ptr| on UI thread, then hop to the IO thread to
+            // bind other end of |gpu_ptr|.
+            ui::mojom::GpuPtr gpu_ptr;
+            BrowserThread::PostTask(
+                BrowserThread::IO, FROM_HERE,
+                base::BindOnce(
+                    [](ui::mojom::GpuRequest request) {
+                      LOG(ERROR) << "bind gpu request on IO";
+                      BrowserGpuClient::Get()->BindGpuRequest(
+                          std::move(request));
+                    },
+                    MakeRequest(&gpu_ptr)));
+            return gpu_ptr;
+          }),
+          BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+
+      ImageTransportFactory::SetFactory(
+          std::make_unique<GpuProcessTransportFactory>(gpu_.get(),
+                                                       GetResizeTaskRunner()));
+    } else {
+      BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
+      ImageTransportFactory::SetFactory(
+          std::make_unique<GpuProcessTransportFactory>(
+              BrowserGpuChannelHostFactory::instance(), GetResizeTaskRunner()));
+    }
   }
 
 #if defined(USE_AURA)
