@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00415dfa_cd4ba69c",
+        "filename": "chrome/browser/extensions/api/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-10-17T17:36:24Z",
+      "side": 1,
+      "message": "Just wondering if you\u0027re fine with this change.",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 35
+      },
+      "revId": "a533b6dc097f7a6dca331af8ed610cb601d7ae10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
