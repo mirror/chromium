@@ -29,10 +29,12 @@
 
 using base::trace_event::MemoryAllocatorDump;
 using base::trace_event::MemoryDumpArgs;
+using base::trace_event::MemoryDumpArgs;
 using base::trace_event::MemoryDumpLevelOfDetail;
 using base::trace_event::MemoryDumpManager;
 using base::trace_event::MemoryDumpProvider;
 using base::trace_event::MemoryDumpRequestArgs;
+using base::trace_event::GlobalMemoryDumpRequestArgs;
 using base::trace_event::MemoryDumpScheduler;
 using base::trace_event::MemoryDumpType;
 using base::trace_event::ProcessMemoryDump;
@@ -145,11 +147,11 @@ class MockCoordinator : public Coordinator, public mojom::Coordinator {
   void RegisterClientProcess(mojom::ClientProcessPtr,
                              mojom::ProcessType) override {}
 
-  void RequestGlobalMemoryDump(const MemoryDumpRequestArgs& args,
+  void RequestGlobalMemoryDump(const GlobalMemoryDumpRequestArgs& args,
                                const RequestGlobalMemoryDumpCallback&) override;
 
   void RequestGlobalMemoryDumpAndAppendToTrace(
-      const MemoryDumpRequestArgs& args,
+      const GlobalMemoryDumpRequestArgs& args,
       const RequestGlobalMemoryDumpAndAppendToTraceCallback&) override;
 
   void GetVmRegionsForHeapProfiler(
@@ -266,17 +268,17 @@ class MemoryTracingIntegrationTest : public testing::Test {
 };
 
 void MockCoordinator::RequestGlobalMemoryDump(
-    const MemoryDumpRequestArgs& args,
+    const GlobalMemoryDumpRequestArgs& args,
     const RequestGlobalMemoryDumpCallback& callback) {
   client_->RequestChromeDump(args.dump_type, args.level_of_detail);
   callback.Run(true, mojom::GlobalMemoryDumpPtr());
 }
 
 void MockCoordinator::RequestGlobalMemoryDumpAndAppendToTrace(
-    const MemoryDumpRequestArgs& args,
+    const GlobalMemoryDumpRequestArgs& args,
     const RequestGlobalMemoryDumpAndAppendToTraceCallback& callback) {
   client_->RequestChromeDump(args.dump_type, args.level_of_detail);
-  callback.Run(args.dump_guid, true);
+  callback.Run(1, true);
 }
 
 // Tests that the MemoryDumpProvider(s) are invoked even if tracing has not
