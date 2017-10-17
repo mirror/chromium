@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08e5e9de_b1ca7c5b",
+        "filename": "components/update_client/background_downloader_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-17T23:29:11Z",
+      "side": 1,
+      "message": "Revert?",
+      "revId": "9f7198c54dea26f4407c38d12e26c5dc2ed4879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
