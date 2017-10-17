@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98f447b6_4ea62a60",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-17T20:38:54Z",
+      "side": 1,
+      "message": "I think this could be simpler if you say:\n\nint64_t reported_value \u003d namespace_size.second / kOneMiB;\nif (namespace_size.second \u003e 0) {\n  // Reported value should be greater than zero if actual value is greater than zero.\n  reported_value \u003d std::max(1, reported_value);\n}\n \n...\n\nWDYT?",
+      "revId": "dc763959b4bbadd30d70608c6dcd5a0e9175b3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b62365_4deececa",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-17T20:38:54Z",
+      "side": 1,
+      "message": "This code is complicated enough that a HistogramTester test would be nice if feasible.",
+      "revId": "dc763959b4bbadd30d70608c6dcd5a0e9175b3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e5eed8_c12e95ec",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51973,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-17T20:38:54Z",
+      "side": 1,
+      "message": "I think the units should be MB not MiB since disk space is typically reported in MB.",
+      "revId": "dc763959b4bbadd30d70608c6dcd5a0e9175b3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
