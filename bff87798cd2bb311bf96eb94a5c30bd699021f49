@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "16dc9bfd_acc47b0e",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-10-17T21:21:29Z",
+      "side": 1,
+      "message": "Well, this is effectively adding it to CQ anyway :-) So most of the arguments on the bug still apply. Again, I\u0027m OK with adding it like this for now (assuming dpranke@ doesn\u0027t object), but if this bot sticks on CQ, please consider consolidating it to the CQ config, if only for having all the CQ bots clearly listed in one single place. It really helps others to see what we\u0027re really testing on CQ.",
+      "parentUuid": "c8a652bc_586b1aa6",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "bff87798cd2bb311bf96eb94a5c30bd699021f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7459c0d8_1c93e16c",
         "filename": "ios/web/public/BUILD.gn",
         "patchSetId": 4
