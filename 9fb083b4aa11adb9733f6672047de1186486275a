@@ -1,0 +1,464 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b5aa925_b5824e28",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "This is a launcher right? You should probably just copy all of the attributes the normal launcher has, like android:relinquishTaskIdentity\u003d\"true\".",
+      "range": {
+        "startLine": 358,
+        "startChar": 12,
+        "endLine": 358,
+        "endChar": 32
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48706220_259de852",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "Shouldn\u0027t use this as VrMainActivity isn\u0027t derived from ChromeActivity. Should probably just copy the normal launcher\u0027s properties like configChanges.",
+      "range": {
+        "startLine": 360,
+        "startChar": 20,
+        "endLine": 360,
+        "endChar": 42
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c96b954_2487a9cb",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "Don\u0027t think this is necessary.",
+      "range": {
+        "startLine": 361,
+        "startChar": 20,
+        "endLine": 361,
+        "endChar": 46
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fdfde49_ebb2b81f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "nit: alphabetic order?",
+      "range": {
+        "startLine": 229,
+        "startChar": 31,
+        "endLine": 229,
+        "endChar": 47
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae2ac5c_c3b99e90",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "Is this going to break if we move this block below the \"if (isCustomTabIntent) {\" block below? If so we should definitely make not of that somehow.",
+      "range": {
+        "startLine": 223,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 9
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e37b075_38b10c9f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "Why not also use the Daydream category? Why exclude that for the present?\n\n(ie check if it has either the daydream category, or that vr extra)",
+      "range": {
+        "startLine": 101,
+        "startChar": 80,
+        "endLine": 101,
+        "endChar": 93
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387afc8f_91eff0df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "nit: intents",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 29
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f451d82c_fc059724",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "false",
+      "range": {
+        "startLine": 80,
+        "startChar": 46,
+        "endLine": 80,
+        "endChar": 50
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b751d5d3_d2df0178",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "Why not just set VR mode to false in onStop(), or set it to false in onStart() if we set it previously?\n\nWould be nice to avoid explicitly targeting samsung devices if at all possible.",
+      "range": {
+        "startLine": 893,
+        "startChar": 8,
+        "endLine": 897,
+        "endChar": 9
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "449dd684_ef78cf5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure how free this function is. We should probably cache somewhere whether or not VR mode is set, and avoid setting it multiple times, or unsetting it when we haven\u0027t set it.",
+      "range": {
+        "startLine": 907,
+        "startChar": 8,
+        "endLine": 907,
+        "endChar": 24
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da584091_849a4fae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "\u0027this call\u0027 is ambiguous, can you clarify please?",
+      "range": {
+        "startLine": 933,
+        "startChar": 11,
+        "endLine": 933,
+        "endChar": 20
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc7d523_aace11eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "nit: an",
+      "range": {
+        "startLine": 933,
+        "startChar": 94,
+        "endLine": 933,
+        "endChar": 95
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa318bf_25d4c16c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "Can you clarify that this is necessary here because we listen to onResume instead of onResumeWithNative, so we can\u0027t expect to have received the intent before onResume is called.",
+      "range": {
+        "startLine": 937,
+        "startChar": 12,
+        "endLine": 937,
+        "endChar": 54
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c9690e9_c0241f25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "nit: no need for parens, this can fit on one line.",
+      "range": {
+        "startLine": 938,
+        "startChar": 9,
+        "endLine": 938,
+        "endChar": 0
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f540321_88e3d4e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "Why is this samsung specific?",
+      "range": {
+        "startLine": 951,
+        "startChar": 81,
+        "endLine": 952,
+        "endChar": 85
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649d0af5_e37c429f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "I\u0027m confused. Doesn\u0027t the launcher force VR mode on, which would mean we\u0027re already in the correct resolution by the time we launch Chrome through the launcher? The launcher should be calling launchInVr so that we\u0027re already in VR, and we can use the fact that we came from the VR launcher to skip the launchInVr workaround we use here in VrShellDelegate and avoid these issues altogether right? (we would skip the pausing and resuming)\n\nIf we then exit VR mode and didn\u0027t expect a density change, having that density change relaunch Chrome sounds okay to me.",
+      "range": {
+        "startLine": 966,
+        "startChar": 0,
+        "endLine": 977,
+        "endChar": 5
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95155a7d_48b10f1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "Are you testing me?",
+      "range": {
+        "startLine": 1019,
+        "startChar": 55,
+        "endLine": 1019,
+        "endChar": 62
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99257cf9_6c3422e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "Why make this change at all?",
+      "range": {
+        "startLine": 1024,
+        "startChar": 45,
+        "endLine": 1024,
+        "endChar": 73
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45dc55bd_1585cee0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "This would leave us seeing 2D right? That\u0027s probably fine? Can\u0027t see why this would happen in practice.",
+      "range": {
+        "startLine": 1188,
+        "startChar": 37,
+        "endLine": 1188,
+        "endChar": 55
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc131e2_db3ec4e1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T21:06:22Z",
+      "side": 1,
+      "message": "comment on why you\u0027re doing this",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 69
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
