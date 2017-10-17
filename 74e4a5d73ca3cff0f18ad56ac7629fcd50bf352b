@@ -16,6 +16,24 @@
       "revId": "74e4a5d73ca3cff0f18ad56ac7629fcd50bf352b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb905a9_e3282d05",
+        "filename": "base/allocator/partition_allocator/partition_alloc_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-17T17:33:51Z",
+      "side": 1,
+      "message": "Bots were happy, but I changed this to std::size_t{2} to make sure.",
+      "parentUuid": "709d8782_5def1c0e",
+      "revId": "74e4a5d73ca3cff0f18ad56ac7629fcd50bf352b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
