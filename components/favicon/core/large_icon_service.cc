@@ -27,6 +27,7 @@
 #include "components/favicon_base/favicon_util.h"
 #include "components/image_fetcher/core/request_metadata.h"
 #include "net/base/network_change_notifier.h"
+#include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "skia/ext/image_operations.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/geometry/size.h"
@@ -183,6 +184,44 @@ void FinishServerRequestAsynchronously(
                                                 base::Bind(callback, status));
 }
 
+// Logs UMA metrics that reflect suspicious page-URL / icon-URL pairs, because
+// we know they shouldn't be hosting their favicons in each other.
+void LogSuspiciousURLMismatches(
+    const GURL& page_url,
+    const favicon_base::FaviconRawBitmapResult& db_result) {
+  // Some popular hosts that we know shouldn't use each others favicon.
+  const std::set<std::string> kKnownUnrelatedHostSuffixes = {
+      "amazon.com",         "cnn.com",       "espn.com",
+      "facebook.com",       "google.com",    "instagram.com",
+      "live.com",           "nytimes.com",   "twitter.com",
+      "washingtonpost.com", "wikipedia.org", "yahoo.com",
+      "youtube.com",
+  };
+
+  const std::string page_host =
+      net::registry_controlled_domains::GetDomainAndRegistry(
+          page_url,
+          net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES);
+  const std::string icon_host =
+      net::registry_controlled_domains::GetDomainAndRegistry(
+          db_result.icon_url,
+          net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES);
+
+  // Ignore trivial cases.
+  if (!db_result.is_valid() ||
+      (kKnownUnrelatedHostSuffixes.count(page_host) == 0 &&
+       kKnownUnrelatedHostSuffixes.count(icon_host) == 0)) {
+    return;
+  }
+
+  const bool mismatch_found =
+      page_host != icon_host &&
+      kKnownUnrelatedHostSuffixes.count(page_host) != 0 &&
+      kKnownUnrelatedHostSuffixes.count(icon_host) != 0;
+  UMA_HISTOGRAM_BOOLEAN("Favicons.LargeIconService.BlacklistedURLMismatch",
+                        mismatch_found);
+}
+
 // Processes the bitmap data returned from the FaviconService as part of a
 // LargeIconService request.
 class LargeIconWorker : public base::RefCountedThreadSafe<LargeIconWorker> {
@@ -199,6 +238,7 @@ class LargeIconWorker : public base::RefCountedThreadSafe<LargeIconWorker> {
   // ProcessIconOnBackgroundThread() so we do not perform complex image
   // operations on the UI thread.
   void OnIconLookupComplete(
+      const GURL& page_url,
       const favicon_base::FaviconRawBitmapResult& db_result);
 
  private:
@@ -246,7 +286,9 @@ LargeIconWorker::~LargeIconWorker() {
 }
 
 void LargeIconWorker::OnIconLookupComplete(
+    const GURL& page_url,
     const favicon_base::FaviconRawBitmapResult& db_result) {
+  LogSuspiciousURLMismatches(page_url, db_result);
   tracker_->PostTaskAndReply(
       background_task_runner_.get(), FROM_HERE,
       base::Bind(&ProcessIconOnBackgroundThread, db_result,
@@ -454,7 +496,8 @@ LargeIconService::GetLargeIconOrFallbackStyleImpl(
   //   a large icon is known but its bitmap is not available.
   return favicon_service_->GetLargestRawFaviconForPageURL(
       page_url, large_icon_types_, max_size_in_pixel,
-      base::Bind(&LargeIconWorker::OnIconLookupComplete, worker), tracker);
+      base::Bind(&LargeIconWorker::OnIconLookupComplete, worker, page_url),
+      tracker);
 }
 
 }  // namespace favicon
