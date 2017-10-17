@@ -34,6 +34,7 @@ namespace client {
 
 DEFINE_UI_CLASS_PROPERTY_KEY(
      bool, kAccessibilityFocusFallsbackToWidgetKey, true);
+DEFINE_UI_CLASS_PROPERTY_KEY(int32_t, kAccessibilityRole, 0);
 DEFINE_UI_CLASS_PROPERTY_KEY(bool,
                              kAccessibilityTouchExplorationPassThrough,
                              false);

@@ -222,6 +222,9 @@ function AutomationRichEditableText(node) {
       root.anchorOffset);
   this.focusLine_ = new editing.EditableLine(
       root.focusObject, root.focusOffset, root.focusObject, root.focusOffset);
+
+  this.line_ = new editing.EditableLine(
+      root.anchorObject, root.anchorOffset, root.focusObject, root.focusOffset);
 }
 
 AutomationRichEditableText.prototype = {
@@ -511,14 +514,16 @@ AutomationRichEditableText.prototype = {
   speakCurrentRichLine_: function(prevLine) {
     var prev = prevLine ? prevLine.startContainer_ : this.node_;
     var lineNodes =
-        this.line_.value_.getSpansInstanceOf(this.node_.constructor);
+        /** @type {Array<!AutomationNode>} */ (
+            this.line_.value_.getSpansInstanceOf(
+                /** @type {function()} */ (this.node_.constructor)));
     var queueMode = cvox.QueueMode.CATEGORY_FLUSH;
     for (var i = 0, cur; cur = lineNodes[i]; i++) {
       if (cur.children.length)
         continue;
       new Output()
           .withRichSpeech(
-              Range.fromNode(cur), Range.fromNode(prev),
+              Range.fromNode(cur), prev ? Range.fromNode(prev) : null,
               Output.EventType.NAVIGATE)
           .withQueueMode(queueMode)
           .go();
@@ -530,6 +535,9 @@ AutomationRichEditableText.prototype = {
   /** @private */
   brailleCurrentRichLine_: function() {
     var cur = this.line_;
+    if (cur.value_ === null)
+      return;
+
     var value = new MultiSpannable(cur.value_);
     if (!this.node_.constructor)
       return;
@@ -553,20 +561,23 @@ AutomationRichEditableText.prototype = {
 
     // Provide context for the current selection.
     var context = cur.startContainer_;
-    var output = new Output().suppress('name').withBraille(
-        Range.fromNode(context), Range.fromNode(this.node_),
-        Output.EventType.NAVIGATE);
-    if (output.braille.length) {
-      var end = cur.containerEndOffset + 1;
-      var prefix = value.substring(0, end);
-      var suffix = value.substring(end, value.length);
-      value = prefix;
-      value.append(Output.SPACE);
-      value.append(output.braille);
-      if (suffix.length) {
-        if (suffix.toString()[0] != Output.SPACE)
-          value.append(Output.SPACE);
-        value.append(suffix);
+
+    if (context) {
+      var output = new Output().suppress('name').withBraille(
+          Range.fromNode(context), Range.fromNode(this.node_),
+          Output.EventType.NAVIGATE);
+      if (output.braille.length) {
+        var end = cur.containerEndOffset + 1;
+        var prefix = value.substring(0, end);
+        var suffix = value.substring(end, value.length);
+        value = prefix;
+        value.append(Output.SPACE);
+        value.append(output.braille);
+        if (suffix.length) {
+          if (suffix.toString()[0] != Output.SPACE)
+            value.append(Output.SPACE);
+          value.append(suffix);
+        }
       }
     }
     value.setSpan(new cvox.ValueSpan(0), 0, cur.value_.length);
