@@ -20,6 +20,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
+#include "base/unguessable_token.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/loader/mojo_async_resource_handler.h"
 #include "content/browser/loader/navigation_resource_throttle.h"
@@ -164,6 +165,7 @@ TEST_P(URLLoaderFactoryImplTest, GetResponse) {
   request.resource_type = RESOURCE_TYPE_XHR;
   // Need to set |request_initiator| for non main frame type request.
   request.request_initiator = url::Origin();
+  request.devtools_frame_token = base::UnguessableToken::Create();
   factory_->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), kRoutingId, kRequestId,
       mojom::kURLLoadOptionNone, request, client.CreateInterfacePtr(),
@@ -241,6 +243,7 @@ TEST_P(URLLoaderFactoryImplTest, GetFailedResponse) {
   request.resource_type = RESOURCE_TYPE_XHR;
   // Need to set |request_initiator| for non main frame type request.
   request.request_initiator = url::Origin();
+  request.devtools_frame_token = base::UnguessableToken::Create();
   factory_->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), 2, 1, mojom::kURLLoadOptionNone, request,
       client.CreateInterfacePtr(),
@@ -271,6 +274,7 @@ TEST_P(URLLoaderFactoryImplTest, GetFailedResponse2) {
   request.resource_type = RESOURCE_TYPE_XHR;
   // Need to set |request_initiator| for non main frame type request.
   request.request_initiator = url::Origin();
+  request.devtools_frame_token = base::UnguessableToken::Create();
   factory_->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), 2, 1, mojom::kURLLoadOptionNone, request,
       client.CreateInterfacePtr(),
@@ -298,6 +302,7 @@ TEST_P(URLLoaderFactoryImplTest, InvalidURL) {
   request.resource_type = RESOURCE_TYPE_XHR;
   // Need to set |request_initiator| for non main frame type request.
   request.request_initiator = url::Origin();
+  request.devtools_frame_token = base::UnguessableToken::Create();
   ASSERT_FALSE(request.url.is_valid());
   factory_->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), 2, 1, mojom::kURLLoadOptionNone, request,
@@ -326,6 +331,7 @@ TEST_P(URLLoaderFactoryImplTest, ShouldNotRequestURL) {
   request.resource_type = RESOURCE_TYPE_XHR;
   // Need to set |request_initiator| for non main frame type request.
   request.request_initiator = url::Origin();
+  request.devtools_frame_token = base::UnguessableToken::Create();
   factory_->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), 2, 1, mojom::kURLLoadOptionNone, request,
       client.CreateInterfacePtr(),
@@ -356,6 +362,7 @@ TEST_P(URLLoaderFactoryImplTest, DownloadToFile) {
   request.resource_type = RESOURCE_TYPE_XHR;
   request.download_to_file = true;
   request.request_initiator = url::Origin();
+  request.devtools_frame_token = base::UnguessableToken::Create();
   factory_->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), kRoutingId, kRequestId, 0, request,
       client.CreateInterfacePtr(),
@@ -424,6 +431,7 @@ TEST_P(URLLoaderFactoryImplTest, DownloadToFileFailure) {
   request.resource_type = RESOURCE_TYPE_XHR;
   request.download_to_file = true;
   request.request_initiator = url::Origin();
+  request.devtools_frame_token = base::UnguessableToken::Create();
   factory_->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), kRoutingId, kRequestId, 0, request,
       client.CreateInterfacePtr(),
@@ -487,6 +495,7 @@ TEST_P(URLLoaderFactoryImplTest, OnTransferSizeUpdated) {
   // Need to set |request_initiator| for non main frame type request.
   request.request_initiator = url::Origin();
   request.report_raw_headers = true;
+  request.devtools_frame_token = base::UnguessableToken::Create();
   factory_->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), kRoutingId, kRequestId,
       mojom::kURLLoadOptionNone, request, client.CreateInterfacePtr(),
@@ -548,6 +557,7 @@ TEST_P(URLLoaderFactoryImplTest, CancelFromRenderer) {
   request.resource_type = RESOURCE_TYPE_XHR;
   // Need to set |request_initiator| for non main frame type request.
   request.request_initiator = url::Origin();
+  request.devtools_frame_token = base::UnguessableToken::Create();
   factory_->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), kRoutingId, kRequestId,
       mojom::kURLLoadOptionNone, request, client.CreateInterfacePtr(),

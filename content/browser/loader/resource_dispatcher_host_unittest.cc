@@ -25,6 +25,7 @@
 #include "base/task_scheduler/task_traits.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/unguessable_token.h"
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/download/download_manager_impl.h"
@@ -180,6 +181,7 @@ static ResourceRequest CreateResourceRequest(const char* method,
   request.transition_type = ui::PAGE_TRANSITION_LINK;
   request.allow_download = true;
   request.keepalive = (type == RESOURCE_TYPE_PING);
+  request.devtools_frame_token = base::UnguessableToken::Create();
   return request;
 }
 
@@ -1081,7 +1083,8 @@ class ResourceDispatcherHostTest : public testing::Test, public IPC::Sender {
       common_params.url = url;
       std::unique_ptr<NavigationRequestInfo> request_info(
           new NavigationRequestInfo(common_params, begin_params, url, true,
-                                    false, false, -1, false, false,
+                                    false, false, -1, base::UnguessableToken(),
+                                    false, false,
                                     blink::kWebPageVisibilityStateVisible));
       std::unique_ptr<NavigationURLLoader> test_loader =
           NavigationURLLoader::Create(

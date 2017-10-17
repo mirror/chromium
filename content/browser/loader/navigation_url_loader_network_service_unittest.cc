@@ -124,8 +124,9 @@ class NavigationURLLoaderNetworkServiceTest : public testing::Test {
         new NavigationRequestInfo(
             common_params, begin_params, url, true /* is_main_frame */,
             false /* parent_is_main_frame */, false /* are_ancestors_secure */,
-            -1 /* frame_tree_node_id */, false /* is_for_guests_only */,
-            false /* report_raw_headers */,
+            -1 /* frame_tree_node_id */,
+            base::UnguessableToken() /* devtools_frame_token */,
+            false /* is_for_guests_only */, false /* report_raw_headers */,
             blink::kWebPageVisibilityStateVisible));
 
     std::vector<std::unique_ptr<URLLoaderRequestHandler>> handlers;

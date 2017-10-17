@@ -652,6 +652,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
     extra_data = &empty_extra_data;
   extra_data->CopyToResourceRequest(resource_request.get());
 
+  DCHECK(resource_request->devtools_frame_token.has_value());
   if (sync_load_response) {
     DCHECK(defers_loading_ == NOT_DEFERRING);
 

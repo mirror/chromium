@@ -10,6 +10,7 @@
 
 #include "base/memory/ref_counted.h"
 #include "base/optional.h"
+#include "base/unguessable_token.h"
 #include "content/common/content_export.h"
 #include "content/public/common/previews_state.h"
 #include "content/public/common/request_context_frame_type.h"
@@ -152,6 +153,8 @@ struct CONTENT_EXPORT ResourceRequest {
 
   // The routing id of the RenderFrame.
   int render_frame_id = 0;
+
+  base::Optional<base::UnguessableToken> devtools_frame_token;
 
   // True if |frame_id| is the main frame of a RenderView.
   bool is_main_frame = false;
