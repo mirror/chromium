@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb07c361_7b4392bd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/generic-sensor/generic-sensor-tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-10-17T15:17:55Z",
+      "side": 1,
+      "message": "nit: it looks like you\u0027ve written \"Ofsensor\" here",
+      "revId": "ae3080a9fb0a3525f5dd8912889e0722840ab265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1e54ec_f5bfc365",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/generic-sensor/generic-sensor-tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-10-17T15:17:55Z",
+      "side": 1,
+      "message": "What if you do something like \"assert_true(sensorType in window, `${sensorType} must not be exposed`)\" instead, and call the function with \"runGenericSensorInsecureContext(\u0027Accelerator\u0027)\"?\n\nAlternatively, I don\u0027t think other specs test for the insecure case and just have .https.html tests instead.",
+      "revId": "ae3080a9fb0a3525f5dd8912889e0722840ab265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5706b5a7_3f04f9d0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/generic-sensor/generic-sensor-tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-10-17T15:17:55Z",
+      "side": 1,
+      "message": "You need a way to uniquely identify the test message, otherwise you\u0027ll have failures in the test output like:\n\nHarness Error. harness_status.status \u003d 1 , harness_status.message \u003d 1 duplicate test name: \"Sensor interfaces are not exposed in an insecure context\"",
+      "revId": "ae3080a9fb0a3525f5dd8912889e0722840ab265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
