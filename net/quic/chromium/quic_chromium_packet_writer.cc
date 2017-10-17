@@ -52,6 +52,7 @@ QuicChromiumPacketWriter::QuicChromiumPacketWriter(DatagramClientSocket* socket)
       delegate_(nullptr),
       packet_(new ReusableIOBuffer(kMaxPacketSize)),
       write_blocked_(false),
+      retry_pending_(false),
       weak_factory_(this) {
   write_callback_ = base::Bind(&QuicChromiumPacketWriter::OnWriteComplete,
                                weak_factory_.GetWeakPtr());
@@ -98,6 +99,16 @@ WriteResult QuicChromiumPacketWriter::WritePacketToSocketImpl() {
   base::TimeTicks now = base::TimeTicks::Now();
   int rv = socket_->Write(packet_.get(), packet_->size(), write_callback_);
 
+  if (rv == ERR_NO_BUFFER_SPACE && !retry_pending_) {
+    retry_timer_.Start(
+        FROM_HERE, base::TimeDelta::FromMilliseconds(10),
+        base::Bind(&QuicChromiumPacketWriter::RetryPacketAfterNoBuffers,
+                   weak_factory_.GetWeakPtr()));
+    retry_pending_ = true;
+    write_blocked_ = true;
+    return WriteResult(WRITE_STATUS_BLOCKED, ERR_IO_PENDING);
+  }
+
   if (rv < 0 && rv != ERR_IO_PENDING && delegate_ != nullptr) {
     // If write error, then call delegate's HandleWriteError, which
     // may be able to migrate and rewrite packet on a new socket.
@@ -127,6 +138,13 @@ WriteResult QuicChromiumPacketWriter::WritePacketToSocketImpl() {
   return WriteResult(status, rv);
 }
 
+void QuicChromiumPacketWriter::RetryPacketAfterNoBuffers() {
+  DCHECK(retry_pending_);
+  WriteResult result = WritePacketToSocketImpl();
+  if (result.error_code != ERR_IO_PENDING)
+    OnWriteComplete(result.error_code);
+}
+
 bool QuicChromiumPacketWriter::IsWriteBlockedDataBuffered() const {
   // Chrome sockets' Write() methods buffer the data until the Write is
   // permitted.
@@ -146,6 +164,16 @@ void QuicChromiumPacketWriter::OnWriteComplete(int rv) {
   DCHECK(delegate_) << "Uninitialized delegate.";
   write_blocked_ = false;
   if (rv < 0) {
+    if (rv == ERR_NO_BUFFER_SPACE && !retry_pending_) {
+      retry_timer_.Start(
+          FROM_HERE, base::TimeDelta::FromMilliseconds(10),
+          base::Bind(&QuicChromiumPacketWriter::RetryPacketAfterNoBuffers,
+                     weak_factory_.GetWeakPtr()));
+      retry_pending_ = true;
+      write_blocked_ = true;
+      return;
+    }
+
     // If write error, then call delegate's HandleWriteError, which
     // may be able to migrate and rewrite packet on a new socket.
     // HandleWriteError returns the outcome of that rewrite attempt.
@@ -154,6 +182,7 @@ void QuicChromiumPacketWriter::OnWriteComplete(int rv) {
     if (rv == ERR_IO_PENDING)
       return;
   }
+  retry_pending_ = false;
 
   if (rv < 0)
     delegate_->OnWriteError(rv);
