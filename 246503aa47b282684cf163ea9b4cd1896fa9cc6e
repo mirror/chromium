@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "141c4dad_d8e16c12",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2912,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-17T05:27:05Z",
+      "side": 1,
+      "message": "If there\u0027s no RFH, doesn\u0027t that mean creation failed? So creating a token is somewhat meaningless anyway. I guess the problem here is that the token isn\u0027t currently marked as optional--maybe we can should do that?",
+      "revId": "246503aa47b282684cf163ea9b4cd1896fa9cc6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d772e3_20ebdd50",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-17T05:27:05Z",
+      "side": 1,
+      "message": "Nit: frame -\u003e main_frame",
+      "range": {
+        "startLine": 101,
+        "startChar": 46,
+        "endLine": 101,
+        "endChar": 51
+      },
+      "revId": "246503aa47b282684cf163ea9b4cd1896fa9cc6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
