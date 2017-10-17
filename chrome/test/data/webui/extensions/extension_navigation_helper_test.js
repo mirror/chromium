@@ -171,6 +171,10 @@ cr.define('extension_navigation_helper_tests', function() {
       // Test trailing slash works.
       testRedirect('chrome://extensions/shortcuts/', false);
 
+      // Test legacy paths
+      testRedirect('chrome://extensions/configureCommands', true);
+      expectEquals(window.location.pathname, '/shortcuts');
+
       loadTimeData.overrideValues({isGuest: true});
       testRedirect('chrome://extensions/', false);
       testRedirect('chrome://extensions/shortcuts', true);
