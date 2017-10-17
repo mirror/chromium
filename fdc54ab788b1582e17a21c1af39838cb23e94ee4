@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c4cf7a6_25cf077b",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-17T13:27:03Z",
+      "side": 1,
+      "message": "nit: observer_handle_?",
+      "range": {
+        "startLine": 553,
+        "startChar": 68,
+        "endLine": 553,
+        "endChar": 75
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429ea1d6_e636f026",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-17T13:27:03Z",
+      "side": 1,
+      "message": "nit: .get() is not needed here, !connection_observer_handle_ should be enough.",
+      "range": {
+        "startLine": 204,
+        "startChar": 12,
+        "endLine": 204,
+        "endChar": 45
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1fa1b2_11b49589",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-17T13:27:03Z",
+      "side": 1,
+      "message": "nit: the same.",
+      "range": {
+        "startLine": 215,
+        "startChar": 11,
+        "endLine": 215,
+        "endChar": 44
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac59a05_83cf2768",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-17T13:27:03Z",
+      "side": 1,
+      "message": "Shall we add a destructor and add a DCHECK that all observers where unregistered before deleting NetworkStateNotifier?",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 22
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad6ecc9_cb782dcc",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-17T13:27:03Z",
+      "side": 1,
+      "message": "I believe that having overloaded methods is discouraged. Could we rename it to AddObserverToMap and RemoveObserverFromMap?",
+      "range": {
+        "startLine": 273,
+        "startChar": 7,
+        "endLine": 273,
+        "endChar": 21
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
