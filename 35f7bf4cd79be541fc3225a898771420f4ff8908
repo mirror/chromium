@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba645927_fc7b2cb5",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T14:45:13Z",
+      "side": 1,
+      "message": "yes, because it deletes the callback, which will delete the fence.",
+      "parentUuid": "89f2aa5d_457af6c9",
+      "range": {
+        "startLine": 850,
+        "startChar": 26,
+        "endLine": 850,
+        "endChar": 32
+      },
+      "revId": "35f7bf4cd79be541fc3225a898771420f4ff8908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9de6ed9f_fc76d3ca",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "18a3794a_9c00a997",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T14:45:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9de6ed9f_fc76d3ca",
+      "range": {
+        "startLine": 218,
+        "startChar": 2,
+        "endLine": 218,
+        "endChar": 5
+      },
+      "revId": "35f7bf4cd79be541fc3225a898771420f4ff8908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86a49e1a_43d5e838",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "35f7bf4cd79be541fc3225a898771420f4ff8908",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f10ce2a_5a4dbf6e",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T14:45:13Z",
+      "side": 1,
+      "message": "No need for a comment, the compiler will ensure they stay in sync which is much better than a comment.",
+      "parentUuid": "86a49e1a_43d5e838",
+      "range": {
+        "startLine": 289,
+        "startChar": 6,
+        "endLine": 289,
+        "endChar": 27
+      },
+      "revId": "35f7bf4cd79be541fc3225a898771420f4ff8908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
