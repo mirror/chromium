@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51ee427d_d2ebd745",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-17T20:06:44Z",
+      "side": 1,
+      "message": "(I mean using getInstance to construct the instance in tests - it should already be constructed before anything calls getInstance)",
+      "parentUuid": "3866ded9_bc15b28f",
+      "range": {
+        "startLine": 438,
+        "startChar": 26,
+        "endLine": 438,
+        "endChar": 48
+      },
+      "revId": "b9e827e2702a08f3537d2deb8342afd91df66dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c25fde6_fdd129ac",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/TestVrShellDelegate.java",
         "patchSetId": 2
