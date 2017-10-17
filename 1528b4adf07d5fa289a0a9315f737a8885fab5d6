@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce9e1904_e33745ae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T22:24:28Z",
+      "side": 1,
+      "message": "We should not do this, but instead have explicit constants for plurals.",
+      "revId": "1528b4adf07d5fa289a0a9315f737a8885fab5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f87cd7_60344cd5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T22:24:28Z",
+      "side": 1,
+      "message": "Let\u0027s early return in this case.",
+      "revId": "1528b4adf07d5fa289a0a9315f737a8885fab5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
