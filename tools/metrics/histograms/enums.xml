@@ -38850,6 +38850,12 @@ would be helpful to identify which type is being sent.
       label="Bubbling Root-scroller, scrollable document, handled application"/>
 </enum>
 
+<enum name="TPMFirmwareUpdateResult">
+  <int value="0" label="Success"/>
+  <int value="1" label="Success after retry"/>
+  <int value="2" label="Failure but still booting"/>
+</enum>
+
 <enum name="TPMResultCodeEnum">
   <int value="0" label="TPM_SUCCESS"/>
   <int value="1" label="TPM_E_AUTHFAIL"/>
