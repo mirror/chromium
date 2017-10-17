@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d31d8c70_bd966bab",
+        "filename": "chrome/browser/vr/elements/vector_icon.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-17T20:00:31Z",
+      "side": 1,
+      "message": "Thinking ahead, we\u0027ll need to databind a const icon reference to a VectorIcon UI element.  With omnibox suggestions, the icon will vary based on suggestion type.",
+      "range": {
+        "startLine": 24,
+        "startChar": 71,
+        "endLine": 24,
+        "endChar": 75
+      },
+      "revId": "dec7e69005388f11b85a712f9790e8fa653d0717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
