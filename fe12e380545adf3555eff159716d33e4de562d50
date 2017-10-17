@@ -16,6 +16,23 @@
       "revId": "fe12e380545adf3555eff159716d33e4de562d50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb268a4_6d74f3ab",
+        "filename": "chromecast/media/cma/backend/volume_control.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-10-17T21:54:01Z",
+      "side": 1,
+      "message": "instead of having this be sometimes null, it might be more reasonable to return a non-null volume control implementation with NOTIMPLEMENTED() methods. that way we can see via logs when the codepaths are hit and this code doesn\u0027t have to grow odd conditionals",
+      "revId": "fe12e380545adf3555eff159716d33e4de562d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
