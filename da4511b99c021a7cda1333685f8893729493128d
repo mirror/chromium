@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa62a91d_a2ceaa7f",
+        "filename": "chrome/browser/ui/views/payments/payment_request_can_make_payment_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-17T00:28:12Z",
+      "side": 1,
+      "message": "void SetUpCommandLine(base::CommandLine* command_line) override {\n      command_line-\u003eAppendSwitchASCII(switches::kDisableFeatures,\n                                      features::kServiceWorkerPaymentApps.name);\n\n  }",
+      "parentUuid": "8e995b94_ff855010",
+      "revId": "da4511b99c021a7cda1333685f8893729493128d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a3e1666_76cd395a",
         "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
         "patchSetId": 6
