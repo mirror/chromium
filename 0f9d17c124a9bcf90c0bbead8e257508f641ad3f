@@ -34,6 +34,24 @@
       "revId": "0f9d17c124a9bcf90c0bbead8e257508f641ad3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990ffa03_37e99210",
+        "filename": "content/public/common/network_connection_tracker.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-17T15:25:03Z",
+      "side": 1,
+      "message": "Done. Got it. Thanks! I agree with you that we should avoid using locks for the common scenarios (many threads trying to read |connection_type_| and it has been initialized).",
+      "parentUuid": "524bbd5d_c5b215f9",
+      "revId": "0f9d17c124a9bcf90c0bbead8e257508f641ad3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
