@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47885697_4b3a6626",
+        "filename": "chrome/browser/shell_integration_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-17T00:35:59Z",
+      "side": 1,
+      "message": "1. What if -[NSWorkspace setDefaultBrowserWithIdentifier:] does things asynchronously (because it probably does) and CoreServicesUIAgent isn’t running yet by the time we make this call? To test it out, does anything weird happen if we launch this without making the -setDefaultBrowserWithIdentifier: call at all?\n\nIn other words, despite what your comment says above, I don’t think that anyone has promised us that CoreServicesUIAgent will actually already be running.",
+      "revId": "e923defa546b7066a29a0adfcc648d4283f3a079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdbb317d_cb4415b5",
+        "filename": "chrome/browser/shell_integration_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-17T00:35:59Z",
+      "side": 1,
+      "message": "2. I don’t remember what OS version introduced the confirmation dialog, but if it’s newer than our minimum runtime OS (10.9), we should skip this call on older versions.",
+      "revId": "e923defa546b7066a29a0adfcc648d4283f3a079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
