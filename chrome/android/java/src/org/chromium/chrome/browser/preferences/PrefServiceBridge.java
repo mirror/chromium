@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.IntDef;
 import android.util.Log;
 
 import org.chromium.base.ContextUtils;
@@ -17,6 +18,8 @@ import org.chromium.chrome.browser.preferences.website.ContentSetting;
 import org.chromium.chrome.browser.preferences.website.ContentSettingException;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +56,20 @@ public final class PrefServiceBridge {
     // Constants related to the Contextual Search preference.
     private static final String CONTEXTUAL_SEARCH_DISABLED = "false";
     private static final String CONTEXTUAL_SEARCH_ENABLED = "true";
+
+    /**
+     * Preferences that match native preferences exposed to Java in PrefService. The indices must
+     * match |kPrefsExposedToJava| in chrome/browser/android/preferences/pref_service_bridge.cc.
+     *
+     * TODO(huayinz): Automatically generate the indices.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({
+            ALLOW_DELETING_BROWSER_HISTORY, INCOGNITO_MODE_AVAILABILITY,
+    })
+    public @interface PrefIndex {}
+    public static final int ALLOW_DELETING_BROWSER_HISTORY = 0;
+    public static final int INCOGNITO_MODE_AVAILABILITY = 1;
 
     /**
      * Structure that holds all the version information about the current Chrome browser.
@@ -101,6 +118,14 @@ public final class PrefServiceBridge {
      */
     public static boolean isInitialized() {
         return sInstance != null;
+    }
+
+    /**
+     * @param preference The name of the preference.
+     * @return Whether the specified preference is enabled.
+     */
+    public boolean getBoolean(@PrefIndex int preference) {
+        return nativeGetBoolean(preference);
     }
 
     /**
@@ -662,13 +687,6 @@ public final class PrefServiceBridge {
         nativeMigrateBrowsingDataPreferences();
     }
 
-    /**
-     * @return Whether browser history can be deleted by the user.
-     */
-    public boolean canDeleteBrowsingHistory() {
-        return nativeCanDeleteBrowsingHistory();
-    }
-
     public void setAllowCookiesEnabled(boolean allow) {
         nativeSetAllowCookiesEnabled(allow);
     }
@@ -957,6 +975,7 @@ public final class PrefServiceBridge {
         nativeSetSupervisedUserId(supervisedUserId);
     }
 
+    private native boolean nativeGetBoolean(int preference);
     private native boolean nativeGetAcceptCookiesEnabled();
     private native boolean nativeGetAcceptCookiesUserModifiable();
     private native boolean nativeGetAcceptCookiesManagedByCustodian();
@@ -1005,7 +1024,6 @@ public final class PrefServiceBridge {
     private native int nativeGetLastClearBrowsingDataTab();
     private native void nativeSetLastClearBrowsingDataTab(int lastTab);
     private native void nativeMigrateBrowsingDataPreferences();
-    private native boolean nativeCanDeleteBrowsingHistory();
     private native void nativeSetAutoplayEnabled(boolean allow);
     private native void nativeSetAllowCookiesEnabled(boolean allow);
     private native void nativeSetBackgroundSyncEnabled(boolean allow);
