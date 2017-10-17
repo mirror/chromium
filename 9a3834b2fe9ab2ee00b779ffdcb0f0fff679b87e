@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d617f21_1232d587",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T17:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26c7f45d_d6dbae53",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 1
+      },
+      "revId": "9a3834b2fe9ab2ee00b779ffdcb0f0fff679b87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b82a14f8_5653835c",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "9a3834b2fe9ab2ee00b779ffdcb0f0fff679b87e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d6e95b8_5a86c4c5",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T17:51:26Z",
+      "side": 1,
+      "message": "Added if statement.",
+      "parentUuid": "b82a14f8_5653835c",
+      "revId": "9a3834b2fe9ab2ee00b779ffdcb0f0fff679b87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e65e4a1d_becc9daa",
+        "filename": "ash/login/ui/login_data_dispatcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T17:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "864fe4c1_7a4b191a",
+      "range": {
+        "startLine": 56,
+        "startChar": 43,
+        "endLine": 56,
+        "endChar": 50
+      },
+      "revId": "9a3834b2fe9ab2ee00b779ffdcb0f0fff679b87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf1e56c5_8552b509",
         "filename": "ash/login/ui/login_password_view.cc",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "9a3834b2fe9ab2ee00b779ffdcb0f0fff679b87e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb15805_32179dfa",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T17:51:26Z",
+      "side": 1,
+      "message": "Done. I\u0027ve updated the comment as well.\n\nUpdateImage is called from button state changes which happen during ViewHierarchyChanged so I believe we should be fine w.r.t. the skipped UpdateImage call. This is only an issue during tests - the icon shows up reliably in deployed builds.",
+      "parentUuid": "bf1e56c5_8552b509",
+      "revId": "9a3834b2fe9ab2ee00b779ffdcb0f0fff679b87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
