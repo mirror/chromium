@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "069c4a34_7194d619",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T19:14:47Z",
+      "side": 1,
+      "message": "Normal developer builds will be unsafe now. Should they be safer? Do we want to do something more targeted? We can import build/config/sanitizers/sanitizers.gni, and change this to:\n\n# Pray we don\u0027t add more sanitizers.\nis_unsafe_developer_build \u003d !is_official_build \u0026\u0026 (is_asan || is_lsan || is_msan || is_tsan || is_ubsan)\n\n# Or maybe this?\nis_unsafe_developer_build \u003d !is_official_build \u0026\u0026 use_libfuzzer",
+      "revId": "d1be27fdcf9f93d438d8b863d838d91046c9b3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
