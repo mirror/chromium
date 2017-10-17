@@ -98,12 +98,14 @@ void AppShortcutLauncherItemController::ItemSelected(
       return;
     }
 
+    // Note that LaunchApp may replace current item controller inline.
+    // Report action via callback now. See crbug.com/771655.
+    std::move(callback).Run(ash::SHELF_ACTION_NEW_WINDOW_CREATED,
+                            base::nullopt);
     // Launching some items replaces this item controller instance, which
     // destroys its ShelfID string pair; making copies avoid crashes.
     ChromeLauncherController::instance()->LaunchApp(
         ash::ShelfID(shelf_id()), source, ui::EF_NONE, display_id);
-    std::move(callback).Run(ash::SHELF_ACTION_NEW_WINDOW_CREATED,
-                            base::nullopt);
     return;
   }
 
