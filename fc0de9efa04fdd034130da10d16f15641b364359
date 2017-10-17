@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a454234c_1ae6a666",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-10-17T16:37:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44c3ed55_1b1ddcdd",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 11
+      },
+      "revId": "fc0de9efa04fdd034130da10d16f15641b364359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbc3e378_475c864a",
         "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-13T22:07:14Z",
       "side": 1,
       "message": "why does this need to be subclassed?",
+      "revId": "fc0de9efa04fdd034130da10d16f15641b364359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae5bcff_472d74e8",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-10-17T16:37:04Z",
+      "side": 1,
+      "message": "I was thinking about moving more codes into MediaCodecEncoder, for the proposed separation.\nSince we don\u0027t want to do it, there is no need to override this and dequeueOutputBuffer any more.",
+      "parentUuid": "fbc3e378_475c864a",
       "revId": "fc0de9efa04fdd034130da10d16f15641b364359",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -62,6 +104,30 @@
       "revId": "fc0de9efa04fdd034130da10d16f15641b364359",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c236dad_665bd05a",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-10-17T16:37:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b03ea408_ef9df784",
+      "range": {
+        "startLine": 149,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 13
+      },
+      "revId": "fc0de9efa04fdd034130da10d16f15641b364359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
