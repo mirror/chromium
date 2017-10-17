@@ -16,6 +16,24 @@
       "revId": "3e608acfe9a658706e0894c288af6fc23939663e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef4405b7_1bafdedf",
+        "filename": "chrome/renderer/searchbox/searchbox_extension_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-17T12:49:19Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "cf3003b7_510ea57a",
+      "revId": "3e608acfe9a658706e0894c288af6fc23939663e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
