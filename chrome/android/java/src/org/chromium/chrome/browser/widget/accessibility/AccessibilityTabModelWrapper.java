@@ -30,6 +30,7 @@ import org.chromium.chrome.browser.widget.accessibility.AccessibilityTabModelAda
  * represent.
  */
 public class AccessibilityTabModelWrapper extends LinearLayout {
+    private final boolean mIsChromeHomeEnabled = FeatureUtilities.isChromeHomeEnabled();
     private AccessibilityTabModelListView mAccessibilityView;
     private LinearLayout mStackButtonWrapper;
     private ImageButton mStandardButton;
@@ -97,7 +98,7 @@ public class AccessibilityTabModelWrapper extends LinearLayout {
      *                 parent.
      */
     public void setup(AccessibilityTabModelAdapterListener listener) {
-        if (FeatureUtilities.isChromeHomeEnabled()) {
+        if (mIsChromeHomeEnabled) {
             mTabIconDarkColor =
                     ApiCompatibilityUtils.getColorStateList(getResources(), R.color.black_alpha_65);
             mTabIconSelectedDarkColor = ApiCompatibilityUtils.getColorStateList(
@@ -183,7 +184,7 @@ public class AccessibilityTabModelWrapper extends LinearLayout {
 
         boolean incognitoSelected = mTabModelSelector.isIncognitoSelected();
 
-        if (FeatureUtilities.isChromeHomeEnabled()) {
+        if (mIsChromeHomeEnabled) {
             mModernLayout.setVisibility(incognitoEnabled ? View.VISIBLE : View.GONE);
             if (incognitoSelected) {
                 setBackgroundColor(ApiCompatibilityUtils.getColor(

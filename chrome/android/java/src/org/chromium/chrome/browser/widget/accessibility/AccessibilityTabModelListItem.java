@@ -49,6 +49,8 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
     private static final int VELOCITY_SCALING_FACTOR = 150;
     private static final int CLOSE_TIMEOUT_MS = 4000;
 
+    private final boolean mIsChromeHomeEnabled = FeatureUtilities.isChromeHomeEnabled();
+
     private int mCloseAnimationDurationMs;
     private int mDefaultAnimationDurationMs;
     private int mCloseTimeoutMs;
@@ -229,7 +231,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
     @Override
     public void onFinishInflate() {
         super.onFinishInflate();
-        if (FeatureUtilities.isChromeHomeEnabled()) {
+        if (mIsChromeHomeEnabled) {
             mTabContents = findViewById(R.id.tab_contents_modern);
             mTitleView = mTabContents.findViewById(R.id.title);
             mDescriptionView = mTabContents.findViewById(R.id.description);
@@ -246,7 +248,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
 
         mUndoContents = (LinearLayout) findViewById(R.id.undo_contents);
         mUndoButton = (Button) findViewById(R.id.undo_button);
-        if (FeatureUtilities.isChromeHomeEnabled()) {
+        if (mIsChromeHomeEnabled) {
             findViewById(R.id.undo_start_space).setVisibility(View.VISIBLE);
             ApiCompatibilityUtils.setTextAppearance(mUndoButton, R.style.BlueButtonText2);
         }
@@ -318,7 +320,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
                     getContext().getString(R.string.accessibility_tabstrip_btn_close_tab, title));
         }
 
-        if (FeatureUtilities.isChromeHomeEnabled()) {
+        if (mIsChromeHomeEnabled) {
             if (mTab.isIncognito()) {
                 setBackgroundResource(R.color.incognito_primary_color);
                 mFaviconView.getBackground().setLevel(mIncognitoLevel);
@@ -353,7 +355,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
                 mFaviconView.setImageResource(R.drawable.globe_incognito_favicon);
             }
 
-            if (FeatureUtilities.isChromeHomeEnabled()) {
+            if (mIsChromeHomeEnabled) {
                 ((TintedImageView) mFaviconView).setTint(bitmap != null ? null : mDarkIconColor);
             }
         }
