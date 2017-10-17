@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c57473b_c60fdaa7",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-17T00:50:59Z",
+      "side": 1,
+      "message": "per offline convo: it might be a bit easier if we:\n1) always try to re-open channel on ping timeout\n2) make |retry_params_.max_retry_attempts| to mean how many times we try to open the channel before giving up (i.e. that value should be \u003e\u003d 1)",
+      "revId": "ced78f81c346b5299078242dcd21a12709083d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
