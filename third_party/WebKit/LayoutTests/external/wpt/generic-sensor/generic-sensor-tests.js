@@ -192,8 +192,8 @@ function runGenericSensorTests(sensorType) {
 
 function runGenericSensorInsecureContext(sensorType) {
   test(() => {
-    assert_throws('SecurityError', () => { new sensorType(); });
-  }, `${sensorType.name}: throw a 'SecurityError' when construct sensor in an insecure context`);
+    assert_false(sensorType in window, `${sensorType} must not be exposed`);
+  }, `${sensorType} is not exposed in an insecure context`);
 }
 
 function runGenericSensorOnerror(sensorType) {
