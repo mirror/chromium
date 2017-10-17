@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69b52b45_1f3a77b2",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-17T07:22:49Z",
+      "side": 1,
+      "message": "After thinking about it, I think we should use |video_frame_id| here because the buffers are allocated externally. In our use case the buffer is passed to the JEA through Mojo IPC, and the encoded buffer consumer is not in the same process that this callback function runs on. If we pass the buffer pointer here, we\u0027d still need a way to map the pointer to a handle for the Mojo IPC callback. Returning |video_frame_id|, which can be used as the handle to the output buffer, would be simpler in this case.",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 66
+      },
+      "revId": "8413ee3e94af14355b6d0e7043a9d9360dd9a8db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79255e00_00093041",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-17T07:22:49Z",
+      "side": 1,
+      "message": "Please switch the two args to align with the sequence below. Referencing the private member of VideoFrame here sounds weird, how about using |VideoFrame.unique_id()| here.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 30
+      },
+      "revId": "8413ee3e94af14355b6d0e7043a9d9360dd9a8db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463d1922_3c0d2fb1",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-17T07:22:49Z",
+      "side": 1,
+      "message": "Will we want to return an error code in case of error?",
+      "range": {
+        "startLine": 80,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 14
+      },
+      "revId": "8413ee3e94af14355b6d0e7043a9d9360dd9a8db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d050839_842add2e",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-17T07:22:49Z",
+      "side": 1,
+      "message": "nit: add a period.",
+      "revId": "8413ee3e94af14355b6d0e7043a9d9360dd9a8db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
