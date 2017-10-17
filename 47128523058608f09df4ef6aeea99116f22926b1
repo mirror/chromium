@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1329979_b75305dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-17T17:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3892eca3_636a3446",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 5
+      },
+      "revId": "47128523058608f09df4ef6aeea99116f22926b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "235f81fe_3f073434",
         "filename": "chromeos/audio/cras_audio_handler.cc",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4a55e414_1b53004c",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-17T17:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "235f81fe_3f073434",
+      "range": {
+        "startLine": 753,
+        "startChar": 24,
+        "endLine": 753,
+        "endChar": 26
+      },
+      "revId": "47128523058608f09df4ef6aeea99116f22926b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9abff094_b14ab979",
         "filename": "chromeos/audio/cras_audio_handler.cc",
         "patchSetId": 14
@@ -62,6 +110,24 @@
       "revId": "47128523058608f09df4ef6aeea99116f22926b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4553c2e_0ebc65c6",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-17T17:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9abff094_b14ab979",
+      "revId": "47128523058608f09df4ef6aeea99116f22926b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "47128523058608f09df4ef6aeea99116f22926b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e3c7f6_cc965349",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-17T17:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f31cc084_f48db066",
+      "range": {
+        "startLine": 881,
+        "startChar": 22,
+        "endLine": 881,
+        "endChar": 24
+      },
+      "revId": "47128523058608f09df4ef6aeea99116f22926b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
