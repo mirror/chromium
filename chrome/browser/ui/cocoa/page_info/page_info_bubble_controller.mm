@@ -10,6 +10,7 @@
 
 #include "base/i18n/rtl.h"
 #include "base/mac/bind_objc_block.h"
+#import "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
 #import "chrome/browser/certificate_viewer.h"
@@ -619,6 +620,12 @@ bool IsInternalURL(const GURL& url) {
 // Layout all of the controls in the window. This should be called whenever
 // the content has changed.
 - (void)performLayout {
+  // Skip layout if the bubble is closing.
+  InfoBubbleWindow* bubbleWindow =
+      base::mac::ObjCCastStrict<InfoBubbleWindow>([self window]);
+  if ([bubbleWindow isClosing])
+    return;
+
   // Make the content at least as wide as the permissions view.
   CGFloat contentWidth =
       std::max([self defaultWindowWidth], NSWidth([permissionsView_ frame]));
