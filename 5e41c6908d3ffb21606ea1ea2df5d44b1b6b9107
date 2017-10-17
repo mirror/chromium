@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d82b6865_63c8bedd",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-17T23:55:59Z",
+      "side": 1,
+      "message": "We need to update the public API in order to do that, which needs to rewrite the coordination unit base to be able to hold different coordination unit interface pointer. All this will be done in next patch, this patch only introduces new mojo interfaces and implements them.",
+      "parentUuid": "3e30cda8_8be6f308",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 20
+      },
+      "revId": "5e41c6908d3ffb21606ea1ea2df5d44b1b6b9107",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a329e1ef_68a34d7f",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "5e41c6908d3ffb21606ea1ea2df5d44b1b6b9107",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1086ba98_dc38aedc",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-17T23:55:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a329e1ef_68a34d7f",
+      "revId": "5e41c6908d3ffb21606ea1ea2df5d44b1b6b9107",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
