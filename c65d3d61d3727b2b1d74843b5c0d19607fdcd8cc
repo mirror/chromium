@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7a16abb_65c5be4e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-17T17:37:02Z",
+      "side": 1,
+      "message": "Maybe file an actual bug and reference it here?",
+      "revId": "c65d3d61d3727b2b1d74843b5c0d19607fdcd8cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
