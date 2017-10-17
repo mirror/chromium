@@ -10,8 +10,8 @@
 #include "ash/ash_export.h"
 #include "base/strings/string16.h"
 #include "ui/gfx/canvas.h"
+#include "ui/gfx/drawable/drawable.h"
 #include "ui/gfx/image/canvas_image_source.h"
-#include "ui/gfx/image/image_skia.h"
 
 namespace chromeos {
 class NetworkState;
@@ -37,7 +37,7 @@ enum class SignalStrength { WEAK, MEDIUM, STRONG, NOT_WIRELESS };
 
 // Depicts a given signal strength using arcs (e.g. for WiFi connections) or
 // bars (e.g. for cell connections).
-class SignalStrengthImageSource : public gfx::CanvasImageSource {
+class SignalStrengthImageSource : public gfx::DrawableSource {
  public:
   ASH_EXPORT SignalStrengthImageSource(ImageType image_type,
                                        SkColor color,
@@ -53,14 +53,13 @@ class SignalStrengthImageSource : public gfx::CanvasImageSource {
 
   void set_color(SkColor color);
 
-  // gfx::CanvasImageSource:
-  void Draw(gfx::Canvas* canvas) override;
-  bool HasRepresentationAtAllScales() const override;
+  // gfx::DrawableSource:
+  void Draw(gfx::Canvas* canvas) const override;
 
  private:
   static gfx::Size GetSizeForIconType(IconType icon_type);
-  void DrawArcs(gfx::Canvas* canvas);
-  void DrawBars(gfx::Canvas* canvas);
+  void DrawArcs(gfx::Canvas* canvas) const;
+  void DrawBars(gfx::Canvas* canvas) const;
 
   ImageType image_type_;
   SkColor color_;
@@ -74,25 +73,25 @@ class SignalStrengthImageSource : public gfx::CanvasImageSource {
 // Gets the image for provided |network|. |network| must not be NULL.
 // |icon_type| determines the color theme and whether or not to show the VPN
 // badge. This caches badged icons per network per |icon_type|.
-ASH_EXPORT gfx::ImageSkia GetImageForNetwork(
+ASH_EXPORT gfx::Drawable GetImageForNetwork(
     const chromeos::NetworkState* network,
     IconType icon_type);
 
 // Gets an image for a Wi-Fi network, either full strength or strike-through
 // based on |enabled|.
-ASH_EXPORT gfx::ImageSkia GetImageForWiFiEnabledState(
+ASH_EXPORT gfx::Drawable GetImageForWiFiEnabledState(
     bool enabled,
     IconType = ICON_TYPE_DEFAULT_VIEW);
 
 // Gets the disconnected image for a cell network.
 // TODO(estade): this is only used by the pre-MD OOBE, which should be removed:
 // crbug.com/728805.
-ASH_EXPORT gfx::ImageSkia GetImageForDisconnectedCellNetwork();
+ASH_EXPORT gfx::Drawable GetImageForDisconnectedCellNetwork();
 
 // Gets the full strength image for a Wi-Fi network using |icon_color| for the
 // main icon and |badge_color| for the badge.
-ASH_EXPORT gfx::ImageSkia GetImageForNewWifiNetwork(SkColor icon_color,
-                                                    SkColor badge_color);
+ASH_EXPORT gfx::Drawable GetImageForNewWifiNetwork(SkColor icon_color,
+                                                   SkColor badge_color);
 
 // Returns the label for |network| based on |icon_type|. |network| cannot be
 // nullptr.
@@ -107,7 +106,7 @@ ASH_EXPORT int GetCellularUninitializedMsg();
 // Gets the correct icon and label for |icon_type|. Also sets |animating|
 // based on whether or not the icon is animating (i.e. connecting).
 ASH_EXPORT void GetDefaultNetworkImageAndLabel(IconType icon_type,
-                                               gfx::ImageSkia* image,
+                                               gfx::Drawable* image,
                                                base::string16* label,
                                                bool* animating);
 

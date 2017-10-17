@@ -89,9 +89,9 @@ class VolumeButton : public ButtonListenerActionableView {
             : (level == 1.0 ? volume_levels
                             : std::max(1, static_cast<int>(std::ceil(
                                               level * (volume_levels - 1)))));
-    gfx::ImageSkia image_skia =
+    gfx::Drawable drawable =
         gfx::CreateVectorIcon(*kVolumeLevelIcons[image_index], kMenuIconColor);
-    image_->SetImage(&image_skia);
+    image_->SetImage(drawable);
     image_index_ = image_index;
   }
 

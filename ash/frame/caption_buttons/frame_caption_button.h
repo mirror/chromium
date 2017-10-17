@@ -10,7 +10,7 @@
 #include "ash/ash_export.h"
 #include "ash/frame/caption_buttons/caption_button_types.h"
 #include "base/macros.h"
-#include "ui/gfx/image/image_skia.h"
+#include "ui/gfx/drawable/drawable.h"
 #include "ui/views/controls/button/button.h"
 
 namespace gfx {
@@ -83,10 +83,10 @@ class ASH_EXPORT FrameCaptionButton : public views::Button {
   // The image id (kept for the purposes of testing) and image used to paint the
   // button's icon.
   const gfx::VectorIcon* icon_definition_ = nullptr;
-  gfx::ImageSkia icon_image_;
+  gfx::Drawable icon_image_;
 
   // The icon image to crossfade from.
-  gfx::ImageSkia crossfade_icon_image_;
+  gfx::Drawable crossfade_icon_image_;
 
   // Crossfade animation started when the button's images are changed by
   // SetImage().

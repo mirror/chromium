@@ -109,7 +109,7 @@ LoginShelfView::LoginShelfView(
   auto add_button = [this](ButtonId id, int text_resource_id,
                            const gfx::VectorIcon& icon) {
     const base::string16 text = l10n_util::GetStringUTF16(text_resource_id);
-    gfx::ImageSkia image = CreateVectorIcon(icon, kButtonColor);
+    gfx::Drawable image = CreateVectorIcon(icon, kButtonColor);
     LoginShelfButton* button = new LoginShelfButton(this, text, image);
     button->set_id(id);
     AddChildView(button);

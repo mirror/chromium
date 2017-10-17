@@ -56,7 +56,7 @@ class VpnDefaultView : public TrayItemMore,
   }
 
   void Update() {
-    gfx::ImageSkia image;
+    gfx::Drawable image;
     base::string16 label;
     bool animating = false;
     GetNetworkStateHandlerImageAndLabel(&image, &label, &animating);
@@ -106,7 +106,7 @@ class VpnDefaultView : public TrayItemMore,
            (vpn->IsConnectedState() || vpn->IsConnectingState());
   }
 
-  void GetNetworkStateHandlerImageAndLabel(gfx::ImageSkia* image,
+  void GetNetworkStateHandlerImageAndLabel(gfx::Drawable* image,
                                            base::string16* label,
                                            bool* animating) {
     NetworkStateHandler* handler =

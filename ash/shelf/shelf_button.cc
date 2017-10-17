@@ -286,7 +286,7 @@ void ShelfButton::SetImage(const gfx::ImageSkia& image) {
       image, skia::ImageOperations::RESIZE_BEST, gfx::Size(width, height)));
 }
 
-const gfx::ImageSkia& ShelfButton::GetImage() const {
+const gfx::Drawable& ShelfButton::GetImage() const {
   return icon_view_->GetImage();
 }
 

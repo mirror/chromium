@@ -50,6 +50,7 @@
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/canvas.h"
+#include "ui/gfx/drawable/drawable_operations.h"
 #include "ui/gfx/font.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/image/image_skia_operations.h"
@@ -389,10 +390,10 @@ class WifiHeaderRowView : public NetworkListView::SectionHeaderRowView {
   void AddExtraButtons(bool enabled) override {
     const SkColor prominent_color = GetNativeTheme()->GetSystemColor(
         ui::NativeTheme::kColorId_ProminentButtonColor);
-    gfx::ImageSkia normal_image = network_icon::GetImageForNewWifiNetwork(
+    gfx::Drawable normal_image = network_icon::GetImageForNewWifiNetwork(
         SkColorSetA(prominent_color, kJoinIconAlpha),
         SkColorSetA(prominent_color, kJoinBadgeAlpha));
-    gfx::ImageSkia disabled_image = network_icon::GetImageForNewWifiNetwork(
+    gfx::Drawable disabled_image = network_icon::GetImageForNewWifiNetwork(
         SkColorSetA(prominent_color, kDisabledJoinIconAlpha),
         SkColorSetA(prominent_color, kDisabledJoinBadgeAlpha));
     join_ = new SystemMenuButton(this, TrayPopupInkDropStyle::HOST_CENTERED,
@@ -706,14 +707,14 @@ bool NetworkListView::ShouldMobileDataSectionBeShown() {
 void NetworkListView::UpdateViewForNetwork(HoverHighlightView* view,
                                            const NetworkInfo& info) {
   view->Reset();
-  gfx::ImageSkia network_image;
+  gfx::Drawable network_image;
   if (info.type == NetworkInfo::Type::MOBILE &&
       (!info.connected && !info.connecting)) {
     // Mobile icons which are not connecting or connected should display a small
     // "X" icon superimposed so that it is clear that they are disconnected.
-    network_image = gfx::ImageSkiaOperations::CreateSuperimposedImage(
+    network_image = gfx::DrawableOperations::Superimpose(
         info.image, gfx::CreateVectorIcon(kNetworkMobileNotConnectedXIcon,
-                                          info.image.height(),
+                                          info.image.Size().height(),
                                           kMobileNotConnectedXIconColor));
   } else {
     network_image = info.image;

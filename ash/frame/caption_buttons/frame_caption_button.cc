@@ -56,7 +56,7 @@ FrameCaptionButton::~FrameCaptionButton() {}
 void FrameCaptionButton::SetImage(CaptionButtonIcon icon,
                                   Animate animate,
                                   const gfx::VectorIcon& icon_definition) {
-  gfx::ImageSkia new_icon_image = gfx::CreateVectorIcon(
+  gfx::Drawable new_icon_image = gfx::CreateVectorIcon(
       icon_definition,
       use_light_images_ ? SK_ColorWHITE : gfx::kChromeIconGrey);
 
@@ -147,28 +147,24 @@ void FrameCaptionButton::PaintButtonContents(gfx::Canvas* canvas) {
   if (icon_alpha < static_cast<int>(kFadeOutRatio * 255))
     crossfade_icon_alpha = static_cast<int>(255 - icon_alpha / kFadeOutRatio);
 
-  int centered_origin_x = (width() - icon_image_.width()) / 2;
-  int centered_origin_y = (height() - icon_image_.height()) / 2;
+  int centered_origin_x = (width() - icon_image_.Size().width()) / 2;
+  int centered_origin_y = (height() - icon_image_.Size().height()) / 2;
 
   if (crossfade_icon_alpha > 0 && !crossfade_icon_image_.isNull()) {
     canvas->SaveLayerAlpha(GetAlphaForIcon(alpha_));
-    cc::PaintFlags flags;
-    flags.setAlpha(icon_alpha);
-    canvas->DrawImageInt(icon_image_, centered_origin_x, centered_origin_y,
-                         flags);
-
-    flags.setAlpha(crossfade_icon_alpha);
-    flags.setBlendMode(SkBlendMode::kPlus);
-    canvas->DrawImageInt(crossfade_icon_image_, centered_origin_x,
-                         centered_origin_y, flags);
+    canvas->SaveLayerAlpha(icon_alpha);
+    icon_image_.Draw(canvas, centered_origin_x, centered_origin_y);
+    canvas->Restore();
+    canvas->SaveLayerAlpha(crossfade_icon_alpha);
+    crossfade_icon_image_.Draw(canvas, centered_origin_x, centered_origin_y);
+    canvas->Restore();
     canvas->Restore();
   } else {
     if (!swap_images_animation_->is_animating())
       icon_alpha = alpha_;
-    cc::PaintFlags flags;
-    flags.setAlpha(GetAlphaForIcon(icon_alpha));
-    canvas->DrawImageInt(icon_image_, centered_origin_x, centered_origin_y,
-                         flags);
+    canvas->SaveLayerAlpha(GetAlphaForIcon(icon_alpha));
+    icon_image_.Draw(canvas, centered_origin_x, centered_origin_y);
+    canvas->Restore();
   }
 }
 

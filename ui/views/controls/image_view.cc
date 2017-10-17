@@ -37,11 +37,11 @@ ImageView::ImageView()
 
 ImageView::~ImageView() {}
 
-void ImageView::SetImage(const gfx::ImageSkia& img) {
+void ImageView::SetImage(const gfx::Drawable& img) {
   if (IsImageEqual(img))
     return;
 
-  last_painted_bitmap_pixels_ = NULL;
+  last_painted_bitmap_pixels_ = nullptr;
   gfx::Size pref_size(GetPreferredSize());
   image_ = img;
   if (pref_size != GetPreferredSize())
@@ -49,16 +49,7 @@ void ImageView::SetImage(const gfx::ImageSkia& img) {
   SchedulePaint();
 }
 
-void ImageView::SetImage(const gfx::ImageSkia* image_skia) {
-  if (image_skia) {
-    SetImage(*image_skia);
-  } else {
-    gfx::ImageSkia t;
-    SetImage(t);
-  }
-}
-
-const gfx::ImageSkia& ImageView::GetImage() const {
+const gfx::Drawable& ImageView::GetImage() const {
   return image_;
 }
 
@@ -77,19 +68,26 @@ void ImageView::ResetImageSize() {
   image_size_set_ = false;
 }
 
-bool ImageView::IsImageEqual(const gfx::ImageSkia& img) const {
+bool ImageView::IsImageEqual(const gfx::Drawable& img) const {
   // Even though we copy ImageSkia in SetImage() the backing store
   // (ImageSkiaStorage) is not copied and may have changed since the last call
   // to SetImage(). The expectation is that SetImage() with different pixels is
   // treated as though the image changed. For this reason we compare not only
   // the backing store but also the pixels of the last image we painted.
-  return image_.BackedBySameObjectAs(img) &&
-      last_paint_scale_ != 0.0f &&
-      last_painted_bitmap_pixels_ == GetBitmapPixels(img, last_paint_scale_);
+  if (img.BackedBySameObjectAs(image_)) {
+    if (img.IsImageSkia())
+      return last_paint_scale_ != 0.0f &&
+             last_painted_bitmap_pixels_ ==
+                 GetBitmapPixels(*img.ToImageSkia(), last_paint_scale_);
+    else
+      return true;  // TODO: More robust Drawable "equality" -- should actually
+                    // include the above logic too
+  }
+  return false;
 }
 
 gfx::Size ImageView::GetImageSize() const {
-  return image_size_set_ ? image_size_ : image_.size();
+  return image_size_set_ ? image_size_ : image_.Size();
 }
 
 gfx::Point ImageView::ComputeImageOrigin(const gfx::Size& image_size) const {
@@ -204,18 +202,17 @@ void ImageView::OnPaintImage(gfx::Canvas* canvas) {
   if (image_bounds.IsEmpty())
     return;
 
-  if (image_bounds.size() != gfx::Size(image_.width(), image_.height())) {
-    // Resize case
-    cc::PaintFlags flags;
-    flags.setFilterQuality(kLow_SkFilterQuality);
-    canvas->DrawImageInt(image_, 0, 0, image_.width(), image_.height(),
-                         image_bounds.x(), image_bounds.y(),
-                         image_bounds.width(), image_bounds.height(), true,
-                         flags);
-  } else {
-    canvas->DrawImageInt(image_, image_bounds.x(), image_bounds.y());
+  //  flags.setFilterQuality(filter ? kLow_SkFilterQuality :
+  //  kNone_SkFilterQuality);
+  image_.Draw(canvas, image_bounds);
+
+  // TODO: move to Drawable impl somehow
+  if (image_.IsImageSkia()) {
+    last_painted_bitmap_pixels_ = image_.ToImageSkia()
+                                      ->GetRepresentation(last_paint_scale_)
+                                      .sk_bitmap()
+                                      .getPixels();
   }
-  last_painted_bitmap_pixels_ = GetBitmapPixels(image_, last_paint_scale_);
 }
 
 }  // namespace views

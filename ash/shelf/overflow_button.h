@@ -7,8 +7,8 @@
 
 #include "ash/ash_export.h"
 #include "base/macros.h"
+#include "ui/gfx/drawable/drawable.h"
 #include "ui/gfx/geometry/rect.h"
-#include "ui/gfx/image/image_skia.h"
 #include "ui/views/controls/button/button.h"
 
 namespace ash {
@@ -60,16 +60,16 @@ class ASH_EXPORT OverflowButton : public views::Button {
   gfx::Rect CalculateButtonBounds() const;
 
   // The original upward chevron image.
-  const gfx::ImageSkia upward_image_;
+  const gfx::Drawable upward_image_;
 
-  // Cached rotations of |upward_image_|.
-  gfx::ImageSkia downward_image_;
-  gfx::ImageSkia leftward_image_;
-  gfx::ImageSkia rightward_image_;
+  // "Cached" rotations of |upward_image_|.
+  gfx::Drawable downward_image_;
+  gfx::Drawable leftward_image_;
+  gfx::Drawable rightward_image_;
 
   // Current chevron image which is a pointer to one of the above images
   // according to current shelf alignment and overflow shelf visibility.
-  const gfx::ImageSkia* chevron_image_;
+  const gfx::Drawable* chevron_image_;
 
   ShelfView* shelf_view_;
   Shelf* shelf_;

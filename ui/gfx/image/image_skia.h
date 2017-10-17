@@ -14,6 +14,7 @@
 #include "ui/gfx/image/image_skia_rep.h"
 
 namespace gfx {
+class Drawable;
 class ImageSkiaSource;
 class Size;
 
@@ -52,6 +53,28 @@ class GFX_EXPORT ImageSkia {
   // Creates an instance that uses the |source|. The constructor loads the image
   // at |scale| and uses its dimensions to calculate the size in DIP.
   ImageSkia(std::unique_ptr<ImageSkiaSource> source, float scale);
+
+  // Syntactic sugar to allow construction from polymorphic sources.
+  template <class T>
+  ImageSkia(
+      std::unique_ptr<T>&& source,
+      const gfx::Size& size,
+      typename std::enable_if<
+          std::is_convertible<T*, ImageSkiaSource*>::value>::type* = nullptr)
+      : ImageSkia(std::unique_ptr<ImageSkiaSource>(
+                      static_cast<ImageSkiaSource*>(source.release())),
+                  size) {}
+
+  // Syntactic sugar to allow construction from polymorphic sources.
+  template <class T>
+  ImageSkia(
+      std::unique_ptr<T>&& source,
+      float scale,
+      typename std::enable_if<
+          std::is_convertible<T*, ImageSkiaSource*>::value>::type* = nullptr)
+      : ImageSkia(std::unique_ptr<ImageSkiaSource>(
+                      static_cast<ImageSkiaSource*>(source.release())),
+                  scale) {}
 
   explicit ImageSkia(const gfx::ImageSkiaRep& image_rep);
 
@@ -151,6 +174,8 @@ class GFX_EXPORT ImageSkia {
   // Clears cached representations for non-supported scale factors that are
   // based on |scale|.
   void RemoveUnsupportedRepresentationsForScale(float scale);
+
+  Drawable* GetUnderlyingDrawable() const;
 
  private:
   friend class test::TestOnThread;

@@ -52,7 +52,7 @@ class BubbleIconView : public views::InkDropHostView,
 
   // Returns the image currently displayed, which can be empty if not set.
   // The returned image is owned by |image_|.
-  const gfx::ImageSkia& GetImage() const;
+  const gfx::Drawable& GetImage() const;
 
   // Sets the tooltip text.
   void SetTooltipText(const base::string16& tooltip);

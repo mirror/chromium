@@ -23,11 +23,10 @@
 #include "third_party/skia/include/core/SkPath.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/color_palette.h"
+#include "ui/gfx/drawable/drawable_operations.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size_conversions.h"
-#include "ui/gfx/image/image_skia_operations.h"
-#include "ui/gfx/image/image_skia_source.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/scoped_canvas.h"
 #include "ui/gfx/skia_util.h"
@@ -97,7 +96,7 @@ class NetworkIconImpl {
   // updates and generates the icon. Does nothing if network no longer exists.
   void Update(const chromeos::NetworkState* network);
 
-  const gfx::ImageSkia& image() const { return image_; }
+  const gfx::Drawable& image() const { return image_; }
 
  private:
   // Updates |strength_index_| for wireless networks. Returns true if changed.
@@ -143,7 +142,7 @@ class NetworkIconImpl {
   bool behind_captive_portal_;
 
   // Generated icon image.
-  gfx::ImageSkia image_;
+  gfx::Drawable image_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkIconImpl);
 };
@@ -224,25 +223,25 @@ bool IconTypeHasVPNBadge(IconType icon_type) {
 }
 
 // This defines how we assemble a network icon.
-class NetworkIconImageSource : public gfx::CanvasImageSource {
+class NetworkIconImageSource : public gfx::DrawableSource {
  public:
-  static gfx::ImageSkia CreateImage(const gfx::ImageSkia& icon,
-                                    const Badges& badges) {
+  static gfx::Drawable CreateImage(const gfx::Drawable& icon,
+                                   const Badges& badges) {
     auto* source = new NetworkIconImageSource(icon, badges);
-    return gfx::ImageSkia(base::WrapUnique(source), source->size());
+    return gfx::Drawable(base::WrapUnique(source));
   }
 
   ~NetworkIconImageSource() override {}
 
-  // gfx::CanvasImageSource:
-  void Draw(gfx::Canvas* canvas) override {
-    const int width = size().width();
-    const int height = size().height();
+  // gfx::DrawableSource:
+  void Draw(gfx::Canvas* canvas) const override {
+    const int width = referenceSize().width();
+    const int height = referenceSize().height();
 
     // The base icon is centered in both dimensions.
-    const int icon_x = (width - icon_.width()) / 2;
-    const int icon_y = (height - icon_.height()) / 2;
-    canvas->DrawImageInt(icon_, icon_x, icon_y);
+    const int icon_x = (width - icon_.Size().width()) / 2;
+    const int icon_y = (height - icon_.Size().height()) / 2;
+    icon_.Draw(canvas, icon_x, icon_y);
 
     auto paint_badge = [&canvas](const Badge& badge, int x, int y,
                                  int badge_size = 0) {
@@ -256,7 +255,7 @@ class NetworkIconImageSource : public gfx::CanvasImageSource {
 
     // The center badge is scaled and centered over the icon.
     if (badges_.center.icon)
-      paint_badge(badges_.center, icon_x, icon_y, icon_.width());
+      paint_badge(badges_.center, icon_x, icon_y, icon_.Size().width());
 
     // The other badges are flush against the edges of the canvas, except at the
     // top, where the badge is only 1dp higher than the base image.
@@ -276,11 +275,9 @@ class NetworkIconImageSource : public gfx::CanvasImageSource {
     }
   }
 
-  bool HasRepresentationAtAllScales() const override { return true; }
-
  private:
-  NetworkIconImageSource(const gfx::ImageSkia& icon, const Badges& badges)
-      : CanvasImageSource(GetSizeForBaseIconSize(icon.size()), false),
+  NetworkIconImageSource(const gfx::Drawable& icon, const Badges& badges)
+      : DrawableSource(GetSizeForBaseIconSize(icon.Size())),
         icon_(icon),
         badges_(badges) {}
 
@@ -293,7 +290,7 @@ class NetworkIconImageSource : public gfx::CanvasImageSource {
     return size;
   }
 
-  const gfx::ImageSkia icon_;
+  const gfx::Drawable icon_;
   const Badges badges_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkIconImageSource);
@@ -328,35 +325,35 @@ ImageType ImageTypeForNetwork(const NetworkState* network, IconType icon_type) {
   return ImageTypeForNetworkType(GetEffectiveNetworkType(network, icon_type));
 }
 
-gfx::ImageSkia GetImageForIndex(ImageType image_type,
-                                IconType icon_type,
-                                int index) {
-  gfx::CanvasImageSource* source =
+gfx::Drawable GetImageForIndex(ImageType image_type,
+                               IconType icon_type,
+                               int index) {
+  gfx::DrawableSource* source =
       new SignalStrengthImageSource(image_type, icon_type, index);
-  return gfx::ImageSkia(base::WrapUnique(source), source->size());
+  return gfx::Drawable(base::WrapUnique(source));
 }
 
 // Returns an image to represent either a fully connected network or a
 // disconnected network.
-const gfx::ImageSkia GetBasicImage(bool connected,
-                                   IconType icon_type,
-                                   const std::string& network_type) {
+const gfx::Drawable GetBasicImage(bool connected,
+                                  IconType icon_type,
+                                  const std::string& network_type) {
   DCHECK_NE(shill::kTypeVPN, network_type);
   return GetImageForIndex(ImageTypeForNetworkType(network_type), icon_type,
                           connected ? kNumNetworkImages - 1 : 0);
 }
 
-gfx::ImageSkia* ConnectingWirelessImage(ImageType image_type,
-                                        IconType icon_type,
-                                        double animation) {
+gfx::Drawable* ConnectingWirelessImage(ImageType image_type,
+                                       IconType icon_type,
+                                       double animation) {
   static const int kImageCount = kNumNetworkImages - 1;
-  static gfx::ImageSkia* s_bars_images_dark[kImageCount];
-  static gfx::ImageSkia* s_bars_images_light[kImageCount];
-  static gfx::ImageSkia* s_arcs_images_dark[kImageCount];
-  static gfx::ImageSkia* s_arcs_images_light[kImageCount];
+  static gfx::Drawable* s_bars_images_dark[kImageCount];
+  static gfx::Drawable* s_bars_images_light[kImageCount];
+  static gfx::Drawable* s_arcs_images_dark[kImageCount];
+  static gfx::Drawable* s_arcs_images_light[kImageCount];
   int index = animation * nextafter(static_cast<float>(kImageCount), 0);
   index = std::max(std::min(index, kImageCount - 1), 0);
-  gfx::ImageSkia** images;
+  gfx::Drawable** images;
   bool dark = IconTypeIsDark(icon_type);
   if (image_type == BARS)
     images = dark ? s_bars_images_dark : s_bars_images_light;
@@ -365,15 +362,15 @@ gfx::ImageSkia* ConnectingWirelessImage(ImageType image_type,
   if (!images[index]) {
     // Lazily cache images.
     // TODO(estade): should the alpha be applied in SignalStrengthImageSource?
-    gfx::ImageSkia source = GetImageForIndex(image_type, icon_type, index + 1);
+    gfx::Drawable source = GetImageForIndex(image_type, icon_type, index + 1);
     images[index] =
-        new gfx::ImageSkia(gfx::ImageSkiaOperations::CreateTransparentImage(
+        new gfx::Drawable(gfx::DrawableOperations::CreateTransparentDrawable(
             source, kConnectingImageAlpha));
   }
   return images[index];
 }
 
-gfx::ImageSkia ConnectingVpnImage(double animation) {
+gfx::Drawable ConnectingVpnImage(double animation) {
   float floored_animation_value =
       std::floor(animation * kNumFadeImages) / kNumFadeImages;
   return gfx::CreateVectorIcon(
@@ -426,9 +423,9 @@ Badge BadgeForNetworkTechnology(const NetworkState* network,
   return badge;
 }
 
-gfx::ImageSkia GetIcon(const NetworkState* network,
-                       IconType icon_type,
-                       int strength_index) {
+gfx::Drawable GetIcon(const NetworkState* network,
+                      IconType icon_type,
+                      int strength_index) {
   if (network->Matches(NetworkTypePattern::Ethernet())) {
     DCHECK_NE(ICON_TYPE_TRAY, icon_type);
     return gfx::CreateVectorIcon(kNetworkEthernetIcon,
@@ -444,13 +441,13 @@ gfx::ImageSkia GetIcon(const NetworkState* network,
   }
 
   NOTREACHED() << "Request for icon for unsupported type: " << network->type();
-  return gfx::ImageSkia();
+  return gfx::Drawable();
 }
 
 //------------------------------------------------------------------------------
 // Get connecting images
 
-gfx::ImageSkia GetConnectingVpnImage(IconType icon_type) {
+gfx::Drawable GetConnectingVpnImage(IconType icon_type) {
   NetworkStateHandler* handler = NetworkHandler::Get()->network_state_handler();
   const NetworkState* connected_network = nullptr;
   if (icon_type == ICON_TYPE_TRAY) {
@@ -459,7 +456,7 @@ gfx::ImageSkia GetConnectingVpnImage(IconType icon_type) {
   }
   double animation = NetworkIconAnimation::GetInstance()->GetAnimation();
 
-  gfx::ImageSkia icon;
+  gfx::Drawable icon;
   Badges badges;
   if (connected_network) {
     icon = GetImageForNetwork(connected_network, icon_type);
@@ -470,8 +467,8 @@ gfx::ImageSkia GetConnectingVpnImage(IconType icon_type) {
   return NetworkIconImageSource::CreateImage(icon, badges);
 }
 
-gfx::ImageSkia GetConnectingImage(IconType icon_type,
-                                  const std::string& network_type) {
+gfx::Drawable GetConnectingImage(IconType icon_type,
+                                 const std::string& network_type) {
   if (network_type == shill::kTypeVPN)
     return GetConnectingVpnImage(icon_type);
 
@@ -619,7 +616,7 @@ void NetworkIconImpl::GetBadges(const NetworkState* network, Badges* badges) {
 
 void NetworkIconImpl::GenerateImage(const NetworkState* network) {
   DCHECK(network);
-  gfx::ImageSkia icon = GetIcon(network, icon_type_, strength_index_);
+  gfx::Drawable icon = GetIcon(network, icon_type_, strength_index_);
   Badges badges;
   GetBadges(network, &badges);
   image_ = NetworkIconImageSource::CreateImage(icon, badges);
@@ -655,7 +652,7 @@ SignalStrengthImageSource::SignalStrengthImageSource(ImageType image_type,
                                                      SkColor color,
                                                      const gfx::Size& size,
                                                      int signal_strength)
-    : CanvasImageSource(size, false),
+    : DrawableSource(size),
       image_type_(image_type /* is_opaque */),
       color_(color),
       signal_strength_(signal_strength) {
@@ -680,16 +677,12 @@ void SignalStrengthImageSource::set_color(SkColor color) {
   color_ = color;
 }
 
-// gfx::CanvasImageSource:
-void SignalStrengthImageSource::Draw(gfx::Canvas* canvas) {
+// gfx::DrawableSource:
+void SignalStrengthImageSource::Draw(gfx::Canvas* canvas) const {
   if (image_type_ == ARCS)
     DrawArcs(canvas);
   else
     DrawBars(canvas);
-}
-
-bool SignalStrengthImageSource::HasRepresentationAtAllScales() const {
-  return true;
 }
 
 gfx::Size SignalStrengthImageSource::GetSizeForIconType(IconType icon_type) {
@@ -697,8 +690,8 @@ gfx::Size SignalStrengthImageSource::GetSizeForIconType(IconType icon_type) {
   return gfx::Size(side, side);
 }
 
-void SignalStrengthImageSource::DrawArcs(gfx::Canvas* canvas) {
-  gfx::RectF oval_bounds((gfx::Rect(size())));
+void SignalStrengthImageSource::DrawArcs(gfx::Canvas* canvas) const {
+  gfx::RectF oval_bounds((gfx::Rect(referenceSize())));
   oval_bounds.Inset(gfx::Insets(kSignalStrengthImageInset));
   // Double the width and height. The new midpoint should be the former
   // bottom center.
@@ -733,7 +726,7 @@ void SignalStrengthImageSource::DrawArcs(gfx::Canvas* canvas) {
   }
 }
 
-void SignalStrengthImageSource::DrawBars(gfx::Canvas* canvas) {
+void SignalStrengthImageSource::DrawBars(gfx::Canvas* canvas) const {
   // Undo the canvas's device scaling and round values to the nearest whole
   // number so we can draw on exact pixel boundaries.
   const float dsf = canvas->UndoDeviceScaleFactor();
@@ -743,7 +736,7 @@ void SignalStrengthImageSource::DrawBars(gfx::Canvas* canvas) {
 
   // Length of short side of an isosceles right triangle, in dip.
   const SkScalar kFullTriangleSide =
-      SkIntToScalar(size().width()) - kSignalStrengthImageInset * 2;
+      SkIntToScalar(referenceSize().width()) - kSignalStrengthImageInset * 2;
 
   auto make_triangle = [scale, kFullTriangleSide](SkScalar side) {
     SkPath triangle;
@@ -779,8 +772,8 @@ void SignalStrengthImageSource::DrawBars(gfx::Canvas* canvas) {
 //------------------------------------------------------------------------------
 // Public interface
 
-gfx::ImageSkia GetImageForNetwork(const NetworkState* network,
-                                  IconType icon_type) {
+gfx::Drawable GetImageForNetwork(const NetworkState* network,
+                                 IconType icon_type) {
   DCHECK(network);
   const std::string network_type = GetEffectiveNetworkType(network, icon_type);
 
@@ -794,8 +787,8 @@ gfx::ImageSkia GetImageForNetwork(const NetworkState* network,
   return icon->image();
 }
 
-gfx::ImageSkia GetImageForWiFiEnabledState(bool enabled, IconType icon_type) {
-  gfx::ImageSkia image =
+gfx::Drawable GetImageForWiFiEnabledState(bool enabled, IconType icon_type) {
+  gfx::Drawable image =
       GetBasicImage(true /* connected */, icon_type, shill::kTypeWifi);
   Badges badges;
   if (!enabled) {
@@ -805,19 +798,18 @@ gfx::ImageSkia GetImageForWiFiEnabledState(bool enabled, IconType icon_type) {
   return NetworkIconImageSource::CreateImage(image, badges);
 }
 
-gfx::ImageSkia GetImageForDisconnectedCellNetwork() {
+gfx::Drawable GetImageForDisconnectedCellNetwork() {
   return GetBasicImage(false /* not connected */, ICON_TYPE_LIST,
                        shill::kTypeCellular);
 }
 
-gfx::ImageSkia GetImageForNewWifiNetwork(SkColor icon_color,
-                                         SkColor badge_color) {
+gfx::Drawable GetImageForNewWifiNetwork(SkColor icon_color,
+                                        SkColor badge_color) {
   SignalStrengthImageSource* source =
       new SignalStrengthImageSource(ImageTypeForNetworkType(shill::kTypeWifi),
                                     ICON_TYPE_LIST, kNumNetworkImages - 1);
   source->set_color(icon_color);
-  gfx::ImageSkia icon =
-      gfx::ImageSkia(base::WrapUnique(source), source->size());
+  gfx::Drawable icon(base::WrapUnique(source));
   Badges badges;
   badges.bottom_right = {&kNetworkBadgeAddOtherIcon, badge_color};
   return NetworkIconImageSource::CreateImage(icon, badges);
@@ -914,7 +906,7 @@ int GetCellularUninitializedMsg() {
 }
 
 void GetDefaultNetworkImageAndLabel(IconType icon_type,
-                                    gfx::ImageSkia* image,
+                                    gfx::Drawable* image,
                                     base::string16* label,
                                     bool* animating) {
   NetworkStateHandler* state_handler =
@@ -945,7 +937,7 @@ void GetDefaultNetworkImageAndLabel(IconType icon_type,
   // Don't show ethernet in the tray
   if (icon_type == ICON_TYPE_TRAY && network &&
       network->Matches(NetworkTypePattern::Ethernet())) {
-    *image = gfx::ImageSkia();
+    *image = gfx::Drawable();
     *animating = false;
     return;
   }

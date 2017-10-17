@@ -489,6 +489,7 @@ ImageSkia ImageSkiaOperations::CreateBlendedImage(const ImageSkia& first,
                                                   double alpha) {
   if (first.isNull() || second.isNull())
     return ImageSkia();
+  DCHECK(!(first.GetUnderlyingDrawable() && second.GetUnderlyingDrawable()));
 
   return ImageSkia(base::MakeUnique<BlendingImageSource>(first, second, alpha),
                    first.size());
@@ -500,6 +501,7 @@ ImageSkia ImageSkiaOperations::CreateSuperimposedImage(
     const ImageSkia& second) {
   if (first.isNull() || second.isNull())
     return ImageSkia();
+  DCHECK(!(first.GetUnderlyingDrawable() && second.GetUnderlyingDrawable()));
 
   return ImageSkia(base::MakeUnique<SuperimposedImageSource>(first, second),
                    first.size());
@@ -510,6 +512,7 @@ ImageSkia ImageSkiaOperations::CreateTransparentImage(const ImageSkia& image,
                                                       double alpha) {
   if (image.isNull())
     return ImageSkia();
+  DCHECK(!image.GetUnderlyingDrawable());
 
   return ImageSkia(base::MakeUnique<TransparentImageSource>(image, alpha),
                    image.size());
@@ -579,7 +582,7 @@ ImageSkia ImageSkiaOperations::CreateResizedImage(
     const Size& target_dip_size) {
   if (source.isNull())
     return ImageSkia();
-
+  DCHECK(!source.GetUnderlyingDrawable());
   return ImageSkia(
       base::MakeUnique<ResizeSource>(source, method, target_dip_size),
       target_dip_size);
@@ -614,6 +617,7 @@ ImageSkia ImageSkiaOperations::CreateRotatedImage(
       SkBitmapOperations::RotationAmount rotation) {
   if (source.isNull())
     return ImageSkia();
+  DCHECK(!source.GetUnderlyingDrawable());
 
   return ImageSkia(base::MakeUnique<RotatedSource>(source, rotation),
                    SkBitmapOperations::ROTATION_180_CW == rotation
@@ -629,6 +633,7 @@ ImageSkia ImageSkiaOperations::CreateIconWithBadge(const ImageSkia& icon,
 
   if (badge.isNull())
     return icon;
+  DCHECK(!(icon.GetUnderlyingDrawable() && badge.GetUnderlyingDrawable()));
 
   return ImageSkia(base::MakeUnique<IconWithBadgeSource>(icon, badge),
                    icon.size());

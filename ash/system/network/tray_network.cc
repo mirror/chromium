@@ -35,6 +35,8 @@
 #include "ui/views/controls/link_listener.h"
 #include "ui/views/widget/widget.h"
 
+#include "ui/gfx/drawable/drawable_operations.h"
+
 using chromeos::NetworkHandler;
 using chromeos::NetworkState;
 using chromeos::NetworkStateHandler;
@@ -61,7 +63,7 @@ std::unique_ptr<Notification> CreateNotification(bool wifi_enabled) {
   std::unique_ptr<Notification> notification(new Notification(
       message_center::NOTIFICATION_TYPE_SIMPLE, kWifiToggleNotificationId,
       base::string16(), l10n_util::GetStringUTF16(string_id),
-      gfx::Image(network_icon::GetImageForWiFiEnabledState(wifi_enabled)),
+      network_icon::GetImageForWiFiEnabledState(wifi_enabled),
       base::string16() /* display_source */, GURL(),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                  system_notifier::kNotifierWifiToggle),
@@ -87,7 +89,7 @@ class NetworkTrayView : public TrayItemView,
   const char* GetClassName() const override { return "NetworkTrayView"; }
 
   void UpdateNetworkStateHandlerIcon() {
-    gfx::ImageSkia image;
+    gfx::Drawable image;
     base::string16 name;
     bool animating = false;
     network_icon::GetDefaultNetworkImageAndLabel(network_icon::ICON_TYPE_TRAY,
@@ -183,7 +185,7 @@ class NetworkDefaultView : public TrayItemMore,
   }
 
   void Update() {
-    gfx::ImageSkia image;
+    gfx::Drawable image;
     base::string16 label;
     bool animating = false;
     network_icon::GetDefaultNetworkImageAndLabel(
@@ -193,7 +195,7 @@ class NetworkDefaultView : public TrayItemMore,
     if (!IsActive() &&
         !NetworkHandler::Get()->network_state_handler()->IsTechnologyEnabled(
             NetworkTypePattern::WiFi())) {
-      image = gfx::ImageSkiaOperations::CreateTransparentImage(
+      image = gfx::DrawableOperations::CreateTransparentDrawable(
           image, TrayPopupItemStyle::kInactiveIconAlpha);
     }
 

@@ -53,16 +53,16 @@ class SettingsUiDelegateImpl
 
 // Returns the icon to use for a network with the given signal strength, which
 // should range from 0 to 100 (inclusive).
-const gfx::ImageSkia GetImageForSignalStrength(int signal_strength) {
+const gfx::Drawable GetImageForSignalStrength(int signal_strength) {
   // Convert the [0, 100] range to [0, 4], since there are 5 distinct signal
   // strength icons (0 bars to 4 bars).
   int normalized_signal_strength =
       std::min(std::max(signal_strength / 25, 0), 4);
 
-  return gfx::CanvasImageSource::MakeImageSkia<
-      ash::network_icon::SignalStrengthImageSource>(
-      ash::network_icon::BARS, gfx::kGoogleBlue500, kTetherSignalIconSize,
-      normalized_signal_strength);
+  return gfx::Drawable(
+      std::make_unique<ash::network_icon::SignalStrengthImageSource>(
+          ash::network_icon::BARS, gfx::kGoogleBlue500, kTetherSignalIconSize,
+          normalized_signal_strength));
 }
 
 std::unique_ptr<message_center::Notification> CreateNotification(

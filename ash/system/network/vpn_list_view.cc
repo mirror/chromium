@@ -83,7 +83,7 @@ class VPNListProviderEntry : public views::ButtonListener, public views::View {
 
     const SkColor image_color = GetNativeTheme()->GetSystemColor(
         ui::NativeTheme::kColorId_ProminentButtonColor);
-    gfx::ImageSkia icon =
+    gfx::Drawable icon =
         gfx::CreateVectorIcon(kSystemMenuAddConnectionIcon, image_color);
     SystemMenuButton* add_vpn_button =
         new SystemMenuButton(this, TrayPopupInkDropStyle::HOST_CENTERED, icon,
@@ -186,7 +186,7 @@ void VPNListNetworkEntry::UpdateFromNetworkState(
   Reset();
   disconnect_button_ = nullptr;
 
-  gfx::ImageSkia image =
+  gfx::Drawable image =
       network_icon::GetImageForNetwork(network, network_icon::ICON_TYPE_LIST);
   base::string16 label = network_icon::GetLabelForNetwork(
       network, network_icon::ICON_TYPE_MENU_LIST);

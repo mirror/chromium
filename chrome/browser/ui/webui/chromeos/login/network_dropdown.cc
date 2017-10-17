@@ -186,7 +186,7 @@ void NetworkDropdown::Refresh() {
 
 void NetworkDropdown::SetNetworkIconAndText() {
   base::string16 text;
-  gfx::ImageSkia icon_image;
+  gfx::Drawable icon_image;
   bool animating = false;
   ash::network_icon::GetDefaultNetworkImageAndLabel(
       ash::network_icon::ICON_TYPE_LIST, &icon_image, &text, &animating);
@@ -196,8 +196,8 @@ void NetworkDropdown::SetNetworkIconAndText() {
     ash::network_icon::NetworkIconAnimation::GetInstance()->RemoveObserver(
         this);
   }
-  SkBitmap icon_bitmap = icon_image.GetRepresentation(
-      web_ui_->GetDeviceScaleFactor()).sk_bitmap();
+  SkBitmap icon_bitmap =
+      icon_image.CreateBitmap(web_ui_->GetDeviceScaleFactor());
   std::string icon_str;
   if (!icon_image.isNull())
     icon_str = webui::GetBitmapDataUrl(icon_bitmap);

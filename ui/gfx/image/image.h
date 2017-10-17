@@ -38,6 +38,7 @@ typedef struct CGColorSpace* CGColorSpaceRef;
 class SkBitmap;
 
 namespace gfx {
+class Drawable;
 struct ImagePNGRep;
 class ImageSkia;
 class Size;
@@ -66,6 +67,8 @@ class GFX_EXPORT Image {
   // Creates a new image by copying the ImageSkia for use as the default
   // representation.
   explicit Image(const ImageSkia& image);
+
+  explicit Image(const Drawable& drawable);
 
 #if defined(OS_IOS)
   // Retains |image|.

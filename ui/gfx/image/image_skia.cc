@@ -125,6 +125,10 @@ class ImageSkiaStorage : public base::RefCountedThreadSafe<ImageSkiaStorage> {
       float scale,
       bool fetch_new_image) const;
 
+  gfx::Drawable* GetUnderlyingDrawable() const {
+    return source_.get() ? source_->GetUnderlyingDrawable() : nullptr;
+  }
+
  private:
   friend class base::RefCountedThreadSafe<ImageSkiaStorage>;
 
@@ -492,6 +496,10 @@ void ImageSkia::RemoveUnsupportedRepresentationsForScale(float scale) {
     if (test_scale != scale && MapToSupportedScale(test_scale) == scale)
       RemoveRepresentation(test_scale);
   }
+}
+
+Drawable* ImageSkia::GetUnderlyingDrawable() const {
+  return storage_ ? storage_.get()->GetUnderlyingDrawable() : nullptr;
 }
 
 void ImageSkia::Init(const ImageSkiaRep& image_rep) {

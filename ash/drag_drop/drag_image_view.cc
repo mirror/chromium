@@ -13,6 +13,7 @@
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/canvas.h"
+#include "ui/gfx/drawable/drawable_operations.h"
 #include "ui/resources/grit/ui_resources.h"
 #include "ui/views/widget/widget.h"
 
@@ -118,25 +119,12 @@ void DragImageView::OnPaint(gfx::Canvas* canvas) {
 
   // |drag_image_size_| is in DIP.
   // ImageSkia::size() also returns the size in DIP.
-  if (GetImage().size() == drag_image_size_) {
-    canvas->DrawImageInt(GetImage(), 0, 0);
+  if (GetImage().Size() == drag_image_size_) {
+    GetImage().Draw(canvas);
   } else {
-    aura::Window* window = widget_->GetNativeWindow();
-    const float device_scale = display::Screen::GetScreen()
-                                   ->GetDisplayNearestWindow(window)
-                                   .device_scale_factor();
-    // The drag image already has device scale factor applied. But
-    // |drag_image_size_| is in DIP units.
-    gfx::Size drag_image_size_pixels =
-        gfx::ScaleToRoundedSize(drag_image_size_, device_scale);
-    gfx::ImageSkiaRep image_rep = GetImage().GetRepresentation(device_scale);
-    if (image_rep.is_null())
-      return;
-    SkBitmap scaled = skia::ImageOperations::Resize(
-        image_rep.sk_bitmap(), skia::ImageOperations::RESIZE_LANCZOS3,
-        drag_image_size_pixels.width(), drag_image_size_pixels.height());
-    gfx::ImageSkia image_skia(gfx::ImageSkiaRep(scaled, device_scale));
-    canvas->DrawImageInt(image_skia, 0, 0);
+    gfx::Drawable image = gfx::DrawableOperations::CreateResizedDrawable(
+        GetImage(), drag_image_size_, skia::ImageOperations::RESIZE_LANCZOS3);
+    image.Draw(canvas);
   }
 
   gfx::Image* drag_hint = DragHint();

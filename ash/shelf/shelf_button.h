@@ -51,7 +51,7 @@ class ASH_EXPORT ShelfButton : public views::Button {
   void SetImage(const gfx::ImageSkia& image);
 
   // Retrieve the image to show proxy operations.
-  const gfx::ImageSkia& GetImage() const;
+  const gfx::Drawable& GetImage() const;
 
   // |state| is or'd into the current state.
   void AddState(State state);

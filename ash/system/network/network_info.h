@@ -8,11 +8,7 @@
 #include <string>
 
 #include "base/strings/string16.h"
-#include "ui/gfx/image/image_skia.h"
-
-namespace gfx {
-class ImageSkia;
-}
+#include "ui/gfx/drawable/drawable.h"
 
 namespace ash {
 
@@ -31,7 +27,7 @@ struct NetworkInfo {
   std::string guid;
   base::string16 label;
   base::string16 tooltip;
-  gfx::ImageSkia image;
+  gfx::Drawable image;
   bool disable;
   bool connected;
   bool connecting;

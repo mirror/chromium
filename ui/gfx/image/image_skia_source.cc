@@ -10,4 +10,8 @@ ImageSkiaSource::~ImageSkiaSource() {}
 
 bool ImageSkiaSource::HasRepresentationAtAllScales() const { return false; }
 
+gfx::Drawable* ImageSkiaSource::GetUnderlyingDrawable() const {
+  return nullptr;
+}
+
 }  // namespace gfx

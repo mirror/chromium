@@ -341,7 +341,7 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
 
     // Draw the back button icon. Its flipping for RTL is handled by the
     // FLIPS_IN_RTL flag set in the its .icon file.
-    gfx::ImageSkia back_button =
+    gfx::Drawable back_button =
         CreateVectorIcon(kShelfBackIcon, SK_ColorTRANSPARENT);
 
     // Paint the back button in tablet mode and handle transition animations.
@@ -357,8 +357,10 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
       }
     }
 
-    canvas->DrawImageInt(back_button, back_center.x() - back_button.width() / 2,
-                         back_center.y() - back_button.height() / 2, opacity);
+    canvas->SaveLayerAlpha(opacity);
+    back_button.Draw(canvas, back_center.x() - back_button.Size().width() / 2,
+                     back_center.y() - back_button.Size().height() / 2);
+    canvas->Restore();
   } else {
     canvas->DrawCircle(circle_center, kAppListButtonRadius, bg_flags);
   }

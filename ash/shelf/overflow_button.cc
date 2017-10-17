@@ -13,7 +13,7 @@
 #include "ash/strings/grit/ash_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/canvas.h"
-#include "ui/gfx/image/image_skia_operations.h"
+#include "ui/gfx/drawable/drawable_operations.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/skbitmap_operations.h"
 #include "ui/views/animation/flood_fill_ink_drop_ripple.h"
@@ -87,22 +87,22 @@ void OverflowButton::UpdateChevronImage() {
       break;
     case ChevronDirection::DOWN:
       if (downward_image_.isNull()) {
-        downward_image_ = gfx::ImageSkiaOperations::CreateRotatedImage(
-            upward_image_, SkBitmapOperations::ROTATION_180_CW);
+        downward_image_ = gfx::DrawableOperations::CreateRotatedDrawable(
+            upward_image_, gfx::DrawableOperations::ROTATION_180_CW);
       }
       chevron_image_ = &downward_image_;
       break;
     case ChevronDirection::LEFT:
       if (leftward_image_.isNull()) {
-        leftward_image_ = gfx::ImageSkiaOperations::CreateRotatedImage(
-            upward_image_, SkBitmapOperations::ROTATION_270_CW);
+        leftward_image_ = gfx::DrawableOperations::CreateRotatedDrawable(
+            upward_image_, gfx::DrawableOperations::ROTATION_270_CW);
       }
       chevron_image_ = &leftward_image_;
       break;
     case ChevronDirection::RIGHT:
       if (rightward_image_.isNull()) {
-        rightward_image_ = gfx::ImageSkiaOperations::CreateRotatedImage(
-            upward_image_, SkBitmapOperations::ROTATION_90_CW);
+        rightward_image_ = gfx::DrawableOperations::CreateRotatedDrawable(
+            upward_image_, gfx::DrawableOperations::ROTATION_90_CW);
       }
       chevron_image_ = &rightward_image_;
       break;
@@ -163,8 +163,8 @@ void OverflowButton::PaintForeground(gfx::Canvas* canvas,
   DCHECK(chevron_image_);
   canvas->DrawImageInt(
       *chevron_image_,
-      bounds.x() + ((bounds.width() - chevron_image_->width()) / 2),
-      bounds.y() + ((bounds.height() - chevron_image_->height()) / 2));
+      bounds.x() + ((bounds.width() - chevron_image_->Size().width()) / 2),
+      bounds.y() + ((bounds.height() - chevron_image_->Size().height()) / 2));
 }
 
 gfx::Rect OverflowButton::CalculateButtonBounds() const {

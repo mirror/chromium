@@ -6,7 +6,7 @@
 #define UI_VIEWS_CONTROLS_IMAGE_VIEW_H_
 
 #include "base/macros.h"
-#include "ui/gfx/image/image_skia.h"
+#include "ui/gfx/drawable/drawable.h"
 #include "ui/views/view.h"
 
 namespace gfx {
@@ -39,17 +39,11 @@ class VIEWS_EXPORT ImageView : public View {
   ImageView();
   ~ImageView() override;
 
-  // Set the image that should be displayed.
-  void SetImage(const gfx::ImageSkia& img);
-
-  // Set the image that should be displayed from a pointer. Reset the image
-  // if the pointer is NULL. The pointer contents is copied in the receiver's
-  // image.
-  void SetImage(const gfx::ImageSkia* image_skia);
+  void SetImage(const gfx::Drawable& drawable);
 
   // Returns the image currently displayed, which can be empty if not set.
   // The returned image is still owned by the ImageView.
-  const gfx::ImageSkia& GetImage() const;
+  const gfx::Drawable& GetImage() const;
 
   // Set the desired image size for the receiving ImageView.
   void SetImageSize(const gfx::Size& image_size);
@@ -87,7 +81,7 @@ class VIEWS_EXPORT ImageView : public View {
   // Returns true if |img| is the same as the last image we painted. This is
   // intended to be a quick check, not exhaustive. In other words it's possible
   // for this to return false even though the images are in fact equal.
-  bool IsImageEqual(const gfx::ImageSkia& img) const;
+  bool IsImageEqual(const gfx::Drawable& img) const;
 
   // Returns the size the image will be painted.
   gfx::Size GetImageSize() const;
@@ -103,7 +97,7 @@ class VIEWS_EXPORT ImageView : public View {
   gfx::Size image_size_;
 
   // The underlying image.
-  gfx::ImageSkia image_;
+  gfx::Drawable image_;
 
   // Horizontal alignment.
   Alignment horiz_alignment_;

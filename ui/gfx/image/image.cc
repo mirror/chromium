@@ -13,6 +13,7 @@
 #include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "third_party/skia/include/core/SkBitmap.h"
+#include "ui/gfx/drawable/drawable.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/image/image_platform.h"
 #include "ui/gfx/image/image_png_rep.h"
@@ -348,6 +349,8 @@ Image::Image(const ImageSkia& image) {
         base::MakeUnique<internal::ImageRepSkia>(new ImageSkia(image)));
   }
 }
+
+Image::Image(const Drawable& drawable) : Image(drawable.MakeImage()) {}
 
 #if defined(OS_IOS)
 Image::Image(UIImage* image) {
