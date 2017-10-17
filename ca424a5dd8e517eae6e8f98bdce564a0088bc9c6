@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61988f0e_05f6b788",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T01:35:01Z",
+      "side": 1,
+      "message": "nit: I don\u0027t believe that there\u0027s any benefit to specifying \"size_t\" as the backing type.",
+      "range": {
+        "startLine": 57,
+        "startChar": 22,
+        "endLine": 57,
+        "endChar": 31
+      },
+      "revId": "ca424a5dd8e517eae6e8f98bdce564a0088bc9c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1f1541_c9c09acb",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T01:35:01Z",
+      "side": 1,
+      "message": "nit: In general, it\u0027s a good idea to put \"other\" at the start of the list.  That way, if you ever add an additional entry to the list, \"other\" doesn\u0027t end up buried in the middle of the list.",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "ca424a5dd8e517eae6e8f98bdce564a0088bc9c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37464e0b_83ced01c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 97737,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T01:35:01Z",
+      "side": 1,
+      "message": "nit: Please add a brief label for each suffix.",
+      "range": {
+        "startLine": 97737,
+        "startChar": 29,
+        "endLine": 97737,
+        "endChar": 0
+      },
+      "revId": "ca424a5dd8e517eae6e8f98bdce564a0088bc9c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
