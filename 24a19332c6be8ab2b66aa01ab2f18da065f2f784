@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e427d4af_e18319e7",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-10-17T19:27:25Z",
+      "side": 1,
+      "message": "Note that in order to add to the serial log, ParseSampleFrame now needed access to connection_, which meant that it needed to move from being a static helper function to an actual class member of BattOrAgent. When I did this, I moved it down with the other class members. The only actual logic changes within this function are the additions of the connection_-\u003eLogSerial... lines.",
+      "revId": "24a19332c6be8ab2b66aa01ab2f18da065f2f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05dd6165_0fabf886",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-10-17T19:27:25Z",
+      "side": 1,
+      "message": "I know StringPrintf is really slow relative to normal concatenation, but it seems like in all of these instances, the benefits it offers of readability outweigh the speed costs given how rarely these lines will be called.",
+      "revId": "24a19332c6be8ab2b66aa01ab2f18da065f2f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3329e64a_10114f47",
+        "filename": "tools/battor_agent/battor_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-10-17T19:27:25Z",
+      "side": 1,
+      "message": "LogSerial used to be a private helper function of BattOrConnectionImpl. However, now that it needed to be accessed by BattOrAgent, I made it a public function, allowing callers to append custom data to the serial log.",
+      "revId": "24a19332c6be8ab2b66aa01ab2f18da065f2f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
