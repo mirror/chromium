@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4fb3ca2_2b8cb484",
+        "filename": "device/geolocation/location_arbitrator_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-17T21:54:09Z",
+      "side": 1,
+      "message": "According to [1], we should use\n  base::test::ScopedTaskEnvironment scoped_task_environment_;\n\nand \n  s/loop_.task_runner()/scoped_task_environment_.GetMainThreadTaskRunner()/\n\n\n[1] https://docs.google.com/document/d/1QabRo8c7D9LsYY3cEcaPQbOCLo8Tu-6VLykYXyl3Pkk/edit",
+      "range": {
+        "startLine": 204,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 26
+      },
+      "revId": "7807b4b85128482980eb269db8efa39cf897c0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
