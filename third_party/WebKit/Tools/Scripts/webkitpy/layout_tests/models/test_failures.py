@@ -216,6 +216,15 @@ class FailureSpaceTabLineBreakTextMismatch(FailureTextMismatch):
         return 'spaces, tabs and newlines only'
 
 
+class FailureNGBlockFlowTextMismatch(FailureTextMismatch):
+
+    def message(self):
+        return 'text diff by reporting LayoutNGBlockFlow instead of LayoutBlockFlow in layout tree dump'
+
+    def text_mismatch_category(self):
+        return 'LayoutBlockFlow vs. LayoutNGBlockFlow mismatch'
+
+
 class FailureMissingImageHash(TestFailure):
 
     def message(self):
@@ -304,7 +313,7 @@ ALL_FAILURE_CLASSES = (FailureTimeout, FailureCrash, FailureMissingResult,
                        FailureTestHarnessAssertion,
                        FailureTextMismatch, FailureSpacesAndTabsTextMismatch,
                        FailureLineBreaksTextMismatch, FailureSpaceTabLineBreakTextMismatch,
-                       FailureMissingImageHash,
+                       FailureNGBlockFlowTextMismatch, FailureMissingImageHash,
                        FailureMissingImage, FailureImageHashMismatch,
                        FailureImageHashIncorrect, FailureReftestMismatch,
                        FailureReftestMismatchDidNotOccur,

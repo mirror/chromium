@@ -325,8 +325,12 @@ class SingleTestRunner(object):
             return True, [test_failures.FailureTestHarnessAssertion()]
         return True, []
 
+    # TODO(xiaochengh): Rename it to _is_layout_tree
     def _is_render_tree(self, text):
-        return text and 'layer at (0,0) size 800x600' in text
+        return text and 'layer at (0,0) size' in text
+
+    def _is_ng_layout_tree(self, text):
+        return self._is_render_tree(text) and 'LayoutNGBlockFlow' in text
 
     def _compare_text(self, expected_text, actual_text):
         if not actual_text:
@@ -345,6 +349,16 @@ class SingleTestRunner(object):
             for char in chars:
                 text = text.replace(char, '')
             return text
+
+        if self._is_render_tree(normalized_actual_text):
+            # LayoutBlockFlow vs. LayoutNGBlockFlow mismatch
+            if self._is_ng_layout_tree(normalized_actual_text):
+                if not self._port.do_text_results_differ(
+                        expected_text,
+                        normalized_actual_text.replace('LayoutNGBlockFlow', 'LayoutBlockFlow')):
+                    return [test_failures.FailureNGBlockFlowTextMismatch()]
+            # General layout tree dump mismatch
+            return [test_failures.FailureTextMismatch()]
 
         # General text mismatch
         if self._port.do_text_results_differ(
