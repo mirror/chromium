@@ -10,6 +10,7 @@ source_set("public") {
   ]
 
   deps = [
+    ":user_agent",
     "//services/service_manager/embedder",
     "//ui/base",
   ]
@@ -55,8 +56,6 @@ source_set("public") {
     "url_schemes.h",
     "url_schemes.mm",
     "url_util.h",
-    "user_agent.h",
-    "user_agent.mm",
     "web_capabilities.cc",
     "web_capabilities.h",
     "web_client.h",
@@ -103,6 +102,19 @@ source_set("public") {
   ]
 
   libs = [ "WebKit.framework" ]
+
+  configs += [ "//build/config/compiler:enable_arc" ]
+}
+
+source_set("user_agent") {
+  deps = [
+    "//base",
+  ]
+
+  sources = [
+    "user_agent.h",
+    "user_agent.mm",
+  ]
 
   configs += [ "//build/config/compiler:enable_arc" ]
 }
