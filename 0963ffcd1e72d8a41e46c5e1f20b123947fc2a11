@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff9c0c92_bffbc552",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T05:48:48Z",
+      "side": 1,
+      "message": "Trailing space.",
+      "revId": "0963ffcd1e72d8a41e46c5e1f20b123947fc2a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015b98af_1f36009a",
+        "filename": "chrome/renderer/media/chrome_key_systems.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T05:48:48Z",
+      "side": 1,
+      "message": "Maybe call base::ASCIIToUTF16() outside of the loop? No idea if compilers will optimize that or not.",
+      "revId": "0963ffcd1e72d8a41e46c5e1f20b123947fc2a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
