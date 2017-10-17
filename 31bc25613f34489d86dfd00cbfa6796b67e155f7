@@ -190,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "310a3383_580f8abf",
+        "filename": "components/history/core/browser/default_top_sites_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-17T00:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "432207a5_d9bbfd67",
+      "revId": "31bc25613f34489d86dfd00cbfa6796b67e155f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "678f8662_21f7d3b2",
         "filename": "components/history/core/browser/expire_history_backend_unittest.cc",
         "patchSetId": 10
@@ -213,6 +231,30 @@
     },
     {
       "key": {
+        "uuid": "52a63d74_c918452f",
+        "filename": "components/history/core/browser/expire_history_backend_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-17T00:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "678f8662_21f7d3b2",
+      "range": {
+        "startLine": 151,
+        "startChar": 59,
+        "endLine": 151,
+        "endChar": 66
+      },
+      "revId": "31bc25613f34489d86dfd00cbfa6796b67e155f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a67d93e1_15dafd4f",
         "filename": "components/history/core/browser/top_sites_provider.h",
         "patchSetId": 10
@@ -227,6 +269,24 @@
       "revId": "31bc25613f34489d86dfd00cbfa6796b67e155f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c0614d_8e672e93",
+        "filename": "components/history/core/browser/top_sites_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-17T00:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a67d93e1_15dafd4f",
+      "revId": "31bc25613f34489d86dfd00cbfa6796b67e155f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
