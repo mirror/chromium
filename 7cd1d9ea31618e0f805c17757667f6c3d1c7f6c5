@@ -110,6 +110,24 @@
     },
     {
       "key": {
+        "uuid": "6ccada7c_0e06677e",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-17T06:56:30Z",
+      "side": 1,
+      "message": "Ah, I sent this without reading falken@\u0027s comment. I\u0027m fine with moving the second sentence of 2. to 3.",
+      "parentUuid": "56640527_acadd6e3",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84ae3f03_3cf2500f",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
         "patchSetId": 14
