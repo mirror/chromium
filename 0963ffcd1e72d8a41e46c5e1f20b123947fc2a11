@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f068afc8_33265f84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-17T06:02:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff9c0c92_bffbc552",
+      "revId": "0963ffcd1e72d8a41e46c5e1f20b123947fc2a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "015b98af_1f36009a",
         "filename": "chrome/renderer/media/chrome_key_systems.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "0963ffcd1e72d8a41e46c5e1f20b123947fc2a11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d30cbb07_0fd17aa6",
+        "filename": "chrome/renderer/media/chrome_key_systems.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-17T06:02:20Z",
+      "side": 1,
+      "message": "Done. But I found the original code more readable :) Typically we\u0027ll only have a few entries (currently 2 with this CL) in the list so I am not super concerned with performance here.",
+      "parentUuid": "015b98af_1f36009a",
+      "revId": "0963ffcd1e72d8a41e46c5e1f20b123947fc2a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
