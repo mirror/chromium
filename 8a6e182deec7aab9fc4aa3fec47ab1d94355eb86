@@ -34,6 +34,24 @@
       "revId": "8a6e182deec7aab9fc4aa3fec47ab1d94355eb86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed80d05e_a6bb0ea3",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T18:52:17Z",
+      "side": 1,
+      "message": "SGTM; please CC me on that (but you don\u0027t need to wait for my LGTM on that).",
+      "parentUuid": "c3247da3_e35ade55",
+      "revId": "8a6e182deec7aab9fc4aa3fec47ab1d94355eb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
