@@ -78,6 +78,16 @@ bool IsEmptyBlock(const NGLayoutInputNode child,
   return true;
 }
 
+NGPhysicalFragment::NGBoxType BoxTypeForNode(const NGBlockNode node) {
+  if (node.IsFloating())
+    return NGPhysicalFragment::NGBoxType::kFloating;
+  if (node.IsOutOfFlowPositioned())
+    return NGPhysicalFragment::NGBoxType::kOutOfFlowPositioned;
+  if (node.IsAtomicInlineLevel())
+    return NGPhysicalFragment::NGBoxType::kInlineBlock;
+  return NGPhysicalFragment::NGBoxType::kNormalBox;
+}
+
 }  // namespace
 
 bool MaybeUpdateFragmentBfcOffset(const NGConstraintSpace& space,
@@ -128,7 +138,9 @@ NGBlockLayoutAlgorithm::NGBlockLayoutAlgorithm(NGBlockNode node,
                                                const NGConstraintSpace& space,
                                                NGBlockBreakToken* break_token)
     : NGLayoutAlgorithm(node, space, break_token),
-      exclusion_space_(new NGExclusionSpace(space.ExclusionSpace())) {}
+      exclusion_space_(new NGExclusionSpace(space.ExclusionSpace())) {
+  container_builder_.SetBoxType(BoxTypeForNode(node));
+}
 
 Optional<MinMaxSize> NGBlockLayoutAlgorithm::ComputeMinMaxSize() const {
   MinMaxSize sizes;

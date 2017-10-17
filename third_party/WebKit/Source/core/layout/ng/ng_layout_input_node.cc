@@ -73,6 +73,10 @@ bool NGLayoutInputNode::IsOutOfFlowPositioned() const {
   return IsBlock() && Style().HasOutOfFlowPosition();
 }
 
+bool NGLayoutInputNode::IsAtomicInlineLevel() const {
+  return box_->IsAtomicInlineLevel();
+}
+
 bool NGLayoutInputNode::IsReplaced() const {
   return box_->IsLayoutReplaced();
 }
