@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "921193d2_87d22451",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-17T06:25:37Z",
+      "side": 1,
+      "message": "should it just be GURL()? EmptyGURL() documentation seems to advise against using it except in special cases.",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3d5094_83f331e1",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-17T06:25:37Z",
+      "side": 1,
+      "message": "Since this came up in code review, can you add a comment that std::queue does not have clear() and why that base::STLCLear function couldn\u0027t be used?",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f46ed04a_37975ba7",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-17T06:25:37Z",
+      "side": 1,
+      "message": "Now I\u0027m thinking the second sentence of 2. should be moved to 3. Sorry as I suggested this comment originally.",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ae3f03_3cf2500f",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-17T06:25:37Z",
+      "side": 1,
+      "message": "|finished_reason_| should be |last_finished_reason_|... but ideally try to write the comment for the public member without referring to the private members.",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cd201e_8761a37b",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-17T06:25:37Z",
+      "side": 1,
+      "message": "The second sentence is a bit hard to understand... it seems to say \"after launch the reason is kSuccess or an error code\"... I suggest we just say:\n\n// Returns the reason for the last time the sender entered the idle state. If this sender has never reached the idle state, returns kNotFinished.",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbbb137d_100c4091",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-17T06:25:37Z",
+      "side": 1,
+      "message": "|has_sent_main_script_| or maybe just |sent_main_script_|",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21925e42_3fb80cab",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-17T06:25:37Z",
+      "side": 1,
+      "message": "Maybe easier to just format it like this:\nScriptStatus {\n  // The script data has been received.\n  kReceived,\n  // The script data has been received, but it has already been taken.\n  kTaken,\n}\n\netc",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fab934_b933f66f",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-17T06:25:37Z",
+      "side": 1,
+      "message": "\"the entry to wait\" is kind of ungrammatical. I think this function is trying to be the reverse of \"Wait\" but of course there isn\u0027t an opposite word like \"Unwait\". Maybe the first sentence should just be: \"Removes the script.\"",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb4fdce_de46a4b4",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-17T06:25:37Z",
+      "side": 1,
+      "message": "\"request the script from the browser\" or \"request the browser to send the script\"",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
