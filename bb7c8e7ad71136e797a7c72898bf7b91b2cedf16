@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31f8d3a8_f3af0e72",
+        "filename": "base/allocator/partition_allocator/PartitionAlloc.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-17T01:05:08Z",
+      "side": 1,
+      "message": "Where does this number come from?",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c89961_926b4da0",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-17T01:05:08Z",
+      "side": 1,
+      "message": "Yeah, I think your reasoning is correct.",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a10354cb_19805575",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-17T01:05:08Z",
+      "side": 1,
+      "message": "a natural number",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7167b7ff_e3d64b42",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-17T01:05:08Z",
+      "side": 1,
+      "message": "to allocate",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1697674_7f2dbf3c",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-17T01:05:08Z",
+      "side": 1,
+      "message": "slot span\u0027s size",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ef78fe_56aafdae",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-17T01:05:08Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a bug. What we want to do here is just...\n\n  Bucket* bucket2 \u003d new_page-\u003ebucket;\n  ...;\n\nThe confusion comes from the fact that we\u0027re reusing |bucket|.",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5cd445a_4b091a34",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-17T01:05:08Z",
+      "side": 1,
+      "message": "Do we have static_assert about this somewhere?",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
