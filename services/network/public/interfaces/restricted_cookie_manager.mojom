@@ -19,6 +19,10 @@ struct CookieManagerGetOptions {
 };
 
 interface RestrictedCookieManager {
+  // For security, the client will be disconnected with the following code if
+  // the "Enable Experimental Web Platform Features" flag is not set.
+  const uint32 kFeatureNotEnabled = 1;
+
   // Returns the cookies visible by a Web page, filtered by |options|.
   //
   // |url| is the URL of the page making the request. |site_for_cookies| is
