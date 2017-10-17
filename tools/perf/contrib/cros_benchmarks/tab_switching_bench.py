@@ -25,6 +25,7 @@ class CrosTabSwitchingTypical24(perf_benchmark.PerfBenchmark):
 
   Benchmark specific option:
     --tabset-repeat=N: Duplicate tab set for N times.
+    --switch-delay=N: delay between tab opening and switching in secs.
   The following usage example opens 120 tabs.
   $ ./run_benchmark --browser=cros-chrome --remote=DUT_IP
   cros_tab_switching.typical_24 --tabset-repeat=5
@@ -37,6 +38,8 @@ class CrosTabSwitchingTypical24(perf_benchmark.PerfBenchmark):
   def AddBenchmarkCommandLineArgs(cls, parser):
     parser.add_option('--tabset-repeat', type='int', default=1,
                       help='repeat tab page set')
+    parser.add_option('--halftime', type='int', default=1,
+                      help='delay between tab opening and switching')
 
   def CreateStorySet(self, options):
     if not options.cros_remote:
@@ -46,8 +49,10 @@ class CrosTabSwitchingTypical24(perf_benchmark.PerfBenchmark):
         archive_data_file='data/tab_switching.json',
         base_dir=os.path.dirname(os.path.abspath(__file__)),
         cloud_storage_bucket=story.PARTNER_BUCKET)
+    # May not have halftime attribute in PRESUBMIT check
+    halftime = getattr(options, 'halftime', 0)
     story_set.AddStory(tab_switching_stories.CrosMultiTabTypical24Story(
-        story_set, options.cros_remote, options.tabset_repeat))
+        story_set, options.cros_remote, options.tabset_repeat, halftime))
     return story_set
 
   @classmethod
