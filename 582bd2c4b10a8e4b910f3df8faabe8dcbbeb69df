@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eecad2ef_3b96751b",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-17T02:28:27Z",
+      "side": 1,
+      "message": "I agree. Updated.",
+      "parentUuid": "fce812bc_40243369",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a241c159_472a5b44",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2540122c_8ddeb093",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-17T02:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a241c159_472a5b44",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6058c296_ff6f6571",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-17T02:28:27Z",
+      "side": 1,
+      "message": "No, std::queue doesn\u0027t have clear.",
+      "parentUuid": "d650a692_6d5e6e45",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbf82429_9a1445a7",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8fb6f47_e2a5bce6",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-17T02:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbf82429_9a1445a7",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4a5f8bc4_074ef73f",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-17T02:28:27Z",
+      "side": 1,
+      "message": "Thanks, it seems better:) Updated.",
+      "parentUuid": "0f5cb040_ff13345c",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8844a46f_efd04639",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29589eb5_df2f09fe",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-17T02:28:27Z",
+      "side": 1,
+      "message": "Ah, that\u0027s right. Thanks.\nFixed a bit.",
+      "parentUuid": "8844a46f_efd04639",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7d86c63d_7d675f24",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-17T02:28:27Z",
+      "side": 1,
+      "message": "Sounds good! Done.",
+      "parentUuid": "f873d30d_a57db9b5",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32213d3a_d64c0651",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
         "patchSetId": 12
@@ -135,6 +261,24 @@
       "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c2fc7e_e850ebce",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-17T02:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32213d3a_d64c0651",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "2232c183_a50b146b",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-17T02:28:27Z",
+      "side": 1,
+      "message": "Yeah, I also felt it\u0027s a bit awkward but couldn\u0027t come up with another good name. OnSendingScriptsFinished was another option I originally thought of, but it doesn\u0027t describe what it does. \nI changed it to UpdateFinishedReasonAndBecomeIdle() while it still seems a little bit detail.",
+      "parentUuid": "e0e8f15b_7aaee754",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bd1d050_0a423baa",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
         "patchSetId": 12
@@ -166,6 +328,24 @@
       "writtenOn": "2017-10-06T08:24:45Z",
       "side": 1,
       "message": "Can you document |has_main_script_streamed_|? \"streamed\" here means it\u0027s the first time the script is being sent?",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7407dde_275ce970",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-17T02:28:27Z",
+      "side": 1,
+      "message": "Sorry, I\u0027ve forgot to change \"streamed\" to \"sent\". I think it could be somewhat better description. \nHow about |has_main_script_sent_| and no document? Is it still better to have short description?",
+      "parentUuid": "6bd1d050_0a423baa",
       "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "67feafd2_b32752b8",
+        "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-17T02:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e4dd88f_92e92110",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34f9999b_6871d82e",
         "filename": "third_party/WebKit/Source/core/workers/InstalledScriptsManager.h",
         "patchSetId": 12
@@ -203,6 +401,24 @@
       "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06eccf5_38ba29a9",
+        "filename": "third_party/WebKit/Source/core/workers/InstalledScriptsManager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-17T02:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34f9999b_6871d82e",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
