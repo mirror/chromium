@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d15e156_1a04d1de",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleFilter.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T18:23:41Z",
+      "side": 1,
+      "message": "if (!value)\n  return !filter.text \u003d\u003d\u003d !filter.negative;",
+      "revId": "2b4e7b05cdab423c9157dc8de251ac5aca50fa4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c75cb07_26173f9d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T18:23:41Z",
+      "side": 1,
+      "message": "filter.parsedFilters.push({...});",
+      "revId": "2b4e7b05cdab423c9157dc8de251ac5aca50fa4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8234314_7fcd79d1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T18:23:41Z",
+      "side": 1,
+      "message": "This condition is always true. Let\u0027s drop.",
+      "revId": "2b4e7b05cdab423c9157dc8de251ac5aca50fa4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
