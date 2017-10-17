@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "043f3a78_7e8335ff",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1247463
+      },
+      "writtenOn": "2017-10-17T15:59:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "034e0f09_d6e1b132",
+      "range": {
+        "startLine": 28,
+        "startChar": 24,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d18995ea_eda1d530",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
         "patchSetId": 16
@@ -39,6 +63,24 @@
       "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260605c2_199bdbfe",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1247463
+      },
+      "writtenOn": "2017-10-17T15:59:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d18995ea_eda1d530",
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d44c961_1dcf16bd",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1247463
+      },
+      "writtenOn": "2017-10-17T15:59:43Z",
+      "side": 1,
+      "message": "Yes but on the other hand, checking whether Ash::Shell has an instance is an implementation detail of the default delegate implementation and the caller should not need to check whether one exists before calling OpenUrl, so I would prefer to keep this as is.",
+      "parentUuid": "b2fb7e91_c3d84413",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 42
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "4116956d_a0d1fa13",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1247463
+      },
+      "writtenOn": "2017-10-17T15:59:43Z",
+      "side": 1,
+      "message": "Thanks James, noted and keeping this as std::make_unique\u003c\u003e.",
+      "parentUuid": "4beffe4f_f69fffbb",
+      "range": {
+        "startLine": 85,
+        "startChar": 25,
+        "endLine": 85,
+        "endChar": 41
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "943bcee5_3fcd3c2a",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
         "patchSetId": 16
@@ -132,6 +222,30 @@
       "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131dbde6_6f094fa8",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1247463
+      },
+      "writtenOn": "2017-10-17T15:59:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "943bcee5_3fcd3c2a",
+      "range": {
+        "startLine": 72,
+        "startChar": 31,
+        "endLine": 72,
+        "endChar": 33
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -182,6 +296,30 @@
     },
     {
       "key": {
+        "uuid": "48cc0ed1_77bf540c",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1247463
+      },
+      "writtenOn": "2017-10-17T15:59:43Z",
+      "side": 1,
+      "message": "I agree with khorimoto@, I think that we should follow the principle of least visibility and only allow the test to call this *ForTesting() function. @Yusuke: would you be okay with that?",
+      "parentUuid": "77b29d0e_479abb5e",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 58
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ea6c9fc_dc6ba977",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
         "patchSetId": 16
@@ -196,6 +334,24 @@
       "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786b66ae_7cc86d65",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1247463
+      },
+      "writtenOn": "2017-10-17T15:59:43Z",
+      "side": 1,
+      "message": "The reason I moved this is to let us declare the ArcIntentHelperTest as a friend class of ArcIntentHelperBridge. Maybe we should continue the conversation about whether or not to use a friend versus public Set...ForTesting() in the other comment thread where khorimoto@ added a reply.",
+      "parentUuid": "5ea6c9fc_dc6ba977",
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -222,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "da32fc7f_5dcec056",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1247463
+      },
+      "writtenOn": "2017-10-17T15:59:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03b14425_2f35de2e",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 38
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "388e2602_3a95d9f7",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
         "patchSetId": 16
@@ -236,6 +416,24 @@
       "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7248e236_3e713148",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1247463
+      },
+      "writtenOn": "2017-10-17T15:59:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "388e2602_3a95d9f7",
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
