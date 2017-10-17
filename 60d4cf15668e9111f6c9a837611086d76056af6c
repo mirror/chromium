@@ -16,6 +16,24 @@
       "revId": "60d4cf15668e9111f6c9a837611086d76056af6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde8c094_a44e9daa",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T20:30:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aa4114e_60c80e4b",
+      "revId": "60d4cf15668e9111f6c9a837611086d76056af6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
