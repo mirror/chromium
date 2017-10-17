@@ -9,6 +9,8 @@
     "HEAD",
     "POST",
     "OPTIONS",
+    "PUT",
+    "DELETE",
     "Accept",
     "Accept-CH",
     "Accept-CH-Lifetime",
