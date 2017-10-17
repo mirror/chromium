@@ -88,6 +88,23 @@
       "revId": "38c9457989a22c686d2848c5c40f74457a8c7b67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683f1546_c56d7336",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-17T20:45:40Z",
+      "side": 1,
+      "message": "Also, this looks like the identical message. Is that intentional?",
+      "revId": "38c9457989a22c686d2848c5c40f74457a8c7b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
