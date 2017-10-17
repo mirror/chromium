@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdaa1bb9_04ea8eb1",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventDispatcher.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-17T02:37:11Z",
+      "side": 1,
+      "message": "Hmm, having to write this way looks redundant, but dom/events/NodeEventContext.cpp does\nin a similar way, so there is no good way to do this for now.\n\nHow about introducing a new utility function like\n\nvoid SetRelatedTargetIfExists(Event\u0026 event, const EventTarget* related_target) {\n  if (event.IsMouseEvent())\n    ToMouseEvent(event).SetRelatedTarget(related_target);\n  } else if ...\n  ...\n}\n\ncall from here and NodeEventContext::HandleLocalEvents()?",
+      "revId": "5bcaa2aea28612d7d8d7f61c28043ce9d72a54e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
