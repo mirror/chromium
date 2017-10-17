@@ -3142,6 +3142,8 @@ crbug.com/754819 external/wpt/longtask-timing/longtask-in-childiframe-crossorigi
 crbug.com/754819 external/wpt/longtask-timing/longtask-in-sibling-iframe-crossorigin.html [ Timeout ]
 crbug.com/754819 external/wpt/longtask-timing/longtask-in-sibling-iframe.html [ Timeout ]
 
+crbug.com/775630 virtual/longtask-v2/http/tests/performance-timing/longtask-v2/longtask-v8compile.html [ Failure Pass ]
+
 crbug.com/731018 [ Mac ] sensor/accelerometer.html [ Failure Pass Crash ]
 crbug.com/731018 [ Mac ] sensor/ambient-light-sensor.html [ Failure Pass Crash ]
 crbug.com/731018 [ Mac ] sensor/gyroscope.html [ Failure Pass Crash ]
