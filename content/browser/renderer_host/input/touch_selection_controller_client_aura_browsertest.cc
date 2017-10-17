@@ -399,7 +399,8 @@ IN_PROC_BROWSER_TEST_P(TouchSelectionControllerClientAuraSiteIsolationTest,
   EXPECT_TRUE(ExecuteScriptAndExtractString(child->current_frame_host(),
                                             "get_point_inside_text()", &str));
   JSONToPoint(str, &point_f);
-  gfx::Point origin = child_view->GetViewOriginInRoot();
+  gfx::PointF origin =
+      child_view->TransformPointToRootCoordSpaceF(gfx::PointF());
   gfx::Vector2dF origin_vec(origin.x(), origin.y());
   point_f += origin_vec;
 
@@ -515,7 +516,8 @@ IN_PROC_BROWSER_TEST_P(TouchSelectionControllerClientAuraSiteIsolationTest,
   EXPECT_TRUE(ExecuteScriptAndExtractString(child->current_frame_host(),
                                             "get_point_inside_text()", &str));
   JSONToPoint(str, &point_f);
-  gfx::Point origin = child_view->GetViewOriginInRoot();
+  gfx::PointF origin =
+      child_view->TransformPointToRootCoordSpaceF(gfx::PointF());
   gfx::Vector2dF origin_vec(origin.x(), origin.y());
   point_f += origin_vec;
 
