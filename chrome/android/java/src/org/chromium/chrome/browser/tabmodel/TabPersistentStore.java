@@ -181,7 +181,9 @@ public class TabPersistentStore extends TabPersister {
 
     private SharedPreferences mPreferences;
     private AsyncTask<Void, Void, DataInputStream> mPrefetchTabListTask;
-    private AsyncTask<Void, Void, DataInputStream> mPrefetchTabListToMergeTask;
+    private List<Pair<AsyncTask<Void, Void, DataInputStream>, String>> mPrefetchTabListToMergeTasks;
+    // A set of filenames which are tracked to merge.
+    private Set<String> mMergedFileNames;
     private byte[] mLastSavedMetadata;
 
     // Tracks whether this TabPersistentStore's tabs are being loaded.
@@ -212,12 +214,16 @@ public class TabPersistentStore extends TabPersister {
         mObserver = observer;
         mPreferences = ContextUtils.getAppSharedPreferences();
 
+        mPrefetchTabListToMergeTasks = new ArrayList<>();
+        mMergedFileNames = new HashSet<>();
+
         assert isStateFile(policy.getStateFileName()) : "State file name is not valid";
         boolean needsInitialization = mPersistencePolicy.performInitialization(
                 AsyncTask.SERIAL_EXECUTOR);
 
         if (mPersistencePolicy.isMergeInProgress()) return;
 
+        // TODO(ltian): change all initializations to parallel executor.
         Executor executor = needsInitialization
                 ? AsyncTask.SERIAL_EXECUTOR : AsyncTask.THREAD_POOL_EXECUTOR;
 
@@ -226,9 +232,16 @@ public class TabPersistentStore extends TabPersister {
         startPrefetchActiveTabTask(executor);
 
         if (mPersistencePolicy.shouldMergeOnStartup()) {
-            assert mPersistencePolicy.getStateToBeMergedFileName() != null;
-            mPrefetchTabListToMergeTask = startFetchTabListTask(
-                    executor, mPersistencePolicy.getStateToBeMergedFileName());
+            for (String mayMergedFileName : mPersistencePolicy.getStateToBeMergedFileNames()) {
+                AsyncTask<Void, Void, DataInputStream> task =
+                        startFetchTabListTask(executor, mayMergedFileName);
+                if (task != null) {
+                    Pair<AsyncTask<Void, Void, DataInputStream>, String> mergeTask =
+                            new Pair<AsyncTask<Void, Void, DataInputStream>, String>(
+                                    task, mayMergedFileName);
+                    mPrefetchTabListToMergeTasks.add(mergeTask);
+                }
+            }
         }
     }
 
@@ -375,21 +388,23 @@ public class TabPersistentStore extends TabPersister {
 
             // Restore the tabs for the other TabPeristentStore instance if its tab metadata file
             // exists.
-            if (mPrefetchTabListToMergeTask != null) {
-                long timeMergingState = SystemClock.uptimeMillis();
-                stream = mPrefetchTabListToMergeTask.get();
-                if (stream != null) {
-                    logExecutionTime("MergeStateInternalFetchTime", timeMergingState);
+            if (mPrefetchTabListToMergeTasks.size() > 0) {
+                for (Pair<AsyncTask<Void, Void, DataInputStream>, String> mergeTask :
+                        mPrefetchTabListToMergeTasks) {
+                    AsyncTask<Void, Void, DataInputStream> task = mergeTask.first;
+                    stream = task.get();
+                    if (stream == null) continue;
+                    mMergedFileNames.add(mergeTask.second);
                     mPersistencePolicy.setMergeInProgress(true);
-                    readSavedStateFile(
-                            stream,
+                    readSavedStateFile(stream,
                             createOnTabStateReadCallback(mTabModelSelector.isIncognitoSelected(),
                                     mTabsToRestore.size() == 0 ? false : true),
-                            null,
-                            true);
-                    logExecutionTime("MergeStateInternalTime", timeMergingState);
+                            null, true);
+                }
+                if (mMergedFileNames.size() > 0) {
                     RecordUserAction.record("Android.MergeState.ColdStart");
                 }
+                mPrefetchTabListToMergeTasks.clear();
             }
         } catch (Exception e) {
             // Catch generic exception to prevent a corrupted state from crashing app on startup.
@@ -422,20 +437,18 @@ public class TabPersistentStore extends TabPersister {
         try {
             long time = SystemClock.uptimeMillis();
             // Read the tab state metadata file.
-            DataInputStream stream = startFetchTabListTask(
-                    AsyncTask.SERIAL_EXECUTOR,
-                    mPersistencePolicy.getStateToBeMergedFileName()).get();
-
-            // Return early if the stream is null, which indicates there isn't a second instance
-            // to merge.
-            if (stream == null) return;
-            logExecutionTime("MergeStateInternalFetchTime", time);
-            mPersistencePolicy.setMergeInProgress(true);
-            readSavedStateFile(stream,
-                    createOnTabStateReadCallback(mTabModelSelector.isIncognitoSelected(), true),
-                    null,
-                    true);
-            logExecutionTime("MergeStateInternalTime", time);
+            for (String mergeFileName : mPersistencePolicy.getStateToBeMergedFileNames()) {
+                DataInputStream stream =
+                        startFetchTabListTask(AsyncTask.SERIAL_EXECUTOR, mergeFileName).get();
+                if (stream == null) continue;
+                logExecutionTime("MergeStateInternalFetchTime", time);
+                mMergedFileNames.add(mergeFileName);
+                mPersistencePolicy.setMergeInProgress(true);
+                readSavedStateFile(stream,
+                        createOnTabStateReadCallback(mTabModelSelector.isIncognitoSelected(), true),
+                        null, true);
+                logExecutionTime("MergeStateInternalTime", time);
+            }
         } catch (Exception e) {
             // Catch generic exception to prevent a corrupted state from crashing app.
             Log.d(TAG, "meregeState exception: " + e.toString(), e);
@@ -1205,7 +1218,9 @@ public class TabPersistentStore extends TabPersister {
                         saveTabListAsynchronously();
                     }
                 });
-                deleteFileAsync(mPersistencePolicy.getStateToBeMergedFileName());
+                for (String mergedFileName : mPersistencePolicy.getStateToBeMergedFileNames()) {
+                    deleteFileAsync(mergedFileName);
+                }
                 if (mObserver != null) mObserver.onStateMerged();
             }
 
@@ -1250,10 +1265,16 @@ public class TabPersistentStore extends TabPersister {
                 if (stateFile.exists()) {
                     if (!stateFile.delete()) Log.e(TAG, "Failed to delete file: " + stateFile);
 
-                    // The merge isn't completely finished until the other TabPersistentStore's
-                    // metadata file is deleted.
-                    if (file.equals(mPersistencePolicy.getStateToBeMergedFileName())) {
-                        mPersistencePolicy.setMergeInProgress(false);
+                    // The merge isn't completely finished until the other TabPersistentStores'
+                    // metadata files are deleted.
+                    for (String mergeFileName : mMergedFileNames) {
+                        if (file.equals(mergeFileName)) {
+                            mMergedFileNames.remove(mergeFileName);
+                            if (mMergedFileNames.isEmpty()) {
+                                mPersistencePolicy.setMergeInProgress(false);
+                            }
+                            break;
+                        }
                     }
                 }
                 return null;
