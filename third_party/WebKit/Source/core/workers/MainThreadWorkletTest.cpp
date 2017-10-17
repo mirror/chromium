@@ -47,9 +47,18 @@ class MainThreadWorkletTest : public ::testing::Test {
     document->UpdateSecurityOrigin(SecurityOrigin::Create(document->Url()));
     reporting_proxy_ =
         std::make_unique<MainThreadWorkletReportingProxyForTest>(document);
+    Document* document = page_->GetFrame().GetDocument();
+    auto creation_params = std::make_unique<GlobalScopeCreationParams>(
+        document->Url(), document->UserAgent(), String() /* source_code */,
+        nullptr /* cached_meta_data */, kDontPauseWorkerGlobalScopeOnStart,
+        nullptr /* content_security_policy_parsed_headers */,
+        String() /* referrer_policy */, document->GetSecurityOrigin(),
+        nullptr /* worker_clients */, document->AddressSpace(),
+        OriginTrialContext::GetTokens(document).get(),
+        nullptr /* worker_settings */, kV8CacheOptionsDefault);
     global_scope_ = new MainThreadWorkletGlobalScope(
-        &page_->GetFrame(), document->Url(), "fake user agent",
-        ToIsolate(document), *reporting_proxy_);
+        &page_->GetFrame(), std::move(creation_params), ToIsolate(document),
+        *reporting_proxy_);
   }
 
   void TearDown() override { global_scope_->Terminate(); }

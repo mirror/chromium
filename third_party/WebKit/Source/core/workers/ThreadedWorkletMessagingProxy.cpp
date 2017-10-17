@@ -34,25 +34,22 @@ void ThreadedWorkletMessagingProxy::Initialize() {
   worklet_object_proxy_ = CreateObjectProxy(this, GetParentFrameTaskRunners());
 
   Document* document = ToDocument(GetExecutionContext());
-  SecurityOrigin* starter_origin = document->GetSecurityOrigin();
-  KURL script_url = document->Url();
-
   ContentSecurityPolicy* csp = document->GetContentSecurityPolicy();
   DCHECK(csp);
 
-  WorkerThreadStartMode start_mode =
-      GetWorkerInspectorProxy()->WorkerStartMode(document);
-  std::unique_ptr<WorkerSettings> worker_settings =
-      WTF::WrapUnique(new WorkerSettings(document->GetSettings()));
-
-  // TODO(ikilpatrick): Decide on sensible a value for referrerPolicy.
+  // TODO(nhiroki): Inherit a referrer policy from owner's document.
+  // (https://crbug.com/773921)
   auto global_scope_creation_params =
       WTF::MakeUnique<GlobalScopeCreationParams>(
-          script_url, document->UserAgent(), String(), nullptr, start_mode,
-          csp->Headers().get(), /* referrerPolicy */ String(), starter_origin,
-          ReleaseWorkerClients(), document->AddressSpace(),
+          document->Url(), document->UserAgent(), String() /* source_code */,
+          nullptr /* cached_meta_data */,
+          GetWorkerInspectorProxy()->WorkerStartMode(document),
+          csp->Headers().get(), String() /* referrerPolicy */,
+          document->GetSecurityOrigin(), ReleaseWorkerClients(),
+          document->AddressSpace(),
           OriginTrialContext::GetTokens(document).get(),
-          std::move(worker_settings), kV8CacheOptionsDefault);
+          std::make_unique<WorkerSettings>(document->GetSettings()),
+          kV8CacheOptionsDefault);
 
   // Worklets share the pre-initialized backing thread so that we don't have to
   // specify the backing thread startup data.
