@@ -1,0 +1,41 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+source_set("gr_search") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  sources = [
+    "gr_search_coordinator.h",
+    "gr_search_coordinator.mm",
+  ]
+  deps = [
+    "//base",
+    "//ios/chrome/browser",
+    "//ios/chrome/browser/ui/commands",
+  ]
+}
+
+source_set("features") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  sources = [
+    "features.cc",
+    "features.h",
+  ]
+  deps = [
+    "//base",
+  ]
+}
+
+source_set("unit_tests") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  testonly = true
+  sources = [
+    "gr_search_coordinator_unittest.mm",
+  ]
+  deps = [
+    ":gr_search",
+    "//ios/chrome/browser/ui/commands",
+    "//testing/gtest",
+    "//third_party/ocmock",
+  ]
+}
