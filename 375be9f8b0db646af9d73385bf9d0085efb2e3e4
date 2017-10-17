@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29fac4ba_78e15761",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-17T23:29:38Z",
+      "side": 1,
+      "message": "Thanks! Done",
+      "parentUuid": "7d82d3c2_12b897a8",
+      "revId": "375be9f8b0db646af9d73385bf9d0085efb2e3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "909527ad_986713ac",
         "filename": "chrome/test/data/webui/settings/site_details_tests.js",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "43338530_15914beb",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-17T23:29:38Z",
+      "side": 1,
+      "message": "As discussed offline, this doesn\u0027t work.",
+      "parentUuid": "909527ad_986713ac",
+      "range": {
+        "startLine": 365,
+        "startChar": 21,
+        "endLine": 365,
+        "endChar": 0
+      },
+      "revId": "375be9f8b0db646af9d73385bf9d0085efb2e3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e03d4bae_b7ee041e",
         "filename": "chrome/test/data/webui/settings/site_details_tests.js",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "375be9f8b0db646af9d73385bf9d0085efb2e3e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1252d521_0d702648",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-17T23:29:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e03d4bae_b7ee041e",
+      "revId": "375be9f8b0db646af9d73385bf9d0085efb2e3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "375be9f8b0db646af9d73385bf9d0085efb2e3e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c196ee03_5082379a",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-17T23:29:38Z",
+      "side": 1,
+      "message": "Oops, thanks!",
+      "parentUuid": "28800d55_fce5ad81",
+      "range": {
+        "startLine": 392,
+        "startChar": 38,
+        "endLine": 392,
+        "endChar": 43
+      },
+      "revId": "375be9f8b0db646af9d73385bf9d0085efb2e3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
