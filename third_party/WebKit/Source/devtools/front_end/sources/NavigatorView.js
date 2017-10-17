@@ -435,6 +435,21 @@ Sources.NavigatorView = class extends UI.VBox {
   }
 
   /**
+   * @param {!Workspace.Project} project
+   * @protected
+   * @return {!Sources.NavigatorTreeNode}
+   */
+  fileSystemRootFolder(project) {
+    var fileSystemNode = this._rootNode.child(project.id());
+    if (!fileSystemNode) {
+      fileSystemNode = new Sources.NavigatorGroupTreeNode(
+          this, project, project.id(), Sources.NavigatorView.Types.FileSystem, project.displayName());
+      this._rootNode.appendChild(fileSystemNode);
+    }
+    return fileSystemNode;
+  }
+
+  /**
    * @param {!Workspace.UISourceCode} uiSourceCode
    * @param {!Workspace.Project} project
    * @param {!SDK.Target} target
@@ -761,40 +776,17 @@ Sources.NavigatorView = class extends UI.VBox {
    * @param {string} path
    * @param {!Workspace.UISourceCode=} uiSourceCodeToCopy
    */
-  create(project, path, uiSourceCodeToCopy) {
-    /**
-     * @this {Sources.NavigatorView}
-     * @param {?string} content
-     */
-    function contentLoaded(content) {
-      createFile.call(this, content || '');
-    }
-
+  async create(project, path, uiSourceCodeToCopy) {
+    var content = '';
     if (uiSourceCodeToCopy)
-      uiSourceCodeToCopy.requestContent().then(contentLoaded.bind(this));
-    else
-      createFile.call(this);
-
-    /**
-     * @this {Sources.NavigatorView}
-     * @param {string=} content
-     */
-    function createFile(content) {
-      project.createFile(path, null, content || '', fileCreated.bind(this));
-    }
-
-    /**
-     * @this {Sources.NavigatorView}
-     * @param {?Workspace.UISourceCode} uiSourceCode
-     */
-    function fileCreated(uiSourceCode) {
-      if (!uiSourceCode)
-        return;
-      this._sourceSelected(uiSourceCode, false);
-      var node = this.revealUISourceCode(uiSourceCode, true);
-      if (node)
-        this.rename(node, true);
-    }
+      content = (await uiSourceCodeToCopy.requestContent()) || '';
+    var uiSourceCode = await project.createFile(path, null, content);
+    if (!uiSourceCode)
+      return;
+    this._sourceSelected(uiSourceCode, false);
+    var node = this.revealUISourceCode(uiSourceCode, true);
+    if (node)
+      this.rename(node, true);
   }
 
   _groupingChanged() {
