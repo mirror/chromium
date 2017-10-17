@@ -255,6 +255,30 @@
     },
     {
       "key": {
+        "uuid": "e6ca04c8_b8ebb71b",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-17T15:46:39Z",
+      "side": 1,
+      "message": "New Blink style guide recommends kConstantStyle for enums. For example, see discussion in https://groups.google.com/a/chromium.org/forum/#!topic/platform-architecture-dev/JOY3TKxQDhE",
+      "parentUuid": "4438ce6e_aa0c03a2",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 20
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e73f1a2_a9cec233",
         "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
         "patchSetId": 1
