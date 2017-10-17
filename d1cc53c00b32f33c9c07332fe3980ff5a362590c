@@ -16,6 +16,24 @@
       "revId": "d1cc53c00b32f33c9c07332fe3980ff5a362590c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3940f1_5cb743d6",
+        "filename": "base/trace_event/trace_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-17T17:42:50Z",
+      "side": 1,
+      "message": "I\u0027ve seen this particular issue when including trace_event/memory_usage_estimator.h (defines base::trace_event::internal namespace) in headers. I think we should always use fully-qualified namespaces when going \"up\" (i.e. base::trace_event -\u003e base::internal).",
+      "parentUuid": "cf66946d_c48f5e14",
+      "revId": "d1cc53c00b32f33c9c07332fe3980ff5a362590c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
