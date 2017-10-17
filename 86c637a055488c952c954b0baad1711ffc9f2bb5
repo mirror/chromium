@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38c5caa1_a8a4c57c",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1247463
+      },
+      "writtenOn": "2017-10-17T00:18:43Z",
+      "side": 1,
+      "message": "I\u0027ve been discussing the issue with creis@, the basic check we wanted to add was restricting ARC from opening arbitrary chrome:// URLs given that the main goal of this CL is to add an explicit way to open chrome://settings/multidevice. Beyond that, in terms of tightening the security model of the existing OnOpenUrl interface, I am probably not the right person to take up that conversation since I am not that familiar with the ARC\u003c\u003eChrome IPC mechanisms but sounds like a good idea to pursue in a follow-up.",
+      "parentUuid": "9e264dea_17d2e948",
+      "revId": "86c637a055488c952c954b0baad1711ffc9f2bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eed496a0_4bf7e341",
         "filename": "url/url_constants.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "86c637a055488c952c954b0baad1711ffc9f2bb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab27c7f_1e884837",
+        "filename": "url/url_constants.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1247463
+      },
+      "writtenOn": "2017-10-17T00:18:43Z",
+      "side": 1,
+      "message": "Sounds good, removed this here.",
+      "parentUuid": "eed496a0_4bf7e341",
+      "revId": "86c637a055488c952c954b0baad1711ffc9f2bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
