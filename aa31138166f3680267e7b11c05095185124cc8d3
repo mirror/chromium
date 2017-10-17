@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "599a7df0_514e5782",
+        "filename": "components/favicon_base/favicon_types.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-17T10:16:56Z",
+      "side": 1,
+      "message": "nit: That\u0027s not what NOTREACHED means. Like (D)CHECK, NOTREACHED means \"this *literally* never happens\".\nAs written, it\u0027s also illegal to call this method with INVALID_ICON. If that\u0027s intended, it at least needs a comment in the header (though I think INVALID_ICON should probably be handled here).",
+      "range": {
+        "startLine": 70,
+        "startChar": 57,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "aa31138166f3680267e7b11c05095185124cc8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cabf0b97_4b59d455",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 50342,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-17T10:16:56Z",
+      "side": 1,
+      "message": "s/don\u0027t involve/don\u0027t necessarily involve/\nsame below",
+      "range": {
+        "startLine": 50341,
+        "startChar": 75,
+        "endLine": 50342,
+        "endChar": 11
+      },
+      "revId": "aa31138166f3680267e7b11c05095185124cc8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

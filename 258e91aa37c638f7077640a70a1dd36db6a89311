@@ -328,6 +328,30 @@
       "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cff58557_6adaccf8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 50342,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-17T10:16:56Z",
+      "side": 1,
+      "message": "The lazy answer is that histograms owners tend to ask for it :D\nMore seriously: When comparing histograms without filtering to a single platform, there\u0027s potential for confusion. E.g. it\u0027s not unreasonable to compare .TileType with .TileFaviconType, but then one will include iOS and the other won\u0027t. Having the platforms explicitly in the description somewhat mitigates that.",
+      "parentUuid": "613445bb_475ed217",
+      "range": {
+        "startLine": 50342,
+        "startChar": 46,
+        "endLine": 50342,
+        "endChar": 0
+      },
+      "revId": "258e91aa37c638f7077640a70a1dd36db6a89311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
