@@ -33,12 +33,10 @@
 
 #include "core/svg/SVGLengthTearOff.h"
 #include "core/svg/properties/SVGAnimatedProperty.h"
-#include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
 
-class SVGAnimatedLength : public SVGAnimatedProperty<SVGLength>,
-                          public ScriptWrappable {
+class SVGAnimatedLength : public SVGAnimatedProperty<SVGLength> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -57,8 +55,6 @@ class SVGAnimatedLength : public SVGAnimatedProperty<SVGLength>,
   const CSSValue* CssValue() const {
     return &CurrentValue()->AsCSSPrimitiveValue();
   }
-
-  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
   SVGAnimatedLength(SVGElement* context_element,

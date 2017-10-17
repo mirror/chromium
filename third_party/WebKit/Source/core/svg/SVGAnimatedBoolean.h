@@ -33,23 +33,16 @@
 
 #include "core/svg/SVGBoolean.h"
 #include "core/svg/properties/SVGAnimatedProperty.h"
-#include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
 
-class SVGAnimatedBoolean final : public SVGAnimatedProperty<SVGBoolean>,
-                                 public ScriptWrappable {
+class SVGAnimatedBoolean final : public SVGAnimatedProperty<SVGBoolean> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
   static SVGAnimatedBoolean* Create(SVGElement* context_element,
                                     const QualifiedName& attribute_name) {
     return new SVGAnimatedBoolean(context_element, attribute_name);
-  }
-
-  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
-    SVGAnimatedProperty<SVGBoolean>::TraceWrappers(visitor);
-    ScriptWrappable::TraceWrappers(visitor);
   }
 
  protected:

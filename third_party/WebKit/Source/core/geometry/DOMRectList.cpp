@@ -49,6 +49,7 @@ DOMRect* DOMRectList::item(unsigned index) {
 
 DEFINE_TRACE(DOMRectList) {
   visitor->Trace(list_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

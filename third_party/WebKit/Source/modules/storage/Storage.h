@@ -39,8 +39,7 @@ namespace blink {
 class ExceptionState;
 class LocalFrame;
 
-class Storage final : public GarbageCollected<Storage>,
-                      public ScriptWrappable,
+class Storage final : public ScriptWrappable,
                       public ContextClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(Storage);

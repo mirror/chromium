@@ -14,8 +14,7 @@
 namespace blink {
 
 class PhotoCapabilities final
-    : public GarbageCollectedFinalized<PhotoCapabilities>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

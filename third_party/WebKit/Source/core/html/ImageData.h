@@ -70,8 +70,7 @@ constexpr const char* kUint8ClampedArrayStorageFormatName = "uint8";
 constexpr const char* kUint16ArrayStorageFormatName = "uint16";
 constexpr const char* kFloat32ArrayStorageFormatName = "float32";
 
-class CORE_EXPORT ImageData final : public GarbageCollectedFinalized<ImageData>,
-                                    public ScriptWrappable,
+class CORE_EXPORT ImageData final : public ScriptWrappable,
                                     public ImageBitmapSource {
   DEFINE_WRAPPERTYPEINFO();
 

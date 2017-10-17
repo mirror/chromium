@@ -19,9 +19,4 @@ String SVGAnimatedString::animVal() {
   return SVGAnimatedProperty<SVGString>::animVal();
 }
 
-DEFINE_TRACE_WRAPPERS(SVGAnimatedString) {
-  SVGAnimatedProperty<SVGString>::TraceWrappers(visitor);
-  ScriptWrappable::TraceWrappers(visitor);
-}
-
 }  // namespace blink

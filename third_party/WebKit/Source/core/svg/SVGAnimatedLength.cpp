@@ -52,9 +52,4 @@ SVGParsingError SVGAnimatedLength::SetBaseValueAsString(const String& value) {
   return parse_status;
 }
 
-DEFINE_TRACE_WRAPPERS(SVGAnimatedLength) {
-  SVGAnimatedProperty<SVGLength>::TraceWrappers(visitor);
-  ScriptWrappable::TraceWrappers(visitor);
-}
-
 }  // namespace blink

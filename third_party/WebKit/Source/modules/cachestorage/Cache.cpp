@@ -516,6 +516,7 @@ Cache::Cache(GlobalFetch::ScopedFetcher* fetcher,
 
 DEFINE_TRACE(Cache) {
   visitor->Trace(scoped_fetcher_);
+  ScriptWrappable::Trace(visitor);
 }
 
 ScriptPromise Cache::MatchImpl(ScriptState* script_state,

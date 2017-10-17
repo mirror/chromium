@@ -53,8 +53,7 @@ class PropertyTreeState;
 // Clipboard API (copy/paste):
 // http://dev.w3.org/2006/webapi/clipops/clipops.html
 class CORE_EXPORT DataTransfer final
-    : public GarbageCollectedFinalized<DataTransfer>,
-      public ScriptWrappable,
+    : public ScriptWrappable,
       public DataObject::Observer {
   USING_GARBAGE_COLLECTED_MIXIN(DataTransfer);
   DEFINE_WRAPPERTYPEINFO();

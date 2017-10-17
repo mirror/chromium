@@ -45,8 +45,7 @@
 namespace blink {
 
 class MODULES_EXPORT RTCCertificate final
-    : public GarbageCollectedFinalized<RTCCertificate>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -56,8 +55,6 @@ class MODULES_EXPORT RTCCertificate final
   // Returns a new WebRTCCertificate shallow copy.
   std::unique_ptr<WebRTCCertificate> CertificateShallowCopy() const;
   const WebRTCCertificate& Certificate() const { return *certificate_; }
-
-  DEFINE_INLINE_TRACE() {}
 
   // Returns the expiration time in ms relative to epoch, 1970-01-01T00:00:00Z.
   DOMTimeStamp expires() const;

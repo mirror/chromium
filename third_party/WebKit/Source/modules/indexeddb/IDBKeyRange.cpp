@@ -71,6 +71,7 @@ IDBKeyRange::IDBKeyRange(IDBKey* lower,
 DEFINE_TRACE(IDBKeyRange) {
   visitor->Trace(lower_);
   visitor->Trace(upper_);
+  ScriptWrappable::Trace(visitor);
 }
 
 ScriptValue IDBKeyRange::lowerValue(ScriptState* script_state) const {

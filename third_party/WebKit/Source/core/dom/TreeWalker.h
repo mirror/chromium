@@ -34,8 +34,7 @@ namespace blink {
 
 class ExceptionState;
 
-class TreeWalker final : public GarbageCollected<TreeWalker>,
-                         public ScriptWrappable,
+class TreeWalker final : public ScriptWrappable,
                          public NodeIteratorBase {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(TreeWalker);

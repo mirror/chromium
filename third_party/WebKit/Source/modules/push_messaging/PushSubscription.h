@@ -24,8 +24,7 @@ class ScriptState;
 struct WebPushSubscription;
 
 class PushSubscription final
-    : public GarbageCollectedFinalized<PushSubscription>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

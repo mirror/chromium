@@ -69,6 +69,7 @@ bool USBInterface::claimed() const {
 
 DEFINE_TRACE(USBInterface) {
   visitor->Trace(device_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

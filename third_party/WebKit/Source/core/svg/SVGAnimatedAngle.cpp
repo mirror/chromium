@@ -50,11 +50,6 @@ DEFINE_TRACE(SVGAnimatedAngle) {
   SVGAnimatedProperty<SVGAngle>::Trace(visitor);
 }
 
-DEFINE_TRACE_WRAPPERS(SVGAnimatedAngle) {
-  SVGAnimatedProperty<SVGAngle>::TraceWrappers(visitor);
-  ScriptWrappable::TraceWrappers(visitor);
-}
-
 bool SVGAnimatedAngle::NeedsSynchronizeAttribute() {
   return orient_type_->NeedsSynchronizeAttribute() ||
          SVGAnimatedProperty<SVGAngle>::NeedsSynchronizeAttribute();

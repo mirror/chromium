@@ -101,6 +101,7 @@ DataTransferItemList::DataTransferItemList(DataTransfer* data_transfer,
 DEFINE_TRACE(DataTransferItemList) {
   visitor->Trace(data_transfer_);
   visitor->Trace(data_object_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

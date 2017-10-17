@@ -36,8 +36,7 @@ class ExceptionState;
 class XMLDocument;
 
 class CORE_EXPORT DOMImplementation final
-    : public GarbageCollected<DOMImplementation>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

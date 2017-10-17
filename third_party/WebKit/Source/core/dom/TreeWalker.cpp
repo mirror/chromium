@@ -250,6 +250,7 @@ Children:
 
 DEFINE_TRACE(TreeWalker) {
   visitor->Trace(current_);
+  ScriptWrappable::Trace(visitor);
   NodeIteratorBase::Trace(visitor);
 }
 

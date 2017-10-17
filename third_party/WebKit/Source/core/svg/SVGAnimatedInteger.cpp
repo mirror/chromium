@@ -49,9 +49,4 @@ DEFINE_TRACE(SVGAnimatedInteger) {
   SVGAnimatedProperty<SVGInteger>::Trace(visitor);
 }
 
-DEFINE_TRACE_WRAPPERS(SVGAnimatedInteger) {
-  SVGAnimatedProperty<SVGInteger>::TraceWrappers(visitor);
-  ScriptWrappable::TraceWrappers(visitor);
-}
-
 }  // namespace blink

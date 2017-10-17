@@ -34,8 +34,7 @@ namespace blink {
 class LocalFrame;
 class PluginData;
 
-class DOMPluginArray final : public GarbageCollected<DOMPluginArray>,
-                             public ScriptWrappable,
+class DOMPluginArray final : public ScriptWrappable,
                              public ContextLifecycleObserver,
                              public PluginsChangedObserver {
   DEFINE_WRAPPERTYPEINFO();

@@ -33,25 +33,18 @@
 
 #include "core/svg/SVGNumberListTearOff.h"
 #include "core/svg/properties/SVGAnimatedProperty.h"
-#include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
 
 // SVG Spec:
 // http://www.w3.org/TR/SVG11/types.html#InterfaceSVGAnimatedNumberList
-class SVGAnimatedNumberList final : public SVGAnimatedProperty<SVGNumberList>,
-                                    public ScriptWrappable {
+class SVGAnimatedNumberList final : public SVGAnimatedProperty<SVGNumberList> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
   static SVGAnimatedNumberList* Create(SVGElement* context_element,
                                        const QualifiedName& attribute_name) {
     return new SVGAnimatedNumberList(context_element, attribute_name);
-  }
-
-  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
-    SVGAnimatedProperty<SVGNumberList>::TraceWrappers(visitor);
-    ScriptWrappable::TraceWrappers(visitor);
   }
 
  protected:

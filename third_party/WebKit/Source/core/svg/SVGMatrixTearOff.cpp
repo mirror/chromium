@@ -47,6 +47,7 @@ SVGMatrixTearOff::SVGMatrixTearOff(SVGTransformTearOff* transform)
 
 DEFINE_TRACE(SVGMatrixTearOff) {
   visitor->Trace(context_transform_);
+  ScriptWrappable::Trace(visitor);
 }
 
 DEFINE_TRACE_WRAPPERS(SVGMatrixTearOff) {

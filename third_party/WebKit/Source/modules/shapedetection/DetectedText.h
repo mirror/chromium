@@ -15,8 +15,7 @@ namespace blink {
 class DOMRect;
 
 class MODULES_EXPORT DetectedText final
-    : public GarbageCollectedFinalized<DetectedText>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

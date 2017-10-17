@@ -12,8 +12,7 @@
 namespace blink {
 
 class USBOutTransferResult final
-    : public GarbageCollectedFinalized<USBOutTransferResult>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -33,8 +32,6 @@ class USBOutTransferResult final
 
   String status() const { return status_; }
   unsigned bytesWritten() const { return bytes_written_; }
-
-  DEFINE_INLINE_TRACE() {}
 
  private:
   const String status_;

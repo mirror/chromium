@@ -23,8 +23,7 @@ class PaymentCompleter;
 class ScriptState;
 
 class MODULES_EXPORT PaymentResponse final
-    : public GarbageCollectedFinalized<PaymentResponse>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
   WTF_MAKE_NONCOPYABLE(PaymentResponse);
 

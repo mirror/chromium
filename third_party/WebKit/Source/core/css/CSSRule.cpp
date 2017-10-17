@@ -64,6 +64,7 @@ DEFINE_TRACE(CSSRule) {
     visitor->Trace(parent_rule_);
   else
     visitor->Trace(parent_style_sheet_);
+  ScriptWrappable::Trace(visitor);
 }
 
 DEFINE_TRACE_WRAPPERS(CSSRule) {

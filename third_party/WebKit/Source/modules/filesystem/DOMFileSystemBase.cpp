@@ -74,6 +74,7 @@ DOMFileSystemBase::~DOMFileSystemBase() {}
 
 DEFINE_TRACE(DOMFileSystemBase) {
   visitor->Trace(context_);
+  ScriptWrappable::Trace(visitor);
 }
 
 WebFileSystem* DOMFileSystemBase::FileSystem() const {

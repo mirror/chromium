@@ -33,7 +33,6 @@
 
 #include "core/svg/SVGNumberTearOff.h"
 #include "core/svg/properties/SVGAnimatedProperty.h"
-#include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -41,8 +40,7 @@ namespace blink {
 class SVGAnimatedNumberOptionalNumber;
 
 // SVG Spec: http://www.w3.org/TR/SVG11/types.html#InterfaceSVGAnimatedNumber
-class SVGAnimatedNumber : public SVGAnimatedProperty<SVGNumber>,
-                          public ScriptWrappable {
+class SVGAnimatedNumber : public SVGAnimatedProperty<SVGNumber> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -61,8 +59,6 @@ class SVGAnimatedNumber : public SVGAnimatedProperty<SVGNumber>,
   }
 
   DECLARE_VIRTUAL_TRACE();
-
-  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
   SVGAnimatedNumber(SVGElement* context_element,

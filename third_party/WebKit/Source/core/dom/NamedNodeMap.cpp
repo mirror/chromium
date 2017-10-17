@@ -130,6 +130,7 @@ bool NamedNodeMap::NamedPropertyQuery(const AtomicString& name,
 
 DEFINE_TRACE(NamedNodeMap) {
   visitor->Trace(element_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

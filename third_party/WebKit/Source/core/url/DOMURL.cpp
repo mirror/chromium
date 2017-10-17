@@ -54,6 +54,7 @@ DOMURL::~DOMURL() {}
 
 DEFINE_TRACE(DOMURL) {
   visitor->Trace(search_params_);
+  ScriptWrappable::Trace(visitor);
 }
 
 void DOMURL::SetInput(const String& value) {

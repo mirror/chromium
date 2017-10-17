@@ -62,6 +62,7 @@ IDBIndex::~IDBIndex() {}
 DEFINE_TRACE(IDBIndex) {
   visitor->Trace(object_store_);
   visitor->Trace(transaction_);
+  ScriptWrappable::Trace(visitor);
 }
 
 void IDBIndex::setName(const String& name, ExceptionState& exception_state) {

@@ -20,8 +20,7 @@ class ExceptionState;
 using HeadersInit = ByteStringSequenceSequenceOrByteStringByteStringRecord;
 
 // http://fetch.spec.whatwg.org/#headers-class
-class MODULES_EXPORT Headers final : public GarbageCollected<Headers>,
-                                     public ScriptWrappable,
+class MODULES_EXPORT Headers final : public ScriptWrappable,
                                      public PairIterable<String, String> {
   DEFINE_WRAPPERTYPEINFO();
 

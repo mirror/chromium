@@ -71,6 +71,7 @@ bool Storage::NamedPropertyQuery(const AtomicString& name,
 
 DEFINE_TRACE(Storage) {
   visitor->Trace(storage_area_);
+  ScriptWrappable::Trace(visitor);
   ContextClient::Trace(visitor);
 }
 

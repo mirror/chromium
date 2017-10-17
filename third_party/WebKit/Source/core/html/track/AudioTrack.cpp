@@ -19,6 +19,7 @@ AudioTrack::AudioTrack(const String& id,
 AudioTrack::~AudioTrack() {}
 
 DEFINE_TRACE(AudioTrack) {
+  ScriptWrappable::Trace(visitor);
   TrackBase::Trace(visitor);
 }
 
