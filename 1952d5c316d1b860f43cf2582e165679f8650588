@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f23ae585_8372787d",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c5eda66_c2ebd6b1",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70096f10_35a154d6",
         "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54ba9ff_d9a66cb2",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Removed sequence checker.",
+      "parentUuid": "70096f10_35a154d6",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c36fc983_7fdc5a0a",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acb05bdd_b4c7929f",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5551db7e_a8a56686",
         "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c773e2c1_ffea98d8",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5551db7e_a8a56686",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c6345289_a6390da4",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c6f406f_10ccc9fc",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41db6e5b_be54c0ed",
         "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.h",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c5228a_1f0e1fb4",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Sure, it makes sense (but I\u0027m not very passionate about refactoring keyboard mic stuff).",
+      "parentUuid": "41db6e5b_be54c0ed",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ec900c6e_4ae91fb5",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3cae1cd_ed30d55d",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "702ad873_0ae7e64f",
         "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.h",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee6123a_059b9299",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Privatized it.",
+      "parentUuid": "702ad873_0ae7e64f",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "bb590406_3bc16997",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef90a9a4_85bfd585",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0df43e0_6accb7e3",
         "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
         "patchSetId": 2
@@ -169,6 +331,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "239b48ee_f0f0aeeb",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Like the rest of the constants, the actual value is irrelevant, that\u0027s why it\u0027s here. I changed name to ValidAudioParameters to clarify what the parameters are.",
+      "parentUuid": "c0df43e0_6accb7e3",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "1ee0c094_c85bceb6",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Gmock still doesn\u0027t support move-only types :(.",
+      "parentUuid": "60297b14_7e2611d9",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c826c8e8_c88eed5b",
         "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
         "patchSetId": 2
@@ -203,6 +401,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3720ede4_73fea440",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Basically, having the complicated threading setup for the output delegate turned out to be a large maintenance burden, and seems like more trouble than it\u0027s worth (I got the impression Dale agrees, but I may be misremembering :) ).",
+      "parentUuid": "c826c8e8_c88eed5b",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "4c657b1e_53912504",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Added comment.",
+      "parentUuid": "dd75c331_0d6f0203",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9faafc9e_50d61a5a",
         "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
         "patchSetId": 2
@@ -237,6 +471,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0176ea_969ad0d0",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Not sure if it\u0027s better now? Otherwise, maybe suggest one.",
+      "parentUuid": "9faafc9e_50d61a5a",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "9216ed3f_c74fb874",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fa5a163_1f423cb1",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4696fa04_48a997e6",
         "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
         "patchSetId": 2
@@ -271,6 +541,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1974dae4_310d16de",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4696fa04_48a997e6",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "618cb373_eff390fa",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "302e9b67_71bf16a7",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3846c1bd_ffa1faad",
         "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
         "patchSetId": 2
@@ -305,6 +611,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1e387b_0e7d0aec",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "The constructor is supposed to do the stream operations asynchronously, if it does them synchronously now, the test will fail (since we didn\u0027t EXPECT it yet).",
+      "parentUuid": "3846c1bd_ffa1faad",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "6ca2aa47_f0a57e42",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "I tried to clarify by making the AGC-ness of the stream part of the CreateDelegate call, hopefully it makes sense to EXPECT it now. For the others, I\u0027m not sure what useful comment I could add (a comment like \"the delegate is expected to open the streams\" is equivalent to what is already written in code).",
+      "parentUuid": "aa52011b_6a66ef39",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd05c08f_254eeb51",
         "filename": "content/browser/renderer_host/media/audio_input_renderer_host.cc",
         "patchSetId": 2
@@ -339,6 +681,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8121d090_8da6e410",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd05c08f_254eeb51",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +719,24 @@
     },
     {
       "key": {
+        "uuid": "f3156678_8f1abd29",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afbef872_e7daa6b3",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f18513a_60e71763",
         "filename": "content/browser/renderer_host/media/audio_input_renderer_host.cc",
         "patchSetId": 2
@@ -373,6 +751,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "058df70f_3abbb921",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f18513a_60e71763",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +789,24 @@
     },
     {
       "key": {
+        "uuid": "264b2347_cca0d224",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "It calls Send.",
+      "parentUuid": "cee768f4_49fa910e",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98b18946_7eee58a5",
         "filename": "media/audio/audio_input_controller.h",
         "patchSetId": 2
@@ -407,6 +821,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc68419_7cdc26e8",
+        "filename": "media/audio/audio_input_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98b18946_7eee58a5",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -427,6 +859,24 @@
     },
     {
       "key": {
+        "uuid": "19a6caf9_f503eeb5",
+        "filename": "media/audio/audio_input_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96050166_74126af5",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7b0e1c2_7cd59ff2",
         "filename": "media/audio/audio_input_delegate.h",
         "patchSetId": 2
@@ -444,6 +894,24 @@
     },
     {
       "key": {
+        "uuid": "8330a00c_39ea8233",
+        "filename": "media/audio/audio_input_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Removed const (also for output, for consistency).",
+      "parentUuid": "b7b0e1c2_7cd59ff2",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25c88978_8968066a",
         "filename": "media/audio/audio_output_delegate.cc",
         "patchSetId": 2
@@ -458,6 +926,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d06cbdcc_344287d5",
+        "filename": "media/audio/audio_output_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T12:40:39Z",
+      "side": 1,
+      "message": "Last time I did this I had great issues with the Windows compile :). I\u0027ll try anyways.",
+      "parentUuid": "25c88978_8968066a",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
