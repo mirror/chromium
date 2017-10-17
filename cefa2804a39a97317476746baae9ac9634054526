@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ef5b86b_016744a3",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-10-17T18:08:10Z",
+      "side": 1,
+      "message": "so then here, it would just be\n_UpdateSysHealthCVS(input_api) without the results.extend part",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "cefa2804a39a97317476746baae9ac9634054526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84617412_e792429a",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-10-17T18:08:10Z",
+      "side": 1,
+      "message": "Since we aren\u0027t using input_api here, we can just say\ndef _CheckNoUncommittedFiles(output_api):\n\n(nit: committed has 2 \u0027m\u0027s)",
+      "range": {
+        "startLine": 121,
+        "startChar": 28,
+        "endLine": 121,
+        "endChar": 29
+      },
+      "revId": "cefa2804a39a97317476746baae9ac9634054526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f563226e_aec9cd55",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-10-17T18:08:10Z",
+      "side": 1,
+      "message": "same thing here with skipping the variable",
+      "range": {
+        "startLine": 132,
+        "startChar": 35,
+        "endLine": 132,
+        "endChar": 36
+      },
+      "revId": "cefa2804a39a97317476746baae9ac9634054526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a11d526_362bf6b6",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-10-17T18:08:10Z",
+      "side": 1,
+      "message": "since we aren\u0027t using the result of _RunArgs here, we can skip the assignment _ \u003d\nso we\u0027d just have\n_RunArgs([",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 15
+      },
+      "revId": "cefa2804a39a97317476746baae9ac9634054526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5914f78_2a9d89a6",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-10-17T18:08:10Z",
+      "side": 1,
+      "message": "Since we aren\u0027t adding anything to results, we can just have this function not return anything and delete results \u003d [] and return results",
+      "range": {
+        "startLine": 140,
+        "startChar": 9,
+        "endLine": 140,
+        "endChar": 16
+      },
+      "revId": "cefa2804a39a97317476746baae9ac9634054526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
