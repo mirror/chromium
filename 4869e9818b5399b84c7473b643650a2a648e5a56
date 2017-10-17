@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5d35800_b3963b15",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-17T15:23:37Z",
+      "side": 1,
+      "message": "Prerendered tabs should not have a ManageAccountsDelegate since it is only available in response to a user interaction. I am investigating whether we can delay the creation of the AccountConsistencyHandler to the point at which we have the delegate, so that it will not be invalid.",
+      "parentUuid": "53f01999_674d8781",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 11
+      },
+      "revId": "4869e9818b5399b84c7473b643650a2a648e5a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d914754_cff9729f",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-16T12:33:48Z",
       "side": 1,
       "message": "This conditional will never be true -- prerendered tabs are not added to the TabModel until they are promoted to real tabs.\n\nThis also means that prerendered tabs won\u0027t have a ManageAccountsDelegate at all, which might be a showstopper?",
+      "revId": "4869e9818b5399b84c7473b643650a2a648e5a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa82fc3_6a451d18",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 5242,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-17T15:23:37Z",
+      "side": 1,
+      "message": "You\u0027re right. As a result, this code should be removed (I\u0027ll update it). It\u0027s completely fine that prerendered tabs won\u0027t have a ManageAccountsDelegate, since the Manage Accounts callbacks can only happen in response to user interaction with a real tab. So this is working as intended.",
+      "parentUuid": "5d914754_cff9729f",
       "revId": "4869e9818b5399b84c7473b643650a2a648e5a56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
