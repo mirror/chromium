@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84b9712a_aa5f993b",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-17T15:25:10Z",
+      "side": 1,
+      "message": "This file seems to use _instanceVariable instead of self.property all over the place. This is unusual outside of init, dealloc and setters. I understand you\u0027re keeping with the existing, bur maybe you could consider converting to be more inline with modern ObjectiveC code.",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 20
+      },
+      "revId": "270ac2794a3ae19fab08898e855a4530989af577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e6b359_53dfbc67",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-17T15:25:10Z",
+      "side": 1,
+      "message": "Reload data is pretty heavy handed to remove one cell, an animation out would be nicer…",
+      "range": {
+        "startLine": 325,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 20
+      },
+      "revId": "270ac2794a3ae19fab08898e855a4530989af577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
