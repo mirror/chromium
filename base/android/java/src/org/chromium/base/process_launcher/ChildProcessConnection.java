@@ -280,8 +280,7 @@ public class ChildProcessConnection {
 
         mInitialBinding = connectionFactory.createConnection(intent, defaultFlags, delegate);
         mModerateBinding = connectionFactory.createConnection(intent, defaultFlags, delegate);
-        mStrongBinding = connectionFactory.createConnection(
-                intent, defaultFlags | Context.BIND_IMPORTANT, delegate);
+        mStrongBinding = connectionFactory.createConnection(intent, defaultFlags, delegate);
         mWaivedBinding = connectionFactory.createConnection(
                 intent, defaultFlags | Context.BIND_WAIVE_PRIORITY, delegate);
     }

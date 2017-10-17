@@ -336,6 +336,9 @@ void Page::SetPaused(bool paused) {
     LocalFrame* local_frame = ToLocalFrame(frame);
     local_frame->Loader().SetDefersLoading(paused);
     local_frame->FrameScheduler()->SetPaused(paused);
+    Document* document = local_frame->GetDocument();
+    if (document)
+      document->SetCanExecuteScripts(!paused);
   }
 }
 

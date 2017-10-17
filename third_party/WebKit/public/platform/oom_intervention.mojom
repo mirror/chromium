@@ -1,0 +1,10 @@
+module blink.mojom;
+
+interface OomIntervention {
+  // Called when NearOomMonitor detects near-OOM situation.
+  OnNearOomDetected();
+
+  // Called after OnNearOomDetected() to notify that the intervention is
+  // declined.
+  OnInterventionDeclined();
+};

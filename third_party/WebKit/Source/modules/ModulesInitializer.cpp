@@ -87,6 +87,9 @@
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/web/WebViewClient.h"
 
+// TODO(bashi): This dep isn't allowed. Move InitLocalFrame() to controller/.
+#include "controller/oom_intervention_impl.h"
+
 namespace blink {
 
 void ModulesInitializer::Initialize() {
@@ -138,6 +141,8 @@ void ModulesInitializer::InitLocalFrame(LocalFrame& frame) const {
   if (frame.IsMainFrame()) {
     frame.GetInterfaceRegistry()->AddInterface(WTF::Bind(
         &CopylessPasteServer::BindMojoRequest, WrapWeakPersistent(&frame)));
+    frame.GetInterfaceRegistry()->AddInterface(
+        WTF::Bind(&OomInterventionImpl::Create, WrapWeakPersistent(&frame)));
   }
   frame.GetInterfaceRegistry()->AddInterface(
       WTF::Bind(&InstallationServiceImpl::Create, WrapWeakPersistent(&frame)));
