@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f0452944_ab7296e2",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_overview.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-17T19:20:06Z",
+      "side": 1,
+      "message": "Include link to spec (it\u0027s in the other MD but here for completeness)",
+      "revId": "ff71db302bd556c5e0c9b007dafc78d117122178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27e71614_ed29e246",
         "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_overview.md",
         "patchSetId": 1
@@ -16,6 +33,40 @@
       "revId": "ff71db302bd556c5e0c9b007dafc78d117122178",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29ecb2b0_500774fb",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_overview.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-17T19:20:06Z",
+      "side": 1,
+      "message": "Maybe link to HTML\u0027s structured serializable definition",
+      "revId": "ff71db302bd556c5e0c9b007dafc78d117122178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b574bf_4b45ca86",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/docs/idb_overview.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-17T19:20:06Z",
+      "side": 1,
+      "message": "There\u0027s a subtlety with iterating over an index in reverse order; keys are not visited in exactly the inverse of forward iteration. Not sure if it\u0027s worth calling out here though.",
+      "revId": "ff71db302bd556c5e0c9b007dafc78d117122178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
