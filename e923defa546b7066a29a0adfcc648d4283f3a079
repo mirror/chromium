@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62dc01ee_6911939a",
+        "filename": "chrome/browser/shell_integration_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-17T18:30:40Z",
+      "side": 1,
+      "message": "mark@, thanks for the sanity checking.\n\nThere are a couple issues. If I run without setDefaultBrowserWithIdentifier:, Chrome is no longer the active application (the UI-less CoreServicesUIAgent is), which means that subsequent typing goes into the ether. If the CoreServicesUIAgent somehow does not present the confirmation dialog the user\u0027s machine will be in an odd state until they click on the Chrome window.\n\nI experimented with moving the launchApplication: call before the setDefaultBrowserWithIdentifier:, and wound up with two CoreServicesUIAgents. It seems the framework must use a different pathway to launching the daemon, and it must also assume no one else will launch it so it keeps a dedicated connection to it (i.e. does not ask the Workspace for a connection).\n\nTo try to make this work I think I need to see if CoreServicesUIAgent is already running before issuing launchApplication:. rsesek@ mentioned LaunchServices API (I think) for checking but I can\u0027t find anything that looks helpful.\n\nBut if I get past this point and guarantee that I\u0027m activating the one true CoreServicesUIAgent, I\u0027m not sure how we feel about assuming it\u0027s displaying a dialog. I wrote some code to compare before/after window counts but that is also timing dependent (you can\u0027t know when to take the \"after\" snapshot).",
+      "parentUuid": "47885697_4b3a6626",
+      "revId": "e923defa546b7066a29a0adfcc648d4283f3a079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdbb317d_cb4415b5",
         "filename": "chrome/browser/shell_integration_mac.mm",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "https://www.ctrl.blog/entry/osx-protect-default-browser says 10.10.",
       "parentUuid": "bdbb317d_cb4415b5",
+      "revId": "e923defa546b7066a29a0adfcc648d4283f3a079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ca49a5_5564a12e",
+        "filename": "chrome/browser/shell_integration_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-17T18:30:40Z",
+      "side": 1,
+      "message": "Ack. And avi@, thanks for the reference.",
+      "parentUuid": "81a5c9b6_7f327a21",
       "revId": "e923defa546b7066a29a0adfcc648d4283f3a079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
