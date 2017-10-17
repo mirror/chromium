@@ -255,11 +255,11 @@ void ServiceWorkerProviderContext::SetController(
     state->controller_connector = nullptr;
     state->subresource_loader_factory = nullptr;
   } else {
-    storage::mojom::BlobRegistryPtr blob_registry_ptr;
+    blink::mojom::BlobRegistryPtr blob_registry_ptr;
     ChildThreadImpl::current()->GetConnector()->BindInterface(
         mojom::kBrowserServiceName, mojo::MakeRequest(&blob_registry_ptr));
     auto blob_registry = base::MakeRefCounted<
-        base::RefCountedData<storage::mojom::BlobRegistryPtr>>();
+        base::RefCountedData<blink::mojom::BlobRegistryPtr>>();
     blob_registry->data = std::move(blob_registry_ptr);
     state->controller_connector =
         base::MakeRefCounted<ControllerServiceWorkerConnector>(
