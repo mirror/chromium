@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/containers/flat_set.h"
+#include "base/files/file.h"
 #include "base/memory/memory_pressure_listener.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/sys_info.h"
@@ -167,6 +168,17 @@ bool ParseFileName(const std::string& filename,
                    uint64_t* number,
                    leveldb::FileType* type) {
   return leveldb::ParseFileName(filename, number, type);
+}
+
+bool CorruptClosedDBForTesting(const base::FilePath& db_path) {
+  base::File current(db_path.Append(FILE_PATH_LITERAL("CURRENT")),
+                     base::File::FLAG_WRITE | base::File::FLAG_OPEN_TRUNCATED);
+  if (!current.IsValid())
+    return false;
+  const char kString[] = "StringWithoutEOL";
+  current.Write(0, kString, sizeof(kString));
+  current.Close();
+  return true;
 }
 
 }  // namespace leveldb_chrome
