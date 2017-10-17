@@ -16,6 +16,24 @@
       "revId": "7c1cb716a7b740d45d386ed60a17e2d677da3b1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c2ca09_baf292f0",
+        "filename": "ui/aura/client/aura_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-17T23:16:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdad9dca_07ec197a",
+      "revId": "7c1cb716a7b740d45d386ed60a17e2d677da3b1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
