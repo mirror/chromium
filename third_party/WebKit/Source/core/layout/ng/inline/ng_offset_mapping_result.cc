@@ -170,4 +170,27 @@ bool NGOffsetMappingResult::IsNonCollapsedCharacter(const Node& node,
          unit->GetType() != NGOffsetMappingUnitType::kCollapsed;
 }
 
+bool NGOffsetMappingResult::IsAfterNonCollapsedCharacter(
+    const Node& node,
+    unsigned offset) const {
+  if (offset == 0u)
+    return false;
+  // In case we have one unit ending at |offset| and another starting at
+  // |offset|, we need to find the former. Hence, search with |offset - 1|.
+  const NGOffsetMappingUnit* unit =
+      GetMappingUnitForDOMOffset(node, offset - 1);
+  return unit && offset > unit->DOMStart() &&
+         unit->GetType() != NGOffsetMappingUnitType::kCollapsed;
+}
+
+UChar NGOffsetMappingResult::GetCharacterBefore(
+    const Node& node,
+    unsigned offset,
+    LayoutNGBlockFlow* block_flow) const {
+  const size_t text_content_offset = GetTextContentOffset(node, offset);
+  if (text_content_offset == kNotFound || text_content_offset == 0u)
+    return 0;
+  return NGInlineNode(block_flow).Text()[text_content_offset - 1];
+}
+
 }  // namespace blink

@@ -28,6 +28,7 @@
 #include "core/dom/Text.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/layout/HitTestResult.h"
+#include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_offset_mapping_result.h"
 
 namespace blink {
@@ -220,6 +221,28 @@ unsigned LayoutTextFragment::ResolvedTextLength() const {
       mapping.GetTextContentOffset(*node, Start() + FragmentLength());
   DCHECK_LE(start, end);
   return end - start;
+}
+
+bool LayoutTextFragment::ContainsCaretOffset(int text_offset) const {
+  if (!ShouldUseNGAlternatives())
+    return LayoutText::ContainsCaretOffset(text_offset);
+
+  const Node* node = AssociatedTextNode();
+  if (!node)
+    return 0;
+  unsigned dom_offset = text_offset + Start();
+  const NGOffsetMappingResult& mapping = GetNGOffsetMapping();
+  if (text_offset < static_cast<int>(FragmentLength()) &&
+      mapping.IsNonCollapsedCharacter(*node, dom_offset))
+    return true;
+  if (text_offset > 0 &&
+      mapping.IsAfterNonCollapsedCharacter(*node, dom_offset)) {
+    UChar char_before =
+        mapping.GetCharacterBefore(*node, dom_offset, EnclosingNGBlockFlow());
+    if (char_before != kNewlineCharacter)
+      return true;
+  }
+  return false;
 }
 
 }  // namespace blink
