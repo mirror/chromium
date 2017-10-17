@@ -16,6 +16,24 @@
       "revId": "c65d3d61d3727b2b1d74843b5c0d19607fdcd8cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5b8c0c_2525d89a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-17T17:43:27Z",
+      "side": 1,
+      "message": "Done: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d775567",
+      "parentUuid": "a7a16abb_65c5be4e",
+      "revId": "c65d3d61d3727b2b1d74843b5c0d19607fdcd8cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
