@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bb88d38_41d58814",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-17T05:50:01Z",
+      "side": 1,
+      "message": "In CL description or code comment, could you mention why the content does not load when the label contains #?",
+      "range": {
+        "startLine": 555,
+        "startChar": 42,
+        "endLine": 555,
+        "endChar": 77
+      },
+      "revId": "dce50f39d6cf78ae5169da5963cc59547bd57953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
