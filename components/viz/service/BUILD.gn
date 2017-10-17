@@ -66,6 +66,14 @@ viz_component("service") {
     "display/skia_renderer.h",
     "display/software_output_device.cc",
     "display/software_output_device.h",
+    "display/software_output_device_mac.h",
+    "display/software_output_device_mac.mm",
+    "display/software_output_device_ozone.cc",
+    "display/software_output_device_ozone.h",
+    "display/software_output_device_win.cc",
+    "display/software_output_device_win.h",
+    "display/software_output_device_x11.cc",
+    "display/software_output_device_x11.h",
     "display/software_renderer.cc",
     "display/software_renderer.h",
     "display/static_geometry_binding.cc",
@@ -134,6 +142,13 @@ viz_component("service") {
     "viz_service_export.h",
   ]
 
+  if (!use_ozone) {
+    sources -= [
+      "display/software_output_device_ozone.cc",
+      "display/software_output_device_ozone.h",
+    ]
+  }
+
   defines = [ "VIZ_SERVICE_IMPLEMENTATION" ]
 
   configs = [ "//build/config/compiler:no_size_t_to_int_warning" ]
@@ -168,11 +183,22 @@ viz_component("service") {
     "//ui/latency",
   ]
 
+  if (!use_x11) {
+    sources -= [
+      "display/software_output_device_x11.cc",
+      "display/software_output_device_x11.h",
+    ]
+  } else {
+    deps += [ "//ui/gfx/x" ]
+  }
+
   if (is_mac) {
     sources += [
       "display_embedder/compositor_overlay_candidate_validator_mac.h",
       "display_embedder/compositor_overlay_candidate_validator_mac.mm",
     ]
+
+    deps += [ "//ui/accelerated_widget_mac" ]
   }
 
   if (is_android) {
@@ -225,6 +251,8 @@ viz_source_set("unit_tests") {
     "display/overlay_unittest.cc",
     "display/renderer_pixeltest.cc",
     "display/shader_unittest.cc",
+    "display/software_output_device_mac_unittest.mm",
+    "display/software_output_device_ozone_unittest.cc",
     "display/software_renderer_unittest.cc",
     "display/surface_aggregator_pixeltest.cc",
     "display/surface_aggregator_unittest.cc",
@@ -273,6 +301,15 @@ viz_source_set("unit_tests") {
     "//ui/display/types",
     "//ui/gfx:test_support",
   ]
+
+  if (use_ozone) {
+    deps += [
+      "//ui/compositor:test_support",
+      "//ui/ozone",
+    ]
+  } else {
+    sources -= [ "display/software_output_device_ozone_unittest.cc" ]
+  }
 }
 
 viz_source_set("perf_tests") {

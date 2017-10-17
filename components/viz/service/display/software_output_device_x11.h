@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_COMPOSITOR_SOFTWARE_OUTPUT_DEVICE_X11_H_
-#define CONTENT_BROWSER_COMPOSITOR_SOFTWARE_OUTPUT_DEVICE_X11_H_
+#ifndef COMPONENTS_VIZ_SERVICE_DISPLAY_SOFTWARE_OUTPUT_DEVICE_X11_H_
+#define COMPONENTS_VIZ_SERVICE_DISPLAY_SOFTWARE_OUTPUT_DEVICE_X11_H_
 
 #include <X11/Xlib.h>
 
@@ -13,9 +13,9 @@
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/x/x11_types.h"
 
-namespace content {
+namespace viz {
 
-class SoftwareOutputDeviceX11 : public viz::SoftwareOutputDevice {
+class SoftwareOutputDeviceX11 : public SoftwareOutputDevice {
  public:
   explicit SoftwareOutputDeviceX11(gfx::AcceleratedWidget widget);
 
@@ -33,6 +33,6 @@ class SoftwareOutputDeviceX11 : public viz::SoftwareOutputDevice {
   DISALLOW_COPY_AND_ASSIGN(SoftwareOutputDeviceX11);
 };
 
-}  // namespace content
+}  // namespace viz
 
-#endif  // CONTENT_BROWSER_COMPOSITOR_SOFTWARE_OUTPUT_DEVICE_X11_H_
+#endif  // COMPONENTS_VIZ_SERVICE_DISPLAY_SOFTWARE_OUTPUT_DEVICE_X11_H_
