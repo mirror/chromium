@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38f9a73b_4144e003",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-17T21:15:13Z",
+      "side": 1,
+      "message": "It is simpler to move the check for RELOAD before line 145, like:\n  // If RELOAD is present in the offline header, load the live page.\n  if (offline_header.reason \u003d\u003d OfflinePageHeader::Reason::RELOAD)\n    return NetworkState::CONNECTED_NETWORK;\n\n  // If other reason is present in the offline header, force loading the offline\n  // page even when the network is connected.\n  if (offline_header.reason !\u003d OfflinePageHeader::Reason::NONE)\n    return NetworkState::FORCE_OFFLINE_ON_CONNECTED_NETWORK;\n\n  // Checks if previews are allowed, ...\n  if (previews_decider \u0026\u0026 ...",
+      "revId": "10247e9f7a08b9d83ca42e98e199c68d14323b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76fc469_1b1a1f29",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-17T21:15:13Z",
+      "side": 1,
+      "message": "Please also add the following checks:\n  EXPECT_EQ(0, bytes_read());\n  EXPECT_FALSE(offline_page_tab_helper()-\u003eGetOfflinePageForTest());",
+      "revId": "10247e9f7a08b9d83ca42e98e199c68d14323b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
