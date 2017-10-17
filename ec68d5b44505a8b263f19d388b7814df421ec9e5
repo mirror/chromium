@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9359260f_0b99cb50",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-17T05:28:46Z",
+      "side": 1,
+      "message": "Is there an existing bug for moving SoftwareOutputDevice impls into viz?",
+      "revId": "ec68d5b44505a8b263f19d388b7814df421ec9e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
