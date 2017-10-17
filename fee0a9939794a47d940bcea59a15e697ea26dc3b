@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "829f64da_bd5636d2",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T04:50:47Z",
+      "side": 1,
+      "message": "Could you check run time to be sure that this won\u0027t have O(n^2) issues?",
+      "range": {
+        "startLine": 628,
+        "startChar": 23,
+        "endLine": 628,
+        "endChar": 36
+      },
+      "revId": "fee0a9939794a47d940bcea59a15e697ea26dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11eef66e_39afddc2",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T04:50:47Z",
+      "side": 1,
+      "message": "NIT: I recall some guideline stating that having enable switches (if default true, require false to change behavior) is preferred over disable switches?  I\u0027ll leave it to you.",
+      "range": {
+        "startLine": 744,
+        "startChar": 25,
+        "endLine": 744,
+        "endChar": 43
+      },
+      "revId": "fee0a9939794a47d940bcea59a15e697ea26dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11cf1681_4ac871d7",
+        "filename": "tools/binary_size/libsupersize/concurrent.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T04:50:47Z",
+      "side": 1,
+      "message": "Should an assert be added to ensure these conditions (along with death test)?",
+      "range": {
+        "startLine": 221,
+        "startChar": 2,
+        "endLine": 221,
+        "endChar": 49
+      },
+      "revId": "fee0a9939794a47d940bcea59a15e697ea26dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ae1907_bf6758bb",
+        "filename": "tools/binary_size/libsupersize/concurrent.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T04:50:47Z",
+      "side": 1,
+      "message": "Match line 225 by:\n  values \u003d [value_transform(v) for v in values]\n?",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 48
+      },
+      "revId": "fee0a9939794a47d940bcea59a15e697ea26dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b22f7b_526656d8",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T04:50:47Z",
+      "side": 1,
+      "message": "Can also use \u0027!r\u0027 for repr():\n  yield \u0027{}: {!r}\u0027.format(i, x)\n\nhttps://docs.python.org/2/library/string.html#formatspec",
+      "range": {
+        "startLine": 154,
+        "startChar": 6,
+        "endLine": 154,
+        "endChar": 39
+      },
+      "revId": "fee0a9939794a47d940bcea59a15e697ea26dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd022f8_53078f40",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T04:50:47Z",
+      "side": 1,
+      "message": "Maybe:\n  return tuple(x.split(\u0027:\u0027, 1))\n?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 48
+      },
+      "revId": "fee0a9939794a47d940bcea59a15e697ea26dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66262e77_f74755b9",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T04:50:47Z",
+      "side": 1,
+      "message": "NIT: presence",
+      "range": {
+        "startLine": 165,
+        "startChar": 10,
+        "endLine": 165,
+        "endChar": 18
+      },
+      "revId": "fee0a9939794a47d940bcea59a15e697ea26dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3d94ec_6eec40d7",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T04:50:47Z",
+      "side": 1,
+      "message": "NIT: exist",
+      "range": {
+        "startLine": 166,
+        "startChar": 29,
+        "endLine": 166,
+        "endChar": 35
+      },
+      "revId": "fee0a9939794a47d940bcea59a15e697ea26dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d604de_cd0cff0f",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T04:50:47Z",
+      "side": 1,
+      "message": "Do you mean % ?\n\nAlso why not just use assert() like elsewhere in code?",
+      "range": {
+        "startLine": 199,
+        "startChar": 51,
+        "endLine": 199,
+        "endChar": 53
+      },
+      "revId": "fee0a9939794a47d940bcea59a15e697ea26dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb67a44_fe4da325",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T04:50:47Z",
+      "side": 1,
+      "message": "Stores results rather than return?",
+      "range": {
+        "startLine": 467,
+        "startChar": 7,
+        "endLine": 467,
+        "endChar": 14
+      },
+      "revId": "fee0a9939794a47d940bcea59a15e697ea26dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b81ed1bb_8d0ba901",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T04:50:47Z",
+      "side": 1,
+      "message": "Just double-checking that you meant to use print.\n\nAlso, print() to be more Python 3 friendly?",
+      "range": {
+        "startLine": 654,
+        "startChar": 2,
+        "endLine": 654,
+        "endChar": 7
+      },
+      "revId": "fee0a9939794a47d940bcea59a15e697ea26dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
