@@ -22,7 +22,6 @@
       "build/util/lib/common/unittest_util.py",
       "infra/scripts/.*",
       "DEPS",
-      "testing/buildbot/.*",
       "testing/scripts/.*",
       "testing/test_env.py",
       "third_party/android_platform/development/scripts/.*",
