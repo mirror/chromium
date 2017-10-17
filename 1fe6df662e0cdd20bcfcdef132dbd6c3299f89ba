@@ -16,6 +16,24 @@
       "revId": "1fe6df662e0cdd20bcfcdef132dbd6c3299f89ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65bfe29a_37594123",
+        "filename": "chromecast/media/cma/backend/audio_decoder_for_mixer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-17T18:30:00Z",
+      "side": 1,
+      "message": "Done.  I still had alsa_features.h laying around, so this file would still compile. Also updated alsa/alsa_wrapper.cc",
+      "parentUuid": "7e653155_0cd42cad",
+      "revId": "1fe6df662e0cdd20bcfcdef132dbd6c3299f89ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
