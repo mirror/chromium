@@ -19,7 +19,8 @@
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
-#include "content/browser/blob_storage/blob_url_loader_factory.h"
+#include "content/browser/blob_storage/blob_url_loader.h"
+#include "content/browser/non_network_url_loader_factory.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_url_loader_client.h"
@@ -281,8 +282,8 @@ class BlobURLRequestJobTest : public testing::TestWithParam<bool> {
 
       mojom::URLLoaderPtr url_loader;
       TestURLLoaderClient url_loader_client;
-      scoped_refptr<BlobURLLoaderFactory> factory =
-          BlobURLLoaderFactory::Create(
+      scoped_refptr<NonNetworkURLLoaderFactory> factory =
+          NonNetworkURLLoaderFactory::Create(
               base::BindOnce(&BlobURLRequestJobTest::GetStorageContext,
                              base::Unretained(this)),
               file_system_context_);
@@ -658,7 +659,7 @@ TEST_P(BlobURLRequestJobTest, BrokenBlob) {
   TestErrorRequest(500);
 }
 
-// The parameter's value determines whether BlobURLLoaderFactory is used.
+// The parameter's value determines whether NonNetworkURLLoaderFactory is used.
 INSTANTIATE_TEST_CASE_P(BlobURLRequestJobTest,
                         BlobURLRequestJobTest,
                         ::testing::Bool());
