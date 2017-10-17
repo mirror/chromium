@@ -22,6 +22,30 @@
       "revId": "33b02bcedd175dcfbd255f47fcc9a6d082fc7852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83610ba_2ea15914",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-17T15:45:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e42e6b3b_e258ac50",
+      "range": {
+        "startLine": 133,
+        "startChar": 9,
+        "endLine": 133,
+        "endChar": 25
+      },
+      "revId": "33b02bcedd175dcfbd255f47fcc9a6d082fc7852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
