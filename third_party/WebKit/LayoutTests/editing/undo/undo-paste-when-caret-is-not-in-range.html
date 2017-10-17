@@ -1,17 +1,27 @@
-<div id="edit" contentEditable="true">abc </div>
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../assert_selection.js"></script>
 <script>
-if (window.testRunner)
-    window.testRunner.dumpAsText();
-edit = document.getElementById("edit");
-var s = window.getSelection();
-s.collapse(edit, edit.childNodes.length);
-document.execCommand("InsertText", false, " ");
-s.setBaseAndExtent(edit.firstChild, 0, edit.firstChild, 3);
-document.execCommand("Copy");
-document.execCommand("InsertText", false, "def");
-s.setBaseAndExtent(edit.firstChild, 0, edit.firstChild, 3);
-document.execCommand("Paste");
-s.collapse(edit, edit.childNodes.length);
-document.execCommand("Undo");
-document.body.innerHTML = "<div>This tests an assertion failure when undoing a paste operation when the caret is outside of the range to be undone. This test should not crash with debug build.</div>";
+// The below test undo paste, when the caret is not in range.
+selection_test(
+  '<div contenteditable>^abc| </div>',
+  selection => {
+    const document  = selection.document;
+    const edit = document.querySelector('div');
+    // Copy the current selection.
+    document.execCommand('copy');
+    // Insert on a selection.
+    document.execCommand('insertText', false, 'def');
+    // Mark a selection
+    selection.setBaseAndExtent(edit.firstChild, 0 , edit.firstChild, 3);
+    // Execute paste
+    document.execCommand('paste');
+    selection.collapse(edit, edit.childNodes.length);
+    // Execute undo
+    document.execCommand('undo');
+  },
+  '<div contenteditable>^def| </div>',
+  'Undo pastshould work when caret not in range'
+);
 </script>
