@@ -22,6 +22,30 @@
       "revId": "137af9a597d99776e42847d55f2a2e7d5dd0b4b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f5bf68_6c82f697",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-10-17T23:42:21Z",
+      "side": 1,
+      "message": "The field edit warning (|field_edit_downgraded_security_level|) isn\u0027t set because the field edit was not responsible for downgrading the security level. Perhaps I could word the comment more clearly, e.g. \"Ensure that the security state remains Dangerous in the kMarkHttpAsDangerous configuration.\"",
+      "parentUuid": "33696b4a_63a0a848",
+      "range": {
+        "startLine": 1455,
+        "startChar": 42,
+        "endLine": 1455,
+        "endChar": 0
+      },
+      "revId": "137af9a597d99776e42847d55f2a2e7d5dd0b4b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
