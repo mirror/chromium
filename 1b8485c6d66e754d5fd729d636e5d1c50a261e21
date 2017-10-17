@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13056cf3_2ff71236",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-17T10:25:40Z",
+      "side": 1,
+      "message": "nit: Prefer using \"Reland\" instead of \"Revert revert\" in the future.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "1b8485c6d66e754d5fd729d636e5d1c50a261e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
