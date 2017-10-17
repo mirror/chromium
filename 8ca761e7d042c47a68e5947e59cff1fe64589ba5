@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef767a16_b89a319e",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-17T20:07:39Z",
+      "side": 1,
+      "message": "nit: return value in comment is obsolete.",
+      "revId": "8ca761e7d042c47a68e5947e59cff1fe64589ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4992b6cc_6b3d14bf",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-17T20:07:39Z",
+      "side": 1,
+      "message": "nit: Move below Mutate to match header order.",
+      "revId": "8ca761e7d042c47a68e5947e59cff1fe64589ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
