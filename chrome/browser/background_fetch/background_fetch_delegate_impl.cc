@@ -137,6 +137,17 @@ void BackgroundFetchDelegateImpl::DownloadUrl(
   download_service_->StartDownload(params);
 }
 
+void BackgroundFetchDelegateImpl::Abort(const std::string& job_unique_id) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  for (auto& entry : download_job_unique_id_map_) {
+    if (entry.second != job_unique_id)
+      continue;
+
+    download_service_->CancelDownload(entry.first);
+  }
+}
+
 void BackgroundFetchDelegateImpl::OnDownloadStarted(
     const std::string& guid,
     std::unique_ptr<content::BackgroundFetchResponse> response) {
