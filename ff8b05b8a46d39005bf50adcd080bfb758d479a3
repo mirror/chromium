@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "46cb4ff8_e9f30c3b",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-17T08:02:26Z",
+      "side": 1,
+      "message": "merge w/ prev cond?\nif (element-\u003eIsScriptElement() \u0026\u0026 !Scripting...)",
+      "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b16bbce_87071bf7",
         "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
         "patchSetId": 4
@@ -64,6 +81,57 @@
       "writtenOn": "2017-10-17T00:27:58Z",
       "side": 1,
       "message": "The last part of previous XMLDocumentParser::PendingScriptFinished().",
+      "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eccf046_d7dca1bc",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLParserScriptRunner.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-17T08:02:26Z",
+      "side": 1,
+      "message": "Should we replace this w/ DCHECK? (possibly in separate CL)",
+      "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df968391_2aabb50e",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLParserScriptRunner.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-17T08:02:26Z",
+      "side": 1,
+      "message": "Do you happen to know what this means? (was copied from original code)",
+      "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e40699_5a55c671",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLParserScriptRunner.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-17T08:02:26Z",
+      "side": 1,
+      "message": "Remove this comment.",
       "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
