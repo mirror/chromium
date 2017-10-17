@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "0bb14328_de9567ac",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2027,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-10-17T22:30:46Z",
+      "side": 1,
+      "message": "Nasko: I\u0027m not sure about this test, but in some other tests waiting for DidAttachInterstitialPage doesn\u0027t seem sufficient.\n\nExample: SSLUITest.TestInterstitialOptionsOverridable calls NavigateToURL, then WaitForInterstitialAttach and then WaitForRenderFrameReady. Without WaitForRenderFrameReady(), it fails consistently for me before executing JavaScript.\n\nIt might not be necessary here, I don\u0027t fully understand where it\u0027s warranted.",
+      "parentUuid": "de8bba0d_4e117db4",
+      "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a520682_69e0b9df",
         "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
         "patchSetId": 18
