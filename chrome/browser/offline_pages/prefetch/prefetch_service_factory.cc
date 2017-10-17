@@ -18,6 +18,7 @@
 #include "chrome/browser/offline_pages/prefetch/prefetch_configuration_impl.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_instance_id_proxy.h"
+#include "chrome/browser/offline_pages/prefetch/prefetch_internals_delegate_impl.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/channel_info.h"
 #include "chrome/common/chrome_constants.h"
@@ -94,13 +95,15 @@ KeyedService* PrefetchServiceFactory::BuildServiceInstanceFor(
   auto configuration =
       base::MakeUnique<PrefetchConfigurationImpl>(profile->GetPrefs());
 
+  auto internals_delegate = base::MakeUnique<PrefetchInternalsDelegateImpl>();
+
   return new PrefetchServiceImpl(
       std::move(offline_metrics_collector), std::move(prefetch_dispatcher),
       std::move(prefetch_gcm_app_handler),
       std::move(prefetch_network_request_factory), std::move(prefetch_store),
       std::move(suggested_articles_observer), std::move(prefetch_downloader),
       std::move(prefetch_importer), std::move(prefetch_background_task_handler),
-      std::move(configuration));
+      std::move(configuration), std::move(internals_delegate));
 }
 
 }  // namespace offline_pages
