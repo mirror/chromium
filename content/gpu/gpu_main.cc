@@ -41,6 +41,7 @@
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
 #include "media/gpu/features.h"
 #include "services/ui/gpu/gpu_main.h"
+#include "third_party/angle/src/gpu_info_util/SystemInfo.h"
 #include "third_party/skia/include/core/SkGraphics.h"
 #include "ui/events/platform/platform_event_source.h"
 #include "ui/gfx/switches.h"
@@ -328,8 +329,6 @@ bool StartSandboxLinux(gpu::GpuWatchdogThread* watchdog_thread,
                        const gpu::GPUInfo* gpu_info) {
   TRACE_EVENT0("gpu,startup", "Initialize sandbox");
 
-  bool res = false;
-
   if (watchdog_thread) {
     // LinuxSandbox needs to be able to ensure that the thread
     // has really been stopped.
@@ -338,11 +337,15 @@ bool StartSandboxLinux(gpu::GpuWatchdogThread* watchdog_thread,
 
   // LinuxSandbox::InitializeSandbox() must always be called
   // with only one thread.
-  res = LinuxSandbox::InitializeSandbox(gpu_info);
+  SandboxSeccompBPF::Options sandbox_options;
+  sandbox_options.use_amd_specific_policies =
+      gpu_info && angle::IsAMD(gpu_info->active_gpu().vendor_id);
+  bool res = LinuxSandbox::InitializeSandbox(std::move(sandbox_options));
+
   if (watchdog_thread) {
-    base::Thread::Options options;
-    options.timer_slack = base::TIMER_SLACK_MAXIMUM;
-    watchdog_thread->StartWithOptions(options);
+    base::Thread::Options thread_options;
+    thread_options.timer_slack = base::TIMER_SLACK_MAXIMUM;
+    watchdog_thread->StartWithOptions(thread_options);
   }
 
   return res;
