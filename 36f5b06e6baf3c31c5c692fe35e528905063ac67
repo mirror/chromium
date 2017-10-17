@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "fdec92fa_e7f309cd",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-17T16:56:56Z",
+      "side": 1,
+      "message": "\u003e Watch out when you merge. I landed it after branch point in https://crbug.com/774516. I can also request a merge for the change if you want me to.\n\nYes, let\u0027s request a merge to make things simple.",
+      "parentUuid": "ff7ac99f_1a773013",
+      "range": {
+        "startLine": 116,
+        "startChar": 44,
+        "endLine": 116,
+        "endChar": 55
+      },
+      "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1df6744f_509058c8",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 5
