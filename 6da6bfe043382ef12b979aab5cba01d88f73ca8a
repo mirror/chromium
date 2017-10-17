@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8fd570b5_44ebaa9c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-17T17:24:35Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "4e102c7f_61e38bde",
+      "revId": "6da6bfe043382ef12b979aab5cba01d88f73ca8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1203878b_a1176759",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/worklet-context-interaction.html",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "6da6bfe043382ef12b979aab5cba01d88f73ca8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de5b6afa_34c7b6d9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/worklet-context-interaction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-17T17:24:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1203878b_a1176759",
+      "revId": "6da6bfe043382ef12b979aab5cba01d88f73ca8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "894bc359_c2b5b444",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/worklet-context-interaction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-17T17:24:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1b022b3_aa8615b0",
+      "revId": "6da6bfe043382ef12b979aab5cba01d88f73ca8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e848214c_9154940e",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/worklet-context-interaction.html",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d942db73_4f1ac8a7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/worklet-context-interaction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-17T17:24:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e848214c_9154940e",
+      "revId": "6da6bfe043382ef12b979aab5cba01d88f73ca8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "225fbe4d_b83757b1",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "6da6bfe043382ef12b979aab5cba01d88f73ca8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d60193_fc9b95f4",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-17T17:24:35Z",
+      "side": 1,
+      "message": "After offline chat, we decided to change this to !\u003d kClosed.\n\nThis change will restart Destination even right after its construction, but we think that\u0027s okay.",
+      "parentUuid": "225fbe4d_b83757b1",
+      "revId": "6da6bfe043382ef12b979aab5cba01d88f73ca8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
