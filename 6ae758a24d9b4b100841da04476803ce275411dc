@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "47c060e5_ccd21b03",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-17T20:56:07Z",
+      "side": 1,
+      "message": "Good point about possible confusion. I\u0027ve added comments in the scenarios that you pointed out as confusing.",
+      "parentUuid": "0ebaf7b2_178c911d",
+      "range": {
+        "startLine": 590,
+        "startChar": 40,
+        "endLine": 590,
+        "endChar": 55
+      },
+      "revId": "6ae758a24d9b4b100841da04476803ce275411dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db4110c5_85cff364",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-17T16:21:11Z",
       "side": 1,
       "message": "the event sequences AUTOFILL_VIEW_EXITED, AUTOFILL_VIEW_ENTERED are caused by our implementation limitation, they are not required.",
+      "range": {
+        "startLine": 596,
+        "startChar": 51,
+        "endLine": 596,
+        "endChar": 73
+      },
+      "revId": "6ae758a24d9b4b100841da04476803ce275411dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e651343_11ce10eb",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-17T20:56:07Z",
+      "side": 1,
+      "message": "I\u0027ve added comment about possible confusion.",
+      "parentUuid": "db4110c5_85cff364",
       "range": {
         "startLine": 596,
         "startChar": 51,
