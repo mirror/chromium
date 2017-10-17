@@ -34,6 +34,24 @@
       "revId": "aa4c0cb3e6f17ecc038fdd279f1af90a81584576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81764a9a_232238f2",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-17T08:40:48Z",
+      "side": 1,
+      "message": "Do you mean event listeners by \"callbacks\"?\n\nAs far as I understand, I think we should fix event listeners so that they are not invoked when the browsing context is \"paused\".",
+      "parentUuid": "749bd1d8_ae1a233a",
+      "revId": "aa4c0cb3e6f17ecc038fdd279f1af90a81584576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
