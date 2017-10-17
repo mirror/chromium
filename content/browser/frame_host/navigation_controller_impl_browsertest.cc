@@ -3707,6 +3707,49 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(1, controller.GetLastCommittedEntryIndex());
 }
 
+// Verify that history.replaceState() leads to resetting the page transition
+// type.
+IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
+                       FrameNavigationEntry_ReplaceState) {
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  const NavigationControllerImpl& controller =
+      static_cast<const NavigationControllerImpl&>(
+          shell()->web_contents()->GetController());
+
+  // Test fixture: start with typing a URL.
+  {
+    ASSERT_TRUE(NavigateToURL(
+        shell(), embedded_test_server()->GetURL(
+                     "/navigation_controller/simple_page_1.html")));
+    ASSERT_EQ(1, controller.GetEntryCount());
+    ASSERT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetTransitionType(),
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+  }
+
+  {
+    // history.replaceState().
+    FrameNavigateParamsCapturer capturer(root);
+    std::string script =
+        "history.replaceState({}, 'page 2', 'simple_page_2.html')";
+    ASSERT_TRUE(ExecuteScript(root, script));
+    capturer.Wait();
+    ASSERT_EQ(NAVIGATION_TYPE_EXISTING_PAGE, capturer.navigation_type());
+    ASSERT_TRUE(capturer.is_same_document());
+
+    EXPECT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        capturer.transition(),
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK)));
+    EXPECT_EQ(1, controller.GetEntryCount());
+    EXPECT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetTransitionType(),
+        ui::PAGE_TRANSITION_LINK));
+  }
+}
+
 // Verify that subframes can be restored in a new NavigationController using the
 // PageState of an existing NavigationEntry.
 IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,

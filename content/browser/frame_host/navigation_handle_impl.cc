@@ -97,7 +97,7 @@ NavigationHandleImpl::NavigationHandleImpl(
     bool is_form_submission)
     : url_(url),
       has_user_gesture_(false),
-      transition_(ui::PAGE_TRANSITION_LINK),
+      transition_(kDefaultPageTransition),
       is_external_protocol_(false),
       net_error_code_(net::OK),
       render_frame_host_(nullptr),

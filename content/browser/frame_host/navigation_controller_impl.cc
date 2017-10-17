@@ -1383,6 +1383,11 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
     // which land us at the last committed entry.
     entry = GetLastCommittedEntry();
 
+    // Reset page transition type to avoid interpretations like the user having
+    // typed a certain URL (which was actually location.replace case, for
+    // example).
+    entry->SetTransitionType(NavigationHandleImpl::kDefaultPageTransition);
+
     // If this is a same document navigation, then there's no SSLStatus in the
     // NavigationHandle so don't overwrite the existing entry's SSLStatus.
     if (!is_same_document)

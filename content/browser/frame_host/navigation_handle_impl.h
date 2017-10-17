@@ -77,6 +77,9 @@ class ServiceWorkerNavigationHandle;
 // the RenderFrameHost still apply.
 class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
  public:
+  static constexpr ui::PageTransition kDefaultPageTransition =
+      ui::PAGE_TRANSITION_LINK;
+
   // If |redirect_chain| is empty, then the redirect chain will be created to
   // start with |url|. Otherwise |redirect_chain| is used as the starting point.
   // |navigation_start| comes from the DidStartProvisionalLoad IPC, which tracks
