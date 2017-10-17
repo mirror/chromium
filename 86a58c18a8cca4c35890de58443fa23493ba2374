@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d7abb65_2ac27544",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-17T07:42:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "850cd50c_159a5690",
+      "revId": "86a58c18a8cca4c35890de58443fa23493ba2374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "749f22ba_2023b6ad",
         "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-16T17:56:50Z",
       "side": 1,
       "message": "Lacks override?",
+      "revId": "86a58c18a8cca4c35890de58443fa23493ba2374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4495a06_fc1b1e90",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-17T07:42:07Z",
+      "side": 1,
+      "message": "The rest of methods like this don\u0027t have the override either, they have it in the class definition but not in the implementation.",
+      "parentUuid": "749f22ba_2023b6ad",
       "revId": "86a58c18a8cca4c35890de58443fa23493ba2374",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +101,24 @@
       "side": 1,
       "message": "Umm, what I meant is that this method doesn\u0027t make sense for kForColumns direction, does it ? You are using LogicalHeight in any case, so unless we are dealing with some orthogonal flow, which I don\u0027t think it applies here, we are always providing the free space in kForRows direction.\n\nSo, I was thinking on something like this:\n\n  DCHECK((Direction() \u003d\u003d kForRows)",
       "parentUuid": "04419ea7_b220bb3b",
+      "revId": "86a58c18a8cca4c35890de58443fa23493ba2374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "825bb7bf_a9e9fef1",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-17T07:42:07Z",
+      "side": 1,
+      "message": "This is actually wrong. :-(\n\nThe thing is that in the case of columns I was not doing anything, as the IndefiniteSizeStrategy for columns is only used when computing intrinsic widths. And later during the layout everything works as expected.\nBut if I\u0027m returning 0 for columns here, this will lead to wrong computations of preferred logical widths, which is not nice.\nI need to modify that in order to check the minWidth and return the proper value as free space. So preferred widths are properly computed.\nI\u0027ll work on a new version of the patch doing that.\n\nNote that we\u0027ve the very same problem regarding preferred widths in the case of flexible tracks.\nIndefiniteSizeStrategy::RecomputeUsedFlexFractionIfNeeded() always returns \"false\" for columns,\nwhen it should actually do the computation in that case too.\n\nI don\u0027t think we can easily have a test for this, as the final output doesn\u0027t vary.\nBut if you have any idea, please tell me.",
+      "parentUuid": "01e72794_363d5985",
       "revId": "86a58c18a8cca4c35890de58443fa23493ba2374",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
