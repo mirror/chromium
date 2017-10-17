@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b6560ac6_6cf8a8a7",
+        "filename": "chrome_elf/whitelist/whitelist.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done - no problem.",
+      "parentUuid": "7512e7df_102d11d2",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54300975_d2e440bc",
         "filename": "chrome_elf/whitelist/whitelist.cc",
         "patchSetId": 3
@@ -301,6 +319,24 @@
     },
     {
       "key": {
+        "uuid": "1444b86a_fbc0631d",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Ha, no worries.  Made me laugh.\n\nBut now I\u0027m not sure why I would do this... the returned DWORDs are just a primitive value.  What does the const (especially in the location you placed it above) do for me?",
+      "parentUuid": "437aa435_058ea3d6",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "858fc649_a6061929",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -345,6 +381,30 @@
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc2407fb_7d666463",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done.  I added the move ctor and move assignment, and everything works now.  Thanks!",
+      "parentUuid": "28077b23_553085dc",
+      "range": {
+        "startLine": 71,
+        "startChar": 20,
+        "endLine": 71,
+        "endChar": 26
+      },
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

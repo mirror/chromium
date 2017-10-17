@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cbc33f9e_c414245c",
+        "filename": "chrome_elf/whitelist/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa3f2392_5829cf4a",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12f7a8ee_2d4fa6dd",
         "filename": "chrome_elf/whitelist/whitelist.cc",
         "patchSetId": 6
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "856b10da_e1c658f8",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done.\n\nI can\u0027t look directly at the crazy \"\u0026\u0026\".  I\u0027m barely acknowledging \"\u0026\".  ;D\n\nAm I the only one left in the world that thinks it\u0027s way easier/cleaner/more intuitive to just handle raw pointers/addresses than they many layers of c++ language complexity?\n\n\u003cshakes cane\u003e \"Get off my lawn!\"",
+      "parentUuid": "8c442d4e_57166e1c",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0f75ee3_75c98acd",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 6
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "f8db4830_5cc8bb14",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0f75ee3_75c98acd",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0d54c08_3059e405",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 6
@@ -84,6 +138,24 @@
       "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d30d9f_5a15fa9c",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0d54c08_3059e405",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +179,30 @@
       "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3dac18_6e839556",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b4fd679_e77480a3",
+      "range": {
+        "startLine": 101,
+        "startChar": 21,
+        "endLine": 101,
+        "endChar": 29
+      },
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +243,48 @@
       "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7558f778_4b629b53",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a18667a2_76fcccd3",
+      "range": {
+        "startLine": 137,
+        "startChar": 26,
+        "endLine": 137,
+        "endChar": 38
+      },
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1096ca7_ab54ee74",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9286a396_3e9d7171",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +334,54 @@
     },
     {
       "key": {
+        "uuid": "c7027ea6_f27800cb",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daa768a8_d60d58be",
+      "range": {
+        "startLine": 143,
+        "startChar": 24,
+        "endLine": 143,
+        "endChar": 31
+      },
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4e82991_935e0ebe",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc28743b_254501f8",
+      "range": {
+        "startLine": 143,
+        "startChar": 51,
+        "endLine": 143,
+        "endChar": 55
+      },
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4751fba9_66c8ec9c",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 6
@@ -213,6 +399,24 @@
     },
     {
       "key": {
+        "uuid": "ec3d4728_dd4fc523",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4751fba9_66c8ec9c",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea361af4_805dadd7",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 6
@@ -227,6 +431,24 @@
       "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1d7d0e_5390de38",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea361af4_805dadd7",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +475,30 @@
     },
     {
       "key": {
+        "uuid": "88565b3a_6446ef70",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a606a12_a5cbd195",
+      "range": {
+        "startLine": 245,
+        "startChar": 34,
+        "endLine": 245,
+        "endChar": 63
+      },
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d51ccb92_2b090fb1",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 6
@@ -267,6 +513,24 @@
       "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2de6e56_aa05a06d",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d51ccb92_2b090fb1",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -287,6 +551,24 @@
     },
     {
       "key": {
+        "uuid": "f6ad49e5_a64afcc0",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56e55166_42bf387f",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7610c434_35080de6",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 6
@@ -301,6 +583,24 @@
       "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d9562d_94c716cc",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Well, Windows registry redirection is very targeted towards chunks of the hive.  Most of the OS and system registry are not redirected.  Registered DLLs are redirected.\nEg: \"SOFTWARE\\\\Microsoft\\\\CTF\\\\TIP\" is not redirected.\n\"SOFTWARE\\\\Classes\\\\CLSID\\\\\" is redirected.\n\nFurther dirty details:\nhttps://cs.chromium.org/chromium/src/chrome_elf/nt_registry/nt_registry.cc?type\u003dcs\u0026q\u003dkHklmSoftwareSubtree\u0026sq\u003dpackage:chromium\u0026l\u003d151\n\nHowever, I\u0027d still like to leave a sanity check in the code.  I\u0027m basically blindly grabbing a DLL off of disk (which was pointed to by a registered CLSID key), and parsing it.  \nI\u0027ve moved the sanity check into GetModuleData() -\u003e I\u0027ll just return false if an unexpected bitness is encountered.",
+      "parentUuid": "7610c434_35080de6",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -321,6 +621,24 @@
     },
     {
       "key": {
+        "uuid": "1e290881_0393e994",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75ff59a3_106443fa",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "369ac098_f90010ee",
         "filename": "chrome_elf/whitelist/whitelist_ime.h",
         "patchSetId": 6
@@ -332,6 +650,24 @@
       "writtenOn": "2017-10-07T21:30:34Z",
       "side": 1,
       "message": "this looks like a good use for \"enum class\" (unless the integer values are significant -- are they?). how about:\nenum class IMEStatus {\n  kSuccess,\n  kErrorGeneric,\n  ...\n};\nnote that each value doesn\u0027t need a prefix (e.g., \"Ime\") for disambiguation when \"enum class\" is used.",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372b0821_9681e2a6",
+        "filename": "chrome_elf/whitelist/whitelist_ime.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "I do want kImeSuccess to have a 0 value.  And these are only for ease of debugging/logging - which I think integer values are easier for.  I find \"Ime\" just helps with readability, as there will be multiple independent support modules in whitelist, and these return status codes are all in the whitelist namespace.\n\nI don\u0027t need to explicitly set a value for any beyond kImeSuccess \u003d 0 though.  They will be assigned incrementally after the first.  Removed further.",
+      "parentUuid": "369ac098_f90010ee",
       "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -355,6 +691,24 @@
     },
     {
       "key": {
+        "uuid": "70032be0_d30a4268",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69a4c796_944ad8c3",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4e8246_32c92c54",
         "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
         "patchSetId": 6
@@ -369,6 +723,24 @@
       "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d7207e_e9621689",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done.  Nice, thanks.",
+      "parentUuid": "5a4e8246_32c92c54",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -389,6 +761,24 @@
     },
     {
       "key": {
+        "uuid": "91fd4903_0945ced3",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done.  Nice, thanks.",
+      "parentUuid": "6f32e3ed_971b1685",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd24f020_723348ac",
         "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
         "patchSetId": 6
@@ -403,6 +793,24 @@
       "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ef1425_2a1e4dee",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd24f020_723348ac",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -423,6 +831,24 @@
     },
     {
       "key": {
+        "uuid": "e3d7c338_09626452",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72e2926f_6ebe9570",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "465c7bda_36226f5d",
         "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
         "patchSetId": 6
@@ -434,6 +860,24 @@
       "writtenOn": "2017-10-07T21:30:34Z",
       "side": 1,
       "message": "should this be ASSERT rather than EXPECT (i.e., is there any point in the test continuing if this fails)? if so, how about making RegisterFakeIme a void fn, use ASSERT_NO_FATAL_FAILURE here, and sprinkle ASSERT_FOO liberally within RegisterFakeIme in place of early returns?",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960b4474_4b2b78c3",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "I want to make sure the CancelRegRedirect happens for cleanup.  So for now I\u0027ll leave these few as EXPECT.  This test doesn\u0027t have a wrapper class for cleanup, because I need redirection to only be turned on at a specific time.  After I\u0027ve called GetExistingImeDllPath().",
+      "parentUuid": "465c7bda_36226f5d",
       "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -457,6 +901,24 @@
     },
     {
       "key": {
+        "uuid": "33ceb886_17ad8cd7",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "Same.",
+      "parentUuid": "56c1ecd0_31305c5c",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d55e381_67996de1",
         "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
         "patchSetId": 6
@@ -468,6 +930,24 @@
       "writtenOn": "2017-10-07T21:30:34Z",
       "side": 1,
       "message": "should this check the ime list now?",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55b5a4c_d35b57a6",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-17T23:54:38Z",
+      "side": 1,
+      "message": "I\u0027ll do this in a follow-up CL.  The whitelist_ime module doesn\u0027t have analysis functions yet.  For now, a successful InitIMEs() call is the big test.  It forces the init code path for at least one non-Microsoft registered IME. \n\nWhen the support functions are added to search the list for a given PE image, etc, I\u0027ll add more to the testing!",
+      "parentUuid": "8d55e381_67996de1",
       "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
