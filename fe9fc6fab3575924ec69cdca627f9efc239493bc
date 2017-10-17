@@ -240,6 +240,23 @@
     },
     {
       "key": {
+        "uuid": "e272330d_39279528",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:10:49Z",
+      "side": 1,
+      "message": "Another perf case for you to consider: What is the algorithmic/io complexity of this function? What if we end up calling it many times, will our perf be bad? I think this was designed with overlay cases in mind, which are normally very few - though for mac it is more, so perf impacts may overlap.",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c510809_0994bd7d",
         "filename": "components/viz/service/display/display.h",
         "patchSetId": 7
