@@ -312,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "63fdcff5_aa27cc1b",
+        "filename": "chrome/browser/vr/speech_recognizer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-17T19:25:33Z",
+      "side": 1,
+      "message": "discussed offline. Removed SetVSResult for now.",
+      "parentUuid": "c477f03e_c4a7011d",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf3a95f6_383afae0",
         "filename": "chrome/browser/vr/speech_recognizer.h",
         "patchSetId": 9

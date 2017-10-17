@@ -16,6 +16,24 @@
       "revId": "c67436770de0e75b33e4d6a9048dfdbd47d56dc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42330c1d_7662bef2",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-17T19:25:33Z",
+      "side": 1,
+      "message": "We are not sending GURL to VR UI for now. Once we do, we will send GURL to VR UI.",
+      "parentUuid": "42aee6da_d90ad551",
+      "revId": "c67436770de0e75b33e4d6a9048dfdbd47d56dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
