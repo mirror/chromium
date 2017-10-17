@@ -33,6 +33,34 @@ Persistence.Persistence = class extends Common.Object {
   }
 
   /**
+   * @param {!Workspace.Project} project
+   */
+  ignoreProject(project) {
+    this._mapping.ignoreProject(project);
+  }
+
+  /**
+   * @param {!Workspace.Project} project
+   */
+  removeIgnoredProject(project) {
+    this._mapping.removeIgnoredProject(project);
+  }
+
+  /**
+   * @param {!Persistence.PersistenceBinding} binding
+   */
+  addBinding(binding) {
+    this._mapping.addBinding(binding);
+  }
+
+  /**
+   * @param {!Persistence.PersistenceBinding} binding
+   */
+  removeBinding(binding) {
+    this._mapping.removeBinding(binding);
+  }
+
+  /**
    * @param {function(function(!Persistence.PersistenceBinding), function(!Persistence.PersistenceBinding)):!Persistence.MappingSystem} mappingFactory
    */
   _setMappingForTest(mappingFactory) {
@@ -397,7 +425,27 @@ Persistence.PersistenceBinding = class {
 Persistence.MappingSystem = function() {};
 
 Persistence.MappingSystem.prototype = {
-  dispose: function() {}
+  dispose: function() {},
+
+  /**
+   * @param {!Workspace.Project} project
+   */
+  ignoreProject(project) {},
+
+  /**
+   * @param {!Workspace.Project} project
+   */
+  removeIgnoredProject(project) {},
+
+  /**
+   * @param {!Persistence.PersistenceBinding} binding
+   */
+  addBinding(binding) {},
+
+  /**
+   * @param {!Persistence.PersistenceBinding} binding
+   */
+  removeBinding(binding) {}
 };
 
 /** @type {!Persistence.Persistence} */

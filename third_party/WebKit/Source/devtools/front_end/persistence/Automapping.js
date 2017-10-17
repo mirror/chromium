@@ -22,6 +22,8 @@ Persistence.Automapping = class {
 
     /** @type {!Map<string, !Workspace.UISourceCode>} */
     this._fileSystemUISourceCodes = new Map();
+    /** @type {!Set<!Workspace.Project>} */
+    this._ignoredProjects = new Set();
     this._sweepThrottler = new Common.Throttler(100);
 
     var pathEncoder = new Persistence.Automapping.PathEncoder();
@@ -50,6 +52,24 @@ Persistence.Automapping = class {
       this._onProjectAdded(fileSystem);
     for (var uiSourceCode of workspace.uiSourceCodes())
       this._onUISourceCodeAdded(uiSourceCode);
+  }
+
+  /**
+   * @override
+   * @param {!Workspace.Project} project
+   */
+  ignoreProject(project) {
+    this._ignoredProjects.add(project);
+    this._scheduleRemap();
+  }
+
+  /**
+   * @override
+   * @param {!Workspace.Project} project
+   */
+  removeIgnoredProject(project) {
+    this._ignoredProjects.delete(project);
+    this._scheduleRemap();
   }
 
   _scheduleRemap() {
@@ -156,11 +176,47 @@ Persistence.Automapping = class {
   }
 
   /**
+   * @override
+   * @param {!Persistence.PersistenceBinding} binding
+   */
+  removeBinding(binding) {
+    this._unbindNetwork(binding.network);
+  }
+
+  /**
+   * @override
+   * @param {!Persistence.PersistenceBinding} binding
+   */
+  addBinding(binding) {
+    this._innerAddBinding(binding);
+  }
+
+  /**
+   * @param {!Persistence.PersistenceBinding} binding
+   */
+  _innerAddBinding(binding) {
+    if (binding.network[Persistence.Automapping._binding] || binding.fileSystem[Persistence.Automapping._binding])
+      throw 'Must unbind UISourceCodes before adding a binding.';
+    binding.network[Persistence.Automapping._processingPromise] = null;
+
+    this._bindings.add(binding);
+    binding.network[Persistence.Automapping._binding] = binding;
+    binding.fileSystem[Persistence.Automapping._binding] = binding;
+    if (binding.exactMatch) {
+      var projectFolder = this._projectFoldersIndex.closestParentFolder(binding.fileSystem.url());
+      var newFolderAdded = projectFolder ? this._activeFoldersIndex.addFolder(projectFolder) : false;
+      if (newFolderAdded)
+        this._scheduleSweep();
+    }
+    this._onBindingCreated.call(null, binding);
+  }
+
+  /**
    * @param {!Workspace.UISourceCode} networkSourceCode
    */
   _bindNetwork(networkSourceCode) {
     if (networkSourceCode[Persistence.Automapping._processingPromise] ||
-        networkSourceCode[Persistence.Automapping._binding])
+        networkSourceCode[Persistence.Automapping._binding] || this._ignoredProjects.has(networkSourceCode.project()))
       return;
     var createBindingPromise = this._createBinding(networkSourceCode).then(onBinding.bind(this));
     networkSourceCode[Persistence.Automapping._processingPromise] = createBindingPromise;
@@ -180,17 +236,7 @@ Persistence.Automapping = class {
       // TODO(lushnikov): remove this check once there's a single uiSourceCode per url. @see crbug.com/670180
       if (binding.network[Persistence.Automapping._binding] || binding.fileSystem[Persistence.Automapping._binding])
         return;
-
-      this._bindings.add(binding);
-      binding.network[Persistence.Automapping._binding] = binding;
-      binding.fileSystem[Persistence.Automapping._binding] = binding;
-      if (binding.exactMatch) {
-        var projectFolder = this._projectFoldersIndex.closestParentFolder(binding.fileSystem.url());
-        var newFolderAdded = projectFolder ? this._activeFoldersIndex.addFolder(projectFolder) : false;
-        if (newFolderAdded)
-          this._scheduleSweep();
-      }
-      this._onBindingCreated.call(null, binding);
+      this.addBinding(binding);
     }
   }
 
