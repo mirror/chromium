@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1034c39_155f8ce7",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-17T10:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34c3d3be_135e8f99",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b352fbe7_8c18adb0",
         "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed9cded8_6f56f28f",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-17T10:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b352fbe7_8c18adb0",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d213e8e8_90f89212",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-17T10:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea40819a_7a2485d1",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f789850_250fb0ee",
         "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-16T18:41:36Z",
       "side": 1,
       "message": "This won\u0027t work very well for very small images,\nI think we should add some code that always inverts\nimages smaller than a certain size, maybe 16 or 24.\n\nEven for large images, won\u0027t this possibly generate an\ninconsistent number of blocks depending on how things\nround?\n\nEven if not, I wonder if it might be more robust to loop\nfrom 0 to (num_blocks), and compute the start and end index\nof each block. That\u0027d be more \"fair\".",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13872672_119ece36",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-17T10:16:17Z",
+      "side": 1,
+      "message": "Added a new check to \u0027ShouldApplyHighContrastFilterToImage\u0027 function to decide fast on small images.\nUpdated here.",
+      "parentUuid": "4f789850_250fb0ee",
       "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "28d616a9_0b03ce87",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-17T10:16:17Z",
+      "side": 1,
+      "message": "Updated the function comment and added more details on why.",
+      "parentUuid": "6e43e93f_3160583b",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fdd3a74_416974ed",
         "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb037e14_b4513d1d",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-17T10:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fdd3a74_416974ed",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "2c6482a0_312b81e9",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-17T10:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92042d7b_586d99a4",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0650b9e5_7d4e2f25",
         "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-16T18:41:36Z",
       "side": 1,
       "message": "Similar to the comment above, I think it\u0027d be more\nfair to compute the block boundaries a different way.\nThis way always creates smaller blocks on the right\nand bottom edges unless things happen to divide\nevenly.",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee9a531_93ed38df",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-17T10:16:17Z",
+      "side": 1,
+      "message": "Updated above code, and here are just DCHECKS.",
+      "parentUuid": "0650b9e5_7d4e2f25",
       "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "b7207f6c_09e7481b",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-17T10:16:17Z",
+      "side": 1,
+      "message": "Done.\n\nI couldn\u0027t find random seed for \"base/rand_util.h\", is there one or it\u0027s good as it is?",
+      "parentUuid": "eb91bf2f_a62c49d7",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2317dbe7_5ed109ed",
         "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
         "patchSetId": 3
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "65daff4e_7c015e28",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-17T10:16:17Z",
+      "side": 1,
+      "message": "This one is correct, should it be rephrased for readability?\nIf S would be opaque samples and T transparent samples:\nS \u003c T/4 \u003d\u003d\u003e\n4S \u003c T \u003d\u003d\u003e\n4S + 4T \u003c 5T \u003d\u003d\u003e\n4(S+T)/5 \u003c T \u003d\u003d\u003e\n80% \u003c T/(S+T)",
+      "parentUuid": "2317dbe7_5ed109ed",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48a9fd31_3c2676f3",
         "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
         "patchSetId": 3
@@ -183,6 +363,24 @@
       "writtenOn": "2017-10-16T18:41:36Z",
       "side": 1,
       "message": "why 128?",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce052cf_f17d0ae4",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-17T10:16:17Z",
+      "side": 1,
+      "message": "To normalize the value in the [0..1] range.\nAs sum of the \u0027color differences from average\u0027 is computed, it can at most be half the 256 range (The extreme case is when half of the pixels are 0 and half 256, and average is 128).\nDoes it need rephrasing or description?",
+      "parentUuid": "48a9fd31_3c2676f3",
       "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
