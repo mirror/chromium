@@ -22,6 +22,30 @@
       "revId": "1d5a734f4e634c14485b7bed36eabaa0afdcdcf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e34ed29d_bcb1bec5",
+        "filename": "base/win/scoped_variant.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-17T17:46:31Z",
+      "side": 1,
+      "message": "Done. https://chromium-review.googlesource.com/c/chromium/src/+/723767",
+      "parentUuid": "303bb2b6_f5c3e808",
+      "range": {
+        "startLine": 128,
+        "startChar": 51,
+        "endLine": 128,
+        "endChar": 57
+      },
+      "revId": "1d5a734f4e634c14485b7bed36eabaa0afdcdcf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
