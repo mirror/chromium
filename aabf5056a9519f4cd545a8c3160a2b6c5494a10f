@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3bf5abd_9f348a4d",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T17:20:04Z",
+      "side": 1,
+      "message": "You need to declare a destructor which overrides the base class\u0027 destructor.",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "aabf5056a9519f4cd545a8c3160a2b6c5494a10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "452c8cf6_539ebce5",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T17:20:04Z",
+      "side": 1,
+      "message": "nit: I don\u0027t believe it is necessary to declare a default constructor.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "aabf5056a9519f4cd545a8c3160a2b6c5494a10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c91ed4_a44eafd0",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T17:20:04Z",
+      "side": 1,
+      "message": "Before this line:\n\n// ArcIntentHelperBridge::OpenUrlDelegate:",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 1
+      },
+      "revId": "aabf5056a9519f4cd545a8c3160a2b6c5494a10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289657b1_bcdd9ba0",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T17:20:04Z",
+      "side": 1,
+      "message": "nit: Chromium style prefers omitting curly braces for single lines:\n\n// Disallow opening chrome:// URLs.\nif (gurl.SchemeIs(content::kChromeUIScheme))\n  return;",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 3
+      },
+      "revId": "aabf5056a9519f4cd545a8c3160a2b6c5494a10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf16bda_41a6ca9c",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T17:20:04Z",
+      "side": 1,
+      "message": "nit: None of this needs to be public. You can make it all protected/private.",
+      "range": {
+        "startLine": 28,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 7
+      },
+      "revId": "aabf5056a9519f4cd545a8c3160a2b6c5494a10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa5b0f4_04c66746",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T17:20:04Z",
+      "side": 1,
+      "message": "nit: Same thing with ctor/dtor as concrete implementation.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 36
+      },
+      "revId": "aabf5056a9519f4cd545a8c3160a2b6c5494a10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973fb1db_4b58b3f9",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T17:20:04Z",
+      "side": 1,
+      "message": "Before this line:\n\n// ArcIntentHelperBridge::OpenUrlDelegate:",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 1
+      },
+      "revId": "aabf5056a9519f4cd545a8c3160a2b6c5494a10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ceee65b_0c5031cb",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T17:20:04Z",
+      "side": 1,
+      "message": "Trivial getters and setters (i.e., those that set or return a single field) are styled as lower-case with underscores:\n\nGetter for foo: foo()\nSetter for foo: set_foo()\n\nSo, you should use: last_opened_url()",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "aabf5056a9519f4cd545a8c3160a2b6c5494a10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9d3bd9_819ab2bb",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T17:20:04Z",
+      "side": 1,
+      "message": "nit: Generally, virtual functions shouldn\u0027t be private. As a convention, most Chromium unit tests will list SetUp() and TearDown() as protected and have the instance fields listed below these functions. I\u0027d recommend following that same pattern for readability purposes.",
+      "range": {
+        "startLine": 48,
+        "startChar": 1,
+        "endLine": 48,
+        "endChar": 8
+      },
+      "revId": "aabf5056a9519f4cd545a8c3160a2b6c5494a10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "791e6ef7_01341b24",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T17:20:04Z",
+      "side": 1,
+      "message": "nit: I\u0027m pretty sure you can omit the \"GURL()\" portion since GURL\u0027s string constructor is not explicit:\n\nEXPECT_EQ(\"https://google.com\", test_open_url_delegate_-\u003eGetLastOpenedUrl());",
+      "range": {
+        "startLine": 274,
+        "startChar": 12,
+        "endLine": 274,
+        "endChar": 38
+      },
+      "revId": "aabf5056a9519f4cd545a8c3160a2b6c5494a10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

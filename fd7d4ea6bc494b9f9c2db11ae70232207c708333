@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "9852aedd_644c98ec",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T17:20:04Z",
+      "side": 1,
+      "message": "In that case, you should add a HasShellInstance() function to your OpenUrlDelegate class. It is not scalable to have your delegate class, which does not have its own unit tests, specify logic which can get out of sync.",
+      "parentUuid": "6d44c961_1dcf16bd",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 42
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91f99636_82fbc5ee",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
         "patchSetId": 16
@@ -349,6 +373,24 @@
       "side": 1,
       "message": "The reason I moved this is to let us declare the ArcIntentHelperTest as a friend class of ArcIntentHelperBridge. Maybe we should continue the conversation about whether or not to use a friend versus public Set...ForTesting() in the other comment thread where khorimoto@ added a reply.",
       "parentUuid": "5ea6c9fc_dc6ba977",
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc0a55ff_0c061c8a",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T17:20:04Z",
+      "side": 1,
+      "message": "Correct - the TestOpenUrlDelegate should be nested within the ArcIntentHelperTest class for visibility purposes.",
+      "parentUuid": "786b66ae_7cc86d65",
       "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
