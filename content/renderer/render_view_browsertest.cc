@@ -855,12 +855,13 @@ TEST_F(RenderViewImplTest, OriginReplicationForSwapOut) {
 // a new tab looks fine, but visiting the second web page renders smaller DOM
 // elements. We can solve this by updating DSF after swapping in the main frame.
 // See crbug.com/737777#c37.
-TEST_F(RenderViewImplTest, UpdateDSFAfterSwapIn) {
+TEST_F(RenderViewImplScaleFactorTest, UpdateDSFAfterSwapIn) {
+  DoSetUp();
   // The bug reproduces if zoom is used for devices scale factor.
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kEnableUseZoomForDSF);
   const float device_scale = 3.0f;
-  view()->OnSetDeviceScaleFactor(device_scale);
+  SetDeviceScaleFactor(device_scale);
   EXPECT_EQ(device_scale, view()->GetDeviceScaleFactor());
 
   LoadHTML("Hello world!");
@@ -951,27 +952,6 @@ TEST_F(RenderViewImplTest, DetachingProxyAlsoDestroysProvisionalFrame) {
         RenderFrameImpl::FromRoutingID(routing_id));
     EXPECT_FALSE(provisional_frame);
   }
-}
-
-// Verify that the renderer process doesn't crash when device scale factor
-// changes after a cross-process navigation has commited.
-// See https://crbug.com/571603.
-TEST_F(RenderViewImplTest, SetZoomLevelAfterCrossProcessNavigation) {
-  // The bug reproduces if zoom is used for devices scale factor.
-  base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      switches::kEnableUseZoomForDSF);
-
-  LoadHTML("Hello world!");
-
-  // Swap the main frame out after which it should become a WebRemoteFrame.
-  TestRenderFrame* main_frame =
-      static_cast<TestRenderFrame*>(view()->GetMainRenderFrame());
-  main_frame->SwapOut(kProxyRoutingId, true,
-                      ReconstructReplicationStateForTesting(main_frame));
-  EXPECT_TRUE(view()->webview()->MainFrame()->IsWebRemoteFrame());
-
-  // This should not cause a crash.
-  view()->OnDeviceScaleFactorChanged();
 }
 
 // Test that we get the correct UpdateState message when we go back twice
