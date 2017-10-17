@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3892eca3_636a3446",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T17:46:26Z",
+      "side": 1,
+      "message": "nit: align with the start of previous line to make it easier to read, this and other bullets.\ni.e.\n- Creates ...\n  power ...",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 5
+      },
+      "revId": "47128523058608f09df4ef6aeea99116f22926b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "235f81fe_3f073434",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T17:46:26Z",
+      "side": 1,
+      "message": "nit: pre-decrement, i.e. --init_volume_count_",
+      "range": {
+        "startLine": 753,
+        "startChar": 24,
+        "endLine": 753,
+        "endChar": 26
+      },
+      "revId": "47128523058608f09df4ef6aeea99116f22926b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9abff094_b14ab979",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T17:46:26Z",
+      "side": 1,
+      "message": "nit: Get rid of \"else\" since we \"return\" in the other branch.",
+      "revId": "47128523058608f09df4ef6aeea99116f22926b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31cc084_f48db066",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T17:46:26Z",
+      "side": 1,
+      "message": "nit: pre-increment, i.e. ++init_volume_count_",
+      "range": {
+        "startLine": 881,
+        "startChar": 22,
+        "endLine": 881,
+        "endChar": 24
+      },
+      "revId": "47128523058608f09df4ef6aeea99116f22926b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
