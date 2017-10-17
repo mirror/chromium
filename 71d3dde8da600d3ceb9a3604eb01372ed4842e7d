@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ad9450c_d87447f2",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-17T01:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "016f21ed_e45ecff8",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "068e091f_f6c22511",
         "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "424ab90c_3d7af6ef",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-17T01:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "068e091f_f6c22511",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19af3c98_72f5c5e6",
         "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4eaaa2_4afdde70",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-17T01:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19af3c98_72f5c5e6",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "eb979aa2_c7ab4bdf",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-17T01:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5bd6fec_65a20b0e",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1e8006a_353ff766",
         "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
         "patchSetId": 4
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "d700f4b2_25f514dd",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-17T01:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1e8006a_353ff766",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9233702e_3adc48cc",
         "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
         "patchSetId": 4
@@ -115,6 +205,24 @@
       "writtenOn": "2017-10-16T20:39:44Z",
       "side": 1,
       "message": "Can you add comments explaining what the knobs do?\n\nIntuitively, the origin sweep limit doesn\u0027t make sense to me. I expect that on a \"normal\" profile, IndexedDB usage would be high on a couple of origins (Docs? Pandora?), and insignificant for all other origins (Pareto\u0027s law). If my intuition holds, we\u0027d want to sweep the active origins often, at least until we\u0027re done removing all the accumulated tombstones.\n\nI\u0027m assuming (based on the variable name) that the limit applies to all sweeps. If it only applies to completed sweeps (i.e. it only kicks in once we know we\u0027ve fully sweeped an origin), then the values seem fine. However, in that case, I\u0027d be concerned that the limit never kicks in for large databases, where a full sweep would run past the time limit.",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef37cb7c_ee38d7fd",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-17T01:55:23Z",
+      "side": 1,
+      "message": "We have global limit on sweeps, as well as a per-origin-limit on sweeps. We also don\u0027t want to never sweep a slightly inactive origin because another origin is move active. This ensures that we get full coverage of all origins, which is the important part of this feature. We don\u0027t really need to sweep frequently on a per-origin basis (we\u0027ve never swept until now).\n\nAnd remember we\u0027re starting with stats here - it\u0027s more important to have stats for coverage.\n\nWe count anything that wasn\u0027t a \u0027new connection\u0027 as a successful sweep - so a timeout can occur. BUT we record stats appropriately for each type of result, and we can modify this if we need to.",
+      "parentUuid": "9233702e_3adc48cc",
       "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "b899a6ac_35f218a8",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-17T01:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56837a2e_bb667421",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9523b257_d26808e6",
         "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
         "patchSetId": 4
@@ -152,6 +278,24 @@
       "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af25dc5_70d3248c",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-17T01:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9523b257_d26808e6",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "0635626b_13bc5388",
+        "filename": "content/browser/indexed_db/indexed_db_factory_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-17T01:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87ce6e59_54f79fb9",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4caa8a61_572df370",
         "filename": "content/browser/indexed_db/indexed_db_factory_unittest.cc",
         "patchSetId": 4
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "d70f0c33_5e9f9b33",
+        "filename": "content/browser/indexed_db/indexed_db_factory_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-17T01:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4caa8a61_572df370",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac924951_afd4417c",
         "filename": "content/browser/indexed_db/indexed_db_factory_unittest.cc",
         "patchSetId": 4
@@ -200,6 +380,24 @@
       "writtenOn": "2017-10-16T20:39:44Z",
       "side": 1,
       "message": "We don\u0027t usually embed misc. type information like \"ptr\" in names. (look above and below) Why is this instance different?",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9e2699_4e57b7b3",
+        "filename": "content/browser/indexed_db/indexed_db_factory_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-17T01:55:23Z",
+      "side": 1,
+      "message": "We do for cases in tests where we have to hold on to a raw pointer when it\u0027s owned somewhere else in a smart pointer.",
+      "parentUuid": "ac924951_afd4417c",
       "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "7925a834_0854d6ab",
+        "filename": "content/browser/indexed_db/indexed_db_factory_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-17T01:55:23Z",
+      "side": 1,
+      "message": "I\u0027ve seen this pattern everywhere in tests, as having a raw ptr is an anomaly. I\u0027d prefer to keep this pattern, and it\u0027s also consistent with the rest of the tests.",
+      "parentUuid": "4906d38d_0c4e7cb2",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76737f8b_de9528c6",
         "filename": "content/browser/indexed_db/indexed_db_leveldb_coding.cc",
         "patchSetId": 4
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "92a3a04c_debae220",
+        "filename": "content/browser/indexed_db/indexed_db_leveldb_coding.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-17T01:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76737f8b_de9528c6",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c49a29e_0a37652c",
         "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
         "patchSetId": 4
@@ -254,6 +488,24 @@
       "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd193728_a07f2217",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-17T01:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c49a29e_0a37652c",
+      "revId": "71d3dde8da600d3ceb9a3604eb01372ed4842e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
