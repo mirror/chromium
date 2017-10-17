@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "239c19bb_f44d9775",
+        "filename": "components/language/DEPS",
+        "patchSetId": 25
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-17T06:06:17Z",
+      "side": 0,
+      "message": "nit: kill this comment entirely :). Hopefully we won\u0027t need to ever make this component a layered component even when we introduce iOS support.",
+      "revId": "c5738ca191803ea95e5e01b8310f2f66e43b24d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
