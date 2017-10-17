@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03e24369_c0690aa5",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer_common_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-17T02:07:50Z",
+      "side": 1,
+      "message": "Maybe this here meant to use initial_bounds?",
+      "revId": "d830e1d41eeccaa19ab52d31fddf4b7462fd6e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
