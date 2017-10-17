@@ -22,6 +22,30 @@
       "revId": "43e2a2363dce1bc13744db0e0f6f9d8c738fab39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107ae31d_69923dab",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T21:38:58Z",
+      "side": 1,
+      "message": "Maybe it is because we don\u0027t set any show state for |is_voice_interaction_oobe_|. Hence, ash does not crop the widget but never increases its size. So not really an ash bug.\n\nWhy do we not setting full screen for |is_voice_interaction_oobe_|? To reveal the shelf? Maybe set show state to |SHOW_STATE_MAXIMIZED| in [1] for |is_voice_interaction_oobe_| to see if that helps? \n\n[1]: https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/ui/login_display_host_impl.cc?rcl\u003dc072e2c9ed75f34500bad931822c0fb12f8ffa2f\u0026l\u003d1187",
+      "parentUuid": "d9298d76_88a97c22",
+      "range": {
+        "startLine": 1058,
+        "startChar": 53,
+        "endLine": 1059,
+        "endChar": 59
+      },
+      "revId": "43e2a2363dce1bc13744db0e0f6f9d8c738fab39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
