@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdd90880_24c29e2a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-17T22:17:31Z",
+      "side": 1,
+      "message": "Could set Bug: 658880\n\nThis was a bug filed before, but then I duped it into a sort-of similar bug, although it probably shouldn\u0027t have been duped.",
+      "revId": "9a2ce6c74abda50a399a874aa4463767b39b1648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb659eb_38d1b8f5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-17T22:17:31Z",
+      "side": 1,
+      "message": "If it\u0027s not too verbose, try_bots and _try_bots could also be renamed to be more specific, e.g. applicable_try_bots. But that\u0027s probably not necessary.",
+      "revId": "9a2ce6c74abda50a399a874aa4463767b39b1648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9615925d_f0098e0d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-17T22:17:31Z",
+      "side": 1,
+      "message": "We can also use the curly-brace set comprehension notation like in the line above, i.e.\n\n    if self.try_bots.issubset({b.builder_name for b in finished_jobs}):\n\nOr possibly, if the notation isn\u0027t too obscure:\n\n    if self.try_bots \u003c\u003d {b.builder_name for b in finished_jobs}:",
+      "revId": "9a2ce6c74abda50a399a874aa4463767b39b1648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
