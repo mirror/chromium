@@ -90695,6 +90695,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WebAudio.AudioContext.ValueSetterConflictPercentage">
+  <owner>rtoy@chromium.org</owner>
+  <owner>hongchan@chromium.org</owner>
+  <summary>
+    The percentage of number of calls to an AudioParam value setter that
+    conflicts with an ongoing AudioParam automation to the total number of calls
+    to the value setter.  Updated once when an AudioContext is closed.
+  </summary>
+</histogram>
+
 <histogram name="WebAudio.AudioDestination.CallbackBufferSize">
   <owner>rtoy@chromium.org</owner>
   <owner>hongchan@chromium.org</owner>
