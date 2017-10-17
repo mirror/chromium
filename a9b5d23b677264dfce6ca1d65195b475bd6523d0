@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "282b15b6_54cfc7d8",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T22:49:18Z",
+      "side": 1,
+      "message": "Sure, this is ok now that the MAX is an alias for the last entry in the enum.",
+      "parentUuid": "7fda078d_e2b917a3",
+      "range": {
+        "startLine": 32,
+        "startChar": 25,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bb70258_29fd1761",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
         "patchSetId": 10
