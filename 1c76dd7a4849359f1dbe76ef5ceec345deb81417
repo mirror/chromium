@@ -33,6 +33,23 @@
       "revId": "1c76dd7a4849359f1dbe76ef5ceec345deb81417",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b83aaaf0_85aa856b",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-17T17:24:35Z",
+      "side": 1,
+      "message": "DCHECK(net_error \u003d\u003d ERR_BLOCKED_BY_CLIENT || render_frame_host-\u003eCanCommitURL(...)); ?",
+      "revId": "1c76dd7a4849359f1dbe76ef5ceec345deb81417",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
