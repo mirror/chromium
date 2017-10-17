@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b444679_0f55f758",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1181784
+      },
+      "writtenOn": "2017-10-17T06:25:32Z",
+      "side": 1,
+      "message": "This part is quite similar to the previous function. How about extracting to be:\nvoid SetNetworkConditions(std::vector\u003cHeadlessBrowserContext*\u003e browser_contexts, HeadlessNetworkConditions conditions)\nand use it in both functions?",
+      "range": {
+        "startLine": 717,
+        "startChar": 0,
+        "endLine": 727,
+        "endChar": 3
+      },
+      "revId": "608ce890fa77cb01de41392ac35e42222d5cb818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
