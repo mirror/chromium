@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "87bbddf8_ca699348",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-17T14:42:28Z",
+      "side": 1,
+      "message": "Nit: Limit the CL title to one 72-char line, preferably starting with [Background Fetch] or similar",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 55
+      },
+      "revId": "b8c27ec0cef7030344ebf1bcb5c31a3411198686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "751d4726_867cedb2",
         "filename": "content/browser/background_fetch/background_fetch_job_controller_unittest.cc",
         "patchSetId": 2
