@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91b3e8_af27f6e5",
+        "filename": "cc/paint/discardable_image_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T20:44:59Z",
+      "side": 1,
+      "message": "nit: Could this return a const\u0026? We either way copy the state instead of moving the map in place. And feels better since the class is used on multiple threads.",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 21
+      },
+      "revId": "26eff08f5d7a69980eb45772b8cba4ed0eaa1db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7cda801_36579fc9",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T20:44:59Z",
+      "side": 1,
+      "message": "Could use the map accessor directly if we just take a const\u0026 to the decoding mode map.",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 3
+      },
+      "revId": "26eff08f5d7a69980eb45772b8cba4ed0eaa1db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88672700_f9b4d978",
+        "filename": "cc/raster/raster_source.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T20:44:59Z",
+      "side": 1,
+      "message": "Use GetDisplayItemList()-\u003ediscardable_image_map() at the call-site?",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "26eff08f5d7a69980eb45772b8cba4ed0eaa1db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64aabab4_54772fa6",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T20:44:59Z",
+      "side": 1,
+      "message": "If we put the mode on DecodeState, then we can set the policy to SYNC in UpdateImageDecodingHints? Also would be great if we could UMA how many such images we see. May be another bucket in CheckerImagingDecision?",
+      "range": {
+        "startLine": 287,
+        "startChar": 2,
+        "endLine": 295,
+        "endChar": 17
+      },
+      "revId": "26eff08f5d7a69980eb45772b8cba4ed0eaa1db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b56f0bd6_1850551b",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T20:44:59Z",
+      "side": 1,
+      "message": "I think we\u0027ll need to manage the case where the decision for an image we were asyncing has to be flipped now. Here\u0027s a suggestion for it:\n\n1) Check the |image_async_decode_state_| map to query the current state for it. If it is async then we have tiles without this image that we are responsible for invalidating.\n\n2) Add these image ids to |images_pending_invalidation_|. Since the method only runs during commit, we\u0027ll be taking the set of images to invalidate as the next step, so these images will be invalidated on the incoming pending tree that flipped the mode. Also update the policy for them in |image_async_decode_state_| to SYNC.\n\n3) This decode might have already started so just need to avoid invalidating it again in DidFinishImageDecode. May be add a DCHECK there that the only case where we see an entry in image_async_decode_state_ with SYNC policy is if the decode_mode_map_ is set to kSync for this image.",
+      "range": {
+        "startLine": 441,
+        "startChar": 2,
+        "endLine": 449,
+        "endChar": 3
+      },
+      "revId": "26eff08f5d7a69980eb45772b8cba4ed0eaa1db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "368c860d_3f002698",
+        "filename": "cc/tiles/checker_image_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-17T20:44:59Z",
+      "side": 1,
+      "message": "Do you think we should maintain the mode on DecodeState? That\u0027s where all other state for a PaintImage lives and gets cleared on navigations.",
+      "range": {
+        "startLine": 205,
+        "startChar": 2,
+        "endLine": 205,
+        "endChar": 78
+      },
+      "revId": "26eff08f5d7a69980eb45772b8cba4ed0eaa1db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
