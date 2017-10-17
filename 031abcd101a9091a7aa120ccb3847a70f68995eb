@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6ce6743_21bf6bb0",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-full-coverage.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-10-17T13:38:38Z",
+      "side": 1,
+      "message": "I was just wondering if \"full-coverage\" is the correct name?\n\nHow do other platforms do it? Do they use \"cq\" in some configs? If not, would naming our CQ config \"ios-simulator-minimum-coverage\" be more accurate?\n\nSo I\u0027m not that great with names. :) I\u0027d look at what other platforms do and pick something similar to that. If what you have already is, then great!",
+      "revId": "031abcd101a9091a7aa120ccb3847a70f68995eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
