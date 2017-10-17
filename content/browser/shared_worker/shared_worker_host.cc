@@ -53,11 +53,13 @@ bool AllowIndexedDBOnIOThread(const GURL& url,
 SharedWorkerHost::SharedWorkerHost(
     std::unique_ptr<SharedWorkerInstance> instance,
     int process_id,
-    int route_id)
+    int route_id,
+    const base::UnguessableToken& devtools_worker_token)
     : binding_(this),
       instance_(std::move(instance)),
       process_id_(process_id),
       route_id_(route_id),
+      devtools_worker_token_(devtools_worker_token),
       next_connection_request_id_(1),
       creation_time_(base::TimeTicks::Now()),
       interface_provider_binding_(this),
@@ -90,10 +92,10 @@ void SharedWorkerHost::Start(mojom::SharedWorkerFactoryPtr factory,
       instance_->content_security_policy_type(),
       instance_->creation_address_space(), instance_->data_saver_enabled()));
 
-  factory->CreateSharedWorker(std::move(info), pause_on_start, route_id_,
-                              std::move(content_settings), std::move(host),
-                              mojo::MakeRequest(&worker_),
-                              std::move(interface_provider));
+  factory->CreateSharedWorker(
+      std::move(info), pause_on_start, devtools_worker_token_, route_id_,
+      std::move(content_settings), std::move(host), mojo::MakeRequest(&worker_),
+      std::move(interface_provider));
 
   // Monitor the lifetime of the worker.
   worker_.set_connection_error_handler(base::BindOnce(

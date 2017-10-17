@@ -130,13 +130,13 @@ void SetupOnUIThread(
 
   // Register to DevTools and update params accordingly.
   const int routing_id = rph->GetNextRoutingID();
-  params->wait_for_debugger =
-      ServiceWorkerDevToolsManager::GetInstance()->WorkerCreated(
-          process_id, routing_id,
-          ServiceWorkerDevToolsManager::ServiceWorkerIdentifier(
-              context, weak_context, params->service_worker_version_id,
-              params->script_url, params->scope),
-          params->is_installed);
+  ServiceWorkerDevToolsManager::GetInstance()->WorkerCreated(
+      process_id, routing_id,
+      ServiceWorkerDevToolsManager::ServiceWorkerIdentifier(
+          context, weak_context, params->service_worker_version_id,
+          params->script_url, params->scope),
+      params->is_installed, &params->wait_for_debugger,
+      &params->devtools_worker_token);
   params->worker_devtools_agent_route_id = routing_id;
   // Create DevToolsProxy here to ensure that the WorkerCreated() call is
   // balanced by DevToolsProxy's destructor calling WorkerDestroyed().

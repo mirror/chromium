@@ -50,6 +50,7 @@ struct WebEmbeddedWorkerStartData {
   WebString user_agent;
   PauseAfterDownloadMode pause_after_download_mode;
   WaitForDebuggerMode wait_for_debugger_mode;
+  WebString instrumentation_token;
   WebSettings::V8CacheOptions v8_cache_options;
   bool data_saver_enabled;
 

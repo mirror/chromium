@@ -13,6 +13,7 @@
 #include "base/memory/singleton.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
+#include "base/unguessable_token.h"
 #include "content/public/browser/devtools_agent_host.h"
 
 namespace content {
@@ -85,10 +86,12 @@ class CONTENT_EXPORT ServiceWorkerDevToolsManager {
   // Returns true when the worker must be paused on start because a DevTool
   // window for the same former ServiceWorkerIdentifier is still opened or
   // debug-on-start is enabled in chrome://serviceworker-internals.
-  bool WorkerCreated(int worker_process_id,
+  void WorkerCreated(int worker_process_id,
                      int worker_route_id,
                      const ServiceWorkerIdentifier& service_worker_id,
-                     bool is_installed_version);
+                     bool is_installed_version,
+                     bool* wait_for_debugger,
+                     base::UnguessableToken* devtools_worker_token);
   void WorkerReadyForInspection(int worker_process_id, int worker_route_id);
   void WorkerVersionInstalled(int worker_process_id, int worker_route_id);
   void WorkerVersionDoomed(int worker_process_id, int worker_route_id);

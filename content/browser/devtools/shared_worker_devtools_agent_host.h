@@ -16,8 +16,10 @@ class SharedWorkerDevToolsAgentHost : public WorkerDevToolsAgentHost {
  public:
   using List = std::vector<scoped_refptr<SharedWorkerDevToolsAgentHost>>;
 
-  SharedWorkerDevToolsAgentHost(WorkerId worker_id,
-                                const SharedWorkerInstance& shared_worker);
+  SharedWorkerDevToolsAgentHost(
+      const base::UnguessableToken& devtools_worker_token,
+      WorkerId worker_id,
+      const SharedWorkerInstance& shared_worker);
 
   // DevToolsAgentHost override.
   std::string GetType() override;

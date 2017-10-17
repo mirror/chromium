@@ -52,10 +52,11 @@ void SetDevToolsAttachedOnIO(
 }  // namespace
 
 ServiceWorkerDevToolsAgentHost::ServiceWorkerDevToolsAgentHost(
+    const base::UnguessableToken& devtools_worker_token,
     WorkerId worker_id,
     const ServiceWorkerIdentifier& service_worker,
     bool is_installed_version)
-    : WorkerDevToolsAgentHost(worker_id),
+    : WorkerDevToolsAgentHost(devtools_worker_token, worker_id),
       service_worker_(new ServiceWorkerIdentifier(service_worker)),
       version_installed_time_(is_installed_version ? base::Time::Now()
                                                    : base::Time()) {

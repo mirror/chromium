@@ -10,6 +10,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
+#include "base/unguessable_token.h"
 #include "content/public/browser/devtools_agent_host.h"
 
 namespace content {
@@ -34,9 +35,11 @@ class CONTENT_EXPORT SharedWorkerDevToolsManager {
 
   // Returns true when the worker must be paused on start because a DevTool
   // window for the same former SharedWorkerInstance is still opened.
-  bool WorkerCreated(int worker_process_id,
+  void WorkerCreated(int worker_process_id,
                      int worker_route_id,
-                     const SharedWorkerInstance& instance);
+                     const SharedWorkerInstance& instance,
+                     bool* pause_on_start,
+                     base::UnguessableToken* devtools_worker_token);
   void WorkerReadyForInspection(int worker_process_id, int worker_route_id);
   void WorkerDestroyed(int worker_process_id, int worker_route_id);
   void RemoveInspectedWorkerData(WorkerId id);
