@@ -42,6 +42,52 @@
     },
     {
       "key": {
+        "uuid": "b2fb7e91_c3d84413",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T01:07:56Z",
+      "side": 1,
+      "message": "IMO, your delegate class should directly delegate to the OpenUrlFromArc() call. If you add additional logic to the function (i.e., your if() check), it is easy for your delegate class to get out of sync and introduce subtle bugs.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 42
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f99636_82fbc5ee",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T01:07:56Z",
+      "side": 1,
+      "message": "I believe base::MakeUnique\u003c\u003e() is preferred.",
+      "range": {
+        "startLine": 85,
+        "startChar": 25,
+        "endLine": 85,
+        "endChar": 41
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "943bcee5_3fcd3c2a",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
         "patchSetId": 16
@@ -76,6 +122,30 @@
       "writtenOn": "2017-10-17T00:26:57Z",
       "side": 1,
       "message": "Since production code cannot call *ForTesting() functions (I think CQ fails if someone does that), moving this to public: should be safe. Please also delete L109 (friend) if you move this to public:.",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 58
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b29d0e_479abb5e",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-17T01:07:56Z",
+      "side": 1,
+      "message": "I disagree here - we should use the conventions of the language in order to specify visibility instead of relying on an implementation detail of the CQ linter.",
+      "parentUuid": "7b83f448_af97c1aa",
       "range": {
         "startLine": 111,
         "startChar": 0,
