@@ -176,7 +176,8 @@ cr.define('extensions', function() {
     },
 
     /** @private */
-    onCollectErrorsChange_: function() {
+    onCollectErrorsChange_: function(e) {
+      console.log('oncollate', this.$$('#collect-errors').checked);
       this.delegate.setItemCollectsErrors(
           this.data.id, this.$$('#collect-errors').checked);
     },
