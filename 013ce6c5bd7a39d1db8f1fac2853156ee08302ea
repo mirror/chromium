@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "024d5355_3fa14f1e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-17T10:24:14Z",
+      "side": 1,
+      "message": "Let\u0027s trace page_visible_ and page_stopped_ too.",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 20
+      },
+      "revId": "013ce6c5bd7a39d1db8f1fac2853156ee08302ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
