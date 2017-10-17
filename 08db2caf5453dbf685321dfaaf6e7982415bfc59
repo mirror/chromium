@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "71732b0b_612960f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-17T19:09:41Z",
+      "side": 1,
+      "message": "768986",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "08db2caf5453dbf685321dfaaf6e7982415bfc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82bdf4cd_c6d88b6c",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
