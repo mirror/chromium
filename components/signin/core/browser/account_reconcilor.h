@@ -166,8 +166,8 @@ class AccountReconcilor : public KeyedService,
 
   // The reconcilor is enabled if Sync or Dice is enabled.
   bool IsEnabled();
-  // Returns true if account consistency is enabled (Mirror or Dice).
-  bool IsAccountConsistencyEnabled();
+  // Returns true if account consistency is enforced (Mirror or Dice).
+  bool IsAccountConsistencyEnforced();
 
   // All actions with side effects, only doing meaningful work if account
   // consistency is enabled. Virtual so that they can be overridden in tests.
@@ -254,6 +254,8 @@ class AccountReconcilor : public KeyedService,
 
   // True iff an error occured during the last attempt to reconcile.
   bool error_during_last_reconcile_;
+
+  bool reconcile_is_noop_;
 
   // Used during reconcile action.
   // These members are used to validate the gaia cookie.  |gaia_accounts_|
