@@ -188,12 +188,13 @@ ObjectUI.JavaScriptAutocomplete.completionsForExpression = async function(expres
           generatePreview: false
         },
         /* userGesture */ false, /* awaitPromise */ false);
-    return completionsOnGlobal(result);
+    var completionGroups = await completionsOnGlobal(result);
+    return receivedPropertyNames(completionGroups);
   }
 
   /**
    * @param {!SDK.RuntimeModel.EvaluationResult} result
-   * @return {!Promise<!UI.SuggestBox.Suggestions>}
+   * @return {!Promise<!Array<!ObjectUI.JavaScriptAutocomplete.CompletionGroup>>}
    */
   async function completionsOnGlobal(result) {
     if (result.error || !!result.exceptionDetails || !result.object)
@@ -228,8 +229,10 @@ ObjectUI.JavaScriptAutocomplete.completionsForExpression = async function(expres
         completions = evaluateResult.object.value;
     }
     executionContext.runtimeModel.releaseObjectGroup('completion');
-    return receivedPropertyNames(completions);
 
+    var globalNames = await executionContext.globalLexicalScopeNames();
+    completions.push({items: globalNames});
+    return completions;
 
     /**
      * @param {string=} type

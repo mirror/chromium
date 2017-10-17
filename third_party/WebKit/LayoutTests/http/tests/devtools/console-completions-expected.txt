@@ -1,6 +1,6 @@
-Tests completions prototype chain.
+Tests completions prototype chain and scope variables.
 
-Completions:
+Completions for objectC.:
 {
     priority : 2
     subtitle : "C"
@@ -44,4 +44,18 @@ Completions:
     priority : 2
     text : "shadowedMember"
 }
+{
+    priority : 2
+    subtitle : undefined
+    text : "prefixA"
+}
+{
+    priority : 2
+    text : "prefixB"
+}
+{
+    priority : 2
+    text : "prefixFoo"
+}
+Completions for prefix:
 
