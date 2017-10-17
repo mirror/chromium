@@ -104,6 +104,40 @@ public class AutofillPaymentInstrument extends PaymentInstrument
     }
 
     @Override
+    public boolean isCardNetworksAndTypesSupported(
+            @Nullable int[] cardNetworks, @Nullable int[] cardTypes) {
+        boolean cardNetworkCheckResult = false;
+        if (cardNetworks != null && cardNetworks.length > 0) {
+            String cardIssuerNetwork = mCard.getBasicCardIssuerNetwork();
+            Map<Integer, String> allCardNetworks = AutofillPaymentApp.getNetworks();
+            for (int cardNetwork : cardNetworks) {
+                if (allCardNetworks.get(cardNetwork) == cardIssuerNetwork) {
+                    cardNetworkCheckResult = true;
+                    break;
+                }
+            }
+        } else {
+            cardNetworkCheckResult = true;
+        }
+
+        boolean cardTypeCheckResult = false;
+        if (cardTypes != null && cardTypes.length > 0) {
+            int cardType = mCard.getCardType();
+            Map<Integer, Integer> allCardTypes = AutofillPaymentApp.getCardTypes();
+            for (int type : cardTypes) {
+                if (allCardTypes.get(type) == cardType) {
+                    cardTypeCheckResult = true;
+                    break;
+                }
+            }
+        } else {
+            cardTypeCheckResult = true;
+        }
+
+        return cardNetworkCheckResult & cardTypeCheckResult;
+    }
+
+    @Override
     @Nullable
     public String getCountryCode() {
         return AutofillAddress.getCountryCode(mBillingAddress);

@@ -37,10 +37,28 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     private final long mRegistrationId;
     private final Drawable mIcon;
     private final Set<String> mMethodNames;
+    private final Capabilities[] mCapabilities;
     private final boolean mCanPreselect;
     private final Set<String> mPreferredRelatedApplicationIds;
     private final boolean mIsIncognito;
 
+    public static class Capabilities {
+        private int[] mSupportedCardNetworks;
+        private int[] mSupportedCardTypes;
+
+        Capabilities(int[] supportedCardNetworks, int[] supportedCardTypes) {
+            mSupportedCardNetworks = supportedCardNetworks;
+            mSupportedCardTypes = supportedCardTypes;
+        }
+
+        int[] getSupportedCardNetworks() {
+            return mSupportedCardNetworks;
+        }
+
+        int[] getSupportedCardTypes() {
+            return mSupportedCardTypes;
+        }
+    }
     /**
      * Build a service worker payment app instance per origin.
      *
@@ -61,7 +79,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
      */
     public ServiceWorkerPaymentApp(WebContents webContents, long registrationId, URI scope,
             String label, @Nullable String sublabel, @Nullable String tertiarylabel,
-            @Nullable Drawable icon, String[] methodNames,
+            @Nullable Drawable icon, String[] methodNames, Capabilities[] capabilities,
             String[] preferredRelatedApplicationIds) {
         super(scope.toString(), label, sublabel, tertiarylabel, icon);
         mWebContents = webContents;
@@ -76,6 +94,8 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
         for (int i = 0; i < methodNames.length; i++) {
             mMethodNames.add(methodNames[i]);
         }
+
+        mCapabilities = capabilities;
 
         mPreferredRelatedApplicationIds = new HashSet<>();
         Collections.addAll(mPreferredRelatedApplicationIds, preferredRelatedApplicationIds);

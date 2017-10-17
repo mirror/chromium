@@ -34,6 +34,7 @@ using ::base::android::JavaRef;
 using ::base::android::ScopedJavaGlobalRef;
 using ::base::android::ScopedJavaLocalRef;
 using ::base::android::ToJavaArrayOfStrings;
+using ::base::android::ToJavaIntArray;
 using ::payments::mojom::CanMakePaymentEventData;
 using ::payments::mojom::CanMakePaymentEventDataPtr;
 using ::payments::mojom::PaymentCurrencyAmount;
@@ -100,6 +101,18 @@ void OnPaymentAppsVerified(const JavaRef<jobject>& jweb_contents,
       }
     }
 
+    base::android::ScopedJavaLocalRef<jobjectArray> jcapabilities =
+        Java_ServiceWorkerPaymentAppBridge_createCapabilities(
+            env, app_info.second->capabilities.size());
+    for (size_t i = 0; i < app_info.second->capabilities.size(); i++) {
+      Java_ServiceWorkerPaymentAppBridge_addCapabilities(
+          env, jcapabilities, base::checked_cast<int>(i),
+          ToJavaIntArray(
+              env, app_info.second->capabilities[i].supported_card_networks),
+          ToJavaIntArray(
+              env, app_info.second->capabilities[i].supported_card_types));
+    }
+
     Java_ServiceWorkerPaymentAppBridge_onPaymentAppCreated(
         env, app_info.second->registration_id,
         ConvertUTF8ToJavaString(env, app_info.second->scope.spec()),
@@ -117,6 +130,7 @@ void OnPaymentAppsVerified(const JavaRef<jobject>& jweb_contents,
             ? nullptr
             : gfx::ConvertToJavaBitmap(app_info.second->icon.get()),
         ToJavaArrayOfStrings(env, app_info.second->enabled_methods),
+        jcapabilities,
         ToJavaArrayOfStrings(env, preferred_related_application_ids),
         jweb_contents, jcallback);
   }

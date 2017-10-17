@@ -115,6 +115,15 @@ public abstract class PaymentInstrument extends PaymentOption {
         return true;
     }
 
+    /**
+     * @return Whether the instrument supports the specificed card networks and types if
+     * 'basic-card' payment method is supported.
+     */
+    public boolean isCardNetworksAndTypesSupported(
+            @Nullable int[] cardNetworks, @Nullable int[] cardTypes) {
+        return false;
+    }
+
     /** @return The country code (or null if none) associated with this payment instrument. */
     @Nullable
     public String getCountryCode() {
