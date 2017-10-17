@@ -461,6 +461,30 @@
     },
     {
       "key": {
+        "uuid": "b3375b86_526806d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-17T18:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5736440b_4a2942a2",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 56
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc668e4c_0961cfac",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationMenuView.java",
         "patchSetId": 3
@@ -811,6 +835,30 @@
       "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3f56a3_466be70d",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-17T18:35:01Z",
+      "side": 1,
+      "message": "third_party implementation is functional again, I moved the icon spacing logic back into it, reverted a lot of the deletions, and put the layout gravity/orientation stuff in the base BottomNavigationItemView so the individual items look good in the base implementation..",
+      "parentUuid": "20dce544_ed8197ec",
+      "range": {
+        "startLine": 207,
+        "startChar": 4,
+        "endLine": 207,
+        "endChar": 73
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
