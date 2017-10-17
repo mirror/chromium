@@ -136,6 +136,7 @@ NGPhysicalFragment::NGPhysicalFragment(LayoutObject* layout_object,
       size_(size),
       break_token_(std::move(break_token)),
       type_(type),
+      box_type_(NGBoxType::kNormalBox),
       is_placed_(false) {}
 
 // Keep the implementation of the destructor here, to avoid dependencies on

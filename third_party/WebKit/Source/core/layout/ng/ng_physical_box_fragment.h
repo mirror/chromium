@@ -23,6 +23,7 @@ class CORE_EXPORT NGPhysicalBoxFragment final
                         Vector<RefPtr<NGPhysicalFragment>>& children,
                         Vector<NGBaseline>& baselines,
                         unsigned,  // NGBorderEdges::Physical
+                        NGBoxType box_type,
                         RefPtr<NGBreakToken> break_token = nullptr);
 
   const NGBaseline* Baseline(const NGBaselineRequest&) const;

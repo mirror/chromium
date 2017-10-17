@@ -21,7 +21,8 @@ NGFragmentBuilder::NGFragmentBuilder(NGLayoutInputNode node,
     : NGContainerFragmentBuilder(style, writing_mode, direction),
       node_(node),
       layout_object_(node.GetLayoutObject()),
-      did_break_(false) {}
+      did_break_(false),
+      box_type_(NGPhysicalFragment::NGBoxType::kNormalBox) {}
 
 NGFragmentBuilder::NGFragmentBuilder(LayoutObject* layout_object,
                                      RefPtr<const ComputedStyle> style,
@@ -30,7 +31,8 @@ NGFragmentBuilder::NGFragmentBuilder(LayoutObject* layout_object,
     : NGContainerFragmentBuilder(style, writing_mode, direction),
       node_(nullptr),
       layout_object_(layout_object),
-      did_break_(false) {}
+      did_break_(false),
+      box_type_(NGPhysicalFragment::NGBoxType::kNormalBox) {}
 
 NGFragmentBuilder::~NGFragmentBuilder() {}
 
@@ -245,7 +247,7 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
       WTF::AdoptRef(new NGPhysicalBoxFragment(
           layout_object_, Style(), physical_size, contents_visual_rect,
           children_, baselines_, border_edges_.ToPhysical(WritingMode()),
-          std::move(break_token)));
+          box_type_, std::move(break_token)));
 
   return WTF::AdoptRef(new NGLayoutResult(
       std::move(fragment), oof_positioned_descendants_, unpositioned_floats_,
