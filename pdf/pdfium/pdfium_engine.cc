@@ -1276,6 +1276,7 @@ void PDFiumEngine::FinishLoadingDocument() {
   if (doc_) {
     DocumentFeatures document_features;
     document_features.page_count = pages_.size();
+    FPDF_HasXFAField(doc_, &document_features.xfa_doc_type);
     client_->DocumentLoadComplete(document_features);
   }
 }
