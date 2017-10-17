@@ -33,6 +33,24 @@
       "revId": "a5bd96752dd573f5b8d66e628633e158b5d6d87e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c1e30b3_7e778316",
+        "filename": "base/mac/objc_property_releaser_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-17T15:21:39Z",
+      "side": 0,
+      "message": "Accurate: base/mac/objc_release_properties_unittest.mm",
+      "parentUuid": "62a6e897_df14b86f",
+      "revId": "a5bd96752dd573f5b8d66e628633e158b5d6d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
