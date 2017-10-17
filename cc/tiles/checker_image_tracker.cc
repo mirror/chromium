@@ -284,6 +284,16 @@ bool CheckerImageTracker::ShouldCheckerImage(const DrawImage& draw_image,
     return true;
   }
 
+  auto decoding_mode_it = decoding_mode_map_.find(image_id);
+  PaintImage::DecodingMode decoding_mode_hint =
+      decoding_mode_it == decoding_mode_map_.end()
+          ? PaintImage::DecodingMode::kUnspecified
+          : decoding_mode_it->second;
+  // If the mode is sync, then don't checker this image.
+  // TODO(vmpstr): Figure out what we should do in the other cases.
+  if (decoding_mode_hint == PaintImage::DecodingMode::kSync)
+    return false;
+
   auto insert_result = image_async_decode_state_.insert(
       std::pair<PaintImage::Id, DecodeState>(image_id, DecodeState()));
   auto it = insert_result.first;
@@ -418,6 +428,25 @@ void CheckerImageTracker::ScheduleNextImageDecode() {
 
   image_id_to_decode_.emplace(image_id, std::make_unique<ScopedDecodeHolder>(
                                             image_controller_, request_id));
+}
+
+void CheckerImageTracker::UpdateImageDecodingHints(
+    base::flat_map<PaintImage::Id, PaintImage::DecodingMode>
+        decoding_mode_map) {
+  // Merge the |decoding_mode_map| with our member map, keeping the more
+  // conservative values.
+  // TODO(vmpstr): Figure out if and how do we clear this value to ensure that
+  // if we no longer have any kSync images, for example, then we can loosen the
+  // requirement on the decoding mode for that image id.
+  for (auto pair : decoding_mode_map) {
+    PaintImage::Id id = pair.first;
+    PaintImage::DecodingMode decoding_mode = pair.second;
+    auto it = decoding_mode_map_.find(id);
+    if (it == decoding_mode_map_.end())
+      decoding_mode_map_[id] = decoding_mode;
+    else
+      it->second = PaintImage::GetConservative(it->second, decoding_mode);
+  }
 }
 
 }  // namespace cc
