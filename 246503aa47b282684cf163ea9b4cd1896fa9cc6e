@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d97719ed_03bad703",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2912,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-17T16:39:46Z",
+      "side": 1,
+      "message": "I\u0027d rather keep it required and ensured it was always passed. I actually was missing compiler support for it - missing it below should not have happened at the first place.\n\nAs for the RFH, the logic in lines 2833-2850 allow main_frame_route_id \u003d\u003d MSG_ROUTING_NONE getting into the callback and I don\u0027t understand how this is handled in the renderer. My goal is that for every living RFH the token is propagated.",
+      "parentUuid": "141c4dad_d8e16c12",
+      "revId": "246503aa47b282684cf163ea9b4cd1896fa9cc6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0d772e3_20ebdd50",
         "filename": "content/common/frame.mojom",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "246503aa47b282684cf163ea9b4cd1896fa9cc6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6b7897_b94ca6c2",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-17T16:39:46Z",
+      "side": 1,
+      "message": "Following up on this one.",
+      "parentUuid": "c0d772e3_20ebdd50",
+      "range": {
+        "startLine": 101,
+        "startChar": 46,
+        "endLine": 101,
+        "endChar": 51
+      },
+      "revId": "246503aa47b282684cf163ea9b4cd1896fa9cc6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
