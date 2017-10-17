@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23d07b65_b15aac79",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-17T21:20:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef767a16_b89a319e",
+      "revId": "8ca761e7d042c47a68e5947e59cff1fe64589ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4992b6cc_6b3d14bf",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "8ca761e7d042c47a68e5947e59cff1fe64589ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ec6c14_9284dc58",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-17T21:20:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4992b6cc_6b3d14bf",
+      "revId": "8ca761e7d042c47a68e5947e59cff1fe64589ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
