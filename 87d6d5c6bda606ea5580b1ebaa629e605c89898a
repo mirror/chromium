@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80fbb487_61b3ddef",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-17T18:38:50Z",
+      "side": 1,
+      "message": "I added a comment to explain why this check is important, which is a slight variation of your suggestion.",
+      "parentUuid": "67ea3035_2fefffa8",
+      "range": {
+        "startLine": 377,
+        "startChar": 6,
+        "endLine": 377,
+        "endChar": 24
+      },
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c607489a_6cd750e2",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 7
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "6e88ed34_5d3181e4",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-17T18:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c607489a_6cd750e2",
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "050df2fd_40c661d2",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 7
@@ -56,6 +98,24 @@
       "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0efe93f_45e67c77",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-17T18:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "050df2fd_40c661d2",
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "4817ff5e_f9d205a9",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-17T18:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e7029f5_cec5126a",
+      "range": {
+        "startLine": 993,
+        "startChar": 68,
+        "endLine": 993,
+        "endChar": 71
+      },
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a534661f_6171a4db",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 7
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "240c816a_d3448f11",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-17T18:38:50Z",
+      "side": 1,
+      "message": "Added one.",
+      "parentUuid": "a534661f_6171a4db",
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c61c3728_09517ac6",
         "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
         "patchSetId": 7
@@ -113,6 +215,24 @@
       "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ac8eab_b5c2b808",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-17T18:38:50Z",
+      "side": 1,
+      "message": "Done, with the exception of having larger counts for \"longer\" urls:\n\nhttps://cs.chromium.org/chromium/src/components/omnibox/browser/history_url_provider.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d1013\n\nI want the https://www.wytih/ suggestion to be \"essentially\" worse than the other longer urls.",
+      "parentUuid": "c61c3728_09517ac6",
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "ec0ee29a_224aa215",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-17T18:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86cfb450_463dd694",
+      "range": {
+        "startLine": 657,
+        "startChar": 62,
+        "endLine": 657,
+        "endChar": 67
+      },
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d2c7a9f_d0651330",
         "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
         "patchSetId": 7
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "14b807dc_55f51da3",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-17T18:38:50Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1d2c7a9f_d0651330",
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4ef180f_bc50d5f2",
         "filename": "components/omnibox/browser/url_prefix.cc",
         "patchSetId": 7
@@ -170,6 +332,24 @@
       "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78000b5f_afb4da94",
+        "filename": "components/omnibox/browser/url_prefix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-17T18:38:50Z",
+      "side": 1,
+      "message": "Ack - I will follow up on this in a different CL. It shouldn\u0027t take too much time.",
+      "parentUuid": "a4ef180f_bc50d5f2",
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
