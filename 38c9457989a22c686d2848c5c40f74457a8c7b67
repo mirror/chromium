@@ -70,6 +70,24 @@
       "revId": "38c9457989a22c686d2848c5c40f74457a8c7b67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe7f7a1_581852ce",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-17T20:42:26Z",
+      "side": 1,
+      "message": "Keen. Maybe something like\n\"Unable to add printer. Please restart this computer and give it another go.\"\nor \n\"Unable to add printer. Try restarting this computer then add the printer.\"\n\nI\u0027m also up for LG\u0027ing \"Can\u0027t add printer. Restart system and try again.\", but I\u0027m suggesting something friendlier.\n\nAre you up for asking clurie@ which version they would prefer?",
+      "parentUuid": "a40acc0f_33a6519c",
+      "revId": "38c9457989a22c686d2848c5c40f74457a8c7b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
