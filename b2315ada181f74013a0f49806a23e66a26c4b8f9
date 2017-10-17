@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "4fc92d50_cd1f9ac4",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T18:32:35Z",
+      "side": 1,
+      "message": "nit: use std::make_unique\u003c\u003e in new code. And we could probably just make it a member instead of as a unique_ptr since we include its header.",
+      "range": {
+        "startLine": 35,
+        "startChar": 28,
+        "endLine": 35,
+        "endChar": 44
+      },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f31d216_57bfdb8c",
+        "filename": "ash/login/login_metrics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T18:32:35Z",
+      "side": 1,
+      "message": "nit: DCHECK_NE(previous, current);",
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ede452a_bc9db39d",
         "filename": "ash/login/login_metrics_recorder.cc",
         "patchSetId": 3
@@ -25,6 +65,86 @@
     },
     {
       "key": {
+        "uuid": "63dd714a_798c83a5",
+        "filename": "ash/login/login_metrics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T18:32:35Z",
+      "side": 1,
+      "message": "nit: This part should probably be a DCHECK since it should never happen.",
+      "range": {
+        "startLine": 46,
+        "startChar": 37,
+        "endLine": 46,
+        "endChar": 71
+      },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0229a57a_8bf387bd",
+        "filename": "ash/login/login_metrics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T18:32:35Z",
+      "side": 1,
+      "message": "Why do need to reset state here?",
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42aaa08_ec077ab8",
+        "filename": "ash/login/login_metrics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T18:32:35Z",
+      "side": 1,
+      "message": "nit: DCHECK ?",
+      "range": {
+        "startLine": 98,
+        "startChar": 6,
+        "endLine": 98,
+        "endChar": 55
+      },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac1995a_ccadea9d",
+        "filename": "ash/login/login_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T18:32:35Z",
+      "side": 1,
+      "message": "nit: prefer to call this Reset() to reflect what it does better.",
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cea36692_8c62e76f",
         "filename": "ash/login/login_metrics_recorder.h",
         "patchSetId": 3
@@ -42,6 +162,57 @@
         "endLine": 64,
         "endChar": 23
       },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab45a478_82dba89e",
+        "filename": "ash/login/login_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T18:32:35Z",
+      "side": 1,
+      "message": "nit: insert an empty line before",
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b15b95_bbe769da",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T18:32:35Z",
+      "side": 1,
+      "message": "How do we know this is from smart lock? Otherwise, would this double count the success unlock since we also count it in OnAuthenticate?",
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8778c1_bb39eab7",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T18:32:35Z",
+      "side": 1,
+      "message": "This is a bit strange that we reset the unlock_attempt_ on suspend. Why do we need to do this?",
       "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
