@@ -22,6 +22,30 @@
       "revId": "396ff377fbee5dc7c1926f02f5aa206e6f64c731",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ac67be_4b5c8ee3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/resources/edit-dom-test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-17T00:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e00216c_77d37c29",
+      "range": {
+        "startLine": 5,
+        "startChar": 32,
+        "endLine": 5,
+        "endChar": 39
+      },
+      "revId": "396ff377fbee5dc7c1926f02f5aa206e6f64c731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
