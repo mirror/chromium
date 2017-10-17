@@ -193,6 +193,9 @@
 #error "Another copy of this file has already been included."
 #endif
 
+#ifndef BASE_TRACE_EVENT_COMMON_TRACE_EVENT_COMMON_H_
+#define BASE_TRACE_EVENT_COMMON_TRACE_EVENT_COMMON_H_
+
 // This will mark the trace event as disabled by default. The user will need
 // to explicitly enable the event.
 #define TRACE_DISABLED_BY_DEFAULT(name) "disabled-by-default-" name
@@ -1092,3 +1095,5 @@
 #define TRACE_EVENT_SCOPE_NAME_GLOBAL ('g')
 #define TRACE_EVENT_SCOPE_NAME_PROCESS ('p')
 #define TRACE_EVENT_SCOPE_NAME_THREAD ('t')
+
+#endif  // BASE_TRACE_EVENT_COMMON_TRACE_EVENT_COMMON_H_
