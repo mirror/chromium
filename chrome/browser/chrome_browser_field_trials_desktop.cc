@@ -180,17 +180,21 @@ void SetupStabilityDebugging() {
 
     // Trigger a flush of the memory mapped file to maximize the chances of
     // having a minimal amount of content in the stability file, even if
-    // the system crashes or loses power. Even running in the background,
-    // this is a potentially expensive operation, so done under an experiment
-    // to allow measuring the performance effects, if any.
+    // the system crashes or loses power. Note: this does not flush the file
+    // metadata nor does it wait for the changes to be flushed to disk before
+    // returning. This is an expensive operation. Run as an experiment to
+    // measure the effect on performance and collection.
     const bool should_flush = base::GetFieldTrialParamByFeatureAsBool(
         browser_watcher::kStabilityDebuggingFeature,
         browser_watcher::kInitFlushParam, false);
     if (should_flush) {
+      // Flushing a mapped view incurs synchronous IO, so post off to a
+      // background task.
       base::PostTaskWithTraits(
           FROM_HERE, {base::MayBlock()},
-          base::Bind(&base::PersistentMemoryAllocator::Flush,
-                     base::Unretained(global_tracker->allocator()), true));
+          base::BindOnce(base::IgnoreResult(&::FlushViewOfFile),
+                         base::Unretained(global_tracker->allocator()->data()),
+                         0u));
     }
 
     // Store a copy of the system profile in this allocator. There will be some
