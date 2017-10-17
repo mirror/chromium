@@ -34,6 +34,7 @@
 #include "core/css/StyleEngine.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentParser.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/html/HTMLDocument.h"
 #include "core/html/custom/V0CustomElementSyncMicrotaskQueue.h"
 #include "core/html/imports/HTMLImportChild.h"
@@ -60,8 +61,9 @@ void HTMLImportLoader::Dispose() {
   ClearResource();
 }
 
-void HTMLImportLoader::StartLoading(RawResource* resource) {
-  SetResource(resource);
+void HTMLImportLoader::StartLoading(FetchParameters& params,
+                                    ResourceFetcher* fetcher) {
+  SetResource(RawResource::FetchImport(params, fetcher, this));
 }
 
 void HTMLImportLoader::ResponseReceived(

@@ -3,6 +3,8 @@
 // found in the LICENSE file.
 
 #include "platform/loader/testing/MockResourceClient.h"
+#include "platform/scheduler/child/web_scheduler.h"
+#include "public/platform/Platform.h"
 
 namespace blink {
 
@@ -10,7 +12,9 @@ MockResourceClient::MockResourceClient(Resource* resource)
     : resource_(resource),
       notify_finished_called_(false),
       encoded_size_on_notify_finished_(0) {
-  resource_->AddClient(this);
+  resource_->AddClient(
+      this,
+      Platform::Current()->CurrentThread()->Scheduler()->LoadingTaskRunner());
 }
 
 MockResourceClient::~MockResourceClient() {}

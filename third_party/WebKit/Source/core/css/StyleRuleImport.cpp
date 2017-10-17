@@ -24,6 +24,7 @@
 
 #include "core/css/StyleSheetContents.h"
 #include "core/dom/Document.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/loader/resource/CSSStyleSheetResource.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
@@ -135,7 +136,7 @@ void StyleRuleImport::RequestStyleSheet() {
   options.initiator_info.name = FetchInitiatorTypeNames::css;
   FetchParameters params(ResourceRequest(abs_url), options);
   params.SetCharset(parent_style_sheet_->Charset());
-  resource_ = CSSStyleSheetResource::Fetch(params, fetcher);
+  resource_ = CSSStyleSheetResource::Fetch(params, fetcher, nullptr);
   if (resource_) {
     // if the import rule is issued dynamically, the sheet may be
     // removed from the pending sheet count, so let the doc know
@@ -144,7 +145,9 @@ void StyleRuleImport::RequestStyleSheet() {
         root_sheet == parent_style_sheet_)
       parent_style_sheet_->StartLoadingDynamicSheet();
     loading_ = true;
-    resource_->AddClient(style_sheet_client_);
+    resource_->AddClient(
+        style_sheet_client_,
+        TaskRunnerHelper::Get(TaskType::kNetworking, document).get());
   }
 }
 
