@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dfeb86ef_323b8d34",
+        "filename": "ui/base/ime/win/imm32_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-17T21:12:24Z",
+      "side": 1,
+      "message": "Nope. Removed!",
+      "parentUuid": "d2d3a9b8_3aed108d",
+      "revId": "6913205b984f76bad68d5d80afe042ac78298a77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e8f7344_ff5774b7",
         "filename": "ui/views/accessibility/native_view_accessibility_win.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "6913205b984f76bad68d5d80afe042ac78298a77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad4d555_b9f702a3",
+        "filename": "ui/views/accessibility/native_view_accessibility_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-17T21:12:24Z",
+      "side": 1,
+      "message": "Nope! Removed!",
+      "parentUuid": "3e8f7344_ff5774b7",
+      "revId": "6913205b984f76bad68d5d80afe042ac78298a77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
