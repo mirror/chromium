@@ -5,6 +5,9 @@
 #ifndef THIRD_PARTY_LEVELDATABASE_LEVELDB_CHROME_H_
 #define THIRD_PARTY_LEVELDATABASE_LEVELDB_CHROME_H_
 
+#include <memory>
+#include <string>
+
 #include "leveldb/cache.h"
 #include "leveldb/env.h"
 #include "leveldb/export.h"
@@ -28,7 +31,9 @@ LEVELDB_EXPORT leveldb::Cache* GetSharedInMemoryBlockCache();
 LEVELDB_EXPORT bool IsMemEnv(const leveldb::Env* env);
 
 // Creates an in-memory Env for which all files are stored in the heap.
-LEVELDB_EXPORT leveldb::Env* NewMemEnv(leveldb::Env* base_env);
+// This wraps leveldb::NewMemEnv to add memory-infra logging.
+LEVELDB_EXPORT std::unique_ptr<leveldb::Env> NewMemEnv(leveldb::Env* base_env,
+                                                       const std::string& name);
 
 // If filename is a leveldb file, store the type of the file in *type.
 // The number encoded in the filename is stored in *number.  If the

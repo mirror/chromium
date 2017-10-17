@@ -14,6 +14,7 @@
 #include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/test/test_suite.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -260,6 +261,9 @@ TEST(ChromiumEnvTest, TestOpenOnRead) {
 
 class ChromiumEnvDBTrackerTest : public ::testing::Test {
  protected:
+  ChromiumEnvDBTrackerTest()
+      : scoped_task_environment_(
+            base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
   void SetUp() override {
     testing::Test::SetUp();
     ASSERT_TRUE(scoped_temp_dir_.CreateUniqueTempDir());
@@ -294,6 +298,7 @@ class ChromiumEnvDBTrackerTest : public ::testing::Test {
 
  private:
   base::ScopedTempDir scoped_temp_dir_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
 TEST_F(ChromiumEnvDBTrackerTest, GetOrCreateAllocatorDump) {
@@ -440,7 +445,8 @@ TEST_F(ChromiumEnvDBTrackerTest, CheckMemEnv) {
   ASSERT_TRUE(env != nullptr);
   EXPECT_FALSE(leveldb_chrome::IsMemEnv(env));
 
-  std::unique_ptr<leveldb::Env> memenv(leveldb_chrome::NewMemEnv(env));
+  std::unique_ptr<leveldb::Env> memenv =
+      leveldb_chrome::NewMemEnv(env, "CheckMemEnv");
   EXPECT_TRUE(leveldb_chrome::IsMemEnv(memenv.get()));
 }
 

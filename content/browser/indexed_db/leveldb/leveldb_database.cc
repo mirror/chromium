@@ -334,7 +334,7 @@ std::unique_ptr<LevelDBDatabase> LevelDBDatabase::OpenInMemory(
   std::unique_ptr<ComparatorAdapter> comparator_adapter(
       base::MakeUnique<ComparatorAdapter>(comparator));
   std::unique_ptr<leveldb::Env> in_memory_env(
-      leveldb_chrome::NewMemEnv(LevelDBEnv::Get()));
+      leveldb_chrome::NewMemEnv(LevelDBEnv::Get(), "indexed-db"));
 
   std::unique_ptr<leveldb::DB> db;
   std::unique_ptr<const leveldb::FilterPolicy> filter_policy;
