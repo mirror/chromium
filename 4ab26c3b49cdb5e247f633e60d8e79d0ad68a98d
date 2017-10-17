@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "830c1ff3_1f2265a3",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "babed996_f8ac0c2b",
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0f8191e_a8a1778e",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78af2ea7_f56ee0b9",
+      "range": {
+        "startLine": 140,
+        "startChar": 9,
+        "endLine": 140,
+        "endChar": 16
+      },
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b2c0b5d_6a1ace58",
         "filename": "components/exo/wayland/clients/client_base.cc",
         "patchSetId": 6
@@ -88,6 +130,54 @@
     },
     {
       "key": {
+        "uuid": "228bc627_29164e25",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "e1aa71f5_698b8ec5",
+      "range": {
+        "startLine": 168,
+        "startChar": 31,
+        "endLine": 168,
+        "endChar": 32
+      },
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9043f296_dc4d3fa8",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "Removed the extension array completely.",
+      "parentUuid": "8b2c0b5d_6a1ace58",
+      "range": {
+        "startLine": 168,
+        "startChar": 25,
+        "endLine": 168,
+        "endChar": 26
+      },
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae837cc4_057bac06",
         "filename": "components/exo/wayland/clients/client_base.cc",
         "patchSetId": 6
@@ -108,6 +198,30 @@
       "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e681120_cee117fc",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae837cc4_057bac06",
+      "range": {
+        "startLine": 171,
+        "startChar": 26,
+        "endLine": 171,
+        "endChar": 30
+      },
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "8f8f2638_addd5489",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7396826e_bbc41329",
+      "range": {
+        "startLine": 173,
+        "startChar": 21,
+        "endLine": 173,
+        "endChar": 25
+      },
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4546c81c_4ec0dfd1",
         "filename": "components/exo/wayland/clients/client_base.cc",
         "patchSetId": 6
@@ -154,6 +292,30 @@
       "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f843cd8_fe737711",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4546c81c_4ec0dfd1",
+      "range": {
+        "startLine": 182,
+        "startChar": 29,
+        "endLine": 182,
+        "endChar": 33
+      },
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "7bf2ad14_392aff5b",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fabab8f3_d75d4ef8",
+      "range": {
+        "startLine": 454,
+        "startChar": 35,
+        "endLine": 454,
+        "endChar": 39
+      },
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d69893b0_4fbc5199",
         "filename": "components/exo/wayland/clients/client_base.cc",
         "patchSetId": 6
@@ -200,6 +386,30 @@
       "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7eb105_5139295c",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d69893b0_4fbc5199",
+      "range": {
+        "startLine": 457,
+        "startChar": 23,
+        "endLine": 457,
+        "endChar": 45
+      },
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "6e50081f_0d90e889",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c02cf374_bea16402",
+      "range": {
+        "startLine": 464,
+        "startChar": 26,
+        "endLine": 464,
+        "endChar": 36
+      },
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aadad1b_6fc03f49",
         "filename": "components/exo/wayland/clients/client_base.cc",
         "patchSetId": 6
@@ -246,6 +480,30 @@
       "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa5531b_6bf69c3f",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aadad1b_6fc03f49",
+      "range": {
+        "startLine": 469,
+        "startChar": 25,
+        "endLine": 469,
+        "endChar": 37
+      },
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "24b17932_564480f3",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67a37ad7_11c7ec26",
+      "range": {
+        "startLine": 476,
+        "startChar": 27,
+        "endLine": 476,
+        "endChar": 43
+      },
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d70cf0fd_4fcb4142",
         "filename": "components/exo/wayland/clients/client_base.cc",
         "patchSetId": 6
@@ -289,6 +571,24 @@
     },
     {
       "key": {
+        "uuid": "08ca230e_29fba209",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "This is a temporary hack that we should replace once the proper extension, \"VK_EXT_external_memory_dma_buf\", lands.\nAdded a TODO.",
+      "parentUuid": "d70cf0fd_4fcb4142",
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1f56fd2_4325cd0d",
         "filename": "components/exo/wayland/clients/client_base.cc",
         "patchSetId": 6
@@ -300,6 +600,30 @@
       "writtenOn": "2017-10-17T03:04:50Z",
       "side": 1,
       "message": "move this to variable above?",
+      "range": {
+        "startLine": 692,
+        "startChar": 20,
+        "endLine": 692,
+        "endChar": 32
+      },
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8350ff1_e65ec4fb",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "This is not needed. It has been done in another places since we are getting a pointer to a temporary object.\nI can move it to variable above if you prefer so though.",
+      "parentUuid": "e1f56fd2_4325cd0d",
       "range": {
         "startLine": 692,
         "startChar": 20,
@@ -335,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "152ab5ad_451c729b",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41dc021c_fb523314",
+      "range": {
+        "startLine": 703,
+        "startChar": 31,
+        "endLine": 703,
+        "endChar": 36
+      },
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afc8c1e1_e21753fb",
         "filename": "components/exo/wayland/clients/client_base.h",
         "patchSetId": 6
@@ -349,6 +697,24 @@
       "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3f209e_904e7ef1",
+        "filename": "components/exo/wayland/clients/client_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "We would rely on the OS cleaning up all the resources. That was similar to what we do in other vulkan clients (vk_glow, that I used to figure out how to initialize Vulkan).\n\nAdded ScopedVk* for everything we use, we should be cleaning up resources properly now.\nTODO is gone.",
+      "parentUuid": "afc8c1e1_e21753fb",
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -372,6 +738,30 @@
       "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf43bb47_4dd2456c",
+        "filename": "components/exo/wayland/clients/vulkan.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-17T23:49:56Z",
+      "side": 1,
+      "message": "That was just the good intention of writing a comment describing the class, but I never followed up.\n\nAdded a comment.",
+      "parentUuid": "da6a47da_001ec604",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 2
+      },
+      "revId": "4ab26c3b49cdb5e247f633e60d8e79d0ad68a98d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
