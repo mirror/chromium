@@ -61,6 +61,8 @@ class PDFEngine {
   struct DocumentFeatures {
     // Number of pages in document.
     size_t page_count = 0;
+    // What type of XFA form the document contains.
+    int xfa_doc_type = 0;
   };
 
   // The interface that's provided to the rendering engine.

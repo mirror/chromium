@@ -42275,6 +42275,12 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="45" label="Cast"/>
 </enum>
 
+<enum name="XFADocumentTypes">
+  <int value="0" label="None"/>
+  <int value="1" label="Full"/>
+  <int value="2" label="Foreground Only"/>
+</enum>
+
 <enum name="XFrameOptions">
   <int value="0" label="NONE">
     A frame is loaded without any X-Frame-Options header.
