@@ -42,6 +42,8 @@ const base::Feature kAutofillDeleteDisusedAddresses{
     "AutofillDeleteDisusedAddresses", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillDeleteDisusedCreditCards{
     "AutofillDeleteDisusedCreditCards", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kAutofillExpandedPopupViews{
+    "AutofillExpandedPopupViews", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillOfferLocalSaveIfServerCardManuallyEntered{
     "AutofillOfferLocalSaveIfServerCardManuallyEntered",
     base::FEATURE_DISABLED_BY_DEFAULT};
