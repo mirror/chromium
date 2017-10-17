@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "051845f0_ee731af8",
+        "filename": "chrome/browser/chromeos/file_manager/file_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-17T10:07:30Z",
+      "side": 1,
+      "message": "Could you make MAYBE_Focus a macro which is disabled on DISABLE_SLOW_FILESAPP_TESTS?",
+      "revId": "5bc856da464b752516e4040118c87fc145c45e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0034ef7c_de8e734f",
+        "filename": "ui/file_manager/file_manager/background/js/test_util_base.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-17T10:07:30Z",
+      "side": 1,
+      "message": "nit: This line can be removed, as it is same as line 47.",
+      "revId": "5bc856da464b752516e4040118c87fc145c45e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ef311c_e05db52d",
+        "filename": "ui/file_manager/file_manager/background/js/test_util_base.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-17T10:07:30Z",
+      "side": 1,
+      "message": "opt_additionalTouchProperties can be undefined, so touchProperties.identifier can throw an error.",
+      "range": {
+        "startLine": 418,
+        "startChar": 2,
+        "endLine": 418,
+        "endChar": 28
+      },
+      "revId": "5bc856da464b752516e4040118c87fc145c45e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de79047_169861b8",
+        "filename": "ui/file_manager/integration_tests/file_manager/focus.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-17T10:07:30Z",
+      "side": 1,
+      "message": "These functions and variables (headerQuery, x, y) can be put inside longTappingTableHeaderSteps, and it is preferred to avoid conflicts in the global object.",
+      "revId": "5bc856da464b752516e4040118c87fc145c45e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b363ad0_a992cffd",
+        "filename": "ui/file_manager/integration_tests/file_manager/focus.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-17T10:07:30Z",
+      "side": 1,
+      "message": "Instead of using busy loop, you should be able to wait 3s have passed by setTimeout",
+      "revId": "5bc856da464b752516e4040118c87fc145c45e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ab513e0_1aaa3eac",
+        "filename": "ui/file_manager/integration_tests/file_manager/focus.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-17T10:07:30Z",
+      "side": 1,
+      "message": "A comment should be placed after each argument.\nhttps://google.github.io/styleguide/jsguide.html#formatting-block-comment-style",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 35
+      },
+      "revId": "5bc856da464b752516e4040118c87fc145c45e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd4cfa9_e7269ac5",
+        "filename": "ui/file_manager/integration_tests/file_manager/focus.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-17T10:07:30Z",
+      "side": 1,
+      "message": "Remove this line (if it is for debugging)",
+      "revId": "5bc856da464b752516e4040118c87fc145c45e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df552c2_248592d7",
+        "filename": "ui/file_manager/integration_tests/file_manager/resize_column.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-17T10:07:30Z",
+      "side": 1,
+      "message": "ditto for these global functions/variables.",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "5bc856da464b752516e4040118c87fc145c45e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
