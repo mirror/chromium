@@ -18,6 +18,7 @@ source_set("keyboard_assist") {
     "toolbar_ui_bar_button_item.mm",
   ]
   deps = [
+    "resources:keyboard_accessory_gr_search",
     "resources:keyboard_accessory_qr_scanner",
     "resources:keyboard_accessory_voice_search",
     "//base",
@@ -26,6 +27,7 @@ source_set("keyboard_assist") {
     "//ios/chrome/browser",
     "//ios/chrome/browser/ui",
     "//ios/chrome/browser/ui/commands",
+    "//ios/chrome/browser/ui/gr_search:features",
     "//ui/base",
     "//ui/gfx",
   ]

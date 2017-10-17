@@ -309,6 +309,7 @@ source_set("ui_internal") {
     "//ios/chrome/browser/ui/elements:elements_internal",
     "//ios/chrome/browser/ui/find_bar",
     "//ios/chrome/browser/ui/first_run",
+    "//ios/chrome/browser/ui/gr_search",
     "//ios/chrome/browser/ui/history",
     "//ios/chrome/browser/ui/history_popup:coordinator",
     "//ios/chrome/browser/ui/history_popup/requirements",
