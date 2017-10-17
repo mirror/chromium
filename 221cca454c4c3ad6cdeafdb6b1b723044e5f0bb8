@@ -16,6 +16,24 @@
       "revId": "221cca454c4c3ad6cdeafdb6b1b723044e5f0bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de4df520_0f374c81",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-17T16:17:29Z",
+      "side": 1,
+      "message": "\u003e Does this still work if we only have the call to setText?\nWith only |-setText| the \"go\" button gets enabled, but the pre-edit label is still up, and the label itself is empty.\n\n\u003e Does the popup open as a result?  Should it?\nIt does not. I suppose that for consistency it should, but it actually feels nicer to not have the popup.",
+      "parentUuid": "cf5eba77_3afee3db",
+      "revId": "221cca454c4c3ad6cdeafdb6b1b723044e5f0bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
