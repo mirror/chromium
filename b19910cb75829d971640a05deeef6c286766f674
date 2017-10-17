@@ -34,6 +34,24 @@
       "revId": "b19910cb75829d971640a05deeef6c286766f674",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50db6de9_f03cbda6",
+        "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T20:02:37Z",
+      "side": 1,
+      "message": "RTCPeerConnectionHandler::Observer is reference counted, so I would prefer to see scoped_refptr\u003cRtcEventLogOutputSink\u003e, can you make RtcEventLogOutputSink ref counted (maybe virtual inheritance)?\n\nIf there is a reason not to do this, add a comment saying the sink_ must outlive the proxy, but I prefer to avoid this whenever possible.",
+      "parentUuid": "48fc3d5a_7d4c38d8",
+      "revId": "b19910cb75829d971640a05deeef6c286766f674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
