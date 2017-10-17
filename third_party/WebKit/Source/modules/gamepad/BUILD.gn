@@ -14,6 +14,8 @@ blink_modules_sources("gamepad") {
     "GamepadDispatcher.h",
     "GamepadEvent.cpp",
     "GamepadEvent.h",
+    "GamepadHapticActuator.cpp",
+    "GamepadHapticActuator.h",
     "GamepadList.cpp",
     "GamepadList.h",
     "GamepadPose.cpp",
@@ -23,6 +25,8 @@ blink_modules_sources("gamepad") {
   ]
 
   deps = [
+    "//content/public/common:service_names_blink",
     "//device/gamepad/public/cpp:shared_with_blink",
+    "//device/gamepad/public/interfaces:interfaces_blink",
   ]
 }
