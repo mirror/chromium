@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a9b6b17a_654f9aac",
+        "filename": "chrome/browser/shell_integration_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-17T20:39:25Z",
+      "side": 1,
+      "message": "Thank you for that. I believe this addresses connecting to the one true CoreServicesUIAgent instance. I don\u0027t think there\u0027s a way to reliably know if the daemon has a visible dialog (race condition) so we have to decide if it\u0027s OK to always activate the daemon or not.",
+      "parentUuid": "12347e4e_487cd72a",
+      "revId": "e923defa546b7066a29a0adfcc648d4283f3a079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdbb317d_cb4415b5",
         "filename": "chrome/browser/shell_integration_mac.mm",
         "patchSetId": 1
@@ -105,6 +123,24 @@
       "revId": "e923defa546b7066a29a0adfcc648d4283f3a079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfdaf764_06d7d50a",
+        "filename": "chrome/browser/shell_integration_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-17T20:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74ca49a5_5564a12e",
+      "revId": "e923defa546b7066a29a0adfcc648d4283f3a079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
