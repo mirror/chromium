@@ -56,10 +56,13 @@
 #include "modules/media_controls/MediaControlsRotateToFullscreenDelegate.h"
 #include "modules/media_controls/MediaControlsWindowEventListener.h"
 #include "modules/media_controls/MediaDownloadInProductHelpManager.h"
+#include "modules/media_controls/elements/MediaControlButtonPanelElement.h"
 #include "modules/media_controls/elements/MediaControlCastButtonElement.h"
 #include "modules/media_controls/elements/MediaControlCurrentTimeDisplayElement.h"
 #include "modules/media_controls/elements/MediaControlDownloadButtonElement.h"
+#include "modules/media_controls/elements/MediaControlElementsHelper.h"
 #include "modules/media_controls/elements/MediaControlFullscreenButtonElement.h"
+#include "modules/media_controls/elements/MediaControlModernPlayButtonElement.h"
 #include "modules/media_controls/elements/MediaControlMuteButtonElement.h"
 #include "modules/media_controls/elements/MediaControlOverflowMenuButtonElement.h"
 #include "modules/media_controls/elements/MediaControlOverflowMenuListElement.h"
@@ -77,6 +80,7 @@
 #include "modules/remoteplayback/RemotePlayback.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/runtime_enabled_features.h"
+#include "public/platform/WebSize.h"
 
 namespace {
 
@@ -115,6 +119,9 @@ const char* kStateCSSClasses[6] = {
     "phase-ready state-playing",          // kPlaying
     "phase-ready state-buffering",        // kBuffering
 };
+
+// The padding in pixels inside the button panel.
+constexpr int kModernControlsButtonPadding = 26;
 
 bool ShouldShowFullscreenButton(const HTMLMediaElement& media_element) {
   // Unconditionally allow the user to exit fullscreen if we are in it
@@ -291,6 +298,7 @@ MediaControlsImpl::MediaControlsImpl(HTMLMediaElement& media_element)
       text_track_list_(nullptr),
       overflow_list_(nullptr),
       media_button_panel_(nullptr),
+      modern_play_button_(nullptr),
       cast_button_(nullptr),
       fullscreen_button_(nullptr),
       download_button_(nullptr),
@@ -377,7 +385,10 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
 //     |    (-webkit-media-controls-panel)
 //     |  {if ModernMediaControlsEnabled, otherwise
 //     |   contents are directly attached to parent.
-//     +-HTMLDivElement
+//     +-MediaControlModernPlayButtonElement
+//     |  (-internal-media-controls-play-button)
+//     |  {if ModernMediaControlsEnabled}
+//     +-MediaControlButtonPanelElement
 //     |  |  (-internal-media-controls-button-panel)
 //     |  +-MediaControlPlayButtonElement
 //     |  |   (-webkit-media-controls-play-button)
@@ -385,6 +396,8 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
 //     |  |    (-webkit-media-controls-current-time-display)
 //     |  +-MediaControlRemainingTimeDisplayElement
 //     |  |    (-webkit-media-controls-time-remaining-display)
+//     |  +-HTMLDivElement
+//     |  |    (-internal-media-controls-button-spacer)
 //     |  +-MediaControlMuteButtonElement
 //     |  |    (-webkit-media-controls-mute-button)
 //     |  +-MediaControlVolumeSliderElement
@@ -434,9 +447,10 @@ void MediaControlsImpl::InitializeControls() {
   // seperate button panel. This is because they are displayed in two lines.
   Element* button_panel = panel_;
   if (IsModern()) {
-    media_button_panel_ = HTMLDivElement::Create(GetDocument());
-    media_button_panel_->SetShadowPseudoId(
-        "-internal-media-controls-button-panel");
+    modern_play_button_ = new MediaControlModernPlayButtonElement(*this);
+    panel_->AppendChild(modern_play_button_);
+
+    media_button_panel_ = new MediaControlButtonPanelElement(*this);
     panel_->AppendChild(media_button_panel_);
     button_panel = media_button_panel_;
   }
@@ -450,6 +464,9 @@ void MediaControlsImpl::InitializeControls() {
 
   duration_display_ = new MediaControlRemainingTimeDisplayElement(*this);
   button_panel->AppendChild(duration_display_);
+
+  MediaControlElementsHelper::CreateDiv(
+      "-internal-media-controls-button-spacer", button_panel);
 
   timeline_ = new MediaControlTimelineElement(*this);
   panel_->AppendChild(timeline_);
@@ -853,6 +870,90 @@ void MediaControlsImpl::RemotePlaybackStateChanged() {
   overlay_cast_button_->UpdateDisplayType();
 }
 
+void MediaControlsImpl::UpdateOverflowMenuWanted() {
+  // If the bool is true then the element is "sticky" this means that we will
+  // always try and show it unless there is not room for it.
+  std::pair<bool, MediaControlElementBase*> row_elements[] = {
+      std::make_pair(true, play_button_.Get()),
+      std::make_pair(true, mute_button_.Get()),
+      std::make_pair(true, fullscreen_button_.Get()),
+      std::make_pair(true, current_time_display_.Get()),
+      std::make_pair(true, duration_display_.Get()),
+      std::make_pair(false, cast_button_.Get()),
+      std::make_pair(false, download_button_.Get()),
+      std::make_pair(false, toggle_closed_captions_button_.Get()),
+  };
+
+  // These are the elements in order of priority that take up vertical room.
+  MediaControlElementBase* column_elements[] = {
+      media_button_panel_.Get(), timeline_.Get(), modern_play_button_.Get(),
+  };
+
+  // Get the size of the button panel and media controls.
+  WebSize controls_size =
+      MediaControlElementsHelper::GetSizeOrDefault(this, 0, 0);
+  WebSize panel_size = media_button_panel_->GetSizeOrDefault();
+  panel_size.width -= kModernControlsButtonPadding;
+
+  // Allocate vertical room for the column elements.
+  for (MediaControlElementBase* element : column_elements) {
+    WebSize element_size = element->GetSizeOrDefault();
+    if (controls_size.height - element_size.height >= 0) {
+      element->SetDoesFit(true);
+      controls_size.height -= element_size.height;
+    } else {
+      element->SetDoesFit(false);
+    }
+  }
+
+  // If we cannot show the modern play button, show the normal one.
+  play_button_->SetIsWanted(!modern_play_button_->DoesFit());
+
+  // Go through the elements and if they are sticky allocate them to the panel
+  // if we have enough room. If not (or they are not sticky) then add them to
+  // the overflow menu.
+  MediaControlElementBase* last_element = nullptr;
+  bool allocate_space = true;
+  bool wanted = false;
+  for (std::pair<bool, MediaControlElementBase*> pair : row_elements) {
+    MediaControlElementBase* element = pair.second;
+    WebSize element_size = element->GetSizeOrDefault();
+    bool does_fit = allocate_space && pair.first &&
+                    ((panel_size.width - element_size.width) >= 0);
+    element->SetDoesFit(does_fit);
+
+    // If the element is wanted then it should take up space, otherwise skip it.
+    element->SetOverflowElementIsWanted(element->IsWanted());
+    if (!element->IsWanted())
+      continue;
+
+    // The element does fit and is sticky so we should allocate space for it. If
+    // we cannot fit this element we should stop allocating space for other
+    // elements.
+    if (does_fit) {
+      panel_size.width -= element_size.width;
+      last_element = element;
+    } else {
+      allocate_space = false;
+    }
+
+    // If it doesn't fit or is not sticky and it has an overflow element then we
+    // should display it on the overflow menu.
+    wanted = wanted || (!does_fit && element->HasOverflowButton());
+  }
+
+  overflow_menu_->SetDoesFit(wanted);
+  overflow_menu_->SetIsWanted(wanted);
+
+  // If we want to show the overflow button and we do not have any space to show
+  // it then we should hide the last shown element.
+  WebSize overflow_icon_size = overflow_menu_->GetSizeOrDefault();
+  if (wanted && last_element && panel_size.width < overflow_icon_size.width)
+    last_element->SetDoesFit(false);
+
+  MaybeRecordElementsDisplayed();
+}
+
 void MediaControlsImpl::DefaultEventHandler(Event* event) {
   HTMLDivElement::DefaultEventHandler(event);
 
@@ -1155,9 +1256,10 @@ void MediaControlsImpl::ComputeWhichControlsFit() {
   // This might be better suited for a layout, but since JS media controls
   // won't benefit from that anwyay, we just do it here like JS will.
 
-  // TODO(beccahughes): Update this for modern controls.
-  if (IsModern())
+  if (IsModern()) {
+    UpdateOverflowMenuWanted();
     return;
+  }
 
   // Controls that we'll hide / show, in order of decreasing priority.
   MediaControlElementBase* elements[] = {
@@ -1270,18 +1372,39 @@ void MediaControlsImpl::ComputeWhichControlsFit() {
     overlay_play_button_->SetDoesFit(does_fit);
   }
 
-  // Record the display state when needed. It is only recorded when the media
-  // element is in a state that allows it in order to reduce noise in the
-  // metrics.
-  if (MediaControlInputElement::ShouldRecordDisplayStates(MediaElement())) {
-    // Record which controls are used.
-    for (const auto& element : elements)
-      element->MaybeRecordDisplayed();
-    overflow_menu_->MaybeRecordDisplayed();
-  }
+  MaybeRecordElementsDisplayed();
 
   if (download_iph_manager_)
     download_iph_manager_->UpdateInProductHelp();
+}
+
+void MediaControlsImpl::MaybeRecordElementsDisplayed() {
+  // Record the display state when needed. It is only recorded when the media
+  // element is in a state that allows it in order to reduce noise in the
+  // metrics.
+  if (!MediaControlInputElement::ShouldRecordDisplayStates(MediaElement()))
+    return;
+
+  MediaControlElementBase* elements[] = {
+      play_button_.Get(),
+      fullscreen_button_.Get(),
+      download_button_.Get(),
+      timeline_.Get(),
+      mute_button_.Get(),
+      volume_slider_.Get(),
+      toggle_closed_captions_button_.Get(),
+      cast_button_.Get(),
+      current_time_display_.Get(),
+      duration_display_.Get(),
+      modern_play_button_.Get(),
+  };
+
+  // Record which controls are used.
+  for (const auto& element : elements) {
+    if (element)
+      element->MaybeRecordDisplayed();
+  }
+  overflow_menu_->MaybeRecordDisplayed();
 }
 
 void MediaControlsImpl::PositionPopupMenu(Element* popup_menu) {
@@ -1295,7 +1418,6 @@ void MediaControlsImpl::PositionPopupMenu(Element* popup_menu) {
 
   DOMRect* bounding_client_rect = MediaElement().getBoundingClientRect();
   DOMVisualViewport* viewport = GetDocument().domWindow()->visualViewport();
-  ;
 
   int bottom = viewport->height() - bounding_client_rect->y() -
                bounding_client_rect->height() + kPopupMenuMarginPx;
@@ -1413,6 +1535,7 @@ DEFINE_TRACE(MediaControlsImpl) {
   visitor->Trace(rotate_to_fullscreen_delegate_);
   visitor->Trace(download_iph_manager_);
   visitor->Trace(media_button_panel_);
+  visitor->Trace(modern_play_button_);
   MediaControls::Trace(visitor);
   HTMLDivElement::Trace(visitor);
 }
