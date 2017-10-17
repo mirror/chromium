@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8213cdb3_aaa53f33",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_called.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-17T23:38:24Z",
+      "side": 1,
+      "message": "Needs to be in a step?",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 15
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3acda3d6_894545e4",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_unregister.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-17T23:38:24Z",
+      "side": 1,
+      "message": "Is there any guarantee that this will be called before a frame is provided to onFrameBad?",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508ddffe_43e7ef19",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrSession_prevent_multiple_exclusive.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-17T23:38:24Z",
+      "side": 1,
+      "message": "Unnecessary spaces",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae17632b_1623cd54",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrSession_prevent_multiple_exclusive.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-17T23:38:24Z",
+      "side": 1,
+      "message": "Nit: Move the t.done()s into a .then() that\u0027s chained with this one? I believe that\u0027s what we\u0027ve been doing elsewhere.",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b97391_710d6f7c",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrSession_prevent_multiple_exclusive.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-17T23:38:24Z",
+      "side": 1,
+      "message": "Unnecessary space, should have semicolon",
+      "range": {
+        "startLine": 50,
+        "startChar": 12,
+        "endLine": 50,
+        "endChar": 13
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
