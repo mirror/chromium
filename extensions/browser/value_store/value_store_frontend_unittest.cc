@@ -52,10 +52,25 @@ class ValueStoreFrontendTest : public testing::Test {
     return !!output->get();
   }
 
+  bool Set(const std::string& key, std::unique_ptr<base::Value> value) {
+    ValueStore::Status status;
+    ValueStore::WriteResult write_result(std::move(status));
+    storage_->Set(key, std::move(value),
+                  base::Bind(&ValueStoreFrontendTest::SetAndWait,
+                             base::Unretained(this), &write_result));
+    content::RunAllTasksUntilIdle();
+    return write_result.status().ok();
+  }
+
  protected:
   void GetAndWait(std::unique_ptr<base::Value>* output,
                   std::unique_ptr<base::Value> result) {
     *output = std::move(result);
+  }
+
+  void SetAndWait(ValueStore::WriteResult* output,
+                  ValueStore::WriteResult write_result) {
+    *output = std::move(write_result);
   }
 
   scoped_refptr<extensions::TestValueStoreFactory> factory_;
@@ -86,8 +101,9 @@ TEST_F(ValueStoreFrontendTest, GetExistingData) {
 }
 
 TEST_F(ValueStoreFrontendTest, ChangesPersistAfterReload) {
-  storage_->Set("key0", std::unique_ptr<base::Value>(new base::Value(0)));
-  storage_->Set("key1", std::unique_ptr<base::Value>(new base::Value("new1")));
+  ASSERT_TRUE(Set("key0", std::unique_ptr<base::Value>(new base::Value(0))));
+  ASSERT_TRUE(
+      Set("key1", std::unique_ptr<base::Value>(new base::Value("new1"))));
   storage_->Remove("key2");
 
   // Reload the DB and test our changes.

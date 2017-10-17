@@ -146,6 +146,11 @@ bool PolicyAllowsCorporateKeyUsageForExtension(
   return allow_corporate_key_usage;
 }
 
+void DidSetExtensionValue(ValueStore::WriteResult write_result) {
+  LOG_IF(WARNING, !write_result.status().ok())
+      << "Error writing platform keys: " << write_result.status().message;
+}
+
 }  // namespace
 
 struct KeyPermissions::PermissionsForExtension::KeyEntry {
@@ -466,7 +471,8 @@ void KeyPermissions::SetPlatformKeysOfExtension(
     const std::string& extension_id,
     std::unique_ptr<base::Value> value) {
   extensions_state_store_->SetExtensionValue(
-      extension_id, kStateStorePlatformKeys, std::move(value));
+      extension_id, kStateStorePlatformKeys, std::move(value),
+      base::Bind(&DidSetExtensionValue));
 }
 
 }  // namespace chromeos

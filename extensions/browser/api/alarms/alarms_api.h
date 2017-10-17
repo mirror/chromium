@@ -5,9 +5,11 @@
 #ifndef EXTENSIONS_BROWSER_API_ALARMS_ALARMS_API_H_
 #define EXTENSIONS_BROWSER_API_ALARMS_ALARMS_API_H_
 
+#include <string>
 #include <vector>
 
 #include "extensions/browser/extension_function.h"
+#include "extensions/browser/value_store/value_store.h"
 
 namespace base {
 class Clock;
@@ -31,7 +33,7 @@ class AlarmsCreateFunction : public AsyncExtensionFunction {
   bool RunAsync() override;
   DECLARE_EXTENSION_FUNCTION("alarms.create", ALARMS_CREATE)
  private:
-  void Callback();
+  void Callback(ValueStore::WriteResult write_result);
 
   base::Clock* const clock_;
   // Whether or not we own |clock_|. This is needed because we own it
@@ -72,7 +74,7 @@ class AlarmsClearFunction : public AsyncExtensionFunction {
   bool RunAsync() override;
 
  private:
-  void Callback(const std::string& name, bool success);
+  void Callback(ValueStore::WriteResult write_result);
   DECLARE_EXTENSION_FUNCTION("alarms.clear", ALARMS_CLEAR)
 };
 
@@ -84,7 +86,7 @@ class AlarmsClearAllFunction : public AsyncExtensionFunction {
   bool RunAsync() override;
 
  private:
-  void Callback();
+  void Callback(ValueStore::WriteResult write_result);
   DECLARE_EXTENSION_FUNCTION("alarms.clearAll", ALARMS_CLEARALL)
 };
 

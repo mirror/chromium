@@ -29,6 +29,10 @@ std::string GetDeclarativeRuleStorageKey(const std::string& event_name,
     return "declarative_rules." + event_name;
 }
 
+void WriteToStorageCallback(ValueStore::WriteResult write_result) {
+  LOG_IF(WARNING, !write_result.status().ok())
+      << "Error writing rule: " << write_result.status().message;
+}
 
 }  // namespace
 
@@ -110,7 +114,8 @@ void RulesCacheDelegate::WriteToStorage(const std::string& extension_id,
 
   StateStore* store = ExtensionSystem::Get(browser_context_)->rules_store();
   if (store)
-    store->SetExtensionValue(extension_id, storage_key_, std::move(value));
+    store->SetExtensionValue(extension_id, storage_key_, std::move(value),
+                             base::Bind(&WriteToStorageCallback));
 }
 
 void RulesCacheDelegate::CheckIfReady() {

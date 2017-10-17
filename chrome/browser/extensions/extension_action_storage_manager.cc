@@ -192,6 +192,11 @@ std::unique_ptr<base::DictionaryValue> DefaultsToValue(
   return dict;
 }
 
+void WroteToStorage(ValueStore::WriteResult write_result) {
+  LOG_IF(WARNING, !write_result.status().ok())
+      << "Error writing to storage: " << write_result.status().message;
+}
+
 }  // namespace
 
 ExtensionActionStorageManager::ExtensionActionStorageManager(
@@ -249,7 +254,8 @@ void ExtensionActionStorageManager::WriteToStorage(
     std::unique_ptr<base::DictionaryValue> defaults =
         DefaultsToValue(extension_action);
     store->SetExtensionValue(extension_action->extension_id(),
-                             kBrowserActionStorageKey, std::move(defaults));
+                             kBrowserActionStorageKey, std::move(defaults),
+                             base::Bind(&WroteToStorage));
   }
 }
 

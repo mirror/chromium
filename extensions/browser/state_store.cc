@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/location.h"
@@ -113,10 +114,11 @@ void StateStore::GetExtensionValue(const std::string& extension_id,
 
 void StateStore::SetExtensionValue(const std::string& extension_id,
                                    const std::string& key,
-                                   std::unique_ptr<base::Value> value) {
-  task_queue_->InvokeWhenReady(
-      base::Bind(&ValueStoreFrontend::Set, base::Unretained(store_.get()),
-                 GetFullKey(extension_id, key), base::Passed(&value)));
+                                   std::unique_ptr<base::Value> value,
+                                   WriteCallback callback) {
+  task_queue_->InvokeWhenReady(base::Bind(
+      &ValueStoreFrontend::Set, base::Unretained(store_.get()),
+      GetFullKey(extension_id, key), base::Passed(&value), callback));
 }
 
 void StateStore::RemoveExtensionValue(const std::string& extension_id,

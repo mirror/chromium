@@ -26,6 +26,7 @@ class ValueStoreFrontend : public base::SupportsWeakPtr<ValueStoreFrontend> {
   enum class BackendType { RULES, STATE };
 
   typedef base::Callback<void(std::unique_ptr<base::Value>)> ReadCallback;
+  typedef base::Callback<void(ValueStore::WriteResult)> WriteCallback;
 
   ValueStoreFrontend(
       const scoped_refptr<extensions::ValueStoreFactory>& store_factory,
@@ -37,7 +38,9 @@ class ValueStoreFrontend : public base::SupportsWeakPtr<ValueStoreFrontend> {
   void Get(const std::string& key, const ReadCallback& callback);
 
   // Sets a value with the given key.
-  void Set(const std::string& key, std::unique_ptr<base::Value> value);
+  void Set(const std::string& key,
+           std::unique_ptr<base::Value> value,
+           const WriteCallback& callback);
 
   // Removes the value with the given key.
   void Remove(const std::string& key);

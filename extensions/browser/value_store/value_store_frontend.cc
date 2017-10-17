@@ -43,12 +43,15 @@ class ValueStoreFrontend::Backend : public base::RefCountedThreadSafe<Backend> {
                    << " failed: " << result.status().message;
     }
 
-    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-        base::Bind(&ValueStoreFrontend::Backend::RunCallback,
-                   this, callback, base::Passed(&value)));
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&ValueStoreFrontend::Backend::RunReadCallback, this,
+                   callback, base::Passed(&value)));
   }
 
-  void Set(const std::string& key, std::unique_ptr<base::Value> value) {
+  void Set(const std::string& key,
+           std::unique_ptr<base::Value> value,
+           const WriteCallback& callback) {
     DCHECK(IsOnBackendSequence());
     LazyInit();
     // We don't need the old value, so skip generating changes.
@@ -57,6 +60,10 @@ class ValueStoreFrontend::Backend : public base::RefCountedThreadSafe<Backend> {
         *value);
     LOG_IF(ERROR, !result.status().ok())
         << "Error while writing " << key << " to " << db_path_.value();
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&ValueStoreFrontend::Backend::RunWriteCallback, this,
+                   callback, base::Passed(&result)));
   }
 
   void Remove(const std::string& key) {
@@ -88,10 +95,16 @@ class ValueStoreFrontend::Backend : public base::RefCountedThreadSafe<Backend> {
     }
   }
 
-  void RunCallback(const ValueStoreFrontend::ReadCallback& callback,
-                   std::unique_ptr<base::Value> value) {
+  void RunReadCallback(const ValueStoreFrontend::ReadCallback& callback,
+                       std::unique_ptr<base::Value> value) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     callback.Run(std::move(value));
+  }
+
+  void RunWriteCallback(const ValueStoreFrontend::WriteCallback& callback,
+                        ValueStore::WriteResult result) {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    callback.Run(std::move(result));
   }
 
   // The factory which will be used to lazily create the ValueStore when needed.
@@ -129,12 +142,13 @@ void ValueStoreFrontend::Get(const std::string& key,
 }
 
 void ValueStoreFrontend::Set(const std::string& key,
-                             std::unique_ptr<base::Value> value) {
+                             std::unique_ptr<base::Value> value,
+                             const WriteCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   GetBackendTaskRunner()->PostTask(
       FROM_HERE, base::Bind(&ValueStoreFrontend::Backend::Set, backend_, key,
-                            base::Passed(&value)));
+                            base::Passed(&value), callback));
 }
 
 void ValueStoreFrontend::Remove(const std::string& key) {

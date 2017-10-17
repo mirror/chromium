@@ -120,6 +120,11 @@ bool GetStringList(const base::DictionaryValue& dict,
   return true;
 }
 
+void WroteToStorage(ValueStore::WriteResult write_result) {
+  LOG_IF(WARNING, !write_result.status().ok())
+      << "Error writing to storage: " << write_result.status().message;
+}
+
 }  // namespace
 
 MenuItem::MenuItem(const Id& id,
@@ -830,7 +835,8 @@ void MenuManager::WriteToStorage(const Extension* extension,
 
   if (store_) {
     store_->SetExtensionValue(extension->id(), kContextMenusKey,
-                              MenuItemsToValue(all_items));
+                              MenuItemsToValue(all_items),
+                              base::Bind(&WroteToStorage));
   }
 }
 
