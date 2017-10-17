@@ -617,10 +617,8 @@ bool MP4StreamParser::EnqueueSample(BufferQueueMap* buffers, bool* err) {
     return true;
   }
 
-  if (!runs_->IsSampleValid()) {
-    runs_->AdvanceRun();
-    return true;
-  }
+  if (!runs_->IsSampleValid())
+    return runs_->AdvanceRun();
 
   DCHECK(!(*err));
 
@@ -635,10 +633,8 @@ bool MP4StreamParser::EnqueueSample(BufferQueueMap* buffers, bool* err) {
       video_track_ids_.find(runs_->track_id()) != video_track_ids_.end();
 
   // Skip this entire track if it's not one we're interested in
-  if (!audio && !video) {
-    runs_->AdvanceRun();
-    return true;
-  }
+  if (!audio && !video)
+    return runs_->AdvanceRun();
 
   // Attempt to cache the auxiliary information first. Aux info is usually
   // placed in a contiguous block before the sample data, rather than being
@@ -674,8 +670,7 @@ bool MP4StreamParser::EnqueueSample(BufferQueueMap* buffers, bool* err) {
     LIMITED_MEDIA_LOG(DEBUG, media_log_, num_empty_samples_skipped_,
                       kMaxEmptySampleLogs)
         << "Skipping 'trun' sample with size of 0.";
-    runs_->AdvanceSample();
-    return true;
+    return runs_->AdvanceSample();
   }
 
   std::unique_ptr<DecryptConfig> decrypt_config;
@@ -757,7 +752,7 @@ bool MP4StreamParser::EnqueueSample(BufferQueueMap* buffers, bool* err) {
   if (runs_->cts() != kNoTimestamp) {
     stream_buf->set_timestamp(runs_->cts());
   } else {
-    MEDIA_LOG(ERROR, media_log_) << "Frame CTS exceeds representable limit";
+    MEDIA_LOG(ERROR, media_log_) << "Frame PTS exceeds representable limit";
     *err = true;
     return false;
   }
@@ -779,8 +774,7 @@ bool MP4StreamParser::EnqueueSample(BufferQueueMap* buffers, bool* err) {
            << ", size=" << sample_size;
 
   (*buffers)[runs_->track_id()].push_back(stream_buf);
-  runs_->AdvanceSample();
-  return true;
+  return runs_->AdvanceSample();
 }
 
 bool MP4StreamParser::SendAndFlushSamples(BufferQueueMap* buffers) {
@@ -848,10 +842,11 @@ bool MP4StreamParser::ComputeHighestEndOffset(const MovieFragment& moof) {
       int64_t sample_end_offset = runs.sample_offset() + runs.sample_size();
       if (sample_end_offset > highest_end_offset_)
         highest_end_offset_ = sample_end_offset;
-
-      runs.AdvanceSample();
+      if (!runs.AdvanceSample())
+        return false;
     }
-    runs.AdvanceRun();
+    if (!runs.AdvanceRun())
+      return false;
   }
 
   return true;
