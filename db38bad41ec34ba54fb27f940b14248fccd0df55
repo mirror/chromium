@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea08e60c_2bfa62fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-17T09:50:38Z",
+      "side": 1,
+      "message": "tangent, but it\u0027s sad that we\u0027d potentially make all prefetch tasks run on the serial executor.  I think we\u0027re very rapidly approaching the time where there needs to be a state controller for the initialization of this and not relying solely on the executor to control ordering.\n\ndefinitely nothing to do in this cl, just a thought for later",
+      "range": {
+        "startLine": 239,
+        "startChar": 46,
+        "endLine": 239,
+        "endChar": 54
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c22b19_3d629c7c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-17T09:50:38Z",
+      "side": 1,
+      "message": "maybe instead of storing the AsyncTask and filename separately, mPrefetchTabListToMergeTasks could store a list of Pair\u003cAsyncTask\u003cVoid, Void, DataInputStream\u003e, String\u003es to keep the data together.\n\nThen I\u0027d rename mMergeFileNames to mMerge[d]FileNames or mMergeFileNamesPendingDelete to better track that we want that list to get to zero to indicate merging is done",
+      "range": {
+        "startLine": 394,
+        "startChar": 28,
+        "endLine": 394,
+        "endChar": 56
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4963aeaf_953640b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-17T09:50:38Z",
+      "side": 1,
+      "message": "I agree with Theresa that hardcoding to zero here seems off.\n\n@twellington, can you remind me when this flow is needed?\n\nIn multi-window if both chrome\u0027s are alive, do we use this?  Do we not support live tab moves as of yet?  I wonder if that might be possible very soon if this get resolved: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d774730\n\nFor multi-window, what happens if you have \"Don\u0027t keep activities\" set?  Will one Chrome die when you toggle between them?  If you go into settings in one, then the background tabs will be killed right?  If you then go to the homescreen and return, will a merge be triggered (as you\u0027d have one CTA and the other would be a preferences activity)?\n\nComing back to this change, I don\u0027t see why we wouldn\u0027t just attempt to merge all files in the list of state files.  Browser Actions is only added if needed and it doesn\u0027t seem like it would hurt if we just iterated over the list here vs just checking the zero-th one.",
+      "range": {
+        "startLine": 441,
+        "startChar": 19,
+        "endLine": 441,
+        "endChar": 32
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37611cd3_e4e82355",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-17T09:50:38Z",
+      "side": 1,
+      "message": "should this be mMergeFileNames instead of talking to the policy?",
+      "range": {
+        "startLine": 1225,
+        "startChar": 45,
+        "endLine": 1225,
+        "endChar": 63
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae43d3cd_2fe34d61",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-17T09:50:38Z",
+      "side": 1,
+      "message": "can this be replaced with something like:\n\nboolean wasMergeFile \u003d mMergeFileNames.remove(file);\nif (wasMergeFile \u0026\u0026 mMergeFiles.isEmpty()) mPersistencePolicy.setMergeInProgress(false);\n\nAlso, should mMergeFileNames be a Set instead of a List?  Do we need ordered-ness or is lookup more important here.",
+      "range": {
+        "startLine": 1274,
+        "startChar": 25,
+        "endLine": 1274,
+        "endChar": 31
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
