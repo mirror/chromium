@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dcd2725_9b13309b",
+        "filename": "tools/chrome_proxy/webdriver/proxy_connection.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-17T17:30:20Z",
+      "side": 1,
+      "message": "Can we add a comment here on what\u0027s the difference between 127.0.0.1 and localhost?",
+      "revId": "e882a539d5124f98a0940f27aaaedef0e7e1f031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
