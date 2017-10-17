@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0c13d288_2977f76c",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_dxgi_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-17T19:49:01Z",
+      "side": 1,
+      "message": "Not easily - there is also the GpuMemoryBufferImplSharedMemory test, which doesn\u0027t need InitializeOneOff called.  If I unconditionally initialize on Windows, that test fails the first time, and needs to re-run (some error inside InitializeOneOff about initializing for a different mode).\n\nBy making this specifically run for the DXGI test, I avoid messing with the stability of the other test.",
+      "parentUuid": "ff76a7f0_adee0c72",
+      "revId": "7b1bb0afa49991b2f673271db0678e2d8d5dfd23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6fa0095_5a74537b",
         "filename": "ui/gl/gl_image_dxgi.cc",
         "patchSetId": 15
@@ -39,6 +57,30 @@
       "revId": "7b1bb0afa49991b2f673271db0678e2d8d5dfd23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b48af2_55ef0f1a",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-17T19:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6fa0095_5a74537b",
+      "range": {
+        "startLine": 387,
+        "startChar": 4,
+        "endLine": 387,
+        "endChar": 17
+      },
+      "revId": "7b1bb0afa49991b2f673271db0678e2d8d5dfd23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
