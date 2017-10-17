@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "150e32cc_9ab58877",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-17T20:24:17Z",
+      "side": 0,
+      "message": "Now that this isn\u0027t abstract, can #getNewIteViewInstance() have a default implementation so this class can also not be abstract? That would also allow BottomNavigationView.java to not be abstract.",
+      "range": {
+        "startLine": 226,
+        "startChar": 18,
+        "endLine": 226,
+        "endChar": 62
+      },
+      "revId": "55976957cef23a4004aee45bd6260282fcc0e64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

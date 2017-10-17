@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dc728fd_f36c5e91",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationItemView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-17T20:24:17Z",
+      "side": 1,
+      "message": "Sometimes Android changes the default params between versions, so it\u0027s safer to call super(context) unless we\u0027re explicitly trying not to use the defaults.",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 32
+      },
+      "revId": "a3f02aabaeea43ad5b4c283d071cd8fdd3e8944c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8ea90c_d43090e3",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-17T20:24:17Z",
+      "side": 1,
+      "message": "Does this still need to be protected?",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 50
+      },
+      "revId": "a3f02aabaeea43ad5b4c283d071cd8fdd3e8944c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
