@@ -46,6 +46,30 @@
       "revId": "137af9a597d99776e42847d55f2a2e7d5dd0b4b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb43621_7bf349cc",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1002294
+      },
+      "writtenOn": "2017-10-17T23:49:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "77f5bf68_6c82f697",
+      "range": {
+        "startLine": 1455,
+        "startChar": 42,
+        "endLine": 1455,
+        "endChar": 0
+      },
+      "revId": "137af9a597d99776e42847d55f2a2e7d5dd0b4b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
