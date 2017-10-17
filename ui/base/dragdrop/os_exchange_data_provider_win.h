@@ -11,6 +11,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <wrl/client.h>
 
 // Win8 SDK compatibility, see http://goo.gl/fufvl for more information.
 // "Note: This interface has been renamed IDataObjectAsyncCapability."
@@ -21,7 +22,6 @@
 #endif
 
 #include "base/macros.h"
-#include "base/win/scoped_comptr.h"
 #include "ui/base/dragdrop/os_exchange_data.h"
 #include "ui/base/ui_base_export.h"
 #include "ui/gfx/geometry/vector2d.h"
@@ -113,7 +113,7 @@ class DataObjectImpl : public DownloadFileObserver,
   typedef std::vector<std::unique_ptr<StoredDataInfo>> StoredData;
   StoredData contents_;
 
-  base::win::ScopedComPtr<IDataObject> source_object_;
+  Microsoft::WRL::ComPtr<IDataObject> source_object_;
 
   bool is_aborting_;
   bool in_drag_loop_;
@@ -185,7 +185,7 @@ class UI_BASE_EXPORT OSExchangeDataProviderWin
 
  private:
   scoped_refptr<DataObjectImpl> data_;
-  base::win::ScopedComPtr<IDataObject> source_object_;
+  Microsoft::WRL::ComPtr<IDataObject> source_object_;
 
   DISALLOW_COPY_AND_ASSIGN(OSExchangeDataProviderWin);
 };

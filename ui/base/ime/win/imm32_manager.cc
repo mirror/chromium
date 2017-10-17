@@ -5,6 +5,7 @@
 #include "ui/base/ime/win/imm32_manager.h"
 
 #include <stdint.h>
+#include <wrl/client.h>
 
 #include <memory>
 
@@ -12,7 +13,6 @@
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/win/scoped_comptr.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/base/ime/composition_text.h"
 
