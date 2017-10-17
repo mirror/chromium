@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "906a2e59_a70e427b",
+        "filename": "device/gamepad/game_controller_data_fetcher_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-17T20:39:17Z",
+      "side": 1,
+      "message": "Previously I was using GCControllerPlayerIndex1 and GCControllerPlayerIndex4 which aren\u0027t defined before OS X 10.11 and cause build failures.",
+      "range": {
+        "startLine": 142,
+        "startChar": 22,
+        "endLine": 142,
+        "endChar": 51
+      },
+      "revId": "f242b4c0dd5ad2c8f5eaa94982d8f96f625a60ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
