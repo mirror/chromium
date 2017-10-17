@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13dfa2b5_422af314",
+        "filename": "ash/message_center/message_center_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-17T18:16:52Z",
+      "side": 1,
+      "message": "nit: blank line here since the comment only applies to kBackgroundColor.",
+      "revId": "9b9e5ebd7d44321656d6d1619d46044a8fd85467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
