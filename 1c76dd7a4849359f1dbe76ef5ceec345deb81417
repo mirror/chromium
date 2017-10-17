@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e441fd3e_78d9fbfa",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-17T22:41:11Z",
+      "side": 1,
+      "message": "This CL only deals with disallowing enabled extensions from committing in a non-extension process.  A separate, follow-up CL will deal with disallowing other URLs (web URLs, disabled extensions, etc.) from committing in an extension process.  I have a WIP CL @ https://chromium-review.googlesource.com/c/chromium/src/+/696270 (still quite a few tests are failing there;  for now I am focusing on the current CL).",
+      "parentUuid": "7ab4cfef_eab26d6b",
+      "revId": "1c76dd7a4849359f1dbe76ef5ceec345deb81417",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "734200b5_a8726feb",
         "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
         "patchSetId": 16
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b5e8f0b7_85956921",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-17T22:41:11Z",
+      "side": 1,
+      "message": "Ooops.  Done.",
+      "parentUuid": "734200b5_a8726feb",
+      "revId": "1c76dd7a4849359f1dbe76ef5ceec345deb81417",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b83aaaf0_85aa856b",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 16
@@ -50,6 +86,24 @@
       "revId": "1c76dd7a4849359f1dbe76ef5ceec345deb81417",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09391bd_729c43ba",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-17T22:41:11Z",
+      "side": 1,
+      "message": "I find the current style more readable.  AFAIR, when removal of DCHECK_IMPLIES was being discussed, people pointed out that a sufficiently smart compiler should optimize away the empty if statement.",
+      "parentUuid": "b83aaaf0_85aa856b",
+      "revId": "1c76dd7a4849359f1dbe76ef5ceec345deb81417",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
