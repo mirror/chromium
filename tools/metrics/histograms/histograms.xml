@@ -58011,6 +58011,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PDF.XFADocumentType" enum="XFADocumentTypes">
+  <owner>rharrison@chromium.org</owner>
+  <summary>
+    Tracks what types of XFA forms are present in PDF documents that are loaded.
+  </summary>
+</histogram>
+
 <histogram name="Pepper.Graphics3DHasShareGroup" units="BooleanShareGroup">
   <owner>jbauman@chromium.org</owner>
   <summary>
