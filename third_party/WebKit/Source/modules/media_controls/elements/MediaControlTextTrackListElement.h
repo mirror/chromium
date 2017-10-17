@@ -35,6 +35,7 @@ class MediaControlTextTrackListElement final : public MediaControlDivElement {
   // Creates the track element in the list when a valid track is passed in and
   // the "Off" item when the parameter is null.
   Element* CreateTextTrackListItem(TextTrack*);
+  Element* CreateTextTrackHeaderItem();
 };
 
 }  // namespace blink

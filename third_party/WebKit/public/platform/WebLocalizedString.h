@@ -100,6 +100,7 @@ struct WebLocalizedString {
     kOtherMonthLabel,
     kOtherWeekLabel,
     kOverflowMenuCaptions,
+    kOverflowMenuCaptionsSubmenuHeader,
     kOverflowMenuCast,
     kOverflowMenuEnterFullscreen,
     kOverflowMenuExitFullscreen,

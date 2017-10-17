@@ -124,6 +124,9 @@ const char* kStateCSSClasses[6] = {
 constexpr int kModernControlsAudioButtonPadding = 20;
 constexpr int kModernControlsVideoButtonPadding = 26;
 
+// The maximum height of the audio controls in pixels.
+constexpr int kMaxHeightAudioMediaControls = 54;
+
 bool ShouldShowFullscreenButton(const HTMLMediaElement& media_element) {
   // Unconditionally allow the user to exit fullscreen if we are in it
   // now.  Especially on android, when we might not yet know if
@@ -1431,14 +1434,20 @@ void MediaControlsImpl::PositionPopupMenu(Element* popup_menu) {
   DOMRect* bounding_client_rect = MediaElement().getBoundingClientRect();
   DOMVisualViewport* viewport = GetDocument().domWindow()->visualViewport();
 
-  int bottom = viewport->height() - bounding_client_rect->y() -
-               bounding_client_rect->height() + kPopupMenuMarginPx;
+  // The height of modern audio controls is capped so we should cap the height
+  // in our calculations.
+  int element_height = bounding_client_rect->height();
+  if (IsModern() && MediaElement().IsHTMLAudioElement())
+    element_height = std::min(element_height, kMaxHeightAudioMediaControls);
+
+  int bottom = viewport->height() - bounding_client_rect->y() - element_height +
+               kPopupMenuMarginPx;
   int right = viewport->width() - bounding_client_rect->x() -
               bounding_client_rect->width() + kPopupMenuMarginPx;
 
-  popup_menu->style()->setProperty("bottom", WTF::String::Number(bottom),
+  popup_menu->style()->setProperty("bottom", WTF::String::Number(bottom) + "px",
                                    kImportant, ASSERT_NO_EXCEPTION);
-  popup_menu->style()->setProperty("right", WTF::String::Number(right),
+  popup_menu->style()->setProperty("right", WTF::String::Number(right) + "px",
                                    kImportant, ASSERT_NO_EXCEPTION);
 }
 
