@@ -34,6 +34,24 @@
       "revId": "38c9457989a22c686d2848c5c40f74457a8c7b67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9b4745_05638704",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-17T18:59:08Z",
+      "side": 1,
+      "message": "Sure, I\u0027m happy to give it a try. Please let me know what this is asking the user to do (since it\u0027s not clear to me) and I\u0027ll try to edit it into something succinct. I/We can then see if clurie@ will approve it or suggest some other text.\n\nSpecifically, what is the subject (or method) of \"restart\" and what is the method for \"try again\"?",
+      "parentUuid": "353fc6a5_ddb77dda",
+      "revId": "38c9457989a22c686d2848c5c40f74457a8c7b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
