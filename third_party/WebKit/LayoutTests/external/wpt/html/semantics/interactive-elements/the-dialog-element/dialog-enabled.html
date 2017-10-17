@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<dialog id="mydialog"></dialog>
+<script>
+test(function() {
+  dialog = document.querySelector('dialog')
+  assert_true(typeof dialog.show == 'function');
+}, "The DIALOG element should be recognized if the dialog feature is on");
+</script>
+</body>
+</html>
