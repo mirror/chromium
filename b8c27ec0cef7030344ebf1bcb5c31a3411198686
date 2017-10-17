@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "751d4726_867cedb2",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-17T14:30:36Z",
+      "side": 1,
+      "message": "With https://chromium-review.googlesource.com/c/chromium/src/+/723306 it should be fine to continue using |job_completed_closure_ \u003d run_loop.QuitClosure();| here",
+      "range": {
+        "startLine": 252,
+        "startChar": 2,
+        "endLine": 252,
+        "endChar": 33
+      },
+      "revId": "b8c27ec0cef7030344ebf1bcb5c31a3411198686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
