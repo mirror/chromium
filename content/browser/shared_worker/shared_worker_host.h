@@ -15,6 +15,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
+#include "base/unguessable_token.h"
 #include "content/common/shared_worker/shared_worker.mojom.h"
 #include "content/common/shared_worker/shared_worker_client.mojom.h"
 #include "content/common/shared_worker/shared_worker_factory.mojom.h"
@@ -42,7 +43,8 @@ class SharedWorkerHost : public mojom::SharedWorkerHost,
  public:
   SharedWorkerHost(std::unique_ptr<SharedWorkerInstance> instance,
                    int process_id,
-                   int route_id);
+                   int route_id,
+                   const base::UnguessableToken& devtools_worker_token);
   ~SharedWorkerHost() override;
 
   // Starts the SharedWorker in the renderer process.
@@ -113,6 +115,7 @@ class SharedWorkerHost : public mojom::SharedWorkerHost,
 
   const int process_id_;
   const int route_id_;
+  const base::UnguessableToken devtools_worker_token_;
   int next_connection_request_id_;
   bool termination_message_sent_ = false;
   bool closed_ = false;

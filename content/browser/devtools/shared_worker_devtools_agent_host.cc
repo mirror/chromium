@@ -22,9 +22,10 @@ void TerminateSharedWorkerOnIO(
 }  // namespace
 
 SharedWorkerDevToolsAgentHost::SharedWorkerDevToolsAgentHost(
+    const base::UnguessableToken& devtools_worker_token,
     WorkerId worker_id,
     const SharedWorkerInstance& shared_worker)
-    : WorkerDevToolsAgentHost(worker_id),
+    : WorkerDevToolsAgentHost(devtools_worker_token, worker_id),
       shared_worker_(new SharedWorkerInstance(shared_worker)) {
   NotifyCreated();
 }

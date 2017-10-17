@@ -76,24 +76,29 @@ void ServiceWorkerDevToolsManager::AddAllAgentHostsForBrowserContext(
   }
 }
 
-bool ServiceWorkerDevToolsManager::WorkerCreated(
+void ServiceWorkerDevToolsManager::WorkerCreated(
     int worker_process_id,
     int worker_route_id,
     const ServiceWorkerIdentifier& service_worker_id,
-    bool is_installed_version) {
+    bool is_installed_version,
+    bool* wait_for_debugger,
+    base::UnguessableToken* devtools_worker_token) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   const WorkerId id(worker_process_id, worker_route_id);
   AgentHostMap::iterator it = FindExistingWorkerAgentHost(service_worker_id);
   if (it == workers_.end()) {
+    *devtools_worker_token = base::UnguessableToken::Create();
     scoped_refptr<ServiceWorkerDevToolsAgentHost> host =
-        new ServiceWorkerDevToolsAgentHost(id, service_worker_id,
+        new ServiceWorkerDevToolsAgentHost(*devtools_worker_token, id,
+                                           service_worker_id,
                                            is_installed_version);
     workers_[id] = host.get();
     for (auto& observer : observer_list_)
       observer.WorkerCreated(host.get());
     if (debug_service_worker_on_start_)
         host->PauseForDebugOnStart();
-    return host->IsPausedForDebugOnStart();
+    *wait_for_debugger = host->IsPausedForDebugOnStart();
+    return;
   }
 
   // Worker was restarted.
@@ -101,8 +106,8 @@ bool ServiceWorkerDevToolsManager::WorkerCreated(
   agent_host->WorkerRestarted(id);
   workers_.erase(it);
   workers_[id] = agent_host;
-
-  return agent_host->IsAttached();
+  *wait_for_debugger = agent_host->IsAttached();
+  *devtools_worker_token = agent_host->devtools_worker_token();
 }
 
 void ServiceWorkerDevToolsManager::WorkerReadyForInspection(

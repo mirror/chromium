@@ -6,6 +6,7 @@
 #define CONTENT_BROWSER_DEVTOOLS_WORKER_DEVTOOLS_AGENT_HOST_H_
 
 #include "base/macros.h"
+#include "base/unguessable_token.h"
 #include "content/browser/devtools/devtools_agent_host_impl.h"
 #include "content/common/content_export.h"
 #include "ipc/ipc_listener.h"
@@ -21,6 +22,9 @@ class CONTENT_EXPORT WorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
 
   // DevToolsAgentHost override.
   BrowserContext* GetBrowserContext() override;
+  const base::UnguessableToken& devtools_worker_token() const {
+    return devtools_worker_token_;
+  }
 
   // DevToolsAgentHostImpl overrides.
   void AttachSession(DevToolsSession* session) override;
@@ -42,7 +46,8 @@ class CONTENT_EXPORT WorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
   bool IsTerminated();
 
  protected:
-  explicit WorkerDevToolsAgentHost(WorkerId worker_id);
+  WorkerDevToolsAgentHost(const base::UnguessableToken& devtools_worker_token,
+                          WorkerId worker_id);
   ~WorkerDevToolsAgentHost() override;
 
   enum WorkerState {
@@ -65,6 +70,7 @@ class CONTENT_EXPORT WorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
   void WorkerCreated();
   void OnDispatchOnInspectorFrontend(const DevToolsMessageChunk& message);
 
+  base::UnguessableToken devtools_worker_token_;
   WorkerState state_;
   WorkerId worker_id_;
   DISALLOW_COPY_AND_ASSIGN(WorkerDevToolsAgentHost);

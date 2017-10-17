@@ -33,17 +33,22 @@ void SharedWorkerDevToolsManager::AddAllAgentHosts(
   }
 }
 
-bool SharedWorkerDevToolsManager::WorkerCreated(
+void SharedWorkerDevToolsManager::WorkerCreated(
     int worker_process_id,
     int worker_route_id,
-    const SharedWorkerInstance& instance) {
+    const SharedWorkerInstance& instance,
+    bool* pause_on_start,
+    base::UnguessableToken* devtools_worker_token) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   const WorkerId id(worker_process_id, worker_route_id);
   AgentHostMap::iterator it =
       FindExistingWorkerAgentHost(instance);
   if (it == workers_.end()) {
-    workers_[id] = new SharedWorkerDevToolsAgentHost(id, instance);
-    return false;
+    *pause_on_start = false;
+    *devtools_worker_token = base::UnguessableToken::Create();
+    workers_[id] =
+        new SharedWorkerDevToolsAgentHost(*devtools_worker_token, id, instance);
+    return;
   }
 
   // Worker restarted.
@@ -51,7 +56,8 @@ bool SharedWorkerDevToolsManager::WorkerCreated(
   agent_host->WorkerRestarted(id);
   workers_.erase(it);
   workers_[id] = agent_host;
-  return agent_host->IsAttached();
+  *pause_on_start = agent_host->IsAttached();
+  *devtools_worker_token = workers_[id]->devtools_worker_token();
 }
 
 void SharedWorkerDevToolsManager::WorkerReadyForInspection(

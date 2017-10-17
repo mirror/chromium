@@ -28,9 +28,11 @@ class ServiceWorkerDevToolsAgentHost : public WorkerDevToolsAgentHost {
   using ServiceWorkerIdentifier =
       ServiceWorkerDevToolsManager::ServiceWorkerIdentifier;
 
-  ServiceWorkerDevToolsAgentHost(WorkerId worker_id,
-                                 const ServiceWorkerIdentifier& service_worker,
-                                 bool is_installed_version);
+  ServiceWorkerDevToolsAgentHost(
+      const base::UnguessableToken& devtools_worker_token,
+      WorkerId worker_id,
+      const ServiceWorkerIdentifier& service_worker,
+      bool is_installed_version);
 
   void UnregisterWorker();
 
