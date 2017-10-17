@@ -96,6 +96,9 @@ class Service : public service_manager::Service,
   // Call if the ui::Service is being run as a standalone process.
   void set_running_standalone(bool value) { running_standalone_ = value; }
 
+  // Get the task runner for GPU thread.
+  scoped_refptr<base::SingleThreadTaskRunner> GetGpuThreadTaskRunner();
+
  private:
   // Holds InterfaceRequests received before the first WindowTreeHost Display
   // has been established.

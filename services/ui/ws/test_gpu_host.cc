@@ -11,6 +11,10 @@ TestGpuHost::TestGpuHost() = default;
 
 TestGpuHost::~TestGpuHost() = default;
 
+scoped_refptr<base::SingleThreadTaskRunner> TestGpuHost::GetTaskRunner() {
+  return nullptr;
+}
+
 void TestGpuHost::CreateFrameSinkManager(
     viz::mojom::FrameSinkManagerRequest request,
     viz::mojom::FrameSinkManagerClientPtr client) {

@@ -115,6 +115,10 @@ component("gpu") {
     "//media/mojo/*",
     "//remoting/codec:encoder",
     ":*",
+
+    # TODO(penghuang): Remove it when we have a separate viz process.
+    # https://crbug.com/774514
+    "//chrome/browser:browser",
   ]
 
   if (is_mac) {
