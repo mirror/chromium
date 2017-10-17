@@ -2,6 +2,142 @@
   "comments": [
     {
       "key": {
+        "uuid": "4744f4a9_8323e637",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T21:53:14Z",
+      "side": 1,
+      "message": "I\u0027m concerned that people might use this without getting the benefits, but not realize that. Should we #error here instead?\n\nIs it not possible to provide this on Windows?",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dec68e9_6933fbe3",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T21:53:14Z",
+      "side": 1,
+      "message": "We probably want more complete documentation here. For example: is |end| 1 byte past the last real object, like a C++-style end iterator? Or is |end| itself the last real byte?",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e865f8e_354d36ec",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T21:53:14Z",
+      "side": 1,
+      "message": "Nit: End all sentences with a period.",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc8648f_34c36550",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T21:53:14Z",
+      "side": 1,
+      "message": "I think you might want to follow the `g_...` naming convention for globals (see e.g. |g_log_timestamp| in base/logging.cc).",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b084eaf3_f94f210f",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T21:53:14Z",
+      "side": 1,
+      "message": "Nit: \"it\u0027s\"",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012d7607_76d48f3c",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T21:53:14Z",
+      "side": 1,
+      "message": "Nit: Probably better to use a C++-style cast here.",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a14a161d_3d7c5d3d",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T21:53:14Z",
+      "side": 1,
+      "message": "It\u0027s better to use base::AutoLock (and in SetReadOnly).",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca10b1d_c4eb8c2d",
+        "filename": "base/memory/protected_memory_cfi.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T21:53:14Z",
+      "side": 1,
+      "message": "I see, you check here. This is OK as long as you\u0027re the caller, but in the future other people might use protected_memory.h and not realize they need to do this.",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a96e1d4c_401ed9b1",
         "filename": "base/memory/protected_memory_posix.cc",
         "patchSetId": 5
@@ -13,6 +149,74 @@
       "writtenOn": "2017-10-17T20:10:04Z",
       "side": 1,
       "message": "Should this be PROTECTED_MEMORY?",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb2bf86_af2c6162",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T21:53:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure? but you might fall afoul of our rule against complex static initializers here. You might want to use a base::LazyInstance instead.",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a10020b_03ef8954",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T21:53:14Z",
+      "side": 1,
+      "message": "I think you\u0027ll need a ~Pipe to close the pipes. :)",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56f6df0_3c7a93e2",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T21:53:14Z",
+      "side": 1,
+      "message": "On Windows, if you ever need to implement this there, you can use VirtualQueryEx. And on macOS/iOS, http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/vm_region.html.",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa090d3_8b97785a",
+        "filename": "base/memory/protected_memory_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T21:53:14Z",
+      "side": 1,
+      "message": "Chromium convention is to put helper functions and structs and stuff in an anonymous namespace at the top of the file. (This is also equivalent to `static`, which can be nice for optimization and symbol/namespace hygiene.)",
       "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
