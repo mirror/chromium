@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa284cd_c3dcb518",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/tabular-data/the-table-element/tHead-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-10-17T21:45:51Z",
+      "side": 0,
+      "message": "My most favorite kind of red line in a diff :)",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 4
+      },
+      "revId": "6aab96ef3334dc42897ce573fffebd7454829d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
