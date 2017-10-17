@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89a66fd9_0fe6560d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-17T04:20:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7fa92132_b58b9e24",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec2de34a_c24dbd1e",
         "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-16T05:22:16Z",
       "side": 1,
       "message": "By the way now that we\u0027re trying to gather common things into WebKit/common could we start trying to do that too at some point? (No need to be addressed in this CL)",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "484a8399_13ade76e",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-17T04:20:11Z",
+      "side": 1,
+      "message": "Oh, great, who can confirm this thing? and is there some documents about that? Yeah, I also think it\u0027s better to do it in a separate CL.",
+      "parentUuid": "ec2de34a_c24dbd1e",
       "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7a956298_85c9ce6b",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-17T04:20:11Z",
+      "side": 1,
+      "message": "Any other better substitute?",
+      "parentUuid": "648dabbc_381b06cb",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f086daf1_019ce48b",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-16T05:22:16Z",
       "side": 1,
       "message": "These don\u0027t seem to be needed member methods, can they just be static helper methods?  Also do they need to be on this class?",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80177383_6b8283c0",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-17T04:20:11Z",
+      "side": 1,
+      "message": "I thought about that, but keep it here seems make the code clearly. I am not sure, but if it\u0027s not in this class, where do you think is better?",
+      "parentUuid": "f086daf1_019ce48b",
       "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +188,30 @@
     },
     {
       "key": {
+        "uuid": "4cde66e8_e7b566c4",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-17T04:20:11Z",
+      "side": 1,
+      "message": "I tried before, but in that case, we need modify the codes use \"GetOrCreateServiceWorkerHandle\" as below in both ServiceWorkerDispatcherHost and ServiceWorkerProviderHost:\nLine 761 --\u003e attrs.installing \u003d *GetOrCreateServiceWorkerHandle(installing_version);\nNot sure if it\u0027s better than using Clone?",
+      "parentUuid": "47a706ae_1ee2a00c",
+      "range": {
+        "startLine": 897,
+        "startChar": 28,
+        "endLine": 897,
+        "endChar": 76
+      },
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc1212e1_e5dec819",
         "filename": "content/common/service_worker/service_worker_messages.h",
         "patchSetId": 2
@@ -156,6 +252,30 @@
     },
     {
       "key": {
+        "uuid": "2a11263b_457ad470",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-17T04:20:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4ec4bbc8_cbbaf79c",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "959c143d_5debe771",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
         "patchSetId": 2
@@ -173,6 +293,24 @@
     },
     {
       "key": {
+        "uuid": "d651ba3c_2c5d31fd",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-17T04:20:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "959c143d_5debe771",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d391dda9_8210ca29",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
         "patchSetId": 2
@@ -187,6 +325,24 @@
       "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62e137c_a2911208",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-17T04:20:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d391dda9_8210ca29",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
