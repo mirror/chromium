@@ -241,11 +241,6 @@ test("vr_common_unittests") {
     "//mojo/common",
     "//mojo/public/cpp/bindings",
     "//testing/gmock",
-
-    # TODO(mthiesse): Figure out why these webrtc deps are necessary for compiling these tests.
-    # Is a dependency missing from some other target?
-    "//third_party/webrtc/api:video_frame_api",
-    "//third_party/webrtc/system_wrappers:metrics_default",
     "//ui/gfx:test_support",
     "//ui/gfx/geometry",
     "//ui/gl",
@@ -294,6 +289,11 @@ source_set("vr_test_support") {
 
     # TODO(mthiesse, crbug.com/769373): Remove dependency on device/vr:fakes.
     "//device/vr:fakes",
+
+    # TODO(mthiesse): Figure out why these webrtc deps are necessary for compiling these tests.
+    # Is a dependency missing from some other target?
+    "//third_party/webrtc/api:video_frame_api",
+    "//third_party/webrtc/system_wrappers:metrics_default",
   ]
 
   if (is_win) {
