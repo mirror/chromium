@@ -109,6 +109,8 @@ bool RenderFrameHostDelegate::ShouldAllowRunningInsecureContent(
   return false;
 }
 
+void RenderFrameHostDelegate::ViewSource(RenderFrameHostImpl* frame) {}
+
 #if defined(OS_ANDROID)
 base::android::ScopedJavaLocalRef<jobject>
 RenderFrameHostDelegate::GetJavaRenderFrameHostDelegate() {

@@ -21,7 +21,6 @@ class GURL;
 class Profile;
 
 namespace content {
-class PageState;
 class WebContents;
 }
 
@@ -145,16 +144,6 @@ void ToggleFullscreenMode(Browser* browser);
 void ClearCache(Browser* browser);
 bool IsDebuggerAttachedToCurrentTab(Browser* browser);
 
-// Opens a view-source tab for a given web contents.
-void ViewSource(Browser* browser, content::WebContents* tab);
-
-// Opens a view-source tab for any frame within a given web contents.
-void ViewSource(Browser* browser,
-                content::WebContents* tab,
-                const GURL& url,
-                const content::PageState& page_state);
-
-void ViewSelectedSource(Browser* browser);
 bool CanViewSource(const Browser* browser);
 
 void CreateBookmarkAppFromCurrentWebContents(Browser* browser);
