@@ -164,7 +164,7 @@ class GFX_EXPORT RenderTextHarfBuzz : public RenderText {
   SelectionModel FindCursorPosition(const Point& point) override;
   bool IsSelectionSupported() const override;
   std::vector<FontSpan> GetFontSpansForTesting() override;
-  Range GetGlyphBounds(size_t index) override;
+  Range GetCursorSpan(const Range& text_range) override;
 
   // ICU grapheme iterator for the layout text. Can be null in case of an error.
   base::i18n::BreakIterator* GetGraphemeIterator();
