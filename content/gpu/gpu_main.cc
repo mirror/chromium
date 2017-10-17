@@ -78,6 +78,7 @@
 #if defined(OS_LINUX)
 #include "content/common/font_config_ipc_linux.h"
 #include "content/common/sandbox_linux/sandbox_linux.h"
+#include "content/gpu/gpu_sandbox_hook_linux.h"
 #include "content/public/common/sandbox_init.h"
 #include "third_party/skia/include/ports/SkFontConfigInterface.h"
 #endif
@@ -340,6 +341,9 @@ bool StartSandboxLinux(gpu::GpuWatchdogThread* watchdog_thread,
   SandboxSeccompBPF::Options sandbox_options;
   sandbox_options.use_amd_specific_policies =
       gpu_info && angle::IsAMD(gpu_info->active_gpu().vendor_id);
+  sandbox_options.pre_sandbox_hook =
+      GetGpuProcessPreSandboxHook(sandbox_options.use_amd_specific_policies);
+
   bool res = LinuxSandbox::InitializeSandbox(std::move(sandbox_options));
 
   if (watchdog_thread) {
