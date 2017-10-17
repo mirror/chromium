@@ -68,7 +68,7 @@ TEST_F(TabGridMediatorTest, TestRemoveNoTabsOverlay) {
 TEST_F(TabGridMediatorTest, TestAddNoTabsOverlay) {
   SetConsumer();
   InsertWebStateAt(0);
-  web_state_list_->CloseWebStateAt(0);
+  web_state_list_->CloseWebStateAt(0, WebStateList::CLOSE_NO_FLAGS);
   [[consumer_ verify] addNoTabsOverlay];
 }
 

@@ -677,12 +677,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   [_overscrollActionsController invalidate];
   _overscrollActionsController = nil;
 
-  if (!GetApplicationContext()->IsShuttingDown()) {
-    // Invalidate any snapshot stored for this session.
-    DCHECK(self.tabId);
-    [self.snapshotManager removeImageWithSessionID:self.tabId];
-  }
-
   // Cancel any queued dialogs.
   [self.dialogDelegate cancelDialogForTab:self];
 
@@ -1253,6 +1247,11 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     [[self.webController nativeController] willUpdateSnapshot];
   }
   [_overscrollActionsController clear];
+}
+
+- (void)removeSnapshot {
+  DCHECK(self.tabId);
+  [self.snapshotManager removeImageWithSessionID:self.tabId];
 }
 
 #pragma mark - CRWWebDelegate and CRWWebStateObserver protocol methods
