@@ -16,6 +16,8 @@
 #include "ui/gl/angle_platform_impl.h"
 #endif  // defined(USE_EGL)
 
+#include <iostream>
+
 namespace gpu {
 namespace gles2 {
 
@@ -410,7 +412,6 @@ GLES2DecoderPassthroughImpl::GLES2DecoderPassthroughImpl(
     ContextGroup* group)
     : GLES2Decoder(command_buffer_service, outputter),
       client_(client),
-      commands_to_process_(0),
       debug_marker_manager_(),
       logger_(&debug_marker_manager_, client_),
       surface_(),
@@ -461,85 +462,47 @@ GLES2Decoder::Error GLES2DecoderPassthroughImpl::DoCommandsImpl(
     const volatile void* buffer,
     int num_entries,
     int* entries_processed) {
-  commands_to_process_ = num_commands;
-  error::Error result = error::kNoError;
-  const volatile CommandBufferEntry* cmd_data =
+  DCHECK(num_entries > 0);
+
+  const volatile CommandBufferEntry* begin_data =
       static_cast<const volatile CommandBufferEntry*>(buffer);
-  int process_pos = 0;
-  unsigned int command = 0;
+  const volatile CommandBufferEntry* end_data = begin_data + num_entries;
+  const volatile CommandBufferEntry* cmd_data = begin_data;
 
-  while (process_pos < num_entries && result == error::kNoError &&
-         commands_to_process_--) {
-    const unsigned int size = cmd_data->value_header.size;
-    command = cmd_data->value_header.command;
+  error::Error result = error::kNoError;
+  unsigned int current_size = 0;
 
-    if (size == 0) {
-      result = error::kInvalidSize;
-      break;
-    }
+  while (result == error::kNoError && cmd_data < end_data && num_commands--) {
+    auto header = CommandHeader::FromVolatile(cmd_data->value_header);
+    current_size = header.size;
+    unsigned int current_command = header.command;
 
-    // size can't overflow because it is 21 bits.
-    if (static_cast<int>(size) + process_pos > num_entries) {
-      result = error::kOutOfBounds;
-      break;
-    }
-
-    if (DebugImpl && log_commands()) {
-      LOG(ERROR) << "[" << logger_.GetLogPrefix() << "]"
-                 << "cmd: " << GetCommandName(command);
-    }
-
-    const unsigned int arg_count = size - 1;
-    unsigned int command_index = command - kFirstGLES2Command;
-    if (command_index < arraysize(command_info)) {
-      const CommandInfo& info = command_info[command_index];
-      unsigned int info_arg_count = static_cast<unsigned int>(info.arg_count);
-      if ((info.arg_flags == cmd::kFixed && arg_count == info_arg_count) ||
-          (info.arg_flags == cmd::kAtLeastN && arg_count >= info_arg_count)) {
-        bool doing_gpu_trace = false;
-        if (DebugImpl && gpu_trace_commands_) {
-          if (CMD_FLAG_GET_TRACE_LEVEL(info.cmd_flags) <= gpu_trace_level_) {
-            doing_gpu_trace = true;
-            gpu_tracer_->Begin(TRACE_DISABLED_BY_DEFAULT("gpu_decoder"),
-                               GetCommandName(command), kTraceDecoder);
-          }
-        }
-
-        if (DebugImpl) {
-          VerifyServiceTextureObjectsExist();
-        }
-
-        uint32_t immediate_data_size = (arg_count - info_arg_count) *
-                                       sizeof(CommandBufferEntry);  // NOLINT
-        if (info.cmd_handler) {
-          result = (this->*info.cmd_handler)(immediate_data_size, cmd_data);
-        } else {
-          result = error::kUnknownCommand;
-        }
-
-        if (DebugImpl && doing_gpu_trace) {
-          gpu_tracer_->End(kTraceDecoder);
-        }
-      } else {
-        result = error::kInvalidArguments;
-      }
+    // Call the command
+    if (current_command < arraysize(command_info)) {
+      const CommandInfo& info = command_info[current_command];
+      const unsigned int info_arg_count = static_cast<unsigned int>(info.arg_count);
+      uint32_t immediate_data_size = (current_size - info_arg_count) *
+                                     sizeof(CommandBufferEntry);  // NOLINT
+      result = (this->*info.cmd_handler)(immediate_data_size, cmd_data);
     } else {
-      result = DoCommonCommand(command, arg_count, cmd_data);
+      result = error::kUnknownCommand;
     }
 
-    if (result == error::kNoError && context_lost_) {
-      result = error::kLostContext;
-    }
+    // Sadly we need to check for context loss all the time, why isn't it the command that returns context loss?
+    // Actually, let's say it is skipped
+    // if (context_lost_ && result == error::kNoError) {
+    //   result = error::kLostContext;
+    // }
 
-    if (result != error::kDeferCommandUntilLater) {
-      process_pos += size;
-      cmd_data += size;
-    }
+    cmd_data += current_size;
   }
 
-  if (entries_processed)
-    *entries_processed = process_pos;
+  // Fixup command pos to be the correct value if we have a defer
+  if (result == error::kDeferCommandUntilLater) {
+    cmd_data -= current_size;
+  }
 
+  *entries_processed = cmd_data - begin_data;
   return result;
 }
 
@@ -1955,17 +1918,26 @@ bool GLES2DecoderPassthroughImpl::IsEmulatedFramebufferBound(
   return false;
 }
 
+#define COMMON_COMMAND_BUFFER_CMD_OP(name)                       \
+  {                                                              \
+    &CommonDecoder::Handle##name, cmd::name::kArgFlags,          \
+        cmd::name::cmd_flags,                                    \
+        sizeof(cmd::name) / sizeof(CommandBufferEntry),      \
+  },  /* NOLINT */
 #define GLES2_CMD_OP(name)                                               \
   {                                                                      \
       &GLES2DecoderPassthroughImpl::Handle##name, cmds::name::kArgFlags, \
       cmds::name::cmd_flags,                                             \
-      sizeof(cmds::name) / sizeof(CommandBufferEntry) - 1,               \
+      sizeof(cmds::name) / sizeof(CommandBufferEntry),                   \
   }, /* NOLINT */
 
 constexpr GLES2DecoderPassthroughImpl::CommandInfo
     GLES2DecoderPassthroughImpl::command_info[] = {
-        GLES2_COMMAND_LIST(GLES2_CMD_OP)};
+        COMMON_COMMAND_BUFFER_CMDS(COMMON_COMMAND_BUFFER_CMD_OP)
+        GLES2_COMMAND_LIST(GLES2_CMD_OP)
+    };
 
+#undef COMMON_COMMAND_BUFFER_CMD_OP
 #undef GLES2_CMD_OP
 
 }  // namespace gles2

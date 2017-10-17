@@ -167,6 +167,16 @@ class GPU_EXPORT CommonDecoder {
   // Get the actual shared memory buffer.
   scoped_refptr<gpu::Buffer> GetSharedMemoryBuffer(unsigned int shm_id);
 
+  // Generate a member function prototype for each command in an automated and
+  // typesafe way.
+#define COMMON_COMMAND_BUFFER_CMD_OP(name)                \
+  error::Error Handle##name(uint32_t immediate_data_size, \
+                            const volatile void* data);
+
+  COMMON_COMMAND_BUFFER_CMDS(COMMON_COMMAND_BUFFER_CMD_OP)
+
+  #undef COMMON_COMMAND_BUFFER_CMD_OP
+
  protected:
   // Executes a common command.
   // Parameters:
@@ -184,16 +194,6 @@ class GPU_EXPORT CommonDecoder {
   const char* GetCommonCommandName(cmd::CommandId command_id) const;
 
  private:
-  // Generate a member function prototype for each command in an automated and
-  // typesafe way.
-#define COMMON_COMMAND_BUFFER_CMD_OP(name)                \
-  error::Error Handle##name(uint32_t immediate_data_size, \
-                            const volatile void* data);
-
-  COMMON_COMMAND_BUFFER_CMDS(COMMON_COMMAND_BUFFER_CMD_OP)
-
-  #undef COMMON_COMMAND_BUFFER_CMD_OP
-
   CommandBufferServiceBase* command_buffer_service_;
   size_t max_bucket_size_;
 

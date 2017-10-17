@@ -188,7 +188,7 @@ enum CommandId {
   #undef COMMON_COMMAND_BUFFER_CMD_OP
 
   kNumCommands,
-  kLastCommonId = 255  // reserve 256 spaces for common commands.
+  kLastCommonId = kNumCommands - 1
 };
 
 static_assert(kNumCommands - 1 <= kLastCommonId, "too many commands");
