@@ -46,6 +46,30 @@
       "revId": "7cad500ef761c5d0eeea37652e2263fcf83245b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a364252_7a55b65f",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-10-17T21:11:57Z",
+      "side": 1,
+      "message": "OK, some quick capacity estimates:\n\ncd src/ios\ngit log --format\u003d\u0027%h %cd %s\u0027 . | head -100 | tail -1\n0e72c666e0e4 Fri Oct 6 19:39:57 2017 +0000 [iOS] Remove unused param from sign in controllers.\nThat\u0027s 100 commits in 8 work days, about 16 commits a day on average. Looking at the commits, I see 2-3 occasional commits within a few minutes from each other at peak hours (~18:00 and ~23:00 UTC). \n\nios-simulator-cronet can take ~20 min if it needs compiling (e.g. https://build.chromium.org/p/tryserver.chromium.mac/builders/ios-simulator-cronet/builds/337), but otherwise it\u0027s pretty fast to bail out with analyze (2-3 min).\n\nTogether, these numbers suggest that 2 machines should handle this builder if it\u0027s triggered only by only \u0027ios\u0027 changes, however it will likely need more machines to be on the general CQ pool, as chromium gets ~60 CLs per hour at peak hours, and even at 3 min. average run it would take 3-4 bots to handle the load.\n\nSo, my previous suggestion of adding it to CQ as a general builder would NOT work yet, but after adding 2-3 more machines to the pool it\u0027d be my preferred way to do so. I\u0027d suggest to file a quick crbug and add a TODO here to promote this to a proper CQ bot.",
+      "parentUuid": "a5cb4452_57878f75",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "7cad500ef761c5d0eeea37652e2263fcf83245b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
