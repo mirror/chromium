@@ -27,6 +27,7 @@
 #define Dictionary_h
 
 #include "bindings/core/v8/DictionaryIterator.h"
+#include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/Nullable.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/CoreExport.h"
@@ -37,7 +38,6 @@
 
 namespace blink {
 
-class ExceptionState;
 class ExecutionContext;
 
 // Dictionary class provides ways to retrieve property values as C++ objects
@@ -76,7 +76,47 @@ class CORE_EXPORT Dictionary final {
   bool Get(const StringView& key, v8::Local<v8::Value>& value) const {
     return isolate_ && GetInternal(V8String(isolate_, key), value);
   }
+  bool Get(const StringView& key,
+           v8::Local<v8::Value>& value,
+           ExceptionState& es) const {
+    return isolate_ && GetInternal(V8String(isolate_, key), value, es);
+  }
   bool Get(const StringView& key, Dictionary&) const;
+
+  // Get the value of the given property in this dictionary and store it to
+  // |value|. The type parameter |IDLType| is an IDL type (e.g., IDLByteString).
+  //  - If accessing the property raises an error, the error is set to |es| and
+  //    this function returns false.
+  //  - If converting data fails, the error is set to |es| and this function
+  //    returns false.
+  //  - If |key| property is not present in this dictionary (including the case
+  //    where the stored value is |undefined|), returns false.
+  //  - Otherwise, returns true.
+  template <typename IDLType>
+  bool Get(const StringView& key,
+           typename IDLType::ImplType& value,
+           ExceptionState& es) const {
+    v8::Local<v8::Value> v8_value;
+    DCHECK(!es.HadException());
+    if (!Get(key, v8_value, es))
+      return false;
+    DCHECK(!es.HadException());
+    DCHECK(!v8_value.IsEmpty());
+    if (v8_value->IsUndefined())
+      return false;
+
+    value = NativeValueTraits<IDLType>::NativeValue(isolate_, v8_value, es);
+    return !es.HadException();
+  }
+
+  template <typename IDLType>
+  WTF::Optional<typename IDLType::ImplType> Get(const StringView& key,
+                                                ExceptionState& es) {
+    typename IDLType::ImplType value;
+    if (!Get<IDLType>(key, value, es))
+      return WTF::nullopt;
+    return value;
+  }
 
   HashMap<String, String> GetOwnPropertiesAsStringHashMap(
       ExceptionState&) const;
@@ -95,6 +135,9 @@ class CORE_EXPORT Dictionary final {
  private:
   bool GetInternal(const v8::Local<v8::Value>& key,
                    v8::Local<v8::Value>& result) const;
+  bool GetInternal(const v8::Local<v8::Value>& key,
+                   v8::Local<v8::Value>& result,
+                   ExceptionState&) const;
 
   v8::Isolate* isolate_;
   // Undefined, Null, or Object is allowed as type of dictionary.
@@ -118,8 +161,10 @@ struct NativeValueTraits<Dictionary>
 
 // DictionaryHelper is a collection of static methods for getting or
 // converting a value from Dictionary.
+// DEPRECATED, Use template <typename IDLType> Dictionary::Get.
 struct DictionaryHelper {
   STATIC_ONLY(DictionaryHelper);
+
   template <typename T>
   static bool Get(const Dictionary&, const StringView& key, T& value);
   template <typename T>

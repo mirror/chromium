@@ -122,6 +122,25 @@ bool Dictionary::GetInternal(const v8::Local<v8::Value>& key,
   return dictionary_object_->Get(V8Context(), key).ToLocal(&result);
 }
 
+bool Dictionary::GetInternal(const v8::Local<v8::Value>& key,
+                             v8::Local<v8::Value>& result,
+                             ExceptionState& exception_state) const {
+  if (dictionary_object_.IsEmpty())
+    return false;
+
+  if (!V8CallBoolean(dictionary_object_->Has(V8Context(), key)))
+    return false;
+
+  // Swallow a possible exception in v8::Object::Get().
+  // TODO(bashi,yukishiino): Should rethrow the exception.
+  // http://crbug.com/666661
+  v8::TryCatch try_catch(GetIsolate());
+  bool r = dictionary_object_->Get(V8Context(), key).ToLocal(&result);
+  if (try_catch.HasCaught())
+    exception_state.RethrowV8Exception(try_catch.Exception());
+  return r;
+}
+
 WARN_UNUSED_RESULT static v8::MaybeLocal<v8::String> GetStringValueInArray(
     v8::Local<v8::Context> context,
     v8::Local<v8::Array> array,
