@@ -134,4 +134,31 @@ TEST_F(LayoutTextTest, ResolvedTextLengthNG) {
   EXPECT_EQ(3u, GetBasicText()->ResolvedTextLength());
 }
 
+TEST_F(LayoutTextTest, ContainsCaretOffset) {
+  // This test records the behavior introduced in crrev.com/e3eb4e
+  SetBasicBody(" foo   bar ");
+  EXPECT_FALSE(GetBasicText()->ContainsCaretOffset(0));   // "| foo   bar "
+  EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(1));    // " |foo   bar "
+  EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(2));    // " f|oo   bar "
+  EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(3));    // " fo|o   bar "
+  EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(4));    // " foo|   bar "
+  EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(5));    // " foo |  bar "
+  EXPECT_FALSE(GetBasicText()->ContainsCaretOffset(6));   // " foo  | bar "
+  EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(7));    // " foo   |bar "
+  EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(8));    // " foo   b|ar "
+  EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(9));    // " foo   ba|r "
+  EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(10));   // " foo   bar| "
+  EXPECT_FALSE(GetBasicText()->ContainsCaretOffset(11));  // " foo   bar |"
+}
+
+TEST_F(LayoutTextTest, ContainsCaretOffsetWithForcedLineBreak) {
+  // This test records the behavior introduced in crrev.com/e3eb4e
+  SetBodyInnerHTML("<pre id='target'>foo\n</div>");
+  EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(0));   // "|foo\n"
+  EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(1));   // "f|oo\n"
+  EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(2));   // "fo|o\n"
+  EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(3));   // "foo|\n"
+  EXPECT_FALSE(GetBasicText()->ContainsCaretOffset(4));  // "foo\n|"
+}
+
 }  // namespace blink
