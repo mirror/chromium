@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "807108b3_0ce4d31d",
+        "filename": "chrome/browser/media/encrypted_media_supported_types_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-17T04:54:08Z",
+      "side": 1,
+      "message": "Actually this does work because SetUpCommandLine() is called before the server is started. I tried your suggestion but base_url() is empty here.",
+      "parentUuid": "5ddfba27_d9bac0d9",
+      "range": {
+        "startLine": 352,
+        "startChar": 67,
+        "endLine": 352,
+        "endChar": 78
+      },
+      "revId": "a685b239c258d81a8be6d1d1b2c200317f602533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47ce05e5_8d11a2ef",
         "filename": "chrome/browser/media/encrypted_media_supported_types_browsertest.cc",
         "patchSetId": 6
