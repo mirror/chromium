@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70117c86_904bdde6",
+        "filename": "ui/file_manager/file_manager/background/js/device_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-17T06:01:17Z",
+      "side": 0,
+      "message": "If these strings are not in use anymore, could you remove them from chromeos_strings.grdp?",
+      "range": {
+        "startLine": 206,
+        "startChar": 20,
+        "endLine": 206,
+        "endChar": 52
+      },
+      "revId": "0fc5451ac52eac5f141b72af906cb794baa1699b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
