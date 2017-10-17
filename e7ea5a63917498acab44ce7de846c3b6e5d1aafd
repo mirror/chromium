@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "156d7539_dddb1717",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-10-17T21:51:03Z",
+      "side": 1,
+      "message": "aren\u0027t you supposed to divide by 2? Or is the triangle area constant above multiplied by 2? In which case it is misnomed",
+      "revId": "e7ea5a63917498acab44ce7de846c3b6e5d1aafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
