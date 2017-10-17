@@ -27,7 +27,8 @@ class PrefetchServiceImpl : public PrefetchService {
       std::unique_ptr<PrefetchDownloader> prefetch_downloader,
       std::unique_ptr<PrefetchImporter> prefetch_importer,
       std::unique_ptr<PrefetchBackgroundTaskHandler> background_task_handler,
-      std::unique_ptr<PrefetchConfiguration> prefetch_configuration);
+      std::unique_ptr<PrefetchConfiguration> prefetch_configuration,
+      std::unique_ptr<PrefetchInternalsDelegate> internals_delegate);
 
   ~PrefetchServiceImpl() override;
 
@@ -43,6 +44,7 @@ class PrefetchServiceImpl : public PrefetchService {
   PrefetchImporter* GetPrefetchImporter() override;
   PrefetchBackgroundTaskHandler* GetPrefetchBackgroundTaskHandler() override;
   PrefetchConfiguration* GetPrefetchConfiguration() override;
+  PrefetchInternalsDelegate* GetPrefetchInternalsDelegate() override;
 
   // KeyedService implementation:
   void Shutdown() override;
@@ -61,6 +63,7 @@ class PrefetchServiceImpl : public PrefetchService {
   std::unique_ptr<PrefetchBackgroundTaskHandler>
       prefetch_background_task_handler_;
   std::unique_ptr<PrefetchConfiguration> prefetch_configuration_;
+  std::unique_ptr<PrefetchInternalsDelegate> prefetch_internals_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(PrefetchServiceImpl);
 };
