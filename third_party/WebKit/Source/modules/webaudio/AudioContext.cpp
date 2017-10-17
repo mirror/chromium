@@ -271,4 +271,27 @@ double AudioContext::baseLatency() const {
   return FramesPerBuffer() / static_cast<double>(sampleRate());
 }
 
+// TODO(crbug.com/764396): Remove these when fixed.
+void AudioContext::CountValueSetterConflict(bool does_conflict) {
+  ++count_value_setter_calls_;
+  if (does_conflict) {
+    ++count_value_setter_conflicts_;
+  }
+}
+
+void AudioContext::RecordValueSetterStatistics() {
+  DEFINE_STATIC_LOCAL(SparseHistogram, value_setter_count_histogram,
+                      ("WebAudio.AudioParam.ValueSetterCount"));
+  DEFINE_STATIC_LOCAL(SparseHistogram, value_setter_conflict_count_histogram,
+                      ("WebAudio.AudioParam.ValueSetterConflictCount"));
+  DEFINE_STATIC_LOCAL(
+      LinearHistogram, value_setter_conflict_histogram,
+      ("WebAudio.AudioParam.ValueSetterConflictPercentage", 1, 100, 101));
+
+  value_setter_count_histogram.Sample(coutn_value_setter_calls_);
+  value_setter_conflict_count_histogram.Sample(count_value_setter_conflicts_);
+  value_setter_conflict_histogram.Count(static_cast<int32_t>(
+      0.5 + 100.0 * count_value_setter_conflicts_ / count_value_setter_calls_));
+}
+
 }  // namespace blink
