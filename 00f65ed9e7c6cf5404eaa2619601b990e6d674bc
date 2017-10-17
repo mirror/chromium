@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f54c21c_ab084ad0",
+        "filename": "chrome/browser/resources/print_preview/data/measurement_system.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-17T01:03:37Z",
+      "side": 1,
+      "message": "Do we need to store this.unitType_ anymore? Can we directly store the prefs for the specific system, as follows?\n\nthis.measurementSystemPrefs_ \u003d measurementSystemPrefs.get(unitType);\n\nAnd then we  would also have to update setSystem() to re-populated this.measurementSystemPrefs_.",
+      "revId": "00f65ed9e7c6cf5404eaa2619601b990e6d674bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5144e966_ce8b2934",
+        "filename": "chrome/browser/resources/print_preview/data/measurement_system.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-17T01:03:37Z",
+      "side": 1,
+      "message": "Can we use assert() instead of throwing our own error? Also how about the following?\n\nassert(measurementSystemPrefs.has(this.unitType_));",
+      "revId": "00f65ed9e7c6cf5404eaa2619601b990e6d674bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
