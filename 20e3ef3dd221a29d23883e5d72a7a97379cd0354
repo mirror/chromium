@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ccac4a6_3fa27ce6",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-17T18:36:20Z",
+      "side": 1,
+      "message": "My thinking is that kConnectionRetry and kNetworkCache both imply the sink is a Cast device since we were able to open a channel to it in the past. This may be the case even if discovered_by_dial is true.",
+      "parentUuid": "ee0f923d_70043496",
+      "range": {
+        "startLine": 407,
+        "startChar": 6,
+        "endLine": 407,
+        "endChar": 38
+      },
+      "revId": "20e3ef3dd221a29d23883e5d72a7a97379cd0354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "349d6135_5c5963ba",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-17T00:13:16Z",
       "side": 1,
       "message": "May have merge conflict with https://chromium-review.googlesource.com/c/chromium/src/+/722127",
+      "range": {
+        "startLine": 530,
+        "startChar": 31,
+        "endLine": 530,
+        "endChar": 32
+      },
+      "revId": "20e3ef3dd221a29d23883e5d72a7a97379cd0354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae7ce572_a26324fd",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-17T18:36:20Z",
+      "side": 1,
+      "message": "Ack. I will move it out of this method since I want to make |dial_sink_failure_count_| include retries.",
+      "parentUuid": "349d6135_5c5963ba",
       "range": {
         "startLine": 530,
         "startChar": 31,
