@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e30cda8_8be6f308",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-17T23:41:16Z",
+      "side": 1,
+      "message": "Now we are using strongly typed APIs, can we move SetProperty/SendEvent to protected in the base class and update the call site?",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 20
+      },
+      "revId": "5e41c6908d3ffb21606ea1ea2df5d44b1b6b9107",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a329e1ef_68a34d7f",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-17T23:41:16Z",
+      "side": 1,
+      "message": "nit: add a TODO here to indicate that the CU interface will be removed and replaced by the newly added specific type CUs.",
+      "revId": "5e41c6908d3ffb21606ea1ea2df5d44b1b6b9107",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
