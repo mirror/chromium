@@ -371,8 +371,6 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
 
   GLES2DecoderClient* client_;
 
-  int commands_to_process_;
-
   DebugMarkerManager debug_marker_manager_;
   Logger logger_;
 
@@ -395,7 +393,7 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
   };
 
   // A table of CommandInfo for all the commands.
-  static const CommandInfo command_info[kNumCommands - kFirstGLES2Command];
+  static const CommandInfo command_info[kNumCommands];
 
   // The GL context this decoder renders to on behalf of the client.
   scoped_refptr<gl::GLSurface> surface_;
