@@ -12,6 +12,7 @@
 #include "base/test/histogram_tester.h"
 #include "base/time/time.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
+#include "chrome/browser/resource_coordinator/time.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "content/public/browser/web_contents.h"
 #include "testing/gmock/include/gmock/gmock.h"
