@@ -16,6 +16,24 @@
       "revId": "b34b63a3c020cbbde991a63aab1909f589399111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd8b35a_4a38d835",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-17T23:30:06Z",
+      "side": 1,
+      "message": "Ack, will keep that in mind as I make further changes in here.",
+      "parentUuid": "5dbc3273_b35168ba",
+      "revId": "b34b63a3c020cbbde991a63aab1909f589399111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
