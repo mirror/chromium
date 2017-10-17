@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28939896_ed8beea6",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-17T21:55:14Z",
+      "side": 0,
+      "message": "Since we only support android builds on linux hosts, this (and the next 2) are behavior-preserving too. But I\u0027d guess that in a android-on-mac build, we\u0027d want to run these hooks, so this looks like a progression for that hypothetical config as well.",
+      "revId": "c072e2c9ed75f34500bad931822c0fb12f8ffa2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
