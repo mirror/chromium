@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc7013db_cafed894",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_dxgi.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-17T02:48:45Z",
+      "side": 1,
+      "message": "Sorry, just realized I reviewed the wrong version of this CL. See me comment about the test SetUp hook on latest patch. That\u0027s my last question before I\u0027m happy to see this land.",
+      "parentUuid": "d195dea5_4af04ce6",
+      "range": {
+        "startLine": 44,
+        "startChar": 49,
+        "endLine": 44,
+        "endChar": 69
+      },
+      "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1adefdf2_9af1266c",
         "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.h",
         "patchSetId": 13
