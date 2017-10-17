@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14a6c075_db0f12af",
+        "filename": "gpu/gles2_conform_support/egl/context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T23:48:02Z",
+      "side": 1,
+      "message": "Oh, and this was so I can use make_unique, else passing |this| to make_unique it can\u0027t upcast it.",
+      "revId": "eb70492aff69f5c625774eaa980fe189be3c87f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
