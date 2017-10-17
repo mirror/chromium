@@ -879,37 +879,6 @@ static bool NeedsScrollbarPaintOffset(const LayoutObject& object) {
   return false;
 }
 
-void PaintPropertyTreeBuilder::UpdateCompositedLayerStates(
-    const LayoutObject& object,
-    PaintPropertyTreeBuilderFragmentContext& context,
-    bool& force_subtree_update) {
-  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
-         !RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
-  if (!object.NeedsPaintPropertyUpdate() && !force_subtree_update)
-    return;
-
-  if (!object.HasLayer())
-    return;
-  CompositedLayerMapping* mapping =
-      ToLayoutBoxModelObject(object).Layer()->GetCompositedLayerMapping();
-  if (!mapping)
-    return;
-
-  LayoutPoint snapped_paint_offset =
-      context.current.paint_offset - mapping->SubpixelAccumulation();
-  DCHECK(snapped_paint_offset == RoundedIntPoint(snapped_paint_offset));
-
-  if (GraphicsLayer* main_layer = mapping->MainGraphicsLayer()) {
-    PropertyTreeState layer_state(context.current.transform,
-                                  context.current.clip, context.current_effect);
-    IntPoint layer_offset = RoundedIntPoint(snapped_paint_offset) +
-                            main_layer->OffsetFromLayoutObject();
-    main_layer->SetLayerState(std::move(layer_state), layer_offset);
-  }
-
-  // TODO(trchen): Complete for all drawable layers.
-}
-
 // TODO(trchen): Remove this once we bake the paint offset into frameRect.
 void PaintPropertyTreeBuilder::UpdateScrollbarPaintOffset(
     const LayoutObject& object,
@@ -1258,6 +1227,88 @@ void PaintPropertyTreeBuilder::UpdateOutOfFlowContext(
   }
 }
 
+static const TransformPaintPropertyNode* GetPreTransform(
+    const PropertyTreeState& border_box_properties,
+    const ObjectPaintProperties* properties) {
+  if (!properties)
+    return border_box_properties.Transform();
+  if (properties->Transform())
+    return properties->Transform()->Parent();
+  return border_box_properties.Transform();
+}
+
+static const EffectPaintPropertyNode* GetPreEffect(
+    const PropertyTreeState& border_box_properties,
+    const ObjectPaintProperties* properties) {
+  if (!properties)
+    return border_box_properties.Effect();
+  if (properties->Effect())
+    return properties->Effect()->Parent();
+  if (properties->Filter())
+    return properties->Filter()->Parent();
+  return border_box_properties.Effect();
+}
+
+void PaintPropertyTreeBuilder::UpdateCompositedLayerStates(
+    const LayoutObject& object,
+    const PaintPropertyTreeBuilderFragmentContext& context,
+    const FragmentData* fragment_data,
+    bool& force_subtree_update) {
+  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+         !RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
+  if (!object.NeedsPaintPropertyUpdate() && !force_subtree_update)
+    return;
+
+  if (!object.HasLayer())
+    return;
+  CompositedLayerMapping* mapping =
+      ToLayoutBoxModelObject(object).Layer()->GetCompositedLayerMapping();
+  if (!mapping)
+    return;
+
+  DCHECK(fragment_data);
+  // SPv1 compositing forces single fragment for composited elements.
+  // This early out should never hit, but added for robustness.
+  if (fragment_data != object.FirstFragment())
+    return;
+  DCHECK(!fragment_data->NextFragment());
+  DCHECK(fragment_data->LocalBorderBoxProperties());
+
+  const PropertyTreeState& box_state =
+      *fragment_data->LocalBorderBoxProperties();
+  const ObjectPaintProperties* properties = fragment_data->PaintProperties();
+  LayoutPoint layout_snapped_paint_offset =
+      fragment_data->PaintOffset() - mapping->SubpixelAccumulation();
+  IntPoint snapped_paint_offset = RoundedIntPoint(layout_snapped_paint_offset);
+  DCHECK(layout_snapped_paint_offset == snapped_paint_offset);
+
+  if (GraphicsLayer* main_layer = mapping->MainGraphicsLayer()) {
+    PropertyTreeState layer_state(box_state);
+    IntPoint layer_offset =
+        snapped_paint_offset + main_layer->OffsetFromLayoutObject();
+    main_layer->SetLayerState(std::move(layer_state), layer_offset);
+  }
+  if (GraphicsLayer* scrolling_contents_layer =
+          mapping->ScrollingContentsLayer()) {
+    PropertyTreeState layer_state(properties->ScrollTranslation(),
+                                  properties->OverflowClip(),
+                                  box_state.Effect());
+    IntPoint layer_offset = snapped_paint_offset +
+                            scrolling_contents_layer->OffsetFromLayoutObject();
+    scrolling_contents_layer->SetLayerState(std::move(layer_state),
+                                            layer_offset);
+  }
+  if (GraphicsLayer* squashing_layer = mapping->SquashingLayer()) {
+    PropertyTreeState layer_state(GetPreTransform(box_state, properties),
+                                  box_state.Clip(),
+                                  GetPreEffect(box_state, properties));
+    IntPoint layer_offset =
+        snapped_paint_offset + squashing_layer->OffsetFromLayoutObject();
+    squashing_layer->SetLayerState(std::move(layer_state), layer_offset);
+  }
+  // TODO(trchen): Complete for all drawable layers.
+}
+
 void PaintPropertyTreeBuilder::UpdatePaintOffset(
     const LayoutBoxModelObject& object,
     const LayoutObject* container_for_absolute_position,
@@ -1449,6 +1500,8 @@ void PaintPropertyTreeBuilder::UpdateForObjectLocationAndSize(
 
     context.fragment_clip_context->paint_offset = paint_offset;
     fragment_data->SetPaintOffset(paint_offset);
+  } else if (fragment_data) {
+    fragment_data->SetPaintOffset(context.current.paint_offset);
   }
 
   if (paint_offset_translation)
@@ -1687,11 +1740,6 @@ void PaintPropertyTreeBuilder::UpdateFragmentPropertiesForSelf(
   }
   UpdateLocalBorderBoxContext(object, fragment_context, fragment_data,
                               full_context.force_subtree_update);
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
-      !RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
-    UpdateCompositedLayerStates(object, fragment_context,
-                                full_context.force_subtree_update);
-  }
   if (fragment_data && fragment_data->PaintProperties()) {
     ObjectPaintProperties* properties = fragment_data->PaintProperties();
     if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
@@ -1736,6 +1784,12 @@ void PaintPropertyTreeBuilder::UpdatePropertiesForChildren(
         object, fragment_context,
         fragment_data ? fragment_data->PaintProperties() : nullptr,
         context.force_subtree_update);
+
+    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+        !RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+      UpdateCompositedLayerStates(object, fragment_context, fragment_data,
+                                  context.force_subtree_update);
+    }
 
     context.force_subtree_update |= object.SubtreeNeedsPaintPropertyUpdate();
   }
