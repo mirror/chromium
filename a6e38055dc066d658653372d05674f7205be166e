@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "092e12ff_562818db",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-17T20:08:52Z",
+      "side": 1,
+      "message": "nit: we lookup -\u003e look up\n(omit pronouns when it\u0027s easy)",
+      "range": {
+        "startLine": 382,
+        "startChar": 55,
+        "endLine": 382,
+        "endChar": 64
+      },
+      "revId": "a6e38055dc066d658653372d05674f7205be166e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d652e1_ea2897c2",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-17T20:08:52Z",
+      "side": 1,
+      "message": "nit: url -\u003e URL",
+      "range": {
+        "startLine": 383,
+        "startChar": 38,
+        "endLine": 383,
+        "endChar": 41
+      },
+      "revId": "a6e38055dc066d658653372d05674f7205be166e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb7d35e_5ce62583",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-17T20:08:52Z",
+      "side": 1,
+      "message": "I don\u0027t think this tests the IsTypedHost logic, does it?  I think this URL would normally be returned by HistoryURL provider\u0027s normal suggestion logic (dropable prefixes and dall).",
+      "revId": "a6e38055dc066d658653372d05674f7205be166e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
