@@ -1,0 +1,66 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>StylePropertyMap.getProperties tests</title>
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#dom-stylepropertymap-getproperties">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<div id="target-empty"></div>
+<div id="target-multiple" style="--A: A; width: 0px; --C: C; background-image: url('A'), url('B'); color: red; --B: B;"></div>
+<script>
+'use strict';
+
+// FIXME(774933): change .styleMap to .attributeStyleMap
+
+test(() => {
+  const styleMap = document.getElementById('target-empty').styleMap;
+  const properties = styleMap.getProperties();
+  assert_equals(properties.length, 0);
+}, 'Calling StylePropertyMap.getProperties on an empty property model returns a zero-length array');
+
+test(() => {
+  const styleMap = document.getElementById('target-multiple').styleMap;
+  const properties = styleMap.getProperties();
+  assert_equals(properties.length, 6);
+
+  assert_array_equals(properties,
+    ['background-image', 'color', 'width', '--A', '--B', '--C']);
+}, 'StylePropertyMap.getProperties returns properties in sorted order');
+
+test(() => {
+  const styleMap = document.getElementById('target-multiple').styleMap;
+  const properties = styleMap.getProperties();
+  assert_equals(properties.length, 6);
+
+  const result = properties[2]; // width
+  assert_equals(result.constructor.name, CSSUnitValue.name);
+  assert_equals(result.value, 0);
+  assert_equals(result.unit, 'px');
+}, 'StylePropertyMap.getProperties returns CSS properties with the correct CSSStyleValue');
+
+test(() => {
+  const styleMap = document.getElementById('target-multiple').styleMap;
+  const properties = styleMap.getProperties();
+  assert_equals(properties.length, 6);
+
+  const result = properties[0]; // background-color
+  assert_equals(result.length, 2);
+  assert_equals(result[0].constructor.name, CSSURLImageResource.name);
+  assert_equals(result[0].url, 'A');
+  assert_equals(result[1].constructor.name, CSSURLImageResource.name);
+  assert_equals(result[1].url, 'B');
+}, 'StylePropertyMap.getProperties returns list-valued properties with the correct CSSStyleValue');
+
+test(() => {
+  const styleMap = document.getElementById('target-multiple').styleMap;
+  const properties = styleMap.getProperties();
+  assert_equals(properties.length, 6);
+
+  assert_equals(properties[3].constructor.name, CSSKeywordValue.name);
+  assert_equals(properties[3].value, 'A');
+  assert_equals(properties[4].constructor.name, CSSKeywordValue.name);
+  assert_equals(properties[4].value, 'B');
+  assert_equals(properties[4].constructor.name, CSSKeywordValue.name);
+  assert_equals(properties[5].value, 'C');
+}, 'StylePropertyMap.getProperties returns custom properties with the correct CSSStyleValue');
+
+</script>
