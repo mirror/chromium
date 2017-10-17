@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "942b2af9_5983329d",
+        "filename": "third_party/WebKit/Source/core/animation/CSSDefaultInterpolationType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-17T21:37:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37fb9d57_9bebc1ab",
+      "revId": "2a30725e9a6b703738eecfd94cfd57f413a70a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ee4e6a5_997529ef",
         "filename": "third_party/WebKit/Source/core/animation/EffectStackTest.cpp",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "013f185c_7bfd52de",
+        "filename": "third_party/WebKit/Source/core/animation/EffectStackTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-17T21:37:15Z",
+      "side": 1,
+      "message": "In order to do this we\u0027d have to make sure that all the effects we test are associated with an element, otherwise they are skipped by the path you suggest. (Which is the \u0027normal\u0027 path, there just seems to be a lot of setup).\n\nWithin EffectStackTest.cpp this is the case for every test except NewAnimations (which creates some new animations but doesn\u0027t fully associate them via Play(..). Within KeyframeEffectModelTest.cpp this is not the case for any test.\n\nFor now I\u0027ve left a TODO on the helper function that was extracted to AnimationTestHelpers. Let me know if you want me to spend further time trying to get the above to work.",
+      "parentUuid": "2ee4e6a5_997529ef",
+      "revId": "2a30725e9a6b703738eecfd94cfd57f413a70a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9acb99f_d235202b",
         "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectModelTest.cpp",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "2a30725e9a6b703738eecfd94cfd57f413a70a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5199de4f_81cd1627",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectModelTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-17T21:37:15Z",
+      "side": 1,
+      "message": "Extracted to AnimationTestHelpers.",
+      "parentUuid": "a9acb99f_d235202b",
+      "revId": "2a30725e9a6b703738eecfd94cfd57f413a70a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
