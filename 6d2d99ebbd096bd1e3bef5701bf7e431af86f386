@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e158cab8_ba2eb5fb",
+        "filename": "chrome/browser/safe_browsing/v4_get_hash_interceptor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-17T01:21:16Z",
+      "side": 1,
+      "message": "Refactored this so it is agnostic to content::BrowserThread.",
+      "parentUuid": "464660a8_c04df847",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 41
+      },
+      "revId": "6d2d99ebbd096bd1e3bef5701bf7e431af86f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b69ed5d_61ce779d",
         "filename": "chrome/browser/safe_browsing/v4_get_hash_interceptor.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "6d2d99ebbd096bd1e3bef5701bf7e431af86f386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71d698c_15019e2b",
+        "filename": "chrome/browser/safe_browsing/v4_get_hash_interceptor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-17T01:21:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b69ed5d_61ce779d",
+      "range": {
+        "startLine": 105,
+        "startChar": 13,
+        "endLine": 105,
+        "endChar": 21
+      },
+      "revId": "6d2d99ebbd096bd1e3bef5701bf7e431af86f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "31695e51_edd33a92",
+        "filename": "chrome/browser/safe_browsing/v4_get_hash_interceptor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-17T01:21:16Z",
+      "side": 1,
+      "message": "Done, I\u0027ve also merged v4_test_utils into db/v4_test_util",
+      "parentUuid": "3c29ea44_2fec5be0",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 63
+      },
+      "revId": "6d2d99ebbd096bd1e3bef5701bf7e431af86f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c631aea5_52599a9e",
         "filename": "chrome/browser/safe_browsing/v4_get_hash_interceptor.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "6d2d99ebbd096bd1e3bef5701bf7e431af86f386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2772583_e3654e90",
+        "filename": "chrome/browser/safe_browsing/v4_get_hash_interceptor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-17T01:21:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c631aea5_52599a9e",
+      "range": {
+        "startLine": 52,
+        "startChar": 14,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "6d2d99ebbd096bd1e3bef5701bf7e431af86f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
