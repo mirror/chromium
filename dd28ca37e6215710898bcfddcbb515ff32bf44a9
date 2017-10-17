@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dad2fc92_8ca03957",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-10-17T00:02:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ff47444_71655a71",
+      "revId": "dd28ca37e6215710898bcfddcbb515ff32bf44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "568884c4_e9157e0b",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "dd28ca37e6215710898bcfddcbb515ff32bf44a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42187c55_450f06ac",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-10-17T00:02:05Z",
+      "side": 1,
+      "message": "Number of service workers for other domains. Filter will not be shown when there is nothing to filter.",
+      "parentUuid": "568884c4_e9157e0b",
+      "revId": "dd28ca37e6215710898bcfddcbb515ff32bf44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

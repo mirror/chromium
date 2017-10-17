@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04cf4e1b_f5e6f7ae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ParsedURL.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-10-17T00:02:05Z",
+      "side": 1,
+      "message": "I\u0027ve noticed a minor issue when the file name included a query string if the original string had one. Though it does not warrant a separate CL.",
+      "revId": "635c8ead9bdd13e64881738ccc62be1739eaa1fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

@@ -16,6 +16,24 @@
       "revId": "1fa1eff47a519f8637f10ad65c0d81eef01597c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8181052_ee8f9e70",
+        "filename": "third_party/WebKit/Source/devtools/front_end/quick_open/FilteredListWidget.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-10-17T00:02:05Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "49fa3960_380a9dc7",
+      "revId": "1fa1eff47a519f8637f10ad65c0d81eef01597c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
