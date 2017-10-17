@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7981511e_38ade961",
+        "filename": "chrome/browser/chrome_browser_field_trials_desktop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-17T13:29:41Z",
+      "side": 1,
+      "message": "Instead...\nglobal_tracker-\u003eallocator()-\u003eFlush(/*sync\u003d*/false);",
+      "range": {
+        "startLine": 193,
+        "startChar": 12,
+        "endLine": 193,
+        "endChar": 30
+      },
+      "revId": "d7cd563ba635466ca0a5eb3db153352f2ccc854c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
