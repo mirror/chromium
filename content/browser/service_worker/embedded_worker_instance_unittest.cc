@@ -201,6 +201,8 @@ class EmbeddedWorkerInstanceTest : public testing::Test,
     auto info = mojom::ServiceWorkerInstalledScriptsInfo::New();
     info->manager_request =
         mojo::MakeRequest(&installed_scripts_managers_.back());
+    installed_scripts_manager_host_requests_.push_back(
+        mojo::MakeRequest(&info->manager_host_ptr));
     return info;
   }
 
@@ -223,6 +225,8 @@ class EmbeddedWorkerInstanceTest : public testing::Test,
   std::vector<mojom::ServiceWorkerEventDispatcherPtr> dispatchers_;
   std::vector<mojom::ServiceWorkerInstalledScriptsManagerPtr>
       installed_scripts_managers_;
+  std::vector<mojom::ServiceWorkerInstalledScriptsManagerHostRequest>
+      installed_scripts_manager_host_requests_;
   std::vector<std::unique_ptr<ProviderHostEndpoints>> provider_host_endpoints_;
 
   TestBrowserThreadBundle thread_bundle_;
