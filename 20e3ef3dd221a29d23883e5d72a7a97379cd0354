@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee0f923d_70043496",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-17T00:13:16Z",
+      "side": 1,
+      "message": "Shall we use cast_sink.cast_data().discovered_by_dial instead of sink_source? It seems possible to open dial sink with SinkSource::ConnectionRetry and SinkSource::NetworkCache, and we will remove failure count in those cases (not sure if it is expected...)",
+      "range": {
+        "startLine": 407,
+        "startChar": 6,
+        "endLine": 407,
+        "endChar": 38
+      },
+      "revId": "20e3ef3dd221a29d23883e5d72a7a97379cd0354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349d6135_5c5963ba",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-17T00:13:16Z",
+      "side": 1,
+      "message": "May have merge conflict with https://chromium-review.googlesource.com/c/chromium/src/+/722127",
+      "range": {
+        "startLine": 530,
+        "startChar": 31,
+        "endLine": 530,
+        "endChar": 32
+      },
+      "revId": "20e3ef3dd221a29d23883e5d72a7a97379cd0354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
