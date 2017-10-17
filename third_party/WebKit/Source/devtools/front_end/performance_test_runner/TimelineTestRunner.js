@@ -39,7 +39,8 @@ PerformanceTestRunner.timelinePropertyFormatters = {
   allottedMilliseconds: 'formatAsTypeName',
   timedOut: 'formatAsTypeName',
   networkTime: 'formatAsTypeName',
-  timing: 'formatAsTypeName'
+  timing: 'formatAsTypeName',
+  streamed: 'skip'
 };
 
 PerformanceTestRunner.InvalidationFormatters = {
