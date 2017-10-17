@@ -5,13 +5,20 @@
 #include "chrome/browser/chromeos/file_system_provider/operations/read_directory.h"
 
 #include <stddef.h>
-
+#include <iostream>
 #include <string>
 #include <utility>
+#include "base/bind.h"
+#include "chromeos/dbus/dbus_method_call_status.h"
 
 #include "chrome/browser/chromeos/file_system_provider/operations/get_metadata.h"
 #include "chrome/common/extensions/api/file_system_provider.h"
 #include "chrome/common/extensions/api/file_system_provider_internal.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/upstart_client.h"
+
+#include <chrono>
+using namespace std::chrono;
 
 namespace chromeos {
 namespace file_system_provider {
@@ -63,6 +70,57 @@ ReadDirectory::ReadDirectory(
 ReadDirectory::~ReadDirectory() {
 }
 
+void ReadDirectory::HandleEntriesCallback(
+    chromeos::DBusMethodCallStatus call_status,
+    std::vector<std::string> entries) {
+  std::cout << "Handle entries CALLBACK CALLED *** " << std::endl;
+
+  if (call_status == DBUS_METHOD_CALL_FAILURE) {
+    std::cout << "DBUS METHOD CALL FAILURE" << std::endl;
+  } else {
+    std::cout << "DBUS METHOD CALL SUCCESS" << std::endl;
+  }
+
+  for (std::vector<std::string>::iterator it = entries.begin();
+       it != entries.end(); ++it) {
+    std::cout << *it << std::endl;
+  }
+  {
+    int64_t ms = duration_cast<milliseconds>(
+                     std::chrono::system_clock::now().time_since_epoch())
+                     .count();
+    std::cout << "(T1) read_directory# : " << std::to_string(ms) << std::endl;
+    std::to_string(ms);
+  }
+}
+
+void ReadDirectory::HandleStructCallback(
+    chromeos::DBusMethodCallStatus call_status,
+    std::vector<chromeos::EntryData> entries) {
+  std::cout << "Handle Struct Callback *** " << std::endl;
+  if (call_status == DBUS_METHOD_CALL_FAILURE) {
+    std::cout << "DBUS METHOD CALL FAILURE" << std::endl;
+  } else {
+    std::cout << "DBUS METHOD CALL SUCCESS" << std::endl;
+  }
+  for (std::vector<chromeos::EntryData>::iterator it = entries.begin();
+       it != entries.end(); ++it) {
+    std::cout << "path: " << it->fullPath << ", size: " << it->size
+              << ", name: " << it->name
+              << ", mod time: " << it->modification_time
+              << ", is directory: " << std::to_string(it->is_directory)
+              << std::endl;
+  }
+  {
+    int64_t ms = duration_cast<milliseconds>(
+                     std::chrono::system_clock::now().time_since_epoch())
+                     .count();
+    std::cout << "(T1.0) read_directory#Handle struct: " << std::to_string(ms)
+              << std::endl;
+    std::to_string(ms);
+  }
+}
+
 bool ReadDirectory::Execute(int request_id) {
   using extensions::api::file_system_provider::ReadDirectoryRequestedOptions;
 
@@ -74,6 +132,20 @@ bool ReadDirectory::Execute(int request_id) {
   // Request only is_directory and name metadata fields.
   options.is_directory = true;
   options.name = true;
+
+  std::cout << "Executing read dir *** " << std::endl;
+  {
+    int64_t ms = duration_cast<milliseconds>(
+                     std::chrono::system_clock::now().time_since_epoch())
+                     .count();
+    std::cout << "(T0) read_directory#Execute: " << std::to_string(ms)
+              << std::endl;
+    std::to_string(ms);
+  }
+  chromeos::DBusThreadManager::Get()
+      ->GetSmbClientClient()
+      ->CommunicateToService("smb://192.168.0.102/testshare/temp",
+                             base::Bind(&ReadDirectory::HandleStructCallback));
 
   return SendEvent(
       request_id,
