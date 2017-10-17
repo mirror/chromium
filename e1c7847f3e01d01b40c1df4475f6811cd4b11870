@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "536b1bd7_a3db7434",
+        "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-17T11:59:18Z",
+      "side": 1,
+      "message": "This is needed as a public deps to allow includes of \u003cMDFInternationalization/MDFRTL.h\u003e. I am not sure to understand why.",
+      "range": {
+        "startLine": 59,
+        "startChar": 100,
+        "endLine": 59,
+        "endChar": 105
+      },
+      "revId": "e1c7847f3e01d01b40c1df4475f6811cd4b11870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
