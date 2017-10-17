@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4e419b5_e2ea16f6",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T21:04:14Z",
+      "side": 1,
+      "message": "should you do this just if it\u0027s H264?  then you might call the new class MediaCodecH264Encoder, and save the copies / checking mime types / etc.",
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b032d61_c3e22390",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T21:04:14Z",
+      "side": 1,
+      "message": "please add some detail about why.",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 62
+      },
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7edd7b23_7a5b1850",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T21:04:14Z",
+      "side": 1,
+      "message": "please comment what this is.",
+      "range": {
+        "startLine": 25,
+        "startChar": 36,
+        "endLine": 25,
+        "endChar": 50
+      },
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb62ce8_66135e65",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T21:04:14Z",
+      "side": 1,
+      "message": "can be moved to @25, or not.",
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9521037_257897ab",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T21:04:14Z",
+      "side": 1,
+      "message": "should this also check for H264, so that it\u0027s not bothering to copy config frames that it won\u0027t use?",
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9bc8efe_1c6c23fe",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T21:04:14Z",
+      "side": 1,
+      "message": "rather than doing the copy if it\u0027s not a keyframe or if it\u0027s not h264, could you just put codecOutputBuffer into mOutputBuffers?",
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcafa50b_2c46117c",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T21:04:14Z",
+      "side": 1,
+      "message": "this could use a few more high-level comments.",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 9
+      },
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78eb39fd_aa4c493f",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T21:04:14Z",
+      "side": 1,
+      "message": "is this different than \"return super.getOutputBuffer(index)\", maybe with a throw?",
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
