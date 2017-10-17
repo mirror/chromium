@@ -657,6 +657,8 @@ public class ChromeTabbedActivity
                 .edit()
                 .putLong(LAST_BACKGROUNDED_TIME_MS_PREF, System.currentTimeMillis())
                 .apply();
+
+        FeatureUtilities.finalizePendingFeatures();
     }
 
     @Override
