@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d88f1840_069acb10",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-17T10:04:38Z",
+      "side": 1,
+      "message": "Hum, I\u0027m not convinced that it\u0027s worth detailing this here? Especially considering that this will probably evolve over time (it\u0027ll initially only be used to observe the impact on metrics, but we\u0027ll need to decide how to plumb these signals to the TabManager etc if needed).",
+      "parentUuid": "3e6a5370_f2405ab2",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81291640_e2a10b84",
         "filename": "base/memory/swap_thrashing_monitor.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f65081d_dde1af91",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-17T10:04:38Z",
+      "side": 1,
+      "message": "Ha! I dropped this arc as I don\u0027t think it really make sense, I think that it\u0027s better to always have a \"cooldown\" period and to only allow dropping from Confirmed to Suspected.",
+      "parentUuid": "81291640_e2a10b84",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "14f36429_518b99cd",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-17T10:04:38Z",
+      "side": 1,
+      "message": "Nop, moving them.",
+      "parentUuid": "6850167e_603a7e40",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c568398d_c1682086",
         "filename": "base/memory/swap_thrashing_monitor.h",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c932d722_994d29d1",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-17T10:04:38Z",
+      "side": 1,
+      "message": "Ha, I like the delegate approach, I\u0027ll do this.\n\nI don\u0027t really want to define this as an interface that get specialized on each platform. In the long term I\u0027d like to enforce more parts of the state system here (e.g. make sure that the transitions between states are enforced in the base class). I didn\u0027t did it here because it makes me make some cross-platform assumptions of how things should be, but it\u0027ll be a discussion we need to have once we try to expand this to more platforms :)",
+      "parentUuid": "c568398d_c1682086",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4cf3a6a_a3423e47",
         "filename": "base/memory/swap_thrashing_monitor.h",
         "patchSetId": 6
@@ -84,6 +156,24 @@
       "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc471133_b5f37b7a",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-17T10:04:38Z",
+      "side": 1,
+      "message": "It\u0027s just that I\u0027m trying to not make assumptions or design things for !Win platforms yet, I\u0027m trying to keep the cross-platform set of functions as simple as possible.",
+      "parentUuid": "d4cf3a6a_a3423e47",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
