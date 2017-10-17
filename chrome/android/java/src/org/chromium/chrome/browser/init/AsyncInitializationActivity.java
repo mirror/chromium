@@ -287,6 +287,7 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
                 && FirstRunFlowSequencer.launch(this, intent, false /* requiresBroadcast */,
                            shouldPreferLightweightFre(intent))) {
             abortLaunch();
+            overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
             return;
         }
 

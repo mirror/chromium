@@ -6,16 +6,19 @@ package org.chromium.chrome.browser.firstrun;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
 import org.chromium.base.ActivityState;
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ApplicationStatus.ActivityStateListener;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.CachedMetrics.EnumeratedHistogramSample;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ThemedWindowFrame;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.metrics.UmaUtils;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
@@ -188,7 +191,8 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
         mPager = new FirstRunViewPager(this);
         mPager.setId(R.id.fre_pager);
         mPager.setOffscreenPageLimit(3);
-        setContentView(mPager);
+        setContentView(ThemedWindowFrame.wrapContentView(R.style.DialogWhenLarge, mPager));
+        ApiCompatibilityUtils.setStatusBarColor(getWindow(), Color.BLACK);
 
         mFirstRunFlowSequencer = new FirstRunFlowSequencer(this) {
             @Override
