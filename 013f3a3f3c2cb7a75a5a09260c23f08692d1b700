@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dd9fd1d_4be68242",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-10-17T02:18:44Z",
+      "side": 1,
+      "message": "cc_perftests and gpu_perftests don\u0027t generate the json-test-results output yet so I don\u0027t think this will make them upload to the dashboard properly. The following bug is tracking that progress:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d764501\n\nThe rest lgtm",
+      "range": {
+        "startLine": 610,
+        "startChar": 5,
+        "endLine": 610,
+        "endChar": 17
+      },
+      "revId": "013f3a3f3c2cb7a75a5a09260c23f08692d1b700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
