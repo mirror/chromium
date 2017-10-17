@@ -625,6 +625,12 @@ bool IsInternalURL(const GURL& url) {
 // Layout all of the controls in the window. This should be called whenever
 // the content has changed.
 - (void)performLayout {
+  // Skip layout if the bubble is closing.
+  InfoBubbleWindow* bubbleWindow =
+      base::mac::ObjCCastStrict<InfoBubbleWindow>([self window]);
+  if ([bubbleWindow isClosing])
+    return;
+
   // Make the content at least as wide as the permissions view.
   CGFloat contentWidth =
       std::max([self defaultWindowWidth], NSWidth([permissionsView_ frame]));
