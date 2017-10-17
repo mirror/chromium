@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80a8ccd1_c54e174d",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-17T05:07:15Z",
+      "side": 1,
+      "message": "buttons-left?\nid should be unique in the document.",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "77c1f69686767deebb0954cb4daf1de0ebbf42fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
