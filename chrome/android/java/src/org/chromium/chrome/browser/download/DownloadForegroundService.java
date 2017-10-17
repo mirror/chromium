@@ -26,6 +26,8 @@ public class DownloadForegroundService extends Service {
      * @param context The context used to start service.
      */
     public static void startDownloadForegroundService(Context context) {
+        // TODO(jming, dtrainor): Grab a WakeLock here until the service has started (tracked with
+        // crbug.com/770389).
         AppHooks.get().startForegroundService(new Intent(context, DownloadForegroundService.class));
     }
 
