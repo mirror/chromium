@@ -70,9 +70,16 @@ PermissionServiceContext::PermissionServiceContext(
 PermissionServiceContext::~PermissionServiceContext() {
 }
 
-void PermissionServiceContext::CreateService(
+void PermissionServiceContext::CreateServiceForFrame(
     blink::mojom::PermissionServiceRequest request) {
-  services_.AddBinding(base::MakeUnique<PermissionServiceImpl>(this),
+  DCHECK(render_frame_host_);
+  CreateService(std::move(request), {});
+}
+
+void PermissionServiceContext::CreateService(
+    blink::mojom::PermissionServiceRequest request,
+    const url::Origin& origin) {
+  services_.AddBinding(base::MakeUnique<PermissionServiceImpl>(this, origin),
                        std::move(request));
 }
 

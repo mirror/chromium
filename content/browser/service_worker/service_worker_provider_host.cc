@@ -24,6 +24,7 @@
 #include "content/browser/service_worker/service_worker_script_url_loader_factory.h"
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/browser/url_loader_factory_getter.h"
+#include "content/browser/worker_binder_registry.h"
 #include "content/common/service_worker/service_worker_messages.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/common/service_worker/service_worker_utils.h"
@@ -134,7 +135,8 @@ void GetInterfaceImpl(const std::string& interface_name,
   if (!process)
     return;
 
-  // TODO(sammc): Dispatch interface requests.
+  GetWorkerBinderRegistry().BindInterface(
+      interface_name, std::move(interface_pipe), process, origin);
 }
 
 }  // anonymous namespace
