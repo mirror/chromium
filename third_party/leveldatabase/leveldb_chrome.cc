@@ -85,6 +85,10 @@ class Globals {
   void UpdateHistograms() {
     leveldb_env::DBTracker::GetInstance()->UpdateHistograms();
 
+    // In-memory caches are hard-coded to be zero bytes.
+    UMA_HISTOGRAM_COUNTS_10M("LevelDB.SharedCache.BytesUsed.InMemory",
+                             GetSharedInMemoryBlockCache()->TotalCharge());
+
     // leveldb limits the read cache size to 1GB, but its default value is 8MB,
     // and Chrome uses either 1MB or 8MB.
     if (GetSharedWebBlockCache() == GetSharedBrowserBlockCache()) {
@@ -96,8 +100,6 @@ class Globals {
                              web_block_cache_->TotalCharge());
     UMA_HISTOGRAM_COUNTS_10M("LevelDB.SharedCache.BytesUsed.Browser",
                              browser_block_cache_->TotalCharge());
-    UMA_HISTOGRAM_COUNTS_10M("LevelDB.SharedCache.BytesUsed.InMemory",
-                             GetSharedInMemoryBlockCache()->TotalCharge());
   }
 
  private:
