@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cb35696_869e10a2",
+        "filename": "ui/keyboard/keyboard_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-17T04:32:22Z",
+      "side": 1,
+      "message": "nit: std::make_unique?",
+      "range": {
+        "startLine": 156,
+        "startChar": 6,
+        "endLine": 156,
+        "endChar": 22
+      },
+      "revId": "8ca9f8476ac4b0369d159cfd1fbe0405c3b00510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
