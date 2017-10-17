@@ -1,0 +1,463 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c5eda66_c2ebd6b1",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "remove \"explicit\"",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70096f10_35a154d6",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Why does ControllerEventHandler allow sequential access only? All the operations are serialized on IO thread anyways.",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb05bdd_b4c7929f",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Add somewhere a comment that |weak_delegate_| must be accessed on IO thread only?",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5551db7e_a8a56686",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "|writer| type is not quite obvious, but up to you.",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6f406f_10ccc9fc",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "{} not needed",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41db6e5b_be54c0ed",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Would it make sense to move KeyboardMicRegistration to a separate ChromeOS-specific header? (in a separate CL)",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3cae1cd_ed30d55d",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Move all these after l.32?",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702ad873_0ae7e64f",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Why publishing both constructor and Create()?",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef90a9a4_85bfd585",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Not in use as of now.",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0df43e0_6accb7e3",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Not sure what is the point of having this function? To me, it just obscures the fact that unavailable parameters are used.",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60297b14_7e2611d9",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "You could just mock OnStreamCreated instead, and expect it with \"_\" instead of parameters you do not care about.",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c826c8e8_c88eed5b",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Do we want REAL_IO_THREAD? If not, could you add a comment explaining that?\nOverall, would be nice to have a comment on threading for these tests (what are UI, IO and audio manager threads here)",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd75c331_0d6f0203",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Why do we need this?",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9faafc9e_50d61a5a",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Could you change the name to be more descriptive?",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa5a163_1f423cb1",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Could you define a constant for this \u002710\u0027 used everywhere? Would be easier to read.",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4696fa04_48a997e6",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "This line (and others like this) look quite confusing. Could you add a comment on what is going on?",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302e9b67_71bf16a7",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Move to unnamed namespace above?",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3846c1bd_ffa1faad",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "First making a call and then setting up the environment looks pretty unnatural when reading. Are there any specific reasons you prefer this order?",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa52011b_6a66ef39",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Since the stream is 2 levels down from the delegate, having comments explaining expectations would be helpful, especially for things like SetAutomaticGainControl().",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd05c08f_254eeb51",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afbef872_e7daa6b3",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f18513a_60e71763",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Not needed? (Some others probably as well) Cleanup headers?",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee768f4_49fa910e",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Make it static or just a helper function?",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b18946_7eee58a5",
+        "filename": "media/audio/audio_input_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "It looks like this belongs to a separate CL? Why mixing them together? This one seems to be a safe change, having it separately may simplify reverts and re-lands of a bigger one ;)",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96050166_74126af5",
+        "filename": "media/audio/audio_input_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Just \"\u003d default\" in the header and ditch .cc?",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b0e1c2_7cd59ff2",
+        "filename": "media/audio/audio_input_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Why to restrict implementations to \u0027const\u0027?",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c88978_8968066a",
+        "filename": "media/audio/audio_output_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-17T08:58:47Z",
+      "side": 1,
+      "message": "Here we could also default the implementations and drop .cc",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
