@@ -65,6 +65,7 @@ class FakeArcCertStoreInstance : public mojom::CertStoreInstance {
 
   void OnKeyPermissionsChanged(
       const std::vector<std::string>& permissions) override {
+    DLOG(ERROR) << "OnKeyPermissionsChanged() invoked";
     permissions_ = permissions;
   }
 
@@ -103,6 +104,8 @@ class ArcCertStoreBridgeTest : public InProcessBrowserTest {
                                     kFakeUserName);
     command_line->AppendSwitchASCII(chromeos::switches::kLoginProfile,
                                     TestingProfile::kTestUserProfileDir);
+    command_line->AppendSwitchASCII(chromeos::switches::kProfileRequiresPolicy,
+                                    "false");
   }
 
   void SetUpOnMainThread() override {
@@ -286,6 +289,7 @@ IN_PROC_BROWSER_TEST_F(ArcCertStoreBridgeTest, KeyPermissionsTest) {
   EXPECT_EQ(0U, instance()->permissions().size());
   EXPECT_FALSE(instance()->is_on_certs_changed_called());
 
+  DLOG(ERROR) << "SETTING CORP KEY USAGE POLICY";
   // Allow corporate usage keys to ARC app.
   SetCorporateKeyUsagePolicy(kFakePackageName);
 

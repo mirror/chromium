@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "base/bind.h"
 #include "base/compiler_specific.h"
 #include "base/debug/stack_trace.h"
 #include "base/files/file_path.h"
@@ -15,6 +16,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
+#include "chrome/browser/chromeos/policy/wildcard_login_checker.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/policy/core/common/cloud/cloud_policy_client.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
@@ -37,7 +39,6 @@ namespace policy {
 class CloudExternalDataManager;
 class DeviceManagementService;
 class PolicyOAuth2TokenFetcher;
-class WildcardLoginChecker;
 
 // Implements logic for initializing user policy on Chrome OS.
 class UserCloudPolicyManagerChromeOS : public CloudPolicyManager,
@@ -49,6 +50,11 @@ class UserCloudPolicyManagerChromeOS : public CloudPolicyManager,
   // is forced to false until either there has been a successful policy fetch
   // from the server or |initial_policy_fetch_timeout| has expired. (The timeout
   // may be set to TimeDelta::Max() to block permanently.)
+  // |fatal_error_callback| will be invoked if the user session should not be
+  // allowed to continue running (for example, if the user fails the wildcard
+  // check, or if we were unable to check/load policy).
+  // If |policy_required| is set, then |fatal_error_callback| will be invoked if
+  // this class is unable to load policy for the user.
   // |task_runner| is the runner for policy refresh tasks.
   // |io_task_runner| is used for network IO. Currently this must be the IO
   // BrowserThread.
@@ -57,6 +63,8 @@ class UserCloudPolicyManagerChromeOS : public CloudPolicyManager,
       std::unique_ptr<CloudExternalDataManager> external_data_manager,
       const base::FilePath& component_policy_cache_path,
       base::TimeDelta initial_policy_fetch_timeout,
+      base::OnceClosure fatal_error_callback,
+      bool policy_required,
       const scoped_refptr<base::SequencedTaskRunner>& task_runner,
       const scoped_refptr<base::SequencedTaskRunner>& io_task_runner);
   ~UserCloudPolicyManagerChromeOS() override;
@@ -112,6 +120,11 @@ class UserCloudPolicyManagerChromeOS : public CloudPolicyManager,
   void GetChromePolicy(PolicyMap* policy_map) override;
 
  private:
+  // Sets the appropriate flags to mark whether the current session requires
+  // policy. If |policy_required| is true, this ensures that future instances
+  // of this session will not start up unless a valid policy blob can be loaded.
+  void SetPolicyRequired(bool policy_required);
+
   // Fetches a policy token using the refresh token if available, or the
   // authentication context of the signin context, and calls back
   // OnOAuth2PolicyTokenFetched when done.
@@ -130,6 +143,11 @@ class UserCloudPolicyManagerChromeOS : public CloudPolicyManager,
   // Called when |policy_fetch_timeout_| times out, to cancel the blocking wait
   // for the initial policy fetch.
   void OnBlockingFetchTimeout();
+
+  // Called when a wildcard check has completed, to allow us to exit the session
+  // if required.
+  void OnWildcardCheckCompleted(const std::string& username,
+                                WildcardLoginChecker::Result result);
 
   // Cancels waiting for the initial policy fetch and flags the
   // ConfigurationPolicyProvider ready (assuming all other initialization tasks
@@ -189,6 +207,10 @@ class UserCloudPolicyManagerChromeOS : public CloudPolicyManager,
   // TODO(emaxx): Remove after the crashes tracked at https://crbug.com/685996
   // are fixed.
   base::debug::StackTrace connect_callstack_;
+
+  // The callback to invoke if the user session should be shutdown. This is
+  // injected in the constructor to make it easier to write tests.
+  base::OnceClosure fatal_error_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(UserCloudPolicyManagerChromeOS);
 };
