@@ -284,6 +284,40 @@
       "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dccf380_dce67d48",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-17T08:29:22Z",
+      "side": 1,
+      "message": "\u0027If the script has already been taken\u0027",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ecae8a6_a5e5b818",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-17T08:29:22Z",
+      "side": 1,
+      "message": "It\u0027s not plausible but technically the status could be changed after RequestInstalledScript and before GetStatusOnWorkerThread? Probably just removing this DCHECK is fine, the code + DCHECK below seems to cover all the possible cases",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
