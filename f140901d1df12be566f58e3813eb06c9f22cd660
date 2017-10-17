@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95508330_67d63fe8",
+        "filename": "testing/libfuzzer/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-17T22:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05441e47_36107d68",
+      "revId": "f140901d1df12be566f58e3813eb06c9f22cd660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7a83402_20290cde",
         "filename": "testing/libfuzzer/coverage.py",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f140901d1df12be566f58e3813eb06c9f22cd660",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da5a51d_c24dc6e7",
+        "filename": "testing/libfuzzer/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-17T22:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7a83402_20290cde",
+      "revId": "f140901d1df12be566f58e3813eb06c9f22cd660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
