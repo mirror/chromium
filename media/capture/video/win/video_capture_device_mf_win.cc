@@ -20,8 +20,8 @@
 #include "media/capture/video/win/capability_list_win.h"
 #include "media/capture/video/win/sink_filter_win.h"
 
+using Microsoft::WRL::ComPtr;
 using base::win::ScopedCoMem;
-using base::win::ScopedComPtr;
 
 namespace media {
 
@@ -60,7 +60,7 @@ static bool FillFormat(IMFMediaType* type, VideoCaptureFormat* format) {
 HRESULT FillCapabilities(IMFSourceReader* source,
                          CapabilityList* capabilities) {
   DWORD stream_index = 0;
-  ScopedComPtr<IMFMediaType> type;
+  ComPtr<IMFMediaType> type;
   HRESULT hr;
   while (SUCCEEDED(hr = source->GetNativeMediaType(
                        kFirstVideoStream, stream_index, type.GetAddressOf()))) {
@@ -122,7 +122,7 @@ class MFReaderCallback final
     sample->GetBufferCount(&count);
 
     for (DWORD i = 0; i < count; ++i) {
-      ScopedComPtr<IMFMediaBuffer> buffer;
+      ComPtr<IMFMediaBuffer> buffer;
       sample->GetBufferByIndex(i, buffer.GetAddressOf());
       if (buffer.Get()) {
         DWORD length = 0, max_length = 0;
@@ -197,11 +197,11 @@ VideoCaptureDeviceMFWin::~VideoCaptureDeviceMFWin() {
 }
 
 bool VideoCaptureDeviceMFWin::Init(
-    const base::win::ScopedComPtr<IMFMediaSource>& source) {
+    const Microsoft::WRL::ComPtr<IMFMediaSource>& source) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(!reader_.Get());
 
-  ScopedComPtr<IMFAttributes> attributes;
+  ComPtr<IMFAttributes> attributes;
   MFCreateAttributes(attributes.GetAddressOf(), 1);
   DCHECK(attributes.Get());
 
@@ -229,7 +229,7 @@ void VideoCaptureDeviceMFWin::AllocateAndStart(
     if (SUCCEEDED(hr)) {
       const CapabilityWin found_capability =
           GetBestMatchedCapability(params.requested_format, capabilities);
-      ScopedComPtr<IMFMediaType> type;
+      ComPtr<IMFMediaType> type;
       hr = reader_->GetNativeMediaType(kFirstVideoStream,
                                        found_capability.stream_index,
                                        type.GetAddressOf());
