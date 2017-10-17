@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66673927_cb4a4632",
+        "filename": "ui/file_manager/file_manager/common/js/util.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-17T08:25:38Z",
+      "side": 1,
+      "message": "isPrintable sounds like a function which returns a boolean value.\n\nMaybe we should make util.isPrintable a function whose input is a character and output is whether the input is printable, and loops through each characters in name here.",
+      "revId": "3bdbce78b6e0076e250dadd226e61734b45416b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
