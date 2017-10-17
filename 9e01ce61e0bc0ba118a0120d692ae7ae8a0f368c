@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f873115_01ef5c4d",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-17T21:40:47Z",
+      "side": 1,
+      "message": "Let\u0027s give this a default implementation and make this class non-abstract too.",
+      "range": {
+        "startLine": 103,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 29
+      },
+      "revId": "9e01ce61e0bc0ba118a0120d692ae7ae8a0f368c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
