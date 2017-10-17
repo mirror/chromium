@@ -20,7 +20,11 @@
 
 #if defined(USE_GBM)
 #include <gbm.h>
-#endif
+#if defined(USE_VULKAN)
+#include <vulkan/vulkan.h>
+#include <vulkan/vulkan_intel.h>
+#endif  // defined(USE_GBM)
+#endif  // defined(USE_VULKAN)
 
 namespace base {
 class CommandLine;
@@ -78,7 +82,13 @@ class ClientBase {
     std::unique_ptr<ScopedEglImage> egl_image;
     std::unique_ptr<ScopedEglSync> egl_sync;
     std::unique_ptr<ScopedTexture> texture;
-#endif
+#if defined(USE_VULKAN)
+    std::unique_ptr<ScopedVkDeviceMemory> vk_memory;
+    std::unique_ptr<ScopedVkImage> vk_image;
+    std::unique_ptr<ScopedVkImageView> vk_image_view;
+    std::unique_ptr<ScopedVkFramebuffer> vk_framebuffer;
+#endif  // defined(USE_VULKAN)
+#endif  // defined(USE_GBM)
     std::unique_ptr<zwp_linux_buffer_params_v1> params;
     std::unique_ptr<base::SharedMemory> shared_memory;
     std::unique_ptr<wl_shm_pool> shm_pool;
@@ -112,6 +122,13 @@ class ClientBase {
   std::unique_ptr<base::MessageLoopForUI> ui_loop_;
   base::ScopedFD drm_fd_;
   std::unique_ptr<gbm_device> device_;
+#if defined(USE_VULKAN)
+  std::unique_ptr<ScopedVkInstance> vk_instance_;
+  std::unique_ptr<ScopedVkDevice> vk_device_;
+  std::unique_ptr<ScopedVkCommandPool> vk_command_pool_;
+  std::unique_ptr<ScopedVkRenderPass> vk_render_pass_;
+  VkQueue vk_queue_;
+#endif
 #endif
   scoped_refptr<gl::GLSurface> gl_surface_;
   scoped_refptr<gl::GLContext> gl_context_;
