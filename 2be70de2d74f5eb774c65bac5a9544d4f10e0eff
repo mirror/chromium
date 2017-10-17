@@ -22,6 +22,30 @@
       "revId": "2be70de2d74f5eb774c65bac5a9544d4f10e0eff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1245618d_151db6a2",
+        "filename": "content/renderer/media/webrtc_audio_device_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1154069
+      },
+      "writtenOn": "2017-10-17T07:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40a9cf8d_5865cfb1",
+      "range": {
+        "startLine": 361,
+        "startChar": 2,
+        "endLine": 361,
+        "endChar": 9
+      },
+      "revId": "2be70de2d74f5eb774c65bac5a9544d4f10e0eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
