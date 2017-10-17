@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0c9e101_6e47ec8c",
+        "filename": "third_party/WebKit/LayoutTests/editing/undo/undo-paste-when-caret-is-not-in-range.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-17T18:14:02Z",
+      "side": 1,
+      "message": "Test body can be simplified with selection.setClipboardData:\n\nselection_test(\n  \u0027\u003cdiv contenteditable\u003e^def|\\u00A0\u003c/div\u003e\u0027,\n  selection \u003d\u003e {\n    const document  \u003d selection.document;\n    const edit \u003d document.querySelector(\u0027div\u0027);\n    selection.setClipboardData(\u0027abc\u0027);\n    document.execCommand(\u0027paste\u0027);\n    selection.collapse(edit, edit.childNodes.length);\n    document.execCommand(\u0027undo\u0027);\n  },\n  \u0027\u003cdiv contenteditable\u003e^def|\\u00A0\u003c/div\u003e\u0027,\n  \u0027...\u0027);",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 37
+      },
+      "revId": "54edab457e443ece3c9b7c408280903005f13fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12665d37_60fe0ada",
+        "filename": "third_party/WebKit/LayoutTests/editing/undo/undo-paste-when-caret-is-not-in-range.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-17T18:14:02Z",
+      "side": 1,
+      "message": "nit: fix typo",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "54edab457e443ece3c9b7c408280903005f13fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
