@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b53adca7_b4d04bd5",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T21:40:28Z",
+      "side": 1,
+      "message": "This looks like a magic number.  Are the XFA document types defined in an enum anywhere?  I\u0027m concerned that if ever a new type is added, this constant will not be correctly updated.  If there is not an existing enum, I\u0027d recommend defining one for the purposes of emitting to this histogram, with an explicit \"OTHER\" fallback as the first bucket.",
+      "range": {
+        "startLine": 1508,
+        "startChar": 23,
+        "endLine": 1508,
+        "endChar": 24
+      },
+      "revId": "2866a386d2a5fa11d0b949d38dff40d359a2212b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
