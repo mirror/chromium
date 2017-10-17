@@ -910,6 +910,7 @@ void ServiceWorkerProviderHost::SendSetControllerServiceWorker(
       }
     }
   }
+  usleep(10000);
   container_->SetController(GetOrCreateServiceWorkerHandle(version),
                             used_features, notify_controllerchange);
 }
