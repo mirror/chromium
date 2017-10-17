@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "650696a1_acc73a83",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-17T21:53:43Z",
+      "side": 1,
+      "message": "nit: white spaces",
+      "revId": "eb06f26a1612632338ccc206431ea466c63c53f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f2fa80_7912a6ab",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-17T21:53:43Z",
+      "side": 1,
+      "message": "why not a new style iterator?",
+      "revId": "eb06f26a1612632338ccc206431ea466c63c53f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
