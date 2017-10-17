@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Calling StylePropertyMap.getProperties on an empty property model returns a zero-length array
+FAIL StylePropertyMap.getProperties returns properties in sorted order assert_array_equals: property 0, expected "background-image" but got "--A"
+FAIL StylePropertyMap.getProperties returns CSS properties with the correct CSSStyleValue assert_equals: expected "CSSUnitValue" but got "String"
+FAIL StylePropertyMap.getProperties returns list-valued properties with the correct CSSStyleValue assert_equals: expected 2 but got 3
+FAIL StylePropertyMap.getProperties returns custom properties with the correct CSSStyleValue assert_equals: expected "CSSKeywordValue" but got "String"
+Harness: the test ran to completion.
+
