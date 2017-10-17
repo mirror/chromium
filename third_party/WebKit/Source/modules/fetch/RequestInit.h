@@ -5,6 +5,7 @@
 #ifndef RequestInit_h
 #define RequestInit_h
 
+#include "bindings/core/v8/NativeValueTraits.h"
 #include "bindings/modules/v8/byte_string_sequence_sequence_or_byte_string_byte_string_record.h"
 #include "modules/fetch/Headers.h"
 #include "platform/heap/Handle.h"
@@ -41,6 +42,11 @@ class RequestInit {
   bool AreAnyMembersSet() const { return are_any_members_set_; }
 
  private:
+  class GetterHelper;
+  struct IDLPassThrough;
+  friend struct NativeValueTraits<IDLPassThrough>;
+  friend struct NativeValueTraitsBase<IDLPassThrough>;
+
   String method_;
   HeadersInit headers_;
   String content_type_;

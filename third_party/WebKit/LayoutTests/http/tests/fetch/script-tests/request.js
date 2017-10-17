@@ -560,6 +560,37 @@ test(() => {
     assert_throws({name: 'TypeError'}, () => { req.clone(); });
   }, 'Used => clone');
 
+test(() => {
+  // We implement RequestInit manually so we need to test the functionality
+  // here.
+  function undefined_nonpresent(property_name) {
+    assert_not_equals(property_name, 'referrer', 'property_name');
+    const request = new Request('/', {referrer: '/'});
+    let init = {};
+    init[property_name] = undefined;
+    return (new Request(request, init)).referrer === request.url;
+  }
+
+  assert_true(undefined_nonpresent('method'), 'method');
+  assert_true(undefined_nonpresent('headers'), 'headers');
+  assert_true(undefined_nonpresent('body'), 'body');
+  assert_true(undefined_nonpresent('referrerPolicy'), 'referrerPolicy');
+  assert_true(undefined_nonpresent('mode'), 'mode');
+  assert_true(undefined_nonpresent('credentials'), 'credentials');
+  assert_true(undefined_nonpresent('cache'), 'cache');
+  assert_true(undefined_nonpresent('redirect'), 'redirect');
+  assert_true(undefined_nonpresent('integrity'), 'integrity');
+  assert_true(undefined_nonpresent('keepalive'), 'keepalive');
+  assert_true(undefined_nonpresent('signal'), 'signal');
+  assert_true(undefined_nonpresent('window'), 'window');
+
+  // |undefined_nonpresent| uses referrer for testing, so we need to test
+  // the property manually.
+  const request = new Request('/', {referrerPolicy: 'same-origin'});
+  assert_equals(new Request(request, {referrer: undefined}).referrerPolicy,
+                'same-origin', 'referrer');
+}, 'An undefined member should be treated as non-present');
+
 promise_test(function() {
     var headers = new Headers;
     headers.set('Content-Language', 'ja');
