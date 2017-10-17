@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "1a78b54a_949e9268",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-17T13:29:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c15e1c1d_5d0e3e86",
+      "revId": "34588d0bdd584a8a8f4e854dc9bfcab4ce0f9db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94d05321_59645add",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 2
@@ -65,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "3cda1100_04fd0d51",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-17T13:29:15Z",
+      "side": 1,
+      "message": "\u003e after |password_view_button_timeout_| seconds?\nFixed in another way.",
+      "parentUuid": "94d05321_59645add",
+      "range": {
+        "startLine": 463,
+        "startChar": 37,
+        "endLine": 463,
+        "endChar": 39
+      },
+      "revId": "34588d0bdd584a8a8f4e854dc9bfcab4ce0f9db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f2ce850_c2b530ee",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 2
@@ -79,6 +121,24 @@
       "revId": "34588d0bdd584a8a8f4e854dc9bfcab4ce0f9db6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf387fb_35169df0",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-17T13:29:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f2ce850_c2b530ee",
+      "revId": "34588d0bdd584a8a8f4e854dc9bfcab4ce0f9db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
