@@ -34,6 +34,24 @@
       "revId": "2cea02bb974351bb0ccbb035307c4e46fa016a87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a73c80_fb497a46",
+        "filename": "android_webview/tools/apk_merger.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-17T15:27:29Z",
+      "side": 1,
+      "message": "Oh, TIL. In that case, I\u0027m fine with what you have.",
+      "parentUuid": "1b9a107a_96199cc5",
+      "revId": "2cea02bb974351bb0ccbb035307c4e46fa016a87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
