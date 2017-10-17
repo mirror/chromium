@@ -373,7 +373,7 @@ contactInfoSelectionCoordinator:(ContactInfoSelectionCoordinator*)coordinator
         didSelectContactProfile:(autofill::AutofillProfile*)contactProfile {
   DCHECK(contactProfile);
   _paymentRequest->set_selected_contact_profile(contactProfile);
-  [_viewController updateContactInfoSection];
+  [_viewController updateSections];
 
   [_contactInfoSelectionCoordinator stop];
   _contactInfoSelectionCoordinator = nil;
@@ -391,7 +391,7 @@ contactInfoSelectionCoordinator:(ContactInfoSelectionCoordinator*)coordinator
            didFinishEditingProfile:(autofill::AutofillProfile*)profile {
   DCHECK(profile);
   _paymentRequest->set_selected_contact_profile(profile);
-  [_viewController updateContactInfoSection];
+  [_viewController updateSections];
 
   [_contactInfoEditCoordinator stop];
   _contactInfoEditCoordinator = nil;
@@ -462,7 +462,7 @@ contactInfoSelectionCoordinator:(ContactInfoSelectionCoordinator*)coordinator
   DCHECK(paymentMethod);
   DCHECK(paymentMethod->IsCompleteForPayment());
   _paymentRequest->set_selected_payment_method(paymentMethod);
-  [_viewController updatePaymentMethodSection];
+  [_viewController updateSections];
 
   [self updatePaymentSummaryItem];
 
@@ -484,7 +484,7 @@ contactInfoSelectionCoordinator:(ContactInfoSelectionCoordinator*)coordinator
   DCHECK(paymentMethod);
   DCHECK(paymentMethod->IsCompleteForPayment());
   _paymentRequest->set_selected_payment_method(paymentMethod);
-  [_viewController updatePaymentMethodSection];
+  [_viewController updateSections];
 
   [self updatePaymentSummaryItem];
 
