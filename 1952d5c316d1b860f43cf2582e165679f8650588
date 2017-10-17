@@ -962,6 +962,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cf6f987_c8380f50",
+        "filename": "media/audio/audio_output_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T14:56:10Z",
+      "side": 1,
+      "message": "I\u0027m not sure I should spend time on this, so I added the cc files back. Guido showed me the similar https://cs.chromium.org/chromium/src/media/capture/video_capturer_source.cc.",
+      "parentUuid": "647bcac8_c5ccb4db",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
