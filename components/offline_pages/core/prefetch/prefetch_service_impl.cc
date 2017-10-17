@@ -17,6 +17,7 @@
 #include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_importer.h"
+#include "components/offline_pages/core/prefetch/prefetch_internals_delegate.h"
 #include "components/offline_pages/core/prefetch/prefetch_network_request_factory.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
 #include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
@@ -34,7 +35,8 @@ PrefetchServiceImpl::PrefetchServiceImpl(
     std::unique_ptr<PrefetchImporter> prefetch_importer,
     std::unique_ptr<PrefetchBackgroundTaskHandler>
         prefetch_background_task_handler,
-    std::unique_ptr<PrefetchConfiguration> prefetch_configuration)
+    std::unique_ptr<PrefetchConfiguration> prefetch_configuration,
+    std::unique_ptr<PrefetchInternalsDelegate> internals_delegate)
     : offline_metrics_collector_(std::move(offline_metrics_collector)),
       prefetch_dispatcher_(std::move(dispatcher)),
       prefetch_gcm_handler_(std::move(gcm_handler)),
@@ -45,7 +47,8 @@ PrefetchServiceImpl::PrefetchServiceImpl(
       prefetch_importer_(std::move(prefetch_importer)),
       prefetch_background_task_handler_(
           std::move(prefetch_background_task_handler)),
-      prefetch_configuration_(std::move(prefetch_configuration)) {
+      prefetch_configuration_(std::move(prefetch_configuration)),
+      prefetch_internals_delegate_(std::move(internals_delegate)) {
   prefetch_dispatcher_->SetService(this);
   prefetch_downloader_->SetPrefetchService(this);
   prefetch_gcm_handler_->SetService(this);
@@ -102,6 +105,10 @@ PrefetchServiceImpl::GetPrefetchBackgroundTaskHandler() {
 
 PrefetchConfiguration* PrefetchServiceImpl::GetPrefetchConfiguration() {
   return prefetch_configuration_.get();
+}
+
+PrefetchInternalsDelegate* PrefetchServiceImpl::GetPrefetchInternalsDelegate() {
+  return prefetch_internals_delegate_.get();
 }
 
 void PrefetchServiceImpl::Shutdown() {

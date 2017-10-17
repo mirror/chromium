@@ -19,6 +19,7 @@ class PrefetchImporter;
 class PrefetchNetworkRequestFactory;
 class PrefetchStore;
 class SuggestedArticlesObserver;
+class PrefetchInternalsDelegate;
 
 // Main class and entry point for the Offline Pages Prefetching feature, that
 // controls the lifetime of all major subcomponents of the prefetching system.
@@ -41,6 +42,9 @@ class PrefetchService : public KeyedService {
   virtual PrefetchImporter* GetPrefetchImporter() = 0;
   virtual PrefetchBackgroundTaskHandler* GetPrefetchBackgroundTaskHandler() = 0;
   virtual PrefetchConfiguration* GetPrefetchConfiguration() = 0;
+
+  // May be |nullptr| in tests.
+  virtual PrefetchInternalsDelegate* GetPrefetchInternalsDelegate() = 0;
 
   // May be |nullptr| in tests.  The PrefetchService does not depend on the
   // SuggestedArticlesObserver, it merely owns it for lifetime purposes.
