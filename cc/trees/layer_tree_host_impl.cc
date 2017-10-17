@@ -655,8 +655,14 @@ LayerTreeHostImpl::EventListenerTypeForTouchStartOrMoveAt(
   }
 
   if (out_touch_action) {
+    float device_scale_factor = active_tree_->device_scale_factor();
     const auto& region = layer_impl_with_touch_handler->touch_action_region();
-    gfx::Point point = gfx::ToRoundedPoint(device_viewport_point);
+    gfx::PointF point_in_layer_space(
+        device_viewport_point.x() / device_scale_factor -
+            layer_impl_with_touch_handler->position().x(),
+        device_viewport_point.y() / device_scale_factor -
+            layer_impl_with_touch_handler->position().y());
+    gfx::Point point = gfx::ToRoundedPoint(point_in_layer_space);
     *out_touch_action = region.GetWhiteListedTouchAction(point);
   }
 
