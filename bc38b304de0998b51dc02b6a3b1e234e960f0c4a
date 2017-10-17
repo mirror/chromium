@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a7391cf4_63255480",
+        "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-10-17T22:22:07Z",
+      "side": 1,
+      "message": "I tried it now that that change is committed, and it works. It seems to be the case that this code is run after the OobeOptIn dialog is shown. Do you think there\u0027s a potential race condition?",
+      "parentUuid": "26c42432_4b3372a5",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3f305c6_e5942f17",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 1
@@ -65,6 +83,24 @@
       "writtenOn": "2017-09-19T07:28:30Z",
       "side": 1,
       "message": "Style: Could you keep the current error-guard style?",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f7438e_debd8ded",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-10-17T22:22:07Z",
+      "side": 1,
+      "message": "What\u0027s the benefit of that? This isn\u0027t error handling code, and the error-guard style makes the code path less explicit. I don\u0027t feel strongly about it though, and I can change it back if you prefer it.",
+      "parentUuid": "e3f305c6_e5942f17",
       "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f651a9c7_fadbe142",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-10-17T22:22:07Z",
+      "side": 1,
+      "message": "There is no [x] button for the OOBE TOS screen. Only \"Skip\" and \"Agree\".\nFor the default TOS screen (when going through the setting), yes. I hooked a debugger up and saw it break here when the user clicks [x] AND when the they click \"decline\".",
+      "parentUuid": "56837aba_ccd9fad3",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34da70cf_6ea56d10",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 1
@@ -99,6 +153,24 @@
       "writtenOn": "2017-09-19T07:28:30Z",
       "side": 1,
       "message": "SetArcPlayStoreEnabledForProfile(*, false); should trigger this?\nWhy is it necessary to call here explicitly?",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7a3cfa_7b35b3ae",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-10-17T22:22:07Z",
+      "side": 1,
+      "message": "From my understanding, it won\u0027t. It\u0027ll only call it when the ARC is a managed preference.",
+      "parentUuid": "34da70cf_6ea56d10",
       "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
