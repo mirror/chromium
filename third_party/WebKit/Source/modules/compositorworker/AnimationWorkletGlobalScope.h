@@ -15,7 +15,6 @@
 namespace blink {
 
 class ExceptionState;
-class WorkerClients;
 
 // Represents the animation worklet global scope and implements all methods that
 // the global scope exposes to user script (See
@@ -32,12 +31,9 @@ class MODULES_EXPORT AnimationWorkletGlobalScope
 
  public:
   static AnimationWorkletGlobalScope* Create(
-      const KURL&,
-      const String& user_agent,
-      RefPtr<SecurityOrigin> document_security_origin,
+      std::unique_ptr<GlobalScopeCreationParams>,
       v8::Isolate*,
-      WorkerThread*,
-      WorkerClients*);
+      WorkerThread*);
   ~AnimationWorkletGlobalScope() override;
   DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
@@ -57,12 +53,9 @@ class MODULES_EXPORT AnimationWorkletGlobalScope
   AnimatorDefinition* FindDefinitionForTest(const String& name);
 
  private:
-  AnimationWorkletGlobalScope(const KURL&,
-                              const String& user_agent,
-                              RefPtr<SecurityOrigin> document_security_origin,
+  AnimationWorkletGlobalScope(std::unique_ptr<GlobalScopeCreationParams>,
                               v8::Isolate*,
-                              WorkerThread*,
-                              WorkerClients*);
+                              WorkerThread*);
 
   typedef HeapHashMap<String, TraceWrapperMember<AnimatorDefinition>>
       DefinitionMap;
