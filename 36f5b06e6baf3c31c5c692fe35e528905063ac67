@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2df702ab_75d9b669",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-17T16:23:45Z",
+      "side": 1,
+      "message": "A comment.",
+      "range": {
+        "startLine": 109,
+        "startChar": 6,
+        "endLine": 109,
+        "endChar": 27
+      },
+      "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7ac99f_1a773013",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-17T16:23:45Z",
+      "side": 1,
+      "message": "Watch out when you merge. I landed it after branch point in https://crbug.com/774516. I can also request a merge for the change if you want me to.",
+      "range": {
+        "startLine": 116,
+        "startChar": 44,
+        "endLine": 116,
+        "endChar": 55
+      },
+      "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df6744f_509058c8",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-17T16:23:45Z",
+      "side": 1,
+      "message": "Does it preserve the selected item?",
+      "range": {
+        "startLine": 125,
+        "startChar": 15,
+        "endLine": 125,
+        "endChar": 37
+      },
+      "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba0179f_0f600f47",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-17T16:23:45Z",
+      "side": 1,
+      "message": "Why do you need this list at all instead of creating the values dynamically?",
+      "range": {
+        "startLine": 143,
+        "startChar": 30,
+        "endLine": 143,
+        "endChar": 47
+      },
+      "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b30a857_f0055b9a",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-17T16:23:45Z",
+      "side": 1,
+      "message": "Do you need it?",
+      "range": {
+        "startLine": 597,
+        "startChar": 24,
+        "endLine": 597,
+        "endChar": 37
+      },
+      "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b47e818_38f4dea2",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-17T16:23:45Z",
+      "side": 1,
+      "message": "Definitely redundant.",
+      "range": {
+        "startLine": 600,
+        "startChar": 21,
+        "endLine": 600,
+        "endChar": 34
+      },
+      "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474187c5_810e2644",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-17T16:23:45Z",
+      "side": 1,
+      "message": "You can simply check |password_dropdown_|",
+      "range": {
+        "startLine": 619,
+        "startChar": 6,
+        "endLine": 620,
+        "endChar": 76
+      },
+      "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
