@@ -39,6 +39,47 @@
       "revId": "e07873256d6f2d3291e0e3aa62d050ef813211c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b0ae5d_140ba437",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-17T19:30:35Z",
+      "side": 1,
+      "message": "I think a good place for a GLHelper instance to live is in viz::ContextProvider (possible lazily initialized). That way it\u0027s life time would be tied to the life time of the gpu channel it uses. Also, this means it could be accessed via ContextProviderWrapper.",
+      "parentUuid": "f1778edc_e060bb46",
+      "revId": "e07873256d6f2d3291e0e3aa62d050ef813211c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edaddbb4_f9636bd0",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-17T19:30:35Z",
+      "side": 1,
+      "message": "Using the sharedMainThreadContextProvider may not be safe.  There is no strict guarantee that this is the same context that created \u0027image\u0027.  There is a potential data security vulnerability here. For example after a GPU context reset, the texture ID returned by skia might not be valid in the new SharedMainThreadContext. Then the readback might be reading back content from a different texture, possibly leaking private (or cross-origin) data.",
+      "range": {
+        "startLine": 251,
+        "startChar": 25,
+        "endLine": 251,
+        "endChar": 56
+      },
+      "revId": "e07873256d6f2d3291e0e3aa62d050ef813211c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
