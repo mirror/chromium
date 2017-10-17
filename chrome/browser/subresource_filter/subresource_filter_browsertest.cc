@@ -479,7 +479,8 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
   content::RenderFrameHost* frame = FindFrameByName(kSubframeNames[0]);
   ASSERT_TRUE(frame);
   if (content::IsBrowserSideNavigationEnabled()) {
-    EXPECT_EQ(disallowed_subdocument_url, frame->GetLastCommittedURL());
+    EXPECT_EQ(GURL("chrome-error://err_blocked_by_client"),
+              frame->GetLastCommittedURL());
     ExpectFramesIncludedInLayout(kSubframeNames, kExpectOnlySecondSubframe);
   } else {
     EXPECT_EQ(allowed_empty_subdocument_url, frame->GetLastCommittedURL());

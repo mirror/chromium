@@ -45,6 +45,8 @@ class MockExtensionSystem : public ExtensionSystem {
       const Extension* extension) override;
   void InstallUpdate(const std::string& extension_id,
                      const base::FilePath& temp_dir) override;
+  void PromptToEnableExtensionIfNecessary(
+      content::NavigationHandle* navigation_handle) override;
 
  private:
   content::BrowserContext* browser_context_;

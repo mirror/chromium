@@ -823,8 +823,10 @@ void NavigationRequest::OnRequestFailed(
   TRACE_EVENT_ASYNC_STEP_INTO1("navigation", "NavigationRequest", this,
                                "OnRequestFailed", "error", net_error);
   state_ = FAILED;
-  if (navigation_handle_.get())
+  if (navigation_handle_.get()) {
     navigation_handle_->set_net_error_code(static_cast<net::Error>(net_error));
+    common_params_.url = navigation_handle_->GetURL();
+  }
 
   // With PlzNavigate, debug URLs will give a failed navigation because the
   // WebUI backend won't find a handler for them. They will be processed in the
@@ -867,15 +869,10 @@ void NavigationRequest::OnRequestFailed(
         frame_tree_node_->render_manager()->GetFrameHostForNavigation(*this);
   }
 
-  // The check below is not valid in case of blocked requests, because blocked
-  // requests are committed in the old process (which might not pass the
-  // CanCommitURL check, but this is okay because we will commit a
-  // chrome-error:// page).
-  if (net_error != net::ERR_BLOCKED_BY_CLIENT) {
-    // Don't ask the renderer to commit an URL if the browser will kill it when
-    // it does.
+  // Don't ask the renderer to commit an URL if the browser will kill it when
+  // it does.
+  if (!common_params_.url.SchemeIs(kChromeErrorScheme))
     DCHECK(render_frame_host->CanCommitURL(common_params_.url));
-  }
 
   NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(render_frame_host,
                                                            common_params_.url);

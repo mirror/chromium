@@ -23,12 +23,12 @@
 #include "chrome/browser/extensions/component_loader.h"
 #include "chrome/browser/extensions/extension_error_reporter.h"
 #include "chrome/browser/extensions/extension_garbage_collector.h"
+#include "chrome/browser/extensions/extension_install_prompt_controller.h"
 #include "chrome/browser/extensions/extension_management.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_sync_service.h"
 #include "chrome/browser/extensions/extension_system_factory.h"
 #include "chrome/browser/extensions/install_verifier.h"
-#include "chrome/browser/extensions/navigation_observer.h"
 #include "chrome/browser/extensions/shared_module_service.h"
 #include "chrome/browser/extensions/shared_user_script_master.h"
 #include "chrome/browser/extensions/state_store_notification_observer.h"
@@ -189,7 +189,8 @@ void ExtensionSystemImpl::Shared::Init(bool extensions_enabled) {
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
 
-  navigation_observer_.reset(new NavigationObserver(profile_));
+  extension_install_prompt_controller_.reset(
+      new ExtensionInstallPromptController(profile_));
 
   bool allow_noisy_errors = !command_line->HasSwitch(switches::kNoErrorDialogs);
   ExtensionErrorReporter::Init(allow_noisy_errors);
@@ -277,6 +278,12 @@ void ExtensionSystemImpl::Shared::Init(bool extensions_enabled) {
 
   // Make the chrome://extension-icon/ resource available.
   content::URLDataSource::Add(profile_, new ExtensionIconSource(profile_));
+}
+
+void ExtensionSystemImpl::Shared::PromptToEnableExtensionIfNecessary(
+    content::NavigationHandle* navigation_handle) {
+  extension_install_prompt_controller_->PromptToEnableExtensionIfNecessary(
+      navigation_handle);
 }
 
 void ExtensionSystemImpl::Shared::Shutdown() {
@@ -436,6 +443,11 @@ void ExtensionSystemImpl::InstallUpdate(const std::string& extension_id,
                                         const base::FilePath& temp_dir) {
   NOTREACHED() << "Not yet implemented";
   base::DeleteFile(temp_dir, true /* recursive */);
+}
+
+void ExtensionSystemImpl::PromptToEnableExtensionIfNecessary(
+    content::NavigationHandle* navigation_handle) {
+  shared_->PromptToEnableExtensionIfNecessary(navigation_handle);
 }
 
 void ExtensionSystemImpl::RegisterExtensionWithRequestContexts(

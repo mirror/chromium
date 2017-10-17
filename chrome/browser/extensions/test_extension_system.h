@@ -69,6 +69,8 @@ class TestExtensionSystem : public ExtensionSystem {
       const Extension* extension) override;
   void InstallUpdate(const std::string& extension_id,
                      const base::FilePath& temp_dir) override;
+  void PromptToEnableExtensionIfNecessary(
+      content::NavigationHandle* navigation_handle) override;
 
   // Note that you probably want to use base::RunLoop().RunUntilIdle() right
   // after this to run all the accumulated tasks.

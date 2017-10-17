@@ -141,6 +141,11 @@ void TestExtensionSystem::InstallUpdate(const std::string& extension_id,
   NOTREACHED();
 }
 
+void TestExtensionSystem::PromptToEnableExtensionIfNecessary(
+    content::NavigationHandle* navigation_handle) {
+  NOTREACHED();
+}
+
 TestingValueStore* TestExtensionSystem::value_store() {
   // These tests use TestingValueStore in a way that ensures it only ever mints
   // instances of TestingValueStore.

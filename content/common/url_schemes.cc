@@ -42,6 +42,7 @@ void RegisterContentSchemes(bool lock_schemes) {
   GetContentClient()->AddAdditionalSchemes(&schemes);
 
   url::AddStandardScheme(kChromeDevToolsScheme, url::SCHEME_WITHOUT_PORT);
+  url::AddStandardScheme(kChromeErrorScheme, url::SCHEME_WITHOUT_PORT);
   url::AddStandardScheme(kChromeUIScheme, url::SCHEME_WITHOUT_PORT);
   url::AddStandardScheme(kGuestScheme, url::SCHEME_WITHOUT_PORT);
 
