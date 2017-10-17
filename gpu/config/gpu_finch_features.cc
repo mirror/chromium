@@ -18,9 +18,4 @@ const base::Feature kDefaultEnableGpuRasterization{
     "DefaultEnableGpuRasterization", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
-// Enables the GPU scheduler. The finch feature is only used as an emergency
-// kill-switch and to keep the alternate code path tested on canary/dev.
-const base::Feature kGpuScheduler{"GpuScheduler",
-                                  base::FEATURE_ENABLED_BY_DEFAULT};
-
 }  // namespace features
