@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "9f5b8afd_88c609a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragment.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-17T19:26:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3e13414f_30fb0c67",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87c7a99a_2e5cc4ae",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragmentTest.java",
         "patchSetId": 20
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "Yes. The tests are independent, but they depend on setUp. What\u0027s confusing about it?",
       "parentUuid": "87c7a99a_2e5cc4ae",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f003310_9b21d11f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragmentTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-17T19:26:58Z",
+      "side": 1,
+      "message": "I would prefer to avoid this member and use hard coded values (2, 3, etc.)",
+      "parentUuid": "4fc51130_93858e43",
       "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -209,6 +245,24 @@
       "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e532bd3a_128ca471",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragmentTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-17T19:26:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "43314c54_013bc508",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +310,30 @@
       "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691aa5ce_101e895c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragmentTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-17T19:26:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "df69e009_037c6979",
+      "range": {
+        "startLine": 78,
+        "startChar": 43,
+        "endLine": 78,
+        "endChar": 56
+      },
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
