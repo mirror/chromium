@@ -154,6 +154,24 @@
       "revId": "93610dbee75bfcb413934eac3a24f21d570905d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add937bc_f432a060",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 90704,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-17T22:46:52Z",
+      "side": 1,
+      "message": "If you mean that if the percentage is \u003c 10%, then yeah, it might be that way.  That is our expectation, but we don\u0027t really know.\n\nI\u0027ll add two more tables to count the conflicts and the calls since we have that info anyway.",
+      "parentUuid": "f36249ac_04f483f9",
+      "revId": "93610dbee75bfcb413934eac3a24f21d570905d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
