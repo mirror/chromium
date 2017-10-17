@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "55860bbe_9337d260",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-17T22:37:42Z",
+      "side": 1,
+      "message": "Done.  Always happy to make names more descriptive...well, until they start adding line breaks all over the place, at least.",
+      "parentUuid": "d1f18587_a027beb7",
+      "range": {
+        "startLine": 593,
+        "startChar": 9,
+        "endLine": 593,
+        "endChar": 14
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "745e74ae_82db6a97",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-17T22:08:01Z",
       "side": 1,
       "message": "nit, suggestion: Make part of State?  (I don\u0027t have strong feelings, just noting that as best I can tell this is per-request.)",
+      "range": {
+        "startLine": 674,
+        "startChar": 22,
+        "endLine": 674,
+        "endChar": 33
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f270c4_b6f1f571",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-17T22:37:42Z",
+      "side": 1,
+      "message": "I\u0027m concerned that these are overly non-POD types to put in a struct - client_binding_ even has a mandatory constructor argument.\n\nThe style guide is a bit confusing here.  \"Structs should only be used for passive objects that carry data\" - these two objects are active objects that carry a lot more than data.  Does it violate the style guide for a struct to own them?  I\u0027m not sure.\n\nI\u0027m also a bit concerned about client_binding_\u0027s reference to |this|.  Sticking an intervening class between the two seems weird.  And having different ownership of the two objects also seems weird.\n\nAnyhow, leaving as-is for now.",
+      "parentUuid": "745e74ae_82db6a97",
       "range": {
         "startLine": 674,
         "startChar": 22,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b9c5ea26_2d5529ca",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-17T22:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "722c40f3_fbee4c69",
+      "range": {
+        "startLine": 676,
+        "startChar": 8,
+        "endLine": 676,
+        "endChar": 9
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b88b291_66de1888",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15fd497_76c12bad",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-17T22:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b88b291_66de1888",
+      "range": {
+        "startLine": 789,
+        "startChar": 26,
+        "endLine": 789,
+        "endChar": 41
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "86c55344_979bafe3",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-17T22:37:42Z",
+      "side": 1,
+      "message": "It\u0027s not, you\u0027re right.",
+      "parentUuid": "51b1b42c_48fe0f26",
+      "range": {
+        "startLine": 898,
+        "startChar": 10,
+        "endLine": 898,
+        "endChar": 23
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bd10596_ac4be5cb",
         "filename": "content/public/common/simple_url_loader_unittest.cc",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6bf238_8076dc76",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-17T22:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bd10596_ac4be5cb",
+      "range": {
+        "startLine": 1229,
+        "startChar": 12,
+        "endLine": 1229,
+        "endChar": 17
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "232fe728_4cd24dd0",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-17T22:37:42Z",
+      "side": 1,
+      "message": "Done (x2)",
+      "parentUuid": "40d0d7d9_4816b8a3",
+      "range": {
+        "startLine": 1232,
+        "startChar": 25,
+        "endLine": 1232,
+        "endChar": 31
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2305989_4d753429",
         "filename": "content/public/common/simple_url_loader_unittest.cc",
         "patchSetId": 12
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "5ad206da_dd19c4bc",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1328,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-17T22:37:42Z",
+      "side": 1,
+      "message": "Done.  I also added a comment above num_network_changes indicating an entire sequence is replayed that many times.",
+      "parentUuid": "e2305989_4d753429",
+      "range": {
+        "startLine": 1328,
+        "startChar": 7,
+        "endLine": 1328,
+        "endChar": 24
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9121e8ef_6971961d",
         "filename": "content/public/common/simple_url_loader_unittest.cc",
         "patchSetId": 12
@@ -206,6 +398,30 @@
       "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f7276d6_48b91e4d",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-17T22:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9121e8ef_6971961d",
+      "range": {
+        "startLine": 1369,
+        "startChar": 18,
+        "endLine": 1369,
+        "endChar": 20
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
