@@ -41,6 +41,23 @@ bool AppendFragmentOffsetAndSize(const NGPhysicalFragment* fragment,
   return has_content;
 }
 
+String StringForBoxType(NGPhysicalFragment::NGBoxType box_type) {
+  switch (box_type) {
+    case NGPhysicalFragment::NGBoxType::kNormalBox:
+      return String();
+    case NGPhysicalFragment::NGBoxType::kInlineBlock:
+      return "inline-block";
+    case NGPhysicalFragment::NGBoxType::kFloating:
+      return "floating";
+    case NGPhysicalFragment::NGBoxType::kOutOfFlowPositioned:
+      return "out-of-flow-positioned";
+    case NGPhysicalFragment::NGBoxType::kAnonymousBox:
+      return "anonymous";
+  }
+  NOTREACHED();
+  return String();
+}
+
 void AppendFragmentToString(const NGPhysicalFragment* fragment,
                             StringBuilder* builder,
                             NGPhysicalFragment::DumpFlags flags,
@@ -54,6 +71,12 @@ void AppendFragmentToString(const NGPhysicalFragment* fragment,
   if (fragment->IsBox()) {
     if (flags & NGPhysicalFragment::DumpType) {
       builder->Append("Box");
+      String box_type = StringForBoxType(fragment->BoxType());
+      if (!box_type.IsEmpty()) {
+        builder->Append(" (");
+        builder->Append(box_type);
+        builder->Append(")");
+      }
       has_content = true;
     }
     has_content =
@@ -136,6 +159,7 @@ NGPhysicalFragment::NGPhysicalFragment(LayoutObject* layout_object,
       size_(size),
       break_token_(std::move(break_token)),
       type_(type),
+      box_type_(NGBoxType::kNormalBox),
       is_placed_(false) {}
 
 // Keep the implementation of the destructor here, to avoid dependencies on
@@ -232,9 +256,10 @@ RefPtr<NGPhysicalFragment> NGPhysicalFragment::CloneWithoutOffset() const {
 }
 
 String NGPhysicalFragment::ToString() const {
-  return String::Format("Type: '%d' Size: '%s' Offset: '%s' Placed: '%d'",
-                        Type(), Size().ToString().Ascii().data(),
-                        Offset().ToString().Ascii().data(), IsPlaced());
+  return String::Format(
+      "Type: '%d' Size: '%s' Offset: '%s' Placed: '%d', BoxType: '%s'", Type(),
+      Size().ToString().Ascii().data(), Offset().ToString().Ascii().data(),
+      IsPlaced(), StringForBoxType(BoxType()).Ascii().data());
 }
 
 String NGPhysicalFragment::DumpFragmentTree(DumpFlags flags) const {
