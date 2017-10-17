@@ -921,9 +921,53 @@ function unownedFormElementsAndFieldSetsToFormData_(
   form['action'] = ''
   form['is_form_tag'] = false;
 
+  if (document.documentElement.hasAttribute('lang') &&
+      !document.documentElement.getAttribute('lang').
+          toLowerCase().startsWith('en')) {
+    return formOrFieldsetsToFormData_(
+        null /* formElement*/, null /* formControlElement */, fieldsets,
+        controlElements, extractMask, form, null /* field */);
+  }
+
+  var title = document.title.toLowerCase();
+  var path = document.location.pathname.toLowerCase();
+  // The keywords are defined in
+  // UnownedCheckoutFormElementsAndFieldSetsToFormData in
+  // components/autofill/content/renderer/form_autofill_util.cc
+  var keywords = [
+    'payment',
+    'checkout',
+    'address',
+    'delivery',
+    'shipping',
+    'wallet'
+  ];
+
+  for (var keyword in keywords) {
+    if (title.includes(keywords[keyword]) || path.includes(keywords[keyword])) {
+      form['is_formless_checkout'] = true;
+      return formOrFieldsetsToFormData_(
+          null /* formElement*/, null /* formControlElement */, fieldsets,
+          controlElements, extractMask, form, null /* field */);
+    }
+  }
+
+  // Since it's not a checkout flow, only add fields that have a non-"off"
+  // autocomplete attribute to the formless autofill.
+  var controlElementsWithAutocomplete = [];
+  for (var index = 0; index < controlElements.length; index++) {
+    if (controlElements[index].hasAttribute('autocomplete') &&
+        controlElements[index].getAttribute('autocomplete') !== 'off') {
+      controlElementsWithAutocomplete += controlElements[index];
+    }
+  }
+
+  if (controlElementsWithAutocomplete.length == 0) {
+    return false;
+  }
   return formOrFieldsetsToFormData_(
       null /* formElement*/, null /* formControlElement */, fieldsets,
-      controlElements, extractMask, form, null /* field */);
+      controlElementsWithAutocomplete, extractMask, form, null /* field */);
 }
 
 /**
