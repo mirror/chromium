@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7e7974e_e4cfc3f1",
+        "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-17T20:37:05Z",
+      "side": 0,
+      "message": "No longer needed? (added in https://chromiumcodereview.appspot.com/10332141)",
+      "revId": "68672fdcad280a8ff69b91927d38d0eabf2c87f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
