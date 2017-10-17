@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29c781b4_bf4c1664",
+        "filename": "chrome/browser/chromeos/file_manager/file_browser_handlers.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-17T06:22:13Z",
+      "side": 1,
+      "message": "When EnableZipArchiverPacker is enabled and EnableZipArchiverUnpacker is disabled, should we show the zip archiver as a handler for zip-pattern URLs?",
+      "range": {
+        "startLine": 150,
+        "startChar": 35,
+        "endLine": 150,
+        "endChar": 59
+      },
+      "revId": "f81b77f99647d13c2b227afbc383daf4c8df0d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
