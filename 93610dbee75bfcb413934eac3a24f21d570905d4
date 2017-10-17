@@ -137,6 +137,23 @@
       "revId": "93610dbee75bfcb413934eac3a24f21d570905d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f36249ac_04f483f9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 90704,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-17T19:27:40Z",
+      "side": 1,
+      "message": "How many total calls to the value setter do you expect to see?  In my experience, percentage histograms tend not to be useful if this number is small (say, \u003c10).\n\nGenerally when people use these histograms, I often recommend they also have a histogram of counts, one for the total number of calls, and one for the number of conflicts.  These data tends to be easier to interpret, especially in cases that occur rarely (either rare conflicts or typically only a few calls to the value setter).  Do you have count histograms?",
+      "revId": "93610dbee75bfcb413934eac3a24f21d570905d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
