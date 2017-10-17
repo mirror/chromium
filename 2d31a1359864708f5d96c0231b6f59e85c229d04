@@ -22,6 +22,30 @@
       "revId": "2d31a1359864708f5d96c0231b6f59e85c229d04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11cdb36e_36334868",
+        "filename": "media/video/video_encode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-17T05:38:49Z",
+      "side": 1,
+      "message": "I was trying to make it consistent to the existing interface.\n\nBut it is really sounds good if we can leave other code untouched. We can further provide a default implementation in vea.cc. So that we don\u0027t need to touch other VEAs. WDYT?",
+      "parentUuid": "9aac49eb_e657c80d",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 0
+      },
+      "revId": "2d31a1359864708f5d96c0231b6f59e85c229d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
