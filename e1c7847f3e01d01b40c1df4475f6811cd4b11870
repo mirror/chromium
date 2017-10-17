@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a914bd9_4c2676fb",
+        "filename": "DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-17T16:33:07Z",
+      "side": 1,
+      "message": "Not yet as I wasn\u0027t sure about the framework.\nIt is also missing a README and a License file.",
+      "parentUuid": "fe454020_f81132c3",
+      "revId": "e1c7847f3e01d01b40c1df4475f6811cd4b11870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93164357_8ada1774",
         "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "e1c7847f3e01d01b40c1df4475f6811cd4b11870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bae60d_0cef00d3",
+        "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-17T16:33:07Z",
+      "side": 1,
+      "message": "Removed after the fixing the third party.",
+      "parentUuid": "93164357_8ada1774",
+      "range": {
+        "startLine": 17,
+        "startChar": 22,
+        "endLine": 17,
+        "endChar": 65
+      },
+      "revId": "e1c7847f3e01d01b40c1df4475f6811cd4b11870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "688b448f_625677f8",
+        "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-17T16:33:07Z",
+      "side": 1,
+      "message": "Thanks!\nChanged in the third party.",
+      "parentUuid": "c963e17f_36b881dd",
+      "range": {
+        "startLine": 59,
+        "startChar": 100,
+        "endLine": 59,
+        "endChar": 105
+      },
+      "revId": "e1c7847f3e01d01b40c1df4475f6811cd4b11870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a200ef25_e14b7284",
         "filename": "ios/third_party/material_internationalization_ios/Info.plist",
         "patchSetId": 5
@@ -103,6 +169,24 @@
       "revId": "e1c7847f3e01d01b40c1df4475f6811cd4b11870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6dc1e5_a2d17da1",
+        "filename": "ios/third_party/material_internationalization_ios/Info.plist",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-17T16:33:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a200ef25_e14b7284",
+      "revId": "e1c7847f3e01d01b40c1df4475f6811cd4b11870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
