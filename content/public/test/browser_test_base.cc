@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/metrics/field_trial_param_associator.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
@@ -106,6 +107,7 @@ BrowserTestBase::BrowserTestBase()
       use_software_compositing_(false),
       set_up_called_(false),
       disable_io_checks_(false) {
+  field_trial_list_ = std::make_unique<base::FieldTrialList>(nullptr);
 #if defined(OS_MACOSX)
   base::mac::SetOverrideAmIBundled(true);
 #endif
@@ -258,6 +260,9 @@ void BrowserTestBase::SetUp() {
   // Need to wipe feature list clean, since BrowserMain calls
   // FeatureList::SetInstance, which expects no instance to exist.
   base::FeatureList::ClearInstanceForTesting();
+  base::FieldTrialParamAssociator::GetInstance()
+      ->ClearAllCachedParamsForTesting();
+  field_trial_list_ = nullptr;
 
   auto ui_task = base::MakeUnique<base::Closure>(base::Bind(
       &BrowserTestBase::ProxyRunTestOnMainThreadLoop, base::Unretained(this)));

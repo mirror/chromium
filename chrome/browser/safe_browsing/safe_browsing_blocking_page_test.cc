@@ -19,6 +19,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -47,6 +48,7 @@
 #include "components/safe_browsing/db/test_database_manager.h"
 #include "components/safe_browsing/db/util.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
+#include "components/safe_browsing/features.h"
 #include "components/safe_browsing/web_ui/constants.h"
 #include "components/security_interstitials/content/security_interstitial_controller_client.h"
 #include "components/security_interstitials/core/controller_client.h"
@@ -372,13 +374,16 @@ class SafeBrowsingBlockingPageBrowserTest
   }
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII("enable-features",
-                                    "ThreatDomDetailsTagAttributes<SBDomStudy");
-    command_line->AppendSwitchASCII("force-fieldtrials",
-                                    "SBDomStudy/SBDomGroup");
     command_line->AppendSwitchASCII(
-        "force-fieldtrial-params",
-        "SBDomStudy.SBDomGroup:tag_attribute_csv/div%2Cfoo%2Cdiv%2Cbaz");
+        "force-fieldtrials",
+        "scoped_feature_list_trial_name/scoped_feature_list_trial_group");
+    std::string params =
+        "scoped_feature_list_trial_name.scoped_feature_list_trial_group:tag_"
+        "attribute_csv/div%2Cfoo%2Cdiv%2Cbaz";
+    command_line->AppendSwitchASCII("force-fieldtrial-params", params);
+    std::map<std::string, std::string> parameters;
+    scoped_feature_list_.InitAndEnableFeatureWithParameters(
+        safe_browsing::kThreatDomDetailsTagAndAttributeFeature, parameters);
 
     if (testing::get<1>(GetParam()))
       content::IsolateAllSitesForTesting(command_line);
@@ -781,6 +786,7 @@ class SafeBrowsingBlockingPageBrowserTest
   TestSafeBrowsingServiceFactory factory_;
   TestSafeBrowsingBlockingPageFactory blocking_page_factory_;
   net::EmbeddedTestServer https_server_;
+  base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingBlockingPageBrowserTest);
 };
