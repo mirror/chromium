@@ -21,11 +21,11 @@ class NGPhysicalFragment;
 class CORE_EXPORT NGLineBoxFragmentBuilder final
     : public NGContainerFragmentBuilder {
   STACK_ALLOCATED();
-
  public:
   NGLineBoxFragmentBuilder(NGInlineNode,
                            RefPtr<const ComputedStyle>,
-                           NGWritingMode);
+                           NGWritingMode,
+                           TextDirection);
 
   NGLogicalSize Size() const final;
 
