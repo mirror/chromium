@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b09beab_9c3d2894",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_database.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-17T12:27:43Z",
+      "side": 1,
+      "message": "I feels wrong to make clients spell out \"ProtoDatabaseImpl\", because that\u0027s an implementation detail. Clients don\u0027t care how exactly the data is persisted.\nHowever, you\u0027re right that this should really just be a ctor, so now it is :)",
+      "parentUuid": "3a6703e5_4c259d9b",
+      "range": {
+        "startLine": 39,
+        "startChar": 52,
+        "endLine": 39,
+        "endChar": 58
+      },
+      "revId": "f81371bf92bb256d07048008fc69428f147f6b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbf9ea8c_9e096220",
         "filename": "components/ntp_snippets/remote/remote_suggestions_database_unittest.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "f81371bf92bb256d07048008fc69428f147f6b49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e2e4c2_3f5dac3e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_database_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-17T12:27:43Z",
+      "side": 1,
+      "message": "Comments updated.",
+      "parentUuid": "fbf9ea8c_9e096220",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "f81371bf92bb256d07048008fc69428f147f6b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d5252f09_45a4cd59",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_database_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-17T12:27:43Z",
+      "side": 1,
+      "message": "\"Load\" means \"load everything in the DB\" (which we do for suggestions), while \"Get\" means \"load a single item from the DB\" (which we do for images). Comment added.",
+      "parentUuid": "5b8f1d07_32feea77",
+      "range": {
+        "startLine": 140,
+        "startChar": 14,
+        "endLine": 140,
+        "endChar": 17
+      },
+      "revId": "f81371bf92bb256d07048008fc69428f147f6b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68b8d14b_d005d1ff",
         "filename": "components/ntp_snippets/remote/remote_suggestions_database_unittest.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-16T15:48:35Z",
       "side": 1,
       "message": "A comment explaining why you don\u0027t provide the data explicitly may be useful.",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 38
+      },
+      "revId": "f81371bf92bb256d07048008fc69428f147f6b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b70adcb_733301d3",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_database_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-17T12:27:43Z",
+      "side": 1,
+      "message": "Well, that\u0027s just how FakeDB works. It\u0027s also the same as in all the previous tests.\nCan you suggest what comment you would like to see here?",
+      "parentUuid": "68b8d14b_d005d1ff",
       "range": {
         "startLine": 189,
         "startChar": 2,
