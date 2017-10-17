@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cea5d4e0_ff8bc635",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-17T22:10:36Z",
+      "side": 1,
+      "message": "Ack, I think I\u0027d prefer to keep them together",
+      "parentUuid": "da5d20b3_76f6cc02",
+      "revId": "73b423c512347f4f29f267a6f9dda4300cf63b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb6f43f8_5f541a2a",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 6
