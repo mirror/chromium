@@ -16,17 +16,17 @@ namespace gpu {
 gfx::GpuMemoryBufferType GetNativeGpuMemoryBufferType() {
 #if defined(OS_MACOSX)
   return gfx::IO_SURFACE_BUFFER;
-#endif
-#if defined(OS_LINUX)
+#elif defined(OS_LINUX)
   return gfx::NATIVE_PIXMAP;
-#endif
+#elif defined(OS_FUCHSIA)
   return gfx::EMPTY_BUFFER;
+#else
+#error Unknown platform.
+#endif
 }
 
 bool IsNativeGpuMemoryBufferConfigurationSupported(gfx::BufferFormat format,
                                                    gfx::BufferUsage usage) {
-  DCHECK_NE(gfx::SHARED_MEMORY_BUFFER, GetNativeGpuMemoryBufferType());
-  DCHECK_NE(gfx::EMPTY_BUFFER, GetNativeGpuMemoryBufferType());
 #if defined(OS_MACOSX)
   switch (usage) {
     case gfx::BufferUsage::GPU_READ:
@@ -55,19 +55,18 @@ bool IsNativeGpuMemoryBufferConfigurationSupported(gfx::BufferFormat format,
   }
   NOTREACHED();
   return false;
-#endif
-
-#if defined(OS_LINUX)
+#elif defined(OS_LINUX)
   if (!gfx::ClientNativePixmapFactory::GetInstance()) {
     // unittests don't have to set ClientNativePixmapFactory.
     return false;
   }
   return gfx::ClientNativePixmapFactory::GetInstance()
       ->IsConfigurationSupported(format, usage);
-#endif
-
-  NOTREACHED();
+#elif defined(OS_FUCHSIA)
   return false;
+#else
+#error Unknown platform.
+#endif
 }
 
 }  // namespace gpu
