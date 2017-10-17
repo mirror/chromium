@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "254cf22f_5a4d4e1a",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T00:27:58Z",
+      "side": 0,
+      "message": "This section is moved after IsElementNode() check because this condition is always false when !IsElementNode() and thus safe to reorder.",
+      "revId": "8d8f80ec0d9bd3d5dfbb1e6d26a5b67971a3908f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

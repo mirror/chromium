@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ee43fcc_29cd36bf",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T00:27:58Z",
+      "side": 1,
+      "message": "I replaced ScriptElementBase* null check with IsScriptElement() to remove use of ScriptElementBase from this file.",
+      "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b16bbce_87071bf7",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T00:27:58Z",
+      "side": 1,
+      "message": "If not (success \u0026\u0026 script_loader-\u003eWillBeParserExecuted()), then I think HasParserBlockingScript() should be false here, and thus behavior of whether calling ParseParsing() or not is preserved.",
+      "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e11b73a_e97bef02",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T00:27:58Z",
+      "side": 1,
+      "message": "This CL makes IsDetached() check also done when |success| is false, but I expect it is safe.",
+      "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7fd6f0_3853c50a",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T00:27:58Z",
+      "side": 1,
+      "message": "The last part of previous XMLDocumentParser::PendingScriptFinished().",
+      "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d9144f_f38479d5",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLParserScriptRunner.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T00:27:58Z",
+      "side": 1,
+      "message": "+explicit",
+      "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
