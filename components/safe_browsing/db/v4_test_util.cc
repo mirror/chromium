@@ -3,20 +3,23 @@
 // found in the LICENSE file.
 
 #include "components/safe_browsing/db/v4_test_util.h"
-#include "components/safe_browsing/db/util.h"
+
+#include "components/safe_browsing/db/v4_protocol_manager_util.h"
 
 namespace safe_browsing {
 
 namespace {
 
-const char kClient[] = "unittest";
 const char kAppVer[] = "1.0";
+const char kClient[] = "unittest";
 const char kKeyParam[] = "test_key_param";
+const char kReportUrlPrefix[] = "test_url_prefix";
 
 }  // namespace
 
 V4ProtocolConfig GetTestV4ProtocolConfig(bool disable_auto_update) {
-  return V4ProtocolConfig(kClient, disable_auto_update, kKeyParam, kAppVer);
+  return V4ProtocolConfig(kClient, disable_auto_update, kKeyParam,
+                          kReportUrlPrefix, kAppVer);
 }
 
 std::ostream& operator<<(std::ostream& os, const ThreatMetadata& meta) {

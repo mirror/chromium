@@ -786,7 +786,6 @@ static_library("extensions") {
   # browser, then we can clean up these dependencies.
   public_deps = [
     "//chrome/common/extensions/api",
-    "//components/safe_browsing/db:util",
     "//content/public/browser",
   ]
   deps = [
@@ -848,6 +847,7 @@ static_library("extensions") {
     "//components/resources",
     "//components/safe_browsing/common:safe_browsing_prefs",
     "//components/safe_browsing/db:database_manager",
+    "//components/safe_browsing/db:v4_protocol_manager_util",
     "//components/search_engines",
     "//components/sessions",
     "//components/signin/core/browser",

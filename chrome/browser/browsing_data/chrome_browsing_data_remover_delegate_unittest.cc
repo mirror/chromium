@@ -35,6 +35,7 @@
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/permissions/permission_decision_auto_blocker.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
+#include "chrome/browser/safe_browsing/test_safe_browsing_service.h"
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate.h"
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate_factory.h"
 #include "chrome/browser/storage/durable_storage_permission_context.h"
@@ -272,9 +273,9 @@ class RemoveSafeBrowsingCookieTester : public RemoveCookieTester {
  public:
   RemoveSafeBrowsingCookieTester()
       : browser_process_(TestingBrowserProcess::GetGlobal()) {
-    scoped_refptr<safe_browsing::SafeBrowsingService> sb_service =
-        safe_browsing::SafeBrowsingService::CreateSafeBrowsingService();
-    browser_process_->SetSafeBrowsingService(sb_service.get());
+    safe_browsing::TestSafeBrowsingServiceFactory sb_service_factory;
+    auto* sb_service = sb_service_factory.CreateSafeBrowsingService();
+    browser_process_->SetSafeBrowsingService(sb_service);
     sb_service->Initialize();
     base::RunLoop().RunUntilIdle();
 
