@@ -16,6 +16,23 @@
       "revId": "a5bd96752dd573f5b8d66e628633e158b5d6d87e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a6e897_df14b86f",
+        "filename": "base/mac/objc_property_releaser_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-17T02:05:12Z",
+      "side": 0,
+      "message": "From what I understand, the test was copypastad to the test of the new way of doing this. I noticed this duplication because I was playing with jumbo builds of base and got a \"duplicate symbol ah_ah_ah\".",
+      "revId": "a5bd96752dd573f5b8d66e628633e158b5d6d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
