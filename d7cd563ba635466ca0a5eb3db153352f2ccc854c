@@ -22,6 +22,30 @@
       "revId": "d7cd563ba635466ca0a5eb3db153352f2ccc854c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20aab3e5_b4f42fb4",
+        "filename": "chrome/browser/chrome_browser_field_trials_desktop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-10-17T17:34:33Z",
+      "side": 1,
+      "message": "As we discussed offline, this method is now (soon) synchronous only, so posting to a blocking thread here.",
+      "parentUuid": "7981511e_38ade961",
+      "range": {
+        "startLine": 193,
+        "startChar": 12,
+        "endLine": 193,
+        "endChar": 30
+      },
+      "revId": "d7cd563ba635466ca0a5eb3db153352f2ccc854c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
