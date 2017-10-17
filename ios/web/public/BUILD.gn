@@ -106,3 +106,16 @@ source_set("public") {
 
   configs += [ "//build/config/compiler:enable_arc" ]
 }
+
+source_set("user_agent") {
+  deps = [
+    "//base",
+  ]
+
+  sources = [
+    "user_agent.h",
+    "user_agent.mm",
+  ]
+
+  configs += [ "//build/config/compiler:enable_arc" ]
+}
