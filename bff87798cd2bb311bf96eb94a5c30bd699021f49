@@ -117,6 +117,30 @@
       "revId": "bff87798cd2bb311bf96eb94a5c30bd699021f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d550b977_77ac24b6",
+        "filename": "ios/web/public/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-17T20:55:04Z",
+      "side": 1,
+      "message": "Yes, adding \":user_agent\" to \"public\" public_deps should work and is the correct thing to do here.",
+      "parentUuid": "331adcc5_58a36b46",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 15
+      },
+      "revId": "bff87798cd2bb311bf96eb94a5c30bd699021f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
