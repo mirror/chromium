@@ -16,6 +16,24 @@
       "revId": "e7ea5a63917498acab44ce7de846c3b6e5d1aafd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de21e3cf_8c9b0771",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-17T22:01:43Z",
+      "side": 1,
+      "message": "Well, the sanity check compares the triangle area to a _half_ \nof |kBT709PrimariesArea|, which is equivalent to comparing\ntwice the triangle area to |kBT709PrimariesArea|, right?\nBut I get the point, how would you make what\u0027s happening here\nmore evident?",
+      "parentUuid": "156d7539_dddb1717",
+      "revId": "e7ea5a63917498acab44ce7de846c3b6e5d1aafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
