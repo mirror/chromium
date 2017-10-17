@@ -241,6 +241,19 @@ source_set("core") {
   ]
 }
 
+source_set("user_agent") {
+  deps = [
+    "//base",
+  ]
+
+  sources = [
+    "public/user_agent.h",
+    "public/user_agent.mm",
+  ]
+
+  configs += [ "//build/config/compiler:enable_arc" ]
+}
+
 source_set("earl_grey_test_support") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true
