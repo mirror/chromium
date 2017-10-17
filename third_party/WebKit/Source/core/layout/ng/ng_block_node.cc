@@ -294,10 +294,7 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
   // layout purpose.
   // BaselinePosition() relies on margins set to the box, and computed value is
   // good enough for it to work correctly.
-  // Set this only for atomic inlines, or we end up adding margins twice.
-  if (box_->IsAtomicInlineLevel()) {
-    box_->SetMargin(ComputePhysicalMargins(constraint_space, Style()));
-  }
+  box_->SetMargin(ComputePhysicalMargins(constraint_space, Style()));
 
   LayoutMultiColumnFlowThread* flow_thread = GetFlowThread(*box_);
   if (flow_thread) {
@@ -441,8 +438,10 @@ void NGBlockNode::CopyChildFragmentPosition(
     FloatingObject* floating_object =
         ToLayoutBlockFlow(box_)->InsertFloatingObject(*layout_box);
     floating_object->SetIsInPlacedTree(false);
-    floating_object->SetX(fragment.Offset().left + additional_offset.left);
-    floating_object->SetY(fragment.Offset().top + additional_offset.top);
+    floating_object->SetX(fragment.Offset().left + additional_offset.left -
+                          layout_box->MarginLeft());
+    floating_object->SetY(fragment.Offset().top + additional_offset.top -
+                          layout_box->MarginTop());
     floating_object->SetIsPlaced(true);
     floating_object->SetIsInPlacedTree(true);
   }
