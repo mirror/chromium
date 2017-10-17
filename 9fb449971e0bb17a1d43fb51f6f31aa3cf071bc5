@@ -16,6 +16,24 @@
       "revId": "9fb449971e0bb17a1d43fb51f6f31aa3cf071bc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f3ff4e_b140a4f4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/getstats.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-10-17T04:47:57Z",
+      "side": 1,
+      "message": "Yes, it\u0027s possible. But I\u0027d rather make that a separate test for the datachannel counters - there are a number of things that we could test wrt how that\u0027s incremented. This test is about making sure we get data out of getStats at all.\n\nThat\u0027s what I said in the note that I sent when I asked for review.\nCan we fix one problem at a time?",
+      "parentUuid": "0e8ff36b_188e8497",
+      "revId": "9fb449971e0bb17a1d43fb51f6f31aa3cf071bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
