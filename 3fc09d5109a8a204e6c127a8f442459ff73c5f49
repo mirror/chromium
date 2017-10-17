@@ -184,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "2694b6e8_b7d40f44",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-17T21:17:57Z",
+      "side": 1,
+      "message": "Hmmm ... I wonder why that DCHECK is passing,  I was expecting this to be running on the compositor thread.  ...",
+      "parentUuid": "cda1ee38_96ba5203",
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b50144c_9f434895",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
         "patchSetId": 8
