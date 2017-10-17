@@ -16,6 +16,24 @@
       "revId": "13d5f5d342b3b7069b804b3a8abbcd84f16a29f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe07a8d_2e301d00",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-17T16:31:36Z",
+      "side": 1,
+      "message": "I am thinking that we need to encode these information in the \"launch\" attribute too. For the string length limit, I haven\u0027t seen any but I\u0027ll keep searching.\nhttps://docs.microsoft.com/en-us/uwp/schemas/tiles/toastschema/element-toast",
+      "parentUuid": "ea0d0e58_f9ea7210",
+      "revId": "13d5f5d342b3b7069b804b3a8abbcd84f16a29f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
