@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dd1879f_3e134787",
+        "filename": "tools/cfi/blacklist.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-17T20:12:03Z",
+      "side": 1,
+      "message": "I think this would need to have a [cfi-vcall|cfi-unrelated-cast|cfi-derived-cast] header.",
+      "revId": "d323fe1444e1c2334d7b251706b0829a51c653ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
