@@ -34,7 +34,11 @@ void ThreadedWorkletMessagingProxy::Initialize() {
   worklet_object_proxy_ = CreateObjectProxy(this, GetParentFrameTaskRunners());
 
   Document* document = ToDocument(GetExecutionContext());
+
+  // TODO(nhiroki): WorkletGlobalScope should be a unique opaque origin.
+  // (https://crbug.com/773772)
   SecurityOrigin* starter_origin = document->GetSecurityOrigin();
+
   KURL script_url = document->Url();
 
   ContentSecurityPolicy* csp = document->GetContentSecurityPolicy();
@@ -45,12 +49,14 @@ void ThreadedWorkletMessagingProxy::Initialize() {
   std::unique_ptr<WorkerSettings> worker_settings =
       WTF::WrapUnique(new WorkerSettings(document->GetSettings()));
 
-  // TODO(ikilpatrick): Decide on sensible a value for referrerPolicy.
+  // TODO(nhiroki): Inherit a referrer policy from owner's document.
+  // (https://crbug.com/773921)
   auto global_scope_creation_params =
       WTF::MakeUnique<GlobalScopeCreationParams>(
-          script_url, document->UserAgent(), String(), nullptr, start_mode,
-          csp->Headers().get(), /* referrerPolicy */ String(), starter_origin,
-          ReleaseWorkerClients(), document->AddressSpace(),
+          script_url, document->UserAgent(), String() /* source_code */,
+          nullptr /* cached_meta_data */, start_mode, csp->Headers().get(),
+          String() /* referrerPolicy */, starter_origin, ReleaseWorkerClients(),
+          document->AddressSpace(),
           OriginTrialContext::GetTokens(document).get(),
           std::move(worker_settings), kV8CacheOptionsDefault);
 
