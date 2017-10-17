@@ -163,6 +163,30 @@
     },
     {
       "key": {
+        "uuid": "575f54b8_ca3829b9",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T20:50:46Z",
+      "side": 1,
+      "message": "Oh wait, my bad; didn\u0027t see the next line. But maybe add comment:\n\n# Assign path for the special case len(taget) \u003d\u003d 1.\n\n?",
+      "parentUuid": "03025cd5_9bbfd58d",
+      "range": {
+        "startLine": 181,
+        "startChar": 11,
+        "endLine": 181,
+        "endChar": 20
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82b41ede_95ecfad1",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 6
