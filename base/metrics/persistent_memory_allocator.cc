@@ -13,12 +13,15 @@
 #include <sys/mman.h>
 #endif
 
+#include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/files/memory_mapped_file.h"
 #include "base/logging.h"
 #include "base/memory/shared_memory.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/numerics/safe_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_restrictions.h"
 
 namespace {
@@ -1029,7 +1032,7 @@ FilePersistentMemoryAllocator::FilePersistentMemoryAllocator(
   // Ensure the disk-copy of the data reflects the fully-initialized memory as
   // there is no guarantee as to what order the pages might be auto-flushed by
   // the OS in the future.
-  Flush(true);
+  Flush(false);
 }
 
 FilePersistentMemoryAllocator::~FilePersistentMemoryAllocator() {}
@@ -1048,9 +1051,15 @@ void FilePersistentMemoryAllocator::FlushPartial(size_t length, bool sync) {
     return;
 
 #if defined(OS_WIN)
-  // Windows doesn't support a synchronous flush.
-  BOOL success = ::FlushViewOfFile(data(), length);
-  DPCHECK(success);
+  if (sync) {
+    // Windows doesn't support a synchronous flush.
+    BOOL success = ::FlushViewOfFile(data(), length);
+    DPCHECK(success);
+  } else {
+    // DO NOT SUBMIT.
+    base::PostTaskWithTraits(FROM_HERE, {base::MayBlock()},
+        base::Bind(base::IgnoreResult(::FlushViewOfFile), data(), length));
+  }
 #elif defined(OS_MACOSX)
   // On OSX, "invalidate" removes all cached pages, forcing a re-read from
   // disk. That's not applicable to "flush" so omit it.

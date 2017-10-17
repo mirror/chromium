@@ -187,15 +187,8 @@ void SetupStabilityDebugging() {
     const bool should_flush = base::GetFieldTrialParamByFeatureAsBool(
         browser_watcher::kStabilityDebuggingFeature,
         browser_watcher::kInitFlushParam, false);
-    if (should_flush) {
-      // Flushing a mapped view incurs synchronous IO, so post off to a
-      // background task.
-      base::PostTaskWithTraits(
-          FROM_HERE, {base::MayBlock()},
-          base::BindOnce(base::IgnoreResult(&::FlushViewOfFile),
-                         base::Unretained(global_tracker->allocator()->data()),
-                         0u));
-    }
+    if (should_flush)
+      global_tracker->allocator()->Flush(false /* asynchronous */);
 
     // Store a copy of the system profile in this allocator. There will be some
     // delay before this gets populated, perhaps as much as a minute. Because
