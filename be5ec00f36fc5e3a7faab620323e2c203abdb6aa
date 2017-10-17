@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8f7ff23a_7b6143a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-17T09:42:56Z",
+      "side": 1,
+      "message": "Prefer not to link to private docs in Chromium CLs.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 5
+      },
+      "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3175df0d_cba2e471",
         "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.cc",
         "patchSetId": 2
@@ -41,6 +64,29 @@
         "startChar": 18,
         "endLine": 80,
         "endChar": 38
+      },
+      "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79767e61_788ffd4d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-17T09:42:56Z",
+      "side": 1,
+      "message": "I\u0027m going to ask that you don\u0027t use \u0027GR\u0027 as part of any of the class or identifier (or directory) names, for a number of reasons.\n\n- ObjC style is to only use initialisms that are well-known in the computing industry.\n- \"GR\" expands to an internal code name.\n- Even when expanded, the code name doesn\u0027t really explain what the feature does.\n\nI\u0027d suggest \u0027visual\u0027 as a general substitute -- VisualSearchCoordinator, visual_search, etc.",
+      "range": {
+        "startLine": 564,
+        "startChar": 2,
+        "endLine": 564,
+        "endChar": 21
       },
       "revId": "be5ec00f36fc5e3a7faab620323e2c203abdb6aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
