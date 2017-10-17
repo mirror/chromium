@@ -172,6 +172,24 @@
       "revId": "93610dbee75bfcb413934eac3a24f21d570905d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538098e5_50c76de1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 90704,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-17T23:52:04Z",
+      "side": 1,
+      "message": "I meant if the denominator is typically small (say, \u003c10), then these percentage histograms tend not be useful.",
+      "parentUuid": "add937bc_f432a060",
+      "revId": "93610dbee75bfcb413934eac3a24f21d570905d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
