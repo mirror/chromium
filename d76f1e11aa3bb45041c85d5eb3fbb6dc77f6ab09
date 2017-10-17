@@ -16,6 +16,24 @@
       "revId": "d76f1e11aa3bb45041c85d5eb3fbb6dc77f6ab09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e8b298_2e6095fa",
+        "filename": "android_webview/tools/apk_merger.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-10-17T14:55:06Z",
+      "side": 1,
+      "message": "my bad :(",
+      "parentUuid": "0fb127a7_09e84171",
+      "revId": "d76f1e11aa3bb45041c85d5eb3fbb6dc77f6ab09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
