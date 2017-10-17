@@ -7,13 +7,17 @@
 
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/events/EventTarget.h"
+#include "modules/vr/latest/VRFrameRequestCallbackCollection.h"
 #include "platform/heap/Handle.h"
+#include "platform/transforms/TransformationMatrix.h"
 #include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class VRDevice;
 class VRFrameOfReferenceOptions;
+class VRFrameRequestCallback;
+class VRPresentationFrame;
 
 class VRSession final : public EventTargetWithInlineData {
   DEFINE_WRAPPERTYPEINFO();
@@ -41,6 +45,9 @@ class VRSession final : public EventTargetWithInlineData {
                                         const String& type,
                                         const VRFrameOfReferenceOptions&);
 
+  int requestFrame(VRFrameRequestCallback*);
+  void cancelFrame(int id);
+
   // Called by JavaScript to manually end the session.
   ScriptPromise end(ScriptState*);
 
@@ -54,6 +61,7 @@ class VRSession final : public EventTargetWithInlineData {
 
   void OnFocus();
   void OnBlur();
+  void OnFrame(std::unique_ptr<TransformationMatrix>);
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -61,11 +69,15 @@ class VRSession final : public EventTargetWithInlineData {
   const Member<VRDevice> device_;
   const bool exclusive_;
 
+  Member<VRPresentationFrame> presentation_frame_;
+  VRFrameRequestCallbackCollection callback_collection_;
+
   double depth_near_ = 0.1;
   double depth_far_ = 1000.0;
   bool blurred_ = false;
-
   bool detached_ = false;
+  bool pending_frame_ = false;
+  bool resolving_frame_ = false;
 };
 
 }  // namespace blink
