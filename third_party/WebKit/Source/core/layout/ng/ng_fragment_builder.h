@@ -110,6 +110,11 @@ class CORE_EXPORT NGFragmentBuilder final : public NGContainerFragmentBuilder {
     return *this;
   }
 
+  NGFragmentBuilder& SetBoxType(NGPhysicalFragment::NGBoxType box_type) {
+    box_type_ = box_type;
+    return *this;
+  }
+
   // Offsets are not supposed to be set during fragment construction, so we
   // do not provide a setter here.
 
@@ -147,6 +152,7 @@ class CORE_EXPORT NGFragmentBuilder final : public NGContainerFragmentBuilder {
   LayoutUnit intrinsic_block_size_;
 
   bool did_break_;
+  NGPhysicalFragment::NGBoxType box_type_;
   LayoutUnit used_block_size_;
 
   Vector<RefPtr<NGBreakToken>> child_break_tokens_;

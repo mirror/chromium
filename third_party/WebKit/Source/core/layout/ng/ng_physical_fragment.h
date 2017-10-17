@@ -47,6 +47,15 @@ class CORE_EXPORT NGPhysicalFragment
     // When adding new values, make sure the bit size of |type_| is large
     // enough to store.
   };
+  enum NGBoxType {
+    kNormalBox,
+    kInlineBlock,
+    kFloating,
+    kOutOfFlowPositioned,
+    kAnonymousBox
+    // When adding new values, make sure the bit size of |box_type_| is large
+    // enough to store.
+  };
 
   ~NGPhysicalFragment();
 
@@ -58,6 +67,13 @@ class CORE_EXPORT NGPhysicalFragment
   bool IsBox() const { return Type() == NGFragmentType::kFragmentBox; }
   bool IsText() const { return Type() == NGFragmentType::kFragmentText; }
   bool IsLineBox() const { return Type() == NGFragmentType::kFragmentLineBox; }
+
+  NGBoxType BoxType() const { return static_cast<NGBoxType>(box_type_); }
+  // An inline block is represented as a kFragmentBox.
+  // TODO(eae): This isn't true for replaces elements at the moment.
+  bool IsInlineBlock() const { return BoxType() == kInlineBlock; }
+  // A box fragment that do not exist in DOM/style tree.
+  bool IsAnonymousBox() const { return BoxType() == kAnonymousBox; }
 
   // The accessors in this class shouldn't be used by layout code directly,
   // instead should be accessed by the NGFragmentBase classes. These accessors
@@ -132,6 +148,7 @@ class CORE_EXPORT NGPhysicalFragment
   RefPtr<NGBreakToken> break_token_;
 
   unsigned type_ : 2;  // NGFragmentType
+  unsigned box_type_ : 3;  // NGBoxType
   unsigned is_placed_ : 1;
   unsigned border_edge_ : 4;  // NGBorderEdges::Physical
 

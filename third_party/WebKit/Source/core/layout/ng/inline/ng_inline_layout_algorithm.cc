@@ -60,6 +60,7 @@ NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
           break_token),
       is_horizontal_writing_mode_(
           blink::IsHorizontalWritingMode(space.WritingMode())) {
+  container_builder_.SetBoxType(NGPhysicalFragment::NGBoxType::kAnonymousBox);
   quirks_mode_ = !inline_node.GetLayoutObject()->GetDocument().InNoQuirksMode();
   unpositioned_floats_ = ConstraintSpace().UnpositionedFloats();
 
