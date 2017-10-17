@@ -69,6 +69,24 @@
       "revId": "c1db97f9ee28e6a75944fa4991ca3e49cbe11d2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be14de95_42f6f3d7",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-17T16:07:30Z",
+      "side": 1,
+      "message": "Hmm, I thought you could just call ResumeNavigation without waiting for anything first. I might be wrong then : ( but it is a good improvement to make in the future.",
+      "parentUuid": "2bf2c479_3e5edefb",
+      "revId": "c1db97f9ee28e6a75944fa4991ca3e49cbe11d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
