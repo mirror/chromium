@@ -16,6 +16,24 @@
       "revId": "97f9b7125d2c0d00f7f5611da9e67fdd5784b644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d693be_0c400eaf",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-17T00:30:43Z",
+      "side": 1,
+      "message": "I think we made |sinks| by value to avoid copying when Cast/DialMediaSinkServiceImpl (on IO thread) posting ProvideSinks() callback to UI thread. (It seems not working since move() is not properly implemented for MediaSinkInternal...)\n\nChanging this to const ref needs to change MediaSinkService::OnSinksDiscoveredCallback() and all references. Not sure if we want to change it back in future...May want to keep it as it is if it is not a big performance issue...",
+      "parentUuid": "9f6b5053_9c9ac395",
+      "revId": "97f9b7125d2c0d00f7f5611da9e67fdd5784b644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
