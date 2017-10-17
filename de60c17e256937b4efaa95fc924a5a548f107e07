@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1143928b_231126bb",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-17T15:20:16Z",
+      "side": 1,
+      "message": "(1) -\u003e Done.\n(2) -\u003e Done.\n(3) -\u003e As we have discussed in person, since i am not using any type specific variables, it\u0027s fine to write all my tests with SolidColorDrawQuads.",
+      "parentUuid": "914e72d2_c37026b9",
+      "revId": "de60c17e256937b4efaa95fc924a5a548f107e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23ede22c_4e967a94",
         "filename": "components/viz/service/display/display_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-13T16:28:55Z",
       "side": 1,
       "message": "if quad3 was a renderpass draw quad would it be removed, and then you\u0027d lose the 2nd renderpass entirely?\n\nthis is where u need to worry about inside vs outside occlusion.\nquads inside the render pass should occlude a RPDQ, quads from the RenderPass it points to shouldn\u0027t, quads from other RenderPass pointed to by other RPDQ can.",
+      "revId": "de60c17e256937b4efaa95fc924a5a548f107e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78e5795_ac9a401e",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-17T15:20:16Z",
+      "side": 1,
+      "message": "The current implementation skips renderpass draw quad. I added a TODO to add to the second version. I added a new case to make sure this doesn\u0027t regress.",
+      "parentUuid": "23ede22c_4e967a94",
       "revId": "de60c17e256937b4efaa95fc924a5a548f107e07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
