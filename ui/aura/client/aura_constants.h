@@ -36,6 +36,9 @@ enum class WindowEmbedType {
 AURA_EXPORT extern const WindowProperty<bool>* const
     kAccessibilityFocusFallsbackToWidgetKey;
 
+// A property key to store the accessible role (|AXRole|) of this window.
+AURA_EXPORT extern const WindowProperty<int32_t>* const kAccessibilityRole;
+
 // A property key to store whether accessibility touch exploration gets handled
 // by the window and all touches pass through directly.
 AURA_EXPORT extern const WindowProperty<bool>* const
