@@ -8,12 +8,12 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow DIV class='half'",
-          "rect": [8, 353, 60, 38],
+          "rect": [7, 352, 62, 40],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='half'",
-          "rect": [8, 338, 60, 38],
+          "rect": [7, 337, 62, 40],
           "reason": "geometry"
         },
         {

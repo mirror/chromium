@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutTextControl TEXTAREA id='editor'",
-          "rect": [5, 5, 147, 38],
+          "rect": [4, 4, 149, 40],
           "reason": "subtree"
         },
         {
@@ -18,7 +18,7 @@
         },
         {
           "object": "LayoutTextControl TEXTAREA id='editor'",
-          "rect": [9, 24, 124, 15],
+          "rect": [8, 23, 126, 17],
           "reason": "scroll control"
         },
         {
@@ -28,12 +28,12 @@
         },
         {
           "object": "LayoutTextControl TEXTAREA id='editor'",
-          "rect": [133, 24, 15, 15],
+          "rect": [132, 23, 17, 17],
           "reason": "scroll control"
         },
         {
           "object": "LayoutTextControl TEXTAREA id='editor'",
-          "rect": [133, 9, 15, 15],
+          "rect": [132, 8, 17, 17],
           "reason": "scroll control"
         }
       ]

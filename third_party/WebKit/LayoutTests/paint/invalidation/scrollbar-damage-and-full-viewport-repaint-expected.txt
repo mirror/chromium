@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow DIV id='container'",
-          "rect": [1, 236, 185, 15],
+          "rect": [0, 235, 187, 17],
           "reason": "scroll control"
         }
       ]

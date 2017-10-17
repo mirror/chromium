@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutTableCol COL id='col'",
-          "rect": [8, 8, 113, 104],
+          "rect": [7, 7, 115, 106],
           "reason": "style change"
         },
         {

@@ -7,13 +7,13 @@
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
-          "object": "LayoutBlockFlow DIV id='div_outline'",
-          "rect": [8, 138, 120, 120],
+          "object": "LayoutBlockFlow DIV id='div_border'",
+          "rect": [7, 7, 122, 122],
           "reason": "style change"
         },
         {
-          "object": "LayoutBlockFlow DIV id='div_border'",
-          "rect": [8, 8, 120, 120],
+          "object": "LayoutBlockFlow DIV id='div_outline'",
+          "rect": [8, 138, 120, 120],
           "reason": "style change"
         }
       ]

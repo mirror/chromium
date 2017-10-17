@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow DIV class='scroller'",
-          "rect": [18, 60, 310, 200],
+          "rect": [17, 59, 312, 202],
           "reason": "subtree"
         },
         {
@@ -23,7 +23,7 @@
         },
         {
           "object": "LayoutBlockFlow DIV class='scroller'",
-          "rect": [308, 65, 15, 175],
+          "rect": [307, 64, 17, 177],
           "reason": "scroll control"
         }
       ]

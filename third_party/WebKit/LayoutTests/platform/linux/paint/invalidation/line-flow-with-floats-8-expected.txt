@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow P",
-          "rect": [8, 74, 418, 526],
+          "rect": [7, 73, 420, 528],
           "reason": "geometry"
         },
         {

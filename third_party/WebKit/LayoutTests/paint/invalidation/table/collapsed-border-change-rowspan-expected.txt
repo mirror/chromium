@@ -33,17 +33,17 @@
         },
         {
           "object": "LayoutTableCell TD id='cell1'",
-          "rect": [8, 8, 99, 299],
+          "rect": [7, 7, 101, 301],
           "reason": "full"
         },
         {
           "object": "LayoutTableCell TD id='cell3'",
-          "rect": [8, 207, 99, 100],
+          "rect": [7, 206, 101, 102],
           "reason": "disappeared"
         },
         {
           "object": "LayoutTableCell TD id='cell2'",
-          "rect": [8, 107, 99, 100],
+          "rect": [7, 106, 101, 102],
           "reason": "disappeared"
         }
       ]

@@ -7,18 +7,18 @@
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
-          "object": "LayoutButton INPUT",
-          "rect": [3, 4, 62, 29],
+          "object": "LayoutButton BUTTON",
+          "rect": [2, 3, 57, 31],
           "reason": "subtree"
         },
         {
           "object": "LayoutText #text",
-          "rect": [16, 11, 36, 14],
+          "rect": [16, 11, 30, 14],
           "reason": "subtree"
         },
         {
           "object": "LayoutBlockFlow (anonymous)",
-          "rect": [16, 11, 36, 13],
+          "rect": [16, 11, 30, 13],
           "reason": "subtree"
         }
       ]
@@ -26,7 +26,7 @@
   ],
   "objectPaintInvalidations": [
     {
-      "object": "LayoutButton INPUT",
+      "object": "LayoutButton BUTTON",
       "reason": "subtree"
     },
     {
@@ -42,7 +42,7 @@
       "reason": "subtree"
     },
     {
-      "object": "InlineTextBox 'Submit'",
+      "object": "InlineTextBox 'Reset'",
       "reason": "subtree"
     }
   ]

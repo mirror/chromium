@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow DIV id='target'",
-          "rect": [40, 50, 208, 118],
+          "rect": [39, 49, 210, 120],
           "reason": "geometry"
         },
         {

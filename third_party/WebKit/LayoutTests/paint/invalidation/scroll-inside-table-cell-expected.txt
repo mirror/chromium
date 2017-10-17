@@ -8,8 +8,13 @@
       "paintInvalidations": [
         {
           "object": "LayoutTableCell (relative positioned) TD id='cellToScroll' class='relative'",
-          "rect": [312, 112, 454, 469],
+          "rect": [311, 111, 456, 471],
           "reason": "subtree"
+        },
+        {
+          "object": "LayoutTableCell (relative positioned) TD id='cellToScroll' class='relative'",
+          "rect": [313, 563, 437, 17],
+          "reason": "scroll control"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV class='absolute green'",
@@ -20,11 +25,6 @@
           "object": "LayoutBlockFlow (relative positioned) DIV class='relative red'",
           "rect": [314, 114, 435, 450],
           "reason": "subtree"
-        },
-        {
-          "object": "LayoutTableCell (relative positioned) TD id='cellToScroll' class='relative'",
-          "rect": [314, 564, 435, 15],
-          "reason": "scroll control"
         }
       ]
     }

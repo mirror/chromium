@@ -8,182 +8,182 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [550, 350, 150, 150],
+          "rect": [549, 349, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [535, 325, 150, 150],
+          "rect": [534, 324, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [535, 325, 150, 150],
+          "rect": [534, 324, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [520, 300, 150, 150],
+          "rect": [519, 299, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [520, 300, 150, 150],
+          "rect": [519, 299, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [505, 275, 150, 150],
+          "rect": [504, 274, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [505, 275, 150, 150],
+          "rect": [504, 274, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [490, 250, 150, 150],
+          "rect": [489, 249, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [490, 250, 150, 150],
+          "rect": [489, 249, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [475, 225, 150, 150],
+          "rect": [474, 224, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [475, 225, 150, 150],
+          "rect": [474, 224, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [460, 200, 150, 150],
+          "rect": [459, 199, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [460, 200, 150, 150],
+          "rect": [459, 199, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [445, 175, 150, 150],
+          "rect": [444, 174, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [445, 175, 150, 150],
+          "rect": [444, 174, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [430, 150, 150, 150],
+          "rect": [429, 149, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [430, 150, 150, 150],
+          "rect": [429, 149, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) div id='html' class='outerBox'",
-          "rect": [400, 100, 150, 150],
+          "rect": [399, 99, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [250, 350, 150, 150],
+          "rect": [249, 349, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [235, 325, 150, 150],
+          "rect": [234, 324, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [235, 325, 150, 150],
+          "rect": [234, 324, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [220, 300, 150, 150],
+          "rect": [219, 299, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [220, 300, 150, 150],
+          "rect": [219, 299, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [205, 275, 150, 150],
+          "rect": [204, 274, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [205, 275, 150, 150],
+          "rect": [204, 274, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [190, 250, 150, 150],
+          "rect": [189, 249, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [190, 250, 150, 150],
+          "rect": [189, 249, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [175, 225, 150, 150],
+          "rect": [174, 224, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [175, 225, 150, 150],
+          "rect": [174, 224, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [160, 200, 150, 150],
+          "rect": [159, 199, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [160, 200, 150, 150],
+          "rect": [159, 199, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [145, 175, 150, 150],
+          "rect": [144, 174, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [145, 175, 150, 150],
+          "rect": [144, 174, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [130, 150, 150, 150],
+          "rect": [129, 149, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [130, 150, 150, 150],
+          "rect": [129, 149, 152, 152],
           "reason": "geometry"
         },
         {
           "object": "LayoutSVGRoot (positioned) svg id='svg'",
-          "rect": [100, 100, 150, 150],
+          "rect": [99, 99, 152, 152],
           "reason": "geometry"
         },
         {

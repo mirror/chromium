@@ -7,8 +7,13 @@
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
+          "object": "LayoutTable TABLE",
+          "rect": [7, 7, 115, 106],
+          "reason": "geometry"
+        },
+        {
           "object": "LayoutTableCol COL id='col'",
-          "rect": [8, 8, 113, 104],
+          "rect": [7, 7, 115, 106],
           "reason": "style change"
         },
         {
@@ -27,23 +32,23 @@
           "reason": "style change"
         },
         {
-          "object": "LayoutTable TABLE",
-          "rect": [8, 108, 113, 4],
-          "reason": "incremental"
-        },
-        {
           "object": "LayoutTableRow TR",
           "rect": [8, 58, 109, 52],
           "reason": "style change"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [10, 60, 56, 50],
+          "rect": [9, 9, 58, 52],
           "reason": "geometry"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [10, 10, 56, 50],
+          "rect": [8, 8, 56, 52],
+          "reason": "geometry"
+        },
+        {
+          "object": "LayoutTableCell TD",
+          "rect": [10, 60, 56, 50],
           "reason": "geometry"
         },
         {
@@ -63,11 +68,6 @@
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [9, 9, 54, 50],
-          "reason": "geometry"
-        },
-        {
-          "object": "LayoutTableCell TD",
           "rect": [63, 59, 53, 50],
           "reason": "geometry"
         },
@@ -75,11 +75,6 @@
           "object": "LayoutTableCell TD",
           "rect": [63, 9, 53, 50],
           "reason": "geometry"
-        },
-        {
-          "object": "LayoutTable TABLE",
-          "rect": [116, 8, 5, 104],
-          "reason": "incremental"
         }
       ]
     }
@@ -87,7 +82,7 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutTable TABLE",
-      "reason": "incremental"
+      "reason": "geometry"
     },
     {
       "object": "LayoutTableCol COL id='col'",

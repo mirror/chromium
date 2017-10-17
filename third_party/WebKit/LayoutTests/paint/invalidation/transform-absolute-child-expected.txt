@@ -18,7 +18,7 @@
         },
         {
           "object": "LayoutBlockFlow (relative positioned) DIV id='box' class='rotated'",
-          "rect": [16, 8, 288, 288],
+          "rect": [15, 7, 290, 290],
           "reason": "subtree"
         }
       ]

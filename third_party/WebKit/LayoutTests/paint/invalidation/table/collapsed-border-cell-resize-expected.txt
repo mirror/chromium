@@ -7,14 +7,14 @@
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
-          "object": "LayoutTableRow TR",
-          "rect": [8, 8, 104, 204],
+          "object": "LayoutTableCell TD id='target'",
+          "rect": [7, 7, 105, 205],
           "reason": "geometry"
         },
         {
-          "object": "LayoutTableCell TD id='target'",
-          "rect": [8, 111, 103, 100],
-          "reason": "incremental"
+          "object": "LayoutTableRow TR",
+          "rect": [8, 8, 104, 204],
+          "reason": "geometry"
         }
       ]
     }
@@ -26,7 +26,7 @@
     },
     {
       "object": "LayoutTableCell TD id='target'",
-      "reason": "incremental"
+      "reason": "geometry"
     }
   ]
 }

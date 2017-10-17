@@ -48,22 +48,22 @@
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [15, 82, 117, 67],
+          "rect": [14, 81, 119, 69],
           "reason": "appeared"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [15, 82, 117, 67],
+          "rect": [14, 81, 119, 69],
           "reason": "disappeared"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [15, 15, 117, 67],
+          "rect": [14, 14, 119, 69],
           "reason": "appeared"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [15, 15, 117, 67],
+          "rect": [14, 14, 119, 69],
           "reason": "disappeared"
         }
       ]

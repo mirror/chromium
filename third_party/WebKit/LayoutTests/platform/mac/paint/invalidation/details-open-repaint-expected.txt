@@ -13,7 +13,7 @@
         },
         {
           "object": "LayoutTextControl INPUT",
-          "rect": [8, 68, 131, 19],
+          "rect": [7, 67, 133, 21],
           "reason": "appeared"
         },
         {

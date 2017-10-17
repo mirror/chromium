@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutTextControl INPUT id='target'",
-          "rect": [5, 5, 47, 25],
+          "rect": [4, 4, 49, 27],
           "reason": "subtree"
         },
         {
