@@ -930,6 +930,10 @@ void SimpleURLLoaderImpl::StartRequest(
       mojo::MakeRequest(&url_loader_), 0 /* routing_id */, 0 /* request_id */,
       0 /* options */, *resource_request, std::move(client_ptr),
       net::MutableNetworkTrafficAnnotationTag(annotation_tag));
+  if (!url_loader_.is_bound() || !url_loader_factory_ptr_.is_bound()) {
+    int w = 5;
+    ++w;
+  }
 }
 
 void SimpleURLLoaderImpl::Retry() {
