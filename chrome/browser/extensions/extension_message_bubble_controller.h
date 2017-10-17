@@ -74,6 +74,10 @@ class ExtensionMessageBubbleController : public chrome::BrowserListObserver,
     // widget deactivates.
     virtual bool ShouldAcknowledgeOnDeactivate() const = 0;
 
+    // Returns true if the bubble should be shown once per extension
+    // per profile (per session).
+    virtual bool ShouldShowBubblePerExtensionPerProfile() const = 0;
+
     // Whether to show a list of extensions in the bubble.
     virtual bool ShouldShowExtensionList() const = 0;
 
@@ -186,6 +190,8 @@ class ExtensionMessageBubbleController : public chrome::BrowserListObserver,
       bool should_ignore_learn_more);
 
  private:
+  typedef std::set<std::pair<Profile*, ExtensionId>> ProfileExtensionPairSet;
+
   void HandleExtensionUnloadOrUninstall();
 
   // ExtensionRegistryObserver:
@@ -210,6 +216,8 @@ class ExtensionMessageBubbleController : public chrome::BrowserListObserver,
   void OnClose();
 
   std::set<Profile*>* GetProfileSet();
+
+  ProfileExtensionPairSet* GetProfileExtensionPairSet();
 
   // A weak pointer to the Browser we are associated with. Not owned by us.
   Browser* browser_;

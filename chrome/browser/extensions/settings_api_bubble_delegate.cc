@@ -202,6 +202,10 @@ bool SettingsApiBubbleDelegate::ShouldAcknowledgeOnDeactivate() const {
   return false;
 }
 
+bool SettingsApiBubbleDelegate::ShouldShowBubblePerExtensionPerProfile() const {
+  return false;
+}
+
 bool SettingsApiBubbleDelegate::ShouldShowExtensionList() const {
   return false;
 }

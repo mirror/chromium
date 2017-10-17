@@ -78,6 +78,10 @@ bool DevModeBubbleDelegate::ShouldAcknowledgeOnDeactivate() const {
   return false;
 }
 
+bool DevModeBubbleDelegate::ShouldShowBubblePerExtensionPerProfile() const {
+  return false;
+}
+
 bool DevModeBubbleDelegate::ShouldShowExtensionList() const {
   return false;
 }

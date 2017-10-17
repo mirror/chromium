@@ -158,6 +158,11 @@ bool NtpOverriddenBubbleDelegate::ShouldAcknowledgeOnDeactivate() const {
       features::kAcknowledgeNtpOverrideOnDeactivate);
 }
 
+bool NtpOverriddenBubbleDelegate::ShouldShowBubblePerExtensionPerProfile()
+    const {
+  return true;
+}
+
 bool NtpOverriddenBubbleDelegate::ShouldShowExtensionList() const {
   return false;
 }

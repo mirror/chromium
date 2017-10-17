@@ -107,6 +107,11 @@ bool SuspiciousExtensionBubbleDelegate::ShouldAcknowledgeOnDeactivate() const {
   return false;
 }
 
+bool SuspiciousExtensionBubbleDelegate::ShouldShowBubblePerExtensionPerProfile()
+    const {
+  return false;
+}
+
 bool SuspiciousExtensionBubbleDelegate::ShouldShowExtensionList() const {
   return true;
 }

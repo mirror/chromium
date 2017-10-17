@@ -364,6 +364,33 @@ class ExtensionMessageBubbleTest : public BrowserWithTestWindowTest {
     BrowserWithTestWindowTest::TearDown();
   }
 
+  void ShowAndDismissBubbleByDeactivation(
+      TestExtensionMessageBubbleController* controller,
+      const std::string& extension_name) {
+    controller->SetIsActiveBubble();
+    EXPECT_TRUE(controller->ShouldShow());
+    std::vector<base::string16> override_extensions =
+        controller->GetExtensionList();
+    ASSERT_EQ(1U, override_extensions.size());
+    EXPECT_TRUE(base::ASCIIToUTF16(extension_name) ==
+                override_extensions[0].c_str());
+    EXPECT_EQ(0U, controller->link_click_count());
+    EXPECT_EQ(0U, controller->dismiss_click_count());
+    EXPECT_EQ(0U, controller->action_click_count());
+
+    // Simulate showing the bubble and dismissing it by clicking outside of the
+    // bubble.
+    FakeExtensionMessageBubble bubble;
+    bubble.set_action_on_show(
+        FakeExtensionMessageBubble::BUBBLE_ACTION_DISMISS_DEACTIVATION);
+    EXPECT_TRUE(controller->ShouldShow());
+    bubble.set_controller(controller);
+    bubble.Show();
+    EXPECT_EQ(0U, controller->link_click_count());
+    EXPECT_EQ(0U, controller->action_click_count());
+    EXPECT_EQ(1U, controller->dismiss_click_count());
+  }
+
  protected:
   scoped_refptr<Extension> CreateExtension(
       Manifest::Location location,
@@ -389,7 +416,7 @@ class ExtensionMessageBubbleTestWithParam
 // Test that the bubble correctly treats dismissal due to deactivation.
 // Currently, the NTP bubble is the only one that has flexible behavior (toggled
 // by a feature).
-TEST_P(ExtensionMessageBubbleTestWithParam,
+TEST_F(ExtensionMessageBubbleTestWithParam,
        BubbleCorrectlyReshowsOnDeactivationDismissal) {
   const bool kAcknowledgeOnDeactivate = GetParam();
   base::test::ScopedFeatureList feature_list;
@@ -1065,6 +1092,41 @@ TEST_F(ExtensionMessageBubbleTest, NtpOverriddenControllerTest) {
                                extensions::UNINSTALL_REASON_FOR_TESTING,
                                base::Bind(&base::DoNothing),
                                NULL);
+}
+
+// Tests that the NTP override bubble is shown (on the new tab page) each time
+// an NTP overriding extension is installed for a single profile.
+TEST_F(ExtensionMessageBubbleTest, ShowNtpBubblePerProfilePerExtensionTest) {
+  Init();
+  ASSERT_TRUE(LoadExtensionOverridingNtp("1", kId1, Manifest::UNPACKED));
+  std::unique_ptr<TestExtensionMessageBubbleController> controller(
+      std::make_unique<TestExtensionMessageBubbleController>(
+          new NtpOverriddenBubbleDelegate(browser()->profile()), browser()));
+  ShowAndDismissBubbleByDeactivation(controller.get(), "Extension 1");
+
+  ASSERT_TRUE(LoadExtensionOverridingNtp("2", kId2, Manifest::UNPACKED));
+  controller = std::make_unique<TestExtensionMessageBubbleController>(
+      new NtpOverriddenBubbleDelegate(browser()->profile()), browser());
+  ShowAndDismissBubbleByDeactivation(controller.get(), "Extension 2");
+
+  ASSERT_TRUE(LoadExtensionOverridingNtp("3", kId3, Manifest::UNPACKED));
+  controller = std::make_unique<TestExtensionMessageBubbleController>(
+      new NtpOverriddenBubbleDelegate(browser()->profile()), browser());
+  ShowAndDismissBubbleByDeactivation(controller.get(), "Extension 3");
+
+  // No extension should have become disabled.
+  ExtensionRegistry* registry = ExtensionRegistry::Get(profile());
+  EXPECT_TRUE(registry->enabled_extensions().GetByID(kId1) != NULL);
+  EXPECT_TRUE(registry->enabled_extensions().GetByID(kId2) != NULL);
+  EXPECT_TRUE(registry->enabled_extensions().GetByID(kId3) != NULL);
+
+  // Clean up after ourselves.
+  service_->UninstallExtension(kId1, extensions::UNINSTALL_REASON_FOR_TESTING,
+                               base::Bind(&base::DoNothing), NULL);
+  service_->UninstallExtension(kId2, extensions::UNINSTALL_REASON_FOR_TESTING,
+                               base::Bind(&base::DoNothing), NULL);
+  service_->UninstallExtension(kId3, extensions::UNINSTALL_REASON_FOR_TESTING,
+                               base::Bind(&base::DoNothing), NULL);
 }
 
 void SetInstallTime(const std::string& extension_id,

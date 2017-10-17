@@ -35,6 +35,11 @@ using ProfileSetMap = std::map<std::string, std::set<Profile*>>;
 base::LazyInstance<ProfileSetMap>::DestructorAtExit g_shown_for_profiles =
     LAZY_INSTANCE_INITIALIZER;
 
+using ProfileExtensionPairSetMap =
+    std::map<std::string, std::set<std::pair<Profile*, ExtensionId>>>;
+base::LazyInstance<ProfileExtensionPairSetMap>::DestructorAtExit
+    g_shown_for_profile_extension_pairs = LAZY_INSTANCE_INITIALIZER;
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -127,8 +132,17 @@ bool ExtensionMessageBubbleController::ShouldShow() {
   // check if each extension entry is still installed, and, if not, remove it
   // from the list.
   UpdateExtensionIdList();
-  std::set<Profile*>* profiles = GetProfileSet();
-  return !profiles->count(profile()->GetOriginalProfile()) &&
+
+  bool shown_on_profile;
+  if (delegate_->ShouldShowBubblePerExtensionPerProfile() &&
+      GetExtensionIdList().size() == 1) {
+    shown_on_profile = GetProfileExtensionPairSet()->count(std::make_pair(
+        profile()->GetOriginalProfile(), GetExtensionIdList()[0]));
+  } else {
+    shown_on_profile = GetProfileSet()->count(profile()->GetOriginalProfile());
+  }
+
+  return !shown_on_profile &&
          (!model_->has_active_bubble() || is_active_bubble_) &&
          !GetExtensionIdList().empty();
 }
@@ -208,6 +222,11 @@ void ExtensionMessageBubbleController::OnShown(
   close_bubble_callback_ = close_bubble_callback;
   DCHECK(is_active_bubble_);
   GetProfileSet()->insert(profile()->GetOriginalProfile());
+  if (delegate_->ShouldShowBubblePerExtensionPerProfile() &&
+      GetExtensionIdList().size() == 1) {
+    GetProfileExtensionPairSet()->insert(std::make_pair(
+        profile()->GetOriginalProfile(), GetExtensionIdList()[0]));
+  }
 }
 
 void ExtensionMessageBubbleController::OnBubbleAction() {
@@ -237,7 +256,6 @@ void ExtensionMessageBubbleController::OnBubbleDismiss(
            user_action_ == ACTION_DISMISS_DEACTIVATION);
     return;
   }
-
   user_action_ = closed_by_deactivation ? ACTION_DISMISS_DEACTIVATION
                                         : ACTION_DISMISS_USER_ACTION;
 
@@ -272,6 +290,7 @@ void ExtensionMessageBubbleController::SetIsActiveBubble() {
 
 void ExtensionMessageBubbleController::ClearProfileListForTesting() {
   GetProfileSet()->clear();
+  GetProfileExtensionPairSet()->clear();
 }
 
 // static
@@ -361,6 +380,9 @@ void ExtensionMessageBubbleController::OnClose() {
   if (user_action_ != ACTION_DISMISS_DEACTIVATION ||
       delegate_->ShouldAcknowledgeOnDeactivate()) {
     AcknowledgeExtensions();
+    if (delegate_->ShouldShowBubblePerExtensionPerProfile())
+      GetProfileExtensionPairSet()->clear();
+
     if (delegate_->ClearProfileSetAfterAction())
       GetProfileSet()->clear();
   }
@@ -368,6 +390,11 @@ void ExtensionMessageBubbleController::OnClose() {
 
 std::set<Profile*>* ExtensionMessageBubbleController::GetProfileSet() {
   return &g_shown_for_profiles.Get()[delegate_->GetKey()];
+}
+
+std::set<std::pair<Profile*, ExtensionId>>*
+ExtensionMessageBubbleController::GetProfileExtensionPairSet() {
+  return &g_shown_for_profile_extension_pairs.Get()[delegate_->GetKey()];
 }
 
 }  // namespace extensions
