@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f5edd96c_7e17a8c9",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-17T02:50:39Z",
+      "side": 1,
+      "message": "I\u0027m not really sure.  This cl: https://codereview.chromium.org/2969163002 justified the removal of event_request_id by pointing out that weak pointers were wiped out when \"the current request finishes\". If we don\u0027t invalidate all weak pointers at this point, don\u0027t we run the risk of calling methods on the wrong events at some point?\n\nHaving said that, invalidating all weak pointers seems like a heavy-handed way of solving the problem too.\n\nWDYT?",
+      "parentUuid": "b7d22114_c2d4a33f",
+      "range": {
+        "startLine": 186,
+        "startChar": 4,
+        "endLine": 186,
+        "endChar": 17
+      },
+      "revId": "761f3bd0672cf7aedb813979a2ee44c75e642c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc98a99c_bf1e8f03",
         "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-16T00:54:29Z",
       "side": 1,
       "message": "Nit: this needs braces because the body is more than 1 line.",
+      "range": {
+        "startLine": 122,
+        "startChar": 31,
+        "endLine": 122,
+        "endChar": 32
+      },
+      "revId": "761f3bd0672cf7aedb813979a2ee44c75e642c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd6126be_d376f59a",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-17T02:50:39Z",
+      "side": 1,
+      "message": "Done. I would actually prefer to use braces in all cases, including 1-line. Can you elaborate on why you prefer braces in this case (which is logically a single line) while omitting them when the single line is unwrapped?",
+      "parentUuid": "dc98a99c_bf1e8f03",
       "range": {
         "startLine": 122,
         "startChar": 31,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a022ca2f_ccf728de",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-17T02:50:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc61a454_32876872",
+      "range": {
+        "startLine": 132,
+        "startChar": 18,
+        "endLine": 132,
+        "endChar": 41
+      },
+      "revId": "761f3bd0672cf7aedb813979a2ee44c75e642c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9eedb455_80ea7b1c",
         "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e150af12_be191dda",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-17T02:50:39Z",
+      "side": 1,
+      "message": "This code is unaware of how calling code decides the value for expected_to_record_minutes_histogram, so it would be incorrect to say \"only recorded the first time here\".  I\u0027ve updated it to \"is recorded if expected\".",
+      "parentUuid": "9eedb455_80ea7b1c",
+      "range": {
+        "startLine": 251,
+        "startChar": 30,
+        "endLine": 251,
+        "endChar": 76
+      },
+      "revId": "761f3bd0672cf7aedb813979a2ee44c75e642c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9885643_4ae2d3b3",
         "filename": "chrome/browser/banners/app_banner_settings_helper.cc",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-16T00:54:29Z",
       "side": 1,
       "message": "Nit: perhaps flip this so it\u0027s\n\nif (base::FeatureList::IsEnabled(...)\n  return NO_ERROR_DETECTED;\n\n// everything else here.",
+      "range": {
+        "startLine": 264,
+        "startChar": 2,
+        "endLine": 264,
+        "endChar": 73
+      },
+      "revId": "761f3bd0672cf7aedb813979a2ee44c75e642c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323482fc_21c42c80",
+        "filename": "chrome/browser/banners/app_banner_settings_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-17T02:50:39Z",
+      "side": 1,
+      "message": "I considered doing that, but felt that this wasn\u0027t really a condition that warranted an early return in that way that package_name_or_start_url.empty() and !added_time.is_null() warrant an early return (I could imagine adding extra code after line 281 to run in both kExperimentalAppBanners and !kExperimentalAppBanners cases).",
+      "parentUuid": "e9885643_4ae2d3b3",
       "range": {
         "startLine": 264,
         "startChar": 2,
