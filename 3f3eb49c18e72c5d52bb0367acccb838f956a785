@@ -16,6 +16,24 @@
       "revId": "3f3eb49c18e72c5d52bb0367acccb838f956a785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eccf1d3_326211df",
+        "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-17T22:12:29Z",
+      "side": 1,
+      "message": "AfterItemSelected is not called if it is left in this order (callback somehow is not called in this case).",
+      "parentUuid": "dea85dc1_de901120",
+      "revId": "3f3eb49c18e72c5d52bb0367acccb838f956a785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
