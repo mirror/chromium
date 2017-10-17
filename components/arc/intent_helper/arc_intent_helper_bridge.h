@@ -62,9 +62,18 @@ class ArcIntentHelperBridge
       std::vector<IntentFilter> intent_filters) override;
   void OnOpenDownloads() override;
   void OnOpenUrl(const std::string& url) override;
+  void OnOpenChromeSettingsMultideviceUrl() override;
   void OpenWallpaperPicker() override;
   void SetWallpaperDeprecated(const std::vector<uint8_t>& jpeg_data) override;
   void OpenVolumeControl() override;
+
+  class OpenUrlDelegate {
+   public:
+    virtual ~OpenUrlDelegate() {}
+
+    // Opens the given URL in the Chrome browser.
+    virtual void OpenUrl(const GURL& url) = 0;
+  };
 
   // Retrieves icons for the |activities| and calls |callback|.
   // See ActivityIconLoader::GetActivityIcons() for more details.
@@ -94,14 +103,21 @@ class ArcIntentHelperBridge
       std::vector<mojom::IntentHandlerInfoPtr> handlers);
 
   static const char kArcIntentHelperPackageName[];
+  static const char kMultideviceSettingsUrl[];
 
  private:
+  friend class ArcIntentHelperTest;
+
+  void SetOpenUrlDelegateForTesting(
+      std::unique_ptr<OpenUrlDelegate> open_url_delegate);
+
   THREAD_CHECKER(thread_checker_);
 
   content::BrowserContext* const context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
 
   mojo::Binding<mojom::IntentHelperHost> binding_;
+  std::unique_ptr<OpenUrlDelegate> open_url_delegate_;
   internal::ActivityIconLoader icon_loader_;
 
   // List of intent filters from Android. Used to determine if Chrome should

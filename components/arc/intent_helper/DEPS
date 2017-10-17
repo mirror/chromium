@@ -5,6 +5,7 @@ include_rules = [
   "+ash/shell.h",
   "+ash/shell_delegate.h",
   "+ash/wallpaper/wallpaper_controller.h",
+  "+content/public/common",
   "+components/google/core/browser",
   "+ui/base",
   "+ui/gfx",
