@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5c663974_cd7223f8",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-17T03:25:41Z",
+      "side": 1,
+      "message": "The context for that CL is that we could only create one banner per navigation, and there wasn\u0027t reprompting at the time. :)\n\nI\u0027m specifically focused on the InvalidateWeakPtrs() call here. All of the Mojo bindings like event_ seem fine; they are explicitly reset here and then rebound in SendBannerPromptRequest(), so it\u0027s impossible to send a message to an old object (and all Mojo objects here are specifically for communicating with the renderer and firing the event).\n\nHowever, there may be cases where we need to vend a WeakPtr callback to some other service that\u0027s not involved in the reprompting (e.g. some callback run on dismissal in a subclass), so calling InvalidateWeakPtrs() would unintentionally destroy that callback.\n\nIt might be safest to split out the InvalidateWeakPtrs() call from the rest of ResetBindings().",
+      "parentUuid": "f5edd96c_7e17a8c9",
+      "range": {
+        "startLine": 186,
+        "startChar": 4,
+        "endLine": 186,
+        "endChar": 17
+      },
+      "revId": "761f3bd0672cf7aedb813979a2ee44c75e642c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc98a99c_bf1e8f03",
         "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Done. I would actually prefer to use braces in all cases, including 1-line. Can you elaborate on why you prefer braces in this case (which is logically a single line) while omitting them when the single line is unwrapped?",
       "parentUuid": "dc98a99c_bf1e8f03",
+      "range": {
+        "startLine": 122,
+        "startChar": 31,
+        "endLine": 122,
+        "endChar": 32
+      },
+      "revId": "761f3bd0672cf7aedb813979a2ee44c75e642c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5adae1b8_b307f90c",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-17T03:25:41Z",
+      "side": 1,
+      "message": "This is a long and much bike-shedded upon topic (e.g. https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/eIEY-0UKQxw).\n\nThe style guide allows braces to be omitted for conditionals where the body fits on one line. This, combined with braces where the body is one logical statement but splits over multiple lines, is what Chromium most commonly does across the codebase (hence the nit here).\n\nMore generally, the overriding advice is to be consistent with surrounding code (e.g. app_banner_settings_helper.cc does this).",
+      "parentUuid": "dd6126be_d376f59a",
       "range": {
         "startLine": 122,
         "startChar": 31,
@@ -190,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "c2cff0ef_6b00153b",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-17T03:25:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e150af12_be191dda",
+      "range": {
+        "startLine": 251,
+        "startChar": 30,
+        "endLine": 251,
+        "endChar": 76
+      },
+      "revId": "761f3bd0672cf7aedb813979a2ee44c75e642c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9885643_4ae2d3b3",
         "filename": "chrome/browser/banners/app_banner_settings_helper.cc",
         "patchSetId": 2
@@ -234,6 +306,30 @@
       "revId": "761f3bd0672cf7aedb813979a2ee44c75e642c1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ced4ed4_162fb5e1",
+        "filename": "chrome/browser/banners/app_banner_settings_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-17T03:25:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "323482fc_21c42c80",
+      "range": {
+        "startLine": 264,
+        "startChar": 2,
+        "endLine": 264,
+        "endChar": 73
+      },
+      "revId": "761f3bd0672cf7aedb813979a2ee44c75e642c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
