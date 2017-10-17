@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "875007c2_21620cc1",
+        "filename": "chromecast/media/cma/backend/fuchsia/mixer_output_stream_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-10-17T21:52:01Z",
+      "side": 1,
+      "message": "could you hoist this constant up to the top of the file and give it a name?",
+      "revId": "fe12e380545adf3555eff159716d33e4de562d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
