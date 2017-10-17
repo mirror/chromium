@@ -46,6 +46,30 @@
       "revId": "f3d06391779e45f66a68798a7ae60f1014e37e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "091f87f0_8434cab4",
+        "filename": "net/dns/dns_config_service_posix_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-17T11:57:24Z",
+      "side": 1,
+      "message": "When you say \"This test\", do you mean \"ChangeConfigMultipleTimes\"?\nCan we add a comment to this effect, like:\n// |run_loop_| will be nullptr in ChangeConfigMultipleTimes, but OnConfigChanged() will be\n// called on devices with active network connections when the initial config is parsed.",
+      "parentUuid": "06dd1efd_2656d3ef",
+      "range": {
+        "startLine": 216,
+        "startChar": 18,
+        "endLine": 216,
+        "endChar": 0
+      },
+      "revId": "f3d06391779e45f66a68798a7ae60f1014e37e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
