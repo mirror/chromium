@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59dfba34_a5bfd8fa",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-17T16:14:38Z",
+      "side": 1,
+      "message": "you don\u0027t need to change this header if you just want to allow IO. the friending at the bottom is for code that waits on another thread. can you just use ScopedAllowIO instead? (sorry didn\u0027t notice this earlier)",
+      "revId": "b3f0c1daa139584106b7c70d68409911aa1a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
