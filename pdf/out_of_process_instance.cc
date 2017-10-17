@@ -1504,6 +1504,8 @@ void OutOfProcessInstance::DocumentLoadComplete(
   pp::PDF::SetContentRestriction(this, content_restrictions);
   HistogramCustomCounts("PDF.PageCount", document_features.page_count, 1,
                         1000000, 50);
+  HistogramEnumeration("PDF.XFADocumentType", document_features.xfa_doc_type,
+                       3);
 }
 
 void OutOfProcessInstance::RotateClockwise() {
