@@ -666,6 +666,7 @@ INSTANTIATE_TEST_CASE_P(DiceTable,
 // Tests that the AccountReconcilor is always registered.
 TEST_F(AccountReconcilorTest, DiceTokenServiceRegistration) {
   signin::ScopedAccountConsistencyDice scoped_dice;
+  ASSERT_TRUE(signin::IsAccountConsistencyDiceAvailable());
   AccountReconcilor* reconcilor =
       AccountReconcilorFactory::GetForProfile(profile());
   ASSERT_TRUE(reconcilor);
