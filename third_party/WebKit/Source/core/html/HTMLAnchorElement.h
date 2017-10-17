@@ -25,8 +25,10 @@
 #define HTMLAnchorElement_h
 
 #include "core/CoreExport.h"
+#include "core/dom/DOMTokenList.h"
 #include "core/dom/Document.h"
 #include "core/html/HTMLElement.h"
+#include "core/html/RelList.h"
 #include "core/html_names.h"
 #include "core/url/DOMURLUtils.h"
 #include "platform/LinkHash.h"
@@ -88,6 +90,14 @@ class CORE_EXPORT HTMLAnchorElement : public HTMLElement, public DOMURLUtils {
 
   void SendPings(const KURL& destination_url) const;
 
+  DOMTokenList& relList() const {
+    return static_cast<DOMTokenList&>(*rel_list_);
+  }
+
+  DECLARE_VIRTUAL_TRACE();
+
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
+
  protected:
   HTMLAnchorElement(const QualifiedName&, Document&);
 
@@ -123,6 +133,7 @@ class CORE_EXPORT HTMLAnchorElement : public HTMLElement, public DOMURLUtils {
   uint32_t link_relations_;
   mutable LinkHash cached_visited_link_hash_;
   bool was_focused_by_mouse_;
+  TraceWrapperMember<RelList> rel_list_;
 };
 
 inline LinkHash HTMLAnchorElement::VisitedLinkHash() const {
