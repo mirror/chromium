@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34a61b67_15f4c42d",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-10-17T10:04:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cec3d75_f339cfd8",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 53
+      },
+      "revId": "7d26d0584ff24e707da3148363cf475edc1ab119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75d538c4_402d65dd",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "7d26d0584ff24e707da3148363cf475edc1ab119",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a83e2c1_dee5d367",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-10-17T10:04:14Z",
+      "side": 1,
+      "message": "Yup they\u0027re actually used quite a bit in memory infra code :D",
+      "parentUuid": "75d538c4_402d65dd",
+      "range": {
+        "startLine": 117,
+        "startChar": 12,
+        "endLine": 117,
+        "endChar": 75
+      },
+      "revId": "7d26d0584ff24e707da3148363cf475edc1ab119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
