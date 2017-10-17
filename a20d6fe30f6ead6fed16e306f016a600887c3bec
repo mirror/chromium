@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "281bed50_2906d2bc",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadDispatcher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-17T20:45:18Z",
+      "side": 1,
+      "message": "How can I use the string constant defined in service_names.mojom? I had content::mojom::blink::kBrowserServiceName here but it gave me a presubmit error:\n\n\"Do not use Chromium class from namespace content inside Blink core\"",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 22
+      },
+      "revId": "a20d6fe30f6ead6fed16e306f016a600887c3bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
