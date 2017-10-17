@@ -167,6 +167,7 @@
 #include "third_party/WebKit/public/platform/WebCache.h"
 #include "third_party/WebKit/public/platform/WebImageGenerator.h"
 #include "third_party/WebKit/public/platform/WebMemoryCoordinator.h"
+#include "third_party/WebKit/public/platform/WebMemoryThreadState.h"
 #include "third_party/WebKit/public/platform/WebNetworkStateNotifier.h"
 #include "third_party/WebKit/public/platform/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -892,6 +893,19 @@ void RenderThreadImpl::Init(
                                   mojo::MakeRequest(&parent_coordinator));
     memory_coordinator_ = CreateChildMemoryCoordinator(
         std::move(parent_coordinator), this);
+  }
+
+  // Check if there is a command line switch to set a new threshold for
+  // the memory pressure GC of blink.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kForceMemoryPressureThresholdsMb)) {
+    std::string memory_threshold = command_line.GetSwitchValueASCII(
+        switches::kForceMemoryPressureThresholdsMb);
+    unsigned force_memory_threshold;
+    if (base::StringToUint(memory_threshold, &force_memory_threshold)) {
+      blink::WebMemoryThreadState::SetForceMemoryPressureThreshold(
+          force_memory_threshold);
+    }
   }
 
   int num_raster_threads = 0;
