@@ -598,6 +598,12 @@ gfx::ColorSpace GetColorSpaceFromEdid(const std::vector<uint8_t>& edid) {
   if (!display::ParseChromaticityCoordinates(edid, &primaries))
     return gfx::ColorSpace();
 
+  // Sanity check: primaries should verify Bx <= Gx <= Rx and By <= Ry <= Gy.
+  if (!(primaries.fBX <= primaries.fGX && primaries.fGX <= primaries.fRX &&
+        primaries.fBY <= primaries.fRY && primaries.fRY <= primaries.fGY)) {
+    return gfx::ColorSpace();
+  }
+
   SkMatrix44 color_space_as_matrix;
   if (!primaries.toXYZD50(&color_space_as_matrix))
     return gfx::ColorSpace();
