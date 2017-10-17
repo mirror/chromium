@@ -2877,6 +2877,9 @@ void GetRestrictedCookieManager(
     network::mojom::RestrictedCookieManagerRequest request) {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableExperimentalWebPlatformFeatures)) {
+    request.ResetWithReason(
+        network::mojom::RestrictedCookieManager::kFeatureNotEnabled,
+        "Requires Enable Experimental Web Platform Features flag");
     return;
   }
 
