@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "292882b0_34764682",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T01:30:57Z",
+      "side": 1,
+      "message": "Do we mean \"commit\" in the Windows sense, here? ajwong has been working on untangling that distinction lately (see e.g. https://chromium-review.googlesource.com/c/chromium/src/+/717942), and also on harmonizing our vocabulary in PA generally.\n\nIf so, it would be more clear to switch on `defined(OS_WIN)`, I think.",
+      "revId": "928cadb15be9a80f5083c2d2c2db493d5751bfdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
