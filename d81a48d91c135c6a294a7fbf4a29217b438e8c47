@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2315d04_2fe47837",
+        "filename": "device/gamepad/game_controller_data_fetcher_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-17T20:35:49Z",
+      "side": 1,
+      "message": "Apparently these GCControllerPlayerIndex# constants were added in OS X 10.11\n\nhttps://developer.apple.com/library/content/releasenotes/General/APIDiffsMacOSX10_11/Objective-C/GameController.html",
+      "range": {
+        "startLine": 140,
+        "startChar": 15,
+        "endLine": 140,
+        "endChar": 39
+      },
+      "revId": "d81a48d91c135c6a294a7fbf4a29217b438e8c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
