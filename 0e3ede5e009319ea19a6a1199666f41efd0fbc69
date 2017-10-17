@@ -46,6 +46,30 @@
       "revId": "0e3ede5e009319ea19a6a1199666f41efd0fbc69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "715a2569_8e09383a",
+        "filename": "content/browser/net/network_errors_listing_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-17T17:59:29Z",
+      "side": 1,
+      "message": "I understand that it has no effect on namespace collisions in jumbo builds.  However, it is good practice to put everything that is only used within the same file in the anonymous namespace.",
+      "parentUuid": "277949ef_9c309f0d",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 50
+      },
+      "revId": "0e3ede5e009319ea19a6a1199666f41efd0fbc69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
