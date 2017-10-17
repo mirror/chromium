@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b392397c_d7e6c167",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1745,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-17T16:22:28Z",
+      "side": 1,
+      "message": "Why the check if inferredLabel is going to be returned anyway?",
+      "range": {
+        "startLine": 1745,
+        "startChar": 6,
+        "endLine": 1745,
+        "endChar": 30
+      },
+      "revId": "7822acf93b05a4c307c58cd90150f8cf858178f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
