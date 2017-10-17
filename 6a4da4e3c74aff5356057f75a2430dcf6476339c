@@ -81,6 +81,24 @@
       "revId": "6a4da4e3c74aff5356057f75a2430dcf6476339c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11c37e7_bc9f3380",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-17T11:48:45Z",
+      "side": 1,
+      "message": "We currently have a 1-1 relationship between chromeos and chrome versions. I don\u0027t see how we could release a new chrome (or os) without revving the other? Is an idea to update some services (including chrome) without updating the os?",
+      "parentUuid": "5da6c87f_ce6024a3",
+      "revId": "6a4da4e3c74aff5356057f75a2430dcf6476339c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
