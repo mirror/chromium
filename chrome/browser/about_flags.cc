@@ -2592,6 +2592,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kNtpGoogleGInOmniboxDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::NTPShowGoogleGInOmniboxFeature)},
 #endif  // OS_ANDROID
+
+    {"tokenfree-user-activation",
+     flag_descriptions::kTokenfreeUserActivationName,
+     flag_descriptions::kTokenfreeUserActivationDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kTokenfreeUserActivation)},
+
 #if BUILDFLAG(ENABLE_WEBRTC) && BUILDFLAG(RTC_USE_H264) && \
     !defined(MEDIA_DISABLE_FFMPEG)
     {"enable-webrtc-h264-with-openh264-ffmpeg",

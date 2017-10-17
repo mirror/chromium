@@ -2022,6 +2022,11 @@ const char kSpannableInlineAutocompleteDescription[] =
     "A new type of inline autocomplete for the omnibox that works with "
     "keyboards that compose text.";
 
+const char kTokenfreeUserActivationName[] = "Token-free User Activation";
+const char kTokenfreeUserActivationDescription[] =
+    "Enable simple user activation for APIs that are otherwise controlled by "
+    "user gesture tokens.";
+
 const char kTranslateCompactUIName[] = "New Translate Infobar";
 const char kTranslateCompactUIDescription[] =
     "Enable the new Translate compact infobar UI.";

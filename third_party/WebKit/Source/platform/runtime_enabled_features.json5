@@ -1005,6 +1005,9 @@
       status: "stable",
     },
     {
+      name: "TokenfreeUserActivation",
+    },
+    {
       name: "TopNavByUserActivationInSandbox",
       status: "stable",
     },

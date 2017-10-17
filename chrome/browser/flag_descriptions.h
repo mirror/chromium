@@ -1233,6 +1233,9 @@ extern const char kSetMarketUrlForTestingDescription[];
 extern const char kSpannableInlineAutocompleteName[];
 extern const char kSpannableInlineAutocompleteDescription[];
 
+extern const char kTokenfreeUserActivationName[];
+extern const char kTokenfreeUserActivationDescription[];
+
 extern const char kTranslateCompactUIName[];
 extern const char kTranslateCompactUIDescription[];
 

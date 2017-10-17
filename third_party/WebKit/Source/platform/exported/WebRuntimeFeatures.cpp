@@ -288,6 +288,10 @@ void WebRuntimeFeatures::EnableSlimmingPaintV2(bool enable) {
   RuntimeEnabledFeatures::SetSlimmingPaintV2Enabled(enable);
 }
 
+void WebRuntimeFeatures::EnableTokenfreeUserActivation(bool enable) {
+  RuntimeEnabledFeatures::SetTokenfreeUserActivationEnabled(enable);
+}
+
 void WebRuntimeFeatures::EnableTouchEventFeatureDetection(bool enable) {
   RuntimeEnabledFeatures::SetTouchEventFeatureDetectionEnabled(enable);
 }
