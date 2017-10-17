@@ -509,6 +509,10 @@ component("base") {
     "memory/shared_memory_win.cc",
     "memory/singleton.cc",
     "memory/singleton.h",
+    "memory/swap_thrashing_delegate.cc",
+    "memory/swap_thrashing_delegate.h",
+    "memory/swap_thrashing_monitor.cc",
+    "memory/swap_thrashing_monitor.h",
     "memory/weak_ptr.cc",
     "memory/weak_ptr.h",
     "message_loop/incoming_task_queue.cc",
@@ -1369,6 +1373,7 @@ component("base") {
   # Windows.
   if (is_win) {
     sources += [
+      #"memory/swap_thrashing_delegate_win.cc",
       "power_monitor/power_monitor_device_source_win.cc",
       "profiler/win32_stack_frame_unwinder.cc",
       "profiler/win32_stack_frame_unwinder.h",
@@ -1380,6 +1385,8 @@ component("base") {
       "file_descriptor_store.h",
       "memory/shared_memory_helper.cc",
       "memory/shared_memory_helper.h",
+
+      #"memory/swap_thrashing_delegate.cc",
       "message_loop/message_pump_libevent.cc",
       "strings/string16.cc",
     ]
@@ -2074,6 +2081,7 @@ test("base_unittests") {
     "memory/shared_memory_unittest.cc",
     "memory/shared_memory_win_unittest.cc",
     "memory/singleton_unittest.cc",
+    "memory/swap_thrashing_monitor_unittest.cc",
     "memory/weak_ptr_unittest.cc",
     "message_loop/message_loop_io_posix_unittest.cc",
     "message_loop/message_loop_task_runner_unittest.cc",
