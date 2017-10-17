@@ -33,6 +33,24 @@
       "revId": "e923defa546b7066a29a0adfcc648d4283f3a079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a5c9b6_7f327a21",
+        "filename": "chrome/browser/shell_integration_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-17T05:35:01Z",
+      "side": 1,
+      "message": "https://www.ctrl.blog/entry/osx-protect-default-browser says 10.10.",
+      "parentUuid": "bdbb317d_cb4415b5",
+      "revId": "e923defa546b7066a29a0adfcc648d4283f3a079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
