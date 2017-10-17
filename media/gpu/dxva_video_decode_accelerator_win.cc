@@ -2296,6 +2296,10 @@ void DXVAVideoDecodeAccelerator::FlushInternal() {
   if (!processing_config_changed_) {
     SetState(kFlushing);
 
+    RETURN_AND_NOTIFY_ON_FAILURE(SendMFTMessage(MFT_MESSAGE_COMMAND_FLUSH, 0),
+                                 "Flush: Failed to send message.",
+                                 PLATFORM_FAILURE, );
+
     main_thread_task_runner_->PostTask(
         FROM_HERE,
         base::Bind(&DXVAVideoDecodeAccelerator::NotifyFlushDone, weak_ptr_));
