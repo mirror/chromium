@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "404fce61_7244afa9",
+        "filename": "device/gamepad/game_controller_data_fetcher_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-10-17T21:38:15Z",
+      "side": 1,
+      "message": "We are currently testing a tool to automatically revert changes that break the build.\n\nBut as a heads up the mac compile broke again on this line:\n\nhttps://logs.chromium.org/v/?s\u003dchromium%2Fbb%2Fchromium.webkit%2FWebKit_Mac_Builder__dbg_%2F218396%2F%2B%2Frecipes%2Fsteps%2Fcompile%2F0%2Fstdout\n\nIt can\u0027t find the GCControllerPlayerIndex type",
+      "revId": "f3f5e27db16be55caf642b2274f8cfe6eb38e4f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
