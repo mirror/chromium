@@ -22,6 +22,30 @@
       "revId": "55976957cef23a4004aee45bd6260282fcc0e64c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943a373c_4389dd18",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-17T21:07:36Z",
+      "side": 0,
+      "message": "Good catch, no longer abstract.",
+      "parentUuid": "150e32cc_9ab58877",
+      "range": {
+        "startLine": 226,
+        "startChar": 18,
+        "endLine": 226,
+        "endChar": 62
+      },
+      "revId": "55976957cef23a4004aee45bd6260282fcc0e64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
