@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ab4cfef_eab26d6b",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-17T15:58:10Z",
+      "side": 1,
+      "message": "What if it\u0027s a disabled or nonexistent extension?  Do we still want to let it commit, and be caught later?  Or should we catch it earlier, in which case we could DCHECK here?",
+      "revId": "1c76dd7a4849359f1dbe76ef5ceec345deb81417",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734200b5_a8726feb",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-17T15:58:10Z",
+      "side": 1,
+      "message": "we check !\u003d kWebstoreAppId above, so don\u0027t need it here, right?",
+      "revId": "1c76dd7a4849359f1dbe76ef5ceec345deb81417",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
