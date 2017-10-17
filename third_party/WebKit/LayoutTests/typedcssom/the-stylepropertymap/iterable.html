@@ -1,0 +1,61 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>StylePropertyMap iterable tests</title>
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#the-stylepropertymap">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<div id="target-empty"></div>
+<div id="target-multiple" style="--A: A; width: 0px; --C: C; transition-duration: 1s, 2s; color: red; --B: B;"></div>
+<script>
+'use strict';
+
+test(() => {
+  const styleMap = document.getElementById('target-empty').styleMap;
+  const properties = Array.from(styleMap);
+  assert_equals(properties.length, 0);
+}, 'Iterating over an empty StylePropertyMap gives a zero-length array');
+
+test(() => {
+  const styleMap = document.getElementById('target-multiple').styleMap;
+  const keys = Array.from(styleMap.keys());
+  assert_array_equals(keys,
+    ['color', 'transition-duration', 'width', '--A', '--B', '--C']);
+}, 'StylePropertyMap iterates properties in correct order');
+
+test(() => {
+  const styleMap = document.getElementById('target-multiple').styleMap;
+  const [key, value] = Array.from(styleMap)[2];
+  assert_equals(key, 'width');
+  assert_equals(result.constructor.name, CSSUnitValue.name);
+  assert_equals(result.value, 0);
+  assert_equals(result.unit, 'px');
+}, 'StylePropertyMap iterator returns CSS properties with the correct CSSStyleValue');
+
+test(() => {
+  const styleMap = document.getElementById('target-multiple').styleMap;
+  const [key, result] = Array.from(styleMap)[1];
+  assert_equals(key, 'transition-duration');
+  assert_equals(result.length, 2);
+  assert_equals(result[0].constructor.name, CSSUnitValue.name);
+  assert_equals(result[0].value, 1);
+  assert_equals(result[1].constructor.name, CSSUnitValue.name);
+  assert_equals(result[1].value, 2);
+}, 'StylePropertyMap iterator returns list-valued properties with the correct CSSStyleValue');
+
+test(() => {
+  const styleMap = document.getElementById('target-multiple').styleMap;
+  const entries = Array.from(styleMap);
+  assert_equals(entries.length, 6);
+
+  const custom_entries = entries.slice(3);
+  for (let i = 0; i < custom_entries.length; i++) {
+    const expected_var = ['A', 'B', 'C'][i];
+    const [key, result] = custom_entries[i];
+
+    assert_equals(key, '--' + expected_var);
+    assert_equals(result.constructor.name, CSSKeywordValue.name);
+    assert_equals(result.value, expected_name);
+  }
+}, 'StylePropertyMap iterator returns custom properties with the correct CSSStyleValue');
+
+</script>
