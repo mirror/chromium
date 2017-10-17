@@ -31,7 +31,7 @@ void WorkletScriptLoader::FetchScript(const KURL& module_url_record) {
     NotifyFinished(nullptr);
     return;
   }
-  SetResource(resource);
+  SetResource(resource, fetcher_->Context().GetLoadingTaskRunner().get());
   // notifyFinished() will be called later.
 }
 

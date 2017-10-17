@@ -29,6 +29,7 @@
 
 #include <memory>
 #include "core/dom/Document.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/Settings.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html/parser/HTMLResourcePreloader.h"
@@ -266,7 +267,9 @@ CSSPreloaderResourceClient::CSSPreloaderResourceClient(
                   : kScanOnly),
       preloader_(preloader),
       resource_(ToCSSStyleSheetResource(resource)) {
-  resource_->AddClient(this);
+  resource_->AddClient(this, TaskRunnerHelper::Get(TaskType::kNetworking,
+                                                   preloader->GetDocument())
+                                 .get());
 }
 
 CSSPreloaderResourceClient::~CSSPreloaderResourceClient() {}

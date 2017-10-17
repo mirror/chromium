@@ -56,15 +56,19 @@ class ResourceOwner : public C {
  protected:
   ResourceOwner() {}
 
-  void SetResource(ResourceType*);
-  void ClearResource() { SetResource(nullptr); }
+  // If this Resource is already finished when SetResource() is called,
+  // callbacks will be received asynchronously by a task scheduled
+  // on the given WebTaskRunner. Otherwise, the given WebTaskRunner is unused.
+  void SetResource(ResourceType*, WebTaskRunner*);
+  void ClearResource() { SetResource(nullptr, nullptr); }
 
  private:
   Member<ResourceType> resource_;
 };
 
 template <class R, class C>
-inline void ResourceOwner<R, C>::SetResource(R* new_resource) {
+inline void ResourceOwner<R, C>::SetResource(R* new_resource,
+                                             WebTaskRunner* task_runner) {
   if (new_resource == resource_)
     return;
 
@@ -75,7 +79,7 @@ inline void ResourceOwner<R, C>::SetResource(R* new_resource) {
 
   if (new_resource) {
     resource_ = new_resource;
-    resource_->AddClient(this);
+    resource_->AddClient(this, task_runner);
   }
 }
 

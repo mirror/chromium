@@ -6,6 +6,7 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/IdTargetObserver.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/svg/SVGElement.h"
 #include "core/svg/SVGResourceClient.h"
 #include "platform/loader/fetch/FetchParameters.h"
@@ -77,8 +78,11 @@ void SVGElementProxy::AddClient(SVGResourceClient* client) {
   if (id_.IsEmpty())
     return;
   if (!is_local_) {
-    if (document_)
-      document_->AddClient(client);
+    if (document_) {
+      document_->AddClient(client, TaskRunnerHelper::Get(TaskType::kNetworking,
+                                                         context_document_)
+                                       .get());
+    }
     return;
   }
   TreeScope* client_scope = client->GetTreeScope();
@@ -141,6 +145,7 @@ void SVGElementProxy::Resolve(Document& document) {
   options.initiator_info.name = FetchInitiatorTypeNames::css;
   FetchParameters params(ResourceRequest(url_), options);
   document_ = DocumentResource::FetchSVGDocument(params, document.Fetcher());
+  context_document_ = &document;
   url_ = String();
 }
 
@@ -181,6 +186,7 @@ DEFINE_TRACE(SVGElementProxy) {
   visitor->Trace(clients_);
   visitor->Trace(observers_);
   visitor->Trace(document_);
+  visitor->Trace(context_document_);
 }
 
 void SVGElementProxySet::Add(SVGElementProxy& element_proxy) {

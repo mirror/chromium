@@ -754,8 +754,11 @@ void SVGUseElement::SetDocumentResource(DocumentResource* resource) {
     resource_->RemoveClient(this);
 
   resource_ = resource;
-  if (resource_)
-    resource_->AddClient(this);
+  if (resource_) {
+    resource_->AddClient(
+        this,
+        TaskRunnerHelper::Get(TaskType::kNetworking, &GetDocument()).get());
+  }
 }
 
 }  // namespace blink

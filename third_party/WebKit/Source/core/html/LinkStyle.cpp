@@ -6,6 +6,7 @@
 
 #include "core/css/StyleSheetContents.h"
 #include "core/dom/Document.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
@@ -335,7 +336,9 @@ LinkStyle::LoadReturnValue LinkStyle::LoadStylesheetIfNeeded(
     params.SetIntegrityMetadata(metadata_set);
     params.MutableResourceRequest().SetFetchIntegrity(integrity_attr);
   }
-  SetResource(CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher()));
+  SetResource(
+      CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher()),
+      TaskRunnerHelper::Get(TaskType::kNetworking, &GetDocument()).get());
 
   if (loading_ && !GetResource()) {
     // The request may have been denied if (for example) the stylesheet is

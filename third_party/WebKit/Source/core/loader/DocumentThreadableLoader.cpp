@@ -1305,6 +1305,24 @@ bool DocumentThreadableLoader::IsAllowedRedirect(
   return !cors_flag_ && GetSecurityOrigin()->CanRequest(url);
 }
 
+void DocumentThreadableLoader::SetResource(RawResource* new_resource) {
+  if (new_resource == resource_)
+    return;
+
+  if (RawResource* old_resource = resource_.Release()) {
+    checker_.WillRemoveClient();
+    old_resource->RemoveClient(this);
+  }
+
+  if (new_resource) {
+    resource_ = new_resource;
+    checker_.WillAddClient();
+    resource_->AddClient(this, TaskRunnerHelper::Get(TaskType::kNetworking,
+                                                     GetExecutionContext())
+                                   .get());
+  }
+}
+
 SecurityOrigin* DocumentThreadableLoader::GetSecurityOrigin() const {
   return security_origin_
              ? security_origin_.get()

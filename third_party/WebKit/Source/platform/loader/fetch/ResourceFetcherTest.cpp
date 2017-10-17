@@ -301,7 +301,9 @@ TEST_F(ResourceFetcherTest, RevalidateWhileFinishingLoading) {
   Resource* resource1 = MockResource::Fetch(fetch_params1, fetcher1);
   Persistent<RequestSameResourceOnComplete> client =
       new RequestSameResourceOnComplete(resource1);
-  resource1->AddClient(client);
+  resource1->AddClient(
+      client,
+      Platform::Current()->CurrentThread()->Scheduler()->LoadingTaskRunner());
   platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
   EXPECT_TRUE(client->NotifyFinishedCalled());
   resource1->RemoveClient(client);
@@ -379,7 +381,9 @@ TEST_F(ResourceFetcherTest, ResponseOnCancel) {
   Resource* resource = RawResource::Fetch(fetch_params, fetcher);
   Persistent<ServeRequestsOnCompleteClient> client =
       new ServeRequestsOnCompleteClient();
-  resource->AddClient(client);
+  resource->AddClient(
+      client,
+      Platform::Current()->CurrentThread()->Scheduler()->LoadingTaskRunner());
   resource->Loader()->Cancel();
   resource->RemoveClient(client);
 }

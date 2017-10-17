@@ -143,7 +143,10 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
     return ResourcePriority();
   }
 
-  void AddClient(ResourceClient*);
+  // If this Resource is already finished when AddClient is called, the
+  // ResourceClient will be notified asynchronously by a task scheduled
+  // on the given WebTaskRunner. Otherwise, the given WebTaskRunner is unused.
+  void AddClient(ResourceClient*, WebTaskRunner*);
   void RemoveClient(ResourceClient*);
 
   // If this Resource is already finished when AddFinishObserver is called, the

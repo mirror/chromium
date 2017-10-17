@@ -27,6 +27,7 @@
 #include "core/css/StyleSheetContents.h"
 #include "core/dom/Document.h"
 #include "core/dom/IncrementLoadEventDelayCount.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/loader/resource/CSSStyleSheetResource.h"
 #include "core/loader/resource/XSLStyleSheetResource.h"
 #include "core/xml/DocumentXSLT.h"
@@ -167,7 +168,9 @@ void ProcessingInstruction::Process(const String& href, const String& charset) {
     loading_ = true;
     if (!is_xsl_)
       GetDocument().GetStyleEngine().AddPendingSheet(style_engine_context_);
-    SetResource(resource);
+    SetResource(
+        resource,
+        TaskRunnerHelper::Get(TaskType::kNetworking, &GetDocument()).get());
   }
 }
 

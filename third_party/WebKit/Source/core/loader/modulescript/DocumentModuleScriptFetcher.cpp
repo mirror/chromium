@@ -79,7 +79,7 @@ void DocumentModuleScriptFetcher::Fetch(FetchParameters& fetch_params,
   }
 
   // ScriptResource::Fetch() is processed asynchronously.
-  SetResource(resource);
+  SetResource(resource, fetcher_->Context().GetLoadingTaskRunner().get());
 }
 
 void DocumentModuleScriptFetcher::NotifyFinished(Resource* resource) {

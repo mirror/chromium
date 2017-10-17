@@ -34,6 +34,7 @@
 #include "core/css/StyleEngine.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentParser.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/html/HTMLDocument.h"
 #include "core/html/custom/V0CustomElementSyncMicrotaskQueue.h"
 #include "core/html/imports/HTMLImportChild.h"
@@ -61,7 +62,9 @@ void HTMLImportLoader::Dispose() {
 }
 
 void HTMLImportLoader::StartLoading(RawResource* resource) {
-  SetResource(resource);
+  SetResource(resource, TaskRunnerHelper::Get(TaskType::kNetworking,
+                                              controller_->Master())
+                            .get());
 }
 
 void HTMLImportLoader::ResponseReceived(
