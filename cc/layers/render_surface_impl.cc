@@ -70,6 +70,7 @@ const RenderSurfaceImpl* RenderSurfaceImpl::render_target() const {
 
 RenderSurfaceImpl::DrawProperties::DrawProperties() {
   draw_opacity = 1.f;
+  draw_color_temperature = 0.f;
   is_clipped = false;
 }
 
@@ -399,7 +400,8 @@ void RenderSurfaceImpl::AppendQuads(DrawMode draw_mode,
   shared_quad_state->SetAll(
       draw_transform(), content_rect(), content_rect(),
       draw_properties_.clip_rect, draw_properties_.is_clipped, contents_opaque,
-      draw_properties_.draw_opacity, BlendMode(), sorting_context_id);
+      draw_properties_.draw_opacity, draw_properties_.draw_color_temperature,
+      BlendMode(), sorting_context_id);
 
   if (layer_tree_impl_->debug_state().show_debug_borders.test(
           DebugBorderType::RENDERPASS)) {

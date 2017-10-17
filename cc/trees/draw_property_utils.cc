@@ -601,6 +601,18 @@ static float LayerDrawOpacity(const LayerImpl* layer, const EffectTree& tree) {
   return draw_opacity;
 }
 
+static void SetSurfaceDrawColorTemperature(const EffectTree& tree,
+                                           RenderSurfaceImpl* render_surface) {
+  const EffectNode* node = tree.Node(render_surface->EffectTreeIndex());
+  render_surface->SetDrawColorTemperature(node->color_temperature);
+}
+
+static float LayerDrawColorTemperature(const LayerImpl* layer,
+                                       const EffectTree& tree) {
+  const EffectNode* node = tree.Node(layer->effect_tree_index());
+  return node->color_temperature;
+}
+
 template <typename LayerType>
 static gfx::Transform ScreenSpaceTransformInternal(LayerType* layer,
                                                    const TransformTree& tree) {
@@ -963,6 +975,8 @@ void ComputeDrawPropertiesOfVisibleLayers(const LayerImplList* layer_list,
   for (LayerImpl* layer : *layer_list) {
     layer->draw_properties().opacity =
         LayerDrawOpacity(layer, property_trees->effect_tree);
+    layer->draw_properties().color_temperature =
+        LayerDrawColorTemperature(layer, property_trees->effect_tree);
     RenderSurfaceImpl* render_target = layer->render_target();
     int lca_clip_id = LowestCommonAncestor(layer->clip_tree_index(),
                                            render_target->ClipTreeIndex(),
@@ -1017,6 +1031,7 @@ void ComputeSurfaceDrawProperties(PropertyTrees* property_trees,
                                   RenderSurfaceImpl* render_surface) {
   SetSurfaceIsClipped(property_trees->clip_tree, render_surface);
   SetSurfaceDrawOpacity(property_trees->effect_tree, render_surface);
+  SetSurfaceDrawColorTemperature(property_trees->effect_tree, render_surface);
   SetSurfaceDrawTransform(property_trees, render_surface);
   render_surface->SetScreenSpaceTransform(
       property_trees->ToScreenSpaceTransformWithoutSurfaceContentsScale(

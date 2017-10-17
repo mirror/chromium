@@ -15,6 +15,7 @@ EffectNode::EffectNode()
       stable_id(INVALID_STABLE_ID),
       opacity(1.f),
       screen_space_opacity(1.f),
+      color_temperature(0.f),
       blend_mode(SkBlendMode::kSrcOver),
       has_render_surface(false),
       cache_render_surface(false),
@@ -44,6 +45,7 @@ bool EffectNode::operator==(const EffectNode& other) const {
   return id == other.id && parent_id == other.parent_id &&
          stable_id == other.stable_id && opacity == other.opacity &&
          screen_space_opacity == other.screen_space_opacity &&
+         color_temperature == other.color_temperature &&
          has_render_surface == other.has_render_surface &&
          cache_render_surface == other.cache_render_surface &&
          has_copy_request == other.has_copy_request &&

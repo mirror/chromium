@@ -38,6 +38,7 @@ class VIZ_COMMON_EXPORT SharedQuadState {
               bool is_clipped,
               bool are_contents_opaque,
               float opacity,
+              float color_temperature,
               SkBlendMode blend_mode,
               int sorting_context_id);
   void AsValueInto(base::trace_event::TracedValue* dict) const;
@@ -55,6 +56,7 @@ class VIZ_COMMON_EXPORT SharedQuadState {
   // Indicates whether the quads share this sqs contains opaque content.
   bool are_contents_opaque;
   float opacity;
+  float color_temperature;
   SkBlendMode blend_mode;
   int sorting_context_id;
 };

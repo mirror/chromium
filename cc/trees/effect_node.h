@@ -38,6 +38,11 @@ struct CC_EXPORT EffectNode {
   float opacity;
   float screen_space_opacity;
 
+  // The global color temperature value (0.0f ~ 1.0f). Used to calculate the
+  // layer blue and green colors scales. 0.0f is least warm (default), and
+  // 1.0f is most warm.
+  float color_temperature;
+
   FilterOperations filters;
   FilterOperations background_filters;
   gfx::PointF filters_origin;

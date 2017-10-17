@@ -44,6 +44,7 @@ Layer::Inputs::Inputs(int layer_id)
       mask_layer(nullptr),
       opacity(1.f),
       blend_mode(SkBlendMode::kSrcOver),
+      color_temperature(0.f),
       is_root_for_isolated_group(false),
       hit_testable_without_draws_content(false),
       contents_opaque(false),
@@ -540,6 +541,30 @@ float Layer::EffectiveOpacity() const {
 
 bool Layer::OpacityCanAnimateOnImplThread() const {
   return false;
+}
+
+void Layer::SetColorTemperature(float temperature) {
+  DCHECK(IsPropertyChangeAllowed());
+  DCHECK_GE(temperature, 0.f);
+  DCHECK_LE(temperature, 1.f);
+
+  if (inputs_.color_temperature == temperature)
+    return;
+
+  inputs_.color_temperature = temperature;
+  SetSubtreePropertyChanged();
+
+  if (layer_tree_host_) {
+    PropertyTrees* property_trees = layer_tree_host_->property_trees();
+    if (EffectNode* node =
+            property_trees->effect_tree.Node(effect_tree_index())) {
+      node->color_temperature = temperature;
+      node->effect_changed = true;
+      property_trees->effect_tree.set_needs_update(true);
+    }
+  }
+
+  SetNeedsCommit();
 }
 
 void Layer::SetBlendMode(SkBlendMode blend_mode) {

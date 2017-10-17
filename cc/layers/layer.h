@@ -138,6 +138,9 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   float EffectiveOpacity() const;
   virtual bool OpacityCanAnimateOnImplThread() const;
 
+  void SetColorTemperature(float temperature);
+  float color_temperature() const { return inputs_.color_temperature; }
+
   void SetBlendMode(SkBlendMode blend_mode);
   SkBlendMode blend_mode() const { return inputs_.blend_mode; }
 
@@ -550,6 +553,11 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
 
     float opacity;
     SkBlendMode blend_mode;
+
+    // The global color temperature value (0.0f ~ 1.0f). Used to calculate the
+    // layer blue and green colors scales. 0.0f is least warm (default), and
+    // 1.0f is most warm.
+    float color_temperature;
 
     bool is_root_for_isolated_group : 1;
 

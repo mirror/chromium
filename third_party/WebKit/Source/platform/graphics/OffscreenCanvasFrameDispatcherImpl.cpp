@@ -174,7 +174,7 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
 
   viz::SharedQuadState* sqs = pass->CreateAndAppendSharedQuadState();
   sqs->SetAll(gfx::Transform(), bounds, bounds, bounds, is_clipped,
-              are_contents_opaque, 1.f, SkBlendMode::kSrcOver, 0);
+              are_contents_opaque, 1.f, 0.f, SkBlendMode::kSrcOver, 0);
 
   viz::TransferableResource resource;
   offscreen_canvas_resource_provider_->TransferResource(&resource);

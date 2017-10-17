@@ -16,6 +16,7 @@ namespace viz {
 SharedQuadState::SharedQuadState()
     : is_clipped(false),
       opacity(0.f),
+      color_temperature(0.f),
       blend_mode(SkBlendMode::kSrcOver),
       sorting_context_id(0) {}
 
@@ -34,6 +35,7 @@ void SharedQuadState::SetAll(const gfx::Transform& quad_to_target_transform,
                              bool is_clipped,
                              bool are_contents_opaque,
                              float opacity,
+                             float color_temperature,
                              SkBlendMode blend_mode,
                              int sorting_context_id) {
   this->quad_to_target_transform = quad_to_target_transform;
@@ -43,6 +45,7 @@ void SharedQuadState::SetAll(const gfx::Transform& quad_to_target_transform,
   this->is_clipped = is_clipped;
   this->are_contents_opaque = are_contents_opaque;
   this->opacity = opacity;
+  this->color_temperature = color_temperature;
   this->blend_mode = blend_mode;
   this->sorting_context_id = sorting_context_id;
 }
