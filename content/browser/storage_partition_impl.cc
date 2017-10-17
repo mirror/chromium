@@ -12,12 +12,17 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/files/file.h"
+#include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
+#include "build/build_config.h"
 #include "content/browser/background_fetch/background_fetch_context.h"
 #include "content/browser/blob_storage/blob_registry_wrapper.h"
+#include "content/browser/blob_storage/blob_url_loader.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/browsing_data/storage_partition_http_cache_data_remover.h"
@@ -34,11 +39,17 @@
 #include "content/public/browser/dom_storage_context.h"
 #include "content/public/browser/indexed_db_context.h"
 #include "content/public/browser/local_storage_usage_info.h"
+#include "content/public/browser/non_network_protocol_handler.h"
 #include "content/public/browser/session_storage_usage_info.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/resource_request_completion_status.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
+#include "mojo/public/cpp/system/file_data_pipe_producer.h"
 #include "net/base/completion_callback.h"
+#include "net/base/filename_util.h"
+#include "net/base/mime_util.h"
 #include "net/base/net_errors.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_monster.h"
@@ -243,6 +254,196 @@ base::WeakPtr<storage::BlobStorageContext> BlobStorageContextGetter(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   return blob_context->context()->AsWeakPtr();
 }
+
+static constexpr size_t kDefaultFileUrlPipeSize = 512 * 1024;
+
+// A handler for file URLs with Network Service enabled.
+class FileProtocolHandlerNetworkService : public NonNetworkProtocolHandler {
+ public:
+  FileProtocolHandlerNetworkService(scoped_refptr<base::TaskRunner> task_runner)
+      : task_runner_(std::move(task_runner)) {}
+  ~FileProtocolHandlerNetworkService() override = default;
+
+  // NonNetworkProtocolHandler:
+  void CreateAndStartLoader(const ResourceRequest& request,
+                            mojom::URLLoaderRequest loader,
+                            mojom::URLLoaderClientPtr client) override {
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&FileProtocolHandlerNetworkService ::
+                           CreateAndStartLoaderOnBackgroundSequence,
+                       request, std::move(loader), client.PassInterface()));
+  }
+
+ private:
+  class FileURLLoader : public mojom::URLLoader {
+   public:
+    FileURLLoader(const ResourceRequest& request,
+                  mojom::URLLoaderClientPtrInfo client_info)
+        : weak_factory_(this) {
+      client_.Bind(std::move(client_info));
+
+      base::FilePath path;
+      if (!net::FileURLToFilePath(request.url, &path)) {
+        client_->OnComplete(ResourceRequestCompletionStatus(net::ERR_FAILED));
+        return;
+      }
+
+      base::File::Info info;
+      if (!base::GetFileInfo(path, &info)) {
+        client_->OnComplete(
+            ResourceRequestCompletionStatus(net::ERR_FILE_NOT_FOUND));
+        return;
+      }
+
+      bool should_redirect = false;
+      net::RedirectInfo redirect_info;
+      if (info.is_directory && !path.EndsWithSeparator()) {
+        // If the named path is a directory with no trailing slash, redirect to
+        // the same path, but with a trailing slash.
+        std::string new_path = request.url.path() + '/';
+        GURL::Replacements replacements;
+        replacements.SetPathStr(new_path);
+
+        should_redirect = true;
+        redirect_info.new_url = request.url.ReplaceComponents(replacements);
+      }
+#if defined(OS_WIN)
+      else if (base::LowerCaseEqualsASCII(path.Extension(), ".lnk")) {
+        // Follow Windows shortcuts
+        base::FilePath new_path;
+        if (base::win::ResolveShortcut(path, &new_path, nullptr)) {
+          should_redirect = true;
+          redirect_info.new_url = net::FilePathToFileURL(new_path);
+        }
+      }
+#endif  // defined(OS_WIN)
+
+      if (should_redirect) {
+        redirect_info.new_method = "GET";
+        redirect_info.status_code = 301;
+        client_->OnReceiveRedirect(redirect_info, ResourceResponseHead());
+        return;
+      }
+
+      // TODO(NetworkService): Check file access rights here. In the non-
+      // Network-Service case this is delegated to the embedder through
+      // NetworkDelegate::CanAccessFile, but that is not acceptable here.
+
+      mojo::DataPipe pipe(kDefaultFileUrlPipeSize);
+      if (!pipe.consumer_handle.is_valid()) {
+        client_->OnComplete(ResourceRequestCompletionStatus(net::ERR_FAILED));
+        return;
+      }
+
+      data_producer_ = std::make_unique<mojo::FileDataPipeProducer>(
+          std::move(pipe.producer_handle));
+      if (info.is_directory) {
+        // TODO(NetworkService): Directory listing support.
+        client_->OnComplete(ResourceRequestCompletionStatus(net::ERR_FAILED));
+        return;
+      }
+
+      ResourceResponseHead head;
+      net::GetMimeTypeFromFile(path, &head.mime_type);
+
+      // TODO(NetworkService): Support range requests.
+      head.content_length = static_cast<int64_t>(info.size);
+
+      client_->OnReceiveResponse(head, base::nullopt, nullptr);
+      client_->OnStartLoadingResponseBody(std::move(pipe.consumer_handle));
+
+      data_producer_->WriteFromPath(
+          path, base::BindOnce(&FileURLLoader::OnFileWritten,
+                               weak_factory_.GetWeakPtr()));
+    }
+
+    void OnFileWritten(MojoResult result) {
+      if (result == MOJO_RESULT_OK)
+        client_->OnComplete(ResourceRequestCompletionStatus(net::OK));
+      else
+        client_->OnComplete(ResourceRequestCompletionStatus(net::ERR_FAILED));
+    }
+
+    ~FileURLLoader() override = default;
+
+    // mojom::URLLoader:
+    void FollowRedirect() override {}
+    void SetPriority(net::RequestPriority priority,
+                     int32_t intra_priority_value) override {}
+    void PauseReadingBodyFromNet() override {}
+    void ResumeReadingBodyFromNet() override {}
+
+   private:
+    mojom::URLLoaderClientPtr client_;
+    std::unique_ptr<mojo::FileDataPipeProducer> data_producer_;
+    base::WeakPtrFactory<FileURLLoader> weak_factory_;
+
+    DISALLOW_COPY_AND_ASSIGN(FileURLLoader);
+  };
+
+  static void CreateAndStartLoaderOnBackgroundSequence(
+      const ResourceRequest& request,
+      mojom::URLLoaderRequest loader,
+      mojom::URLLoaderClientPtrInfo client_info) {
+    mojo::MakeStrongBinding(
+        std::make_unique<FileURLLoader>(request, std::move(client_info)),
+        std::move(loader));
+  }
+
+  const scoped_refptr<base::TaskRunner> task_runner_;
+
+  DISALLOW_COPY_AND_ASSIGN(FileProtocolHandlerNetworkService);
+};
+
+// A handler for blob URLs with Network Service enabled. Constructed on the main
+// thread but effectively lives and dies on the IO thread.
+class BlobProtocolHandlerNetworkService : public NonNetworkProtocolHandler {
+ public:
+  using BlobStorageContextGetter =
+      base::OnceCallback<base::WeakPtr<storage::BlobStorageContext>()>;
+
+  BlobProtocolHandlerNetworkService(
+      BlobStorageContextGetter blob_context_getter,
+      scoped_refptr<storage::FileSystemContext> filesystem_context)
+      : file_system_context_(std::move(filesystem_context)),
+        weak_factory_(this) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&BlobProtocolHandlerNetworkService::InitializeOnIO,
+                       weak_factory_.GetWeakPtr(),
+                       std::move(blob_context_getter)));
+  }
+
+  ~BlobProtocolHandlerNetworkService() override = default;
+
+  // NonNetworkProtocolHandler:
+  void CreateAndStartLoader(const ResourceRequest& request,
+                            mojom::URLLoaderRequest loader,
+                            mojom::URLLoaderClientPtr client) override {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    std::unique_ptr<storage::BlobDataHandle> blob_handle;
+    if (blob_storage_context_) {
+      blob_handle =
+          blob_storage_context_->GetBlobDataFromPublicURL(request.url);
+    }
+    BlobURLLoader::CreateAndStart(std::move(loader), request, std::move(client),
+                                  std::move(blob_handle),
+                                  file_system_context_.get());
+  }
+
+ private:
+  void InitializeOnIO(BlobStorageContextGetter blob_storage_context_getter) {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    blob_storage_context_ = std::move(blob_storage_context_getter).Run();
+  }
+
+  scoped_refptr<storage::FileSystemContext> file_system_context_;
+  base::WeakPtr<storage::BlobStorageContext> blob_storage_context_;
+  base::WeakPtrFactory<BlobProtocolHandlerNetworkService> weak_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(BlobProtocolHandlerNetworkService);
+};
 
 }  // namespace
 
@@ -456,6 +657,9 @@ StoragePartitionImpl::~StoragePartitionImpl() {
   if (GetPaymentAppContext())
     GetPaymentAppContext()->Shutdown();
 
+  if (non_network_url_loader_factory_)
+    non_network_url_loader_factory_->ShutDown();
+
   BrowserThread::DeleteSoon(BrowserThread::IO, FROM_HERE,
                             std::move(network_context_owner_));
 }
@@ -551,11 +755,18 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
           context, in_memory, relative_partition_path);
 
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    NonNetworkURLLoaderFactory::BlobContextGetter blob_getter =
-        base::BindOnce(&BlobStorageContextGetter, blob_context);
+    NonNetworkProtocolHandlerMap protocol_handlers;
+    protocol_handlers[url::kBlobScheme] =
+        std::make_unique<BlobProtocolHandlerNetworkService>(
+            base::BindOnce(&BlobStorageContextGetter, blob_context),
+            partition->filesystem_context_);
+    protocol_handlers[url::kFileScheme] =
+        std::make_unique<FileProtocolHandlerNetworkService>(
+            base::CreateSequencedTaskRunnerWithTraits(
+                {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
+                 base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN}));
     partition->non_network_url_loader_factory_ =
-        NonNetworkURLLoaderFactory::Create(std::move(blob_getter),
-                                           partition->filesystem_context_);
+        new NonNetworkURLLoaderFactory(std::move(protocol_handlers));
 
     partition->url_loader_factory_getter_ = new URLLoaderFactoryGetter();
     partition->url_loader_factory_getter_->Initialize(partition.get());

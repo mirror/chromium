@@ -4,33 +4,18 @@
 
 #include "content/browser/non_network_url_loader_factory.h"
 
+#include <string>
+
+#include "base/bind.h"
 #include "base/macros.h"
-#include "content/browser/blob_storage/blob_url_loader.h"
-#include "storage/browser/blob/blob_data_handle.h"
-#include "storage/browser/blob/blob_storage_context.h"
-#include "storage/browser/fileapi/file_system_context.h"
+#include "content/public/browser/browser_thread.h"
 #include "url/gurl.h"
 
 namespace content {
 
-// static
-scoped_refptr<NonNetworkURLLoaderFactory> NonNetworkURLLoaderFactory::Create(
-    BlobContextGetter blob_context_getter,
-    scoped_refptr<storage::FileSystemContext> file_system_context) {
-  scoped_refptr<NonNetworkURLLoaderFactory> factory =
-      new NonNetworkURLLoaderFactory(std::move(file_system_context));
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&NonNetworkURLLoaderFactory::InitializeOnIO, factory,
-                     std::move(blob_context_getter)));
-  return factory;
-}
-
 NonNetworkURLLoaderFactory::NonNetworkURLLoaderFactory(
-    scoped_refptr<storage::FileSystemContext> file_system_context)
-    : file_system_context_(std::move(file_system_context)) {}
-
-NonNetworkURLLoaderFactory::~NonNetworkURLLoaderFactory() = default;
+    NonNetworkProtocolHandlerMap protocol_handlers)
+    : protocol_handlers_(std::move(protocol_handlers)) {}
 
 void NonNetworkURLLoaderFactory::BindRequest(
     mojom::URLLoaderFactoryRequest request) {
@@ -39,6 +24,15 @@ void NonNetworkURLLoaderFactory::BindRequest(
                           base::BindOnce(&NonNetworkURLLoaderFactory::BindOnIO,
                                          this, std::move(request)));
 }
+
+void NonNetworkURLLoaderFactory::ShutDown() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&NonNetworkURLLoaderFactory::ShutDownOnIO, this));
+}
+
+NonNetworkURLLoaderFactory::~NonNetworkURLLoaderFactory() {}
 
 void NonNetworkURLLoaderFactory::CreateLoaderAndStart(
     mojom::URLLoaderRequest loader,
@@ -49,35 +43,35 @@ void NonNetworkURLLoaderFactory::CreateLoaderAndStart(
     mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (request.url.SchemeIsBlob()) {
-    std::unique_ptr<storage::BlobDataHandle> blob_handle;
-    if (blob_storage_context_) {
-      blob_handle =
-          blob_storage_context_->GetBlobDataFromPublicURL(request.url);
-    }
-    BlobURLLoader::CreateAndStart(std::move(loader), request, std::move(client),
-                                  std::move(blob_handle),
-                                  file_system_context_.get());
-  } else {
-    // TODO(rockot): Implement support for protocol handlers.
-    NOTIMPLEMENTED() << "Only blob:// scheme is currently supported. Unable to "
-                     << "fetch " << request.url.spec();
+  std::string scheme = request.url.scheme();
+  auto it = protocol_handlers_.find(scheme);
+  if (it == protocol_handlers_.end()) {
+    DLOG(ERROR) << "No registered handler for '" << scheme << "' scheme of "
+                << "request for " << request.url.spec();
+    return;
   }
+
+  it->second->CreateAndStartLoader(request, std::move(loader),
+                                   std::move(client));
 }
 
 void NonNetworkURLLoaderFactory::Clone(mojom::URLLoaderFactoryRequest request) {
   BindRequest(std::move(request));
 }
 
-void NonNetworkURLLoaderFactory::InitializeOnIO(
-    BlobContextGetter blob_storage_context_getter) {
-  blob_storage_context_ = std::move(blob_storage_context_getter).Run();
-}
-
 void NonNetworkURLLoaderFactory::BindOnIO(
     mojom::URLLoaderFactoryRequest request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (shutting_down_)
+    return;
   bindings_.AddBinding(this, std::move(request));
+}
+
+void NonNetworkURLLoaderFactory::ShutDownOnIO() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  bindings_.CloseAllBindings();
+  protocol_handlers_.clear();
+  shutting_down_ = true;
 }
 
 }  // namespace content
