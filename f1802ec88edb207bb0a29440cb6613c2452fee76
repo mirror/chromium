@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "ef7c1be9_6ed50b60",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentWriteIntervention.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T20:35:42Z",
+      "side": 1,
+      "message": "Then, what should we use instead of ScriptResource::Fetch()?\n\nIIUC the intention is only to send GET and fill a disk cache entry.\n(According to the original implementation this does NOT intend to fill a MemoryCache entry)",
+      "parentUuid": "0cf2d7a9_7b149f1b",
+      "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0a9a7b2_4b28d393",
         "filename": "third_party/WebKit/Source/core/html/parser/PreloadRequest.cpp",
         "patchSetId": 5
@@ -47,6 +65,30 @@
       "writtenOn": "2017-10-17T03:56:44Z",
       "side": 1,
       "message": "Why is this code (L113-117) needed?",
+      "range": {
+        "startLine": 114,
+        "startChar": 48,
+        "endLine": 114,
+        "endChar": 49
+      },
+      "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348be46c_8387c650",
+        "filename": "third_party/WebKit/Source/core/html/parser/PreloadRequest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T20:35:42Z",
+      "side": 1,
+      "message": "This is to intervene preloading request as well (|params| is modified).",
+      "parentUuid": "c0a9a7b2_4b28d393",
       "range": {
         "startLine": 114,
         "startChar": 48,
