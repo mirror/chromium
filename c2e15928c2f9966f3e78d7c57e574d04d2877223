@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "2f661738_6fb126ca",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-17T18:38:50Z",
+      "side": 1,
+      "message": "I mean, that\u0027s why I\u0027m taking the screenshot when it fails",
+      "parentUuid": "1e8b0070_657316ec",
+      "revId": "c2e15928c2f9966f3e78d7c57e574d04d2877223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f4819a8_f1c4ba4e",
         "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
         "patchSetId": 1
@@ -87,6 +105,24 @@
       "revId": "c2e15928c2f9966f3e78d7c57e574d04d2877223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e0cb8c0_2425708e",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-17T18:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f4819a8_f1c4ba4e",
+      "revId": "c2e15928c2f9966f3e78d7c57e574d04d2877223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
