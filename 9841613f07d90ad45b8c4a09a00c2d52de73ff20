@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e5d7f6f_29af6af3",
+        "filename": "components/safe_browsing/base_resource_throttle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-17T16:17:36Z",
+      "side": 1,
+      "message": "[Marking as resolved]\nI would love it if there was a way to enforce this but I am not sure if that\u0027s possible.",
+      "range": {
+        "startLine": 99,
+        "startChar": 48,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9eb108c_d28a23e4",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-17T16:17:36Z",
+      "side": 1,
+      "message": "Once set to true, this will never be reset to false. Is that intended? Just making sure.\nIn my limited understanding of throttles, the can get reused for a different request.",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 187,
+        "endChar": 34
+      },
+      "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4410ff5d_025400be",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-17T16:17:36Z",
+      "side": 1,
+      "message": "For both member variables, can you please elaborate the comment to state what to expect what the true/false states imply?",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 24
+      },
+      "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c689886_95c51bb7",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-17T16:17:36Z",
+      "side": 1,
+      "message": "Nit: You probably don\u0027t need these methods -- just use the member variables directly.",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ad328b_102364f4",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-17T16:17:36Z",
+      "side": 1,
+      "message": "nit: Database",
+      "range": {
+        "startLine": 36,
+        "startChar": 14,
+        "endLine": 36,
+        "endChar": 15
+      },
+      "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
