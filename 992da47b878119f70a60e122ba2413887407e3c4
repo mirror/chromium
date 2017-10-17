@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07f87189_b26ab2c6",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1785,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-17T19:33:30Z",
+      "side": 1,
+      "message": "What\u0027s the difference between |net_log| and |net_log_|?",
+      "range": {
+        "startLine": 1785,
+        "startChar": 38,
+        "endLine": 1785,
+        "endChar": 0
+      },
+      "revId": "992da47b878119f70a60e122ba2413887407e3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b6a022_155fab80",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1809,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-17T19:33:30Z",
+      "side": 1,
+      "message": "I wonder if we should tweak this API a bit. What if Migrate took a configured Socket (since the stream factory is the thing which creates and configures the socket it might as well do that) and then also a reader and a writer.\n\nMigrationResult QuicChromiumClientSession::Migrate(\n    std::unique_ptr\u003cDatagramClientSocket\u003e socket,\n    std::unique_ptr\u003cQuicChromiumPacketReader\u003e reader,\n    std::unique_ptr\u003cQuicChromiumPacketWriter\u003e writer\n\nWith tip-of-tree, the factory is responsible for creating the socket, reader, and writer at session creation time so it seems logical for the factory to do that at migration time. But maybe that\u0027s not ideal because that gets in the way of your follow on work?",
+      "range": {
+        "startLine": 1809,
+        "startChar": 50,
+        "endLine": 1809,
+        "endChar": 0
+      },
+      "revId": "992da47b878119f70a60e122ba2413887407e3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34dd422b_878aaec1",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-17T19:33:30Z",
+      "side": 1,
+      "message": "Were you going to move this method into the sessions as well?",
+      "range": {
+        "startLine": 1196,
+        "startChar": 69,
+        "endLine": 1196,
+        "endChar": 0
+      },
+      "revId": "992da47b878119f70a60e122ba2413887407e3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b56952ba_8e16e7b3",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-17T19:33:30Z",
+      "side": 1,
+      "message": "Can you call your new CreateSocket() method here?",
+      "range": {
+        "startLine": 1568,
+        "startChar": 57,
+        "endLine": 1568,
+        "endChar": 0
+      },
+      "revId": "992da47b878119f70a60e122ba2413887407e3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5a07ae_febc8426",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-17T19:33:30Z",
+      "side": 1,
+      "message": "nit: I\u0027d probably just call this CreateSocket() (or maybe CreateSocketForMigration(). I don\u0027t think the \"DatagramClient\" part adds much value, and ditto for \"ForMigration).",
+      "revId": "992da47b878119f70a60e122ba2413887407e3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
