@@ -708,6 +708,10 @@ void Page::RegisterPluginsChangedObserver(PluginsChangedObserver* observer) {
   plugins_changed_observers_.insert(observer);
 }
 
+ScrollbarTheme& Page::GetScrollbarTheme() const {
+  return ScrollbarTheme::DeprecatedStaticGetTheme();
+}
+
 Page::PageClients::PageClients()
     : chrome_client(nullptr),
       context_menu_client(nullptr),
