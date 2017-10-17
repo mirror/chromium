@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "86e4c97e_3def6e82",
+        "filename": "chrome/app/chrome_exe_main_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-17T11:06:07Z",
+      "side": 1,
+      "message": "Hmm, we have a base::Feature flag for this, but I guess that hasn\u0027t yet been initialized by this point?",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d67953_ce4c5714",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-17T11:06:07Z",
+      "side": 1,
+      "message": "nit: here and elsewhere: hacker_case for variable names",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb302ac_b19538a5",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-17T11:06:07Z",
+      "side": 1,
+      "message": "I think this is a use-after-free. The result of GetBrowserModelId is a base::string16 that goes out of scope before the value is used. (And thus gets destructed.)",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8101c0_07619423",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-17T11:06:07Z",
+      "side": 1,
+      "message": "Does it really have to go in the Start Menu? That may be rather intrusive. What happens after the user deletes such a shortcut?",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8962d305_38467f94",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 24
@@ -42,6 +110,40 @@
         "endLine": 258,
         "endChar": 72
       },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00683d52_94838ffc",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-17T11:06:07Z",
+      "side": 1,
+      "message": "I guess we\u0027d want to add this to core_winrt_util.h?",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ed6a24_cd598278",
+        "filename": "chrome/app/chrome_native_notification_prep_win.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-17T11:06:07Z",
+      "side": 1,
+      "message": "micro nit: blank line after the copyright header. In the .cc too",
       "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
