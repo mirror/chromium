@@ -69,6 +69,24 @@
       "revId": "8fa8e9108064d6a8c8ad0fc8296ceaaa945d24ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b360676a_547ae7d2",
+        "filename": "testing/libfuzzer/fuzzers/javascript_parser_proto_fuzzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-17T16:49:50Z",
+      "side": 1,
+      "message": "I guess if the OOM issue isn\u0027t a problem any more then it is fine to leave out GC for now.",
+      "parentUuid": "224659e7_16dbdb92",
+      "revId": "8fa8e9108064d6a8c8ad0fc8296ceaaa945d24ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
