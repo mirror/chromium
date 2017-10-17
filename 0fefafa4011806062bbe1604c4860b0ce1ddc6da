@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02d3f393_a4092d62",
+        "filename": "ash/display/cursor_window_controller_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-17T18:04:29Z",
+      "side": 1,
+      "message": "nit: can you remove this ifdef?",
+      "revId": "0fefafa4011806062bbe1604c4860b0ce1ddc6da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
