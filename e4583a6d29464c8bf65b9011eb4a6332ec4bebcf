@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1c1691f5_48ce6d1b",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-17T07:24:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7bd747c_11b0084d",
+      "range": {
+        "startLine": 21,
+        "startChar": 33,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "e4583a6d29464c8bf65b9011eb4a6332ec4bebcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "930ff389_03789e16",
         "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "e4583a6d29464c8bf65b9011eb4a6332ec4bebcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7323dcdf_19f7793b",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-17T07:24:17Z",
+      "side": 1,
+      "message": "Yep, those two lines look to identical \u003e.\u003c sorry for that, I should have tested that last commit before uploading",
+      "parentUuid": "930ff389_03789e16",
+      "range": {
+        "startLine": 27,
+        "startChar": 50,
+        "endLine": 27,
+        "endChar": 55
+      },
+      "revId": "e4583a6d29464c8bf65b9011eb4a6332ec4bebcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
