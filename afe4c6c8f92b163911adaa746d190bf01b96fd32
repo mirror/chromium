@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "613d295f_f4ea4def",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-17T22:50:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6287767b_41bc5bac",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99a7e8b0_df7c1bb9",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713051d6_66ef50b9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-17T22:50:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99a7e8b0_df7c1bb9",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "889750eb_52391843",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-17T22:50:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "638010ef_43783414",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89a26b9e_621bdca2",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca986a6_c3726767",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-17T22:50:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89a26b9e_621bdca2",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "344f8f80_28655316",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-17T22:50:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "423c46c5_19345683",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89498450_773b4d13",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0947527_0be2ca5d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-17T22:50:43Z",
+      "side": 1,
+      "message": "This is for the case that the old binding does not have the same filesystem uisourcecode as the new binding request.",
+      "parentUuid": "89498450_773b4d13",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "15b6d5be_c2ab5305",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-17T22:50:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3eea5011_901bd9df",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f423f5e3_8bbadb96",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9324f200_b195d735",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-17T22:50:43Z",
+      "side": 1,
+      "message": "No, this._urlsForFileSystemUISourceCode is just the urls of the current uiSourceCode, here we need all uiSourceCodes already configured.",
+      "parentUuid": "f423f5e3_8bbadb96",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "94f7dd43_0e4c53dd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/module.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-17T22:50:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "df9d5a9d_fff0b554",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d3d1d0_a3a28ac4",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
         "patchSetId": 1
@@ -169,6 +331,24 @@
       "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98520363_cc337036",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-17T22:50:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d3d1d0_a3a28ac4",
+      "revId": "afe4c6c8f92b163911adaa746d190bf01b96fd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
