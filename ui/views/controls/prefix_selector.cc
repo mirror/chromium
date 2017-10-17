@@ -94,6 +94,13 @@ bool PrefixSelector::GetTextRange(gfx::Range* range) const {
   return false;
 }
 
+bool PrefixSelector::GetTextAndSelectionRange(
+    base::OnceCallback<
+        void(bool, const gfx::Range&, const base::string16&, const gfx::Range&)>
+        callback) const {
+  return false;
+}
+
 bool PrefixSelector::GetCompositionTextRange(gfx::Range* range) const {
   *range = gfx::Range();
   return false;

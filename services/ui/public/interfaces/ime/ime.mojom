@@ -4,6 +4,7 @@
 
 module ui.mojom;
 
+import "mojo/common/string16.mojom";
 import "mojo/common/text_direction.mojom";
 import "ui/events/mojo/event.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
@@ -174,11 +175,10 @@ interface TextInputClient {
   // for more details.
   InsertChar(ui.mojom.Event event);
 
+  GetTextAndSelectionRange() => (bool success, gfx.mojom.Range text_range, mojo.common.mojom.String16 text_from_range, gfx.mojom.Range selection_range);
+
   // Dispatch a key event skipping IME. Returns true if event was consumed.
   DispatchKeyEventPostIME(ui.mojom.Event event) => (bool stopped_propagation);
-
-  // Sending visibility status of candidate pop up window to client.
-  SetCandidateWindowVisible(bool visible);
 
   // TODO(moshayedi): Add functions corresponding to ui::TextInputClient for:
   // - Input context information
