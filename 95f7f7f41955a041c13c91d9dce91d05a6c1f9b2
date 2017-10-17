@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94dbe614_9a8a9fe4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T20:29:49Z",
+      "side": 1,
+      "message": "Cros -\u003e cros",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7594397f_bbd0d1cf",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T20:29:49Z",
+      "side": 1,
+      "message": "Rename to MakeSectionBold? UpdateLabelStyle seems pretty generic to me.\n\nDocument function and parameters",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc1eebc_a8b47a58",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T20:29:49Z",
+      "side": 1,
+      "message": "bold_start, bold_length",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee26dcb_a98317e6",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T20:29:49Z",
+      "side": 1,
+      "message": "label_style -\u003e regular_style?",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2501a41a_f0acfec3",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T20:29:49Z",
+      "side": 1,
+      "message": "Is this special case needed?",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27724e4_8039b929",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T20:29:49Z",
+      "side": 1,
+      "message": "bolding_style -\u003e bold_style",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea937190_2f011932",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T20:29:49Z",
+      "side": 1,
+      "message": "Construct all of the styles together near the top of the function, and then apply them at the end.",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6def773b_10194e36",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T20:29:49Z",
+      "side": 1,
+      "message": "optional\u003cint\u003e bold_start;\nint bold_length;",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b979977f_66987ab9",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T20:29:49Z",
+      "side": 1,
+      "message": "Add comment that explains what |offset| is. Or maybe just rename it to shortcut_offset_in_string?",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2aa83d2_38e2f9b6",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T20:29:49Z",
+      "side": 1,
+      "message": "Remove commented section",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
