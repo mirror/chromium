@@ -7,6 +7,9 @@
             height: 100px;
             width: 100px;
             background-color: green;
+         }
+
+        .running {
             animation: anim1 0.1s ease 0s forwards;
          }
 
@@ -40,7 +43,11 @@
 
         var box;
         var expectedValue = "matrix(1, 0, 0, 1, 50, 200)";
-        
+
+        function waitForCompositor() {
+            return document.body.animate({opacity: ['1', '1']}, 1).finished;
+        }
+
         function testState()
         {
             var result = document.getElementById("result");
@@ -51,8 +58,10 @@
             else
                 result.innerHTML = "FAIL - final state was " + computedValue + " expected " + expectedValue;
 
-            if (window.testRunner)
-                testRunner.notifyDone();
+            waitForCompositor().then(() => {
+                if (window.testRunner)
+                    testRunner.notifyDone();
+            });
         }
 
         function swapAnim()
@@ -69,6 +78,8 @@
         {
             box = document.getElementById("box");
             document.addEventListener("animationend", swapAnim, false);
+            // start the animation
+            box.classList.add('running');
         }
         
         if (window.testRunner) {

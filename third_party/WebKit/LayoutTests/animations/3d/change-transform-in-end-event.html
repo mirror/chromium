@@ -43,11 +43,17 @@
    </style>
    <script type="text/javascript" charset="utf-8">
 
+    function waitForCompositor() {
+      return document.body.animate({opacity: ['1', '1']}, 1).finished;
+    }
+
     function testEnded()
     {
       document.getElementById('tester').style.transform = 'translateX(150px)';
-      if (window.testRunner)
-        testRunner.notifyDone();
+      waitForCompositor().then(() => {
+        if (window.testRunner)
+          testRunner.notifyDone();
+      });
     }
 
     function startTest()
