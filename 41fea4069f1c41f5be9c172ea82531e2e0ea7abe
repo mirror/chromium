@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a44c9f35_bd7f3497",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-17T21:19:12Z",
+      "side": 1,
+      "message": "nit: I find the naming of this a little confusing. \"activate\" seems to suggest that this will certainly be activating voice search, however you may deactivate it with the param. SetVoiceSearchActive is, I think, a bit clearer.",
+      "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8137f3_444fece2",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-17T21:19:12Z",
+      "side": 1,
+      "message": "Seems like we should check is_valid(). I\u0027m new to GURL, so I\u0027m not sure if spec is the right way to convert this to the java String that android needs.",
+      "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "114fc312_3ecb4ff0",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-17T21:19:12Z",
+      "side": 1,
+      "message": "why not \"static Foo* g_foo \u003d nullptr;\" as you do elsewhere in this file?",
+      "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef10ce01_7f3a0a92",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-17T21:19:12Z",
+      "side": 1,
+      "message": "I\u0027d be really nice to avoid new/delete. Chatted with you offline about a few possibilities.",
+      "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf2bfe2_1db64615",
+        "filename": "chrome/browser/vr/speech_recognizer_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-17T21:19:12Z",
+      "side": 1,
+      "message": "Dumb gmock question, is Times(0) the same as not having an expectation?",
+      "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87abf1d_a071529f",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-17T21:19:12Z",
+      "side": 1,
+      "message": "This flag is now ready.",
+      "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
