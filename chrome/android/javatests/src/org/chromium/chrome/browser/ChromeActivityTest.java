@@ -16,13 +16,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.CompoundTestRule;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.device.DeviceClassManager;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.ChromeTabCreator;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
-import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
 import org.chromium.content_public.browser.LoadUrlParams;
@@ -32,11 +31,13 @@ import org.chromium.net.test.EmbeddedTestServer;
  * Instrumentation tests for ChromeActivity.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
 public class ChromeActivityTest {
     @Rule
-    public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
+    public final CompoundTestRule mRule = ChromeTestRules.getTabbedActivityCTR();
+
+    private final ChromeTabbedActivityTestRule mActivityTestRule = mRule.get(
+            ChromeTabbedActivityTestRule.class);
+
 
     private static final String FILE_PATH = "/chrome/test/data/android/test.html";
 
