@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5573cecd_e44cc402",
+        "filename": "chromecast/media/cma/backend/fuchsia/fuchsia_volume_control.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-17T21:44:28Z",
+      "side": 1,
+      "message": "There are some configurations when hardware volume control is useful, see https://codesearch.chromium.org/chromium/src/chromecast/media/cma/backend/alsa/BUILD.gn?type\u003dcs\u0026q\u003dALSA_OWNS_VOLUME\u0026l\u003d93. We don\u0027t need it right now.",
+      "parentUuid": "635adbc8_17c9c928",
+      "revId": "b4cb58b2bdfb9e831405259b972d0a378ee863c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f4ec57b_2838a9ba",
         "filename": "chromecast/media/cma/backend/fuchsia/mixer_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-17T21:10:35Z",
       "side": 1,
       "message": "wait, why? what benefit does blocking this thread here provide?",
+      "revId": "b4cb58b2bdfb9e831405259b972d0a378ee863c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93250ce_0069d2f1",
+        "filename": "chromecast/media/cma/backend/fuchsia/mixer_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-17T21:44:28Z",
+      "side": 1,
+      "message": "It allows to avoid refactoring StreamMixer right now (which originally was written to work with ALSA). Without this sleep the mixer will keep calling write() as long as the sources have data. Will need to fix it later.",
+      "parentUuid": "0f4ec57b_2838a9ba",
       "revId": "b4cb58b2bdfb9e831405259b972d0a378ee863c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "b4cb58b2bdfb9e831405259b972d0a378ee863c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df374e4e_c45f8919",
+        "filename": "chromecast/media/cma/backend/fuchsia/mixer_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-17T21:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "930bbe2e_08f2398c",
+      "range": {
+        "startLine": 172,
+        "startChar": 47,
+        "endLine": 172,
+        "endChar": 49
+      },
+      "revId": "b4cb58b2bdfb9e831405259b972d0a378ee863c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
