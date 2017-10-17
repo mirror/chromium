@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a31bc08_a1ae5942",
+        "filename": "remoting/webapp/crd/js/butter_bar.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-17T19:30:54Z",
+      "side": 1,
+      "message": "Domain is case-insensitive, so maybe using lower-case here is safer.",
+      "range": {
+        "startLine": 64,
+        "startChar": 27,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "02746d4485591777c57d0f8daae0bf673d8bf352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
