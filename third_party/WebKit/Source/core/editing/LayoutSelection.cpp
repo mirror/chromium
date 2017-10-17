@@ -73,7 +73,7 @@ base::Optional<int> SelectionPaintRange::EndOffset() const {
 }
 
 SelectionPaintRange::Iterator::Iterator(const SelectionPaintRange* range) {
-  if (!range) {
+  if (!range || range->IsNull()) {
     current_ = nullptr;
     return;
   }
@@ -160,31 +160,39 @@ static EphemeralRangeInFlatTree CalcSelectionInFlatTree(
 }
 
 // LayoutObjects each has SelectionState of kStart, kEnd, kStartAndEnd, or
-// kInside
+// kInside. All LayoutObjects are in new SeletionPaintRange.
 using SelectedLayoutObjects = HashSet<LayoutObject*>;
+// OldSelectedLayoutObjects is previously selected LayoutObjects with
+// previous SelectionState. OldSelectedLayoutObjects include all LayoutObject
+// inside old SelectionPaintRange. Each LayoutObject has arbitrary
+// SelectionState.
+using OldSelectedLayoutObjects = HashMap<LayoutObject*, SelectionState>;
 
 #ifndef NDEBUG
-void PrintPaintInvalidationSet(const SelectedLayoutObjects& selected_objects) {
+void PrintSelectedLayoutObjects(
+    const SelectedLayoutObjects& new_selected_objects) {
   std::stringstream stream;
-  stream << std::endl << "layout_objects:" << std::endl;
-  for (LayoutObject* layout_object : selected_objects) {
+  stream << std::endl;
+  for (LayoutObject* layout_object : new_selected_objects) {
     PrintLayoutObjectForSelection(stream, layout_object);
     stream << std::endl;
   }
   LOG(INFO) << stream.str();
 }
-#endif
 
-static SelectedLayoutObjects CollectInvalidationSet(
-    const SelectionPaintRange& range) {
-  if (range.IsNull())
-    return SelectedLayoutObjects();
-
-  SelectedLayoutObjects invalidation_set;
-  for (LayoutObject* runner : range)
-    invalidation_set.insert(runner);
-  return invalidation_set;
+void PrintOldSelectedLayoutObjects(
+    const OldSelectedLayoutObjects& old_selected_objects) {
+  std::stringstream stream;
+  stream << std::endl;
+  for (const auto& key_pair : old_selected_objects) {
+    LayoutObject* layout_object = key_pair.key;
+    SelectionState old_state = key_pair.value;
+    PrintLayoutObjectForSelection(stream, layout_object);
+    stream << " old: " << old_state << std::endl;
+  }
+  LOG(INFO) << stream.str();
 }
+#endif
 
 // This class represents a selection range in layout tree and each LayoutObject
 // is SelectionState-marked.
@@ -217,7 +225,7 @@ class NewPaintRangeAndSelectedLayoutObjects {
   DISALLOW_COPY_AND_ASSIGN(NewPaintRangeAndSelectedLayoutObjects);
 };
 
-static void SetShouldInvalidateIfNeeds(LayoutObject* layout_object) {
+static void SetShouldInvalidateIfNeeded(LayoutObject* layout_object) {
   if (layout_object->ShouldInvalidateSelection())
     return;
   layout_object->SetShouldInvalidateSelection();
@@ -237,32 +245,45 @@ static void SetShouldInvalidateIfNeeds(LayoutObject* layout_object) {
 // comparing them in |new_range| and |old_range|.
 static void SetShouldInvalidateSelection(
     const NewPaintRangeAndSelectedLayoutObjects& new_range,
-    const SelectionPaintRange& old_range) {
-  const SelectedLayoutObjects& new_invalidation_set = new_range.LayoutObjects();
-  SelectedLayoutObjects old_invalidation_set =
-      CollectInvalidationSet(old_range);
-
-  // We invalidate each LayoutObject which is
-  // - included in new selection range and has valid SelectionState(!= kNone).
-  // - included in old selection range
-  // Invalidate new selected LayoutObjects.
-  for (LayoutObject* layout_object : new_invalidation_set) {
-    if (layout_object->GetSelectionState() != SelectionState::kNone) {
-      SetShouldInvalidateIfNeeds(layout_object);
-      old_invalidation_set.erase(layout_object);
+    const SelectionPaintRange& old_range,
+    const OldSelectedLayoutObjects& old_selected_objects) {
+  // We invalidate each LayoutObject which
+  // has SelectionState of kStart, kEnd, kStartAndEnd, or kInside
+  // and is not in old SelectionPaintRange.
+  for (LayoutObject* layout_object : new_range.LayoutObjects()) {
+    if (old_selected_objects.Contains(layout_object))
       continue;
-    }
+    if (layout_object->GetSelectionState() == SelectionState::kNone)
+      continue;
+    SetShouldInvalidateIfNeeded(layout_object);
+  }
+  // For LayoutObject in old SelectionPaintRange, we invalidate LayoutObject
+  // each of which was painted and would not be painted or was not painted
+  // and would be painted.
+  for (const auto& key_value : old_selected_objects) {
+    LayoutObject* const layout_object = key_value.key;
+    const SelectionState old_state = key_value.value;
+    const SelectionState new_state = layout_object->GetSelectionState();
+    if (new_state == old_state || new_state == SelectionState::kContain ||
+        old_state == SelectionState::kContain)
+      continue;
+    DCHECK(new_state != SelectionState::kNone ||
+           old_state != SelectionState::kNone);
+    SetShouldInvalidateIfNeeded(layout_object);
   }
 
-  // Invalidate previous selected LayoutObjects except already invalidated
-  // above.
-  for (LayoutObject* layout_object : old_invalidation_set) {
-    const SelectionState old_state = layout_object->GetSelectionState();
-    layout_object->SetSelectionStateIfNeeded(SelectionState::kNone);
-    if (layout_object->GetSelectionState() == old_state)
-      continue;
-    SetShouldInvalidateIfNeeds(layout_object);
-  }
+  // Invalidate Selection start/end is moving on a same node.
+  const SelectionPaintRange& new_paint_range = new_range.PaintRange();
+  if (new_paint_range.IsNull() || old_range.IsNull())
+    return;
+  if (new_paint_range.StartLayoutObject()->IsText() &&
+      new_paint_range.StartLayoutObject() == old_range.StartLayoutObject() &&
+      new_paint_range.StartOffset() != old_range.StartOffset())
+    SetShouldInvalidateIfNeeded(new_paint_range.StartLayoutObject());
+  if (new_paint_range.EndLayoutObject()->IsText() &&
+      new_paint_range.EndLayoutObject() == old_range.EndLayoutObject() &&
+      new_paint_range.EndOffset() != old_range.EndOffset())
+    SetShouldInvalidateIfNeeded(new_paint_range.EndLayoutObject());
 }
 
 base::Optional<int> LayoutSelection::SelectionStart() const {
@@ -279,6 +300,25 @@ base::Optional<int> LayoutSelection::SelectionEnd() const {
   return paint_range_.EndOffset();
 }
 
+static OldSelectedLayoutObjects CollectOldLayoutObjectsMarkingNone(
+    const SelectionPaintRange& old_range) {
+  OldSelectedLayoutObjects old_selected_objects;
+  for (LayoutObject* layout_object : old_range) {
+    if (old_selected_objects.Contains(layout_object))
+      continue;
+    old_selected_objects.insert(layout_object,
+                                layout_object->GetSelectionState());
+    layout_object->SetSelectionState(SelectionState::kNone);
+
+    // For ::selection style. See static SetSelectionState() for detail.
+    LayoutObject* const parent = layout_object->Parent();
+    if (!parent)
+      continue;
+    parent->SetSelectionState(SelectionState::kNone);
+  }
+  return old_selected_objects;
+}
+
 void LayoutSelection::ClearSelection() {
   // For querying Layer::compositingState()
   // This is correct, since destroying layout objects needs to cause eager paint
@@ -289,9 +329,10 @@ void LayoutSelection::ClearSelection() {
   if (paint_range_.IsNull())
     return;
 
-  for (auto layout_object : paint_range_) {
-    const SelectionState old_state = layout_object->GetSelectionState();
-    layout_object->SetSelectionStateIfNeeded(SelectionState::kNone);
+  for (const auto& key_value :
+       CollectOldLayoutObjectsMarkingNone(paint_range_)) {
+    LayoutObject* const layout_object = key_value.key;
+    const SelectionState old_state = key_value.value;
     if (layout_object->GetSelectionState() == old_state)
       continue;
     layout_object->SetShouldInvalidateSelection();
@@ -334,11 +375,27 @@ static LayoutTextFragment* FirstLetterPartFor(LayoutObject* layout_object) {
       AssociatedLayoutObjectOf(*layout_object->GetNode(), 0)));
 }
 
+static void SetSelectionState(LayoutObject* layout_object,
+                              SelectionState state) {
+  // |layout_object| should be leaf.
+  DCHECK(!layout_object->SlowFirstChild());
+  DCHECK(state != SelectionState::kNone && state != SelectionState::kContain)
+      << state;
+
+  layout_object->SetSelectionState(state);
+  // Set parent SelectionState kContain for CSS ::selection style.
+  // See LayoutObject::InvalidatePaintForSelection().
+  LayoutObject* const parent = layout_object->Parent();
+  if (!parent)
+    return;
+  parent->SetSelectionState(SelectionState::kContain);
+}
+
 static void MarkSelected(SelectedLayoutObjects* selected_objects,
                          LayoutObject* layout_object,
                          SelectionState state) {
   DCHECK(layout_object->CanBeSelectionLeaf());
-  layout_object->SetSelectionStateIfNeeded(state);
+  SetSelectionState(layout_object, state);
   selected_objects->insert(layout_object);
 }
 
@@ -584,53 +641,26 @@ void LayoutSelection::Commit() {
             DocumentLifecycle::kLayoutClean);
   DocumentLifecycle::DisallowTransitionScope disallow_transition(
       frame_selection_->GetDocument().Lifecycle());
+
+  const OldSelectedLayoutObjects& old_selected_objects =
+      CollectOldLayoutObjectsMarkingNone(paint_range_);
   const NewPaintRangeAndSelectedLayoutObjects& new_range =
       CalcSelectionRangeAndSetSelectionState(*frame_selection_);
-  const SelectionPaintRange& new_paint_range = new_range.PaintRange();
-  if (new_paint_range.IsNull()) {
-    ClearSelection();
+  DCHECK(frame_selection_->GetDocument().GetLayoutView()->GetFrameView());
+  SetShouldInvalidateSelection(new_range, paint_range_, old_selected_objects);
+
+  paint_range_ = new_range.PaintRange();
+  if (paint_range_.IsNull())
+    return;
+  if (paint_range_.StartLayoutObject() == paint_range_.EndLayoutObject()) {
+    DCHECK_EQ(paint_range_.StartLayoutObject()->GetSelectionState(),
+              SelectionState::kStartAndEnd);
     return;
   }
-  DCHECK(frame_selection_->GetDocument().GetLayoutView()->GetFrameView());
-  SetShouldInvalidateSelection(new_range, paint_range_);
-  paint_range_ = new_paint_range;
-  // TODO(yoichio): Remove this if state.
-  // This SelectionState reassignment is ad-hoc patch for
-  // prohibiting use-after-free(crbug.com/752715).
-  // LayoutText::setSelectionState(state) propergates |state| to ancestor
-  // LayoutObjects, which can accidentally change start/end LayoutObject state
-  // then LayoutObject::IsSelectionBorder() returns false although we should
-  // clear selection at LayoutObject::WillBeRemoved().
-  // We should make LayoutObject::setSelectionState() trivial and remove
-  // such propagation or at least do it in LayoutSelection.
-  if ((paint_range_.StartLayoutObject()->GetSelectionState() !=
-           SelectionState::kStart &&
-       paint_range_.StartLayoutObject()->GetSelectionState() !=
-           SelectionState::kStartAndEnd) ||
-      (paint_range_.EndLayoutObject()->GetSelectionState() !=
-           SelectionState::kEnd &&
-       paint_range_.EndLayoutObject()->GetSelectionState() !=
-           SelectionState::kStartAndEnd)) {
-    if (paint_range_.StartLayoutObject() == paint_range_.EndLayoutObject()) {
-      paint_range_.StartLayoutObject()->SetSelectionStateIfNeeded(
-          SelectionState::kStartAndEnd);
-    } else {
-      paint_range_.StartLayoutObject()->SetSelectionStateIfNeeded(
-          SelectionState::kStart);
-      paint_range_.EndLayoutObject()->SetSelectionStateIfNeeded(
-          SelectionState::kEnd);
-    }
-  }
-  // TODO(yoichio): If start == end, they should be kStartAndEnd.
-  // If not, start.SelectionState == kStart and vice versa.
-  DCHECK(paint_range_.StartLayoutObject()->GetSelectionState() ==
-             SelectionState::kStart ||
-         paint_range_.StartLayoutObject()->GetSelectionState() ==
-             SelectionState::kStartAndEnd);
-  DCHECK(paint_range_.EndLayoutObject()->GetSelectionState() ==
-             SelectionState::kEnd ||
-         paint_range_.EndLayoutObject()->GetSelectionState() ==
-             SelectionState::kStartAndEnd);
+  DCHECK_EQ(paint_range_.StartLayoutObject()->GetSelectionState(),
+            SelectionState::kStart);
+  DCHECK_EQ(paint_range_.EndLayoutObject()->GetSelectionState(),
+            SelectionState::kEnd);
 }
 
 void LayoutSelection::OnDocumentShutdown() {
@@ -655,9 +685,7 @@ IntRect LayoutSelection::SelectionBounds() {
 
   // Create a single bounding box rect that encloses the whole selection.
   LayoutRect selected_rect;
-  const SelectedLayoutObjects& current_map =
-      CollectInvalidationSet(paint_range_);
-  for (auto layout_object : current_map)
+  for (auto layout_object : paint_range_)
     selected_rect.Unite(SelectionRectForLayoutObject(layout_object));
 
   return PixelSnappedIntRect(selected_rect);
