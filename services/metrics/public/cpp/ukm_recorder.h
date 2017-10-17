@@ -26,6 +26,10 @@ class SubresourceFilterMetricsObserver;
 class UkmPageLoadMetricsObserver;
 class LocalNetworkRequestsPageLoadMetricsObserver;
 
+namespace blink {
+class Document;
+}
+
 namespace content {
 class RenderWidgetHostLatencyTracker;
 }  // namespace content
@@ -86,6 +90,7 @@ class METRICS_EXPORT UkmRecorder {
   friend SubresourceFilterMetricsObserver;
   friend TestRecordingHelper;
   friend UkmInterface;
+  friend blink::Document;
   friend content::RenderWidgetHostLatencyTracker;
   friend password_manager::PasswordManagerMetricsRecorder;
   friend previews::PreviewsUKMObserver;
