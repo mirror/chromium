@@ -10,7 +10,9 @@ import static org.junit.Assert.assertTrue;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
+import android.widget.ListView;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -18,18 +20,29 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.CallbackHelper;
+import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
+import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
+import org.chromium.chrome.browser.preferences.datareduction.DataReductionMainMenuFooter;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
+import org.chromium.chrome.browser.widget.bottomsheet.ChromeHomePromoDialog;
+import org.chromium.chrome.browser.widget.bottomsheet.ChromeHomePromoDialog.ChromeHomePromoDialogObserver;
+import org.chromium.chrome.browser.widget.bottomsheet.ChromeHomePromoMenuHeader;
 import org.chromium.chrome.test.BottomSheetTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.ChromeTabUtils;
 import org.chromium.chrome.test.util.MenuUtils;
+import org.chromium.components.feature_engagement.FeatureConstants;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.ui.test.util.UiRestriction;
+
+import java.util.concurrent.TimeoutException;
 
 /**
  * Tests for the app menu when Chrome Home is enabled.
@@ -41,6 +54,8 @@ public class ChromeHomeAppMenuTest {
 
     private AppMenuHandler mAppMenuHandler;
     private BottomSheet mBottomSheet;
+    private EmbeddedTestServer mTestServer;
+    private String mTestUrl;
 
     @Rule
     public BottomSheetTestRule mBottomSheetTestRule = new BottomSheetTestRule();
@@ -51,17 +66,22 @@ public class ChromeHomeAppMenuTest {
         mAppMenuHandler = mBottomSheetTestRule.getActivity().getAppMenuHandler();
         mBottomSheet = mBottomSheetTestRule.getBottomSheet();
         mBottomSheetTestRule.setSheetState(BottomSheet.SHEET_STATE_PEEK, false);
+
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
+        mTestUrl = mTestServer.getURL(TEST_PAGE);
+    }
+
+    @After
+    public void tearDown() {
+        mTestServer.stopAndDestroyServer();
     }
 
     @Test
     @SmallTest
     public void testPageMenu() throws IllegalArgumentException, InterruptedException {
         final Tab tab = mBottomSheet.getActiveTab();
-        EmbeddedTestServer testServer = EmbeddedTestServer.createAndStartServer(
-                InstrumentationRegistry.getInstrumentation().getContext());
-        String testUrl = testServer.getURL(TEST_PAGE);
-        ChromeTabUtils.loadUrlOnUiThread(tab, testUrl);
-        ChromeTabUtils.waitForTabPageLoaded(tab, testUrl);
+        loadTestPage();
 
         showAppMenuAndAssertMenuShown();
         AppMenu appMenu = mAppMenuHandler.getAppMenu();
@@ -88,8 +108,6 @@ public class ChromeHomeAppMenuTest {
         iconRow = (AppMenuIconRowFooter) appMenu.getFooterView();
         assertTrue(
                 "Forward button should be enabled", iconRow.getForwardButtonForTests().isEnabled());
-
-        testServer.stopAndDestroyServer();
     }
 
     @Test
@@ -156,6 +174,85 @@ public class ChromeHomeAppMenuTest {
                 appMenu.getListView().getItemIdAtPosition(1));
         Assert.assertEquals("'Help & feedback' should be the third item", R.id.help_id,
                 appMenu.getListView().getItemIdAtPosition(2));
+    }
+
+    @Test
+    @SmallTest
+    @CommandLineFlags.Add({"enable-features=" + ChromeFeatureList.CHROME_HOME_PROMO})
+    public void testPromoAppMenuHeader() throws InterruptedException, TimeoutException {
+        // Create a callback to be notified when the dialog is shown.
+        final CallbackHelper dialogShownCallback = new CallbackHelper();
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            ChromeHomePromoDialog.setObserverForTests(new ChromeHomePromoDialogObserver() {
+                @Override
+                public void onDialogShown(ChromeHomePromoDialog shownDialog) {
+                    dialogShownCallback.notifyCalled();
+                }
+            });
+        });
+
+        // Load a test page and show the app menu. The header is only shown on the page menu.
+        loadTestPage();
+        showAppMenuAndAssertMenuShown();
+
+        // Check for the existence of a header.
+        ListView listView = mAppMenuHandler.getAppMenu().getListView();
+        Assert.assertEquals("There should be one header.", 1, listView.getHeaderViewsCount());
+
+        // Click the header.
+        ChromeHomePromoMenuHeader promoHeader = (ChromeHomePromoMenuHeader) listView.findViewById(
+                R.id.chrome_home_promo_menu_header);
+        ThreadUtils.runOnUiThreadBlocking(() -> { promoHeader.performClick(); });
+
+        // Wait for the dialog to show and the app menu to hide.
+        dialogShownCallback.waitForCallback(0);
+        assertFalse("Menu should be hidden.", mAppMenuHandler.isAppMenuShowing());
+
+        // Reset state.
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> { ChromeHomePromoDialog.setObserverForTests(null); });
+    }
+
+    @Test
+    @SmallTest
+    @CommandLineFlags.Add({"disable-features=" + ChromeFeatureList.CHROME_HOME_PROMO + ","
+                    + FeatureConstants.CHROME_HOME_MENU_HEADER_FEATURE,
+            "enable-features=" + ChromeFeatureList.DATA_REDUCTION_MAIN_MENU})
+    public void testDataSaverAppMenuHeader() throws InterruptedException {
+        // Load a test page and show the app menu. The header is only shown on the page menu.
+        loadTestPage();
+        showAppMenuAndAssertMenuShown();
+
+        // There should currently be no headers.
+        ListView listView = mAppMenuHandler.getAppMenu().getListView();
+        Assert.assertEquals("There should not be a header.", 0, listView.getHeaderViewsCount());
+
+        // Hide the app menu.
+        ThreadUtils.runOnUiThreadBlocking(() -> { mAppMenuHandler.hideAppMenu(); });
+
+        // Turn Data Saver on and re-open the menu.
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            DataReductionProxySettings.getInstance().setDataReductionProxyEnabled(
+                    mBottomSheetTestRule.getActivity().getApplicationContext(), true);
+        });
+        showAppMenuAndAssertMenuShown();
+
+        // Check for the existence of a header.
+        listView = mAppMenuHandler.getAppMenu().getListView();
+        Assert.assertEquals("There should be one header.", 1, listView.getHeaderViewsCount());
+
+        // Check that the right header is showing.
+        DataReductionMainMenuFooter dataReductionHeader =
+                (DataReductionMainMenuFooter) listView.findViewById(R.id.data_reduction_footer);
+        Assert.assertNotNull(dataReductionHeader);
+    }
+
+    // TODO(twellington): Add tests for the IPH menu header.
+
+    private void loadTestPage() throws InterruptedException {
+        final Tab tab = mBottomSheet.getActiveTab();
+        ChromeTabUtils.loadUrlOnUiThread(tab, mTestUrl);
+        ChromeTabUtils.waitForTabPageLoaded(tab, mTestUrl);
     }
 
     private void showAppMenuAndAssertMenuShown() {
