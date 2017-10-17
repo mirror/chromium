@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0d62e1a_a07afbf4",
+        "filename": "chromecast/media/cma/backend/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-17T01:19:30Z",
+      "side": 1,
+      "message": "Use full path //chromecast/...",
+      "revId": "0ea273e623f48de30bd621363084f086c559a789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f4191c_cef5568b",
+        "filename": "chromecast/media/cma/backend/desktop/audio_decoder_desktop.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-17T01:19:30Z",
+      "side": 1,
+      "message": "nit, need to update guards for the directory move as well.",
+      "revId": "0ea273e623f48de30bd621363084f086c559a789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
