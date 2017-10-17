@@ -19,6 +19,7 @@
 #include "core/html/HTMLVideoElement.h"
 #include "core/html_names.h"
 #include "core/input/EventHandler.h"
+#include "core/layout/LayoutBoxModelObject.h"
 #include "core/layout/LayoutObject.h"
 #include "core/loader/EmptyClients.h"
 #include "core/testing/DummyPageHolder.h"
@@ -59,12 +60,30 @@ namespace {
 
 class MockChromeClientForImpl : public EmptyChromeClient {
  public:
+  MockChromeClientForImpl() { device_scale_factor_ = 1; }
   // EmptyChromeClient overrides:
   WebScreenInfo GetScreenInfo() const override {
     WebScreenInfo screen_info;
     screen_info.orientation_type = kWebScreenOrientationLandscapePrimary;
     return screen_info;
   }
+
+  // ChromeClient overrides:
+  IntRect ViewportToScreen(const IntRect& r,
+                           const PlatformFrameView*) const override {
+    IntRect scaled = r;
+    scaled.Scale(1 / device_scale_factor_);
+    return scaled;
+  }
+
+  // defined in MockChromeClientForImpl:
+  float GetDeviceScaleFactor() const { return device_scale_factor_; }
+  void SetDeviceScaleFactor(float device_scale_factor) {
+    device_scale_factor_ = device_scale_factor;
+  }
+
+ private:
+  float device_scale_factor_;
 };
 
 class MockWebMediaPlayerForImpl : public EmptyWebMediaPlayer {
@@ -748,6 +767,37 @@ TEST_F(MediaControlsImplTest, TimelineImmediatelyUpdatesCurrentTime) {
   TimelineElement()->setValueAsNumber(duration / 2, ASSERT_NO_EXCEPTION);
   TimelineElement()->DispatchInputEvent();
   EXPECT_EQ(duration / 2, current_time_display->CurrentValue());
+}
+
+TEST_F(MediaControlsImplTest, TimelineMetricsWidthZoomByDSF) {
+  MediaControls().MediaElement().SetSrc("https://example.com/foo.mp4");
+  testing::RunPendingTasks();
+  SetReady();
+  EnsureSizing();
+  testing::RunPendingTasks();
+
+  MediaControlTimelineElement* timeline = TimelineElement();
+  ASSERT_TRUE(IsElementVisible(*timeline));
+  ASSERT_LT(0, timeline->getBoundingClientRect()->width());
+
+  MediaControls().MediaElement().Play();
+  testing::RunPendingTasks();
+
+  auto& client = static_cast<MockChromeClientForImpl&>(
+      GetDocument().GetPage()->GetChromeClient());
+  client.SetDeviceScaleFactor(3);
+
+  EXPECT_EQ(
+      timeline->getBoundingClientRect()->width() /
+          client.GetDeviceScaleFactor(),
+      client
+          .ViewportToScreen(
+              IntRect(
+                  0, 0,
+                  timeline->GetLayoutBoxModelObject()->OffsetWidth().Round(),
+                  0),
+              GetDocument().View())
+          .Width());
 }
 
 TEST_F(MediaControlsImplTest, TimelineMetricsWidth) {
