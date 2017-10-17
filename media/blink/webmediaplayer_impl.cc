@@ -699,6 +699,11 @@ void WebMediaPlayerImpl::SetRate(double rate) {
   DVLOG(1) << __func__ << "(" << rate << ")";
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
+  if (rate != playback_rate_) {
+    MEDIA_LOG(INFO, media_log_.get()) << "Effective playback rate changed from "
+                                      << playback_rate_ << " to " << rate;
+  }
+
   playback_rate_ = rate;
   if (!paused_) {
     pipeline_controller_.SetPlaybackRate(rate);
