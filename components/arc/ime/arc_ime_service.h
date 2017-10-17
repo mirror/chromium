@@ -107,6 +107,11 @@ class ArcImeService : public KeyedService,
   ui::TextInputType GetTextInputType() const override;
   gfx::Rect GetCaretBounds() const override;
   bool GetTextRange(gfx::Range* range) const override;
+  bool GetTextAndSelectionRange(
+      base::OnceCallback<void(bool,
+                              const gfx::Range&,
+                              const base::string16&,
+                              const gfx::Range&)> callback) const override;
   bool GetSelectionRange(gfx::Range* range) const override;
   bool GetTextFromRange(const gfx::Range& range,
                         base::string16* text) const override;
