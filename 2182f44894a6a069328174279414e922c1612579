@@ -259,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "b85fbdc0_09224595",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T00:44:54Z",
+      "side": 1,
+      "message": "Let\u0027s rename shouldBeVisible to applyFilter and make incrementCounters public and call it explicitly from tree.",
+      "parentUuid": "f2c483a5_0ad368d5",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3eaf3f1_0c789769",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 4
@@ -288,6 +306,24 @@
       "side": 1,
       "message": "This is a good point, it would be more efficient on memory.  As per our offline discussion, we can create them immediately for now, but should keep an eye on performance/memory.",
       "parentUuid": "e3eaf3f1_0c789769",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675fc23e_2fb4711c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T00:44:54Z",
+      "side": 1,
+      "message": "Let\u0027s still do clone.",
+      "parentUuid": "6d445e93_c26d9a91",
       "revId": "2182f44894a6a069328174279414e922c1612579",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

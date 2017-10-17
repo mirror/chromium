@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c960926b_0adb833c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T00:44:54Z",
+      "side": 1,
+      "message": "Feel free to drop such functions and access _filter directly from the same file.",
+      "revId": "2a201e34287ae22418dbd915f5a0ddab0e1800ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
