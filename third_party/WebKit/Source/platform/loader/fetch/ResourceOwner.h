@@ -56,19 +56,15 @@ class ResourceOwner : public C {
  protected:
   ResourceOwner() {}
 
-  // If this Resource is already finished when SetResource() is called,
-  // callbacks will be received asynchronously by a task scheduled
-  // on the given WebTaskRunner. Otherwise, the given WebTaskRunner is unused.
-  void SetResource(ResourceType*, WebTaskRunner*);
-  void ClearResource() { SetResource(nullptr, nullptr); }
+  void SetResource(ResourceType*);
+  void ClearResource() { SetResource(nullptr); }
 
  private:
   Member<ResourceType> resource_;
 };
 
 template <class R, class C>
-inline void ResourceOwner<R, C>::SetResource(R* new_resource,
-                                             WebTaskRunner* task_runner) {
+inline void ResourceOwner<R, C>::SetResource(R* new_resource) {
   if (new_resource == resource_)
     return;
 
@@ -77,10 +73,8 @@ inline void ResourceOwner<R, C>::SetResource(R* new_resource,
   if (ResourceType* old_resource = resource_.Release())
     old_resource->RemoveClient(this);
 
-  if (new_resource) {
+  if (new_resource)
     resource_ = new_resource;
-    resource_->AddClient(this, task_runner);
-  }
 }
 
 }  // namespace blink

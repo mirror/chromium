@@ -467,6 +467,7 @@ Resource* ResourceFetcher::ResourceForStaticData(
 
 Resource* ResourceFetcher::ResourceForBlockedRequest(
     const FetchParameters& params,
+    ResourceClient* client,
     const ResourceFactory& factory,
     ResourceRequestBlockedReason blocked_reason) {
   Resource* resource = factory.Create(
@@ -476,6 +477,8 @@ Resource* ResourceFetcher::ResourceForBlockedRequest(
   resource->FinishAsError(ResourceError::CancelledDueToAccessCheckError(
                               params.Url(), blocked_reason),
                           Context().GetLoadingTaskRunner().get());
+  if (client)
+    resource->AddClient(client, Context().GetLoadingTaskRunner().get());
   return resource;
 }
 
@@ -642,6 +645,7 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
 
 Resource* ResourceFetcher::RequestResource(
     FetchParameters& params,
+    ResourceClient* client,
     const ResourceFactory& factory,
     const SubstituteData& substitute_data) {
   unsigned long identifier = CreateUniqueIdentifier();
@@ -662,7 +666,7 @@ Resource* ResourceFetcher::RequestResource(
   if (result == kAbort)
     return nullptr;
   if (result == kBlock)
-    return ResourceForBlockedRequest(params, factory, blocked_reason);
+    return ResourceForBlockedRequest(params, client, factory, blocked_reason);
 
   Resource::Type resource_type = factory.GetType();
 
@@ -761,6 +765,8 @@ Resource* ResourceFetcher::RequestResource(
   if (!ResourceNeedsLoad(resource, params, policy)) {
     if (policy != kUse)
       InsertAsPreloadIfNecessary(resource, params, resource_type);
+    if (client)
+      resource->AddClient(client, Context().GetLoadingTaskRunner().get());
     return resource;
   }
 
@@ -770,6 +776,8 @@ Resource* ResourceFetcher::RequestResource(
   if (policy != kUse)
     InsertAsPreloadIfNecessary(resource, params, resource_type);
   scoped_resource_load_tracker.ResourceLoadContinuesBeyondScope();
+  if (client)
+    resource->AddClient(client, Context().GetLoadingTaskRunner().get());
 
   DCHECK(!resource->ErrorOccurred() ||
          params.Options().synchronous_policy == kRequestSynchronously);

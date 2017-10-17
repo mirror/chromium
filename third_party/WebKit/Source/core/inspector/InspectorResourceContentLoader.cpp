@@ -136,7 +136,8 @@ void InspectorResourceContentLoader::Start() {
       ResourceLoaderOptions options;
       options.initiator_info.name = FetchInitiatorTypeNames::internal;
       FetchParameters params(resource_request, options);
-      Resource* resource = RawResource::Fetch(params, document->Fetcher());
+      Resource* resource =
+          RawResource::Fetch(params, document->Fetcher(), nullptr);
       if (resource) {
         // Prevent garbage collection by holding a reference to this resource.
         resources_.push_back(resource);
@@ -162,7 +163,7 @@ void InspectorResourceContentLoader::Start() {
       options.initiator_info.name = FetchInitiatorTypeNames::internal;
       FetchParameters params(resource_request, options);
       Resource* resource =
-          CSSStyleSheetResource::Fetch(params, document->Fetcher());
+          CSSStyleSheetResource::Fetch(params, document->Fetcher(), nullptr);
       if (!resource)
         continue;
       // Prevent garbage collection by holding a reference to this resource.

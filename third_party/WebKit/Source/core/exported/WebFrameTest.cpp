@@ -8681,7 +8681,8 @@ static Resource* FetchManifest(Document* document, const KURL& url) {
   FetchParameters fetch_parameters{ResourceRequest(url)};
   fetch_parameters.SetRequestContext(WebURLRequest::kRequestContextManifest);
 
-  return RawResource::FetchSynchronously(fetch_parameters, document->Fetcher());
+  return RawResource::FetchSynchronously(fetch_parameters, document->Fetcher(),
+                                         nullptr);
 }
 
 TEST_P(ParameterizedWebFrameTest, ManifestFetch) {
