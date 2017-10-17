@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac16babd_94795bf2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-17T06:56:04Z",
+      "side": 1,
+      "message": "...before kEnumMax.",
+      "revId": "e1603063765f511d412499abfd9e17a9f876dd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
