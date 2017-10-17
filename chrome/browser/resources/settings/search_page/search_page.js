@@ -9,7 +9,7 @@
 Polymer({
   is: 'settings-search-page',
 
-  behaviors: [I18nBehavior],
+  behaviors: [I18nBehavior, PrefsBehavior],
 
   properties: {
     prefs: Object,
@@ -112,7 +112,22 @@ Polymer({
   /** @private */
   onGoogleAssistantTap_: function() {
     assert(this.voiceInteractionFeatureEnabled_);
+    if (!this.prefs) {
+      console.error('this.prefs is not bound.');
+      return;
+    }
+
+    if (!this.prefs.arc.enabled.value ||
+        !this.prefs.arc.voice_interaction_value_prop.accepted.value) {
+      return;
+    }
+
     settings.navigateTo(settings.routes.GOOGLE_ASSISTANT);
+  },
+
+  /** @private */
+  onAssistantTurnOnTap_: function(event) {
+    this.browserProxy_.turnOnGoogleAssistant();
   },
   // </if>
 
@@ -191,14 +206,13 @@ Polymer({
   },
 
   /**
-   * @param {boolean} featureAvailable
    * @param {boolean} arcEnabled
+   * @param {boolean} valuePropAccepted
    * @return {boolean}
    * @private
    */
-  showAssistantSection_: function(
-      featureAvailable, arcEnabled, valuePropAccepted) {
-    return featureAvailable && arcEnabled && valuePropAccepted;
+  isAssistantTurnedOn_: function(arcEnabled, valuePropAccepted) {
+    return arcEnabled && valuePropAccepted;
   },
   // </if>
 
