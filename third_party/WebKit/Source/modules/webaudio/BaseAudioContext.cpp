@@ -935,6 +935,14 @@ AudioIOPosition BaseAudioContext::OutputPosition() {
   return output_position_;
 }
 
+// TODO(crbug.com/764396): Remove this when fixed.
+void BaseAudioContext::CountValueSetterConflict(bool does_conflict) {
+  ++count_value_setter_calls_;
+  if (does_conflict) {
+    ++count_value_setter_conflicts_;
+  }
+}
+
 void BaseAudioContext::RejectPendingResolvers() {
   DCHECK(IsMainThread());
 
