@@ -1,3 +1,8 @@
+# Next batch to move to main waterfall.
+SystemTrayClientTest.*
+SystemTrayClientEnterpriseTest.*
+SystemTrayClientClockTest.*
+
 # Trying to whitelist
 BrowserDialogTest.Invoke
 CastSessionBrowserTest.CreateAndDestroy
