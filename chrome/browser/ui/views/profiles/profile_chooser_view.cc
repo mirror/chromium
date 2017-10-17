@@ -504,6 +504,11 @@ bool ProfileChooserView::IsShowing() {
 }
 
 // static
+const Browser* ProfileChooserView::GetCurrentBubbleBrowser() {
+  return profile_bubble_ ? profile_bubble_->browser() : nullptr;
+}
+
+// static
 views::Widget* ProfileChooserView::GetCurrentBubbleWidget() {
   return profile_bubble_ ? profile_bubble_->GetWidget() : nullptr;
 }

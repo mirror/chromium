@@ -6,11 +6,14 @@
 
 #include <gtk/gtk.h>
 
+#include "chrome/browser/ui/libgtkui/gtk3_background_painter.h"
 #include "chrome/browser/ui/libgtkui/gtk_util.h"
 #include "ui/base/glib/scoped_gobject.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/image/image_skia_source.h"
 #include "ui/views/resources/grit/views_resources.h"
+#include "ui/views/widget/widget.h"
+#include "ui/views/window/button_background_painter_delegate.h"
 
 namespace libgtkui {
 
@@ -348,6 +351,24 @@ gfx::Insets NavButtonProviderGtk3::GetTopAreaSpacing() const {
 
 int NavButtonProviderGtk3::GetInterNavButtonSpacing() const {
   return inter_button_spacing_;
+}
+
+std::unique_ptr<views::Background>
+NavButtonProviderGtk3::CreateAvatarButtonBackground(
+    std::unique_ptr<views::ButtonBackgroundPainterDelegate> delegate) const {
+  return std::make_unique<Gtk3BackgroundPainter>(
+      std::move(delegate),
+      GetStyleContextFromCss(
+          "#headerbar.header-bar.titlebar GtkButton#button"));
+}
+
+void NavButtonProviderGtk3::CalculateCaptionButtonLayout(
+    const gfx::Size& content_size,
+    int top_area_height,
+    gfx::Size* caption_button_size,
+    gfx::Insets* caption_button_spacing) const {
+  *caption_button_size = gfx::Size(30, 30);
+  *caption_button_spacing = gfx::Insets(10, 10, 10, 10);
 }
 
 }  // namespace libgtkui
