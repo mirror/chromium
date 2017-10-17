@@ -8,6 +8,7 @@
 #include "content/browser/appcache/appcache_request.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_response.h"
+#include "net/url_request/redirect_info.h"
 
 namespace content {
 
@@ -37,6 +38,7 @@ class CONTENT_EXPORT AppCacheURLLoaderRequest : public AppCacheRequest {
   ResourceRequest* GetResourceRequest() override;
   AppCacheURLLoaderRequest* AsURLLoaderRequest() override;
 
+  void UpdateWithRedirectInfo(const net::RedirectInfo& redirect_info);
   void set_request(const ResourceRequest& request) { request_ = request; }
   void set_response(const ResourceResponseHead& response) {
     response_ = response;
