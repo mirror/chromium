@@ -211,6 +211,30 @@
       "revId": "f81371bf92bb256d07048008fc69428f147f6b49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3da4de7_c6bcb1b4",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_database_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-17T14:40:56Z",
+      "side": 1,
+      "message": "Okay, comment added, but in the first place where LoadCallback/GetCallback are called.",
+      "parentUuid": "4892124e_37c26c78",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 38
+      },
+      "revId": "f81371bf92bb256d07048008fc69428f147f6b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
