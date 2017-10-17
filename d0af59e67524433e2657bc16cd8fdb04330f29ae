@@ -16,6 +16,24 @@
       "revId": "d0af59e67524433e2657bc16cd8fdb04330f29ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "531e5a31_e66ac11a",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-17T20:33:23Z",
+      "side": 1,
+      "message": "Oof, thanks. Done.",
+      "parentUuid": "baf8b67f_9a2b1bb9",
+      "revId": "d0af59e67524433e2657bc16cd8fdb04330f29ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
