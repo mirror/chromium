@@ -1,0 +1,14 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// https://w3c.github.io/webrtc-pc/#dom-rtcrtpsynchronizationsource
+interface RTCRtpSynchronizationSource {
+    readonly attribute DOMHighResTimeStamp timestamp;
+    readonly attribute unsigned long       source;
+    // TODO(zstein): Compute the audio level if it is not provided by
+    // the RFC6465 header extension and make this mandatory. https://crbug.com/775668
+    readonly attribute byte?               audioLevel;
+
+  // TODO(zstein): Implement voiceActivityFlag. https://crbug.com/775668
+};
