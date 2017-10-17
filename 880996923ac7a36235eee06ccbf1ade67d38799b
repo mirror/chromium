@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "deff8f10_8752f006",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-17T21:11:34Z",
+      "side": 1,
+      "message": "Instead of checking specifically for Android, how about using base::SysInfo::IsLowEndDevice()?",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76677d8a_03d54990",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 2
@@ -13,6 +30,23 @@
       "writtenOn": "2017-10-17T20:09:04Z",
       "side": 1,
       "message": "nit: const would be more consistent with the surrounding code",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52341ffd_f3450a38",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-17T21:11:34Z",
+      "side": 1,
+      "message": "EXPECT_TRUE. https://github.com/google/googletest/blob/master/googletest/docs/Primer.md#assertions",
       "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
