@@ -457,6 +457,10 @@ class CORE_EXPORT Document : public ContainerNode,
   }
 
   bool CanExecuteScripts(ReasonForCallingCanExecuteScripts) override;
+  void SetCanExecuteScripts(bool can_execute_scripts) {
+    can_execute_scripts_ = can_execute_scripts;
+  }
+
   bool IsRenderingReady() const;
   bool IsScriptExecutionReady() const {
     return HaveImportsLoaded() && HaveScriptBlockingStylesheetsLoaded();
@@ -1755,6 +1759,8 @@ class CORE_EXPORT Document : public ContainerNode,
   Member<NetworkStateObserver> network_state_observer_;
 
   bool has_high_media_engagement_;
+
+  bool can_execute_scripts_;
 
   std::unique_ptr<DocumentOutliveTimeReporter> document_outlive_time_reporter_;
 };

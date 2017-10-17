@@ -1,0 +1,6 @@
+module blink.mojom;
+
+interface OomIntervention {
+  OnNearOomDetected();
+  OnInterventionDeclined();
+};

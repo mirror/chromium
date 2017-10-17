@@ -45,6 +45,13 @@ component("controller") {
     ]
   }
 
+  if (is_android) {
+    sources += [
+      "oom_intervention_impl.cc",
+      "oom_intervention_impl.h",
+    ]
+  }
+
   if (remove_webcore_debug_symbols) {
     configs -= [ "//build/config/compiler:default_symbols" ]
     configs += remove_webcore_symbols_config
