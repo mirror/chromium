@@ -128,6 +128,23 @@
     },
     {
       "key": {
+        "uuid": "1f94d607_f91d72f3",
+        "filename": "ash/login/login_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T20:18:12Z",
+      "side": 1,
+      "message": "Please document the \"why\", ie, why is this class useful, how does it fit in?",
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ac1995a_ccadea9d",
         "filename": "ash/login/login_metrics_recorder.h",
         "patchSetId": 3
@@ -179,6 +196,23 @@
       "writtenOn": "2017-10-17T18:32:35Z",
       "side": 1,
       "message": "nit: insert an empty line before",
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14556e7e_c0eaf5b5",
+        "filename": "ash/login/login_metrics_recorder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-17T20:18:12Z",
+      "side": 1,
+      "message": "Please add some tests which actually instantiate the lock screen and then generate some input events via GetEventGenerator() and do various actions on the lock screen.\n\nIf tested this way, we verify that metrics are being recorded in practice (ie, by the code which invokes LoginMetricsRecorder).\n\nHere is an example: https://cs.chromium.org/chromium/src/ash/login/ui/lock_contents_view_unittest.cc?l\u003d164\u0026rcl\u003dad8c76a089eadde11bc0dc74f979aac06a597acf",
       "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
