@@ -22,6 +22,30 @@
       "revId": "069197544a1e1a9701aa8478e1d3a311c0ccc09e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5363ad_7fc62ca6",
+        "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-17T23:42:41Z",
+      "side": 0,
+      "message": "These are replaced with [Extension|Arc]AppWindowLauncherItemController instances when launched. I believe the point of GetRunningApplications on this class is to instantiate one of these delegates to see if any instances of the app are running:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc?rcl\u003d269c8ebdce06f2df62be0cec2cd2820ef4183e80\u0026l\u003d419\n\nI agree that neither is straightforward; I dislike the item delegate pattern, not to mention the practice of swapping delegates at various times. That said, I believe this comment is fairly accurate, and should be clarified/corrected, but probably not reduced to the suggestion on the right.",
+      "parentUuid": "5cfa7b32_7cdcd006",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 58
+      },
+      "revId": "069197544a1e1a9701aa8478e1d3a311c0ccc09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

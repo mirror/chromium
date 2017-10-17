@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5301c6d_d0b9b5e3",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-17T23:42:41Z",
+      "side": 1,
+      "message": "Maybe GetRunningApplications should just be a static function that takes ShelfID or an app_id string (and maybe a profile), and then we can avoid the delegate instantiation to check for running apps, and avoid the nasty static_cast and the strange item type check above. WDYT?",
+      "revId": "351e06c2c3c96e1c329f63d1b759b142a554bcaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
