@@ -944,6 +944,24 @@
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "647bcac8_c5ccb4db",
+        "filename": "media/audio/audio_output_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-17T13:24:29Z",
+      "side": 1,
+      "message": "Right, I\u0027m getting the following error message. If you can figure out how I messed up, please tell me :).\n\nFAILED: media_mojo_services.dll media_mojo_services.dll.lib media_mojo_services.dll.pdb \nE:/b/depot_tools/win_tools-2_7_6_bin/python/bin/python.exe ../../build/toolchain/win/tool_wrapper.py link-wrapper environment.x86 False link.exe /nologo /IMPLIB:./media_mojo_services.dll.lib /DLL /OUT:./media_mojo_services.dll /PDB:./media_mojo_services.dll.pdb @./media_mojo_services.dll.rsp\nmojo_audio_output_stream.obj : error LNK2019: unresolved external symbol \"__declspec(dllimport) public: virtual __thiscall media::AudioOutputDelegate::EventHandler::~EventHandler(void)\" (__imp_??1EventHandler@AudioOutputDelegate@media@@UAE@XZ) referenced in function \"public: virtual __thiscall media::MojoAudioOutputStream::~MojoAudioOutputStream(void)\" (??1MojoAudioOutputStream@media@@UAE@XZ)\nmojo_audio_output_stream.obj : error LNK2019: unresolved external symbol \"__declspec(dllimport) public: __thiscall media::AudioOutputDelegate::EventHandler::EventHandler(void)\" (__imp_??0EventHandler@AudioOutputDelegate@media@@QAE@XZ) referenced in function \"public: __thiscall media::MojoAudioOutputStream::MojoAudioOutputStream(class mojo::InterfaceRequest\u003cclass media::mojom::AudioOutputStream\u003e,class mojo::InterfacePtr\u003cclass media::mojom::AudioOutputStreamClient\u003e,class base::OnceCallback\u003cclass std::unique_ptr\u003cclass media::AudioOutputDelegate,struct std::default_delete\u003cclass media::AudioOutputDelegate\u003e \u003e __cdecl(class media::AudioOutputDelegate::EventHandler *)\u003e,class base::OnceCallback\u003cvoid __cdecl(class mojo::ScopedHandleBase\u003cclass mojo::SharedBufferHandle\u003e,class mojo::ScopedHandleBase\u003cclass mojo::Handle\u003e)\u003e,class base::OnceCallback\u003cvoid __cdecl(void)\u003e)\" (??0MojoAudioOutputStream@media@@QAE@V?$InterfaceRequest@VAudioOutputStream@mojom@media@@@mojo@@V?$InterfacePtr@VAudioOutputStreamClient@mojom@media@@@3@V?$OnceCallback@$$A6A?AV?$unique_ptr@VAudioOutputDelegate@media@@U?$default_delete@VAudioOutputDelegate@media@@@std@@@std@@PAVEventHandler@AudioOutputDelegate@media@@@Z@base@@V?$OnceCallback@$$A6AXV?$ScopedHandleBase@VSharedBufferHandle@mojo@@@mojo@@V?$ScopedHandleBase@VHandle@mojo@@@2@@Z@6@V?$OnceCallback@$$A6AXXZ@6@@Z)\n./media_mojo_services.dll : fatal error LNK1120: 2 unresolved externals",
+      "parentUuid": "d06cbdcc_344287d5",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
