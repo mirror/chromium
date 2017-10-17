@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ab756575_d98f42f5",
+        "filename": "tools/binary_size/libsupersize/console.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T19:55:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e3f943b0_de511fe9",
+      "revId": "517f52389c29f915d54d18bd0a3c46c82015c600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7b48f8c_845f0055",
         "filename": "tools/binary_size/libsupersize/testdata/Archive.golden",
         "patchSetId": 3

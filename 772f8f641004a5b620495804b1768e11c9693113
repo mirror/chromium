@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b854554c_b2c7f964",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T19:55:54Z",
+      "side": 1,
+      "message": "Add \"_\" prefix? Same in line 15.",
+      "range": {
+        "startLine": 14,
+        "startChar": 39,
+        "endLine": 14,
+        "endChar": 67
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939c8e9b_fecbe549",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T19:55:54Z",
+      "side": 1,
+      "message": "NIT: Receives",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081044ee_06b47136",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T19:55:54Z",
+      "side": 1,
+      "message": "NIT: within",
+      "range": {
+        "startLine": 28,
+        "startChar": 66,
+        "endLine": 28,
+        "endChar": 71
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3948c877_90f50d7c",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T19:55:54Z",
+      "side": 1,
+      "message": "NIT: an?",
+      "range": {
+        "startLine": 29,
+        "startChar": 39,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65ca4567_2830f16c",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T19:55:54Z",
+      "side": 1,
+      "message": "... target is an archive path or a list of object paths.",
+      "range": {
+        "startLine": 175,
+        "startChar": 73,
+        "endLine": 175,
+        "endChar": 74
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb713df_2e69727e",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T19:55:54Z",
+      "side": 1,
+      "message": "\"\"\"Returns a dictionary from object name to list of (offset, size) tuples for string sections. If target is a string (e.g., \"foo.a\") then must be an archive, and object names would be formatted as \"foo.a(bar.o)\". Otherwise target must be a list of objects (e.g., [\"bar1.o\", \"bar2.o\"], and object names are direclty used, e.g., \"bar1.o\".\"\"\"",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 77
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03025cd5_9bbfd58d",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T19:55:54Z",
+      "side": 1,
+      "message": "targets[1:] are all ignored, is this deliberate? If so, then maybe the function should take a single string and |is_archive| as input?",
+      "range": {
+        "startLine": 181,
+        "startChar": 11,
+        "endLine": 181,
+        "endChar": 20
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b41ede_95ecfad1",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T19:55:54Z",
+      "side": 1,
+      "message": "Don\u0027t know what\u0027s meant by this. Unicode strings?",
+      "range": {
+        "startLine": 196,
+        "startChar": 22,
+        "endLine": 196,
+        "endChar": 37
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b68572_d57a65ed",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T19:55:54Z",
+      "side": 1,
+      "message": "NIT: Do you add \"()\" when referring to functions (I do). If so, do that elsewhere as well?",
+      "range": {
+        "startLine": 209,
+        "startChar": 47,
+        "endLine": 209,
+        "endChar": 49
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a134df9e_602445ec",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T19:55:54Z",
+      "side": 1,
+      "message": "# Attempt to assign |target| as archive path, or a list of object paths.",
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514f76df_da937308",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T19:55:54Z",
+      "side": 1,
+      "message": "Should the purpose of doing work on a thread is to make AnalyzeStringLiterals() non-blocking so other stuff can be done, but GetSymbolNames() would still block?",
+      "range": {
+        "startLine": 613,
+        "startChar": 0,
+        "endLine": 614,
+        "endChar": 51
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b9176a_48c17e66",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-17T19:55:54Z",
+      "side": 1,
+      "message": "Should this be an assert instead?",
+      "range": {
+        "startLine": 645,
+        "startChar": 12,
+        "endLine": 645,
+        "endChar": 43
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
