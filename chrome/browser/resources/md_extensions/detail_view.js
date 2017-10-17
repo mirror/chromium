@@ -176,7 +176,7 @@ cr.define('extensions', function() {
     },
 
     /** @private */
-    onCollectErrorsChange_: function() {
+    onCollectErrorsChange_: function(e) {
       this.delegate.setItemCollectsErrors(
           this.data.id, this.$$('#collect-errors').checked);
     },
