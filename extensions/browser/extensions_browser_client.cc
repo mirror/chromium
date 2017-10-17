@@ -17,6 +17,11 @@ ExtensionsBrowserClient* g_client = NULL;
 
 }  // namespace
 
+InfoMap* ExtensionsBrowserClient::GetExtensionInfoMap(
+    content::ResourceContext* resource_context) {
+  return nullptr;
+}
+
 scoped_refptr<update_client::UpdateClient>
 ExtensionsBrowserClient::CreateUpdateClient(content::BrowserContext* context) {
   return scoped_refptr<update_client::UpdateClient>(nullptr);
@@ -46,9 +51,9 @@ bool ExtensionsBrowserClient::IsActivityLoggingEnabled(
   return false;
 }
 
-ExtensionNavigationUIData*
+const ExtensionNavigationUIData*
 ExtensionsBrowserClient::GetExtensionNavigationUIData(
-    net::URLRequest* request) {
+    const content::NavigationUIData* navigation_ui_data) {
   return nullptr;
 }
 

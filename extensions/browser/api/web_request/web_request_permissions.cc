@@ -104,7 +104,7 @@ bool IsSensitiveURL(const GURL& url,
 bool WebRequestPermissions::HideRequest(
     const extensions::InfoMap* extension_info_map,
     const net::URLRequest* request,
-    extensions::ExtensionNavigationUIData* navigation_ui_data) {
+    const extensions::ExtensionNavigationUIData* navigation_ui_data) {
   // Hide requests from the Chrome WebStore App, signin process and WebUI.
   const ResourceRequestInfo* info = ResourceRequestInfo::ForRequest(request);
 
