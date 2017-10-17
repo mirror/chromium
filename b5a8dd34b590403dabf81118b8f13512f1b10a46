@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "df222952_96a267dd",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browser_test_harness.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T21:40:47Z",
+      "side": 1,
+      "message": "I think it can matter. On destruction, operations depend on what features is enabled. e.g. If feature Foo is enabled, the ctor calls Foo::Initialize() instead of Bar::Initialize(), and on destruction calls Foo::Destroy() instead of Bar::Destroy(). Now if |scoped_feature_list_|, which is on the bottom, gets destroyed first, then we can get into a situation where Foo::Initialize() and Bar::Destroy() gets called.\n\nLikely such a scenario does not apply to must classes, but we may hit that case at some point. IMO it\u0027s better to be consistent with the ScopedFeatureList placement, so we should put it at the \"right\" spot even if it doesn\u0027t matter. Plus oftentimes folks copy existing tests to make new tests, so if you put it in the right spot, it tends to stay that way.\n\nSince |scoped_feature_list_| is initialized fairly early on, if there\u0027s no other ordering concerns, it should be destroyed last to mirror its initialization order. i.e. Move it to the top of the private section here.",
+      "parentUuid": "2e1c2c88_9c8a8d58",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dae1662a_5fba2fdd",
         "filename": "chrome/browser/subresource_filter/subresource_filter_worker_browsertest.cc",
         "patchSetId": 8
