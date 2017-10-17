@@ -3928,6 +3928,40 @@
             ]
         }
     ],
+    "WorkStealingInScriptRunner": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "WorkStealingInScriptRunner"
+                    ]
+                }
+            ]
+        }
+    ],
+    "XGEOVisibleNetworks": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Experiment",
+                    "enable_features": [
+                        "XGEOVisibleNetworks"
+                    ]
+                }
+            ]
+        }
+    ],
     "YieldBetweenContentScriptRuns": [
         {
             "platforms": [
