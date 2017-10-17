@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "226e4055_b190de0e",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-17T21:21:53Z",
+      "side": 1,
+      "message": "Is it clear now?",
+      "parentUuid": "70d6195e_c658eb70",
+      "revId": "29d7dbeba19e6b140948a51997338d3285bce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc0c484f_d7d5fbc2",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "29d7dbeba19e6b140948a51997338d3285bce6bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7711fe8_92f558f5",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-17T21:21:53Z",
+      "side": 1,
+      "message": "I deferred changing all the callers to follow-up CL(s).  Even though the follow-up CL(s) will be mostly mechanical (search/replace), we will most likely need some API-specific discussion (e.g. if popups/webUSB/etc w/o consumption acceptable etc.).",
+      "parentUuid": "fc0c484f_d7d5fbc2",
+      "revId": "29d7dbeba19e6b140948a51997338d3285bce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cd058a80_43584fef",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-17T21:21:53Z",
+      "side": 1,
+      "message": "Same as above.\n\nNote, however, that we will try a non-consuming solution first which I missed here. Changed the code accordingly with a comment.",
+      "parentUuid": "bdb1ad91_500fc84c",
+      "revId": "29d7dbeba19e6b140948a51997338d3285bce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c689e663_148b3ef9",
         "filename": "third_party/WebKit/Source/core/frame/UserActivationState.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "29d7dbeba19e6b140948a51997338d3285bce6bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db72e66b_49291924",
+        "filename": "third_party/WebKit/Source/core/frame/UserActivationState.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-17T21:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c689e663_148b3ef9",
+      "revId": "29d7dbeba19e6b140948a51997338d3285bce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
