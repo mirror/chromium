@@ -77,6 +77,7 @@ public class VrShellDelegate
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
     private static final String TAG = "VrShellDelegate";
+    private static final boolean DEBUG_LOGS = true;
 
     // Pseudo-random number to avoid request id collisions. Result codes must fit in lower 16 bits
     // when used with startActivityForResult...
@@ -168,6 +169,8 @@ public class VrShellDelegate
     // party app has asked us to autopresent WebVr content and we're waiting for the WebVr
     // content to call requestPresent.
     private boolean mAutopresentWebVr;
+    // If set to true, we attempt to enter VR mode when the activity is resumed.
+    private boolean mEnterVrOnStartup;
 
     // Set to true if performed VR browsing at least once. That is, this was not simply a WebVr
     // presentation experience.
@@ -198,7 +201,8 @@ public class VrShellDelegate
             sInstance.mProbablyInDon = false;
             sInstance.mExpectPauseOrDonSucceeded.removeCallbacksAndMessages(null);
             sInstance.mVrClassesWrapper.setVrModeEnabled(sInstance.mActivity, true);
-            sInstance.setWindowModeForVr(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            if (DEBUG_LOGS) Log.i(TAG, "VrBroadcastReceiver onReceive");
+            sInstance.setWindowModeForVr();
             if (sInstance.mPaused) {
                 if (sInstance.mInVrAtChromeLaunch == null) sInstance.mInVrAtChromeLaunch = false;
                 // We add a black overlay view so that we can show black while the VR UI is loading.
@@ -271,8 +275,6 @@ public class VrShellDelegate
         VrClassesWrapper wrapper = getVrClassesWrapper();
         if (wrapper == null) return;
         nativeOnLibraryAvailable();
-
-        if (sInstance != null) sInstance.cancelStartupAnimationIfNeeded();
     }
 
     @VisibleForTesting
@@ -424,6 +426,7 @@ public class VrShellDelegate
      * unhandled, the Activity should be recreated in order to handle the change.
      */
     public static boolean onDensityChanged(float oldDpi, float newDpi) {
+        if (DEBUG_LOGS) Log.i(TAG, "onDensityChanged [%.2f]->[%.2f] ", oldDpi, newDpi);
         if (sInstance == null) return false;
         // If density changed while in VR, we expect a second density change to restore the density
         // to what it previously was when we exit VR. We shouldn't have to recreate the activity as
@@ -554,6 +557,13 @@ public class VrShellDelegate
         if (vrSupportLevel != VR_DAYDREAM) return false;
         if (deviceChangesDensityInVr()) return false;
         return ChromeFeatureList.isEnabled(ChromeFeatureList.VR_SHELL);
+    }
+
+    private static boolean deviceSupportsMultipleDensities() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return false;
+        Display display = DisplayAndroidManager.getDefaultDisplayForContext(
+                ContextUtils.getApplicationContext());
+        return display.getSupportedModes().length > 1;
     }
 
     private static boolean deviceChangesDensityInVr() {
@@ -775,7 +785,7 @@ public class VrShellDelegate
         mInVr = true;
         mVrClassesWrapper.setVrModeEnabled(mActivity, true);
 
-        setWindowModeForVr(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        setWindowModeForVr();
         boolean donSuceeded = mDonSucceeded;
         mDonSucceeded = false;
         if (!createVrShell()) {
@@ -841,6 +851,11 @@ public class VrShellDelegate
         sAddedBlackOverlayView = false;
     }
 
+    private void onVrIntent() {
+        mNeedsAnimationCancel = true;
+        mEnterVrOnStartup = true;
+    }
+
     private void onAutopresentIntent() {
         // Autopresent intents are only expected from trusted first party apps while
         // we're not in vr.
@@ -851,13 +866,16 @@ public class VrShellDelegate
         mInVrAtChromeLaunch = true;
     }
 
-    private void onAutopresentUnsupported() {
+    private void onEnterVrUnsupported(ChromeActivity activity) {
         // Auto-presentation is unsupported, but we still need to remove the black overlay before we
         // exit to Daydream so that the user doesn't see black when they come back to Chrome. The
         // overlay will be removed when we get paused by Daydream.
         assert !mInVr;
         mNeedsAnimationCancel = false;
         mVrDaydreamApi.launchVrHomescreen();
+        if (deviceSupportsMultipleDensities()) {
+            getVrClassesWrapper().setVrModeEnabled(activity, false);
+        }
     }
 
     /**
@@ -867,14 +885,34 @@ public class VrShellDelegate
         if (!VrIntentUtils.isVrIntent(intent)) return;
         VrShellDelegate instance = getInstance(activity);
         if (instance == null) return;
+        setVrModeEnabled(activity);
         if (VrIntentUtils.getHandlerInstance().isTrustedDaydreamIntent(intent)) {
+            if (DEBUG_LOGS) Log.i(TAG, "onNewIntentWithNative: autopresent");
             assert activitySupportsAutopresentation(activity);
             instance.mAutopresentWebVr = true;
             if (!ChromeFeatureList.isEnabled(ChromeFeatureList.WEBVR_AUTOPRESENT)) {
-                instance.onAutopresentUnsupported();
+                instance.onEnterVrUnsupported(activity);
                 return;
             }
             instance.onAutopresentIntent();
+        } else if (ChromeFeatureList.isEnabled(ChromeFeatureList.VR_LAUNCH_INTENT)
+                && isVrShellEnabled(instance.mVrSupportLevel)) {
+            if (DEBUG_LOGS) Log.i(TAG, "onNewIntentWithNative: vr");
+            instance.onVrIntent();
+        } else {
+            if (DEBUG_LOGS) Log.i(TAG, "onNewIntentWithNative: unsupported");
+            // TODO(ymalik): Currently we always return to Daydream home, this makes less sense if
+            // a non-VR app sends an intent, perhaps just ignoring the intent is better.
+            instance.onEnterVrUnsupported(activity);
+            return;
+        }
+
+        // If Chrome is already running, the animation will be cancelled from onResume. Note that
+        // this call is what causes us to enter VR mode when Chrome is cold-started. We start a
+        // intermediate activity to cancel the animation which causes onPause and onResume to be
+        // called and we enter VR mode in onResume (because we set the mEnterVrOnStartup bit).
+        if (!instance.mPaused) {
+            instance.cancelStartupAnimationIfNeeded();
         }
     }
 
@@ -882,19 +920,42 @@ public class VrShellDelegate
      * This is called when ChromeTabbedActivity gets a new intent before native is initialized.
      */
     public static void maybeHandleVrIntentPreNative(ChromeActivity activity, Intent intent) {
-        if (VrIntentUtils.getHandlerInstance().isTrustedDaydreamIntent(intent)) {
+        if (VrIntentUtils.isVrIntent(intent)) {
+            if (DEBUG_LOGS) Log.i(TAG, "maybeHandleVrIntentPreNative: preparing for transition");
             // We add a black overlay view so that we can show black while the VR UI is loading.
             // Note that this alone isn't sufficient to prevent 2D UI from showing when
             // auto-presenting WebVR. See comment about the custom animation in {@link
             // getVrIntentOptions}.
             addBlackOverlayViewForActivity(activity);
+
+            // Enable VR mode and hide system UI. We do this here so we don't get kicked out of
+            // VR mode and to prevent seeing a flash of system UI.
+            getVrClassesWrapper().setVrModeEnabled(activity, true);
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            activity.getWindow().getDecorView().setSystemUiVisibility(VR_SYSTEM_UI_FLAGS);
+        }
+    }
+
+    /**
+     * Asynchronously enable VR mode.
+     */
+    public static void setVrModeEnabled(Activity activity) {
+        // We don't do this for devices that support multiple denities (i.e Samsung devices). This
+        // is because they may change the screen density after exiting VR mode which was originally
+        // triggered by a VR intent. The density change forces us to restart Chrome which
+        // triggers this function again during UI inflation. As a result, we would set VR mode again
+        // below, which would cause issues like the System UI never showing up because Samsung
+        // handles system UI showing and hiding themselves upon setting the VR mode. That is, we
+        // would have a nasty bug where the user would never see the system UI after exiting VR.
+        if (!deviceSupportsMultipleDensities()) {
+            getVrClassesWrapper().setVrModeEnabled(activity, true);
         }
     }
 
     @Override
     public void onSystemUiVisibilityChange(int visibility) {
         if (mInVr && !isWindowModeCorrectForVr()) {
-            setWindowModeForVr(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            setWindowModeForVr();
         }
     }
 
@@ -920,20 +981,43 @@ public class VrShellDelegate
                 && orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
-    private void setWindowModeForVr(int requestedOrientation) {
+    private void setWindowModeForVr() {
+        ScreenOrientationDelegateManager.setOrientationDelegate(this);
+        mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        // Set correct orientation.
         if (mRestoreOrientation == null) {
             mRestoreOrientation = mActivity.getRequestedOrientation();
         }
-        mActivity.setRequestedOrientation(requestedOrientation);
-        ScreenOrientationDelegateManager.setOrientationDelegate(this);
-        setupVrModeWindowFlags();
+        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        // Hide system UI. Note: We may have hidden the system UI earlier so that we don't see it
+        // when Chrome is started in VR mode. If that is the case, we don't want to restore
+        // to that after we exit VR mode. This has the the issue that if we hide this for another
+        // reason before entering VR mode, we always show it after exiting VR mode, which is
+        // probably okay.
+        int flags = mActivity.getWindow().getDecorView().getSystemUiVisibility();
+        boolean systemUiHidden = (flags & VR_SYSTEM_UI_FLAGS) == VR_SYSTEM_UI_FLAGS;
+        if (mRestoreSystemUiVisibilityFlag == -1) {
+            mRestoreSystemUiVisibilityFlag = flags & ~VR_SYSTEM_UI_FLAGS;
+        }
+        mActivity.getWindow().getDecorView().setSystemUiVisibility(VR_SYSTEM_UI_FLAGS);
     }
 
     private void restoreWindowMode() {
-        if (mRestoreOrientation != null) mActivity.setRequestedOrientation(mRestoreOrientation);
         ScreenOrientationDelegateManager.setOrientationDelegate(null);
+        mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        // Restore orientation.
+        if (mRestoreOrientation != null) mActivity.setRequestedOrientation(mRestoreOrientation);
         mRestoreOrientation = null;
-        clearVrModeWindowFlags();
+
+        // Restore system UI visibility.
+        if (mRestoreSystemUiVisibilityFlag != -1) {
+            mActivity.getWindow().getDecorView().setSystemUiVisibility(
+                    mRestoreSystemUiVisibilityFlag);
+        }
+        mRestoreSystemUiVisibilityFlag = -1;
     }
 
     /* package */ boolean canEnterVr(Tab tab, boolean justCompletedDon) {
@@ -1040,6 +1124,7 @@ public class VrShellDelegate
 
     private boolean cancelStartupAnimationIfNeeded() {
         if (!mNeedsAnimationCancel) return false;
+        if (DEBUG_LOGS) Log.e(TAG, "canceling startup animation");
         mCancellingEntryAnimation = true;
         Bundle options = ActivityOptions.makeCustomAnimation(mActivity, 0, 0).toBundle();
         mActivity.startActivity(new Intent(mActivity, VrCancelAnimationActivity.class), options);
@@ -1072,7 +1157,16 @@ public class VrShellDelegate
             });
         }
 
-        if (mDonSucceeded) {
+        if (mEnterVrOnStartup) {
+            // This means that Chrome was started with a VR intent, so we should enter VR.
+            assert !mProbablyInDon;
+            if (DEBUG_LOGS) Log.i(TAG, "onResume: entering VR mode for VR intent");
+            mCancellingEntryAnimation = false;
+            if (enterVrInternal() == ENTER_VR_CANCELLED) {
+                cancelPendingVrEntry();
+            }
+            mEnterVrOnStartup = false;
+        } else if (mDonSucceeded) {
             mCancellingEntryAnimation = false;
             handleDonFlowSuccess();
         } else if (mProbablyInDon) {
@@ -1498,24 +1592,6 @@ public class VrShellDelegate
         mActivity.onExitVr();
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
         decor.removeView(mVrShell.getContainer());
-    }
-
-    private void setupVrModeWindowFlags() {
-        if (mRestoreSystemUiVisibilityFlag == -1) {
-            mRestoreSystemUiVisibilityFlag = mActivity.getWindow().getDecorView()
-                    .getSystemUiVisibility();
-        }
-        mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        mActivity.getWindow().getDecorView().setSystemUiVisibility(VR_SYSTEM_UI_FLAGS);
-    }
-
-    private void clearVrModeWindowFlags() {
-        mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        if (mRestoreSystemUiVisibilityFlag != -1) {
-            mActivity.getWindow().getDecorView()
-                    .setSystemUiVisibility(mRestoreSystemUiVisibilityFlag);
-        }
-        mRestoreSystemUiVisibilityFlag = -1;
     }
 
     private void onDensityChangedInternal(float oldDpi, float newDpi) {

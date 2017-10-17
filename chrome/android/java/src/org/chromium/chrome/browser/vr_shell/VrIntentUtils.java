@@ -67,9 +67,15 @@ public class VrIntentUtils {
      * @return Whether or not the given intent is a VR-specific intent.
      */
     public static boolean isVrIntent(Intent intent) {
+        if (intent == null) return false;
         // For simplicity, we only return true here if VR is enabled on the platform and this intent
         // is not fired from a recent apps page. The latter is there so that we don't enter VR mode
         // when we're being resumed from the recent apps in 2D mode.
+        // TODO(ymalik): A VR intent is any intent that has the Daydream category. Currently,
+        // Daydream removes the Daydream category for deep-links (for no real reason). We should add
+        // that bit here when they stop doing that. In addition to the category, DAYDREAM_VR_EXTRA
+        // tells us that this intent is coming directly from VR, but for now we only use this to
+        // classify VR intent.
         boolean canHandleIntent = VrShellDelegate.isVrEnabled() && !launchedFromRecentApps(intent);
         return IntentUtils.safeGetBooleanExtra(intent, DAYDREAM_VR_EXTRA, false) && canHandleIntent;
     }
@@ -80,7 +86,9 @@ public class VrIntentUtils {
     public static boolean isCustomTabVrIntent(Intent intent) {
         // TODO(crbug.com/719661): Currently, only Daydream intents open in a CustomTab. We should
         // probably change this once we figure out core CCT flows in VR.
-        return getHandlerInstance().isTrustedDaydreamIntent(intent);
+        if (intent == null) return false;
+        return IntentHandler.getUrlFromIntent(intent) != null
+                && getHandlerInstance().isTrustedDaydreamIntent(intent);
     }
 
     /**
