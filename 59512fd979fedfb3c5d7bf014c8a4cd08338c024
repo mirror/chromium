@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f40094b_6463706c",
+        "filename": "content/browser/appcache/appcache_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-17T22:50:04Z",
+      "side": 1,
+      "message": "OK, got rid of the factory method, switched to using the appropriate classes ctor from within the handler.",
+      "parentUuid": "f916bd5a_566d8875",
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39ba2422_661f566d",
         "filename": "content/browser/appcache/appcache_request_handler.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-16T15:28:27Z",
       "side": 1,
       "message": "Now this job class has multiple places where it could get killed, which makes me a little nervous... could this instead have, say, DeleteIfNeeded() method which internally checks if it\u0027s bound and/or if it needs to delete itself etc?",
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e26e44a4_ce78525a",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-17T22:50:04Z",
+      "side": 1,
+      "message": "I wrestled with how to manage the lifetime of these two different \u0027job\u0027 types, this is a rough spot.\n\nIn the URLRequest case, the network stack owns any job thats return from a \u0027maybeintercept\u0027 function, which means the handler does not. I\u0027ve tried to make is such that the handler does not own the job in the URLLoader case either.\n\nGenerally the mojo binding keeps the URLLoader alive, but there can be a period of time where we\u0027re waiting for async io cmpletion prior to figuring out whether to \u0027maybe\u0027 load something, that happens prior to setting up the binding. Setting up the binding in crossing a point of no return which would preclude resort to using the network for the url load. The code here was to catch that case.\n\nI\u0027ve put this in a DeleteIfNeededMethod, but it\u0027s still feels like a rought spot. Any ideas on how to better smooth it out would be welcome.",
+      "parentUuid": "39ba2422_661f566d",
       "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c8033a_205ddc03",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-17T22:50:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64d0b885_0911796c",
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +147,24 @@
     },
     {
       "key": {
+        "uuid": "30ec554a_36140609",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-17T22:50:04Z",
+      "side": 1,
+      "message": "The idea was to kill it even if it was bound. Looking closer, this method actually comes from the URLRequestJob class and its also declared as virtual method on AppCacheJob interface. I don\u0027t think we need this method to do anything on the URLLoader derivative? I\u0027ll removing this method from the base class instead.",
+      "parentUuid": "9aecdecc_0a528b0e",
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c875af60_7acd68a1",
         "filename": "content/browser/appcache/appcache_url_loader_job.cc",
         "patchSetId": 2
@@ -104,6 +176,24 @@
       "writtenOn": "2017-10-16T15:28:27Z",
       "side": 1,
       "message": "Should this instead do DCHECK(loader_callback_) / could the callers try not to call this if not needed / no loader_callback_ is given?",
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c40c8a_822655ad",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-17T22:50:04Z",
+      "side": 1,
+      "message": "ok, done",
+      "parentUuid": "c875af60_7acd68a1",
       "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -124,6 +214,24 @@
       "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7b80cc_109a4c16",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-17T22:50:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "992af21d_059ea25c",
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
