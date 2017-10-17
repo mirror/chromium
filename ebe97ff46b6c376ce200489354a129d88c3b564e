@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30982003_b6733720",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserver.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-17T01:04:55Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right to me.  If the tracking document goes away, we may still need to generate and deliver a notification indicating that the target Element is no longer intersecting.\n\nThe existing code, with early return, looks right to me.",
+      "revId": "ebe97ff46b6c376ce200489354a129d88c3b564e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e175aca_003500cc",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserver.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-17T01:04:55Z",
+      "side": 1,
+      "message": "If the TrackingDocument goes away before notification delivery happens, then we would lose the notification that the target no longer intersects, even if the target and its callback execution context survive.\n\nYou can instead add this:\n\nDCHECK(delegate_-\u003eGetExecutionContext());\n\nThat should never transition from true to false during IntersectionObserver::ComputeIntersectionObservations, and you have an early-return there.",
+      "revId": "ebe97ff46b6c376ce200489354a129d88c3b564e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
