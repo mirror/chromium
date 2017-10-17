@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1b77ef94_6cf0cfe0",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-17T06:52:06Z",
+      "side": 1,
+      "message": "How about making a function to centralize state transition like this?\n\nvoid AdvanceState(new_state) {\n  switch (state_) {\n    case State::kInitial:\n      DCHECK_EQ(kSendingScripts, new_state);\n      state_ \u003d new_state;\n      return;\n    case State::kSendingScripts:\n      DCHECK(new_state \u003d\u003d State::kSendingScripts ||\n             new_state \u003d\u003d State::kIdle);\n      state_ \u003d new_state;\n      return;\n    case State::kIdle:\n      DCHECK_EQ(State::kSendingScripts);\n      DCHECK(pending_scripts_.IsEmpty());\n      state_ \u003d new_state;\n      return;\n  }\n}",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "921193d2_87d22451",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 14
@@ -36,6 +53,29 @@
     },
     {
       "key": {
+        "uuid": "2c6da66a_c43795c2",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-17T06:52:06Z",
+      "side": 1,
+      "message": "Installed",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 20
+      },
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f46ed04a_37975ba7",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
         "patchSetId": 14
@@ -47,6 +87,23 @@
       "writtenOn": "2017-10-17T06:25:37Z",
       "side": 1,
       "message": "Now I\u0027m thinking the second sentence of 2. should be moved to 3. Sorry as I suggested this comment originally.",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56640527_acadd6e3",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-17T06:52:06Z",
+      "side": 1,
+      "message": "This 3rd phase sounds \"action\", not \"phase\". I think each phase should clarify its invariants, what it does, and when it moves to the next phase. It looks like 3. lacks \"invariants\" and \"what it does\". For example, how about like this?\n\n\"1. The sender sends all installed scripts to the renderer without any requests from the renderer. This initial phase is called \"streaming\". |state_| is kSendingScripts. When all installed scripts are sent, moves to the phase 2.\"\n\n\"2. The sender is idle. |state_| is kIdle. If the renderer calls RequestInstalledScript(), moves to the phase 3.\"\n\n\"3. The sender sends requested scripts. |state_| is kSendingScripts. When all the requested scripts are sent, returns to the phase 2.\"",
       "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +161,40 @@
     },
     {
       "key": {
+        "uuid": "aef57707_11cd8062",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-17T06:52:06Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b43eed_7b37e54d",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-17T06:52:06Z",
+      "side": 1,
+      "message": "DCHECK_EQ(ScriptStatus::kPending, GetStatusOnWorkerThread(url));",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21925e42_3fb80cab",
         "filename": "content/renderer/service_worker/thread_safe_script_container.h",
         "patchSetId": 14
@@ -132,6 +223,29 @@
       "writtenOn": "2017-10-17T06:25:37Z",
       "side": 1,
       "message": "\"the entry to wait\" is kind of ungrammatical. I think this function is trying to be the reverse of \"Wait\" but of course there isn\u0027t an opposite word like \"Unwait\". Maybe the first sentence should just be: \"Removes the script.\"",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61717a04_0005941d",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-17T06:52:06Z",
+      "side": 1,
+      "message": "This is obvious from the function name.",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 32
+      },
       "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
