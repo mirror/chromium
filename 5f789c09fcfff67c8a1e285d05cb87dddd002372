@@ -249,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "cef251df_fdd363e6",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-17T16:35:46Z",
+      "side": 1,
+      "message": "Just landed the clean-up CL. Can you rebase and see whether LoginState and TestSessionControllerClient calls can be removed?",
+      "parentUuid": "419792f7_a6736282",
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41350f2c_c440612b",
         "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
         "patchSetId": 3
