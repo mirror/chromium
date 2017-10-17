@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d7dbf0_5eda4fec",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-17T07:01:19Z",
+      "side": 1,
+      "message": "How come you don\u0027t need to wait here? (and the next one that changed).",
+      "revId": "59c25db855438a764d72b2f4d6940bf507b64b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
