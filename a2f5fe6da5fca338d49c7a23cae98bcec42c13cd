@@ -128,6 +128,30 @@
       "revId": "a2f5fe6da5fca338d49c7a23cae98bcec42c13cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ccafbd8_ca05fe26",
+        "filename": "third_party/WebKit/Source/platform/weborigin/ReportingServiceProxyPtrHolder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-10-17T11:35:25Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "7559c40f_1fa00ce0",
+      "range": {
+        "startLine": 50,
+        "startChar": 41,
+        "endLine": 50,
+        "endChar": 55
+      },
+      "revId": "a2f5fe6da5fca338d49c7a23cae98bcec42c13cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
