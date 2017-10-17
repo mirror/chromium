@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "3a7daaf4_a24daa2f",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T01:26:28Z",
+      "side": 1,
+      "message": "Nit: It\u0027s better to do TODO(crbug.com/foo)",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0c89961_926b4da0",
         "filename": "base/allocator/partition_allocator/partition_alloc.cc",
         "patchSetId": 4
@@ -30,6 +47,23 @@
       "writtenOn": "2017-10-17T01:05:08Z",
       "side": 1,
       "message": "Yeah, I think your reasoning is correct.",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b483f65f_9e16cd7a",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T01:26:28Z",
+      "side": 1,
+      "message": "Nit: trustworthy",
       "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +138,23 @@
     },
     {
       "key": {
+        "uuid": "720396a3_11dbb7c3",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T01:26:28Z",
+      "side": 1,
+      "message": "Nit: I might phrase it as \"PartitionPage must be able to fit in a metadata slot\".",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5cd445a_4b091a34",
         "filename": "base/allocator/partition_allocator/partition_alloc.h",
         "patchSetId": 4
@@ -115,6 +166,41 @@
       "writtenOn": "2017-10-17T01:05:08Z",
       "side": 1,
       "message": "Do we have static_assert about this somewhere?",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82200f16_437e8a6d",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T01:26:28Z",
+      "side": 1,
+      "message": "Yeah, I would just turn the comment into a the explanation string of a static_assert.",
+      "parentUuid": "a5cd445a_4b091a34",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "268b4aaa_bf9bba4e",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-17T01:26:28Z",
+      "side": 1,
+      "message": "Nit: \"must be able to\"",
       "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
