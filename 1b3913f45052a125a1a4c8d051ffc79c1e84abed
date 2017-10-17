@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c92861e_e58aea4d",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpReceiver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-17T11:26:48Z",
+      "side": 1,
+      "message": "drive-by nit: this comment is superfluous now that the receiver is passed as a unique_ptr",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "1b3913f45052a125a1a4c8d051ffc79c1e84abed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
