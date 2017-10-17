@@ -1367,6 +1367,8 @@ split_static_library("browser") {
     "ssl/ssl_blocking_page.h",
     "ssl/ssl_cert_reporter.h",
     "ssl/ssl_client_certificate_selector.h",
+    "ssl/ssl_error_assistant.cc",
+    "ssl/ssl_error_assistant.h",
     "ssl/ssl_error_handler.cc",
     "ssl/ssl_error_handler.h",
     "ssl/visible_password_observer.cc",
