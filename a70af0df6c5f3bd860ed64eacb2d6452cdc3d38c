@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b2d1fe1_7e9d5bcd",
+        "filename": "media/base/output_with_release_mailbox_cb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T20:38:58Z",
+      "side": 1,
+      "message": "i\u0027ll hide this inside media/gpu/windows with an appropriately firm comment.",
+      "parentUuid": "9e047b94_be34e967",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4b4d165_798a706a",
         "filename": "media/gpu/d3d11_h264_accelerator.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdb9a29_92667951",
+        "filename": "media/gpu/d3d11_h264_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T20:38:58Z",
+      "side": 1,
+      "message": "agreed.  without it, though, i can\u0027t decode anything.  i have a bug opened for it somewhere.",
+      "parentUuid": "c4b4d165_798a706a",
+      "range": {
+        "startLine": 179,
+        "startChar": 25,
+        "endLine": 179,
+        "endChar": 49
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "74a0df0a_39122c78",
+        "filename": "media/gpu/d3d11_h264_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T20:38:58Z",
+      "side": 1,
+      "message": "i have no idea.  this was copied verbatim from the d3d11 vda.  i\u0027ll add a comment.",
+      "parentUuid": "81f5184e_52441545",
+      "range": {
+        "startLine": 212,
+        "startChar": 44,
+        "endLine": 212,
+        "endChar": 53
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "febda5a2_8496b422",
         "filename": "media/gpu/d3d11_h264_accelerator.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd47321_fd13cf80",
+        "filename": "media/gpu/d3d11_h264_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T20:38:58Z",
+      "side": 1,
+      "message": "thanks!  added a todo.",
+      "parentUuid": "febda5a2_8496b422",
+      "range": {
+        "startLine": 270,
+        "startChar": 12,
+        "endLine": 270,
+        "endChar": 36
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "312bb750_5cedb657",
+        "filename": "media/gpu/d3d11_h264_accelerator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T20:38:58Z",
+      "side": 1,
+      "message": "done, at class level.  in an upcoming cl, i\u0027m untangling all of the \"main thread\" and \"mojo thread\" code.",
+      "parentUuid": "5469202b_6bcedef1",
+      "range": {
+        "startLine": 71,
+        "startChar": 53,
+        "endLine": 71,
+        "endChar": 66
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d58aecd7_e8c1bb09",
         "filename": "media/gpu/windows/d3d11_video_decoder.cc",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a99d352_19ea6273",
+        "filename": "media/gpu/windows/d3d11_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T20:38:58Z",
+      "side": 1,
+      "message": "updated the comment.  i really should be a template member function, but the syntax for the bind wasn\u0027t clear.",
+      "parentUuid": "d58aecd7_e8c1bb09",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 69
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "da3842a7_e532477e",
+        "filename": "media/gpu/windows/d3d11_video_decoder_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T20:38:58Z",
+      "side": 1,
+      "message": "this was code copied directly from the vda.  i\u0027ll add a todo / crbug to check what it should be doing.  crbug.com/775577 .",
+      "parentUuid": "a3848f0f_365c6913",
+      "range": {
+        "startLine": 134,
+        "startChar": 6,
+        "endLine": 134,
+        "endChar": 11
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e8d28e0_bf791577",
         "filename": "media/media_options.gni",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c89516_b78b8e71",
+        "filename": "media/media_options.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-17T20:38:58Z",
+      "side": 1,
+      "message": "i just moved it into the enable_d3d11_video_decoder block, so it won\u0027t affect anything that xhwang@ is doing.",
+      "parentUuid": "4e8d28e0_bf791577",
+      "range": {
+        "startLine": 232,
+        "startChar": 6,
+        "endLine": 232,
+        "endChar": 21
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
