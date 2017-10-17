@@ -52,6 +52,24 @@
       "revId": "a2d6b116a33b6e2940ab6a1ed8b38da05579c0b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a2bf12_803ac7f6",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-10-17T01:58:09Z",
+      "side": 1,
+      "message": "O.K. LGTM if we have simple test case in SelectionSampleTest:\n   const auto\u0026 selection \u003d\n        SelectionSample::SetSelectionText(GetDocument().body(), \"\u003c!--^--\u003ebar\u003c!--|--\u003e\");\n    EXPECT_EQ(\"bar\", GetDocument().body()-\u003eInnerHTMLAsString());\n    EXPECT_EQ(SelectionInDOMTree::Builder()\n                  .Collapse(Position(GetDocument().body(), 0))\n                  .Extend(Position(GetDocument().body(), 1))\n                  .Build(),\n              selection);",
+      "parentUuid": "c7f7f623_27ffe773",
+      "revId": "a2d6b116a33b6e2940ab6a1ed8b38da05579c0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
