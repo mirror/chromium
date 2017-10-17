@@ -11,6 +11,12 @@
 
 #include "base/feature_list.h"
 
+class PrefService;
+
+namespace user_prefs {
+class PrefRegistrySyncable;
+}
+
 namespace signin {
 
 // Account consistency feature. Only used on platforms where Mirror is not
@@ -46,6 +52,9 @@ enum class AccountConsistencyMethod {
   kDice
 };
 
+void RegisterAccountConsistentyProfilePrefs(
+    user_prefs::PrefRegistrySyncable* registry);
+
 // Returns the account consistency method.
 AccountConsistencyMethod GetAccountConsistencyMethod();
 
@@ -53,11 +62,19 @@ AccountConsistencyMethod GetAccountConsistencyMethod();
 // management UI is available in the avatar bubble.
 bool IsAccountConsistencyMirrorEnabled();
 
-// Checks whether Dice account consistency is available. If true, then account
-// management UI is available on the Gaia webpages.
-// Returns true when the account consistency method is kDice or kDiceMigration.
+// Returns true if Dice account consistency is enabled or if the Dice migration
+// process is in progress (account consistency method is kDice or
+// kDiceMigration).
+// To check wether Dice is enabled (i.e. the migration is complete), use
+// IsAccountConsistencyEnabledForProfile().
 // WARNING: returns false when the method is kDiceFixAuthErrors.
 bool IsAccountConsistencyDiceAvailable();
+
+// If true, then account management UI is done through Gaia webpages.
+bool IsAccountConsistencyDiceEnabledForProfile(PrefService* user_prefs);
+
+// Called to migrate a profile to Dice. After this call, it is enabled forever.
+void MigrateProfileToDice(PrefService* user_prefs);
 
 // Returns true if the account consistency method is kDiceFixAuthErrors,
 // kDiceMigration or kDice.
