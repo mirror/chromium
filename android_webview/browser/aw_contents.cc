@@ -80,6 +80,7 @@
 #include "net/base/auth.h"
 #include "net/cert/x509_certificate.h"
 #include "third_party/skia/include/core/SkPicture.h"
+#include "ui/android/window_android.h"
 #include "ui/gfx/android/java_bitmap.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/geometry/size.h"
@@ -888,7 +889,7 @@ void AwContents::OnSizeChanged(JNIEnv* env,
                                int oh) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   gfx::Size size(w, h);
-  web_contents_->GetNativeView()->OnPhysicalBackingSizeChanged(size);
+  web_contents_->GetTopLevelNativeWindow()->OnPhysicalBackingSizeChanged(size);
   web_contents_->GetNativeView()->OnSizeChanged(w, h);
   browser_view_renderer_.OnSizeChanged(w, h);
 }

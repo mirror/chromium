@@ -135,10 +135,9 @@ class UI_ANDROID_EXPORT ViewAndroid {
   bool StartDragAndDrop(const base::android::JavaRef<jstring>& jtext,
                         const base::android::JavaRef<jobject>& jimage);
 
-  gfx::Size GetPhysicalBackingSize();
+  virtual gfx::Size GetPhysicalBackingSize() const;
 
   void OnSizeChanged(int width, int height);
-  void OnPhysicalBackingSizeChanged(const gfx::Size& size);
   void OnCursorChanged(int type,
                        const SkBitmap& custom_image,
                        const gfx::Point& hotspot);
@@ -165,6 +164,7 @@ class UI_ANDROID_EXPORT ViewAndroid {
 
  protected:
   ViewAndroid* parent_;
+  void OnPhysicalBackingSizeChangedInternal(const gfx::Size& size);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ViewAndroidBoundsTest, MatchesViewInFront);
@@ -237,9 +237,6 @@ class UI_ANDROID_EXPORT ViewAndroid {
   // the passed events should be processed by the view. Unit in DIP.
   gfx::Rect view_rect_;
   const LayoutType layout_type_;
-
-  // In physical pixel.
-  gfx::Size physical_size_;
 
   FrameInfo frame_info_;
 

@@ -492,7 +492,7 @@ void TabAndroid::OnPhysicalBackingSizeChanged(
   content::WebContents* web_contents =
       content::WebContents::FromJavaWebContents(jweb_contents);
   gfx::Size size(width, height);
-  web_contents->GetNativeView()->OnPhysicalBackingSizeChanged(size);
+  web_contents->GetTopLevelNativeWindow()->OnPhysicalBackingSizeChanged(size);
 }
 
 base::android::ScopedJavaLocalRef<jobject> TabAndroid::GetProfileAndroid(

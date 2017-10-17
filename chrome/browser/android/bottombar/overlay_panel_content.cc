@@ -23,7 +23,7 @@
 #include "content/public/browser/web_contents.h"
 #include "jni/OverlayPanelContent_jni.h"
 #include "net/url_request/url_fetcher_impl.h"
-#include "ui/android/view_android.h"
+#include "ui/android/window_android.h"
 
 using base::android::JavaParamRef;
 
@@ -62,7 +62,7 @@ void OverlayPanelContent::OnPhysicalBackingSizeChanged(
   content::WebContents* web_contents =
       content::WebContents::FromJavaWebContents(jweb_contents);
   gfx::Size size(width, height);
-  web_contents->GetNativeView()->OnPhysicalBackingSizeChanged(size);
+  web_contents->GetTopLevelNativeWindow()->OnPhysicalBackingSizeChanged(size);
   web_contents->GetNativeView()->OnSizeChanged(width, height);
 }
 

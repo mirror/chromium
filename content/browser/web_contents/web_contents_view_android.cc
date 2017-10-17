@@ -160,7 +160,7 @@ WebContentsViewAndroid::GetRenderWidgetHostViewAndroid() {
 }
 
 gfx::NativeWindow WebContentsViewAndroid::GetTopLevelNativeWindow() const {
-  return content_view_core_ ? content_view_core_->GetWindowAndroid() : nullptr;
+  return view_.GetWindowAndroid();
 }
 
 void WebContentsViewAndroid::GetScreenInfo(ScreenInfo* result) const {

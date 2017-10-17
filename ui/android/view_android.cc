@@ -137,8 +137,9 @@ void ViewAndroid::AddChild(ViewAndroid* child) {
 
   // Empty physical backing size need not propagating down since it can
   // accidentally overwrite the valid ones in the children.
-  if (!physical_size_.IsEmpty())
-    child->OnPhysicalBackingSizeChanged(physical_size_);
+  auto physical_size = GetPhysicalBackingSize();
+  if (!physical_size.IsEmpty())
+    child->OnPhysicalBackingSizeChangedInternal(physical_size);
 
   // Empty view size also need not propagating down in order to prevent
   // spurious events with empty size from being sent down.
@@ -410,18 +411,16 @@ void ViewAndroid::DispatchOnSizeChanged() {
   }
 }
 
-void ViewAndroid::OnPhysicalBackingSizeChanged(const gfx::Size& size) {
-  if (physical_size_ == size)
-    return;
-  physical_size_ = size;
+void ViewAndroid::OnPhysicalBackingSizeChangedInternal(const gfx::Size& size) {
   client_->OnPhysicalBackingSizeChanged();
 
   for (auto* child : children_)
-    child->OnPhysicalBackingSizeChanged(size);
+    child->OnPhysicalBackingSizeChangedInternal(size);
 }
 
-gfx::Size ViewAndroid::GetPhysicalBackingSize() {
-  return physical_size_;
+gfx::Size ViewAndroid::GetPhysicalBackingSize() const {
+  auto* window = GetWindowAndroid();
+  return window ? window->GetPhysicalBackingSize() : gfx::Size();
 }
 
 bool ViewAndroid::OnDragEvent(const DragEventAndroid& event) {

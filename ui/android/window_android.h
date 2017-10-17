@@ -83,6 +83,9 @@ class UI_ANDROID_EXPORT WindowAndroid : public ViewAndroid {
   // Return whether the specified Android permission can be requested by Chrome.
   bool CanRequestPermission(const std::string& permission);
 
+  void OnPhysicalBackingSizeChanged(const gfx::Size& size);
+  gfx::Size GetPhysicalBackingSize() const override;
+
   static WindowAndroid* CreateForTesting();
 
   // Return the window token for this window, if one exists.
@@ -111,6 +114,9 @@ class UI_ANDROID_EXPORT WindowAndroid : public ViewAndroid {
   std::unique_ptr<WindowBeginFrameSource> begin_frame_source_;
   bool needs_begin_frames_;
   std::list<base::Closure> vsync_complete_callbacks_;
+
+  // In physical pixel.
+  gfx::Size physical_size_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowAndroid);
 };

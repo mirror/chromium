@@ -175,7 +175,7 @@ void CompositorView::OnPhysicalBackingSizeChanged(
   content::WebContents* web_contents =
       content::WebContents::FromJavaWebContents(jweb_contents);
   gfx::Size size(width, height);
-  web_contents->GetNativeView()->OnPhysicalBackingSizeChanged(size);
+  web_contents->GetTopLevelNativeWindow()->OnPhysicalBackingSizeChanged(size);
 }
 
 void CompositorView::SetLayoutBounds(JNIEnv* env,

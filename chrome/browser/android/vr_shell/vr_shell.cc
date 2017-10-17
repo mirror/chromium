@@ -525,7 +525,7 @@ void VrShell::OnPhysicalBackingSizeChanged(
       content::WebContents::FromJavaWebContents(jweb_contents);
   web_contents->GetNativeView()->OnSizeChanged(width, height);
   gfx::Size size(width, height);
-  web_contents->GetNativeView()->OnPhysicalBackingSizeChanged(size);
+  web_contents->GetTopLevelNativeWindow()->OnPhysicalBackingSizeChanged(size);
 }
 
 void VrShell::ContentPhysicalBoundsChanged(JNIEnv* env,

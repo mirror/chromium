@@ -20,7 +20,7 @@
 #include "content/public/browser/android/content_view_layer_renderer.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/ContentViewRenderView_jni.h"
-#include "ui/android/view_android.h"
+#include "ui/android/window_android.h"
 #include "ui/gfx/android/java_bitmap.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -74,7 +74,7 @@ void ContentViewRenderView::OnPhysicalBackingSizeChanged(
     jint height) {
   WebContents* web_contents = WebContents::FromJavaWebContents(jweb_contents);
   gfx::Size size(width, height);
-  web_contents->GetNativeView()->OnPhysicalBackingSizeChanged(size);
+  web_contents->GetTopLevelNativeWindow()->OnPhysicalBackingSizeChanged(size);
 }
 
 void ContentViewRenderView::SurfaceCreated(JNIEnv* env,

@@ -274,6 +274,18 @@ WindowAndroid* WindowAndroid::GetWindowAndroid() const {
   return const_cast<WindowAndroid*>(this);
 }
 
+void WindowAndroid::OnPhysicalBackingSizeChanged(const gfx::Size& size) {
+  if (physical_size_ == size)
+    return;
+
+  physical_size_ = size;
+  OnPhysicalBackingSizeChangedInternal(size);
+}
+
+gfx::Size WindowAndroid::GetPhysicalBackingSize() const {
+  return physical_size_;
+}
+
 ScopedJavaLocalRef<jobject> WindowAndroid::GetWindowToken() {
   JNIEnv* env = AttachCurrentThread();
   return Java_WindowAndroid_getWindowToken(env, GetJavaObject());
