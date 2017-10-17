@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7490667c_4c760050",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1785,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-17T20:41:47Z",
+      "side": 1,
+      "message": "I probably should rename |net_log| to |migration_net_log|. |net_log_| is the session net log. Connection migration has its own net log as inherited from the old code.",
+      "parentUuid": "07f87189_b26ab2c6",
+      "range": {
+        "startLine": 1785,
+        "startChar": 38,
+        "endLine": 1785,
+        "endChar": 0
+      },
+      "revId": "992da47b878119f70a60e122ba2413887407e3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6b6a022_155fab80",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "992da47b878119f70a60e122ba2413887407e3c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377584f4_70607a1a",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1809,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-17T20:41:47Z",
+      "side": 1,
+      "message": "Oh, normally QuicStreamFactory creates a socket, reader, and writer and handed that over to the QuicChromiumClientSession. However, in the case of connection migration, since we want to move the Migrate() logic to be controlled by session itself, at some point, when session figure out it needs migrate, it will then request a socket(maybe reader, writer) from QuicStreamFactory and then moves on. In other words, in connection migration, stream factory will not initiates migrations(and provides socket, reader, writer actively) but wait for the session requests for resource.\n\nThe Migrate() method is currently public and called by the QuicStreamFactory in this CL, it will be marked as private and called by QuicChromiumClientSession::MigrateToAlternatNetwork(). This CL is just an intermediate one. And sorry about the confusion.",
+      "parentUuid": "a6b6a022_155fab80",
+      "range": {
+        "startLine": 1809,
+        "startChar": 50,
+        "endLine": 1809,
+        "endChar": 0
+      },
+      "revId": "992da47b878119f70a60e122ba2413887407e3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e488c424_ad9cd822",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-17T20:41:47Z",
+      "side": 1,
+      "message": "Yeah...in follow up CLs as keep CLs small and clean to review :)",
+      "parentUuid": "34dd422b_878aaec1",
+      "range": {
+        "startLine": 1196,
+        "startChar": 69,
+        "endLine": 1196,
+        "endChar": 0
+      },
+      "revId": "992da47b878119f70a60e122ba2413887407e3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b56952ba_8e16e7b3",
         "filename": "net/quic/chromium/quic_stream_factory.cc",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "05c54c59_8f79e98f",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-17T20:41:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b56952ba_8e16e7b3",
+      "range": {
+        "startLine": 1568,
+        "startChar": 57,
+        "endLine": 1568,
+        "endChar": 0
+      },
+      "revId": "992da47b878119f70a60e122ba2413887407e3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd5a07ae_febc8426",
         "filename": "net/quic/chromium/quic_stream_factory.h",
         "patchSetId": 4
@@ -108,6 +204,24 @@
       "revId": "992da47b878119f70a60e122ba2413887407e3c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35444e0_d536cdae",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-17T20:41:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd5a07ae_febc8426",
+      "revId": "992da47b878119f70a60e122ba2413887407e3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
