@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa9a1585_32782917",
+        "filename": "components/offline_pages/webui/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-17T21:20:34Z",
+      "side": 1,
+      "message": "Because of this, should the folder be components/offline_pages/content/webui?",
+      "revId": "46bc9f5ca83d8cf9fc9d349a0b50acf461e51771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
