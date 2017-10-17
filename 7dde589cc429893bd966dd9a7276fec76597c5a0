@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22812320_867b32e0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-17T23:25:21Z",
+      "side": 1,
+      "message": "Can you elaborate this a bit more? I\u0027d like to see something like:\n\n- Without this CL, the state machine may enter STARTING_INSTANCE twice, and as a result, and because of that, OnInstanceStarted() has to have an extra parameter.\n- With this CL, the state machine enters each state up to one, which simplifies the callback functions.",
+      "range": {
+        "startLine": 9,
+        "startChar": 43,
+        "endLine": 9,
+        "endChar": 56
+      },
+      "revId": "7dde589cc429893bd966dd9a7276fec76597c5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436099ec_f2706369",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-17T23:25:21Z",
+      "side": 1,
+      "message": "RUNNING",
+      "range": {
+        "startLine": 135,
+        "startChar": 5,
+        "endLine": 135,
+        "endChar": 11
+      },
+      "revId": "7dde589cc429893bd966dd9a7276fec76597c5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
