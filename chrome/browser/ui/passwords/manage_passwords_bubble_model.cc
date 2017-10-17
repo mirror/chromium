@@ -302,7 +302,8 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
     pending_password_ = delegate_->GetPendingPassword();
   } else if (state_ == password_manager::ui::MANAGE_STATE) {
     local_credentials_ = DeepCopyForms(delegate_->GetCurrentForms());
-    UpdateManageStateTitle();
+    title_ = GetManagePasswordsDialogTitleText(
+        GetWebContents()->GetVisibleURL(), origin_);
     manage_link_ = l10n_util::GetStringUTF16(IDS_MANAGE_PASSWORDS_BUBBLE_LINK);
   }
 
@@ -554,11 +555,6 @@ void ManagePasswordsBubbleModel::UpdatePendingStateTitle() {
   GetSavePasswordDialogTitleTextAndLinkRange(
       GetWebContents()->GetVisibleURL(), origin_, IsSmartLockUser(GetProfile()),
       type, &title_, &title_brand_link_range_);
-}
-
-void ManagePasswordsBubbleModel::UpdateManageStateTitle() {
-  GetManagePasswordsDialogTitleText(GetWebContents()->GetVisibleURL(), origin_,
-                                    &title_);
 }
 
 metrics_util::UpdatePasswordSubmissionEvent

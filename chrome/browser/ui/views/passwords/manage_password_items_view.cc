@@ -22,14 +22,48 @@
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/button/image_button_factory.h"
+#include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/link.h"
 #include "ui/views/controls/link_listener.h"
 #include "ui/views/controls/textfield/textfield.h"
+#include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/layout/grid_layout.h"
 
 namespace {
+
+enum NewColumnSet {
+  PASSWORD_FEDERATION_COLUMN_SET,
+  PASSWORD_SIMPLE_COLUMN_SET,
+  UNDO_ROW_COLUMN_SET
+};
+
+void BuildColumnSet(views::GridLayout* layout, NewColumnSet id) {
+  DCHECK(!layout->GetColumnSet(id));
+  views::ColumnSet* column_set = layout->AddColumnSet(id);
+  // First two columns are 50/50 (1:1) when not doing simple password. Simple
+  // passwords are split 70/30 (7:3) as the username is more important than
+  // obscured password digits.
+  const int column_divider = ChromeLayoutProvider::Get()->GetDistanceMetric(
+      views::DISTANCE_RELATED_CONTROL_HORIZONTAL);
+  const int first_column_weight = id == PASSWORD_SIMPLE_COLUMN_SET ? 7 : 1;
+  column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL,
+                        first_column_weight, views::GridLayout::FIXED, 0, 0);
+
+  if (id != UNDO_ROW_COLUMN_SET) {
+    column_set->AddPaddingColumn(0, column_divider);
+    const int second_column_weight = id == PASSWORD_SIMPLE_COLUMN_SET ? 3 : 1;
+    column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL,
+                          second_column_weight, views::GridLayout::FIXED, 0, 0);
+  }
+  // All rows end with a trailing column for the undo button / trash icon.
+  column_set->AddPaddingColumn(0, column_divider);
+  column_set->AddColumn(views::GridLayout::TRAILING, views::GridLayout::FILL, 0,
+                        views::GridLayout::USE_PREF, 0, 0);
+}
+
+enum ButtonTag { kDeleteButton, kUndoButton };
 
 enum ColumnSets {
   ONE_COLUMN_SET,
@@ -38,6 +72,7 @@ enum ColumnSets {
 };
 
 void BuildColumnSetIfNeeded(views::GridLayout* layout, int column_set_id) {
+  DCHECK(!ChromeLayoutProvider::Get()->IsHarmonyMode());
   if (layout->GetColumnSet(column_set_id))
     return;
   views::ColumnSet* column_set = layout->AddColumnSet(column_set_id);
@@ -146,6 +181,8 @@ std::unique_ptr<views::Label> CreatePasswordLabel(
   label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   if (form.federation_origin.unique() && !is_password_visible)
     label->SetObscured(true);
+  if (!form.federation_origin.unique())
+    label->SetElideBehavior(gfx::ELIDE_HEAD);
   label->SetFocusBehavior(views::View::FocusBehavior::ACCESSIBLE_ONLY);
   return label;
 }
@@ -199,7 +236,9 @@ ManagePasswordItemsView::PasswordFormRow::PasswordFormRow(
       undo_link_(nullptr),
       delete_button_(nullptr),
       fixed_height_(fixed_height),
-      deleted_(false) {}
+      deleted_(false) {
+  DCHECK(!ChromeLayoutProvider::Get()->IsHarmonyMode());
+}
 
 void ManagePasswordItemsView::PasswordFormRow::AddRow(
     views::GridLayout* layout) {
@@ -306,6 +345,9 @@ ManagePasswordItemsView::ManagePasswordItemsView(
     const std::vector<autofill::PasswordForm>* password_forms,
     int bubble_width)
     : model_(manage_passwords_bubble_model), bubble_width_(bubble_width) {
+  // TODO(pbos): When cleaning up HarmonyMode, move this file to represent the
+  // new dialog name.
+  DCHECK(!ChromeLayoutProvider::Get()->IsHarmonyMode());
   DCHECK_EQ(password_manager::ui::MANAGE_STATE, model_->state());
   int fixed_height = PasswordFormRow::GetFixedHeight(model_->state());
   for (const auto& password_form : *password_forms) {
@@ -344,4 +386,164 @@ void ManagePasswordItemsView::NotifyPasswordFormStatusChanged(
 void ManagePasswordItemsView::Refresh() {
   RemoveAllChildViews(true);
   AddRows();
+}
+
+ManagePasswordItemsBubbleView::PasswordRow::PasswordRow(
+    ManagePasswordItemsBubbleView* parent,
+    const autofill::PasswordForm* password_form)
+    : parent_(parent), password_form_(password_form) {}
+
+void ManagePasswordItemsBubbleView::PasswordRow::AddToLayout(
+    views::GridLayout* layout) {
+  if (deleted_) {
+    std::unique_ptr<views::Label> text = CreateDeletedPasswordLabel();
+    std::unique_ptr<views::LabelButton> undo_button(
+        views::MdTextButton::CreateSecondaryUiButton(
+            this, l10n_util::GetStringUTF16(IDS_MANAGE_PASSWORDS_UNDO)));
+    undo_button->set_tag(kUndoButton);
+
+    layout->StartRow(0, UNDO_ROW_COLUMN_SET);
+    layout->AddView(text.release(), 1, 1, views::GridLayout::FILL,
+                    views::GridLayout::FILL);
+    layout->AddView(undo_button.release(), 1, 1, views::GridLayout::FILL,
+                    views::GridLayout::FILL);
+    return;
+  }
+
+  std::unique_ptr<views::Label> username_label =
+      CreateUsernameLabel(*password_form_);
+  std::unique_ptr<views::Label> password_label =
+      CreatePasswordLabel(*password_form_, false);
+  std::unique_ptr<views::ImageButton> delete_button = CreateDeleteButton(this);
+  delete_button->set_tag(kDeleteButton);
+  layout->StartRow(0, password_form_->federation_origin.unique()
+                          ? PASSWORD_SIMPLE_COLUMN_SET
+                          : PASSWORD_FEDERATION_COLUMN_SET);
+  layout->AddView(username_label.release(), 1, 1, views::GridLayout::FILL,
+                  views::GridLayout::FILL);
+  layout->AddView(password_label.release(), 1, 1, views::GridLayout::FILL,
+                  views::GridLayout::FILL);
+  layout->AddView(delete_button.release(), 1, 1, views::GridLayout::TRAILING,
+                  views::GridLayout::FILL);
+}
+
+void ManagePasswordItemsBubbleView::PasswordRow::ButtonPressed(
+    views::Button* sender,
+    const ui::Event& event) {
+  deleted_ = sender->tag() == kDeleteButton;
+  parent_->NotifyPasswordFormStatusChanged(*password_form_, deleted_);
+}
+
+ManagePasswordItemsBubbleView::ManagePasswordItemsBubbleView(
+    content::WebContents* web_contents,
+    views::View* anchor_view,
+    LocationBarBubbleDelegateView** global_bubble_view,
+    content::WebContents** global_web_contents,
+    std::unique_ptr<ManagePasswordsBubbleModel> model)
+    : LocationBarBubbleDelegateView(anchor_view, gfx::Point(), web_contents),
+      global_bubble_view_(global_bubble_view),
+      global_web_contents_(global_web_contents),
+      model_(std::move(model)),
+      mouse_handler_(
+          std::make_unique<WebContentMouseHandler>(this,
+                                                   model_->GetWebContents())) {
+  DCHECK_EQ(password_manager::ui::MANAGE_STATE, model_->state());
+
+  *global_bubble_view_ = this;
+  *global_web_contents_ = model_->GetWebContents();
+
+  if (model_->local_credentials().empty()) {
+    views::Label* empty_label = new views::Label(
+        l10n_util::GetStringUTF16(IDS_MANAGE_PASSWORDS_NO_PASSWORDS),
+        CONTEXT_DEPRECATED_SMALL);
+    empty_label->SetMultiLine(true);
+    empty_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    AddChildView(empty_label);
+  } else {
+    for (auto& password_form : model_->local_credentials()) {
+      password_rows_.emplace_back(PasswordRow(this, &password_form));
+    }
+
+    Refresh();
+    Refresh();
+  }
+}
+
+ManagePasswordItemsBubbleView::~ManagePasswordItemsBubbleView() {
+  if (*global_bubble_view_ == this) {
+    *global_bubble_view_ = nullptr;
+    *global_web_contents_ = nullptr;
+  }
+}
+
+void ManagePasswordItemsBubbleView::Refresh() {
+  // This method should only be used when we have password rows, otherwise the
+  // dialog should only show the empty label.
+  DCHECK(!model_->local_credentials().empty());
+
+  RemoveAllChildViews(true);
+
+  views::GridLayout* grid_layout = views::GridLayout::CreateAndInstall(this);
+
+  BuildColumnSet(grid_layout, PASSWORD_FEDERATION_COLUMN_SET);
+  BuildColumnSet(grid_layout, PASSWORD_SIMPLE_COLUMN_SET);
+  BuildColumnSet(grid_layout, UNDO_ROW_COLUMN_SET);
+
+  SetLayoutManager(grid_layout);
+
+  const int vertical_padding = ChromeLayoutProvider::Get()->GetDistanceMetric(
+      views::DISTANCE_RELATED_CONTROL_VERTICAL);
+  bool first_row = true;
+  for (PasswordRow& row : password_rows_) {
+    if (!first_row)
+      grid_layout->AddPaddingRow(0, vertical_padding);
+
+    row.AddToLayout(grid_layout);
+    first_row = false;
+  }
+
+  PreferredSizeChanged();
+  if (GetBubbleFrameView())
+    SizeToContents();
+}
+
+void ManagePasswordItemsBubbleView::NotifyPasswordFormStatusChanged(
+    const autofill::PasswordForm& password_form,
+    bool deleted) {
+  Refresh();
+  // After the view is consistent, notify the model that the password needs to
+  // be updated (either removed or put back into the store, as appropriate.
+  model_->OnPasswordAction(password_form,
+                           deleted ? ManagePasswordsBubbleModel::REMOVE_PASSWORD
+                                   : ManagePasswordsBubbleModel::ADD_PASSWORD);
+}
+
+base::string16 ManagePasswordItemsBubbleView::GetWindowTitle() const {
+  return model_->title();
+}
+
+views::View* ManagePasswordItemsBubbleView::CreateExtraView() {
+  return views::MdTextButton::CreateSecondaryUiButton(
+      this, l10n_util::GetStringUTF16(IDS_MANAGE_PASSWORDS_BUBBLE_LINK));
+}
+
+int ManagePasswordItemsBubbleView::GetDialogButtons() const {
+  return ui::DIALOG_BUTTON_OK;
+}
+
+bool ManagePasswordItemsBubbleView::ShouldShowCloseButton() const {
+  return true;
+}
+
+gfx::Size ManagePasswordItemsBubbleView::CalculatePreferredSize() const {
+  int width = ChromeLayoutProvider::Get()->GetDistanceMetric(
+                  DISTANCE_BUBBLE_PREFERRED_WIDTH) -
+              margins().width();
+  return gfx::Size(width, GetHeightForWidth(width));
+}
+
+void ManagePasswordItemsBubbleView::ButtonPressed(views::Button* sender,
+                                                  const ui::Event& event) {
+  model_->OnManageLinkClicked();
+  CloseBubble();
 }

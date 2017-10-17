@@ -34,10 +34,22 @@ ManagePasswordsTest::ManagePasswordsTest() {
   fetcher_.Fetch();
 
   // Populate |test_form_| with some dummy data.
-  test_form_.signon_realm = kTestOrigin;
-  test_form_.origin = GURL(kTestOrigin);
-  test_form_.username_value = base::ASCIIToUTF16(kTestUsername);
-  test_form_.password_value = base::ASCIIToUTF16(kTestPassword);
+  autofill::PasswordForm test_form;
+  test_form.signon_realm = kTestOrigin;
+  test_form.origin = GURL(kTestOrigin);
+  test_form.username_value = base::ASCIIToUTF16(kTestUsername);
+  test_form.password_value = base::ASCIIToUTF16(kTestPassword);
+  test_forms_.push_back(test_form);
+
+  autofill::PasswordForm federated_form;
+  federated_form.signon_realm =
+      "federation://example.com/somelongeroriginurl.com";
+  federated_form.origin = GURL("https://example.com/");
+  federated_form.federation_origin =
+      url::Origin(GURL("https://somelongeroriginurl.com/"));
+  federated_form.username_value =
+      base::ASCIIToUTF16("test_federation_username");
+  test_forms_.push_back(federated_form);
 }
 
 ManagePasswordsTest::~ManagePasswordsTest() {
@@ -61,7 +73,8 @@ void ManagePasswordsTest::ExecuteManagePasswordsCommand() {
 
 void ManagePasswordsTest::SetupManagingPasswords() {
   std::map<base::string16, const autofill::PasswordForm*> map;
-  map.insert(std::make_pair(base::ASCIIToUTF16(kTestUsername), test_form()));
+  for (auto& form : test_forms_)
+    map.insert(std::make_pair(form.username_value, &form));
   GetController()->OnPasswordAutofilled(map, map.begin()->second->origin,
                                         nullptr);
 }

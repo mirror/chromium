@@ -67,9 +67,9 @@ void GetSavePasswordDialogTitleTextAndLinkRange(
 // |FormatUrlForSecurityDisplay(password_origin_url)|.
 // Otherwise, sets |IDS_MANAGE_PASSWORDS_TITLE| as the |title| having
 // "this site".
-void GetManagePasswordsDialogTitleText(const GURL& user_visible_url,
-                                       const GURL& password_origin_url,
-                                       base::string16* title);
+base::string16 GetManagePasswordsDialogTitleText(
+    const GURL& user_visible_url,
+    const GURL& password_origin_url);
 
 // Sets the formatted |title| in the Account Chooser UI.
 // If |is_smartlock_branding_enabled| is true, sets the |title_link_range| for

@@ -52,6 +52,9 @@ enum ChromeDistanceMetric {
   // default preferred width (ideally smaller than this size). Also add a way of
   // enforcing different snap points for modal dialogs (exclude 320px).
   DISTANCE_MODAL_DIALOG_WIDTH_CONTAINING_MULTILINE_TEXT,
+  // Preferred width of a bubble unless the content is too wide to make that
+  // feasible.
+  DISTANCE_BUBBLE_PREFERRED_WIDTH,
 };
 
 class ChromeLayoutProvider : public views::LayoutProvider {

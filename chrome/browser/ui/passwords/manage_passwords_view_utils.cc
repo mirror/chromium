@@ -131,9 +131,9 @@ void GetSavePasswordDialogTitleTextAndLinkRange(
   }
 }
 
-void GetManagePasswordsDialogTitleText(const GURL& user_visible_url,
-                                       const GURL& password_origin_url,
-                                       base::string16* title) {
+base::string16 GetManagePasswordsDialogTitleText(
+    const GURL& user_visible_url,
+    const GURL& password_origin_url) {
   DCHECK(!password_manager::IsValidAndroidFacetURI(password_origin_url.spec()));
   // Check whether the registry controlled domains for user-visible URL
   // (i.e. the one seen in the omnibox) and the managed password origin URL
@@ -141,11 +141,10 @@ void GetManagePasswordsDialogTitleText(const GURL& user_visible_url,
   if (!SameDomainOrHost(user_visible_url, password_origin_url)) {
     base::string16 formatted_url =
         url_formatter::FormatUrlForSecurityDisplay(password_origin_url);
-    *title = l10n_util::GetStringFUTF16(
+    return l10n_util::GetStringFUTF16(
         IDS_MANAGE_PASSWORDS_TITLE_DIFFERENT_DOMAIN, formatted_url);
-  } else {
-    *title = l10n_util::GetStringUTF16(IDS_MANAGE_PASSWORDS_TITLE);
   }
+  return l10n_util::GetStringUTF16(IDS_MANAGE_PASSWORDS_TITLE);
 }
 
 void GetAccountChooserDialogTitleTextAndLinkRange(

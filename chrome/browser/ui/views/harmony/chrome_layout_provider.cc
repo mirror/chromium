@@ -80,6 +80,8 @@ int ChromeLayoutProvider::GetDistanceMetric(int metric) const {
       return 12;
     case DISTANCE_MODAL_DIALOG_WIDTH_CONTAINING_MULTILINE_TEXT:
       return 400;
+    case DISTANCE_BUBBLE_PREFERRED_WIDTH:
+      return 400;
     default:
       return views::LayoutProvider::GetDistanceMetric(metric);
   }
