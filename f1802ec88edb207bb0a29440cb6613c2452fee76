@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "935604a8_ccea506a",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentWriteIntervention.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T03:09:39Z",
+      "side": 1,
+      "message": "This CL doesn\u0027t hold a reference to ScriptResource, just like the previous code doesn\u0027t hold a reference to the newly created ScriptLoader in FetchBlockedDocWriteScript() in HTMLParserScriptRunner. Resource loading is kept alive because no one cancels it, right?",
+      "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d71a5dc_27f206d0",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T03:09:39Z",
+      "side": 0,
+      "message": "This block is removed because the request is now sent directly via ScriptResource::Fetch() in FetchBlockedDocWriteScriptClient::NotifyFinished(), not via ScriptLoader.",
+      "revId": "c2aa4937ef37ae5cbca64eb1e0ae82a4cb7ba4f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11c95be_b34217a6",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T03:09:39Z",
+      "side": 0,
+      "message": "Moved to FetchBlockedDocWriteScriptClient::NotifyFinished() (AddHeader() and SetDefer() calls).",
+      "revId": "c2aa4937ef37ae5cbca64eb1e0ae82a4cb7ba4f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f79abc_101e3adb",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T03:09:39Z",
+      "side": 0,
+      "message": "ditto as the comment at Line 533.",
+      "revId": "c2aa4937ef37ae5cbca64eb1e0ae82a4cb7ba4f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2249626d_ff7e9bd5",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLParserScriptRunner.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T03:09:39Z",
+      "side": 0,
+      "message": "Moved to EmitWarningNotBlocked().",
+      "revId": "c2aa4937ef37ae5cbca64eb1e0ae82a4cb7ba4f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f9412b_2859039a",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLParserScriptRunner.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T03:09:39Z",
+      "side": 0,
+      "message": "Moved to EmitErrorBlocked().",
+      "revId": "c2aa4937ef37ae5cbca64eb1e0ae82a4cb7ba4f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414d442f_44695f93",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLParserScriptRunner.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T03:09:39Z",
+      "side": 0,
+      "message": "Moved to FetchBlockedDocWriteScriptClient::NotifyFinished().\n\nThe checks in Lines 292--305 are removed because now the logic is decoupled from scripting.",
+      "revId": "c2aa4937ef37ae5cbca64eb1e0ae82a4cb7ba4f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
