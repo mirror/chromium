@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4664ff8_fae43ac0",
+        "filename": "services/metrics/public/cpp/ukm_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-17T19:13:17Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to friend this class, since you are using ukm_builders.h",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 25
+      },
+      "revId": "6783b1df2ac6cd1b18a67325f2f450b691f62f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
