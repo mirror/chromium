@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e651242_40132314",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/Dictionary.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-17T07:33:29Z",
+      "side": 1,
+      "message": "nit: V8CallBoolean is deprecated.",
+      "range": {
+        "startLine": 131,
+        "startChar": 7,
+        "endLine": 131,
+        "endChar": 20
+      },
+      "revId": "89f30d62c417f86c9de800731490b9d465e9224f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
