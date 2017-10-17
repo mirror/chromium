@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ede452a_bc9db39d",
+        "filename": "ash/login/login_metrics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T03:00:09Z",
+      "side": 1,
+      "message": "nit: Is this code reachable?  It\u0027s best practice to omit the \"default\" case for switch stmts like this one, where the default shouldn\u0027t be reachable.  (The compiler can actually check that all of the cases are covered.)",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea36692_8c62e76f",
+        "filename": "ash/login/login_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T03:00:09Z",
+      "side": 1,
+      "message": "nit: Perhaps \"RecordNumLoginAttempts\"?  I find the current name a bit insufficiently detailed to be clear.",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 23
+      },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7939dd_e65363b2",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1788,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T03:00:09Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest using briefer labels for better legibility on the dashboard.  For example, you could use a label like \"Password -\u003e PIN\".",
+      "range": {
+        "startLine": 1783,
+        "startChar": 0,
+        "endLine": 1788,
+        "endChar": 67
+      },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6184a24d_6dd4c97c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2755,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T03:00:09Z",
+      "side": 1,
+      "message": "nit: Perhaps \"Ash.Login.AuthMethod.Switched\".",
+      "range": {
+        "startLine": 2755,
+        "startChar": 17,
+        "endLine": 2755,
+        "endChar": 48
+      },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ffbc24_13e53dee",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2762,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T03:00:09Z",
+      "side": 1,
+      "message": "nit: Perhaps \"Ash.Login.AuthMethod.Used.ClamShellMode\" (and a parallel name for TabletMode below).",
+      "range": {
+        "startLine": 2762,
+        "startChar": 17,
+        "endLine": 2762,
+        "endChar": 57
+      },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67750c1a_472ab7e7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2778,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T03:00:09Z",
+      "side": 1,
+      "message": "nit: Perhaps \"Ash.Login.NumPasswordAttempts.UntilSuccess\"?",
+      "range": {
+        "startLine": 2778,
+        "startChar": 17,
+        "endLine": 2778,
+        "endChar": 66
+      },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b085c5_5aefc226",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2778,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T03:00:09Z",
+      "side": 1,
+      "message": "nit: I\u0027m noticing that all of your histogram names use \"Lock\".  Is there a plan to add parallel histograms that are not for the lock screen?  If not, it might make sense to drop this bit from the names, as it feels a bit redundant with \"Login\" (and less clear than \"Login\" is).",
+      "range": {
+        "startLine": 2778,
+        "startChar": 61,
+        "endLine": 2778,
+        "endChar": 66
+      },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7db7635_c6749c8f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2783,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T03:00:09Z",
+      "side": 1,
+      "message": "nit: \"a successful\"",
+      "range": {
+        "startLine": 2783,
+        "startChar": 4,
+        "endLine": 2783,
+        "endChar": 14
+      },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec424667_7d312af8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2787,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T03:00:09Z",
+      "side": 1,
+      "message": "nit: Perhaps \"Ash.Login.NumPasswordAttempts.UntilFailure\"?  (The histogram description does a good job of clarifying what \"failure\" means, but I think a simpler concept like \"failure\" rather than \"user abandonment\" might be easier for people to parse in the histogram name.)",
+      "range": {
+        "startLine": 2787,
+        "startChar": 67,
+        "endLine": 2787,
+        "endChar": 0
+      },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08bba402_1ed2e6f5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2799,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T03:00:09Z",
+      "side": 1,
+      "message": "nit: \"The numbers of times that users click\"",
+      "range": {
+        "startLine": 2799,
+        "startChar": 4,
+        "endLine": 2799,
+        "endChar": 21
+      },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b530fad0_840c8866",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2799,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-17T03:00:09Z",
+      "side": 1,
+      "message": "nit: \"on the\"",
+      "range": {
+        "startLine": 2799,
+        "startChar": 71,
+        "endLine": 2799,
+        "endChar": 73
+      },
+      "revId": "b2315ada181f74013a0f49806a23e66a26c4b8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
