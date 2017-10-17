@@ -29,11 +29,11 @@ namespace {
 
 typedef uint16_t PacketLength;
 const int kPacketHeaderSize = sizeof(PacketLength);
-const int kReadBufferSize = 4096;
+const int kTCPReadBufferSize = 4096;
 const int kPacketLengthOffset = 2;
 const int kTurnChannelDataHeaderSize = 4;
-const int kRecvSocketBufferSize = 128 * 1024;
-const int kSendSocketBufferSize = 128 * 1024;
+const int kTCPRecvSocketBufferSize = 128 * 1024;
+const int kTCPSendSocketBufferSize = 128 * 1024;
 
 bool IsTlsClientSocket(content::P2PSocketType type) {
   return (type == content::P2P_SOCKET_STUN_TLS_CLIENT ||
@@ -245,14 +245,14 @@ void P2PSocketHostTcpBase::ProcessTlsSslConnectDone(int status) {
 void P2PSocketHostTcpBase::OnOpen() {
   state_ = STATE_OPEN;
   // Setting socket send and receive buffer size.
-  if (net::OK != socket_->SetReceiveBufferSize(kRecvSocketBufferSize)) {
+  if (net::OK != socket_->SetReceiveBufferSize(kTCPRecvSocketBufferSize)) {
     LOG(WARNING) << "Failed to set socket receive buffer size to "
-                 << kRecvSocketBufferSize;
+                 << kTCPRecvSocketBufferSize;
   }
 
-  if (net::OK != socket_->SetSendBufferSize(kSendSocketBufferSize)) {
+  if (net::OK != socket_->SetSendBufferSize(kTCPSendSocketBufferSize)) {
     LOG(WARNING) << "Failed to set socket send buffer size to "
-                 << kSendSocketBufferSize;
+                 << kTCPSendSocketBufferSize;
   }
 
   if (!DoSendSocketCreateMsg())
@@ -312,13 +312,13 @@ void P2PSocketHostTcpBase::DoRead() {
   do {
     if (!read_buffer_.get()) {
       read_buffer_ = new net::GrowableIOBuffer();
-      read_buffer_->SetCapacity(kReadBufferSize);
-    } else if (read_buffer_->RemainingCapacity() < kReadBufferSize) {
-      // Make sure that we always have at least kReadBufferSize of
+      read_buffer_->SetCapacity(kTCPReadBufferSize);
+    } else if (read_buffer_->RemainingCapacity() < kTCPReadBufferSize) {
+      // Make sure that we always have at least kTCPReadBufferSize of
       // remaining capacity in the read buffer. Normally all packets
-      // are smaller than kReadBufferSize, so this is not really
+      // are smaller than kTCPReadBufferSize, so this is not really
       // required.
-      read_buffer_->SetCapacity(read_buffer_->capacity() + kReadBufferSize -
+      read_buffer_->SetCapacity(read_buffer_->capacity() + kTCPReadBufferSize -
                                 read_buffer_->RemainingCapacity());
     }
     result = socket_->Read(
