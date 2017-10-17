@@ -198,6 +198,7 @@ source_set("unit_tests") {
   if (use_alsa) {
     deps += [ "alsa:unit_tests" ]
   }
+
   if (is_fuchsia) {
     deps += [ "fuchsia:unit_tests" ]
   }
