@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9cce73be_704a2e79",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-17T12:10:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f331a75_67e4b59b",
+      "range": {
+        "startLine": 271,
+        "startChar": 53,
+        "endLine": 271,
+        "endChar": 69
+      },
+      "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1eae413f_7c69642d",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 47
@@ -123,6 +147,24 @@
       "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72b64a8_b4c65cf9",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-17T12:10:50Z",
+      "side": 1,
+      "message": "Thanks for pointing it out. I have addressed this issue and added a new test case in the AccumulatedPinchScaleWithKnownTouchAction, to verify that the pinch scale will NOT accumulate if zoom_disabled is true.",
+      "parentUuid": "847f7071_9f52c7d8",
+      "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +262,24 @@
       "side": 1,
       "message": "That is certainly a difference in the behavior than todays. I didn\u0027t think you intended to have any behavioral changes. From a performance point of view as soon as the touch action is known we should dispatch any accumulated delta instead of waiting around.",
       "parentUuid": "42a93140_aba1e3f9",
+      "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5ac275_b7caa93d",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-17T12:10:50Z",
+      "side": 1,
+      "message": "I put some more comments (TODO) here.\n\nI changed the InputHandlerProxy to use a flag to switch between the current behavior and this new behavior. If this change cause something bad to happen, we can easily disable the flag.\n\nMy thoughts are: it is probably rare to have the real touch action unknown until the scroll / pinch end (We will add UMA to measure that). If metrics indicate that this does happen often, we should either disable the flag or find a better way to handle this problem. For the initial version, I think it is fine to go with this behavior (drop all the accumulated delta if the real touch action is unknown).\n\nLocally I have tried enabling/disabling the flag, and I can see that when the flag is disabled, all touch actions are blocked on main.",
+      "parentUuid": "680100ed_769289fb",
       "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -341,6 +401,30 @@
       "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8366a711_63253cc0",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 2385,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-17T12:10:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c670ac3_876b6783",
+      "range": {
+        "startLine": 2385,
+        "startChar": 11,
+        "endLine": 2385,
+        "endChar": 38
+      },
+      "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
