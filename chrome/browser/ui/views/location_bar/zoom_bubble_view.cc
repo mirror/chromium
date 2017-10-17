@@ -135,7 +135,8 @@ void ZoomBubbleView::ShowBubble(content::WebContents* web_contents,
 #if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
   BrowserView* browser_view = BrowserView::GetBrowserViewForBrowser(browser);
   if (!is_fullscreen ||
-      browser_view->immersive_mode_controller()->IsRevealed()) {
+      (browser_view->immersive_mode_controller() &&
+       browser_view->immersive_mode_controller()->IsRevealed())) {
     if (ui::MaterialDesignController::IsSecondaryUiMaterial())
       anchor_view = browser_view->GetLocationBarView();
     else

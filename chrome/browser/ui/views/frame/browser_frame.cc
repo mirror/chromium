@@ -195,7 +195,7 @@ void BrowserFrame::SchedulePaintInRect(const gfx::Rect& rect) {
   views::Widget::SchedulePaintInRect(rect);
 
   // Paint the frame caption area and window controls during immersive reveal.
-  if (browser_view_ &&
+  if (browser_view_ && browser_view_->immersive_mode_controller() &&
       browser_view_->immersive_mode_controller()->IsRevealed()) {
     // This function should not be reentrant because the TopContainerView
     // paints to a layer for the duration of the immersive reveal.

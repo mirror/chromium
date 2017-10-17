@@ -402,7 +402,8 @@ void BrowserTabStripController::StackedLayoutMaybeChanged() {
 }
 
 void BrowserTabStripController::OnStartedDraggingTabs() {
-  if (!immersive_reveal_lock_.get()) {
+  if (!immersive_reveal_lock_.get() &&
+      browser_view_->immersive_mode_controller()) {
     // The top-of-window views should be revealed while the user is dragging
     // tabs in immersive fullscreen. The top-of-window views may not be already
     // revealed if the user is attempting to attach a tab to a tabstrip

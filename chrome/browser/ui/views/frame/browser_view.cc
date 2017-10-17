@@ -440,7 +440,6 @@ BrowserView::~BrowserView() {
 void BrowserView::Init(Browser* browser) {
   browser_.reset(browser);
   browser_->tab_strip_model()->AddObserver(this);
-  immersive_mode_controller_.reset(chrome::CreateImmersiveModeController());
 }
 
 // static
@@ -695,8 +694,10 @@ void BrowserView::BookmarkBarStateChanged(
     // detached state in immersive fullscreen.
     bool detached_changed = (new_state == BookmarkBar::DETACHED) ||
         bookmark_bar_view_->IsDetached();
-    if (detached_changed && immersive_mode_controller_->IsEnabled())
+    if (detached_changed && immersive_mode_controller_ &&
+        immersive_mode_controller_->IsEnabled()) {
       change_type = BookmarkBar::DONT_ANIMATE_STATE_CHANGE;
+    }
 
     bookmark_bar_view_->SetBookmarkBarState(new_state, change_type);
   }
@@ -904,7 +905,7 @@ void BrowserView::OnExclusiveAccessUserInput() {
 
 bool BrowserView::ShouldHideUIForFullscreen() const {
   // Immersive mode needs UI for the slide-down top panel.
-  if (immersive_mode_controller_->IsEnabled())
+  if (immersive_mode_controller_ && immersive_mode_controller_->IsEnabled())
     return false;
 
   return IsFullscreen();
@@ -983,9 +984,12 @@ void BrowserView::SetFocusToLocationBar(bool select_all) {
   // that the location bar view is visible and is considered focusable. If the
   // location bar view gains focus, |immersive_mode_controller_| will keep the
   // top-of-window views revealed.
-  std::unique_ptr<ImmersiveRevealedLock> focus_reveal_lock(
-      immersive_mode_controller_->GetRevealedLock(
-          ImmersiveModeController::ANIMATE_REVEAL_YES));
+  std::unique_ptr<ImmersiveRevealedLock> revealed_lock;
+  if (immersive_mode_controller_) {
+    revealed_lock = base::WrapUnique<ImmersiveRevealedLock>(
+        immersive_mode_controller_->GetRevealedLock(
+            ImmersiveModeController::ANIMATE_REVEAL_NO));
+  }
 
   LocationBarView* location_bar = GetLocationBarView();
   if (location_bar->omnibox_view()->IsFocusable()) {
@@ -1024,9 +1028,12 @@ void BrowserView::FocusToolbar() {
   // that the toolbar is visible and is considered focusable. If the
   // toolbar gains focus, |immersive_mode_controller_| will keep the
   // top-of-window views revealed.
-  std::unique_ptr<ImmersiveRevealedLock> focus_reveal_lock(
-      immersive_mode_controller_->GetRevealedLock(
-          ImmersiveModeController::ANIMATE_REVEAL_YES));
+  std::unique_ptr<ImmersiveRevealedLock> revealed_lock;
+  if (immersive_mode_controller_) {
+    revealed_lock = base::WrapUnique<ImmersiveRevealedLock>(
+        immersive_mode_controller_->GetRevealedLock(
+            ImmersiveModeController::ANIMATE_REVEAL_NO));
+  }
 
   // Start the traversal within the main toolbar. SetPaneFocus stores
   // the current focused view before changing focus.
@@ -1077,7 +1084,8 @@ void BrowserView::ToolbarSizeChanged(bool is_animating) {
 }
 
 void BrowserView::FocusBookmarksToolbar() {
-  DCHECK(!immersive_mode_controller_->IsEnabled());
+  DCHECK(!immersive_mode_controller_ ||
+         !immersive_mode_controller_->IsEnabled());
   if (bookmark_bar_view_.get() &&
       bookmark_bar_view_->visible() &&
       bookmark_bar_view_->GetPreferredSize().height() != 0) {
@@ -1101,7 +1109,8 @@ void BrowserView::FocusAppMenu() {
   if (toolbar_->IsAppMenuFocused()) {
     RestoreFocus();
   } else {
-    DCHECK(!immersive_mode_controller_->IsEnabled());
+    DCHECK(!immersive_mode_controller_ ||
+           !immersive_mode_controller_->IsEnabled());
     toolbar_->SetPaneFocusAndFocusAppMenu();
   }
 }
@@ -1133,9 +1142,11 @@ bool BrowserView::IsBookmarkBarVisible() const {
   if (bookmark_bar_view_->GetPreferredSize().height() == 0)
     return false;
   // New tab page needs visible bookmarks even when top-views are hidden.
-  if (immersive_mode_controller_->ShouldHideTopViews() &&
-      !bookmark_bar_view_->IsDetached())
+  if (immersive_mode_controller_ &&
+      immersive_mode_controller_->ShouldHideTopViews() &&
+      !bookmark_bar_view_->IsDetached()) {
     return false;
+  }
   return true;
 }
 
@@ -1149,8 +1160,10 @@ bool BrowserView::IsTabStripEditable() const {
 }
 
 bool BrowserView::IsToolbarVisible() const {
-  if (immersive_mode_controller_->ShouldHideTopViews())
+  if (immersive_mode_controller_ &&
+      immersive_mode_controller_->ShouldHideTopViews()) {
     return false;
+  }
   // It's possible to reach here before we've been notified of being added to a
   // widget, so |toolbar_| is still null.  Return false in this case so callers
   // don't assume they can access the toolbar yet.
@@ -1272,9 +1285,12 @@ void BrowserView::ShowAppMenu() {
     return;
 
   // Keep the top-of-window views revealed as long as the app menu is visible.
-  std::unique_ptr<ImmersiveRevealedLock> revealed_lock(
-      immersive_mode_controller_->GetRevealedLock(
-          ImmersiveModeController::ANIMATE_REVEAL_NO));
+  std::unique_ptr<ImmersiveRevealedLock> revealed_lock;
+  if (immersive_mode_controller_) {
+    revealed_lock = base::WrapUnique<ImmersiveRevealedLock>(
+        immersive_mode_controller_->GetRevealedLock(
+            ImmersiveModeController::ANIMATE_REVEAL_NO));
+  }
 
   toolbar_->app_menu_button()->Activate(nullptr);
 }
@@ -1836,7 +1852,7 @@ const views::Widget* BrowserView::GetWidget() const {
 }
 
 void BrowserView::RevealTabStripIfNeeded() {
-  if (!immersive_mode_controller_->IsEnabled())
+  if (immersive_mode_controller_ && !immersive_mode_controller_->IsEnabled())
     return;
 
   std::unique_ptr<ImmersiveRevealedLock> revealer(
@@ -2119,6 +2135,7 @@ void BrowserView::InitViews() {
   find_bar_host_view_ = new View();
   AddChildView(find_bar_host_view_);
 
+  immersive_mode_controller_.reset(chrome::CreateImmersiveModeController());
   immersive_mode_controller_->Init(this);
 
   BrowserViewLayout* browser_view_layout = new BrowserViewLayout;
@@ -2355,10 +2372,12 @@ void BrowserView::ProcessFullscreen(bool fullscreen,
 
   // Enable immersive before the browser refreshes its list of enabled commands.
   const bool should_stay_in_immersive =
-      !fullscreen &&
+      !fullscreen && immersive_mode_controller_ &&
       immersive_mode_controller_->ShouldStayImmersiveAfterExitingFullscreen();
-  if (ShouldUseImmersiveFullscreenForUrl(url) && !should_stay_in_immersive)
+  if (ShouldUseImmersiveFullscreenForUrl(url) && !should_stay_in_immersive &&
+      immersive_mode_controller_) {
     immersive_mode_controller_->SetEnabled(fullscreen);
+  }
 
   browser_->WindowFullscreenStateWillChange();
   browser_->WindowFullscreenStateChanged();

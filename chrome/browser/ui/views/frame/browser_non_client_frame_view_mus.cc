@@ -142,7 +142,7 @@ int BrowserNonClientFrameViewMus::GetTopInset(bool restored) const {
     // tapstrip bounds, the top inset should reach this topmost edge.
     const ImmersiveModeController* const immersive_controller =
         browser_view()->immersive_mode_controller();
-    if (immersive_controller->IsEnabled() &&
+    if (immersive_controller && immersive_controller->IsEnabled() &&
         !immersive_controller->IsRevealed()) {
       return (-1) * browser_view()->GetTabStripHeight();
     }
@@ -181,8 +181,9 @@ void BrowserNonClientFrameViewMus::UpdateClientArea() {
       browser_view()->immersive_mode_controller();
   // Frame decorations (the non-client area) are visible if not in immersive
   // mode, or in immersive mode *and* the reveal widget is showing.
-  const bool show_frame_decorations = !immersive_mode_controller->IsEnabled() ||
-                                      immersive_mode_controller->IsRevealed();
+  const bool show_frame_decorations =
+      immersive_mode_controller && (!immersive_mode_controller->IsEnabled() ||
+                                    immersive_mode_controller->IsRevealed());
   if (browser_view()->IsTabStripVisible() && show_frame_decorations) {
     gfx::Rect tab_strip_bounds(GetBoundsForTabStrip(tab_strip_));
     if (!tab_strip_bounds.IsEmpty() && tab_strip_->max_x()) {
@@ -466,7 +467,7 @@ bool BrowserNonClientFrameViewMus::ShouldPaint() const {
   // fullscreen.
   ImmersiveModeController* immersive_mode_controller =
       browser_view()->immersive_mode_controller();
-  return immersive_mode_controller->IsEnabled() &&
+  return immersive_mode_controller && immersive_mode_controller->IsEnabled() &&
          immersive_mode_controller->IsRevealed();
 }
 

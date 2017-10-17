@@ -334,6 +334,7 @@ IN_PROC_BROWSER_TEST_F(TabScrubberTest, FullScreenBrowser) {
       browser()->window()->GetNativeWindow());
   ImmersiveModeController* immersive_controller =
       browser_view->immersive_mode_controller();
+  ASSERT_TRUE(immersive_controller);
   EXPECT_TRUE(immersive_controller->IsEnabled());
 
   ImmersiveRevealEndedWaiter waiter(immersive_controller);

@@ -246,7 +246,7 @@ void TabScrubber::BeginScrub(Browser* browser,
 
   ImmersiveModeController* immersive_controller =
       browser_view->immersive_mode_controller();
-  if (immersive_controller->IsEnabled()) {
+  if (immersive_controller && immersive_controller->IsEnabled()) {
     immersive_reveal_lock_.reset(immersive_controller->GetRevealedLock(
         ImmersiveModeController::ANIMATE_REVEAL_YES));
   }

@@ -126,6 +126,7 @@ IN_PROC_BROWSER_TEST_F(BrowserNonClientFrameViewAshTest, ImmersiveFullscreen) {
 
   ImmersiveModeController* immersive_mode_controller =
       browser_view->immersive_mode_controller();
+  ASSERT_TRUE(immersive_mode_controller);
   ASSERT_EQ(ImmersiveModeController::Type::ASH,
             immersive_mode_controller->type());
 

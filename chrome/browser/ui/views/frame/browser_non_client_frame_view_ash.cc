@@ -138,7 +138,7 @@ int BrowserNonClientFrameViewAsh::GetTopInset(bool restored) const {
     // tapstrip bounds, the top inset should reach this topmost edge.
     const ImmersiveModeController* const immersive_controller =
         browser_view()->immersive_mode_controller();
-    if (immersive_controller->IsEnabled() &&
+    if (immersive_controller && immersive_controller->IsEnabled() &&
         !immersive_controller->IsRevealed()) {
       return (-1) * browser_view()->GetTabStripHeight();
     }
@@ -341,6 +341,7 @@ void BrowserNonClientFrameViewAsh::OnTabletModeToggled(bool enabled) {
     // visible but not activated due to something transparent and/or not
     // fullscreen (ie. fullscreen launcher).
     if (TabletModeClient::Get()->auto_hide_title_bars() &&
+        browser_view()->immersive_mode_controller() &&
         !frame()->IsFullscreen() && !browser_view()->IsBrowserTypeNormal() &&
         !frame()->IsMinimized()) {
       browser_view()->immersive_mode_controller()->SetEnabled(true);
@@ -350,6 +351,7 @@ void BrowserNonClientFrameViewAsh::OnTabletModeToggled(bool enabled) {
     // Exit immersive mode if the feature is enabled and the widget is not in
     // fullscreen mode.
     if (TabletModeClient::Get()->auto_hide_title_bars() &&
+        browser_view()->immersive_mode_controller() &&
         !frame()->IsFullscreen() && !browser_view()->IsBrowserTypeNormal()) {
       browser_view()->immersive_mode_controller()->SetEnabled(false);
       return;
@@ -447,6 +449,6 @@ bool BrowserNonClientFrameViewAsh::ShouldPaint() const {
   // fullscreen.
   ImmersiveModeController* immersive_mode_controller =
       browser_view()->immersive_mode_controller();
-  return immersive_mode_controller->IsEnabled() &&
+  return immersive_mode_controller && immersive_mode_controller->IsEnabled() &&
          immersive_mode_controller->IsRevealed();
 }

@@ -84,8 +84,8 @@ class ImmersiveModeControllerAsh
   std::unique_ptr<ash::ImmersiveFullscreenController> controller_;
 
   // Not owned.
-  BrowserView* browser_view_;
-  aura::Window* native_window_;
+  BrowserView* browser_view_ = nullptr;
+  aura::Window* native_window_ = nullptr;
 
   // True if the observers for window restore and entering / exiting tab
   // fullscreen are enabled.

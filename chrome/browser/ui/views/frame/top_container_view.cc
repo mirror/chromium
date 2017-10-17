@@ -21,7 +21,8 @@ const char* TopContainerView::GetClassName() const {
 }
 
 void TopContainerView::PaintChildren(const views::PaintInfo& paint_info) {
-  if (browser_view_->immersive_mode_controller()->IsRevealed()) {
+  if (browser_view_->immersive_mode_controller() &&
+      browser_view_->immersive_mode_controller()->IsRevealed()) {
     // Top-views depend on parts of the frame (themes, window title, window
     // controls) being painted underneath them. Clip rect has already been set
     // to the bounds of this view, so just paint the frame.  Use a clone without
