@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc34cbe6_88f88664",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-17T01:55:52Z",
+      "side": 1,
+      "message": "SearchAnswerContainerView is already set focusable, maybe we should not make its parent view focusable?",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 53
+      },
+      "revId": "82164a1dcdb8aa8f7b84c66f592d78041022e706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d585681_32486b9f",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-17T01:55:52Z",
+      "side": 1,
+      "message": "This is not used when app_list_focus flag is enabled, so tab focus may not annouce correctly.\nHow about putting this in SearchAnswerContainerView::OnFocus() and call SearchAnswerContainerView::SetSelected(true) there to show highlight? Also call SearchAnswerContainerView::SetSelected(false) in SearchAnswerContainerView::OnBlur().",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 38
+      },
+      "revId": "82164a1dcdb8aa8f7b84c66f592d78041022e706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
