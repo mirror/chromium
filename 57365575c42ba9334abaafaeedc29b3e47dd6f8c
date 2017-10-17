@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c2a93dd6_a3e76307",
+        "filename": "content/common/sandbox_linux/sandbox_linux.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-17T16:40:47Z",
+      "side": 1,
+      "message": "\u003e The next CL makes this a move-only type, which is why these are the way they are, but yes, I\u0027ll make these const refs for now and lose the moves ...\n\nRight, I noticed that after I did the other CL.",
+      "parentUuid": "0f34f78f_65cf4c7a",
+      "range": {
+        "startLine": 99,
+        "startChar": 32,
+        "endLine": 99,
+        "endChar": 58
+      },
+      "revId": "57365575c42ba9334abaafaeedc29b3e47dd6f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "495e1030_4b3cca2f",
         "filename": "content/common/sandbox_linux/sandbox_linux.h",
         "patchSetId": 1
