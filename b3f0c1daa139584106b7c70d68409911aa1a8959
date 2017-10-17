@@ -34,6 +34,24 @@
       "revId": "b3f0c1daa139584106b7c70d68409911aa1a8959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f302b278_32e2737d",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-17T17:59:57Z",
+      "side": 1,
+      "message": "I have changed ScopedAllowBlocking to ScopedAllowIO but got the presubmit error.\n\n** Presubmit ERRORS **\nBanned functions were used.\n    components/cronet/android/cronet_url_request_context_adapter.cc:731:\n      Use the new API in base/threading/thread_restrictions.h.\n    components/cronet/cronet_prefs_manager.cc:214:\n      Use the new API in base/threading/thread_restrictions.h.\n    components/cronet/cronet_prefs_manager.cc:244:\n      Use the new API in base/threading/thread_restrictions.h.\n\nI uploaded the CL using --bypass-hooks which doesn\u0027t seem right.",
+      "parentUuid": "ec0b07bd_c16321a1",
+      "revId": "b3f0c1daa139584106b7c70d68409911aa1a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
