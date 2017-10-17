@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "78023a2d_223c2d29",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T23:58:17Z",
+      "side": 1,
+      "message": "content::RTCRtpSource::AudioLevel() is defined unconditionally as *source_.audio_level() and rtc::Optional::operator*() has an RTC_DCHECK(has_value_). I would expect this to crash on debug builds.\n\nThis suggests this code path isn\u0027t being exercised. Can you update the webrtc_rtp_browsertest.cc to do VerifySynchronizationSources twice?",
+      "parentUuid": "453ca8b5_22ad4ac1",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e8fd162_aaef61a1",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
         "patchSetId": 9
@@ -174,6 +192,24 @@
       "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0ae2cc5_8c90c3dc",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T23:58:17Z",
+      "side": 1,
+      "message": "And add the link to the comment in the code :) if you want to resolve this issue when the interface is exposed you might want to link to a separate bug, otherwise that\u0027s fine.",
+      "parentUuid": "c1d54df3_64a10e49",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -212,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "197334dd_9330aa8c",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T23:58:17Z",
+      "side": 1,
+      "message": "Ditto",
+      "parentUuid": "b8d5bd9c_bf38db55",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb7e0785_27fc7e7e",
         "filename": "third_party/WebKit/public/platform/WebRTCRtpSource.h",
         "patchSetId": 9
@@ -241,6 +295,24 @@
       "side": 1,
       "message": "Using optional gives me:\n\n** Presubmit ERRORS **\nDo not use Chromium class from namespace base inside Blink core:\nthird_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.h:39\n\nAnd there is still an ugly conversion from rtc::Optional to base::Optional elsewhere.",
       "parentUuid": "eb7e0785_27fc7e7e",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8219039_4a0e3e2d",
+        "filename": "third_party/WebKit/public/platform/WebRTCRtpSource.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T23:58:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "334409f5_bfd10f26",
       "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
