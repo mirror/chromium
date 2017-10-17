@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b023129_6efd5137",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelListItem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-17T18:22:12Z",
+      "side": 1,
+      "message": "nit: Let\u0027s initialize this in the constructor.",
+      "range": {
+        "startLine": 52,
+        "startChar": 49,
+        "endLine": 52,
+        "endChar": 88
+      },
+      "revId": "c2b0cc6cc9af048bf354fb16539791681e628a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39058c05_83ddbf55",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-17T18:22:12Z",
+      "side": 1,
+      "message": "nit: Same here comment here about initializing in the constructor",
+      "range": {
+        "startLine": 33,
+        "startChar": 49,
+        "endLine": 33,
+        "endChar": 88
+      },
+      "revId": "c2b0cc6cc9af048bf354fb16539791681e628a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
