@@ -16,6 +16,24 @@
       "revId": "91395eee674f6e38486a264d74e22a3ba2049a66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225dff44_39fda45a",
+        "filename": "content/renderer/gpu/gpu_benchmarking_extension.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-17T22:13:43Z",
+      "side": 1,
+      "message": "Indeed! At least it matches the use below.\n\nAutomated header replacement is tricky because of fun stuff like this.",
+      "parentUuid": "2f9a6e55_c8afb4ee",
+      "revId": "91395eee674f6e38486a264d74e22a3ba2049a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
