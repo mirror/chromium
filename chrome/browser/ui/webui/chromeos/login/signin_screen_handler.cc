@@ -131,7 +131,6 @@ const char kSourceAccountPicker[] = "account-picker";
 
 // Constants for lock screen apps activity state values:
 const char kNoLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.NONE";
-const char kBackgroundLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.BACKGROUND";
 const char kForegroundLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.FOREGROUND";
 const char kAvailableLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.AVAILABLE";
 
@@ -1103,9 +1102,6 @@ void SigninScreenHandler::OnLockScreenNoteStateChanged(
     case ash::mojom::TrayActionState::kLaunching:
     case ash::mojom::TrayActionState::kActive:
       lock_screen_apps_state = kForegroundLockScreenApps;
-      break;
-    case ash::mojom::TrayActionState::kBackground:
-      lock_screen_apps_state = kBackgroundLockScreenApps;
       break;
     case ash::mojom::TrayActionState::kAvailable:
       lock_screen_apps_state = kAvailableLockScreenApps;
