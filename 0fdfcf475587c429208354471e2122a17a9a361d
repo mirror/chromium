@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9c20fba_f8deb53a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleFilter.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T04:07:26Z",
+      "side": 1,
+      "message": "I doubt this works, since mapping function returns a function.",
+      "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89bb2a9c_5b4d8505",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleFilter.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T04:07:26Z",
+      "side": 1,
+      "message": "We should now move this method from ConsoleFilter to the sidebar tree elements instead. Let\u0027s follow up in next patch.",
+      "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59cee997_97567558",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T04:07:26Z",
+      "side": 1,
+      "message": "for (var treeElement of this._treeElements)\n  treeElement.onMessagedAdded(viewMessage);",
+      "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01a69c0_c402f1fe",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T04:07:26Z",
+      "side": 1,
+      "message": "We should either have an item for messages without urls, or not include them in counters on the group.",
+      "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da17716c_d6b23503",
+        "filename": "third_party/WebKit/Source/devtools/front_end/externs.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T04:07:26Z",
+      "side": 1,
+      "message": "I think this should be in standard externs.",
+      "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472eb2dc_89ca2bf3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T04:07:26Z",
+      "side": 1,
+      "message": "Just reuse filter.regex object. It\u0027s unlikely we are going to modify it.",
+      "revId": "0fdfcf475587c429208354471e2122a17a9a361d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
