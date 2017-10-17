@@ -352,6 +352,30 @@
       "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea6cae4d_8733691f",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-17T19:46:44Z",
+      "side": 1,
+      "message": "Using a normal window now. However, the dialog is been rendered at the center of the screen (not even at the center of the browser window, but the center of my screen). I tried a few different approaches (defining Widget::SetBounds, overriding View::GetVisibleBounds()), but none seems to work. What do you recommend instead?",
+      "parentUuid": "620f18bf_1a417114",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
