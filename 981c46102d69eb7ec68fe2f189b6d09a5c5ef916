@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d19b2692_448cc1ea",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-17T15:04:29Z",
+      "side": 1,
+      "message": "This needs the !\u003d Auto check no?",
+      "range": {
+        "startLine": 232,
+        "startChar": 22,
+        "endLine": 232,
+        "endChar": 42
+      },
+      "revId": "981c46102d69eb7ec68fe2f189b6d09a5c5ef916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5780150b_f66a6f00",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-17T15:04:29Z",
+      "side": 1,
+      "message": "Can we store this as a variable on the proxy object? As calling IsEnabled is a search of the active features each time.",
+      "revId": "981c46102d69eb7ec68fe2f189b6d09a5c5ef916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
