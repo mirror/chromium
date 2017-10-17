@@ -198,6 +198,19 @@ TextUtils.FilterParser = class {
   }
 
   /**
+   * @param {!TextUtils.FilterParser.ParsedFilter} filter
+   * @return {!TextUtils.FilterParser.ParsedFilter}
+   */
+  static cloneFilter(filter) {
+    return {
+      key: filter.key,
+      text: filter.text,
+      regex: filter.regex ? new RegExp(filter.regex.source, filter.regex.flags) : undefined,
+      negative: filter.negative
+    };
+  }
+
+  /**
    * @param {string} query
    * @return {!Array<!TextUtils.FilterParser.ParsedFilter>}
    */

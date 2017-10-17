@@ -39,21 +39,29 @@ Console.ConsoleFilter = class {
   }
 
   /**
-   * @param {!Console.ConsoleViewMessage} viewMessage
-   * @return {boolean}
+   * @param {string} level
+   * @return {!Object<string, boolean>}
    */
-  applyFilter(viewMessage) {
-    var visible = this._shouldBeVisible(viewMessage);
-    if (visible)
-      this._incrementCounters(viewMessage.consoleMessage().level);
-    return visible;
+  static singleLevelMask(level) {
+    var result = {};
+    result[level] = true;
+    return result;
+  }
+
+  /**
+   * @return {!Console.ConsoleFilter}
+   */
+  clone() {
+    var parsedFilters = this.parsedFilters.map(filter => TextUtils.FilterParser.cloneFilter);
+    var levelsMask = Object.assign({}, this.levelsMask);
+    return new Console.ConsoleFilter(this.name, parsedFilters, this.executionContext, levelsMask);
   }
 
   /**
    * @param {!Console.ConsoleViewMessage} viewMessage
    * @return {boolean}
    */
-  _shouldBeVisible(viewMessage) {
+  shouldBeVisible(viewMessage) {
     var message = viewMessage.consoleMessage();
     if (this.executionContext &&
         (this.executionContext.runtimeModel !== message.runtimeModel() ||
@@ -118,9 +126,13 @@ Console.ConsoleFilter = class {
   }
 
   /**
-   * @param {?ConsoleModel.ConsoleMessage.MessageLevel} level
+   * @param {!ConsoleModel.ConsoleMessage} message
    */
-  _incrementCounters(level) {
+  incrementCounters(message) {
+    if (message.type === ConsoleModel.ConsoleMessage.MessageType.Command ||
+        message.type === ConsoleModel.ConsoleMessage.MessageType.Result || message.isGroupMessage())
+      return;
+    var level = message.level;
     if (level === ConsoleModel.ConsoleMessage.MessageLevel.Info ||
         level === ConsoleModel.ConsoleMessage.MessageLevel.Verbose)
       this.infoCount++;

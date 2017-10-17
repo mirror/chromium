@@ -58,6 +58,9 @@ MouseEvent.prototype.movementY;
  */
 KeyboardEvent.DOM_KEY_LOCATION_NUMPAD;
 
+/** @type {string} */
+RegExp.prototype.flags;
+
 /**
  * @param {!T} value
  * @param {boolean=} onlyFirst
