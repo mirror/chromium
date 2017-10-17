@@ -103,6 +103,8 @@ static_library("vr_common") {
     "service/vr_display_host.h",
     "service/vr_service_impl.cc",
     "service/vr_service_impl.h",
+    "speech_recognizer.cc",
+    "speech_recognizer.h",
     "target_property.h",
     "toolbar_helper.cc",
     "toolbar_helper.h",
@@ -145,7 +147,6 @@ static_library("vr_common") {
     "//components/toolbar",
     "//components/url_formatter",
     "//components/vector_icons",
-    "//components/vector_icons",
     "//skia",
     "//ui/base",
     "//ui/display",
@@ -169,6 +170,7 @@ test("vr_common_unittests") {
     "fps_meter_unittest.cc",
     "gltf_parser_unittest.cc",
     "service/vr_device_manager_unittest.cc",
+    "speech_recognizer_unittest.cc",
     "test/animation_utils.cc",
     "test/animation_utils.h",
     "test/constants.h",
@@ -201,6 +203,7 @@ test("vr_common_unittests") {
     "//base/test:test_support",
     "//components/security_state/core",
     "//components/toolbar:vector_icons",
+    "//content/test:test_support",
 
     # TODO(mthiesse, crbug.com/769373): Remove dependency on device/vr:fakes.
     "//device/vr:fakes",
