@@ -357,6 +357,30 @@
     },
     {
       "key": {
+        "uuid": "079eede8_1d4e523a",
+        "filename": "content/browser/media/android/media_player_renderer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-17T01:56:00Z",
+      "side": 1,
+      "message": "\u003e We are trying to prevent the observer list from growing into the thousands. Hence we want each feature to observe the WCO at most once.\n\nOkay, I thought about this a bit more. I can only see one reason why this matters: We are using MediaPlayerRendererWCO as a call-stack filter. It is preventing WebContents from calling into all the MediaPlayerRenderers to execute the plethora of uninteresting, no-op stubs. So, of these two solutions:\n\n  A: One MPWCO in WebContents\u0027s observer list, plus 1000 MediaPlayerRenderers in MPWCO\u0027s list.\n  B: 1000 MediaPlayerRenderers in WebContents\u0027s observer list.\n\n[A] is better because it prevents 999 method calls of any uninteresting WCO method (stubbed as no-op).\n\nSo, lgtm then.",
+      "parentUuid": "9df66986_47b814b1",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 75
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33b35bdf_8263ce55",
         "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.h",
         "patchSetId": 6

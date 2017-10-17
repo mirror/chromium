@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34b9d2c9_b5d4660d",
+        "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-17T01:56:00Z",
+      "side": 1,
+      "message": "I would add something like: \"Essentially, this is a call-stack filter to prevent uninteresting observer methods from calling into the MediaPlayerRenderers.\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "29b724b921c98ad187f9ce42e15868536e739e3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
