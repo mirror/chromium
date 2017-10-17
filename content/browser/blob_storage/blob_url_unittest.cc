@@ -6,6 +6,7 @@
 
 #include <limits>
 #include <memory>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/files/file_path.h"
@@ -19,9 +20,11 @@
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "content/browser/blob_storage/blob_protocol_handler_network_service.h"
 #include "content/browser/blob_storage/blob_url_loader.h"
 #include "content/browser/non_network_url_loader_factory.h"
 #include "content/browser/url_loader_factory_getter.h"
+#include "content/public/browser/non_network_protocol_handler.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_url_loader_client.h"
 #include "mojo/common/data_pipe_utils.h"
@@ -282,11 +285,16 @@ class BlobURLRequestJobTest : public testing::TestWithParam<bool> {
 
       mojom::URLLoaderPtr url_loader;
       TestURLLoaderClient url_loader_client;
-      scoped_refptr<NonNetworkURLLoaderFactory> factory =
-          NonNetworkURLLoaderFactory::Create(
+
+      NonNetworkProtocolHandlerMap protocol_handlers;
+      protocol_handlers[url::kBlobScheme] =
+          std::make_unique<BlobProtocolHandlerNetworkService>(
               base::BindOnce(&BlobURLRequestJobTest::GetStorageContext,
                              base::Unretained(this)),
               file_system_context_);
+      scoped_refptr<NonNetworkURLLoaderFactory> factory =
+          new NonNetworkURLLoaderFactory(std::move(protocol_handlers));
+
       base::RunLoop().RunUntilIdle();
       factory->CreateLoaderAndStart(mojo::MakeRequest(&url_loader), 0, 0,
                                     mojom::kURLLoadOptionNone, request,

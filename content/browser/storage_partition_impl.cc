@@ -12,12 +12,18 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/files/file.h"
+#include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
+#include "build/build_config.h"
 #include "content/browser/background_fetch/background_fetch_context.h"
+#include "content/browser/blob_storage/blob_protocol_handler_network_service.h"
 #include "content/browser/blob_storage/blob_registry_wrapper.h"
+#include "content/browser/blob_storage/blob_url_loader.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/browsing_data/storage_partition_http_cache_data_remover.h"
@@ -34,11 +40,17 @@
 #include "content/public/browser/dom_storage_context.h"
 #include "content/public/browser/indexed_db_context.h"
 #include "content/public/browser/local_storage_usage_info.h"
+#include "content/public/browser/non_network_protocol_handler.h"
 #include "content/public/browser/session_storage_usage_info.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/resource_request_completion_status.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
+#include "mojo/public/cpp/system/file_data_pipe_producer.h"
 #include "net/base/completion_callback.h"
+#include "net/base/filename_util.h"
+#include "net/base/mime_util.h"
 #include "net/base/net_errors.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_monster.h"
@@ -456,6 +468,9 @@ StoragePartitionImpl::~StoragePartitionImpl() {
   if (GetPaymentAppContext())
     GetPaymentAppContext()->Shutdown();
 
+  if (non_network_url_loader_factory_)
+    non_network_url_loader_factory_->ShutDown();
+
   BrowserThread::DeleteSoon(BrowserThread::IO, FROM_HERE,
                             std::move(network_context_owner_));
 }
@@ -551,11 +566,13 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
           context, in_memory, relative_partition_path);
 
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    NonNetworkURLLoaderFactory::BlobContextGetter blob_getter =
-        base::BindOnce(&BlobStorageContextGetter, blob_context);
+    NonNetworkProtocolHandlerMap protocol_handlers;
+    protocol_handlers[url::kBlobScheme] =
+        std::make_unique<BlobProtocolHandlerNetworkService>(
+            base::BindOnce(&BlobStorageContextGetter, blob_context),
+            partition->filesystem_context_);
     partition->non_network_url_loader_factory_ =
-        NonNetworkURLLoaderFactory::Create(std::move(blob_getter),
-                                           partition->filesystem_context_);
+        new NonNetworkURLLoaderFactory(std::move(protocol_handlers));
 
     partition->url_loader_factory_getter_ = new URLLoaderFactoryGetter();
     partition->url_loader_factory_getter_->Initialize(partition.get());
