@@ -90,6 +90,7 @@ class TryChromeDialog : public views::ButtonListener,
     virtual ~Delegate() {}
   };
 
+  class Context;
   class ModalShowDelegate;
 
   friend class TryChromeDialogBrowserTestBase;
@@ -102,25 +103,15 @@ class TryChromeDialog : public views::ButtonListener,
   ~TryChromeDialog() override;
 
   // Starts the process of presenting the dialog by initiating an asychronous
-  // search for Chrome's taskbar icon.
+  // search for Chrome's taskbar icon via the encapsulated context object.
   void ShowDialogAsync();
 
-  // Receives the bounds of Chrome's taskbar icon in |icon_rect|. The
-  // interaction is completed immediately in case of rendezvous to allow
-  // browser startup to continue. Otherwise, the dialog is shown to the user.
-  // The delegate's SetToastLocation method is called with the location.
-  void OnTaskbarIconRect(const gfx::Rect& icon_rect);
-
-  // Returns the bounding rectangle of a popup of size |size| centered "over"
-  // |icon_rect|, taking into account the orientation of the taskbar. Returns an
-  // empty rect if |icon_rect| is empty or in case of error.
-  gfx::Rect ComputePopupBoundsOverTaskbarIcon(const gfx::Size& size,
-                                              const gfx::Rect& icon_rect);
-
-  // Returns the bounding rectangle of a popup of size |size| to be positioned
-  // over the notification area of the screen, taking into account LTR vs RTL
-  // text orientation.
-  gfx::Rect ComputePopupBoundsOverNoficationArea(const gfx::Size& size);
+  // Continues work to show the toast following asynchronous context
+  // initialization. The interaction is completed immediately in case of
+  // rendezvous to allow browser startup to continue. Otherwise, the dialog is
+  // shown to the user. The delegate's SetToastLocation method is called with
+  // the location.
+  void OnContextInitialized();
 
   // Notifies the delegate of the final experiment state and that the
   // interaction has completed.
@@ -157,6 +148,8 @@ class TryChromeDialog : public views::ButtonListener,
   // Controls which experiment group to use for varying the layout and controls.
   const size_t group_;
   Delegate* const delegate_;
+
+  std::unique_ptr<Context> context_;
 
   // A closure to run when the interaction has completed.
   base::Closure on_complete_;
