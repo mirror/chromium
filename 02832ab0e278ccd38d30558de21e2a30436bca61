@@ -34,6 +34,24 @@
       "revId": "02832ab0e278ccd38d30558de21e2a30436bca61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c0bc486_aa394026",
+        "filename": "content/public/network/ignore_errors_cert_verifier.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-17T16:10:38Z",
+      "side": 1,
+      "message": "Correct, services/network wouldn\u0027t depend on content.",
+      "parentUuid": "917a4642_41e67aa3",
+      "revId": "02832ab0e278ccd38d30558de21e2a30436bca61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
