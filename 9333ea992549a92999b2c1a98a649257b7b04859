@@ -22,6 +22,30 @@
       "revId": "9333ea992549a92999b2c1a98a649257b7b04859",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a5f338_86c0d1f6",
+        "filename": "ios/web/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-17T17:58:42Z",
+      "side": 1,
+      "message": "Would that pull in the entire ios/web/public and its deps, like //ui/base?",
+      "parentUuid": "f87701a0_2040fbb2",
+      "range": {
+        "startLine": 244,
+        "startChar": 12,
+        "endLine": 244,
+        "endChar": 22
+      },
+      "revId": "9333ea992549a92999b2c1a98a649257b7b04859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
