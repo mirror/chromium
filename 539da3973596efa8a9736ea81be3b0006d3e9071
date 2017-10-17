@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8cbfca5b_0d88b4f1",
+        "filename": "chrome/browser/vr/test/run_all_perftests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-17T18:45:56Z",
+      "side": 1,
+      "message": "Ok, removed.",
+      "parentUuid": "62ad20ac_dab079c2",
+      "revId": "539da3973596efa8a9736ea81be3b0006d3e9071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "879f5d41_bedf1afa",
         "filename": "chrome/browser/vr/test/vr_common_test_suite.cc",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "539da3973596efa8a9736ea81be3b0006d3e9071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa2529b_7bf055d1",
+        "filename": "chrome/browser/vr/test/vr_common_test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-17T18:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "879f5d41_bedf1afa",
+      "revId": "539da3973596efa8a9736ea81be3b0006d3e9071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
