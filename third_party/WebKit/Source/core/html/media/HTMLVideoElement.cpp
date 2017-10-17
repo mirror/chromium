@@ -37,6 +37,7 @@
 #include "core/fullscreen/Fullscreen.h"
 #include "core/html/media/MediaCustomControlsFullscreenDetector.h"
 #include "core/html/media/MediaRemotingInterstitial.h"
+// #include "core/html/media/PictureInPictureInterstitial.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html_names.h"
 #include "core/imagebitmap/ImageBitmap.h"
@@ -533,6 +534,16 @@ void HTMLVideoElement::DisableMediaRemoting() {
   if (GetWebMediaPlayer())
     GetWebMediaPlayer()->RequestRemotePlaybackDisabled(true);
 }
+
+// void HTMLVideoElement::PictureInPictureStarted() {
+//   if (!pip_interstitial_) {
+//     pip_interstitial_ = new MediaRemotingInterstitial(*this);
+//     ShadowRoot& shadow_root = EnsureUserAgentShadowRoot();
+//     shadow_root.InsertBefore(pip_interstitial_, shadow_root.firstChild());
+//     HTMLMediaElement::AssertShadowRootChildren(shadow_root);
+//   }
+//   pip_interstitial_->Show();  
+// }
 
 bool HTMLVideoElement::IsRemotingInterstitialVisible() const {
   return remoting_interstitial_ && remoting_interstitial_->IsVisible();

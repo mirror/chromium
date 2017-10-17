@@ -317,6 +317,11 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
 
   if (observer_)
     observer_->SetClient(this);
+
+  if (client_) {
+    client_->MediaRemotingStarted(
+      WebString::FromUTF8("test"));
+  }
 }
 
 WebMediaPlayerImpl::~WebMediaPlayerImpl() {

@@ -38,31 +38,35 @@ MediaRemotingInterstitial::MediaRemotingInterstitial(
   AppendChild(background_image_);
 
   cast_icon_ = new MediaRemotingCastIconElement(*this);
-  AppendChild(cast_icon_);
+  // AppendChild(cast_icon_);
 
   cast_text_message_ = new MediaRemotingCastMessageElement(*this);
   AppendChild(cast_text_message_);
 
   exit_button_ = new MediaRemotingExitButtonElement(*this);
-  AppendChild(exit_button_);
+  // AppendChild(exit_button_);
 }
 
 void MediaRemotingInterstitial::Show(
     const WebString& remote_device_friendly_name) {
   if (should_be_visible_)
     return;
-  if (remote_device_friendly_name.IsEmpty()) {
     cast_text_message_->setInnerText(
         GetVideoElement().GetLocale().QueryString(
-            WebLocalizedString::kMediaRemotingCastToUnknownDeviceText),
+            WebLocalizedString::kPictureInPictureText),
         ASSERT_NO_EXCEPTION);
-  } else {
-    cast_text_message_->setInnerText(
-        GetVideoElement().GetLocale().QueryString(
-            WebLocalizedString::kMediaRemotingCastText,
-            remote_device_friendly_name),
-        ASSERT_NO_EXCEPTION);
-  }
+  // if (remote_device_friendly_name.IsEmpty()) {
+  //   cast_text_message_->setInnerText(
+  //       GetVideoElement().GetLocale().QueryString(
+  //           WebLocalizedString::kMediaRemotingCastToUnknownDeviceText),
+  //       ASSERT_NO_EXCEPTION);
+  // } else {
+  //   cast_text_message_->setInnerText(
+  //       GetVideoElement().GetLocale().QueryString(
+  //           WebLocalizedString::kMediaRemotingCastText,
+  //           remote_device_friendly_name),
+  //       ASSERT_NO_EXCEPTION);
+  // }
   if (toggle_insterstitial_timer_.IsActive())
     toggle_insterstitial_timer_.Stop();
   should_be_visible_ = true;

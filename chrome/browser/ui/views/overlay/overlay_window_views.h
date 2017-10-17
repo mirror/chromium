@@ -30,6 +30,8 @@ class OverlayWindowViews : public OverlayWindow {
   gfx::Rect GetBounds() const override;
 
  private:
+  class OverlayWindowWidgetDelegate;
+
   std::unique_ptr<views::Widget> widget_;
 
   DISALLOW_COPY_AND_ASSIGN(OverlayWindowViews);

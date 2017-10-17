@@ -95,6 +95,7 @@ struct WebLocalizedString {
     kMediaRemotingCastToUnknownDeviceText,
     kMissingPluginText,
     kMultipleFileUploadText,
+    kPictureInPictureText,
     kOtherColorLabel,
     kOtherDateLabel,
     kOtherMonthLabel,
