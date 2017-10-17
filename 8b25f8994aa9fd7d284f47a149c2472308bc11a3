@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "7a1c3b21_0591b6a3",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-10-17T01:43:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "698e5ee8_748203cc",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 51
+      },
+      "revId": "8b25f8994aa9fd7d284f47a149c2472308bc11a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acb1039e_6acbf693",
         "filename": "components/translate/core/browser/translate_ui_delegate.h",
         "patchSetId": 8
