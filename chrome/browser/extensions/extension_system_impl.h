@@ -26,7 +26,7 @@ class SigninScreenPolicyProvider;
 namespace extensions {
 
 class ExtensionSystemSharedFactory;
-class NavigationObserver;
+class ExtensionInstallPromptController;
 class StateStoreNotificationObserver;
 class UninstallPingSender;
 class InstallGate;
@@ -74,6 +74,8 @@ class ExtensionSystemImpl : public ExtensionSystem {
       const Extension* extension) override;
   void InstallUpdate(const std::string& extension_id,
                      const base::FilePath& temp_dir) override;
+  void PromptToEnableExtensionIfNecessary(
+      content::NavigationHandle* navigation_handle) override;
 
  private:
   friend class ExtensionSystemSharedFactory;
@@ -91,6 +93,9 @@ class ExtensionSystemImpl : public ExtensionSystem {
     void RegisterManagementPolicyProviders();
     void InitInstallGates();
     void Init(bool extensions_enabled);
+
+    void PromptToEnableExtensionIfNecessary(
+        content::NavigationHandle* navigation_handle);
 
     // KeyedService implementation.
     void Shutdown() override;
@@ -125,7 +130,8 @@ class ExtensionSystemImpl : public ExtensionSystem {
         state_store_notification_observer_;
     std::unique_ptr<StateStore> rules_store_;
     scoped_refptr<ValueStoreFactoryImpl> store_factory_;
-    std::unique_ptr<NavigationObserver> navigation_observer_;
+    std::unique_ptr<ExtensionInstallPromptController>
+        extension_install_prompt_controller_;
     std::unique_ptr<ServiceWorkerManager> service_worker_manager_;
     // Shared memory region manager for scripts statically declared in extension
     // manifests. This region is shared between all extensions.

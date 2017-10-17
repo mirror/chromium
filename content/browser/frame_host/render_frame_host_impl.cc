@@ -90,6 +90,7 @@
 #include "content/common/renderer.mojom.h"
 #include "content/common/site_isolation_policy.h"
 #include "content/common/swapped_out_messages.h"
+#include "content/common/url_schemes.h"
 #include "content/common/widget.mojom.h"
 #include "content/public/browser/ax_event_notification_details.h"
 #include "content/public/browser/browser_accessibility_state.h"
@@ -1526,19 +1527,10 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
         100);
   }
 
-  // Blocked navigations are expected to commit in the old renderer
-  // (and therefore such navigations do not go through CanCommitURL checks
-  // below).
-  bool is_blocked_navigation =
-      navigation_handle_ &&
-      navigation_handle_->GetNetErrorCode() == net::ERR_BLOCKED_BY_CLIENT;
-
   // Attempts to commit certain off-limits URL should be caught more strictly
   // than our FilterURL checks below.  If a renderer violates this policy, it
   // should be killed.
-  if (!is_blocked_navigation && !CanCommitURL(validated_params->url)) {
-    VLOG(1) << "Blocked URL " << validated_params->url.spec();
-    // Kills the process.
+  if (!CanCommitURL(validated_params->url)) {
     bad_message::ReceivedBadMessage(process,
                                     bad_message::RFH_CAN_COMMIT_URL_BLOCKED);
     return;
@@ -3643,6 +3635,10 @@ bool RenderFrameHostImpl::CanCommitURL(const GURL& url) {
   if (GetSiteInstance()->GetSiteURL().SchemeIs(kGuestScheme))
     return true;
 
+  // chrome-error://<net error code> pages can commit in any process.
+  if (url.SchemeIs(kChromeErrorScheme))
+    return true;
+
   // Give the client a chance to disallow URLs from committing.
   return GetContentClient()->browser()->CanCommitURL(GetProcess(), url);
 }
@@ -4186,9 +4182,8 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
   }
 
   // Determine if the current NavigationHandle can be used.
-  if (navigation_handle_ && navigation_handle_->GetURL() == params.url) {
+  if (navigation_handle_ && navigation_handle_->GetURL() == params.url)
     return std::move(navigation_handle_);
-  }
 
   // If the URL does not match what the NavigationHandle expects, treat the
   // commit as a new navigation. This can happen when loading a Data

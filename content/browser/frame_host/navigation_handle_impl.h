@@ -221,9 +221,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
     pending_nav_entry_id_ = nav_entry_id;
   }
 
-  void set_net_error_code(net::Error net_error_code) {
-    net_error_code_ = net_error_code;
-  }
+  void set_net_error_code(net::Error net_error_code);
 
   // Returns whether the navigation is currently being transferred from one
   // RenderFrameHost to another. In particular, a DidStartProvisionalLoad IPC

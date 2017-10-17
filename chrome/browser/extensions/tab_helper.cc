@@ -293,12 +293,17 @@ void TabHelper::DidFinishNavigation(
   if (!navigation_handle->IsInMainFrame() || !navigation_handle->HasCommitted())
     return;
 
+  content::BrowserContext* context = web_contents()->GetBrowserContext();
+  if (net::Error::OK != navigation_handle->GetNetErrorCode()) {
+    ExtensionSystem::Get(context)->PromptToEnableExtensionIfNecessary(
+        navigation_handle);
+  }
+
   InvokeForContentRulesRegistries(
       [this, navigation_handle](ContentRulesRegistry* registry) {
     registry->DidFinishNavigation(web_contents(), navigation_handle);
   });
 
-  content::BrowserContext* context = web_contents()->GetBrowserContext();
   ExtensionRegistry* registry = ExtensionRegistry::Get(context);
   const ExtensionSet& enabled_extensions = registry->enabled_extensions();
 

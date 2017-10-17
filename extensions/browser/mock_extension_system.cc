@@ -81,4 +81,9 @@ void MockExtensionSystem::InstallUpdate(const std::string& extension_id,
   NOTREACHED();
 }
 
+void MockExtensionSystem::PromptToEnableExtensionIfNecessary(
+    content::NavigationHandle* navigation_handle) {
+  NOTREACHED();
+}
+
 }  // namespace extensions

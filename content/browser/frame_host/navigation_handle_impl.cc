@@ -63,6 +63,11 @@ void NotifyAbandonedTransferNavigation(const GlobalRequestID& id) {
     rdh->CancelRequest(id.child_id, id.request_id);
 }
 
+GURL CreateChromeErrorUrl(int net_error) {
+  return GURL(std::string(kChromeErrorScheme) + url::kStandardSchemeSeparator +
+              net::ErrorToShortString(net_error) + "/");
+}
+
 }  // namespace
 
 // static
@@ -225,6 +230,25 @@ NavigationHandleImpl::~NavigationHandleImpl() {
 
 NavigatorDelegate* NavigationHandleImpl::GetDelegate() const {
   return frame_tree_node_->navigator()->GetDelegate();
+}
+
+void NavigationHandleImpl::set_net_error_code(net::Error net_error_code) {
+  net_error_code_ = net_error_code;
+
+  // TODO(lukasza): Commit chrome-error://... URL for more error codes.
+  if (net_error_code == net::ERR_BLOCKED_BY_CLIENT) {
+    GURL new_url = CreateChromeErrorUrl(net_error_code);
+
+    // Treat this as a redirect hop to |error_url|, but unlike
+    // WillRedirectRequest do not notify observers and do not give
+    // NavigationThrottles a chance to intervene.
+    was_redirected_ = true;
+    redirect_chain_.push_back(new_url);
+    url_ = new_url;
+    method_ = "GET";
+    resource_request_body_ = nullptr;
+    UpdateSiteURL(nullptr);
+  }
 }
 
 int64_t NavigationHandleImpl::GetNavigationId() const {

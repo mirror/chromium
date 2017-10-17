@@ -22,6 +22,7 @@ class ExtensionService;
 
 namespace content {
 class BrowserContext;
+class NavigationHandle;
 }
 
 namespace extensions {
@@ -130,6 +131,13 @@ class ExtensionSystem : public KeyedService {
   // errors, etc.
   virtual void InstallUpdate(const std::string& extension_id,
                              const base::FilePath& temp_dir) = 0;
+
+  // Checks if |navigation_handle| represents a failed attempt to navigate to a
+  // disabled extension.  If it does, and the extension is disabled due to a
+  // permissions increase, this prompts the user to accept the new permissions
+  // and reloads the navigation.
+  virtual void PromptToEnableExtensionIfNecessary(
+      content::NavigationHandle* navigation_handle) = 0;
 };
 
 }  // namespace extensions
