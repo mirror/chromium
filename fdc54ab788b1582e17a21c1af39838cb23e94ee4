@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d04aa156_95f437cc",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-17T15:36:59Z",
+      "side": 1,
+      "message": "optional nit; I prefer handle_ \u003d nullptr;",
+      "range": {
+        "startLine": 547,
+        "startChar": 12,
+        "endLine": 547,
+        "endChar": 17
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c4cf7a6_25cf077b",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 1
@@ -13,6 +36,29 @@
       "writtenOn": "2017-10-17T13:27:03Z",
       "side": 1,
       "message": "nit: observer_handle_?",
+      "range": {
+        "startLine": 553,
+        "startChar": 68,
+        "endLine": 553,
+        "endChar": 75
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea49654_fa7b428e",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-17T15:36:59Z",
+      "side": 1,
+      "message": "s/handle_/online_observer_handle_/",
       "range": {
         "startLine": 553,
         "startChar": 68,
@@ -48,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "28eeb045_3cf89889",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-17T15:36:59Z",
+      "side": 1,
+      "message": "Just need DCHECK(!connection_observer_handle_)",
+      "range": {
+        "startLine": 204,
+        "startChar": 39,
+        "endLine": 204,
+        "endChar": 45
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c1fa1b2_11b49589",
         "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.cpp",
         "patchSetId": 1
@@ -64,6 +133,75 @@
         "startChar": 11,
         "endLine": 215,
         "endChar": 44
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "201fa5cc_893e9e28",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-17T15:36:59Z",
+      "side": 1,
+      "message": "DCHECK(connection_observer_handle_)",
+      "range": {
+        "startLine": 215,
+        "startChar": 39,
+        "endLine": 215,
+        "endChar": 42
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5116b389_8370a763",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-17T15:36:59Z",
+      "side": 1,
+      "message": "optional nit: I prefer connection_observer_handle_ \u003d nullptr as it\u0027s abundantly clear what it does.",
+      "range": {
+        "startLine": 216,
+        "startChar": 32,
+        "endLine": 216,
+        "endChar": 37
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c36efc_7eed698a",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-17T15:36:59Z",
+      "side": 1,
+      "message": "Let\u0027s not use default in the switch. Better to have the compiler warn us if we\u0027re missing anything.",
+      "range": {
+        "startLine": 284,
+        "startChar": 4,
+        "endLine": 286,
+        "endChar": 12
       },
       "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -94,6 +232,52 @@
     },
     {
       "key": {
+        "uuid": "4438ce6e_aa0c03a2",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-17T15:36:59Z",
+      "side": 1,
+      "message": "Why this change?\n\nAre kConstantStyle as opposed to MACRO_STYLE enums allowed now? Can you point me to that discussion?",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 20
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e73f1a2_a9cec233",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-17T15:36:59Z",
+      "side": 1,
+      "message": "Why an interface class and impl class for this?",
+      "range": {
+        "startLine": 239,
+        "startChar": 8,
+        "endLine": 239,
+        "endChar": 38
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bad6ecc9_cb782dcc",
         "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
         "patchSetId": 1
@@ -110,6 +294,98 @@
         "startChar": 7,
         "endLine": 273,
         "endChar": 21
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56669d6_7a8e8753",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-17T15:36:59Z",
+      "side": 1,
+      "message": "MACRO_CASE?",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 20
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ab1401_a60508e5",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-17T15:36:59Z",
+      "side": 1,
+      "message": "I don\u0027t think this refactor is necessary. Why not just keep with the closure_ we had before?\n\ne.g. something like the following:\n\nobserver-\u003eSetNotificationCallback(base::Bind([](notifier, observer, runner) { notifier-\u003eadded_handle_ \u003d observer-\u003eAddConnectionObserver(notifier, observer, runner)); }",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 37
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b23312_bafe8524",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-17T15:36:59Z",
+      "side": 1,
+      "message": "s/PerformeActionOnNotification/PerformActionOnNotification/",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 35
+      },
+      "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08fe478a_fc5363bf",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-17T15:36:59Z",
+      "side": 1,
+      "message": "Let\u0027s not use default.",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 14
       },
       "revId": "fdc54ab788b1582e17a21c1af39838cb23e94ee4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
