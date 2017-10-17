@@ -182,6 +182,11 @@ deps = {
       'condition': 'checkout_ios',
   },
 
+  'src/ios/third_party/material_internationalization_ios/src': {
+      'url': Var('chromium_git') + '/external/github.com/material-foundation/material-internationalization-ios.git' + '@' + 'f34691a78fc9a0607b565062f6d5cf9f8ea268a4',
+      'condition': 'checkout_ios',
+  },
+
   'src/ios/third_party/material_roboto_font_loader_ios/src': {
       'url': Var('chromium_git') + '/external/github.com/material-foundation/material-roboto-font-loader-ios.git' + '@' + '4aa51e906e5671c71d24e991f1f10d782a58409f',
       'condition': 'checkout_ios',
