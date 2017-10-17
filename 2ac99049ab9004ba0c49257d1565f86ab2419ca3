@@ -22,6 +22,30 @@
       "revId": "2ac99049ab9004ba0c49257d1565f86ab2419ca3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c814154_e33f3b81",
+        "filename": "ios/chrome/browser/ui/qr_scanner/camera_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-17T15:23:38Z",
+      "side": 1,
+      "message": "Yes we do. Otherwise it doesn\u0027t compile on 10 as the API no longer exists.",
+      "parentUuid": "c5aec5b4_376d8293",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 10
+      },
+      "revId": "2ac99049ab9004ba0c49257d1565f86ab2419ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
