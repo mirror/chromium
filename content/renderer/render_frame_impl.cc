@@ -849,10 +849,6 @@ void MaybeHandleDebugURL(const GURL& url) {
                << url.spec();
     CHECK(false);
   }
-
-#if defined(ADDRESS_SANITIZER) || defined(SYZYASAN)
-  MaybeTriggerAsanError(url);
-#endif  // ADDRESS_SANITIZER || SYZYASAN
 }
 
 struct RenderFrameImpl::PendingFileChooser {
@@ -5331,7 +5327,8 @@ void RenderFrameImpl::OnFailedNavigation(
   bool is_reload =
       FrameMsg_Navigate_Type::IsReload(common_params.navigation_type);
   RenderFrameImpl::PrepareRenderViewForNavigation(
-      common_params.url, request_params);
+      common_params.url, request_params,
+      error_code != net::ERR_BLOCKED_BY_ADMINISTRATOR);
 
   GetContentClient()->SetActiveURL(common_params.url);
 
@@ -6445,10 +6442,17 @@ void RenderFrameImpl::InitializeUserMediaClient() {
 
 void RenderFrameImpl::PrepareRenderViewForNavigation(
     const GURL& url,
-    const RequestNavigationParams& request_params) {
+    const RequestNavigationParams& request_params,
+    const bool handle_debug_url) {
   DCHECK(render_view_->webview());
 
-  MaybeHandleDebugURL(url);
+  if (handle_debug_url) {
+    MaybeHandleDebugURL(url);
+  }
+
+#if defined(ADDRESS_SANITIZER) || defined(SYZYASAN)
+  MaybeTriggerAsanError(url);
+#endif  // ADDRESS_SANITIZER || SYZYASAN
 
   if (is_main_frame_) {
     for (auto& observer : render_view_->observers_)
