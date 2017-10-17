@@ -156,7 +156,7 @@ void CoordinatorImpl::BindCoordinatorRequest(
 }
 
 void CoordinatorImpl::RequestGlobalMemoryDump(
-    const base::trace_event::MemoryDumpRequestArgs& args_in,
+    const base::trace_event::GlobalMemoryDumpRequestArgs& args_in,
     const RequestGlobalMemoryDumpCallback& callback) {
   // This merely strips out the |dump_guid| argument.
   auto callback_adapter = [](const RequestGlobalMemoryDumpCallback& callback,
@@ -169,7 +169,7 @@ void CoordinatorImpl::RequestGlobalMemoryDump(
 }
 
 void CoordinatorImpl::RequestGlobalMemoryDumpAndAppendToTrace(
-    const base::trace_event::MemoryDumpRequestArgs& args_in,
+    const base::trace_event::GlobalMemoryDumpRequestArgs& args_in,
     const RequestGlobalMemoryDumpAndAppendToTraceCallback& callback) {
   // This merely strips out the |dump_ptr| argument.
   auto callback_adapter =
@@ -182,8 +182,8 @@ void CoordinatorImpl::RequestGlobalMemoryDumpAndAppendToTrace(
 
 void CoordinatorImpl::GetVmRegionsForHeapProfiler(
     const GetVmRegionsForHeapProfilerCallback& callback) {
-  base::trace_event::MemoryDumpRequestArgs args{
-      0 /* dump_guid */, base::trace_event::MemoryDumpType::VM_REGIONS_ONLY,
+  base::trace_event::GlobalMemoryDumpRequestArgs args{
+      base::trace_event::MemoryDumpType::VM_REGIONS_ONLY,
       base::trace_event::MemoryDumpLevelOfDetail::DETAILED};
   RequestGlobalMemoryDump(args, callback);
 }
@@ -229,7 +229,7 @@ void CoordinatorImpl::UnregisterClientProcess(
 }
 
 void CoordinatorImpl::RequestGlobalMemoryDumpInternal(
-    const base::trace_event::MemoryDumpRequestArgs& args_in,
+    const base::trace_event::GlobalMemoryDumpRequestArgs& args_in,
     bool add_to_trace,
     const RequestGlobalMemoryDumpInternalCallback& callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -239,11 +239,10 @@ void CoordinatorImpl::RequestGlobalMemoryDumpInternal(
 
   bool another_dump_is_queued = !queued_memory_dump_requests_.empty();
 
-  // TODO(primiano): remove dump_guid from the request. For the moment callers
-  // should just pass a zero |dump_guid| in input. It should be an out-only arg.
-  DCHECK_EQ(0u, args_in.dump_guid);
-  base::trace_event::MemoryDumpRequestArgs args = args_in;
+  base::trace_event::MemoryDumpRequestArgs args;
   args.dump_guid = ++next_dump_id_;
+  args.dump_type = args_in.dump_type;
+  args.level_of_detail = args_in.level_of_detail;
 
   // If this is a periodic or peak memory dump request and there already is
   // another request in the queue with the same level of detail, there's no
@@ -292,13 +291,14 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
 
   request->start_time = base::Time::Now();
 
-  TRACE_EVENT_NESTABLE_ASYNC_BEGIN2(
-      base::trace_event::MemoryDumpManager::kTraceCategory, "GlobalMemoryDump",
-      TRACE_ID_LOCAL(request->args.dump_guid), "dump_type",
-      base::trace_event::MemoryDumpTypeToString(request->args.dump_type),
-      "level_of_detail",
-      base::trace_event::MemoryDumpLevelOfDetailToString(
-          request->args.level_of_detail));
+  // TRACE_EVENT_NESTABLE_ASYNC_BEGIN2(
+  //    base::trace_event::MemoryDumpManager::kTraceCategory,
+  //    "GlobalMemoryDump", TRACE_ID_LOCAL(request->args.dump_guid),
+  //    "dump_type",
+  //    base::trace_event::MemoryDumpTypeToString(request->args.dump_type),
+  //    "level_of_detail",
+  //    base::trace_event::MemoryDumpLevelOfDetailToString(
+  //        request->args.level_of_detail));
 
   request->failed_memory_dump_count = 0;
 

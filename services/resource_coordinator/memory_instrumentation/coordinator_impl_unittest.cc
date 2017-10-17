@@ -46,6 +46,7 @@ using base::trace_event::MemoryDumpLevelOfDetail;
 using base::trace_event::ProcessMemoryDump;
 using base::trace_event::MemoryAllocatorDump;
 using base::trace_event::MemoryDumpRequestArgs;
+using base::trace_event::GlobalMemoryDumpRequestArgs;
 
 namespace memory_instrumentation {
 
@@ -84,7 +85,7 @@ class CoordinatorImplTest : public testing::Test {
                                         process_type);
   }
 
-  void RequestGlobalMemoryDump(MemoryDumpRequestArgs args,
+  void RequestGlobalMemoryDump(GlobalMemoryDumpRequestArgs args,
                                RequestGlobalMemoryDumpCallback callback) {
     coordinator_->RequestGlobalMemoryDump(args, callback);
   }
@@ -212,8 +213,8 @@ mojom::RawOSMemDumpPtr FillRawOSDump(int pid) {
 
 // Tests that the global dump is acked even in absence of clients.
 TEST_F(CoordinatorImplTest, NoClients) {
-  base::trace_event::MemoryDumpRequestArgs args = {
-      0, base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
+  base::trace_event::GlobalMemoryDumpRequestArgs args = {
+      base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
       MemoryDumpLevelOfDetail::DETAILED};
 
   MockGlobalMemoryDumpCallback callback;
@@ -231,8 +232,8 @@ TEST_F(CoordinatorImplTest, SeveralClients) {
   EXPECT_CALL(client_process_1, RequestChromeMemoryDump(_, _)).Times(1);
   EXPECT_CALL(client_process_2, RequestChromeMemoryDump(_, _)).Times(1);
 
-  base::trace_event::MemoryDumpRequestArgs args = {
-      0, base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
+  base::trace_event::GlobalMemoryDumpRequestArgs args = {
+      base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
       MemoryDumpLevelOfDetail::DETAILED};
 
   MockGlobalMemoryDumpCallback callback;
@@ -245,8 +246,8 @@ TEST_F(CoordinatorImplTest, SeveralClients) {
 TEST_F(CoordinatorImplTest, MissingChromeDump) {
   base::RunLoop run_loop;
 
-  base::trace_event::MemoryDumpRequestArgs args = {
-      0, base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
+  base::trace_event::GlobalMemoryDumpRequestArgs args = {
+      base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
       MemoryDumpLevelOfDetail::DETAILED};
 
   NiceMock<MockClientProcess> client_process(this, 1,
@@ -275,8 +276,8 @@ TEST_F(CoordinatorImplTest, MissingChromeDump) {
 TEST_F(CoordinatorImplTest, MissingOsDump) {
   base::RunLoop run_loop;
 
-  base::trace_event::MemoryDumpRequestArgs args = {
-      0, base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
+  base::trace_event::GlobalMemoryDumpRequestArgs args = {
+      base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
       MemoryDumpLevelOfDetail::DETAILED};
 
   NiceMock<MockClientProcess> client_process(this, 1,
@@ -305,8 +306,8 @@ TEST_F(CoordinatorImplTest, MissingOsDump) {
 TEST_F(CoordinatorImplTest, ClientCrashDuringGlobalDump) {
   base::RunLoop run_loop;
 
-  base::trace_event::MemoryDumpRequestArgs args = {
-      0, base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
+  base::trace_event::GlobalMemoryDumpRequestArgs args = {
+      base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
       MemoryDumpLevelOfDetail::DETAILED};
 
   auto client_process_1 = base::MakeUnique<NiceMock<MockClientProcess>>(
@@ -350,8 +351,8 @@ TEST_F(CoordinatorImplTest, ClientCrashDuringGlobalDump) {
 TEST_F(CoordinatorImplTest, SingleClientCrashDuringGlobalDump) {
   base::RunLoop run_loop;
 
-  base::trace_event::MemoryDumpRequestArgs args = {
-      0, base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
+  base::trace_event::GlobalMemoryDumpRequestArgs args = {
+      base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
       MemoryDumpLevelOfDetail::DETAILED};
 
   auto client_process = base::MakeUnique<NiceMock<MockClientProcess>>(
@@ -511,8 +512,8 @@ TEST_F(CoordinatorImplTest, GlobalMemoryDumpStruct) {
         run_loop.Quit();
       }));
 
-  base::trace_event::MemoryDumpRequestArgs args = {
-      0, base::trace_event::MemoryDumpType::SUMMARY_ONLY,
+  base::trace_event::GlobalMemoryDumpRequestArgs args = {
+      base::trace_event::MemoryDumpType::SUMMARY_ONLY,
       MemoryDumpLevelOfDetail::BACKGROUND};
   RequestGlobalMemoryDump(args, callback.Get());
   run_loop.Run();
