@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8f7b0802_29abdde3",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-17T21:56:39Z",
+      "side": 1,
+      "message": "I already wrote the new CL and uploaded it, so I\u0027ll add both of you as reviewers if it passes try bots and we can discuss from there.",
+      "parentUuid": "b35bfffc_bc20cda2",
+      "revId": "10247e9f7a08b9d83ca42e98e199c68d14323b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b76fc469_1b1a1f29",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 2
