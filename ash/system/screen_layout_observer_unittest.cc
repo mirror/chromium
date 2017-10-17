@@ -10,6 +10,7 @@
 #include "ash/system/web_notification/web_notification_tray.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
+#include "base/command_line.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -18,6 +19,7 @@
 #include "ui/chromeos/devicetype_utils.h"
 #include "ui/display/display.h"
 #include "ui/display/display_layout_builder.h"
+#include "ui/display/display_switches.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
@@ -33,6 +35,8 @@ class ScreenLayoutObserverTest : public AshTestBase {
 
  protected:
   void SetUp() override {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        ::switches::kEnableMultiDisplayMirroring);
     AshTestBase::SetUp();
     WebNotificationTray::DisableAnimationsForTest(true);
   }
@@ -97,6 +101,10 @@ base::string16 ScreenLayoutObserverTest::GetSecondDisplayName() {
 }
 
 base::string16 ScreenLayoutObserverTest::GetMirroringDisplayName() {
+  if (display_manager()->is_multi_display_mirroring_enabled()) {
+    return base::UTF8ToUTF16(display_manager()->GetDisplayNameForId(
+        display_manager()->GetMirroringDisplayIdList()[0]));
+  }
   return base::UTF8ToUTF16(display_manager()->GetDisplayNameForId(
       display_manager()->mirroring_display_id()));
 }

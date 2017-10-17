@@ -602,9 +602,12 @@ void DisplayInfoProviderChromeOS::UpdateDisplayUnitInfoForPlatform(
   display::DisplayManager* display_manager =
       ash::Shell::Get()->display_manager();
   unit->name = display_manager->GetDisplayNameForId(display.id());
-  if (display_manager->IsInMirrorMode()) {
-    unit->mirroring_source_id =
-        base::Int64ToString(display_manager->mirroring_display_id());
+  if (display_manager->is_multi_display_mirroring_enabled() &&
+      display_manager->IsInSoftwareMirrorMode()) {
+    unit->mirroring_source_id = display_manager->mirroring_source_id();
+  } else if (!display_manager->is_multi_display_mirroring_enabled() &&
+             display_manager->IsInMirrorMode()) {
+    unit->mirroring_source_id = display_manager->mirroring_display_id();
   }
 
   const display::ManagedDisplayInfo& display_info =

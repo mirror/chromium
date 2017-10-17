@@ -43,6 +43,8 @@ class MirrorOnBootTest : public AshTestBase {
         ::switches::kHostWindowBounds, "1+1-300x300,1+301-300x300");
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         ::switches::kEnableSoftwareMirroring);
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        ::switches::kEnableMultiDisplayMirroring);
     AshTestBase::SetUp();
   }
   void TearDown() override { AshTestBase::TearDown(); }
@@ -55,6 +57,13 @@ class MirrorOnBootTest : public AshTestBase {
 using MirrorWindowControllerTest = AshTestBase;
 
 TEST_F(MirrorWindowControllerTest, MirrorCursorBasic) {
+  if (display_manager()->is_multi_display_mirroring_enabled()) {
+    // TODO(weidongg/774795) Remove tis test when multi display mirroring is
+    // enabled by default, because cursor compositing will be enabled for
+    // software mirroring.
+    return;
+  }
+
   MirrorWindowTestApi test_api;
   aura::test::TestWindowDelegate test_window_delegate;
   test_window_delegate.set_window_component(HTTOP);
@@ -101,6 +110,13 @@ TEST_F(MirrorWindowControllerTest, MirrorCursorBasic) {
 }
 
 TEST_F(MirrorWindowControllerTest, MirrorCursorRotate) {
+  if (display_manager()->is_multi_display_mirroring_enabled()) {
+    // TODO(weidongg/774795) Remove tis test when multi display mirroring is
+    // enabled by default, because cursor compositing will be enabled for
+    // software mirroring.
+    return;
+  }
+
   MirrorWindowTestApi test_api;
   aura::test::TestWindowDelegate test_window_delegate;
   test_window_delegate.set_window_component(HTTOP);
@@ -155,6 +171,13 @@ TEST_F(MirrorWindowControllerTest, MirrorCursorRotate) {
 // the source display's host location in the mirror root window's
 // coordinates.
 TEST_F(MirrorWindowControllerTest, MirrorCursorLocations) {
+  if (display_manager()->is_multi_display_mirroring_enabled()) {
+    // TODO(weidongg/774795) Remove tis test when multi display mirroring is
+    // enabled by default, because cursor compositing will be enabled for
+    // software mirroring.
+    return;
+  }
+
   MirrorWindowTestApi test_api;
   display_manager()->SetMultiDisplayMode(display::DisplayManager::MIRRORING);
 
@@ -189,6 +212,13 @@ TEST_F(MirrorWindowControllerTest, MirrorCursorLocations) {
 // Test the behavior of the cursor when entering software mirror mode swaps the
 // cursor's display.
 TEST_F(MirrorWindowControllerTest, MirrorCursorMoveOnEnter) {
+  if (display_manager()->is_multi_display_mirroring_enabled()) {
+    // TODO(weidongg/774795) Remove tis test when multi display mirroring is
+    // enabled by default, because cursor compositing will be enabled for
+    // software mirroring.
+    return;
+  }
+
   aura::Env* env = aura::Env::GetInstance();
   Shell* shell = Shell::Get();
   WindowTreeHostManager* window_tree_host_manager =
@@ -259,7 +289,10 @@ TEST_F(MirrorWindowControllerTest, DockMode) {
 
   EXPECT_EQ(1U, display_manager()->GetNumDisplays());
   EXPECT_TRUE(display_manager()->IsInMirrorMode());
-  EXPECT_EQ(external_id, display_manager()->mirroring_display_id());
+  if (display_manager()->is_multi_display_mirroring_enabled())
+    EXPECT_EQ(external_id, display_manager()->GetMirroringDisplayIdList()[0]);
+  else
+    EXPECT_EQ(external_id, display_manager()->mirroring_display_id());
 
   // dock mode.
   display_info_list.clear();
@@ -277,7 +310,10 @@ TEST_F(MirrorWindowControllerTest, DockMode) {
   display_manager()->OnNativeDisplaysChanged(display_info_list);
   EXPECT_EQ(1U, display_manager()->GetNumDisplays());
   EXPECT_TRUE(display_manager()->IsInMirrorMode());
-  EXPECT_EQ(external_id, display_manager()->mirroring_display_id());
+  if (display_manager()->is_multi_display_mirroring_enabled())
+    EXPECT_EQ(external_id, display_manager()->GetMirroringDisplayIdList()[0]);
+  else
+    EXPECT_EQ(external_id, display_manager()->mirroring_display_id());
 }
 
 TEST_F(MirrorOnBootTest, MirrorOnBoot) {

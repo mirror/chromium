@@ -34,6 +34,11 @@ class ASH_EXPORT CursorWindowController {
 
   void SetLargeCursorSizeInDip(int large_cursor_size_in_dip);
 
+  // If at least one of the features that use cursor compositing is enabled, it
+  // should not be disabled. Future features that require cursor compositing
+  // should be added in this function.
+  bool ShouldEnableCursorCompositing();
+
   // Sets cursor compositing mode on/off.
   void SetCursorCompositingEnabled(bool enabled);
 
@@ -69,8 +74,11 @@ class ASH_EXPORT CursorWindowController {
 
   const gfx::ImageSkia& GetCursorImageForTest() const;
 
-  bool is_cursor_compositing_enabled_;
+  bool is_cursor_compositing_enabled_ = false;
   aura::Window* container_;
+
+  // If true, cursor_compositing will be always enabled. (For test only)
+  bool is_cursor_compositing_enabled_for_test_ = false;
 
   // The bounds of the container in screen coordinates.
   gfx::Rect bounds_in_screen_;
