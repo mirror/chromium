@@ -1113,6 +1113,27 @@ util.isDropEffectAllowed = function(effectAllowed, dropEffect) {
 };
 
 /**
+ * Checks if the specified string contains only printable ASCII characters (from
+ * ' ' to '~').
+ *
+ * @param {string} text The input string.
+ * @return {string|null} String if |text| contains invalid character, otherwise
+ *     null.
+ */
+util.isPrintable = function(text) {
+  if (text == null)
+    return null;
+
+  for (var i = 0; i < text.length; i++) {
+    var charCode = text.charCodeAt(i);
+    if (!(charCode >= 32 && charCode <= 126))
+      return text[i];
+  }
+
+  return null;
+};
+
+/**
  * Verifies the user entered name for file or folder to be created or
  * renamed to. Name restrictions must correspond to File API restrictions
  * (see DOMFilePath::isValidPath). Curernt WebKit implementation is
@@ -1192,11 +1213,10 @@ util.validateExternalDriveName = function(name, volumeInfo) {
   }
 
   // Only printable ASCII (from ' ' to '~')
-  var containsNonPrintableAscii = /[\x00-\x1F\x7F-\x7F]/.exec(name);
+  var containsNonPrintableAscii = util.isPrintable(name);
   if (containsNonPrintableAscii) {
     return Promise.reject(strf(
-        'ERROR_EXTERNAL_DRIVE_INVALID_CHARACTER',
-        containsNonPrintableAscii[0]));
+        'ERROR_EXTERNAL_DRIVE_INVALID_CHARACTER', containsNonPrintableAscii));
   }
 
   var containsForbiddenCharacters =
