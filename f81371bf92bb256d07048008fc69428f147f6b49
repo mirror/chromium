@@ -187,6 +187,30 @@
       "revId": "f81371bf92bb256d07048008fc69428f147f6b49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4892124e_37c26c78",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_database_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-17T14:04:33Z",
+      "side": 1,
+      "message": "something like (but only here)\n\n|suggestion_db| is a fake and it passes data parameters to the callback by itself.\n\nFeel free to ignore if this is a general approach. I just had to look it up.",
+      "parentUuid": "8b70adcb_733301d3",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 38
+      },
+      "revId": "f81371bf92bb256d07048008fc69428f147f6b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
