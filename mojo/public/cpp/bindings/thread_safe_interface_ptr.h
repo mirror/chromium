@@ -217,9 +217,15 @@ class ThreadSafeForwarder : public MessageReceiverWithResponder {
     explicit ForwardToCallingThread(std::unique_ptr<MessageReceiver> responder)
         : responder_(std::move(responder)),
           caller_task_runner_(base::SequencedTaskRunnerHandle::Get()) {}
+    ~ForwardToCallingThread() override {
+      caller_task_runner_->PostTask(
+          FROM_HERE,
+          base::Bind([](std::unique_ptr<MessageReceiver> responder) {},
+                     base::Passed(std::move(responder_))));
+    }
 
    private:
-    bool Accept(Message* message) {
+    bool Accept(Message* message) override {
       // The current instance will be deleted when this method returns, so we
       // have to relinquish the responder's ownership so it does not get
       // deleted.
