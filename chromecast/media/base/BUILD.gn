@@ -58,7 +58,6 @@ source_set("base") {
   deps = [
     "//base",
     "//chromecast/base",
-    "//chromecast/media:libcast_media",
     "//crypto",
     "//crypto:platform",
     "//media",

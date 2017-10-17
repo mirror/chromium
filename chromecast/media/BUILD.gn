@@ -32,6 +32,10 @@ group("libcast_media") {
     deps = [
       "//chromecast/media/cma/backend:libcast_media_1.0",
     ]
+    if (is_fuchsia) {
+      deps +=
+          [ "//chromecast/media/cma/backend/fuchsia:libcast_media_1.0_fuchsia" ]
+    }
   }
 }
 

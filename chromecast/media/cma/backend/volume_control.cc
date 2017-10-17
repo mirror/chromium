@@ -205,7 +205,7 @@ class VolumeControlInternal : public SystemVolumeControl::Delegate {
       // from the ALSA mixer element(s).
       volumes_[AudioContentType::kMedia] = system_volume_control_->GetVolume();
       muted_[AudioContentType::kMedia] = system_volume_control_->IsMuted();
-    } else {
+    } else if (system_volume_control_) {
       // Otherwise, make sure the ALSA mixer element correctly reflects the
       // current volume state.
       system_volume_control_->SetVolume(volumes_[AudioContentType::kMedia]);
@@ -235,7 +235,8 @@ class VolumeControlInternal : public SystemVolumeControl::Delegate {
       StreamMixer::Get()->SetVolume(type, DbFsToScale(dbfs));
     }
 
-    if (!from_system && type == AudioContentType::kMedia) {
+    if (system_volume_control_ && !from_system &&
+        type == AudioContentType::kMedia) {
       system_volume_control_->SetVolume(level);
     }
 
@@ -264,7 +265,8 @@ class VolumeControlInternal : public SystemVolumeControl::Delegate {
       StreamMixer::Get()->SetMuted(type, muted);
     }
 
-    if (!from_system && type == AudioContentType::kMedia) {
+    if (system_volume_control_ && !from_system &&
+        type == AudioContentType::kMedia) {
       system_volume_control_->SetMuted(muted);
     }
 
