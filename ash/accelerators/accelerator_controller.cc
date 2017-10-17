@@ -26,6 +26,7 @@
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
+#include "ash/message_center/message_center_controller.h"
 #include "ash/shell_delegate.h"
 #include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -73,7 +74,6 @@
 #include "ui/display/screen.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/keyboard/keyboard_controller.h"
-#include "ui/message_center/message_center.h"
 
 namespace ash {
 
@@ -169,7 +169,7 @@ void ShowDeprecatedAcceleratorNotification(const char* const notification_id,
           message_center::RichNotificationData(),
           new DeprecatedAcceleratorNotificationDelegate,
           kNotificationSettingsIcon, SystemNotificationWarningLevel::NORMAL);
-  message_center::MessageCenter::Get()->AddNotification(
+  Shell::Get()->message_center_controller()->AddNotification(
       std::move(notification));
 }
 
@@ -755,11 +755,11 @@ void HandleToggleHighContrast() {
             message_center::RichNotificationData(), nullptr,
             kNotificationAccessibilityIcon,
             SystemNotificationWarningLevel::NORMAL);
-    message_center::MessageCenter::Get()->AddNotification(
+    Shell::Get()->message_center_controller()->AddNotification(
         std::move(notification));
   } else {
-    message_center::MessageCenter::Get()->RemoveNotification(
-        kHighContrastToggleAccelNotificationId, false /* by_user */);
+    Shell::Get()->message_center_controller()->RemoveNotification(
+        kHighContrastToggleAccelNotificationId);
   }
 
   controller->SetHighContrastEnabled(will_be_enabled);

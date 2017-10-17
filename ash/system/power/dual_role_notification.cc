@@ -6,6 +6,7 @@
 
 #include <set>
 
+#include "ash/message_center/message_center_controller.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
@@ -49,14 +50,12 @@ class DualRoleNotificationDelegate
 
 }  // namespace
 
-DualRoleNotification::DualRoleNotification(MessageCenter* message_center)
-    : message_center_(message_center),
-      num_dual_role_sinks_(0),
-      line_power_connected_(false) {}
+DualRoleNotification::DualRoleNotification()
+    : num_dual_role_sinks_(0), line_power_connected_(false) {}
 
 DualRoleNotification::~DualRoleNotification() {
-  if (message_center_->FindVisibleNotificationById(kDualRoleNotificationId))
-    message_center_->RemoveNotification(kDualRoleNotificationId, false);
+  Shell::Get()->message_center_controller()->RemoveNotification(
+      kDualRoleNotificationId);
 }
 
 void DualRoleNotification::Update() {
@@ -73,8 +72,8 @@ void DualRoleNotification::Update() {
     if (source.type == PowerStatus::DEDICATED_CHARGER) {
       dual_role_source_.reset();
       line_power_connected_ = true;
-      if (message_center_->FindVisibleNotificationById(kDualRoleNotificationId))
-        message_center_->RemoveNotification(kDualRoleNotificationId, false);
+      Shell::Get()->message_center_controller()->RemoveNotification(
+          kDualRoleNotificationId);
       return;
     }
 
@@ -118,12 +117,8 @@ void DualRoleNotification::Update() {
   if (!change)
     return;
 
-  if (!message_center_->FindVisibleNotificationById(kDualRoleNotificationId)) {
-    message_center_->AddNotification(CreateNotification());
-  } else {
-    message_center_->UpdateNotification(kDualRoleNotificationId,
-                                        CreateNotification());
-  }
+  Shell::Get()->message_center_controller()->AddNotification(
+      CreateNotification());
 }
 
 std::unique_ptr<Notification> DualRoleNotification::CreateNotification() {

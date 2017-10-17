@@ -10,6 +10,8 @@
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/shell.h"
+#include "ash/message_center/message_center_controller.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/date/date_view.h"
 #include "ash/system/power/battery_notification.h"
@@ -27,7 +29,6 @@
 #include "ui/chromeos/devicetype_utils.h"
 #include "ui/gfx/image/image_skia_source.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
 #include "ui/message_center/notification_delegate.h"
 #include "ui/views/controls/image_view.h"
@@ -147,9 +148,8 @@ const int TrayPower::kNoWarningPercentage = 15;
 
 const char TrayPower::kUsbNotificationId[] = "usb-charger";
 
-TrayPower::TrayPower(SystemTray* system_tray, MessageCenter* message_center)
+TrayPower::TrayPower(SystemTray* system_tray)
     : SystemTrayItem(system_tray, UMA_POWER),
-      message_center_(message_center),
       power_tray_(nullptr),
       notification_state_(NOTIFICATION_NONE),
       usb_charger_was_connected_(false),
@@ -160,7 +160,8 @@ TrayPower::TrayPower(SystemTray* system_tray, MessageCenter* message_center)
 
 TrayPower::~TrayPower() {
   PowerStatus::Get()->RemoveObserver(this);
-  message_center_->RemoveNotification(kUsbNotificationId, false);
+  Shell::Get()->message_center_controller()->RemoveNotification(
+      kUsbNotificationId);
 }
 
 views::View* TrayPower::CreateTrayView(LoginStatus status) {
@@ -202,7 +203,7 @@ void TrayPower::OnPowerStatusChanged() {
     // without it being shown again.
     battery_notification_.reset();
     battery_notification_.reset(
-        new BatteryNotification(message_center_, notification_state_));
+        new BatteryNotification(notification_state_));
   } else if (notification_state_ == NOTIFICATION_NONE) {
     battery_notification_.reset();
   } else if (battery_notification_.get()) {
@@ -239,12 +240,14 @@ bool TrayPower::MaybeShowUsbChargerNotification() {
     // TODO(tetsui): Workaround of https://crbug.com/757724. Remove after the
     // bug is fixed.
     notification->set_vector_small_image(gfx::kNoneIcon);
-    message_center_->AddNotification(std::move(notification));
+    Shell::Get()->message_center_controller()->AddNotification(
+        std::move(notification));
     return true;
   } else if (!usb_charger_is_connected && usb_charger_was_connected_) {
     // USB charger was unplugged or was identified as a different type while
     // the USB charger notification was showing.
-    message_center_->RemoveNotification(kUsbNotificationId, false);
+    Shell::Get()->message_center_controller()->RemoveNotification(
+        kUsbNotificationId);
     if (!status.IsLinePowerConnected())
       usb_notification_dismissed_ = false;
     return true;
@@ -260,7 +263,7 @@ void TrayPower::MaybeShowDualRoleNotification() {
   }
 
   if (!dual_role_notification_)
-    dual_role_notification_.reset(new DualRoleNotification(message_center_));
+    dual_role_notification_.reset(new DualRoleNotification());
   dual_role_notification_->Update();
 }
 

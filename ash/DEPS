@@ -76,6 +76,10 @@ include_rules = [
   # SessionManager/UserManager is not part of ash. Use SessionController.
   "-components/session_manager/core",
   "-components/user_manager/user_manager.h",
+
+  # Access to the message center should funnel through ash's
+  # MessageCenterController.
+  "-ui/message_center/message_center.h",
 ]
 
 specific_include_rules = {

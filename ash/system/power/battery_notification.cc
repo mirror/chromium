@@ -4,6 +4,8 @@
 
 #include "ash/system/power/battery_notification.h"
 
+#include "ash/shell.h"
+#include "ash/message_center/message_center_controller.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -17,10 +19,8 @@
 #include "ui/base/l10n/time_format.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image.h"
-#include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
 
-using message_center::MessageCenter;
 using message_center::Notification;
 
 namespace ash {
@@ -127,23 +127,20 @@ std::unique_ptr<Notification> CreateNotification(
 }  // namespace
 
 BatteryNotification::BatteryNotification(
-    MessageCenter* message_center,
-    TrayPower::NotificationState notification_state)
-    : message_center_(message_center) {
-  message_center_->AddNotification(CreateNotification(notification_state));
+    TrayPower::NotificationState notification_state) {
+  Shell::Get()->message_center_controller()->AddNotification(
+      CreateNotification(notification_state));
 }
 
 BatteryNotification::~BatteryNotification() {
-  if (message_center_->FindVisibleNotificationById(kBatteryNotificationId))
-    message_center_->RemoveNotification(kBatteryNotificationId, false);
+  Shell::Get()->message_center_controller()->RemoveNotification(
+      kBatteryNotificationId);
 }
 
 void BatteryNotification::Update(
     TrayPower::NotificationState notification_state) {
-  if (message_center_->FindVisibleNotificationById(kBatteryNotificationId)) {
-    message_center_->UpdateNotification(kBatteryNotificationId,
-                                        CreateNotification(notification_state));
-  }
+  Shell::Get()->message_center_controller()->UpdateNotification(
+      CreateNotification(notification_state));
 }
 
 }  // namespace ash

@@ -11,10 +11,6 @@
 #include "ash/system/tray/system_tray_item.h"
 #include "base/macros.h"
 
-namespace message_center {
-class MessageCenter;
-}
-
 namespace ash {
 
 class BatteryNotification;
@@ -49,8 +45,7 @@ class ASH_EXPORT TrayPower : public SystemTrayItem,
 
   static const char kUsbNotificationId[];
 
-  TrayPower(SystemTray* system_tray,
-            message_center::MessageCenter* message_center);
+  explicit TrayPower(SystemTray* system_tray);
   ~TrayPower() override;
 
   void NotifyUsbNotificationClosedByUser();
@@ -89,7 +84,6 @@ class ASH_EXPORT TrayPower : public SystemTrayItem,
   bool UpdateNotificationStateForRemainingTime();
   bool UpdateNotificationStateForRemainingPercentage();
 
-  message_center::MessageCenter* message_center_;  // Not owned.
   tray::PowerTrayView* power_tray_;
   std::unique_ptr<BatteryNotification> battery_notification_;
   std::unique_ptr<DualRoleNotification> dual_role_notification_;

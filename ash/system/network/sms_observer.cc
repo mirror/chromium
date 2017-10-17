@@ -6,14 +6,15 @@
 
 #include <memory>
 
+#include "ash/message_center/message_center_controller.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/shell.h"
 #include "ash/system/system_notifier.h"
 #include "ash/system/tray/tray_constants.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chromeos/network/network_event_log.h"
 #include "chromeos/network/network_handler.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/message_center/message_center.h"
 
 using chromeos::NetworkHandler;
 
@@ -27,26 +28,22 @@ void ShowNotification(const base::DictionaryValue* message,
                       const std::string& message_text,
                       const std::string& message_number,
                       int message_id) {
-  message_center::MessageCenter* message_center =
-      message_center::MessageCenter::Get();
-  if (!message_center)
-    return;
-
   const char kNotificationId[] = "chrome://network/sms";
-  std::unique_ptr<message_center::Notification> notification;
-
-  notification = system_notifier::CreateSystemNotification(
-      message_center::NOTIFICATION_TYPE_SIMPLE,
-      kNotificationId + std::to_string(message_id),
-      base::ASCIIToUTF16(message_number), base::ASCIIToUTF16(message_text),
-      gfx::Image(gfx::CreateVectorIcon(kSystemMenuSmsIcon, kMenuIconSize,
-                                       kMenuIconColor)),
-      base::string16(), GURL(),
-      message_center::NotifierId(message_center::NotifierId::APPLICATION,
-                                 system_notifier::kNotifierSms),
-      message_center::RichNotificationData(), nullptr, kNotificationSmsSyncIcon,
-      message_center::SystemNotificationWarningLevel::NORMAL);
-  message_center->AddNotification(std::move(notification));
+  std::unique_ptr<message_center::Notification> notification =
+      system_notifier::CreateSystemNotification(
+          message_center::NOTIFICATION_TYPE_SIMPLE,
+          kNotificationId + std::to_string(message_id),
+          base::ASCIIToUTF16(message_number), base::ASCIIToUTF16(message_text),
+          gfx::Image(gfx::CreateVectorIcon(kSystemMenuSmsIcon, kMenuIconSize,
+                                           kMenuIconColor)),
+          base::string16(), GURL(),
+          message_center::NotifierId(message_center::NotifierId::APPLICATION,
+                                     system_notifier::kNotifierSms),
+          message_center::RichNotificationData(), nullptr,
+          kNotificationSmsSyncIcon,
+          message_center::SystemNotificationWarningLevel::NORMAL);
+  Shell::Get()->message_center_controller()->AddNotification(
+      std::move(notification));
 }
 
 }  // namespace

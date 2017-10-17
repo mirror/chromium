@@ -523,10 +523,12 @@ void MessageCenterImpl::ClickOnNotification(const std::string& id) {
   if (HasPopupNotifications())
     MarkSinglePopupAsShown(id, true);
 #endif
+#if 0
   scoped_refptr<NotificationDelegate> delegate =
       notification_list_->GetNotificationDelegate(id);
   if (delegate.get())
     delegate->Click();
+#endif
   {
     internal::ScopedNotificationsIterationLock lock(this);
     for (auto& observer : observer_list_)
@@ -544,10 +546,12 @@ void MessageCenterImpl::ClickOnNotificationButton(const std::string& id,
   if (HasPopupNotifications())
     MarkSinglePopupAsShown(id, true);
 #endif
+#if 0
   scoped_refptr<NotificationDelegate> delegate =
       notification_list_->GetNotificationDelegate(id);
   if (delegate.get())
     delegate->ButtonClick(button_index);
+#endif
   {
     internal::ScopedNotificationsIterationLock lock(this);
     for (auto& observer : observer_list_)

@@ -4,6 +4,7 @@
 
 #include "ash/system/network/tray_network.h"
 
+#include "ash/message_center/message_center_controller.h"
 #include "ash/metrics/user_metrics_recorder.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -28,7 +29,6 @@
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/image/image_skia_operations.h"
-#include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/link.h"
@@ -296,12 +296,9 @@ void TrayNetwork::RequestToggleWifi() {
       enabled ? UMA_STATUS_AREA_DISABLE_WIFI : UMA_STATUS_AREA_ENABLE_WIFI);
   handler->SetTechnologyEnabled(NetworkTypePattern::WiFi(), !enabled,
                                 chromeos::network_handler::ErrorCallback());
-  message_center::MessageCenter* message_center =
-      message_center::MessageCenter::Get();
-  if (message_center->FindVisibleNotificationById(
-          tray::kWifiToggleNotificationId)) {
-    message_center->RemoveNotification(tray::kWifiToggleNotificationId, false);
-  }
+  MessageCenterController* message_center =
+      Shell::Get()->message_center_controller();
+  message_center->RemoveNotification(tray::kWifiToggleNotificationId);
   message_center->AddNotification(tray::CreateNotification(!enabled));
 }
 

@@ -14,7 +14,6 @@
 #include "base/macros.h"
 
 namespace message_center {
-class MessageCenter;
 class Notification;
 }
 
@@ -24,7 +23,7 @@ namespace ash {
 // devices are connected.
 class ASH_EXPORT DualRoleNotification {
  public:
-  explicit DualRoleNotification(message_center::MessageCenter* message_center);
+  DualRoleNotification();
   ~DualRoleNotification();
 
   // Creates or updates the notification.
@@ -34,7 +33,6 @@ class ASH_EXPORT DualRoleNotification {
   // Creates the notification using the updated status.
   std::unique_ptr<message_center::Notification> CreateNotification();
 
-  message_center::MessageCenter* message_center_;
   std::unique_ptr<PowerStatus::PowerSource> dual_role_source_;
   std::unique_ptr<PowerStatus::PowerSource> dual_role_sink_;
   size_t num_dual_role_sinks_;

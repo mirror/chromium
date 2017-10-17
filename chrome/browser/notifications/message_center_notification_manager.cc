@@ -237,6 +237,23 @@ void MessageCenterNotificationManager::OnNotificationRemoved(
   RemoveProfileNotification(id);
 }
 
+void MessageCenterNotificationManager::OnNotificationClicked(
+    const std::string& id) {
+  // TODO(estade): instead of relying on the NotificationDelegate, call
+  // NotificationDisplayService::ProcessOperation() directly. |this| will have
+  // to know about the notification's type.
+  ProfileNotification* profile_notification = FindProfileNotification(id);
+  if (profile_notification)
+    profile_notification->notification().delegate()->Click();
+}
+
+void MessageCenterNotificationManager::OnNotificationButtonClicked(
+    const std::string& id, int button_index) {
+  ProfileNotification* profile_notification = FindProfileNotification(id);
+  if (profile_notification)
+    profile_notification->notification().delegate()->ButtonClick(button_index);
+}
+
 void MessageCenterNotificationManager::SetMessageCenterTrayDelegateForTest(
     message_center::MessageCenterTrayDelegate* delegate) {
   tray_.reset(delegate);
