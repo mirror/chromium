@@ -41,9 +41,13 @@
        testRunner.waitUntilDone();
      }
 
+     function waitForCompositor() {
+       var result = document.getElementById('result');
+       return result.animate({opacity: ['1', '1']}, 1).finished;
+     }
+
      function animationDone()
      {
-       var animated = document.getElementById('animated');
        var result;
        var expected = "matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -200, 0, 200, 1)";
        var computed = getPropertyValue("transform", "animated");
@@ -53,7 +57,10 @@
          result = "FAIL - Computed final position is incorrect. Expected " + expected + ", got " + computed;
        }
        document.getElementById('result').innerHTML = result;
-       testRunner.notifyDone();
+       waitForCompositor().then(() => {
+         if (window.testRunner)
+           testRunner.notifyDone();
+       });
      }
 
      function animationStarted()

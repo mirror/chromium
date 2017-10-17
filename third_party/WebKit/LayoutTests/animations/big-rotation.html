@@ -9,14 +9,14 @@
       height: 100px;
       width: 100px;
       background-color: blue;
-      animation-duration: 3s;
+      animation-duration: 10s;
       animation-timing-function: linear;
       animation-name: rotate;
       animation-fill-mode: forwards;
     }
     @keyframes rotate {
         from { transform: rotate(0); }
-        to   { transform: rotate(540deg); }
+        to   { transform: rotate(1800deg); }
     }
   </style>
   <script src="resources/animation-test-helpers.js" type="text/javascript" charset="utf-8"></script>
@@ -35,7 +35,7 @@
 </head>
 <body>
 <p>
-This test shows rotation of > 180 degrees. The box should make one and a half rotations.
+This test shows rotation of > 180 degrees. The box should make five rotations.
 <div id="box">
 </div>
 <div id="result">
