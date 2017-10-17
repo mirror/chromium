@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a107af63_75d61bea",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-17T18:35:33Z",
+      "side": 1,
+      "message": "This code is tricky. Is there some way to unify these codepaths at the cost of branches? For example, always use the width\u003d\u003d3 path and then have special logic to skip some of the steps in there?\n\nMostly looking to de-dupe this logic into a single function.",
+      "revId": "d09b112dc0cbc42ebb67c450b5faa663f9c18a23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
