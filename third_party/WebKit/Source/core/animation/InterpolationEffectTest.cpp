@@ -5,11 +5,11 @@
 #include <memory>
 #include "core/animation/AnimationTestHelper.h"
 #include "core/animation/InterpolationEffect.h"
-#include "core/animation/LegacyStyleInterpolation.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
+/*
 namespace {
 
 const double kInterpolationTestDuration = 1.0;
@@ -119,5 +119,6 @@ TEST_F(AnimationInterpolationEffectTest, MultipleInterpolations) {
   EXPECT_EQ(1ul, active_interpolations.size());
   EXPECT_FLOAT_EQ(15, GetInterpolableNumber(active_interpolations.at(0)));
 }
+*/
 
 }  // namespace blink
