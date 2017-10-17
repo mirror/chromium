@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "85d64c96_363b7219",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-10-17T21:02:38Z",
+      "side": 1,
+      "message": "Yeah I think we should ask clurie@ which they would prefer. I think she recommended these more simple messages because they need to be translated into many different languages.",
+      "parentUuid": "dbe7f7a1_581852ce",
+      "revId": "38c9457989a22c686d2848c5c40f74457a8c7b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "683f1546_c56d7336",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 1
@@ -102,6 +120,24 @@
       "writtenOn": "2017-10-17T20:45:40Z",
       "side": 1,
       "message": "Also, this looks like the identical message. Is that intentional?",
+      "revId": "38c9457989a22c686d2848c5c40f74457a8c7b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b1a424_c68e0020",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-10-17T21:02:38Z",
+      "side": 1,
+      "message": "Yes this is intentional, any changes we make to the above error I can make to this one. This message is displayed when there is some fatal system error that occurs when they try to manually add a printer. Similarly the above error message is displayed as a catch-all when an error occurred during an attempt to add a printer but we don\u0027t know what it was.",
+      "parentUuid": "683f1546_c56d7336",
       "revId": "38c9457989a22c686d2848c5c40f74457a8c7b67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
