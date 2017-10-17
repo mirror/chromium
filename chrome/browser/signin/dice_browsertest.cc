@@ -338,6 +338,9 @@ class DiceBrowserTestBase : public InProcessBrowserTest,
       case signin::AccountConsistencyMethod::kDiceFixAuthErrors:
         dice_method_name = "dice_fix_auth_errors";
         break;
+      case signin::AccountConsistencyMethod::kDiceMigration:
+        dice_method_name = "dice_migration";
+        break;
       case signin::AccountConsistencyMethod::kDice:
         dice_method_name = "dice";
         break;

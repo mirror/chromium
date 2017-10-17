@@ -82,6 +82,7 @@ AccountReconcilor::AccountReconcilor(
       is_reconcile_started_(false),
       first_execution_(true),
       error_during_last_reconcile_(false),
+      reconcile_is_noop_(true),
       chrome_accounts_changed_(false),
       account_reconcilor_lock_count_(0),
       reconcile_on_unblock_(false) {
@@ -119,7 +120,7 @@ void AccountReconcilor::Shutdown() {
 }
 
 void AccountReconcilor::RegisterWithSigninManager() {
-  if (signin::IsAccountConsistencyDiceEnabled()) {
+  if (signin::IsAccountConsistencyDiceAvailable()) {
     // Reconcilor is always turned on when DICE is enabled. It does not need to
     // observe the SigninManager events.
     return;
@@ -130,7 +131,7 @@ void AccountReconcilor::RegisterWithSigninManager() {
 }
 
 void AccountReconcilor::UnregisterWithSigninManager() {
-  if (signin::IsAccountConsistencyDiceEnabled())
+  if (signin::IsAccountConsistencyDiceAvailable())
     return;
 
   VLOG(1) << "AccountReconcilor::UnregisterWithSigninManager";
@@ -258,7 +259,7 @@ void AccountReconcilor::OnRefreshTokensLoaded() {
 
 void AccountReconcilor::GoogleSigninSucceeded(const std::string& account_id,
                                               const std::string& username) {
-  DCHECK(!signin::IsAccountConsistencyDiceEnabled());
+  DCHECK(!signin::IsAccountConsistencyDiceAvailable());
   VLOG(1) << "AccountReconcilor::GoogleSigninSucceeded: signed in";
   RegisterWithCookieManagerService();
   RegisterWithContentSettings();
@@ -267,7 +268,7 @@ void AccountReconcilor::GoogleSigninSucceeded(const std::string& account_id,
 
 void AccountReconcilor::GoogleSignedOut(const std::string& account_id,
                                         const std::string& username) {
-  DCHECK(!signin::IsAccountConsistencyDiceEnabled());
+  DCHECK(!signin::IsAccountConsistencyDiceAvailable());
   VLOG(1) << "AccountReconcilor::GoogleSignedOut: signed out";
   AbortReconcile();
   UnregisterWithCookieManagerService();
@@ -276,13 +277,14 @@ void AccountReconcilor::GoogleSignedOut(const std::string& account_id,
   PerformLogoutAllAccountsAction();
 }
 
-bool AccountReconcilor::IsAccountConsistencyEnabled() {
+bool AccountReconcilor::IsAccountConsistencyEnforced() {
   return signin::IsAccountConsistencyMirrorEnabled() ||
-         signin::IsAccountConsistencyDiceAvailable();
+         signin::IsAccountConsistencyDiceEnabledForProfile(client_->GetPrefs());
 }
 
 void AccountReconcilor::PerformMergeAction(const std::string& account_id) {
-  if (!IsAccountConsistencyEnabled()) {
+  reconcile_is_noop_ = false;
+  if (!IsAccountConsistencyEnforced()) {
     MarkAccountAsAddedToCookie(account_id);
     return;
   }
@@ -291,7 +293,8 @@ void AccountReconcilor::PerformMergeAction(const std::string& account_id) {
 }
 
 void AccountReconcilor::PerformLogoutAllAccountsAction() {
-  if (!IsAccountConsistencyEnabled())
+  reconcile_is_noop_ = false;
+  if (!IsAccountConsistencyEnforced())
     return;
   VLOG(1) << "AccountReconcilor::PerformLogoutAllAccountsAction";
   cookie_manager_service_->LogOutAllAccounts(kSource);
@@ -343,6 +346,7 @@ void AccountReconcilor::StartReconcile() {
 
   is_reconcile_started_ = true;
   error_during_last_reconcile_ = false;
+  reconcile_is_noop_ = true;
 
   // ListAccounts() also gets signed out accounts but this class doesn't use
   // them.
@@ -591,8 +595,13 @@ void AccountReconcilor::FinishReconcile() {
       !first_account_mismatch, first_execution_, number_gaia_accounts);
   first_execution_ = false;
   CalculateIfReconcileIsDone();
-  if (!is_reconcile_started_)
+  if (!is_reconcile_started_) {
     last_known_first_account_ = first_account;
+    if (reconcile_is_noop_ && signin::IsAccountConsistencyDiceAvailable()) {
+      VLOG(1) << "Migrating Profile to Dice.";
+      signin::MigrateProfileToDice(client_->GetPrefs());
+    }
+  }
   ScheduleStartReconcileIfChromeAccountsChanged();
 }
 
@@ -632,8 +641,11 @@ void AccountReconcilor::ScheduleStartReconcileIfChromeAccountsChanged() {
 void AccountReconcilor::RevokeAllSecondaryTokens() {
   for (const std::string& account : chrome_accounts_) {
     if (account != primary_account_) {
-      VLOG(1) << "Revoking token for " << account;
-      token_service_->RevokeCredentials(account);
+      reconcile_is_noop_ = false;
+      if (IsAccountConsistencyEnforced()) {
+        VLOG(1) << "Revoking token for " << account;
+        token_service_->RevokeCredentials(account);
+      }
     }
   }
 }
