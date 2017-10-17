@@ -84,6 +84,9 @@ extern NSString* const kPaymentRequestCollectionViewID;
 // Updates the payment summary item in the summary section.
 - (void)updatePaymentSummaryItem;
 
+// Updates the shipping, payment method and contact info sections.
+- (void)updateSections;
+
 // Updates the shipping section.
 - (void)updateShippingSection;
 
