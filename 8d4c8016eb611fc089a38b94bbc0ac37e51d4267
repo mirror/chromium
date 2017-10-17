@@ -16,6 +16,23 @@
       "revId": "8d4c8016eb611fc089a38b94bbc0ac37e51d4267",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b0205c_25e0a7a7",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T17:30:04Z",
+      "side": 1,
+      "message": "Yep SGTM",
+      "revId": "8d4c8016eb611fc089a38b94bbc0ac37e51d4267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
