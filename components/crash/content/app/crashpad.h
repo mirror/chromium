@@ -87,7 +87,7 @@ void SetUploadConsent(bool consent);
 // available in the browser process.
 bool GetUploadsEnabled();
 
-enum class ReportUploadState {
+enum class ReportUploadState : int {
   NotUploaded,
   Pending,
   Pending_UserRequested,
@@ -100,6 +100,7 @@ struct Report {
   char remote_id[64];
   time_t upload_time;
   ReportUploadState state;
+  char file_path[1024];
 };
 
 // Obtains a list of reports uploaded to the collection server. This function

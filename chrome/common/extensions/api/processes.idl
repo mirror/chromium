@@ -94,6 +94,20 @@ namespace processes {
     Cache? cssCache;
   };
 
+  // Information for one crash.
+  dictionary Crash {
+    // The local id of the crash.
+    DOMString uuid;
+    // The time of the crash.
+    double creation_time;
+    // The filename on disk of the crash dump.
+    DOMString filename;
+    // Set to true for uploaded crashes.
+    boolean uploaded;
+    // The server id of the crash if uploaded.
+    DOMString? server_id;
+  };
+
   // A callback to report the status of the termination.
   // |didTerminate|: True if terminating the process was successful, and false
   // otherwise.
@@ -109,6 +123,9 @@ namespace processes {
   // indexed by process ID. Metrics requiring aggregation over time will not be
   // populated in each Process object.
   callback GetProcessInfoCallback = void(object processes);
+
+  // Callback for the getCrashes function.
+  callback GetCrashesCallback = void(Crash[] crashes);
 
   interface Functions {
     // Returns the ID of the renderer process for the specified tab.
@@ -132,6 +149,9 @@ namespace processes {
     static void getProcessInfo((long or long[]) processIds,
                                boolean includeMemory,
                                GetProcessInfoCallback callback);
+
+    // Gets the set of crashes.
+    static void getCrashes(GetCrashesCallback callback);
   };
 
   interface Events {
