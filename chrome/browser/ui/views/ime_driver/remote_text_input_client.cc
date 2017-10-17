@@ -23,7 +23,10 @@ RemoteTextInputClient::RemoteTextInputClient(
       text_input_mode_(text_input_mode),
       text_direction_(text_direction),
       text_input_flags_(text_input_flags),
-      caret_bounds_(caret_bounds) {}
+      caret_bounds_(caret_bounds),
+      weak_factory_(this) {
+  weak_ptr_ = weak_factory_.GetWeakPtr();
+}
 
 RemoteTextInputClient::~RemoteTextInputClient() {}
 
@@ -39,14 +42,17 @@ void RemoteTextInputClient::SetCaretBounds(const gfx::Rect& caret_bounds) {
 void RemoteTextInputClient::SetCompositionText(
     const ui::CompositionText& composition) {
   remote_client_->SetCompositionText(composition);
+  has_composition_text_ = !composition.text.empty();
 }
 
 void RemoteTextInputClient::ConfirmCompositionText() {
   remote_client_->ConfirmCompositionText();
+  has_composition_text_ = false;
 }
 
 void RemoteTextInputClient::ClearCompositionText() {
   remote_client_->ClearCompositionText();
+  has_composition_text_ = false;
 }
 
 void RemoteTextInputClient::InsertText(const base::string16& text) {
@@ -93,15 +99,26 @@ bool RemoteTextInputClient::GetCompositionCharacterBounds(
 }
 
 bool RemoteTextInputClient::HasCompositionText() const {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
-  return false;
+  return has_composition_text_;
 }
 
 bool RemoteTextInputClient::GetTextRange(gfx::Range* range) const {
   // TODO(moshayedi): crbug.com/631527.
   NOTIMPLEMENTED();
   return false;
+}
+
+bool RemoteTextInputClient::GetTextAndSelectionRange(
+    base::OnceCallback<
+        void(bool, const gfx::Range&, const base::string16&, const gfx::Range&)>
+        callback) const {
+  if (!ImeEditingAllowed())
+    return false;
+
+  remote_client_->GetTextAndSelectionRange(
+      base::BindOnce(&RemoteTextInputClient::GetTextAndSelectionRangeCallback,
+                     weak_ptr_, base::Passed(&callback)));
+  return true;
 }
 
 bool RemoteTextInputClient::GetCompositionTextRange(gfx::Range* range) const {
@@ -136,8 +153,7 @@ bool RemoteTextInputClient::GetTextFromRange(const gfx::Range& range,
 }
 
 void RemoteTextInputClient::OnInputMethodChanged() {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
+  remote_client_->OnInputMethodChanged();
 }
 
 bool RemoteTextInputClient::ChangeTextDirectionAndLayoutAlignment(
@@ -154,8 +170,7 @@ void RemoteTextInputClient::ExtendSelectionAndDelete(size_t before,
 }
 
 void RemoteTextInputClient::EnsureCaretNotInRect(const gfx::Rect& rect) {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
+  remote_client_->EnsureCaretNotInRect(rect);
 }
 
 bool RemoteTextInputClient::IsTextEditCommandEnabled(
@@ -176,4 +191,23 @@ ui::EventDispatchDetails RemoteTextInputClient::DispatchKeyEventPostIME(
   remote_client_->DispatchKeyEventPostIME(ui::Event::Clone(*event),
                                           base::OnceCallback<void(bool)>());
   return ui::EventDispatchDetails();
+}
+
+void RemoteTextInputClient::GetTextAndSelectionRangeCallback(
+    base::OnceCallback<
+        void(bool, const gfx::Range&, const base::string16&, const gfx::Range&)>
+        callback,
+    bool success,
+    const gfx::Range& text_range,
+    const base::string16& text_from_range,
+    const gfx::Range& selection_range) {
+  if (callback && !callback.is_null()) {
+    std::move(callback).Run(success, text_range, text_from_range,
+                            selection_range);
+  }
+}
+
+bool RemoteTextInputClient::ImeEditingAllowed() const {
+  return (text_input_type_ != ui::TEXT_INPUT_TYPE_NONE &&
+          text_input_type_ != ui::TEXT_INPUT_TYPE_PASSWORD);
 }

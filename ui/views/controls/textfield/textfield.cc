@@ -1439,6 +1439,13 @@ bool Textfield::GetTextRange(gfx::Range* range) const {
   return true;
 }
 
+bool Textfield::GetTextAndSelectionRange(
+    base::OnceCallback<
+        void(bool, const gfx::Range&, const base::string16&, const gfx::Range&)>
+        callback) const {
+  return false;
+}
+
 bool Textfield::GetCompositionTextRange(gfx::Range* range) const {
   if (!ImeEditingAllowed())
     return false;
@@ -1945,7 +1952,7 @@ void Textfield::UpdateBackgroundColor() {
 }
 
 void Textfield::UpdateBorder() {
-  auto border = std::make_unique<views::FocusableBorder>();
+  auto border = base::MakeUnique<views::FocusableBorder>();
   const LayoutProvider* provider = LayoutProvider::Get();
   border->SetInsets(
       provider->GetDistanceMetric(DISTANCE_CONTROL_VERTICAL_TEXT_PADDING),

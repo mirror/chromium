@@ -92,6 +92,17 @@ class TestTextInputClient : public ui::mojom::TextInputClient {
       DispatchKeyEventPostIMECallback callback) override {
     std::move(callback).Run(false);
   }
+  void GetTextAndSelectionRange(
+      GetTextAndSelectionRangeCallback callback) override {
+    std::move(callback).Run(false, gfx::Range(), base::string16(),
+                            gfx::Range());
+  }
+  void OnInputMethodChanged() override {}
+  void EnsureCaretNotInRect(const gfx::Rect& rect) override {}
+  void GetTextRange(const gfx::Range& text_range) override {}
+  void HasCompositionText(HasCompositionTextCallback callback) override {
+    std::move(callback).Run(false);
+  }
 
   mojo::Binding<ui::mojom::TextInputClient> binding_;
   std::unique_ptr<base::RunLoop> run_loop_;
