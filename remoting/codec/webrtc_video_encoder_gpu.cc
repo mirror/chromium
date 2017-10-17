@@ -172,8 +172,8 @@ void WebrtcVideoEncoderGpu::BitstreamBufferReady(int32_t bitstream_buffer_id,
   auto callback_it = callbacks_.find(timestamp);
   DCHECK(callback_it != callbacks_.end())
       << "Callback not found for timestamp " << timestamp;
-  std::move(std::get<1>(*callback_it)).Run(
-      EncodeResult::SUCCEEDED, std::move(encoded_frame));
+  std::move(std::get<1>(*callback_it))
+      .Run(EncodeResult::SUCCEEDED, std::move(encoded_frame));
   callbacks_.erase(timestamp);
 }
 

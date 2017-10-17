@@ -12,19 +12,21 @@ namespace blink {
 class HeapObject;
 
 class PartObject {
-    DISALLOW_NEW();
-private:
-    std::unique_ptr<HeapObject> m_obj;
+  DISALLOW_NEW();
+
+ private:
+  std::unique_ptr<HeapObject> m_obj;
 };
 
 class HeapObject : public GarbageCollectedFinalized<HeapObject> {
-public:
-    void Trace(Visitor*);
-private:
-    Vector<std::unique_ptr<HeapObject> > m_objs;
-    std::unique_ptr<HeapVector<Member<HeapObject> > > m_objs2;
+ public:
+  void Trace(Visitor*);
+
+ private:
+  Vector<std::unique_ptr<HeapObject>> m_objs;
+  std::unique_ptr<HeapVector<Member<HeapObject>>> m_objs2;
 };
 
-}
+}  // namespace blink
 
 #endif

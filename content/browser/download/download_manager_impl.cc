@@ -597,7 +597,6 @@ void DownloadManagerImpl::ResumeInterruptedDownload(
   BeginDownloadInternal(std::move(params), id);
 }
 
-
 void DownloadManagerImpl::SetDownloadItemFactoryForTesting(
     std::unique_ptr<DownloadItemFactory> item_factory) {
   item_factory_ = std::move(item_factory);
@@ -875,8 +874,8 @@ void DownloadManagerImpl::BeginDownloadInternal(
     std::unique_ptr<content::DownloadUrlParameters> params,
     uint32_t id) {
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    std::unique_ptr<ResourceRequest> request = CreateResourceRequest(
-        params.get());
+    std::unique_ptr<ResourceRequest> request =
+        CreateResourceRequest(params.get());
     StoragePartitionImpl* storage_partition =
         GetStoragePartition(browser_context_, params->render_process_host_id(),
                             params->render_frame_host_routing_id());
@@ -885,8 +884,8 @@ void DownloadManagerImpl::BeginDownloadInternal(
         base::BindOnce(
             &BeginResourceDownload, std::move(params), std::move(request),
             storage_partition->url_loader_factory_getter(),
-             base::WrapRefCounted(storage_partition->GetFileSystemContext()),
-             id, weak_factory_.GetWeakPtr()),
+            base::WrapRefCounted(storage_partition->GetFileSystemContext()), id,
+            weak_factory_.GetWeakPtr()),
         base::BindOnce(&DownloadManagerImpl::AddUrlDownloadHandler,
                        weak_factory_.GetWeakPtr()));
   } else {
@@ -895,9 +894,9 @@ void DownloadManagerImpl::BeginDownloadInternal(
         base::BindOnce(&BeginDownload, std::move(params),
                        browser_context_->GetResourceContext(), id,
                        weak_factory_.GetWeakPtr()),
-         base::BindOnce(&DownloadManagerImpl::AddUrlDownloadHandler,
-                        weak_factory_.GetWeakPtr()));
-   }
+        base::BindOnce(&DownloadManagerImpl::AddUrlDownloadHandler,
+                       weak_factory_.GetWeakPtr()));
+  }
 }
 
 }  // namespace content

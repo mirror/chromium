@@ -145,7 +145,8 @@ public class AwContentsGarbageCollectionTest {
             // Instead, we simply emulate Android's behavior by keeping strong references.
             // See crbug.com/595613 for details.
             resultReceivers[i] = ThreadUtils.runOnUiThreadBlocking(
-                    () -> containerView.getContentViewCore()
+                    ()
+                            -> containerView.getContentViewCore()
                                        .getImeAdapterForTest()
                                        .getNewShowKeyboardReceiver());
         }

@@ -98,8 +98,7 @@ void CheckFieldsVisitor::AtValue(Value* edge) {
     return;
 
   // Disallow  unique_ptr<T>, RefPtr<T> and T* to stack-allocated types.
-  if (Parent()->IsUniquePtr() ||
-      Parent()->IsRefPtr() ||
+  if (Parent()->IsUniquePtr() || Parent()->IsRefPtr() ||
       (stack_allocated_host_ && Parent()->IsRawPtr())) {
     invalid_fields_.push_back(std::make_pair(
         current_, InvalidSmartPtr(Parent())));

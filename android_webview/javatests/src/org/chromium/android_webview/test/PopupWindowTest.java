@@ -141,8 +141,11 @@ public class PopupWindowTest {
         // Now long press on some texts and see if the text handles show up.
         DOMUtils.longPressNode(popupContents.getContentViewCore(), "plain_text");
         assertWaitForSelectActionBarStatus(true, popupContents.getContentViewCore());
-        Assert.assertTrue(ThreadUtils.runOnUiThreadBlocking(() -> popupContents.getContentViewCore()
-                    .getSelectionPopupControllerForTesting().hasSelection()));
+        Assert.assertTrue(ThreadUtils.runOnUiThreadBlocking(
+                ()
+                        -> popupContents.getContentViewCore()
+                                   .getSelectionPopupControllerForTesting()
+                                   .hasSelection()));
 
         // Now hide the select action bar. This should hide the text handles and
         // clear the selection.
