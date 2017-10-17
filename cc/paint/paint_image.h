@@ -75,6 +75,9 @@ class CC_PAINT_EXPORT PaintImage {
   enum class CompletionState { DONE, PARTIALLY_DONE };
   enum class DecodingMode { kUnspecified, kSync, kAsync };
 
+  // Returns the more conservative mode out of the two given ones.
+  static DecodingMode GetConservative(DecodingMode one, DecodingMode two);
+
   static Id GetNextId();
   static ContentId GetNextContentId();
 

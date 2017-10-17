@@ -562,5 +562,57 @@ TEST_F(CheckerImageTrackerTest, DisableForSoftwareRaster) {
   EXPECT_FALSE(ShouldCheckerImage(image2, WhichTree::PENDING_TREE));
 }
 
+TEST_F(CheckerImageTrackerTest, DecodingModeHints) {
+  SetUpTracker(true);
+
+  base::flat_map<PaintImage::Id, PaintImage::DecodingMode> hints = {
+      {1, PaintImage::DecodingMode::kUnspecified},
+      {2, PaintImage::DecodingMode::kSync},
+      {3, PaintImage::DecodingMode::kAsync}};
+  checker_image_tracker_->UpdateImageDecodingHints(hints);
+
+  EXPECT_EQ(PaintImage::DecodingMode::kUnspecified,
+            checker_image_tracker_->get_decoding_mode_hint_for_testing(1));
+  EXPECT_EQ(PaintImage::DecodingMode::kSync,
+            checker_image_tracker_->get_decoding_mode_hint_for_testing(2));
+  EXPECT_EQ(PaintImage::DecodingMode::kAsync,
+            checker_image_tracker_->get_decoding_mode_hint_for_testing(3));
+
+  hints = {{1, PaintImage::DecodingMode::kAsync},
+           {2, PaintImage::DecodingMode::kAsync},
+           {3, PaintImage::DecodingMode::kAsync}};
+  checker_image_tracker_->UpdateImageDecodingHints(hints);
+
+  // The more conservative state should persist.
+  EXPECT_EQ(PaintImage::DecodingMode::kUnspecified,
+            checker_image_tracker_->get_decoding_mode_hint_for_testing(1));
+  EXPECT_EQ(PaintImage::DecodingMode::kSync,
+            checker_image_tracker_->get_decoding_mode_hint_for_testing(2));
+  EXPECT_EQ(PaintImage::DecodingMode::kAsync,
+            checker_image_tracker_->get_decoding_mode_hint_for_testing(3));
+
+  hints = {{1, PaintImage::DecodingMode::kUnspecified},
+           {2, PaintImage::DecodingMode::kUnspecified},
+           {3, PaintImage::DecodingMode::kUnspecified}};
+  checker_image_tracker_->UpdateImageDecodingHints(hints);
+
+  EXPECT_EQ(PaintImage::DecodingMode::kUnspecified,
+            checker_image_tracker_->get_decoding_mode_hint_for_testing(1));
+  EXPECT_EQ(PaintImage::DecodingMode::kSync,
+            checker_image_tracker_->get_decoding_mode_hint_for_testing(2));
+  EXPECT_EQ(PaintImage::DecodingMode::kUnspecified,
+            checker_image_tracker_->get_decoding_mode_hint_for_testing(3));
+
+  hints = {{1, PaintImage::DecodingMode::kSync}};
+  checker_image_tracker_->UpdateImageDecodingHints(hints);
+
+  EXPECT_EQ(PaintImage::DecodingMode::kSync,
+            checker_image_tracker_->get_decoding_mode_hint_for_testing(1));
+  EXPECT_EQ(PaintImage::DecodingMode::kSync,
+            checker_image_tracker_->get_decoding_mode_hint_for_testing(2));
+  EXPECT_EQ(PaintImage::DecodingMode::kUnspecified,
+            checker_image_tracker_->get_decoding_mode_hint_for_testing(3));
+}
+
 }  // namespace
 }  // namespace cc
