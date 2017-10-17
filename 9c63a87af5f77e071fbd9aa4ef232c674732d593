@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c901a19_f1df1efc",
+        "filename": "BUILD.gn",
+        "patchSetId": 22
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-17T17:01:01Z",
+      "side": 1,
+      "message": "Nit: I\u0027d probably un-nest this.",
+      "revId": "9c63a87af5f77e071fbd9aa4ef232c674732d593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
