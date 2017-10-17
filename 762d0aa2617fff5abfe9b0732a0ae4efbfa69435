@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71d57106_d1e78800",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-17T14:01:25Z",
+      "side": 1,
+      "message": "We lock the password, not the icon.",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 24
+      },
+      "revId": "762d0aa2617fff5abfe9b0732a0ae4efbfa69435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9efeab_c0349ad4",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-17T14:01:25Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s the right place to keep |passwords_view_reauth_time_| and decide on reauth. ManagePasswordsUIController is limited to a tab. It would be consistent to\n- have a timeout for the whole Chrome profile or\n- have a timeout valid during the bubble lifetime.\nNote that in the second case we must reopen the bubble after reauth. I think we should do it anyway.\n\nWe can discuss which option makes more sense.",
+      "range": {
+        "startLine": 472,
+        "startChar": 5,
+        "endLine": 472,
+        "endChar": 50
+      },
+      "revId": "762d0aa2617fff5abfe9b0732a0ae4efbfa69435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
