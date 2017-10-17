@@ -487,6 +487,10 @@ const int kUndefinedResultCount = -1;
   return (showHideAnimation_.get() != nil) || (moveAnimation_.get() != nil);
 }
 
+- (void)updateFindBarVisibility {
+  findBarBridge_->GetFindBarController()->FindBarVisiblityChanged();
+}
+
 // NSAnimation delegate methods.
 - (void)animationDidEnd:(NSAnimation*)animation {
   // Autorelease the animations (cannot use release because the animation object
@@ -502,6 +506,7 @@ const int kUndefinedResultCount = -1;
   // If the find bar is not visible, make it actually hidden, so it'll no longer
   // respond to key events.
   [[self view] setHidden:![self isFindBarVisible]];
+  [self updateFindBarVisibility];
 }
 
 - (gfx::Point)findBarWindowPosition {
