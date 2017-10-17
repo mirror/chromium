@@ -43,14 +43,7 @@ cr.define('extensions', function() {
    */
   class NavigationHelper {
     constructor() {
-      // Redirect if route not supported.
-      let validPathnames = ['/'];
-      if (!loadTimeData.getBoolean('isGuest')) {
-        validPathnames.push('/shortcuts', '/apps');
-      }
-      if (!validPathnames.includes(this.currentPath_)) {
-        window.history.replaceState(undefined, '', '/');
-      }
+      this.processRoute_();
 
       /** @private {number} */
       this.nextListenerId_ = 1;
@@ -66,6 +59,27 @@ cr.define('extensions', function() {
     /** @private */
     get currentPath_() {
       return location.pathname.replace(CANONICAL_PATH_REGEX, '$1$2');
+    }
+
+    /** @private */
+    processRoute_() {
+      // Replace legacy path with equivalent new path.
+      switch (this.currentPath_) {
+        case '/configureCommands':
+          window.history.replaceState(undefined, '', '/shortcuts');
+          break;
+      }
+
+      // Figure out what paths should be supported.
+      let validPathnames = ['/'];
+      if (!loadTimeData.getBoolean('isGuest')) {
+        validPathnames.push('/shortcuts');
+      }
+
+      // Redirect if path does not point to a supported route.
+      if (!validPathnames.includes(this.currentPath_)) {
+        window.history.replaceState(undefined, '', '/');
+      }
     }
 
     /**
