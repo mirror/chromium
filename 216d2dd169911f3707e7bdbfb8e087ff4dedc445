@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "233bef4f_904b1aa4",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-17T20:13:51Z",
+      "side": 1,
+      "message": "Do you think we should make a helper function similar to InitAndEnableFeatureWithParameters in SFL.",
+      "range": {
+        "startLine": 328,
+        "startChar": 4,
+        "endLine": 339,
+        "endChar": 72
+      },
+      "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
