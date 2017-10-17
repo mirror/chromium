@@ -24,10 +24,12 @@
 
 namespace blink {
 
-RemoteFontFaceSource::RemoteFontFaceSource(FontResource* font,
+RemoteFontFaceSource::RemoteFontFaceSource(CSSFontFace* css_font_face,
+                                           FontResource* font,
                                            CSSFontSelector* font_selector,
                                            FontDisplay display)
-    : font_(font),
+    : CSSFontFaceSource(css_font_face),
+      font_(font),
       font_selector_(font_selector),
       display_(display),
       period_(display == kFontDisplaySwap ? kSwapPeriod : kBlockPeriod),

@@ -22,7 +22,7 @@ class DummyFontFaceSource : public CSSFontFaceSource {
         FontPlatformData(SkTypeface::MakeDefault(), "", 0, false, false));
   }
 
-  DummyFontFaceSource() {}
+  DummyFontFaceSource() : CSSFontFaceSource(nullptr) {}
 
   RefPtr<SimpleFontData> GetFontDataForSize(float size) {
     FontDescription font_description;

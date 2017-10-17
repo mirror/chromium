@@ -696,12 +696,13 @@ void FontFace::InitCSSFontFace(Document* document, const CSSValue* src) {
         if (fetched) {
           CSSFontSelector* font_selector =
               document->GetStyleEngine().GetFontSelector();
-          source = new RemoteFontFaceSource(
-              fetched, font_selector, CSSValueToFontDisplay(display_.Get()));
+          source =
+              new RemoteFontFaceSource(css_font_face_, fetched, font_selector,
+                                       CSSValueToFontDisplay(display_.Get()));
         }
       }
     } else {
-      source = new LocalFontFaceSource(item.GetResource());
+      source = new LocalFontFaceSource(css_font_face_, item.GetResource());
     }
 
     if (source)
@@ -721,8 +722,8 @@ void FontFace::InitCSSFontFace(const unsigned char* data, size_t size) {
     return;
 
   RefPtr<SharedBuffer> buffer = SharedBuffer::Create(data, size);
-  BinaryDataFontFaceSource* source =
-      new BinaryDataFontFaceSource(buffer.get(), ots_parse_message_);
+  BinaryDataFontFaceSource* source = new BinaryDataFontFaceSource(
+      css_font_face_, buffer.get(), ots_parse_message_);
   if (source->IsValid())
     SetLoadStatus(kLoaded);
   else

@@ -13,7 +13,8 @@ namespace blink {
 
 class LocalFontFaceSource final : public CSSFontFaceSource {
  public:
-  LocalFontFaceSource(const String& font_name) : font_name_(font_name) {}
+  LocalFontFaceSource(CSSFontFace* css_font_face, const String& font_name)
+      : CSSFontFaceSource(css_font_face), font_name_(font_name) {}
   bool IsLocal() const override { return true; }
   bool IsLocalFontAvailable(const FontDescription&) override;
 

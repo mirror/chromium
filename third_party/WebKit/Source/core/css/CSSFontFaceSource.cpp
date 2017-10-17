@@ -33,7 +33,7 @@
 
 namespace blink {
 
-CSSFontFaceSource::CSSFontFaceSource() : face_(nullptr) {}
+CSSFontFaceSource::CSSFontFaceSource(CSSFontFace* face) : face_(face) {}
 
 CSSFontFaceSource::~CSSFontFaceSource() {}
 

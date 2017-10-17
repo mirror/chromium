@@ -51,8 +51,6 @@ class CORE_EXPORT CSSFontFaceSource
   virtual bool IsLoaded() const { return true; }
   virtual bool IsValid() const { return true; }
 
-  void SetFontFace(CSSFontFace* face) { face_ = face; }
-
   RefPtr<SimpleFontData> GetFontData(const FontDescription&,
                                      const FontSelectionCapabilities&);
 
@@ -67,7 +65,7 @@ class CORE_EXPORT CSSFontFaceSource
   DECLARE_VIRTUAL_TRACE();
 
  protected:
-  CSSFontFaceSource();
+  CSSFontFaceSource(CSSFontFace*);
   virtual RefPtr<SimpleFontData> CreateFontData(
       const FontDescription&,
       const FontSelectionCapabilities&) = 0;
