@@ -1,0 +1,60 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>StylePropertyMap.getAll tests</title>
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#stylepropertymap">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<div id="target" style="width: 10px; --foo: auto; transition-duration: 1s, 2s;"></div>
+<script>
+'use strict';
+
+// FIXME(774933): change this to Element.attributeStyleMap
+const styleMap = document.getElementById('target').styleMap;
+
+test(() => {
+  assert_throws(new TypeError(), () => styleMap.getAll('lemon'));
+}, 'Calling StylePropertyMap.getAll with an unsupported property throws a TypeError');
+
+test(() => {
+  const result = styleMap.getAll('height');
+  assert_equals(result.length, 0);
+}, 'Calling StylePropertyMap.getAll with a property not in the property model returns an empty list');
+
+test(() => {
+  const result = styleMap.getAll('--Foo');
+  assert_equals(result.length, 0);
+}, 'Calling StylePropertyMap.getAll with a custom property not in the property model returns an empty list');
+
+test(() => {
+  const result = styleMap.getAll('width');
+  assert_equals(result.length, 1);
+  assert_equals(result[0].constructor.name, CSSUnitValue.name);
+  assert_equals(result[0].value, 10);
+  assert_equals(result[0].unit, 'px');
+}, 'Calling StylePropertyMap.getAll with a valid property returns a single element list with the correct entry');
+
+test(() => {
+  const result = styleMap.getAll('wIdTh');
+  assert_equals(result.length, 1);
+  assert_equals(result[0].constructor.name, CSSUnitValue.name);
+  assert_equals(result[0].value, 10);
+  assert_equals(result[0].unit, 'px');
+}, 'StylePropertyMap.getAll is case-insensitive');
+
+test(() => {
+  const result = styleMap.getAll('--foo');
+  assert_equals(result.length, 1);
+  assert_equals(result[0].constructor.name, CSSKeywordValue.name);
+  assert_equals(result[0].value, 'auto');
+}, 'Calling StylePropertyMap.getAll with a valid custom property returns a single element list with the correct entry');
+
+test(() => {
+  const result = styleMap.getAll('transition-duration');
+  assert_equals(result.length, 2);
+  assert_equals(result[0].constructor.name, CSSUnitValue.name);
+  assert_equals(result[0].value, 1);
+  assert_equals(result[1].constructor.name, CSSUnitValue.name);
+  assert_equals(result[1].value, 2);
+}, 'Calling StylePropertyMap.getAll with a list-valued property returns all the values');
+
+</script>
