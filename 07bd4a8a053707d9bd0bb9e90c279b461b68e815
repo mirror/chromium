@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "001c29b2_94c9c7d7",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-17T20:30:49Z",
+      "side": 1,
+      "message": "Nit: s/its/it\u0027s/ throughout.",
+      "revId": "07bd4a8a053707d9bd0bb9e90c279b461b68e815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a596d3_3a1593e0",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-17T20:30:49Z",
+      "side": 1,
+      "message": "s/ignore/skip/",
+      "revId": "07bd4a8a053707d9bd0bb9e90c279b461b68e815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10dba1ca_843d9a8b",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-17T20:30:49Z",
+      "side": 1,
+      "message": "Nit: reformat.",
+      "revId": "07bd4a8a053707d9bd0bb9e90c279b461b68e815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
