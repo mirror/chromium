@@ -47,8 +47,8 @@ LOAD_FLAG(VERIFY_EV_CERT, 1 << 8)
 // This load will not send any cookies.
 LOAD_FLAG(DO_NOT_SEND_COOKIES, 1 << 9)
 
-// This load will not send authentication data (user name/password)
-// to the server (as opposed to the proxy).
+// This load will not send authentication data (user name/password, client
+// certs) to the server (as opposed to the proxy).
 LOAD_FLAG(DO_NOT_SEND_AUTH_DATA, 1 << 10)
 
 // This should only be used for testing (set by HttpNetworkTransaction).

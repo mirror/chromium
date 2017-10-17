@@ -1452,6 +1452,13 @@ int HttpNetworkTransaction::HandleCertificateRequest(int error) {
   // handshake.
   stream_request_.reset();
 
+  // If authentication is disabled, and this is a server (not proxy)
+  // authentication attempt, skip the client cert cache.
+  if ((request_->load_flags & LOAD_DO_NOT_SEND_AUTH_DATA) &&
+      !response_.cert_request_info->is_proxy) {
+    return error;
+  }
+
   // If the user selected one of the certificates in client_certs or declined
   // to provide one for this server before, use the past decision
   // automatically.
