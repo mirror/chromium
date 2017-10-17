@@ -154,8 +154,9 @@ void SigninManager::HandleAuthError(const GoogleServiceAuthError& error) {
 void SigninManager::SignOut(
     signin_metrics::ProfileSignout signout_source_metric,
     signin_metrics::SignoutDelete signout_delete_metric) {
-  StartSignOut(signout_source_metric, signout_delete_metric,
-               !signin::IsAccountConsistencyDiceAvailable());
+  StartSignOut(
+      signout_source_metric, signout_delete_metric,
+      !signin::IsAccountConsistencyDiceEnabledForProfile(client_->GetPrefs()));
 }
 
 void SigninManager::SignOutAndRemoveAllAccounts(
