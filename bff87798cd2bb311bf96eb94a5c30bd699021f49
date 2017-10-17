@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "659f82a7_f957dc44",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-17T19:33:01Z",
+      "side": 1,
+      "message": "sergeyberezin@, is this the best way to add cronet bot to CQ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "bff87798cd2bb311bf96eb94a5c30bd699021f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7459c0d8_1c93e16c",
+        "filename": "ios/web/public/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-17T19:33:01Z",
+      "side": 1,
+      "message": "Could you please remove these files from the list and add \":user_agent\" dependency to public.\nsdefresne@ is this the right suggestion?",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 15
+      },
+      "revId": "bff87798cd2bb311bf96eb94a5c30bd699021f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
