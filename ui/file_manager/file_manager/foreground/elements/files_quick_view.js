@@ -93,6 +93,13 @@ var FilesQuickView = Polymer({
   onOpenInNewButtonTap: function(event) {},
 
   /**
+   * Close the quick view and go back to the file list.
+   */
+  onClose: function() {
+    this.close();
+  },
+
+  /**
    * @param {!Event} event tap event.
    *
    * @private
