@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fd86309_4ff535cc",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-17T18:51:42Z",
+      "side": 1,
+      "message": "s/disabled/disables/?",
+      "revId": "9be6cb74f8f401456e081dc079b7c2b3ae9644e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

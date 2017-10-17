@@ -86,6 +86,24 @@
       "revId": "d63a44a6e0c4fea469e30e607a112ef38bb3241a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7beb0bbb_81a1980e",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-17T18:51:42Z",
+      "side": 1,
+      "message": "You\u0027d have to check with policy folks (who will review this anyways), but my understanding is that to wire it up for webview_android, more code is needed to glue up all these prefs.",
+      "parentUuid": "a9efac2e_1a2bc7ca",
+      "revId": "d63a44a6e0c4fea469e30e607a112ef38bb3241a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
