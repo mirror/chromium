@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "dce50d3b_6202e81d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/resources/service-workers-bypass-for-network-cors-target.php",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-17T05:00:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "357459a6_a4d94b43",
+      "revId": "89338cbaf6750f5d3a4ec86f1545d0888ec59f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2af53060_2d3716c1",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/resources/service-workers-bypass-for-network-cors-worker.js",
         "patchSetId": 7
