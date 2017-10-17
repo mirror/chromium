@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7b7d154_c978ba2c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-17T22:19:26Z",
+      "side": 1,
+      "message": "Add a TODO.",
+      "parentUuid": "ea08e60c_2bfa62fd",
+      "range": {
+        "startLine": 239,
+        "startChar": 46,
+        "endLine": 239,
+        "endChar": 54
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72c22b19_3d629c7c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e433df_ae92bc59",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-17T22:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72c22b19_3d629c7c",
+      "range": {
+        "startLine": 394,
+        "startChar": 28,
+        "endLine": 394,
+        "endChar": 56
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "a1bcf69d_62a7207d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-17T22:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b2cef01_38bcbe40",
+      "range": {
+        "startLine": 441,
+        "startChar": 19,
+        "endLine": 441,
+        "endChar": 32
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37611cd3_e4e82355",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 6
@@ -106,6 +178,30 @@
       "writtenOn": "2017-10-17T09:50:38Z",
       "side": 1,
       "message": "should this be mMergeFileNames instead of talking to the policy?",
+      "range": {
+        "startLine": 1225,
+        "startChar": 45,
+        "endLine": 1225,
+        "endChar": 63
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9428486d_35b2a55f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-17T22:19:26Z",
+      "side": 1,
+      "message": "The problem is in deleteFileAsync we might delete element from mMergeFileNames, then it will cause a ConcurrentModificationException because you modify a set you are iterating.",
+      "parentUuid": "37611cd3_e4e82355",
       "range": {
         "startLine": 1225,
         "startChar": 45,
@@ -138,6 +234,30 @@
       "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380c0bfd_302b0080",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-17T22:19:26Z",
+      "side": 1,
+      "message": "Yea, mMergeFileName should be fine for a Set. The problem I don\u0027t use remove is because we need to iterate through mPersistencePolicy.getStateToBeMergedFileNames() not mMergeFileName. Then then reference comparison does not work. So we need to iterate through the mMergeFileName again to compare the content.",
+      "parentUuid": "ae43d3cd_2fe34d61",
+      "range": {
+        "startLine": 1274,
+        "startChar": 25,
+        "endLine": 1274,
+        "endChar": 31
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
