@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a89d03a1_53824080",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-17T20:56:53Z",
+      "side": 1,
+      "message": "Currently, URLRequestContext is split between the NetworkService and IOThread\u0027s/ProfileIOData, to allow a gradual transition.  The code in NetworkContext/NetworkService will still result in this being hooked up to all relevant URLRequestContexts in production.",
+      "range": {
+        "startLine": 802,
+        "startChar": 16,
+        "endLine": 802,
+        "endChar": 31
+      },
+      "revId": "9a78c497f99c7cf0c7aadd8dd901ef1bd2507a77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
