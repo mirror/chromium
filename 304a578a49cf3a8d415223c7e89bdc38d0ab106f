@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d195dea5_4af04ce6",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_dxgi.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-17T02:42:38Z",
+      "side": 1,
+      "message": "hm, I thought you managed to remove this by initializing ANGLE for test. what am I missing? patch looks great if not for these testing hooks that I\u0027m not sure are necessary.",
+      "range": {
+        "startLine": 44,
+        "startChar": 49,
+        "endLine": 44,
+        "endChar": 69
+      },
+      "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1adefdf2_9af1266c",
         "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.h",
         "patchSetId": 13

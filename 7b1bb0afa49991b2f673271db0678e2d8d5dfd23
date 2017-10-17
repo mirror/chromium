@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6fa0095_5a74537b",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-17T02:42:38Z",
+      "side": 1,
+      "message": "NOTREACHED()?",
+      "range": {
+        "startLine": 387,
+        "startChar": 4,
+        "endLine": 387,
+        "endChar": 17
+      },
+      "revId": "7b1bb0afa49991b2f673271db0678e2d8d5dfd23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
