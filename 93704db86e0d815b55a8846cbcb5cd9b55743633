@@ -46,6 +46,30 @@
       "revId": "93704db86e0d815b55a8846cbcb5cd9b55743633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1843c8_02ad5a70",
+        "filename": "services/service_manager/sandbox/mac/renderer.sb",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-17T17:01:07Z",
+      "side": 1,
+      "message": "Ack. I didn\u0027t know if you were explicitly using the begin for ordering or just for conjunction.",
+      "parentUuid": "e72242cf_9288e5c5",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 8
+      },
+      "revId": "93704db86e0d815b55a8846cbcb5cd9b55743633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
