@@ -217,10 +217,18 @@ void OfflinePageStorageManager::ReportStorageUsageUMA(
 
   // Report the numbers for each namespace.
   std::string base_histogram_name = "OfflinePages.ClearStoragePreRunUsage.";
-  for (auto namespace_summary : page_sizes) {
-    base::UmaHistogramMemoryLargeMB(
-        base_histogram_name + namespace_summary.first,
-        namespace_summary.second);
+  static const int64_t kOneMiB = 1024 * 1024;
+  for (auto namespace_size : page_sizes) {
+    // We want to isolate the actually 0 data usage case into the "0" bucket and
+    // so we will lump into the "1" bucket all cases of 0 < used data < 1 MiB.
+    int64_t reported_value = 0;  // True 0 storage size case.
+    if (namespace_size.second >= kOneMiB)
+      reported_value = namespace_size.second / kOneMiB;  // Normal use case.
+    else if (namespace_size.second > 0)
+      reported_value = 1;  // Lumping 0 < size < 1 MiB into the "1" bucket.
+
+    base::UmaHistogramMemoryLargeMB(base_histogram_name + namespace_size.first,
+                                    reported_value);
   }
 }
 
