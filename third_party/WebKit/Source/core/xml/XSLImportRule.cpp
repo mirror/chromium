@@ -94,7 +94,7 @@ void XSLImportRule::LoadSheet() {
                          fetch_options);
   params.SetOriginRestriction(FetchParameters::kRestrictToSameOrigin);
   XSLStyleSheetResource* resource = XSLStyleSheetResource::FetchSynchronously(
-      params, owner_document->Fetcher());
+      params, owner_document->Fetcher(), nullptr);
   if (!resource || !resource->Sheet())
     return;
 

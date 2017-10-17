@@ -628,7 +628,7 @@ static void* OpenFunc(const char* uri) {
     options.initiator_info.name = FetchInitiatorTypeNames::xml;
     FetchParameters params(ResourceRequest(url), options);
     Resource* resource =
-        RawResource::FetchSynchronously(params, document->Fetcher());
+        RawResource::FetchSynchronously(params, document->Fetcher(), nullptr);
     if (resource && !resource->ErrorOccurred()) {
       data = resource->ResourceBuffer();
       final_url = resource->GetResponse().Url();

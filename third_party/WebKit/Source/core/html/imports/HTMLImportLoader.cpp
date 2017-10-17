@@ -61,10 +61,9 @@ void HTMLImportLoader::Dispose() {
   ClearResource();
 }
 
-void HTMLImportLoader::StartLoading(RawResource* resource) {
-  SetResource(resource, TaskRunnerHelper::Get(TaskType::kNetworking,
-                                              controller_->Master())
-                            .get());
+void HTMLImportLoader::StartLoading(FetchParameters& params,
+                                    ResourceFetcher* fetcher) {
+  SetResource(RawResource::FetchImport(params, fetcher, this));
 }
 
 void HTMLImportLoader::ResponseReceived(

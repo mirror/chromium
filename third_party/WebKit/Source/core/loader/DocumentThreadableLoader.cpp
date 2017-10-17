@@ -1150,12 +1150,12 @@ void DocumentThreadableLoader::LoadRequestAsync(
   ResourceFetcher* fetcher = loading_context_->GetResourceFetcher();
   if (request.GetRequestContext() == WebURLRequest::kRequestContextVideo ||
       request.GetRequestContext() == WebURLRequest::kRequestContextAudio)
-    SetResource(RawResource::FetchMedia(new_params, fetcher));
+    SetResource(RawResource::FetchMedia(new_params, fetcher, this));
   else if (request.GetRequestContext() ==
            WebURLRequest::kRequestContextManifest)
-    SetResource(RawResource::FetchManifest(new_params, fetcher));
+    SetResource(RawResource::FetchManifest(new_params, fetcher, this));
   else
-    SetResource(RawResource::Fetch(new_params, fetcher));
+    SetResource(RawResource::Fetch(new_params, fetcher, this));
 
   if (!GetResource()) {
     probe::documentThreadableLoaderFailedToStartLoadingForClient(
@@ -1192,7 +1192,7 @@ void DocumentThreadableLoader::LoadRequestSync(
   if (request.GetFetchRequestMode() == WebURLRequest::kFetchRequestModeNoCORS)
     fetch_params.SetOriginRestriction(FetchParameters::kNoOriginRestriction);
   Resource* resource = RawResource::FetchSynchronously(
-      fetch_params, loading_context_->GetResourceFetcher());
+      fetch_params, loading_context_->GetResourceFetcher(), nullptr);
   ResourceResponse response =
       resource ? resource->GetResponse() : ResourceResponse();
   unsigned long identifier = resource
@@ -1317,9 +1317,6 @@ void DocumentThreadableLoader::SetResource(RawResource* new_resource) {
   if (new_resource) {
     resource_ = new_resource;
     checker_.WillAddClient();
-    resource_->AddClient(this, TaskRunnerHelper::Get(TaskType::kNetworking,
-                                                     GetExecutionContext())
-                                   .get());
   }
 }
 

@@ -73,6 +73,7 @@ class PLATFORM_EXPORT ResourceFetcher
   DECLARE_VIRTUAL_TRACE();
 
   Resource* RequestResource(FetchParameters&,
+                            ResourceClient*,
                             const ResourceFactory&,
                             const SubstituteData& = SubstituteData());
 
@@ -195,6 +196,7 @@ class PLATFORM_EXPORT ResourceFetcher
                                   const ResourceFactory&,
                                   const SubstituteData&);
   Resource* ResourceForBlockedRequest(const FetchParameters&,
+                                      ResourceClient*,
                                       const ResourceFactory&,
                                       ResourceRequestBlockedReason);
 

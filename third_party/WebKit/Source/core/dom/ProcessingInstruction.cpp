@@ -156,20 +156,24 @@ void ProcessingInstruction::Process(const String& href, const String& charset) {
   FetchParameters params(ResourceRequest(GetDocument().CompleteURL(href)),
                          options);
   if (is_xsl_) {
-    if (RuntimeEnabledFeatures::XSLTEnabled())
-      resource = XSLStyleSheetResource::Fetch(params, GetDocument().Fetcher());
+    if (RuntimeEnabledFeatures::XSLTEnabled()) {
+      resource = XSLStyleSheetResource::Fetch(params, GetDocument().Fetcher(),
+                                              nullptr);
+    }
   } else {
     params.SetCharset(charset.IsEmpty() ? GetDocument().Encoding()
                                         : WTF::TextEncoding(charset));
-    resource = CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher());
+    resource =
+        CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher(), nullptr);
   }
 
   if (resource) {
     loading_ = true;
     if (!is_xsl_)
       GetDocument().GetStyleEngine().AddPendingSheet(style_engine_context_);
-    SetResource(
-        resource,
+    SetResource(resource);
+    GetResource()->AddClient(
+        this,
         TaskRunnerHelper::Get(TaskType::kNetworking, &GetDocument()).get());
   }
 }

@@ -107,9 +107,10 @@ class CORE_EXPORT CSSFontFaceSrcValue : public CSSValue {
     USING_GARBAGE_COLLECTED_MIXIN(FontResourceHelper);
 
    public:
-    static FontResourceHelper* Create(FontResource* resource,
-                                      WebTaskRunner* task_runner) {
-      return new FontResourceHelper(resource, task_runner);
+    static FontResourceHelper* Create(FetchParameters& params,
+                                      ResourceFetcher* fetcher) {
+      FontResourceHelper* helper = new FontResourceHelper(params, fetcher);
+      return helper->GetResource() ? helper : nullptr;
     }
 
     DEFINE_INLINE_VIRTUAL_TRACE() {
@@ -117,8 +118,8 @@ class CORE_EXPORT CSSFontFaceSrcValue : public CSSValue {
     }
 
    private:
-    FontResourceHelper(FontResource* resource, WebTaskRunner* task_runner) {
-      SetResource(resource, task_runner);
+    FontResourceHelper(FetchParameters& params, ResourceFetcher* fetcher) {
+      SetResource(FontResource::Fetch(params, fetcher, this));
     }
 
     String DebugName() const override {

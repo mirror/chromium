@@ -37,9 +37,12 @@ ClassicPendingScript::ClassicPendingScript(
       integrity_failure_(false),
       is_currently_streaming_(false) {
   CheckState();
-  SetResource(resource, TaskRunnerHelper::Get(TaskType::kNetworking,
-                                              &element->GetDocument())
-                            .get());
+  SetResource(resource);
+  if (resource) {
+    resource->AddClient(this, TaskRunnerHelper::Get(TaskType::kNetworking,
+                                                    &element->GetDocument())
+                                  .get());
+  }
   MemoryCoordinator::Instance().RegisterClient(this);
 }
 

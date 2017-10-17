@@ -37,18 +37,15 @@ class InspectorResourceContentLoader::ResourceClient final
   explicit ResourceClient(InspectorResourceContentLoader* loader)
       : loader_(loader) {}
 
-  void WaitForResource(Resource* resource) {
-    if (resource->GetType() == Resource::kRaw) {
-      resource->AddClient(static_cast<RawResourceClient*>(this),
-                          TaskRunnerHelper::Get(TaskType::kNetworking,
-                                                loader_->inspected_frame_.Get())
-                              .get());
-    } else {
-      resource->AddClient(static_cast<StyleSheetResourceClient*>(this),
-                          TaskRunnerHelper::Get(TaskType::kNetworking,
-                                                loader_->inspected_frame_.Get())
-                              .get());
+  Resource* WaitForResource(Resource::Type type,
+                            FetchParameters& params,
+                            ResourceFetcher* fetcher) {
+    if (type == Resource::kRaw) {
+      return RawResource::Fetch(params, fetcher,
+                                static_cast<RawResourceClient*>(this));
     }
+    return CSSStyleSheetResource::Fetch(
+        params, fetcher, static_cast<StyleSheetResourceClient*>(this));
   }
 
   DEFINE_INLINE_TRACE() {
@@ -136,13 +133,13 @@ void InspectorResourceContentLoader::Start() {
       ResourceLoaderOptions options;
       options.initiator_info.name = FetchInitiatorTypeNames::internal;
       FetchParameters params(resource_request, options);
-      Resource* resource = RawResource::Fetch(params, document->Fetcher());
+      ResourceClient* resource_client = new ResourceClient(this);
+      Resource* resource = resource_client->WaitForResource(
+          Resource::kRaw, params, document->Fetcher());
       if (resource) {
         // Prevent garbage collection by holding a reference to this resource.
         resources_.push_back(resource);
-        ResourceClient* resource_client = new ResourceClient(this);
         pending_resource_clients_.insert(resource_client);
-        resource_client->WaitForResource(resource);
       }
     }
 
@@ -161,15 +158,14 @@ void InspectorResourceContentLoader::Start() {
       ResourceLoaderOptions options;
       options.initiator_info.name = FetchInitiatorTypeNames::internal;
       FetchParameters params(resource_request, options);
-      Resource* resource =
-          CSSStyleSheetResource::Fetch(params, document->Fetcher());
+      ResourceClient* resource_client = new ResourceClient(this);
+      Resource* resource = resource_client->WaitForResource(
+          Resource::kCSSStyleSheet, params, document->Fetcher());
       if (!resource)
         continue;
       // Prevent garbage collection by holding a reference to this resource.
       resources_.push_back(resource);
-      ResourceClient* resource_client = new ResourceClient(this);
       pending_resource_clients_.insert(resource_client);
-      resource_client->WaitForResource(resource);
     }
   }
 
