@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b35bfffc_bc20cda2",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-17T21:53:22Z",
+      "side": 1,
+      "message": "I thought about that as well, but then figured that it would make sense to call out that we don\u0027t want the RELOAD to be affected by previews and be here explicitly.\nIt serves its purpose that way.",
+      "parentUuid": "b1504c36_16c29951",
+      "revId": "10247e9f7a08b9d83ca42e98e199c68d14323b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b76fc469_1b1a1f29",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 2
