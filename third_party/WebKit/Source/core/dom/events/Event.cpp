@@ -26,6 +26,9 @@
 #include "core/dom/StaticNodeList.h"
 #include "core/dom/events/EventDispatchMediator.h"
 #include "core/dom/events/EventTarget.h"
+#include "core/events/FocusEvent.h"
+#include "core/events/MouseEvent.h"
+#include "core/events/PointerEvent.h"
 #include "core/frame/HostsUsingFeatures.h"
 #include "core/frame/UseCounter.h"
 #include "core/svg/SVGElement.h"
@@ -286,6 +289,16 @@ HeapVector<Member<EventTarget>> Event::composedPath(
 void Event::SetHandlingPassive(PassiveMode mode) {
   handling_passive_ = mode;
   prevent_default_called_during_passive_ = false;
+}
+
+void Event::SetRelatedTargetIfExists(EventTarget* related_target) {
+  if (IsMouseEvent()) {
+    ToMouseEvent(this)->SetRelatedTarget(related_target);
+  } else if (IsPointerEvent()) {
+    ToPointerEvent(this)->SetRelatedTarget(related_target);
+  } else if (IsFocusEvent()) {
+    ToFocusEvent(this)->SetRelatedTarget(related_target);
+  }
 }
 
 HeapVector<Member<EventTarget>> Event::PathInternal(ScriptState* script_state,
