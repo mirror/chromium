@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36c114ab_d0e1be1b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-17T00:04:21Z",
+      "side": 1,
+      "message": "The CL description is formatted a little strangely.\nPlease begin summary with capital letter (Add support...)\nAdd a blank line between summary and following paragraph.\nAlso, the description paragraph should be wrapped at (no more than) 80 chars.\nSee https://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions",
+      "revId": "aee358b0c8c8955dc5907de1f5a38badd25bf8eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
