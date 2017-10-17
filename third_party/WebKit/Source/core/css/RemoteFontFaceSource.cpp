@@ -24,10 +24,12 @@
 
 namespace blink {
 
-RemoteFontFaceSource::RemoteFontFaceSource(FontResource* font,
+RemoteFontFaceSource::RemoteFontFaceSource(CSSFontFace* css_font_face,
+                                           FontResource* font,
                                            CSSFontSelector* font_selector,
                                            FontDisplay display)
-    : font_(font),
+    : face_(css_font_face),
+      font_(font),
       font_selector_(font_selector),
       display_(display),
       period_(display == kFontDisplaySwap ? kSwapPeriod : kBlockPeriod),
@@ -37,6 +39,7 @@ RemoteFontFaceSource::RemoteFontFaceSource(FontResource* font,
                                          : FontLoadHistograms::kFromUnknown,
                   display_),
       is_intervention_triggered_(false) {
+  DCHECK(face_);
   if (ShouldTriggerWebFontsIntervention()) {
     is_intervention_triggered_ = true;
     period_ = kSwapPeriod;
@@ -113,10 +116,8 @@ void RemoteFontFaceSource::NotifyFinished(Resource* unused_resource) {
   font_ = nullptr;
 
   PruneTable();
-  if (face_) {
-    font_selector_->FontFaceInvalidated();
-    face_->FontLoaded(this, load_finish_reason);
-  }
+  font_selector_->FontFaceInvalidated();
+  face_->FontLoaded(this, load_finish_reason);
 }
 
 void RemoteFontFaceSource::FontLoadShortLimitExceeded(FontResource*) {
@@ -147,10 +148,8 @@ void RemoteFontFaceSource::SwitchToSwapPeriod() {
   period_ = kSwapPeriod;
 
   PruneTable();
-  if (face_) {
-    font_selector_->FontFaceInvalidated();
-    face_->DidBecomeVisibleFallback(this);
-  }
+  font_selector_->FontFaceInvalidated();
+  face_->DidBecomeVisibleFallback(this);
 
   histograms_.RecordFallbackTime();
 }
@@ -255,11 +254,11 @@ void RemoteFontFaceSource::BeginLoadIfNeeded() {
     }
   }
 
-  if (face_)
-    face_->DidBeginLoad();
+  face_->DidBeginLoad();
 }
 
 DEFINE_TRACE(RemoteFontFaceSource) {
+  visitor->Trace(face_);
   visitor->Trace(font_);
   visitor->Trace(font_selector_);
   CSSFontFaceSource::Trace(visitor);

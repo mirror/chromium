@@ -33,8 +33,6 @@
 
 namespace blink {
 
-CSSFontFaceSource::CSSFontFaceSource() : face_(nullptr) {}
-
 CSSFontFaceSource::~CSSFontFaceSource() {}
 
 RefPtr<SimpleFontData> CSSFontFaceSource::GetFontData(
@@ -58,10 +56,6 @@ RefPtr<SimpleFontData> CSSFontFaceSource::GetFontData(
   // No release, because fontData is a reference to a RefPtr that is held in the
   // font_data_table_.
   return font_data;
-}
-
-DEFINE_TRACE(CSSFontFaceSource) {
-  visitor->Trace(face_);
 }
 
 }  // namespace blink
