@@ -11,6 +11,7 @@
 namespace blink {
 
 class MediaControlsImpl;
+struct WebSize;
 
 // MediaControlElementBase implementation based on a <div>. Used for panels, and
 // floating UI.
@@ -18,9 +19,14 @@ class MediaControlDivElement : public HTMLDivElement,
                                public MediaControlElementBase {
   USING_GARBAGE_COLLECTED_MIXIN(MediaControlDivElement);
 
+ public:
   // Implements MediaControlElementBase.
   void SetOverflowElementIsWanted(bool) final;
   void MaybeRecordDisplayed() final;
+
+  // Get the size of the element in pixels or the default if we cannot get the
+  // size because the element has not been layed out yet.
+  WebSize GetSizeOrDefault() const override;
 
   DECLARE_VIRTUAL_TRACE();
 

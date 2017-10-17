@@ -12,6 +12,7 @@
 namespace blink {
 
 class MediaControlsImpl;
+struct WebSize;
 
 // MediaControlElementBase implementation based on an <input> element. Used by
 // buttons and sliders.
@@ -34,6 +35,10 @@ class MODULES_EXPORT MediaControlInputElement : public HTMLInputElement,
   MediaControlInputElement* OverflowElementForTests() const {
     return overflow_element_;
   }
+
+  // Get the size of the element in pixels or the default if we cannot get the
+  // size because the element has not been layed out yet.
+  WebSize GetSizeOrDefault() const override;
 
  protected:
   MediaControlInputElement(MediaControlsImpl&, MediaControlElementType);
