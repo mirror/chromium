@@ -74,11 +74,9 @@ AddressNormalizationManager::NormalizerDelegate::NormalizerDelegate(
   DCHECK(owner_);
   DCHECK(profile_);
 
-  std::string country_code =
-      base::UTF16ToUTF8(profile_->GetRawInfo(ADDRESS_HOME_COUNTRY));
-  if (!autofill::data_util::IsValidCountryCode(country_code))
-    country_code = owner_->default_country_code_;
-
+  const std::string country_code =
+      autofill::data_util::GetCountryCodeWithFallback(
+          *profile_, owner_->default_country_code_);
   address_normalizer->StartAddressNormalization(
       *profile_, country_code, kAddressNormalizationTimeoutSeconds, this);
 }
