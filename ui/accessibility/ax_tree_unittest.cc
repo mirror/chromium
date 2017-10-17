@@ -1109,4 +1109,33 @@ TEST(AXTreeTest, IntListReverseRelations) {
   EXPECT_TRUE(base::ContainsKey(reverse_labelled_by, 1));
 }
 
+TEST(AXTreeTest, GetFromUniqueId) {
+  AXTreeUpdate tree_update;
+  tree_update.root_id = 1;
+  tree_update.nodes.resize(1);
+  tree_update.nodes[0].id = 1;
+
+  FakeAXTreeDelegate fake_delegate;
+
+  AXTree tree_1(tree_update);
+  tree_1.SetDelegate(&fake_delegate);
+
+  tree_update.root_id = 2;
+  tree_update.nodes[0].id = 2;
+
+  AXTree tree_2(tree_update);
+  tree_1.SetDelegate(&fake_delegate);
+
+  AXTree* another = AXTree::GetFromUniqueId(0);
+  EXPECT_EQ(another, nullptr);
+
+  another = AXTree::GetFromUniqueId(1);
+  ASSERT_TRUE(another != nullptr);
+  EXPECT_EQ(tree_1.data().tree_id, another->data().tree_id);
+
+  another = AXTree::GetFromUniqueId(2);
+  ASSERT_TRUE(another != nullptr);
+  EXPECT_EQ(tree_2.data().tree_id, another->data().tree_id);
+}
+
 }  // namespace ui

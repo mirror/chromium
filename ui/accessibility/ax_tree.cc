@@ -8,6 +8,7 @@
 
 #include <set>
 
+#include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/strings/stringprintf.h"
 #include "ui/accessibility/ax_node.h"
@@ -125,6 +126,11 @@ AXTreeDelegate::AXTreeDelegate() {
 AXTreeDelegate::~AXTreeDelegate() {
 }
 
+using UniqueIdMap = base::hash_map<int32_t, AXTree*>;
+// Map from each AXPlatformNode's unique id to its instance.
+base::LazyInstance<UniqueIdMap>::DestructorAtExit g_unique_id_map =
+    LAZY_INSTANCE_INITIALIZER;
+
 AXTree::AXTree()
     : delegate_(NULL), root_(NULL) {
   AXNodeData root;
@@ -134,16 +140,30 @@ AXTree::AXTree()
   initial_state.root_id = -1;
   initial_state.nodes.push_back(root);
   CHECK(Unserialize(initial_state)) << error();
+  g_unique_id_map.Get()[initial_state.root_id] = this;
 }
 
 AXTree::AXTree(const AXTreeUpdate& initial_state)
     : delegate_(NULL), root_(NULL) {
   CHECK(Unserialize(initial_state)) << error();
+  g_unique_id_map.Get()[initial_state.root_id] = this;
 }
 
 AXTree::~AXTree() {
   if (root_)
     DestroyNodeAndSubtree(root_, nullptr);
+
+  g_unique_id_map.Get().erase(data_.tree_id);
+}
+
+// static
+AXTree* AXTree::GetFromUniqueId(int32_t unique_id) {
+  UniqueIdMap* unique_ids = g_unique_id_map.Pointer();
+  auto iter = unique_ids->find(unique_id);
+  if (iter != unique_ids->end())
+    return iter->second;
+
+  return nullptr;
 }
 
 void AXTree::SetDelegate(AXTreeDelegate* delegate) {
@@ -158,6 +178,11 @@ AXNode* AXTree::GetFromId(int32_t id) const {
 void AXTree::UpdateData(const AXTreeData& new_data) {
   if (data_ == new_data)
     return;
+
+  if (data_.tree_id != new_data.tree_id) {
+    g_unique_id_map.Get().erase(data_.tree_id);
+    g_unique_id_map.Get()[new_data.tree_id] = this;
+  }
 
   AXTreeData old_data = data_;
   data_ = new_data;

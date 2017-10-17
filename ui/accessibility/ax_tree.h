@@ -158,6 +158,8 @@ class AX_EXPORT AXTreeDelegate {
 // accessibility APIs on a specific platform.
 class AX_EXPORT AXTree {
  public:
+  static AXTree* GetFromUniqueId(int32_t unique_id);
+
   AXTree();
   explicit AXTree(const AXTreeUpdate& initial_state);
   virtual ~AXTree();
