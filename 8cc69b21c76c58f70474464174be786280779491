@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34eaeb1b_08dadd77",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 24
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-17T00:00:22Z",
+      "side": 1,
+      "message": "FYI: Does this feature need to worry about using old-version code to deserialize new-version data?\nI guess it doesn\u0027t. But if it does, maybe you want to consider adding [Extensible] to enums.\n\nhttps://chromium.googlesource.com/chromium/src/+/97601053cedab95087d4aa1248dd40bf9d9531b9/mojo/public/tools/bindings#Versioning",
+      "revId": "8cc69b21c76c58f70474464174be786280779491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d176af7_faa8bdc9",
+        "filename": "content/common/page_state_serialization_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-17T00:00:22Z",
+      "side": 1,
+      "message": "(What you have done seems fine to me. You don\u0027t have to make changes if you prefer the current way.)\n\nJust want to clarify my previous comment: I was suggesting to have one deserialization unittest for each external type, instead of each field.\nFor example, a String16 deserialization test to make sure that a (previously stored) blob of bytes can be deserialized to a String16 matching the expected value.",
+      "revId": "8cc69b21c76c58f70474464174be786280779491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
