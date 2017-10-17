@@ -69,6 +69,30 @@
       "revId": "bff87798cd2bb311bf96eb94a5c30bd699021f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "331adcc5_58a36b46",
+        "filename": "ios/web/public/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-17T20:07:14Z",
+      "side": 1,
+      "message": "G\u0027Ah, that makes GN complain about implicit dependency chain:\n\nERROR at //ios/web/public/user_agent_unittest.mm:5:10: Can\u0027t include this header from here.\n#import \"ios/web/public/user_agent.h\"\n         ^--------------------------\nThe target:\n  //ios/web:ios_web_public_unittests\nis including a file from the target:\n  //ios/web/public:user_agent\nIt\u0027s usually best to depend directly on the destination target.\nIn some cases, the destination target is considered a subcomponent\nof an intermediate target. In this case, the intermediate target\nshould depend publicly on the destination to forward the ability\nto include headers.\nDependency chain (there may also be others):\n  //ios/web:ios_web_public_unittests --\u003e\n  //ios/web/public:public --[private]--\u003e\n  //ios/web/public:user_agent\n\nI think we are better off having user_agent.{h|mm} in \"public\" and \"user_agent\" rather than adding \"user_agent\" to deps everywhere. \n\nAlternatively maybe it should be added as \u0027public_deps\u0027, would that work?",
+      "parentUuid": "0eb7b87c_54d4b7ab",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 15
+      },
+      "revId": "bff87798cd2bb311bf96eb94a5c30bd699021f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
