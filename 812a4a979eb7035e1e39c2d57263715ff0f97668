@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6db5e190_1f6cabc4",
+        "filename": "components/autofill/content/renderer/form_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-17T19:11:13Z",
+      "side": 1,
+      "message": "to lowercase?",
+      "revId": "812a4a979eb7035e1e39c2d57263715ff0f97668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf43be20_bf55490f",
+        "filename": "components/autofill/content/renderer/page_form_analyser_logger.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-17T19:11:13Z",
+      "side": 1,
+      "message": "I *think* assignment does what you want (i.e., a clear plus append to reuse the buffer).\n\nYou might want to be more explicit:\n\n  text.clear();\n  text +\u003d \"[DOM] \";",
+      "revId": "812a4a979eb7035e1e39c2d57263715ff0f97668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
