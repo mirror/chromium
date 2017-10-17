@@ -112,8 +112,8 @@ void HeadlessExample::OnDomFetched(
   if (result->HasExceptionDetails()) {
     LOG(ERROR) << "Failed to serialize document: "
                << result->GetExceptionDetails()->GetText();
-  } else if (result->GetResult()->GetValue()->GetAsString(&dom)) {
-    printf("%s\n", dom.c_str());
+  } else {
+    printf("%s\n", result->GetResult()->GetValue()->GetString().c_str());
   }
 
   // Shut down the browser (see ~HeadlessExample).
