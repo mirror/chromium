@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c94fd60_420b9e08",
+        "filename": "gpu/ipc/gl_in_process_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T23:44:43Z",
+      "side": 0,
+      "message": "This was the one, where as GLES2Impl::Init failures does not Destroy.",
+      "revId": "4821f7e19c69f9d8b08139ebded0694e842df1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

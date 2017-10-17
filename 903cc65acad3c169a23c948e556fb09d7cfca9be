@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3818730a_9d86cbda",
+        "filename": "gpu/command_buffer/service/feature_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T23:44:43Z",
+      "side": 1,
+      "message": "Initialize always returns true, so now it\u0027s void.",
+      "revId": "903cc65acad3c169a23c948e556fb09d7cfca9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9116d74_c50f157e",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T23:44:43Z",
+      "side": 1,
+      "message": "Exposed for ContextGroup::Initialize to use since it makes GL calls and looks for errors.",
+      "revId": "903cc65acad3c169a23c948e556fb09d7cfca9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09eb68c7_d1d9a0ca",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T23:44:43Z",
+      "side": 1,
+      "message": "Always returned true",
+      "revId": "903cc65acad3c169a23c948e556fb09d7cfca9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9138022b_5f650a41",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T23:44:43Z",
+      "side": 1,
+      "message": "These are glerrors which would not be set because of context loss, cuz they are different from State::error which would be from context loss, right?",
+      "revId": "903cc65acad3c169a23c948e556fb09d7cfca9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21276776_e749ffbb",
+        "filename": "gpu/command_buffer/service/texture_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2012,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T23:44:43Z",
+      "side": 1,
+      "message": "Always returned true",
+      "revId": "903cc65acad3c169a23c948e556fb09d7cfca9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "916e7368_5ce16cc9",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T23:44:43Z",
+      "side": 1,
+      "message": "If the gpu process went away, it\u0027s fatal, right?",
+      "revId": "903cc65acad3c169a23c948e556fb09d7cfca9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d3c7dc_533fb10b",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T23:44:43Z",
+      "side": 1,
+      "message": "Because I pass callback_thread_ to a function that wants a STTR, whereas before it was using a local variable and then upcasting to store it here.",
+      "revId": "903cc65acad3c169a23c948e556fb09d7cfca9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d58d67_403f021d",
+        "filename": "gpu/ipc/gl_in_process_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T23:44:43Z",
+      "side": 1,
+      "message": "Destroy() was being called in one error case in Initialize() but not the other. We expect the caller to not hold only a context that failed to create forever, so make it consistent and remove the one Destroy call. Now we can collapse it into the destructor.",
+      "revId": "903cc65acad3c169a23c948e556fb09d7cfca9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25395c81_f1f95a6c",
+        "filename": "ui/compositor/test/in_process_context_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T23:44:43Z",
+      "side": 1,
+      "message": "InProcessContextProvider::CreateOffscreen does not return null, so removed check",
+      "revId": "903cc65acad3c169a23c948e556fb09d7cfca9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc690576_6498c616",
+        "filename": "ui/compositor/test/in_process_context_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T23:44:43Z",
+      "side": 1,
+      "message": "same",
+      "revId": "903cc65acad3c169a23c948e556fb09d7cfca9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
