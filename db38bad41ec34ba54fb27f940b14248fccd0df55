@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "1b2cef01_38bcbe40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-17T16:09:21Z",
+      "side": 1,
+      "message": "This flow is used in multi-window mode when the Chrome being merged into is alive; it\u0027s used for all merges besides cold-start. We never circled back and implemented live tab merging for multi-window because it hasn\u0027t been a priority. In my initial multi-window merging investigations, I saw issues when trying to merge more than a few tabs a time but that was a while ago so perhaps it\u0027ll \"just\" work now.\n\nFor multi-window, we may call this method in onMultiWindowModeChanged if the activity is resumed and in fullscreen mode. We also try to trigger in onResume() if a boolean is null or true (so this happens on cold start.. but is usually ignored since the tab model is still being loaded):\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java?q\u003dchrometabbedactivity\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d601\n\nI don\u0027t think it\u0027d hurt to attempt to merge all state files in those two scenarios, although the triggers are rather multi-window specific.",
+      "parentUuid": "4963aeaf_953640b4",
+      "range": {
+        "startLine": 441,
+        "startChar": 19,
+        "endLine": 441,
+        "endChar": 32
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37611cd3_e4e82355",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 6
