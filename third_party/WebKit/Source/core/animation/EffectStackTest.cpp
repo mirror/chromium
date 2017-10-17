@@ -12,7 +12,6 @@
 #include "core/animation/ElementAnimations.h"
 #include "core/animation/InvalidatableInterpolation.h"
 #include "core/animation/KeyframeEffectModel.h"
-#include "core/animation/LegacyStyleInterpolation.h"
 #include "core/animation/PendingAnimations.h"
 #include "core/animation/StringKeyframe.h"
 #include "core/animation/animatable/AnimatableDouble.h"
