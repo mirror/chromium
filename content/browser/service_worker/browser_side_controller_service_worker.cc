@@ -230,6 +230,8 @@ void BrowserSideControllerServiceWorker::CompleteDispatchFetchEvent(
   DVLOG(1) << "CompleteFetch [" << internal_fetch_event_id
            << "] status:" << status;
   auto* found = fetch_event_callbacks_.Lookup(internal_fetch_event_id);
+  if (!found)
+    return;
   std::move(*found).Run(status, dispatch_event_time);
   fetch_event_callbacks_.Remove(internal_fetch_event_id);
 }
