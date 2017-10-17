@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_COMPOSITOR_SOFTWARE_OUTPUT_DEVICE_WIN_H_
-#define CONTENT_BROWSER_COMPOSITOR_SOFTWARE_OUTPUT_DEVICE_WIN_H_
+#ifndef COMPONENTS_VIZ_SERVICE_DISPLAY_SOFTWARE_OUTPUT_DEVICE_WIN_H_
+#define COMPONENTS_VIZ_SERVICE_DISPLAY_SOFTWARE_OUTPUT_DEVICE_WIN_H_
 
 #include <stddef.h>
 #include <windows.h>
@@ -22,7 +22,7 @@ namespace base {
 class SharedMemory;
 }
 
-namespace content {
+namespace viz {
 class SoftwareOutputDeviceWin;
 
 class OutputDeviceBacking {
@@ -45,7 +45,7 @@ class OutputDeviceBacking {
   DISALLOW_COPY_AND_ASSIGN(OutputDeviceBacking);
 };
 
-class SoftwareOutputDeviceWin : public viz::SoftwareOutputDevice {
+class SoftwareOutputDeviceWin : public SoftwareOutputDevice {
  public:
   SoftwareOutputDeviceWin(OutputDeviceBacking* backing,
                           gfx::AcceleratedWidget widget);
@@ -70,6 +70,6 @@ class SoftwareOutputDeviceWin : public viz::SoftwareOutputDevice {
   DISALLOW_COPY_AND_ASSIGN(SoftwareOutputDeviceWin);
 };
 
-}  // namespace content
+}  // namespace viz
 
-#endif  // CONTENT_BROWSER_COMPOSITOR_SOFTWARE_OUTPUT_DEVICE_WIN_H_
+#endif  // COMPONENTS_VIZ_SERVICE_DISPLAY_SOFTWARE_OUTPUT_DEVICE_WIN_H_
