@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f489ef7_5a53e6a9",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "scope this variable to where it is used",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c974d03_8f86c238",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "why use new instead of the stack? if new, should be unique_ptr, this looks like a leak.\n\nThis is an SERegion not a rect, so maybe occlusion_region would be a better name?",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0373aa52_1cad50d0",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "scope this variable to where it is used",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db31b0b_fa145aaa",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "same",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ed5af5_98878a6f",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "same, this doesn\u0027t need to survive multiple loop iterations",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc09d755_d8e9f0dc",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "These things would apply to the RenderPassDrawQuad using the pass, not to quads inside the pass? Inside a renderpass with a filter, we still can skip quads that overlap each other, though need to be careful about occlusion from things above but outside the renderpass.\n\nMaybe this is to be addressed, but the TODO reads as it is about applying the filters, which would be to the RenderPassDrawQuad",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cfdfad0_9e657ca4",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "Similar here, if the pass is not opaque, quads inside the pass can still be occluded.",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cda351a_6b091461",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "nit: ++quad",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cced7ad_5c7740b0",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "it looks like current_sqs isn\u0027t needed, you could just use last_sqs in this block since they are synonyms?",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f2fb33_1e9fb5dc",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "I remember we talked about this, but I don\u0027t remember that this was needed in the end.. Applying the transform to the target should give the correct result (that transform is itself flattened sometimes but that is based on the content of the producer of the quads). Which unit test demonstrates why this flatten is here?",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ec3ff5_2e3b81a3",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "Use MathUtil not TransformRect for any transform math in cc/viz",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ded5a23_01f2d786",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "how about visible_quad_rect instead of draw_quad?",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b341475_a51bd654",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "can you put this last in the loop? its tracking state for the next iteration of the algorithm whereas the rest of this block is about deleting a quad or not.",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c9fcd4_f014205b",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "nit: normally no {} for single-line bodies",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c510809_0994bd7d",
+        "filename": "components/viz/service/display/display.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "RemoveOverdrawQuads? CullOccludedQuads? Something that explains what it does a bit more, and is plural, as this removes multiple things",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "138db057_41534de8",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "I think you just want StubDisplayClient?",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf0c17e_02434068",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "Can you add a comment each each of these EXPECT blocks to explain what it\u0027s testing and why it expects what it does? There\u0027s a high level comment on most tests but would appreciate something specific for each such EXPECT.\n\nFor example here, you could say:\n\n// In this test |quad| would occlude |quad2| except that its content is not known to be opaque, so |quad2| is not removed.",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f35964f_7ce59419",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "no acronyms if we can avoid it",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45edd83_29cd95f0",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1544,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-17T20:06:54Z",
+      "side": 1,
+      "message": "With?",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
