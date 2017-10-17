@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89c714a5_b95823d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-17T19:14:14Z",
+      "side": 1,
+      "message": "Please add a note on the speed benchmark. OscillatorNode should be not slower by this change.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "2ed55b14b7cbbfc8fb8c1bb033606fc89165b1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d35970_8eadad8e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OscillatorNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-17T19:14:14Z",
+      "side": 1,
+      "message": "Does this new function run only when custom osc is invoked? Otherwise, is there any possibility of performance regression here?\n\nNOTE: we chatted offline and we don\u0027t have performance regression here.\n\nRevise the method name to a form of \"verb + noun\". Perhaps `doInterpolation` or `interpolateValues`?",
+      "range": {
+        "startLine": 232,
+        "startChar": 13,
+        "endLine": 232,
+        "endChar": 26
+      },
+      "revId": "2ed55b14b7cbbfc8fb8c1bb033606fc89165b1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
