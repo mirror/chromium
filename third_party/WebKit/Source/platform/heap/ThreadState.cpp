@@ -82,6 +82,8 @@ uint8_t ThreadState::main_thread_state_storage_[sizeof(ThreadState)];
 
 const size_t kDefaultAllocatedObjectSizeThreshold = 100 * 1024;
 
+size_t ThreadState::force_memory_pressure_threshold_ = static_cast<size_t>(300);
+
 const char* ThreadState::GcReasonString(BlinkGC::GCReason reason) {
   switch (reason) {
     case BlinkGC::kIdleGC:
@@ -417,7 +419,7 @@ bool ThreadState::ShouldForceConservativeGC() {
 // If we're consuming too much memory, trigger a conservative GC
 // aggressively. This is a safe guard to avoid OOM.
 bool ThreadState::ShouldForceMemoryPressureGC() {
-  if (TotalMemorySize() < 300 * 1024 * 1024)
+  if (TotalMemorySize() < force_memory_pressure_threshold_ * 1024 * 1024)
     return false;
   return JudgeGCThreshold(0, 0, 1.5);
 }
