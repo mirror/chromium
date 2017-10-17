@@ -573,6 +573,4 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, CORSFallbackResponse) {
   }
 }
 
-// TODO(kinuko): Add more tests.
-
 }  // namespace content

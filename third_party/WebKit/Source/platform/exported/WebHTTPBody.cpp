@@ -99,6 +99,26 @@ bool WebHTTPBody::ElementAt(size_t index, Element& result) const {
   return true;
 }
 
+mojo::ScopedMessagePipeHandle WebHTTPBody::AsMessagePipe() const {
+  std::unique_ptr<BlobData> blob_data = BlobData::Create();
+  for (const FormDataElement& form_data : private_->Elements()) {
+    switch (form_data.type_) {
+      case FormDataElement::kData: {
+        std::string str(form_data.data_.data(), form_data.data_.size());
+        blob_data->AppendBytes(form_data.data_.data(), form_data.data_.size());
+        break;
+      }
+      default:
+        DCHECK(false);
+        break;
+    }
+  }
+  long long size = blob_data->length();
+  RefPtr<BlobDataHandle> handle =
+      BlobDataHandle::Create(std::move(blob_data), size);
+  return handle->CloneBlobPtr().PassInterface().PassHandle();
+}
+
 void WebHTTPBody::AppendData(const WebData& data) {
   EnsureMutable();
   // FIXME: FormDataElement::m_data should be a SharedBuffer<char>.  Then we
