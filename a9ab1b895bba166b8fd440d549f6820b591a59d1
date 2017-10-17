@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0db6a50_13ca8dbc",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventDispatcher.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-17T09:56:48Z",
+      "side": 1,
+      "message": "nit: line 37 and 39 should no longer be necessary.",
+      "revId": "a9ab1b895bba166b8fd440d549f6820b591a59d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

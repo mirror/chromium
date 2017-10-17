@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d06d349_3fca9c4d",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventDispatcher.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-17T09:56:48Z",
+      "side": 1,
+      "message": "nit: you don\u0027t have to have braces if the body is one-line, but you could have.\n\nUsually for such border-line style cases I\u0027d follow the other instances in the\nsame file.  I see your change in line 351 doesn\u0027t have braces, so it would be\nbetter to be consistent.",
+      "revId": "03c44e1475032adba8a6fb3330f6c360d5c69d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
