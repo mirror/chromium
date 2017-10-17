@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6ad0a128_b3c861eb",
+        "filename": "components/offline_pages/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-17T18:10:04Z",
+      "side": 1,
+      "message": "ok :) thanks.",
+      "parentUuid": "ca4729ca_b73f06c4",
+      "revId": "909f3c3a6d36d866a6daaa461d040659a6ad19e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7e6c8e6_3b37a27a",
         "filename": "components/offline_pages/BUILD.gn",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "8d8ac5bf_bde71597",
+        "filename": "components/offline_pages/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-17T18:10:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d0bc5eb7_c7389d9d",
+      "revId": "909f3c3a6d36d866a6daaa461d040659a6ad19e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f8189c6_f6298b4e",
         "filename": "components/offline_pages/BUILD.gn",
         "patchSetId": 2
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Currently still unknown reason.  This is the minimal set of deps I could use to compile correctly.  I can spend more time discovering and documenting this if you think it\u0027s valuable.",
       "parentUuid": "8f8189c6_f6298b4e",
+      "revId": "909f3c3a6d36d866a6daaa461d040659a6ad19e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0beda673_8c954cff",
+        "filename": "components/offline_pages/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-17T18:10:04Z",
+      "side": 1,
+      "message": "Would be nice if it\u0027s not a lot of work, can be another CL if needed.",
+      "parentUuid": "446bc7dc_c94306eb",
       "revId": "909f3c3a6d36d866a6daaa461d040659a6ad19e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
