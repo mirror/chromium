@@ -285,11 +285,9 @@ automationInternal.onNodesRemoved.addListener(function(treeID, nodeIDs) {
 automationInternal.onAccessibilityEvent.addListener(function(eventParams) {
   var id = eventParams.treeID;
   var targetTree = AutomationRootNode.getOrCreate(id);
-
+  var previousFocusedNode = automationUtil.focusedNode;
   var isFocusEvent = false;
-  if (eventParams.eventType == 'focus') {
-    isFocusEvent = true;
-  } else if (eventParams.eventType == 'blur') {
+  if (eventParams.eventType == 'blur') {
     // Work around an issue where Chrome sends us 'blur' events on the
     // root node when nothing has focus, we need to treat those as focus
     // events but otherwise not handle blur events specially.
@@ -300,14 +298,28 @@ automationInternal.onAccessibilityEvent.addListener(function(eventParams) {
       eventParams.eventType == 'mediaStoppedPlaying') {
     // These events are global to the tree.
     eventParams.targetID = privates(targetTree).impl.id;
+  } else {
+    if (eventParams.eventType == 'focus')
+      isFocusEvent = true;
+
+    previousFocusedNode = automationUtil.focusedNode;
+    automationUtil.updateFocusedNode();
+
+    // Fire focus events if necessary.
+    if (automationUtil.focusedNode &&
+        automationUtil.focusedNode != previousFocusedNode) {
+      var originalType = eventParams.eventType;
+      eventParams.eventType = 'focus';
+      privates(automationUtil.focusedNode.root)
+          .impl.onAccessibilityEvent(eventParams);
+      eventParams.eventType = originalType;
+    }
   }
 
   // When we get a focus event, ignore the actual event target, and instead
   // check what node has focus globally. If that represents a focus change,
   // fire a focus event on the correct target.
   if (isFocusEvent) {
-    var previousFocusedNode = automationUtil.focusedNode;
-    automationUtil.updateFocusedNode();
     if (automationUtil.focusedNode &&
         automationUtil.focusedNode == previousFocusedNode) {
       return;
