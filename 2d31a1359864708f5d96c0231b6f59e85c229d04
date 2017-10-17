@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "72f6307f_de327ea5",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-17T14:47:52Z",
+      "side": 1,
+      "message": "Might happen in this CL or later, but JIC I\u0027m mentioning that\nthis class implements the mojo interface [1], which is used by\ndefault these days, see https://crbug.com/736517. (I\u0027m letting \nthe mojo version bake for a few stable releases before removing\nthe old IPC code path).\n\n\nhttps://cs.chromium.org/chromium/src/media/mojo/interfaces/video_encode_accelerator.mojom?sq\u003dpackage:chromium\u0026dr\u003dCSs",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 22
+      },
+      "revId": "2d31a1359864708f5d96c0231b6f59e85c229d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9aac49eb_e657c80d",
         "filename": "media/video/video_encode_accelerator.h",
         "patchSetId": 3
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "I was trying to make it consistent to the existing interface.\n\nBut it is really sounds good if we can leave other code untouched. We can further provide a default implementation in vea.cc. So that we don\u0027t need to touch other VEAs. WDYT?",
       "parentUuid": "9aac49eb_e657c80d",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 0
+      },
+      "revId": "2d31a1359864708f5d96c0231b6f59e85c229d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc17112_0e53beca",
+        "filename": "media/video/video_encode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-17T14:47:52Z",
+      "side": 1,
+      "message": "SGTM. Historically this interface used a Client interface to convey\na complex dialogue, and also leaked the underlying IPC pattern of\ndisconnected request-response. Ideally we should work towards a \ntransactional interface that doesn\u0027t keep so much state. But it \ndoesn\u0027t need to happen now.",
+      "parentUuid": "11cdb36e_36334868",
       "range": {
         "startLine": 157,
         "startChar": 2,
