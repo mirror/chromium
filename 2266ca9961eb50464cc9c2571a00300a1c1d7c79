@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2714e52_8801883c",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-17T13:24:34Z",
+      "side": 1,
+      "message": "nit: could we inline kClickTestCase here?",
+      "range": {
+        "startLine": 165,
+        "startChar": 24,
+        "endLine": 165,
+        "endChar": 38
+      },
+      "revId": "2266ca9961eb50464cc9c2571a00300a1c1d7c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23d8a4a_faf68e31",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_views.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-17T13:24:34Z",
+      "side": 1,
+      "message": "fix please",
+      "revId": "2266ca9961eb50464cc9c2571a00300a1c1d7c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
