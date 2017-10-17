@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81334890_f6bab71f",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-17T01:26:27Z",
+      "side": 1,
+      "message": "Can you explain a bit why are we returning early here? It does not seem obvious.",
+      "revId": "db6edbf5d7cf450cb42aa2f1a739635b8ce74b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948f55d6_a1b0fd0b",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-17T01:26:27Z",
+      "side": 1,
+      "message": "Nit: s/Cdd/cdd. Variables names should start with lower case.",
+      "revId": "db6edbf5d7cf450cb42aa2f1a739635b8ce74b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6603392_f4aad4f0",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-17T01:26:27Z",
+      "side": 1,
+      "message": "Nit (optional): Use arrow functions when it makes the code shorter.\n\nprintPreview.destinationStore_.destinations().find(d \u003d\u003e d.id \u003d\u003d \u0027ID2\u0027)",
+      "revId": "db6edbf5d7cf450cb42aa2f1a739635b8ce74b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf31b215_160d00ef",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-17T01:26:27Z",
+      "side": 1,
+      "message": "Need to call resetResolver(\u0027getPrinterCapabilities\u0027) and resetResolver(\u0027getPreview\u0027) before waiting again on a Promise. Otherwise you are not really waiting for the new invocation.",
+      "revId": "db6edbf5d7cf450cb42aa2f1a739635b8ce74b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
