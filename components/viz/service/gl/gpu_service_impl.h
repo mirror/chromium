@@ -50,11 +50,10 @@ class VIZ_SERVICE_EXPORT GpuServiceImpl : public gpu::GpuChannelManagerDelegate,
   GpuServiceImpl(const gpu::GPUInfo& gpu_info,
                  std::unique_ptr<gpu::GpuWatchdogThread> watchdog,
                  scoped_refptr<base::SingleThreadTaskRunner> io_runner,
-                 const gpu::GpuFeatureInfo& gpu_feature_info);
+                 const gpu::GpuFeatureInfo& gpu_feature_info,
+                 const gpu::GpuPreferences& gpu_preferences);
 
   ~GpuServiceImpl() override;
-
-  void UpdateGPUInfoFromPreferences(const gpu::GpuPreferences& preferences);
 
   void InitializeWithHost(mojom::GpuHostPtr gpu_host,
                           gpu::GpuProcessActivityFlags activity_flags,
@@ -163,6 +162,8 @@ class VIZ_SERVICE_EXPORT GpuServiceImpl : public gpu::GpuChannelManagerDelegate,
   void Stop(StopCallback callback) override;
 
   void RequestHDRStatusOnMainThread(RequestHDRStatusCallback callback);
+
+  void UpdateGPUInfo();
 
   scoped_refptr<base::SingleThreadTaskRunner> main_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> io_runner_;
