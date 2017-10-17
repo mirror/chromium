@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc4204f6_0e30ffd1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-17T02:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4472dc9c_506c8126",
+      "revId": "49b7a5b43d7b5f5cda6f09d5d81870bc8df1c6da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c97a450_ed35cf73",
         "filename": "third_party/WebKit/LayoutTests/animations/interpolation/offset-path-interpolation-001.html",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T14:55:12Z",
       "side": 1,
       "message": "Is it feasible for these new offset-path tests be moved to WPT instead?",
+      "revId": "49b7a5b43d7b5f5cda6f09d5d81870bc8df1c6da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f9e1a2_87514802",
+        "filename": "third_party/WebKit/LayoutTests/animations/interpolation/offset-path-interpolation-001.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-17T02:42:09Z",
+      "side": 1,
+      "message": "Not yet. They should have upper case commands in the expectations first.\n\nAlso note that these tests cover CSS Animations, CSS Transitions and Web Animations.\n\nThe WPT for motion path currently cover CSS Animations only. Web platform tests should test a specific feature only. It should be possible for Edge/Safari to pass all the motion path web platform tests without supporting Web Animations.",
+      "parentUuid": "7c97a450_ed35cf73",
       "revId": "49b7a5b43d7b5f5cda6f09d5d81870bc8df1c6da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a2acaf0e_82e56918",
+        "filename": "third_party/WebKit/LayoutTests/animations/interpolation/offset-path-interpolation-002.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-17T02:42:09Z",
+      "side": 1,
+      "message": "The tests for d, and transform, used to be among most flaky interpolation tests. I suspected they were timing out because they have many tests, and each test is run 3 times (CSS Animations, CSS Transitions, Web Animations).\n\nSharding the tests has improved the situation.",
+      "parentUuid": "42d6d617_64d16902",
+      "revId": "49b7a5b43d7b5f5cda6f09d5d81870bc8df1c6da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "189e070b_cc5cd5bb",
         "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationTypesMap.cpp",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "23d0f4ff_5a13435a",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationTypesMap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-17T02:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "189e070b_cc5cd5bb",
+      "revId": "49b7a5b43d7b5f5cda6f09d5d81870bc8df1c6da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec682141_7e2032ba",
         "filename": "third_party/WebKit/Source/core/animation/PathPropertyFunctions.h",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "49b7a5b43d7b5f5cda6f09d5d81870bc8df1c6da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d4e5ac_feff8a26",
+        "filename": "third_party/WebKit/Source/core/animation/PathPropertyFunctions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-17T02:42:09Z",
+      "side": 1,
+      "message": "Done.\n\nI have moved the functions to CSSPathInterpolationType.cpp for consistency with your CL 713469.",
+      "parentUuid": "ec682141_7e2032ba",
+      "revId": "49b7a5b43d7b5f5cda6f09d5d81870bc8df1c6da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
