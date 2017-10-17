@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d315823a_d41d387b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-17T18:27:21Z",
+      "side": 1,
+      "message": "Let\u0027s say \"Note: some network activity from out-of-process iframes might be missing.\"\nI think we still show most of the requests, just not certain ones.",
+      "revId": "2ed2e5822424e12c84dcf57ed09f0a431e834c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
