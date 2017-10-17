@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "624ee87e_caaf096d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadResumptionBackgroundTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-17T16:34:20Z",
+      "side": 1,
+      "message": "Filed a bug so we can do this as a separate task.",
+      "parentUuid": "3dd3529b_088d315c",
+      "revId": "105b6edaa3d235de521a1aac15bbbe166c0b57de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37f4ba96_0f867ad8",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/download/DownloadResumptionSchedulerTest.java",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "820ac99f_e7ab5855",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/download/DownloadResumptionSchedulerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-17T16:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37f4ba96_0f867ad8",
+      "range": {
+        "startLine": 95,
+        "startChar": 34,
+        "endLine": 95,
+        "endChar": 39
+      },
+      "revId": "105b6edaa3d235de521a1aac15bbbe166c0b57de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6e36598_8d075e5f",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/download/DownloadResumptionSchedulerTest.java",
         "patchSetId": 2
@@ -62,6 +104,30 @@
       "revId": "105b6edaa3d235de521a1aac15bbbe166c0b57de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579a221a_3d511b38",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/download/DownloadResumptionSchedulerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-17T16:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6e36598_8d075e5f",
+      "range": {
+        "startLine": 117,
+        "startChar": 66,
+        "endLine": 117,
+        "endChar": 71
+      },
+      "revId": "105b6edaa3d235de521a1aac15bbbe166c0b57de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
