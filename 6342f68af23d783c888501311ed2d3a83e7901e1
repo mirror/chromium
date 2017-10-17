@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "937fe806_c84da392",
+        "filename": "media/formats/mp4/mp4_stream_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-17T21:15:25Z",
+      "side": 1,
+      "message": "Hmm. Could it be the case that a newly advanced-to run is immediately empty? If so, previous code would allow this and advance yet again to next run. But this PS would parse fail. That sounds to me like a behavior regression.",
+      "range": {
+        "startLine": 620,
+        "startChar": 14,
+        "endLine": 620,
+        "endChar": 27
+      },
+      "revId": "6342f68af23d783c888501311ed2d3a83e7901e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f53c58_a2c92be2",
+        "filename": "media/formats/mp4/mp4_stream_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-17T21:15:25Z",
+      "side": 1,
+      "message": "nit: if prior patch set\u0027s \"return false\" here without setting *err true on AdvanceRun() failure went undetected by media_unittests, please add a test that would fail if no parse error on failed AdvanceRun().\n\nweak nit: maybe follow pattern set above, here and elsewhere, like:\n*err \u003d !runs_-\u003eAdvanceRun();\nif (*err)\n  return false;",
+      "revId": "6342f68af23d783c888501311ed2d3a83e7901e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
