@@ -66,6 +66,7 @@ settings.SiteSettingSource = {
   KILL_SWITCH: 'kill-switch',
   POLICY: 'policy',
   PREFERENCE: 'preference',
+  SUBRESOURCE_FILTER_BLACKLIST: 'subresource-filter-blacklist',
 };
 
 /**
