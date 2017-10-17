@@ -95,12 +95,15 @@ _java_primitive_to_boxed_type = {
 
 
 def NameToComponent(name):
-  # insert '_' between anything and a Title name (e.g, HTTPEntry2FooBar ->
-  # HTTP_Entry2_FooBar)
-  name = re.sub('([^_])([A-Z][^A-Z_]+)', r'\1_\2', name)
-  # insert '_' between non upper and start of upper blocks (e.g.,
-  # HTTP_Entry2_FooBar -> HTTP_Entry2_Foo_Bar)
-  name = re.sub('([^A-Z_])([A-Z])', r'\1_\2', name)
+  """ Returns a list of lowercase words corresponding to a given name.
+
+  The name parameter can be given in camel case, macro case, or snake case.
+  """
+  # Assume uppercase names or names with an '_' are already correctly
+  # underscored in macro case or snake case. Otherwise, assume camel case and
+  # add underscore before every uppercase character.
+  if not ('_' in name or name.isupper()):
+    name = re.sub('(.)(?=[A-Z])', r'\1_', name)
   return [x.lower() for x in name.split('_')]
 
 def UpperCamelCase(name):
