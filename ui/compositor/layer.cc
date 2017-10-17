@@ -103,9 +103,6 @@ Layer::Layer()
       layer_grayscale_(0.0f),
       layer_inverted_(false),
       layer_blur_sigma_(0.0f),
-      layer_temperature_(0.0f),
-      layer_blue_scale_(1.0f),
-      layer_green_scale_(1.0f),
       layer_mask_(nullptr),
       layer_mask_back_link_(nullptr),
       zoom_(1),
@@ -133,9 +130,6 @@ Layer::Layer(LayerType type)
       layer_grayscale_(0.0f),
       layer_inverted_(false),
       layer_blur_sigma_(0.0f),
-      layer_temperature_(0.0f),
-      layer_blue_scale_(1.0f),
-      layer_green_scale_(1.0f),
       layer_mask_(nullptr),
       layer_mask_back_link_(nullptr),
       zoom_(1),
@@ -397,6 +391,10 @@ float Layer::GetCombinedOpacity() const {
   return opacity;
 }
 
+float Layer::layer_temperature() const {
+  return cc_layer_->color_temperature();
+}
+
 void Layer::SetLayerTemperature(float value) {
   GetAnimator()->SetTemperature(value);
 }
@@ -499,15 +497,6 @@ void Layer::SetLayerFilters() {
   if (layer_grayscale_) {
     filters.Append(cc::FilterOperation::CreateGrayscaleFilter(
         layer_grayscale_));
-  }
-  if (layer_temperature_) {
-    float color_matrix[] = {
-        1.0f,               0.0f,              0.0f, 0.0f, 0.0f,
-        0.0f, layer_green_scale_,              0.0f, 0.0f, 0.0f,
-        0.0f,               0.0f, layer_blue_scale_, 0.0f, 0.0f,
-        0.0f,               0.0f,              0.0f, 1.0f, 0.0f
-    };
-    filters.Append(cc::FilterOperation::CreateColorMatrixFilter(color_matrix));
   }
   if (layer_inverted_)
     filters.Append(cc::FilterOperation::CreateInvertFilter(1.0));
@@ -1194,14 +1183,8 @@ void Layer::SetColorFromAnimation(SkColor color) {
 }
 
 void Layer::SetTemperatureFromAnimation(float temperature) {
-  layer_temperature_ = temperature;
-
-  // If we only tone down the blue scale, the screen will look very green so we
-  // also need to tone down the green, but with a less value compared to the
-  // blue scale to avoid making things look very red.
-  layer_blue_scale_ = 1.0f - temperature;
-  layer_green_scale_ = 1.0f - 0.3f * temperature;
-  SetLayerFilters();
+  cc_layer_->SetColorTemperature(temperature);
+  ScheduleDraw();
 }
 
 void Layer::ScheduleDrawForAnimation() {
@@ -1241,7 +1224,7 @@ SkColor Layer::GetColorForAnimation() const {
 }
 
 float Layer::GetTemperatureFromAnimation() const {
-  return layer_temperature_;
+  return layer_temperature();
 }
 
 float Layer::GetDeviceScaleFactor() const {

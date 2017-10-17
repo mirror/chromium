@@ -700,6 +700,14 @@ static inline float Opacity(LayerImpl* layer) {
   return layer->test_properties()->opacity;
 }
 
+static inline float ColorTemperature(Layer* layer) {
+  return layer->color_temperature();
+}
+
+static inline float ColorTemperature(LayerImpl* layer) {
+  return layer->test_properties()->color_temperature;
+}
+
 static inline SkBlendMode BlendMode(Layer* layer) {
   return layer->blend_mode();
 }
@@ -911,6 +919,7 @@ bool PropertyTreeBuilderContext<LayerType>::AddEffectNodeIfNeeded(
     DataForRecursion<LayerType>* data_for_children) const {
   const bool is_root = !Parent(layer);
   const bool has_transparency = EffectiveOpacity(layer) != 1.f;
+  const bool has_temperature = ColorTemperature(layer) > 0;
   const bool has_potential_opacity_animation =
       HasPotentialOpacityAnimation(layer);
   const bool has_potential_filter_animation =
@@ -933,9 +942,10 @@ bool PropertyTreeBuilderContext<LayerType>::AddEffectNodeIfNeeded(
   bool has_non_axis_aligned_clip =
       not_axis_aligned_since_last_clip && LayerClipsSubtree(layer);
 
-  bool requires_node =
-      is_root || has_transparency || has_potential_opacity_animation ||
-      has_non_axis_aligned_clip || should_create_render_surface;
+  bool requires_node = is_root || has_transparency || has_temperature ||
+                       has_potential_opacity_animation ||
+                       has_non_axis_aligned_clip ||
+                       should_create_render_surface;
 
   int parent_id = data_from_ancestor.effect_tree_parent;
 
@@ -950,6 +960,7 @@ bool PropertyTreeBuilderContext<LayerType>::AddEffectNodeIfNeeded(
 
   node->stable_id = layer->id();
   node->opacity = Opacity(layer);
+  node->color_temperature = ColorTemperature(layer);
   node->blend_mode = BlendMode(layer);
   node->unscaled_mask_target_size = layer->bounds();
   node->has_render_surface = should_create_render_surface;

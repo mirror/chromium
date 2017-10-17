@@ -110,7 +110,7 @@ void ApplyColorTemperatureToLayers(float layer_temperature,
     settings.SetPreemptionStrategy(
         ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
 
-    layer->SetLayerTemperature(layer_temperature);
+    layer->SetLayerTemperature(1.0f - layer_temperature);
   }
 
   UMA_HISTOGRAM_EXACT_LINEAR(
@@ -288,7 +288,7 @@ void NightLightController::RefreshLayersTemperature() {
   // animations.
   last_animation_duration_ = animation_duration_;
   animation_duration_ = AnimationDuration::kShort;
-  Shell::Get()->SetCursorCompositingEnabled(GetEnabled());
+  // Shell::Get()->SetCursorCompositingEnabled(GetEnabled());
 }
 
 void NightLightController::StartWatchingPrefsChanges() {

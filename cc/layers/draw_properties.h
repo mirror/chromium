@@ -36,6 +36,8 @@ struct CC_EXPORT DrawProperties {
   // opacity, or when opacity is compounded by the hierarchy.
   float opacity;
 
+  float color_temperature;
+
   // Whether the layer has a potentially animating transform in its chain of
   // transforms to the screen. This is essentially a cache of the transform
   // node's potentially-animated status.

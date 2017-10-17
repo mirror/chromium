@@ -46,6 +46,7 @@ struct CC_EXPORT LayerImplTestProperties {
   bool subtree_has_copy_request;
   int sorting_context_id;
   float opacity;
+  float color_temperature;
   FilterOperations filters;
   FilterOperations background_filters;
   gfx::PointF filters_origin;

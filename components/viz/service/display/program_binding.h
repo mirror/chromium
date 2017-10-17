@@ -233,6 +233,9 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
 
   int sampler_location() const { return fragment_shader_.sampler_location_; }
   int alpha_location() const { return fragment_shader_.alpha_location_; }
+  int color_temperature_matrix_location() const {
+    return fragment_shader_.color_temperature_matrix_location_;
+  }
   int color_location() const { return fragment_shader_.color_location_; }
   int background_color_location() const {
     return fragment_shader_.background_color_location_;
