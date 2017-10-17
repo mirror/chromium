@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "265d216c_19e2b316",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-17T10:57:38Z",
+      "side": 1,
+      "message": "micro-nit:  IMHO visited-\u003ecount(node) !\u003d 0 is a bit more concise.\nsame below",
+      "range": {
+        "startLine": 188,
+        "startChar": 6,
+        "endLine": 188,
+        "endChar": 43
+      },
+      "revId": "8940cb33a8b085630da8db1708b9cf6ef92c44cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
