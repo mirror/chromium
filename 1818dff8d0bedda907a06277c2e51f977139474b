@@ -39,6 +39,64 @@
       "revId": "1818dff8d0bedda907a06277c2e51f977139474b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee04f84_26d38c37",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/Dictionary.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-17T06:08:33Z",
+      "side": 1,
+      "message": "In general, all exceptions in Blink should be handled with ExceptionState.  The bindings code generator only takes care of exceptions in ExceptionState.\n\nFor example, the bindings code generator may automatically convert an ExceptionState into a reject promise if an API\u0027s return type is a Promise.  This automatic conversion only happens if it\u0027s ExceptionState.",
+      "parentUuid": "ab24642f_4f2745c6",
+      "revId": "1818dff8d0bedda907a06277c2e51f977139474b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd21137_8cf223d0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/Dictionary.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-17T06:08:33Z",
+      "side": 1,
+      "message": "s/es/exception_state/g",
+      "range": {
+        "startLine": 81,
+        "startChar": 27,
+        "endLine": 81,
+        "endChar": 29
+      },
+      "revId": "1818dff8d0bedda907a06277c2e51f977139474b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f865a6_469d0ae6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/Dictionary.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-17T06:08:33Z",
+      "side": 1,
+      "message": "Do we need to return |false| in this case?  The spec doesn\u0027t care about if |key| exists or not.  Why don\u0027t we return |true|?",
+      "revId": "1818dff8d0bedda907a06277c2e51f977139474b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
