@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2759b36_e963a328",
+        "filename": "content/browser/devtools/service_worker_devtools_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-17T22:14:58Z",
+      "side": 1,
+      "message": "DCHECK(!devtools_worker_token.is_empty())",
+      "revId": "1442f166603058834ac8e37700a1caa13096bf49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e2212e_09101a9c",
+        "filename": "content/browser/devtools/shared_worker_devtools_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-17T22:14:58Z",
+      "side": 1,
+      "message": "not used.",
+      "revId": "1442f166603058834ac8e37700a1caa13096bf49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db36485_82cc0242",
+        "filename": "content/browser/devtools/worker_devtools_agent_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-17T22:14:58Z",
+      "side": 1,
+      "message": "nit: forward-declare instead?",
+      "revId": "1442f166603058834ac8e37700a1caa13096bf49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af7ab68_ad6f44c8",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-17T22:14:58Z",
+      "side": 1,
+      "message": "You\u0027re already passing it as part of params, aren\u0027t you?",
+      "revId": "1442f166603058834ac8e37700a1caa13096bf49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111eecb3_7e7cd445",
+        "filename": "content/browser/shared_worker/shared_worker_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-17T22:14:58Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "1442f166603058834ac8e37700a1caa13096bf49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3501f10_36e16c0d",
+        "filename": "content/browser/shared_worker/shared_worker_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-17T22:14:58Z",
+      "side": 1,
+      "message": "DCHECK(!devtools_worker_token.is_empty())",
+      "revId": "1442f166603058834ac8e37700a1caa13096bf49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
