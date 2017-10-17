@@ -6,13 +6,17 @@
 
 #include <stdint.h>
 #include <map>
+#include <memory>
 #include <vector>
 
 #include "base/bind.h"
 #include "base/files/file_path.h"
+#include "base/memory/ptr_util.h"
+#include "base/test/histogram_tester.h"
 #include "base/test/simple_test_clock.h"
 #include "base/time/time.h"
 #include "components/offline_pages/core/archive_manager.h"
+#include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/client_policy_controller.h"
 #include "components/offline_pages/core/offline_page_item.h"
 #include "components/offline_pages/core/offline_page_model_impl.h"
@@ -208,6 +212,7 @@ class OfflinePageStorageManagerTest : public testing::Test {
                   StorageStats stats = {kFreeSpaceNormal, 0, 0},
                   TestOptions options = TestOptions::DEFAULT);
   void TryClearPages();
+  std::string GetSizeHistogramName(const std::string& name_space);
 
   // testing::Test
   void TearDown() override;
@@ -220,6 +225,7 @@ class OfflinePageStorageManagerTest : public testing::Test {
   ClearStorageResult last_clear_storage_result() const {
     return last_clear_storage_result_;
   }
+  base::HistogramTester* histogram_tester() { return histogram_tester_.get(); }
 
  private:
   std::unique_ptr<OfflinePageStorageManager> manager_;
@@ -228,6 +234,7 @@ class OfflinePageStorageManagerTest : public testing::Test {
   std::unique_ptr<TestArchiveManager> archive_manager_;
 
   base::SimpleTestClock* clock_;
+  std::unique_ptr<base::HistogramTester> histogram_tester_;
 
   size_t last_cleared_page_count_;
   int total_cleared_times_;
@@ -259,11 +266,18 @@ void OfflinePageStorageManagerTest::Initialize(
   manager_.reset(new OfflinePageStorageManager(
       model_.get(), policy_controller(), archive_manager_.get()));
   manager_->SetClockForTesting(std::move(clock));
+
+  histogram_tester_ = base::MakeUnique<base::HistogramTester>();
 }
 
 void OfflinePageStorageManagerTest::TryClearPages() {
   manager()->ClearPagesIfNeeded(base::Bind(
       &OfflinePageStorageManagerTest::OnPagesCleared, base::Unretained(this)));
+}
+
+std::string OfflinePageStorageManagerTest::GetSizeHistogramName(
+    const std::string& name_space) {
+  return "OfflinePages.ClearStoragePreRunUsage." + name_space;
 }
 
 void OfflinePageStorageManagerTest::TearDown() {
@@ -287,6 +301,10 @@ TEST_F(OfflinePageStorageManagerTest, TestClearPagesLessThanLimit) {
   EXPECT_EQ(1, total_cleared_times());
   EXPECT_EQ(ClearStorageResult::SUCCESS, last_clear_storage_result());
   EXPECT_EQ(2, static_cast<int>(model()->GetRemovedPages().size()));
+  histogram_tester()->ExpectUniqueSample(
+      GetSizeHistogramName(kOneWeekNamespace), 1, 1);
+  histogram_tester()->ExpectUniqueSample(GetSizeHistogramName(kOneDayNamespace),
+                                         1, 1);
 }
 
 TEST_F(OfflinePageStorageManagerTest, TestClearPagesMoreThanLimit) {
@@ -298,6 +316,10 @@ TEST_F(OfflinePageStorageManagerTest, TestClearPagesMoreThanLimit) {
   EXPECT_EQ(1, total_cleared_times());
   EXPECT_EQ(ClearStorageResult::SUCCESS, last_clear_storage_result());
   EXPECT_EQ(45, static_cast<int>(model()->GetRemovedPages().size()));
+  histogram_tester()->ExpectUniqueSample(
+      GetSizeHistogramName(kOneWeekNamespace), 12, 1);
+  histogram_tester()->ExpectUniqueSample(GetSizeHistogramName(kOneDayNamespace),
+                                         17, 1);
 }
 
 TEST_F(OfflinePageStorageManagerTest, TestClearPagesMoreFreshPages) {
@@ -310,6 +332,10 @@ TEST_F(OfflinePageStorageManagerTest, TestClearPagesMoreFreshPages) {
   EXPECT_EQ(1, total_cleared_times());
   EXPECT_EQ(ClearStorageResult::SUCCESS, last_clear_storage_result());
   EXPECT_EQ(1, static_cast<int>(model()->GetRemovedPages().size()));
+  histogram_tester()->ExpectUniqueSample(
+      GetSizeHistogramName(kOneWeekNamespace), 15, 1);
+  histogram_tester()->ExpectUniqueSample(GetSizeHistogramName(kOneDayNamespace),
+                                         50, 1);
 }
 
 TEST_F(OfflinePageStorageManagerTest, TestDeletePersistentPages) {
@@ -320,6 +346,9 @@ TEST_F(OfflinePageStorageManagerTest, TestDeletePersistentPages) {
   EXPECT_EQ(1, total_cleared_times());
   EXPECT_EQ(ClearStorageResult::UNNECESSARY, last_clear_storage_result());
   EXPECT_EQ(0, static_cast<int>(model()->GetRemovedPages().size()));
+  // As there's no temporary pages, no reporting happens.
+  histogram_tester()->ExpectTotalCount(
+      GetSizeHistogramName(kPersistentNamespace), 0);
 }
 
 TEST_F(OfflinePageStorageManagerTest, TestDeletionFailed) {
@@ -331,6 +360,10 @@ TEST_F(OfflinePageStorageManagerTest, TestDeletionFailed) {
   EXPECT_EQ(1, total_cleared_times());
   EXPECT_EQ(ClearStorageResult::DELETE_FAILURE, last_clear_storage_result());
   EXPECT_EQ(0, static_cast<int>(model()->GetRemovedPages().size()));
+  histogram_tester()->ExpectUniqueSample(
+      GetSizeHistogramName(kOneWeekNamespace), 10, 1);
+  histogram_tester()->ExpectUniqueSample(GetSizeHistogramName(kOneDayNamespace),
+                                         10, 1);
 }
 
 TEST_F(OfflinePageStorageManagerTest, TestStorageTimeInterval) {
@@ -342,6 +375,12 @@ TEST_F(OfflinePageStorageManagerTest, TestStorageTimeInterval) {
   EXPECT_EQ(1, total_cleared_times());
   EXPECT_EQ(ClearStorageResult::SUCCESS, last_clear_storage_result());
   EXPECT_EQ(20, static_cast<int>(model()->GetRemovedPages().size()));
+  // This histogram should only report once per launch. Checking here for the
+  // first report.
+  histogram_tester()->ExpectUniqueSample(
+      GetSizeHistogramName(kOneWeekNamespace), 10, 1);
+  histogram_tester()->ExpectUniqueSample(GetSizeHistogramName(kOneDayNamespace),
+                                         10, 1);
 
   // Advance clock so we go over the gap, but no expired pages.
   clock()->Advance(constants::kClearStorageInterval +
@@ -360,6 +399,11 @@ TEST_F(OfflinePageStorageManagerTest, TestStorageTimeInterval) {
   EXPECT_EQ(3, total_cleared_times());
   EXPECT_EQ(ClearStorageResult::UNNECESSARY, last_clear_storage_result());
   EXPECT_EQ(20, static_cast<int>(model()->GetRemovedPages().size()));
+  // Testing the histogram after the last run to confirm nothing changed.
+  histogram_tester()->ExpectUniqueSample(
+      GetSizeHistogramName(kOneWeekNamespace), 10, 1);
+  histogram_tester()->ExpectUniqueSample(GetSizeHistogramName(kOneDayNamespace),
+                                         10, 1);
 }
 
 TEST_F(OfflinePageStorageManagerTest, TestClearMultipleTimes) {
@@ -376,18 +420,36 @@ TEST_F(OfflinePageStorageManagerTest, TestClearMultipleTimes) {
   EXPECT_EQ(1, total_cleared_times());
   EXPECT_EQ(ClearStorageResult::SUCCESS, last_clear_storage_result());
   EXPECT_EQ(1, static_cast<int>(model()->GetRemovedPages().size()));
+  // For this test the once-per-launch flag for the reporting of this histogram
+  // will be reset before each clearing run.
+  // Note: this histogram always reports the start state of cleaning procedure.
+  // It will look as it is always one step behind.
+  histogram_tester()->ExpectUniqueSample(
+      GetSizeHistogramName(kOneWeekNamespace), 15, 1);
+  histogram_tester()->ExpectUniqueSample(GetSizeHistogramName(kOneDayNamespace),
+                                         50, 1);
+  histogram_tester()->ExpectUniqueSample(
+      GetSizeHistogramName(kPersistentNamespace), 20, 1);
 
   // Advance the clock by expiration period of last_n namespace, should be
   // expiring all pages left in the namespace.
   clock()->Advance(policy.expiration_period);
+  manager()->ResetUsageReportingFlagForTesting();
   TryClearPages();
   EXPECT_EQ(100, last_cleared_page_count());
   EXPECT_EQ(2, total_cleared_times());
   EXPECT_EQ(ClearStorageResult::SUCCESS, last_clear_storage_result());
   EXPECT_EQ(101, static_cast<int>(model()->GetRemovedPages().size()));
+  histogram_tester()->ExpectUniqueSample(
+      GetSizeHistogramName(kOneWeekNamespace), 15, 2);
+  histogram_tester()->ExpectUniqueSample(GetSizeHistogramName(kOneDayNamespace),
+                                         50, 2);
+  histogram_tester()->ExpectUniqueSample(
+      GetSizeHistogramName(kPersistentNamespace), 20, 2);
 
   // Only 1 ms passes and no changes in pages, so no need to clear page.
   clock()->Advance(base::TimeDelta::FromMilliseconds(1));
+  manager()->ResetUsageReportingFlagForTesting();
   TryClearPages();
   EXPECT_EQ(0, last_cleared_page_count());
   EXPECT_EQ(3, total_cleared_times());
@@ -403,17 +465,29 @@ TEST_F(OfflinePageStorageManagerTest, TestClearMultipleTimes) {
       {available_space, total_size_before, 40 * kTestFileSize});
   EXPECT_GE(total_size_before, constants::kOfflinePageStorageLimit *
                                    (available_space + total_size_before));
+  // Note: No need to reset usage here as the last run clearing was unnecessary.
   TryClearPages();
   EXPECT_LE(total_size_before * constants::kOfflinePageStorageClearThreshold,
             model()->GetTemporaryPagesSize());
   EXPECT_EQ(4, total_cleared_times());
   EXPECT_EQ(ClearStorageResult::SUCCESS, last_clear_storage_result());
-  int deleted_page_total = last_cleared_page_count() + 101;
-  EXPECT_EQ(deleted_page_total,
-            static_cast<int>(model()->GetRemovedPages().size()));
+  // Number of removed pages should be what was already deleted until the last
+  // step plus the what's needed to get to the 10% of total free space.
+  EXPECT_EQ(101 + 327, static_cast<int>(model()->GetRemovedPages().size()));
+  histogram_tester()->ExpectBucketCount(GetSizeHistogramName(kOneWeekNamespace),
+                                        15, 2);
+  histogram_tester()->ExpectBucketCount(GetSizeHistogramName(kOneWeekNamespace),
+                                        215, 1);
+  histogram_tester()->ExpectTotalCount(GetSizeHistogramName(kOneWeekNamespace),
+                                       3);
+  histogram_tester()->ExpectUniqueSample(GetSizeHistogramName(kOneDayNamespace),
+                                         50, 2);
+  histogram_tester()->ExpectUniqueSample(
+      GetSizeHistogramName(kPersistentNamespace), 20, 3);
 
   // After more days, all pages should be deleted.
   clock()->Advance(base::TimeDelta::FromDays(30));
+  manager()->ResetUsageReportingFlagForTesting();
   TryClearPages();
   EXPECT_EQ(0, model()->GetTemporaryPagesSize());
   EXPECT_EQ(5, total_cleared_times());
@@ -421,6 +495,18 @@ TEST_F(OfflinePageStorageManagerTest, TestClearMultipleTimes) {
   // Number of removed pages should be all the temporary pages initially
   // created plus 400 more pages added above for bookmark namespace.
   EXPECT_EQ(131 + 400, static_cast<int>(model()->GetRemovedPages().size()));
+  histogram_tester()->ExpectBucketCount(GetSizeHistogramName(kOneWeekNamespace),
+                                        15, 2);
+  histogram_tester()->ExpectBucketCount(GetSizeHistogramName(kOneWeekNamespace),
+                                        215, 1);
+  histogram_tester()->ExpectBucketCount(GetSizeHistogramName(kOneWeekNamespace),
+                                        51, 1);
+  histogram_tester()->ExpectTotalCount(GetSizeHistogramName(kOneWeekNamespace),
+                                       4);
+  histogram_tester()->ExpectUniqueSample(GetSizeHistogramName(kOneDayNamespace),
+                                         50, 2);
+  histogram_tester()->ExpectUniqueSample(
+      GetSizeHistogramName(kPersistentNamespace), 20, 4);
 }
 
 }  // namespace offline_pages
