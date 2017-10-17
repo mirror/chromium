@@ -51,6 +51,13 @@ class CC_EXPORT RenderSurfaceImpl {
   }
   float draw_opacity() const { return draw_properties_.draw_opacity; }
 
+  void SetDrawColorTemperature(float temperature) {
+    draw_properties_.draw_color_temperature = temperature;
+  }
+  float draw_color_temperature() const {
+    return draw_properties_.draw_color_temperature;
+  }
+
   SkBlendMode BlendMode() const;
   bool UsesDefaultBlendMode() const;
 
@@ -202,6 +209,7 @@ class CC_EXPORT RenderSurfaceImpl {
     ~DrawProperties();
 
     float draw_opacity;
+    float draw_color_temperature;
 
     // Transforms from the surface's own space to the space of its target
     // surface.

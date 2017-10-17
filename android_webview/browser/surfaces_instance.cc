@@ -138,6 +138,7 @@ void SurfacesInstance::DrawAndSwap(const gfx::Size& viewport,
   quad_state->clip_rect = clip;
   quad_state->is_clipped = true;
   quad_state->opacity = 1.f;
+  quad_state->color_temperature = 1.f;
 
   viz::SurfaceDrawQuad* surface_quad =
       render_pass->CreateAndAppendDrawQuad<viz::SurfaceDrawQuad>();
@@ -191,8 +192,8 @@ void SurfacesInstance::SetSolidColorRootFrame() {
   viz::SharedQuadState* quad_state =
       render_pass->CreateAndAppendSharedQuadState();
   quad_state->SetAll(gfx::Transform(), rect, rect, rect, is_clipped,
-                     are_contents_opaque, 1.f, SkBlendMode::kSrcOver, 0);
-  viz::SolidColorDrawQuad* solid_quad =
+                     are_contents_opaque, 1.f, 0.f, SkBlendMode::kSrcOver, 0);
+  cc::SolidColorDrawQuad* solid_quad =
       render_pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   solid_quad->SetNew(quad_state, rect, rect, SK_ColorBLACK, false);
   viz::CompositorFrame frame;
