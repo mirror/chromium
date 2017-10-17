@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64aff3c0_d249f4b2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/Dictionary.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-17T06:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20b5dd9b_22c54ff3",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 8
+      },
+      "revId": "1818dff8d0bedda907a06277c2e51f977139474b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab24642f_4f2745c6",
         "filename": "third_party/WebKit/Source/bindings/core/v8/Dictionary.cpp",
         "patchSetId": 5
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "fdafd0a0_72883f97",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/Dictionary.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-17T06:40:20Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "6ee04f84_26d38c37",
+      "revId": "1818dff8d0bedda907a06277c2e51f977139474b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fd21137_8cf223d0",
         "filename": "third_party/WebKit/Source/bindings/core/v8/Dictionary.h",
         "patchSetId": 5
@@ -83,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "40e98641_712368a0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/Dictionary.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-17T06:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fd21137_8cf223d0",
+      "range": {
+        "startLine": 81,
+        "startChar": 27,
+        "endLine": 81,
+        "endChar": 29
+      },
+      "revId": "1818dff8d0bedda907a06277c2e51f977139474b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7f865a6_469d0ae6",
         "filename": "third_party/WebKit/Source/bindings/core/v8/Dictionary.h",
         "patchSetId": 5
@@ -97,6 +163,24 @@
       "revId": "1818dff8d0bedda907a06277c2e51f977139474b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2b2c5c_bb63d614",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/Dictionary.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-17T06:40:20Z",
+      "side": 1,
+      "message": "It affects whether the member is considered to be present or not, which is referred from other places (e.g. https://fetch.spec.whatwg.org/#dom-request).",
+      "parentUuid": "f7f865a6_469d0ae6",
+      "revId": "1818dff8d0bedda907a06277c2e51f977139474b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
