@@ -244,14 +244,10 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
     return web_database_observer_impl_.get();
   }
 
-  std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
-      const blink::WebURLRequest& request,
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner) override;
+  std::unique_ptr<blink::WebURLLoaderFactory> CreateDefaultURLLoaderFactory()
+      override;
 
   void RequestPurgeMemory() override;
-
-  PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
-  CreateNetworkURLLoaderFactory();
 
   // Returns non-null.
   // It is invalid to call this in an incomplete env where
@@ -260,6 +256,9 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   CreateDefaultURLLoaderFactoryGetter();
 
  private:
+  PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
+  CreateNetworkURLLoaderFactory();
+
   bool CheckPreparsedJsCachingEnabled() const;
 
   // Factory that takes a type and return PlatformEventObserverBase that matches
@@ -327,11 +326,6 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   std::unique_ptr<LocalStorageCachedAreas> local_storage_cached_areas_;
 
   std::unique_ptr<BlinkInterfaceProviderImpl> blink_interface_provider_;
-
-  // Platform's default factory getter. TODO(kinuko): Migrate all
-  // URLLoader{Factory} callsites to per-frame / per-context ones and
-  // deprecate this.
-  scoped_refptr<ChildURLLoaderFactoryGetter> url_loader_factory_getter_;
 
   mojom::WebDatabaseHostPtrInfo web_database_host_info_;
   scoped_refptr<mojom::ThreadSafeWebDatabaseHostPtr> web_database_host_;

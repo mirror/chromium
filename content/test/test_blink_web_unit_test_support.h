@@ -10,6 +10,7 @@
 #include "base/compiler_specific.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "build/build_config.h"
 #include "cc/blink/web_compositor_support_impl.h"
 #include "content/child/blink_platform_impl.h"
@@ -41,9 +42,8 @@ class TestBlinkWebUnitTestSupport : public BlinkPlatformImpl {
   blink::WebFileUtilities* GetFileUtilities() override;
   blink::WebIDBFactory* IdbFactory() override;
 
-  std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
-      const blink::WebURLRequest& request,
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner) override;
+  std::unique_ptr<blink::WebURLLoaderFactory> CreateDefaultURLLoaderFactory()
+      override;
   blink::WebString UserAgent() override;
   blink::WebString QueryLocalizedString(
       blink::WebLocalizedString::Name name) override;
