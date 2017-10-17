@@ -118,6 +118,10 @@ class ASH_EXPORT PowerButtonController
   // Saves the button type for this power button.
   ButtonType button_type_ = ButtonType::NORMAL;
 
+  // Was a command-line switch set telling us the current device could observe
+  // accelerometer events to enter tablet mode.
+  bool enable_tablet_mode_ = false;
+
   // Was a command-line switch set telling us to use non-tablet-style power
   // button behavior even if we're running on a convertible device?
   bool force_clamshell_power_button_ = false;
