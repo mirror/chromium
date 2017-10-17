@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e42e6b3b_e258ac50",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-17T02:08:09Z",
+      "side": 1,
+      "message": "I\u0027d like to not add ExecutionContext member to this class if possible.\nInstead, can we add GetExecutionContext() virtual function to FontSelector (that returns a WorkerGlobalScope on OffscreenFontSelector) and use it?",
+      "range": {
+        "startLine": 133,
+        "startChar": 9,
+        "endLine": 133,
+        "endChar": 25
+      },
+      "revId": "33b02bcedd175dcfbd255f47fcc9a6d082fc7852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
