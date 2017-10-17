@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcdb1a29_e42920c8",
+        "filename": "base/mac/objc_property_releaser_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-17T01:56:07Z",
+      "side": 0,
+      "message": "I’m sad because we’re losing this test.",
+      "revId": "a5bd96752dd573f5b8d66e628633e158b5d6d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
