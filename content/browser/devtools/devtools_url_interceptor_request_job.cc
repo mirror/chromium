@@ -785,6 +785,7 @@ DevToolsURLInterceptorRequestJob::SubRequest::SubRequest(
       resource_request_info->GetRequestID(),
       resource_request_info->GetRenderFrameID(),
       resource_request_info->IsMainFrame(),
+      resource_request_info->GetDevToolsFrameToken(),
       resource_request_info->GetResourceType(),
       resource_request_info->GetPageTransition(),
       resource_request_info->should_replace_current_entry(),

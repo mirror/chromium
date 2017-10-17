@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/supports_user_data.h"
+#include "base/unguessable_token.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/loader/resource_requester_info.h"
 #include "content/public/browser/navigation_ui_data.h"
@@ -55,6 +56,7 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
       int request_id,
       int render_frame_id,
       bool is_main_frame,
+      base::UnguessableToken devtools_frame_token,
       ResourceType resource_type,
       ui::PageTransition transition_type,
       bool should_replace_current_entry,
@@ -102,6 +104,7 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
   bool ShouldReportRawHeaders() const;
   NavigationUIData* GetNavigationUIData() const override;
   bool CanceledByDevTools() const override;
+  base::UnguessableToken GetDevToolsFrameToken() const;
 
   CONTENT_EXPORT void AssociateWithRequest(net::URLRequest* request);
 
@@ -219,6 +222,7 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
   int request_id_;
   int render_frame_id_;
   bool is_main_frame_;
+  base::UnguessableToken devtools_frame_token_;
   bool should_replace_current_entry_;
   bool is_download_;
   bool is_stream_;

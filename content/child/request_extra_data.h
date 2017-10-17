@@ -8,7 +8,9 @@
 #include <utility>
 
 #include "base/compiler_specific.h"
+#include "base/logging.h"
 #include "base/macros.h"
+#include "base/unguessable_token.h"
 #include "content/child/web_url_loader_impl.h"
 #include "content/common/content_export.h"
 #include "content/common/navigation_params.h"
@@ -39,6 +41,10 @@ class CONTENT_EXPORT RequestExtraData : public blink::WebURLRequest::ExtraData {
   }
   void set_is_main_frame(bool is_main_frame) {
     is_main_frame_ = is_main_frame;
+  }
+  void set_devtools_frame_token(const base::UnguessableToken& token) {
+    DCHECK(!token.is_empty());
+    devtools_frame_token_ = token;
   }
   url::Origin frame_origin() const { return frame_origin_; }
   void set_frame_origin(const url::Origin& frame_origin) {
@@ -149,6 +155,7 @@ class CONTENT_EXPORT RequestExtraData : public blink::WebURLRequest::ExtraData {
   blink::WebPageVisibilityState visibility_state_;
   int render_frame_id_;
   bool is_main_frame_;
+  base::UnguessableToken devtools_frame_token_;
   url::Origin frame_origin_;
   bool allow_download_;
   ui::PageTransition transition_type_;

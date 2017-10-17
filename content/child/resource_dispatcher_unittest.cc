@@ -20,6 +20,7 @@
 #include "base/process/process_handle.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
+#include "base/unguessable_token.h"
 #include "content/child/request_extra_data.h"
 #include "content/child/test_request_peer.h"
 #include "content/common/appcache_interfaces.h"
@@ -215,7 +216,8 @@ class ResourceDispatcherTest : public testing::Test, public IPC::Sender {
     request->fetch_frame_type = REQUEST_CONTEXT_FRAME_TYPE_NONE;
     request->download_to_file = download_to_file;
 
-    const RequestExtraData extra_data;
+    RequestExtraData extra_data;
+    extra_data.set_devtools_frame_token(base::UnguessableToken::Create());
     extra_data.CopyToResourceRequest(request.get());
 
     return request;

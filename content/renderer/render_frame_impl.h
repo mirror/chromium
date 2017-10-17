@@ -1527,7 +1527,8 @@ class CONTENT_EXPORT RenderFrameImpl
   // frame.
   // |devtools_frame_token_| is only defined by the browser and is never
   // sent back from the renderer in the control calls.
-  blink::WebString devtools_frame_token_;
+  base::UnguessableToken devtools_frame_token_;
+  blink::WebString devtools_frame_token_string_;
 
   base::WeakPtrFactory<RenderFrameImpl> weak_factory_;
 

@@ -5,6 +5,7 @@
 #ifndef CONTENT_RENDERER_SERVICE_WORKER_WORKER_FETCH_CONTEXT_IMPL_H_
 #define CONTENT_RENDERER_SERVICE_WORKER_WORKER_FETCH_CONTEXT_IMPL_H_
 
+#include "base/unguessable_token.h"
 #include "content/common/service_worker/service_worker_provider.mojom.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/child/child_url_loader_factory_getter.h"
@@ -75,6 +76,7 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   void set_service_worker_provider_id(int id);
   void set_is_controlled_by_service_worker(bool flag);
   void set_parent_frame_id(int id);
+  void set_parent_frame_devtools_token(const base::UnguessableToken& token);
   void set_site_for_cookies(const blink::WebURL& site_for_cookies);
   // Sets whether the worker context is a secure context.
   // https://w3c.github.io/webappsec-secure-contexts/
@@ -107,6 +109,7 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   bool is_data_saver_enabled_ = false;
   bool is_on_sub_frame_ = false;
   int parent_frame_id_ = MSG_ROUTING_NONE;
+  base::UnguessableToken devtools_frame_token_;
   GURL site_for_cookies_;
   bool is_secure_context_ = false;
   int appcache_host_id_ = blink::WebApplicationCacheHost::kAppCacheNoHostId;

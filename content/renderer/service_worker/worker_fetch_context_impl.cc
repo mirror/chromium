@@ -53,6 +53,7 @@ void WorkerFetchContextImpl::WillSendRequest(blink::WebURLRequest& request) {
   RequestExtraData* extra_data = new RequestExtraData();
   extra_data->set_service_worker_provider_id(service_worker_provider_id_);
   extra_data->set_render_frame_id(parent_frame_id_);
+  extra_data->set_devtools_frame_token(devtools_frame_token_);
   extra_data->set_initiated_in_secure_context(is_secure_context_);
   request.SetExtraData(extra_data);
   request.SetAppCacheHostID(appcache_host_id_);
@@ -132,6 +133,11 @@ void WorkerFetchContextImpl::set_is_controlled_by_service_worker(bool flag) {
 
 void WorkerFetchContextImpl::set_parent_frame_id(int id) {
   parent_frame_id_ = id;
+}
+
+void WorkerFetchContextImpl::set_parent_frame_devtools_token(
+    const base::UnguessableToken& token) {
+  devtools_frame_token_ = token;
 }
 
 void WorkerFetchContextImpl::set_site_for_cookies(

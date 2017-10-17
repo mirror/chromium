@@ -1223,9 +1223,11 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
       media_factory_(this,
                      base::Bind(&RenderFrameImpl::RequestOverlayRoutingToken,
                                 base::Unretained(this))),
-      devtools_frame_token_(
+      devtools_frame_token_(params.devtools_frame_token),
+      devtools_frame_token_string_(
           blink::WebString::FromUTF8(params.devtools_frame_token.ToString())),
       weak_factory_(this) {
+  DCHECK(!devtools_frame_token_.is_empty());
   service_manager::mojom::InterfaceProviderPtr remote_interfaces;
   pending_remote_interface_provider_request_ = MakeRequest(&remote_interfaces);
   remote_interfaces_.reset(new service_manager::InterfaceProvider);
@@ -3056,6 +3058,7 @@ RenderFrameImpl::CreateWorkerFetchContext() {
           url_loader_factory_getter->GetClonedInfo());
 
   worker_fetch_context->set_parent_frame_id(routing_id_);
+  worker_fetch_context->set_parent_frame_devtools_token(devtools_frame_token_);
   worker_fetch_context->set_site_for_cookies(
       frame_->GetDocument().SiteForCookies());
   worker_fetch_context->set_is_secure_context(
@@ -4183,7 +4186,7 @@ void RenderFrameImpl::DidBlockFramebust(const WebURL& url) {
 }
 
 blink::WebString RenderFrameImpl::GetDevToolsFrameToken() {
-  return devtools_frame_token_;
+  return devtools_frame_token_string_;
 }
 
 void RenderFrameImpl::AbortClientNavigation() {
@@ -4436,6 +4439,7 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
   extra_data->set_requested_with(requested_with);
   extra_data->set_render_frame_id(routing_id_);
   extra_data->set_is_main_frame(!parent);
+  extra_data->set_devtools_frame_token(devtools_frame_token_);
   extra_data->set_frame_origin(url::Origin(frame_document.GetSecurityOrigin()));
   extra_data->set_allow_download(
       navigation_state->common_params().allow_download);
