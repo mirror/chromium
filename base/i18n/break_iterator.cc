@@ -39,6 +39,7 @@ BreakIterator::~BreakIterator() {
 }
 
 bool BreakIterator::Init() {
+  DCHECK(!iter_);  // Init() shouldn't be called twice.
   UErrorCode status = U_ZERO_ERROR;
   UParseError parse_error;
   UBreakIteratorType break_type;
