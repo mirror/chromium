@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "872c8aaa_f49064c7",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-17T18:34:15Z",
+      "side": 1,
+      "message": "Err, we should use _RunArgs(input_api...) instead of importing subprocess directly. In general, it\u0027s recommended to not import modules directly in the PRESUBMIT file to avoid polluting the python importing environment.",
+      "parentUuid": "84617412_e792429a",
+      "range": {
+        "startLine": 121,
+        "startChar": 28,
+        "endLine": 121,
+        "endChar": 29
+      },
+      "revId": "cefa2804a39a97317476746baae9ac9634054526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f563226e_aec9cd55",
         "filename": "tools/perf/PRESUBMIT.py",
         "patchSetId": 13
