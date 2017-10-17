@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0dbe952_cc5dad2f",
+        "filename": "base/win/core_winrt_util_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-17T01:00:44Z",
+      "side": 1,
+      "message": "Microsoft::WRL::ComPtr is preferred now.",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 14
+      },
+      "revId": "66d2528833e9e4e2e16dc6e14d90c97d2d9d0aaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
