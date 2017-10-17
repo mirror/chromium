@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9fc4125d_0c4a9632",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-17T22:00:04Z",
+      "side": 1,
+      "message": "Yep, updated commit message.",
+      "parentUuid": "0b306766_5358d408",
+      "revId": "538e5bb550f538ae24c120f42090cec44b86a530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46e3405f_61ea8ace",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a0a1d435_06df8f2a",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-17T22:00:04Z",
+      "side": 1,
+      "message": "I\u0027ve removed any changes related to BrowserGpuChannelHostFactory from this CL again. Yes, this definitely should though.",
+      "parentUuid": "46e3405f_61ea8ace",
+      "revId": "538e5bb550f538ae24c120f42090cec44b86a530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a166410_d5a21e45",
         "filename": "content/browser/gpu/browser_gpu_client.cc",
         "patchSetId": 12
@@ -50,6 +86,24 @@
       "revId": "538e5bb550f538ae24c120f42090cec44b86a530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d707b7_915285a2",
+        "filename": "content/browser/gpu/browser_gpu_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-17T22:00:04Z",
+      "side": 1,
+      "message": "Deleted file.",
+      "parentUuid": "8a166410_d5a21e45",
+      "revId": "538e5bb550f538ae24c120f42090cec44b86a530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
