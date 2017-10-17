@@ -284,7 +284,9 @@ public class FeatureUtilities {
     }
 
     /**
-     * @return Whether or not chrome should attach the toolbar to the bottom of the screen.
+     * @return Whether or not chrome should attach the toolbar to the bottom of the screen. This
+     *         value can change during runtime, so it should be cached locally if the state needs
+     *         to remain consistent.
      */
     @CalledByNative
     public static boolean isChromeHomeEnabled() {
