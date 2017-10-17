@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "9908b17e_db15c741",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/generic-sensor/generic-sensor-tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-10-17T16:18:44Z",
+      "side": 1,
+      "message": "right, I did not realize/notice that strings are used - sorry for that. Great proposal! should we follow this way or you prefer merging everything to a single file?",
+      "parentUuid": "09935bb2_16ff9f28",
+      "revId": "ae3080a9fb0a3525f5dd8912889e0722840ab265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5706b5a7_3f04f9d0",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/generic-sensor/generic-sensor-tests.js",
         "patchSetId": 2
