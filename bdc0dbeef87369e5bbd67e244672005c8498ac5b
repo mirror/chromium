@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d68aaca9_8f971ecd",
+        "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLMediaElementCapture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-17T23:46:09Z",
+      "side": 1,
+      "message": "Do you really want to run captureStream after the frame is detached?\n\nMaybe would it make more sense to add:\n\n  if (!script_state-\u003eContextIsValid())\n    return nullptr;\n\n?",
+      "revId": "bdc0dbeef87369e5bbd67e244672005c8498ac5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
