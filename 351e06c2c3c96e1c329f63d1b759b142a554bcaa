@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "674c80ff_a5673ef7",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-17T23:46:02Z",
+      "side": 1,
+      "message": "This is unclear, I think the logic should be:\nif (!item)\n  return vector\u003c...\u003e();  // edge case\n// This should only be called for pinned apps or v1 apps.\nDCHECK(item-\u003etype \u003d\u003d ash::TYPE_APP || item-\u003etype \u003d\u003d ash::TYPE_PINNED_APP);",
+      "revId": "351e06c2c3c96e1c329f63d1b759b142a554bcaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5301c6d_d0b9b5e3",
         "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
         "patchSetId": 1
