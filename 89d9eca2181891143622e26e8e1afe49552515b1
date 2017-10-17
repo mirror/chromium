@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "abe99036_b796d870",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-17T15:59:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "45291f8e_7ea43134",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 40,
+        "endChar": 82
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98f8c5be_38a1715f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
         "patchSetId": 4
@@ -272,6 +296,30 @@
       "side": 1,
       "message": "Wow great to know! But I have questions on how we should map char* to presumably int in enum. \n\nIf we have both the enum and the char* array we currently have, we can easily get pref name but then again we need to keep sync the array and the c++ enum. So is it worth having this c++ enum?\n\nCan\u0027t think of a better way to map them...",
       "parentUuid": "98f8c5be_38a1715f",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 57
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3841d52_cc66e3b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-17T15:59:31Z",
+      "side": 1,
+      "message": "Yes, we would have to map the c++ enum to something. We could use a switch statement to get the right preference based on the enum value, or a hashmap, or something else entirely. The benefit is that the C++ class has to keep it\u0027s mapping in-sync with itself, which is easier to reason about than following code comments in pref_service_bridge.cc and PreferServiceBridge.java that tells folks to try to keep things in sync but doesn\u0027t have any good way to enforce it.",
+      "parentUuid": "c679a2a4_c149e22d",
       "range": {
         "startLine": 64,
         "startChar": 7,
@@ -328,6 +376,30 @@
       "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c565ea_540a3e42",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-17T15:59:31Z",
+      "side": 1,
+      "message": "Great!",
+      "parentUuid": "83c16413_000a98cd",
+      "range": {
+        "startLine": 705,
+        "startChar": 10,
+        "endLine": 705,
+        "endChar": 84
+      },
+      "revId": "89d9eca2181891143622e26e8e1afe49552515b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
