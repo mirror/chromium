@@ -543,6 +543,7 @@ DeviceManagementRequestJob* DeviceManagementService::CreateJob(
 
 void DeviceManagementService::ScheduleInitialization(
     int64_t delay_milliseconds) {
+  DLOG(ERROR) << "*** SCHEDULING INIT TO " << delay_milliseconds;
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (initialized_)
