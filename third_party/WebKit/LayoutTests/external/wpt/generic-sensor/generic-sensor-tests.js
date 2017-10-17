@@ -190,10 +190,10 @@ function runGenericSensorTests(sensorType) {
   }, `${sensorType.name}: sensor readings can not be fired on the background tab`);
 }
 
-function runGenericSensorInsecureContext(sensorType) {
+function runGenericSensorInsecureContext(typeOfsensorType) {
   test(() => {
-    assert_throws('SecurityError', () => { new sensorType(); });
-  }, `${sensorType.name}: throw a 'SecurityError' when construct sensor in an insecure context`);
+    assert_equals(typeOfsensorType, "undefined");
+  }, `Sensor interfaces are not exposed in an insecure context`);
 }
 
 function runGenericSensorOnerror(sensorType) {
