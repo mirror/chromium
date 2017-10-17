@@ -36,6 +36,7 @@
 #include "ui/gfx/geometry/vector2d.h"
 #include "ui/views/background.h"
 #include "ui/views/controls/scroll_view.h"
+#include "ui/views/controls/styled_label.h"
 #include "ui/views/focus/focus_search.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/fill_layout.h"
@@ -136,6 +137,32 @@ views::View* FindFirstOrLastFocusableChild(views::View* root, bool reverse) {
   return search.FindNextFocusableView(
       root, reverse, views::FocusSearch::DOWN, false /*check_starting_view*/,
       &dummy_focus_traversable, &dummy_focus_traversable_view);
+}
+
+void UpdateLabelStyle(views::StyledLabel* label,
+                      base::string16& error_text,
+                      int total_offset,
+                      int bolding_length) {
+  views::StyledLabel::RangeStyleInfo label_style;
+  label_style.custom_font = label->GetDefaultFontList().Derive(
+      0, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::NORMAL);
+  label_style.override_color = SK_ColorWHITE;
+  if (bolding_length == 0) {
+    label->AddStyleRange(gfx::Range(0, error_text.length()), label_style);
+    return;
+  }
+
+  views::StyledLabel::RangeStyleInfo bolding_style;
+  bolding_style.custom_font = label->GetDefaultFontList().Derive(
+      0, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::BOLD);
+  bolding_style.override_color = SK_ColorWHITE;
+  label->AddStyleRange(gfx::Range(total_offset, total_offset + bolding_length),
+                       bolding_style);
+
+  label->AddStyleRange(gfx::Range(0, total_offset - 1), label_style);
+  label->AddStyleRange(
+      gfx::Range(total_offset + bolding_length + 1, error_text.length()),
+      label_style);
 }
 
 }  // namespace
@@ -609,25 +636,37 @@ LoginAuthUserView* LockContentsView::CurrentAuthUserView() {
 }
 
 void LockContentsView::ShowErrorMessage() {
-  std::string error_text = l10n_util::GetStringUTF8(
+  base::string16 error_text = l10n_util::GetStringUTF16(
       unlock_attempt_ ? IDS_ASH_LOGIN_ERROR_AUTHENTICATING_2ND_TIME
                       : IDS_ASH_LOGIN_ERROR_AUTHENTICATING);
   ImeController* ime_controller = Shell::Get()->ime_controller();
   if (ime_controller->IsCapsLockEnabled()) {
-    error_text +=
-        "\n" + l10n_util::GetStringUTF8(IDS_ASH_LOGIN_ERROR_CAPS_LOCK_HINT);
+    error_text += base::ASCIIToUTF16(" ") +
+                  l10n_util::GetStringUTF16(IDS_ASH_LOGIN_ERROR_CAPS_LOCK_HINT);
   }
 
+  int total_offset = 0;
+  int bolding_length = 0;
   // Display a hint to switch keyboards if there are other active input
   // methods.
   if (ime_controller->available_imes().size() > 1) {
-    error_text += "\n" + l10n_util::GetStringUTF8(
-                             IDS_ASH_LOGIN_ERROR_KEYBOARD_SWITCH_HINT);
+    error_text += base::ASCIIToUTF16(" ");
+    total_offset = error_text.length();
+    base::string16 shortcut =
+        l10n_util::GetStringUTF16(IDS_ASH_LOGIN_KEYBOARD_SWITCH_SHORTCUT);
+    bolding_length = shortcut.length();
+
+    size_t offset;
+    error_text +=
+        /*"\n" + */ l10n_util::GetStringFUTF16(
+            IDS_ASH_LOGIN_ERROR_KEYBOARD_SWITCH_HINT, shortcut, &offset);
+    total_offset += offset;
   }
 
+  views::StyledLabel* label = new views::StyledLabel(error_text, this);
+  UpdateLabelStyle(label, error_text, total_offset, bolding_length);
   error_bubble_->ShowErrorBubble(
-      base::UTF8ToUTF16(error_text),
-      CurrentAuthUserView()->password_view() /*anchor_view*/);
+      label, CurrentAuthUserView()->password_view() /*anchor_view*/);
 }
 
 }  // namespace ash
