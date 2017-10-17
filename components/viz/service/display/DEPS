@@ -13,9 +13,11 @@ include_rules = [
   "+skia",
   "+third_party/skia",
   "+third_party/khronos",
+  "+ui/accelerated_widget_mac",
   "+ui/latency",
   "+ui/gl/ca_renderer_layer_params.h",
   "+ui/gl/dc_renderer_layer_params.h",
+  "+ui/ozone",
 ]
 
 specific_include_rules = {
@@ -30,4 +32,9 @@ specific_include_rules = {
     "+components/viz/test",
     "+gpu/GLES2",
   ],
+  "software_output_device_ozone_unittest.cc": [
+    "+ui/compositor",
+    "+ui/gl",
+    "+ui/platform_window",
+  ]
 }
