@@ -3281,6 +3281,16 @@
   },
 
 
+  "MinimumAllowedChromeVersion": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "MinimumAllowedChromeVersion": "61.0.3163.120"
+    },
+    "pref_mappings": [
+      { "pref": "cros.min_version.chrome"}
+    ]
+  },
+
   "----- Chrome Frame policies -------------------------------------------": {},
 
   "ChromeFrameRendererSettings": {
