@@ -75,7 +75,6 @@ crbug.com/624233 virtual/gpu-rasterization/images/color-profile-background-clip-
 
 crbug.com/653722 compositing/reflections/nested-reflection-anchor-point.html [ Pass Failure ]
 crbug.com/653722 compositing/reflections/nested-reflection-animated.html [ Pass Failure ]
-crbug.com/653722 compositing/reflections/nested-reflection-transition.html [ Pass Failure ]
 
 crbug.com/664850 virtual/display_list_2d_canvas/fast/canvas/canvas-createImageBitmap-webgl.html [ Pass Failure ]
 crbug.com/664850 virtual/display_list_2d_canvas/fast/canvas/OffscreenCanvas-2d-drawImage.html [ Pass Failure ]
