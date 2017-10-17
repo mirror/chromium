@@ -45,6 +45,7 @@ bool SharedWorkerDevToolsAgent::OnMessageReceived(const IPC::Message& message) {
 }
 
 void SharedWorkerDevToolsAgent::SendDevToolsMessage(
+    int worker_id,
     int session_id,
     int call_id,
     const blink::WebString& msg,
@@ -57,6 +58,7 @@ void SharedWorkerDevToolsAgent::SendDevToolsMessage(
 
   if (message.length() < kMaxMessageChunkSize) {
     chunk.data.swap(message);
+    chunk.worker_id = worker_id;
     chunk.session_id = session_id;
     chunk.call_id = call_id;
     chunk.post_state = post_state;
@@ -68,7 +70,8 @@ void SharedWorkerDevToolsAgent::SendDevToolsMessage(
 
   for (size_t pos = 0; pos < message.length(); pos += kMaxMessageChunkSize) {
     chunk.is_last = pos + kMaxMessageChunkSize >= message.length();
-    chunk.session_id = chunk.is_last ? session_id : 0;
+    chunk.worker_id = worker_id;
+    chunk.session_id = session_id;
     chunk.call_id = chunk.is_last ? call_id : 0;
     chunk.post_state = chunk.is_last ? post_state : std::string();
     chunk.data = message.substr(pos, kMaxMessageChunkSize);
@@ -79,28 +82,28 @@ void SharedWorkerDevToolsAgent::SendDevToolsMessage(
   }
 }
 
-void SharedWorkerDevToolsAgent::OnAttach(const std::string& host_id,
-                                         int session_id) {
-  webworker_->AttachDevTools(WebString::FromUTF8(host_id), session_id);
+void SharedWorkerDevToolsAgent::OnAttach(int worker_id, int session_id) {
+  webworker_->AttachDevTools(worker_id, session_id);
 }
 
-void SharedWorkerDevToolsAgent::OnReattach(const std::string& host_id,
+void SharedWorkerDevToolsAgent::OnReattach(int worker_id,
                                            int session_id,
                                            const std::string& state) {
-  webworker_->ReattachDevTools(WebString::FromUTF8(host_id), session_id,
+  webworker_->ReattachDevTools(worker_id, session_id,
                                WebString::FromUTF8(state));
 }
 
-void SharedWorkerDevToolsAgent::OnDetach(int session_id) {
-  webworker_->DetachDevTools(session_id);
+void SharedWorkerDevToolsAgent::OnDetach(int worker_id, int session_id) {
+  webworker_->DetachDevTools(worker_id, session_id);
 }
 
 void SharedWorkerDevToolsAgent::OnDispatchOnInspectorBackend(
+    int worker_id,
     int session_id,
     int call_id,
     const std::string& method,
     const std::string& message) {
-  webworker_->DispatchDevToolsMessage(session_id, call_id,
+  webworker_->DispatchDevToolsMessage(worker_id, session_id, call_id,
                                       WebString::FromUTF8(method),
                                       WebString::FromUTF8(message));
 }

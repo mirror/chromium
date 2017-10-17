@@ -129,7 +129,8 @@ void DevToolsAgent::OnDestruct() {
   delete this;
 }
 
-void DevToolsAgent::SendProtocolMessage(int session_id,
+void DevToolsAgent::SendProtocolMessage(int worker_id,
+                                        int session_id,
                                         int call_id,
                                         const blink::WebString& message,
                                         const blink::WebString& state_cookie) {
@@ -138,7 +139,7 @@ void DevToolsAgent::SendProtocolMessage(int session_id,
         session_id, call_id, message.Utf8(), state_cookie.Utf8());
     return;
   }
-  SendChunkedProtocolMessage(this, routing_id(), session_id, call_id,
+  SendChunkedProtocolMessage(this, routing_id(), worker_id, session_id, call_id,
                              message.Utf8(), state_cookie.Utf8());
 }
 
@@ -203,6 +204,7 @@ DevToolsAgent* DevToolsAgent::FromRoutingId(int routing_id) {
 // static
 void DevToolsAgent::SendChunkedProtocolMessage(IPC::Sender* sender,
                                                int routing_id,
+                                               int worker_id,
                                                int session_id,
                                                int call_id,
                                                const std::string& message,
@@ -213,6 +215,7 @@ void DevToolsAgent::SendChunkedProtocolMessage(IPC::Sender* sender,
 
   if (message.length() < kMaxMessageChunkSize) {
     chunk.data = message;
+    chunk.worker_id = worker_id;
     chunk.session_id = session_id;
     chunk.call_id = call_id;
     chunk.post_state = post_state;
@@ -224,6 +227,7 @@ void DevToolsAgent::SendChunkedProtocolMessage(IPC::Sender* sender,
 
   for (size_t pos = 0; pos < message.length(); pos += kMaxMessageChunkSize) {
     chunk.is_last = pos + kMaxMessageChunkSize >= message.length();
+    chunk.worker_id = worker_id;
     chunk.session_id = session_id;
     chunk.call_id = chunk.is_last ? call_id : 0;
     chunk.post_state = chunk.is_last ? post_state : std::string();
@@ -235,25 +239,29 @@ void DevToolsAgent::SendChunkedProtocolMessage(IPC::Sender* sender,
   }
 }
 
-void DevToolsAgent::OnAttach(const std::string& host_id, int session_id) {
-  GetWebAgent()->Attach(WebString::FromUTF8(host_id), session_id);
-  session_ids_.insert(session_id);
+void DevToolsAgent::OnAttach(int worker_id, int session_id) {
+  GetWebAgent()->Attach(worker_id, session_id);
+  if (!worker_id)
+    session_ids_.insert(session_id);
 }
 
-void DevToolsAgent::OnReattach(const std::string& host_id,
+void DevToolsAgent::OnReattach(int worker_id,
                                int session_id,
                                const std::string& agent_state) {
-  GetWebAgent()->Reattach(WebString::FromUTF8(host_id), session_id,
+  GetWebAgent()->Reattach(worker_id, session_id,
                           WebString::FromUTF8(agent_state));
-  session_ids_.insert(session_id);
+  if (!worker_id)
+    session_ids_.insert(session_id);
 }
 
-void DevToolsAgent::OnDetach(int session_id) {
-  GetWebAgent()->Detach(session_id);
-  session_ids_.erase(session_id);
+void DevToolsAgent::OnDetach(int worker_id, int session_id) {
+  GetWebAgent()->Detach(worker_id, session_id);
+  if (!worker_id)
+    session_ids_.erase(session_id);
 }
 
-void DevToolsAgent::OnDispatchOnInspectorBackend(int session_id,
+void DevToolsAgent::OnDispatchOnInspectorBackend(int worker_id,
+                                                 int session_id,
                                                  int call_id,
                                                  const std::string& method,
                                                  const std::string& message) {
@@ -265,7 +273,7 @@ void DevToolsAgent::OnDispatchOnInspectorBackend(int session_id,
                                         call_id));
     return;
   }
-  GetWebAgent()->DispatchOnInspectorBackend(session_id, call_id,
+  GetWebAgent()->DispatchOnInspectorBackend(worker_id, session_id, call_id,
                                             WebString::FromUTF8(method),
                                             WebString::FromUTF8(message));
 }
@@ -344,7 +352,7 @@ void DevToolsAgent::GotManifest(int session_id,
 
   std::string json_message;
   base::JSONWriter::Write(*response, &json_message);
-  SendChunkedProtocolMessage(this, routing_id(), session_id, call_id,
+  SendChunkedProtocolMessage(this, routing_id(), 0, session_id, call_id,
                              json_message, std::string());
 }
 

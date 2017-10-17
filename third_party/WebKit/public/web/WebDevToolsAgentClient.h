@@ -42,18 +42,13 @@ class WebString;
 class WebDevToolsAgentClient {
  public:
   // Sends response message over the protocol, update agent state on the browser
-  // side for potential re-attach. |callId| for notifications is 0, |state| for
-  // notifications is empty.
-  virtual void SendProtocolMessage(int session_id,
+  // side for potential re-attach. |call_id| for notifications is 0, |state| for
+  // notifications is empty. |worker_id| for frame itself is 0.
+  virtual void SendProtocolMessage(int worker_id,
+                                   int session_id,
                                    int call_id,
                                    const WebString& response,
                                    const WebString& state) {}
-
-  // Returns process id.
-  virtual long ProcessId() { return -1; }
-
-  // Returns unique identifier of the entity within process.
-  virtual int DebuggerId() { return -1; }
 
   // Resume the inspected renderer that is waiting for DevTools front-end to
   // initialize its state.

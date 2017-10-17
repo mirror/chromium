@@ -66,6 +66,7 @@ IPC_STRUCT_BEGIN(DevToolsMessageChunk)
   IPC_STRUCT_MEMBER(bool, is_first)
   IPC_STRUCT_MEMBER(bool, is_last)
   IPC_STRUCT_MEMBER(int, message_size)
+  IPC_STRUCT_MEMBER(int, worker_id)
   IPC_STRUCT_MEMBER(int, session_id)
   IPC_STRUCT_MEMBER(int, call_id)
   IPC_STRUCT_MEMBER(std::string, data)
@@ -81,13 +82,13 @@ IPC_MESSAGE_ROUTED1(DevToolsClientMsg_DispatchOnInspectorFrontend,
 // browser.
 // Tells agent that there is a client host connected to it.
 IPC_MESSAGE_ROUTED2(DevToolsAgentMsg_Attach,
-                    std::string /* host_id */,
+                    int /* worker_id */,
                     int /* session_id */)
 
 // Tells agent that a client host was disconnected from another agent and
 // connected to this one.
 IPC_MESSAGE_ROUTED3(DevToolsAgentMsg_Reattach,
-                    std::string /* host_id */,
+                    int /* worker_id */,
                     int /* session_id */,
                     std::string /* agent_state */)
 
@@ -95,7 +96,8 @@ IPC_MESSAGE_ROUTED3(DevToolsAgentMsg_Reattach,
 IPC_MESSAGE_ROUTED1(DevToolsAgentMsg_Detach, int /* session_id */)
 
 // WebKit-level transport.
-IPC_MESSAGE_ROUTED4(DevToolsAgentMsg_DispatchOnInspectorBackend,
+IPC_MESSAGE_ROUTED5(DevToolsAgentMsg_DispatchOnInspectorBackend,
+                    int /* worker_id */
                     int /* session_id */,
                     int /* call_id */,
                     std::string /* method */,

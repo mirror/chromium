@@ -43,15 +43,19 @@ class WebDevToolsAgent {
  public:
   virtual ~WebDevToolsAgent() {}
 
-  virtual void Attach(const WebString& host_id, int session_id) = 0;
-  virtual void Reattach(const WebString& host_id,
+  // Zero |worker_id| means attaching to the frame.
+  virtual void Attach(int worker_id,
+                      int session_id) = 0;
+  virtual void Reattach(int worker_id,
                         int session_id,
                         const WebString& saved_state) = 0;
-  virtual void Detach(int session_id) = 0;
+  virtual void Detach(int worker_id,
+                      int session_id) = 0;
 
   virtual void ContinueProgram() = 0;
 
-  virtual void DispatchOnInspectorBackend(int session_id,
+  virtual void DispatchOnInspectorBackend(int worker_id,
+                                          int session_id,
                                           int call_id,
                                           const WebString& method,
                                           const WebString& message) = 0;

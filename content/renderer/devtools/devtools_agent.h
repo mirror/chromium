@@ -42,6 +42,7 @@ class CONTENT_EXPORT DevToolsAgent : public RenderFrameObserver,
 
   static void SendChunkedProtocolMessage(IPC::Sender* sender,
                                          int routing_id,
+                                         int worker_id,
                                          int session_id,
                                          int call_id,
                                          const std::string& message,
@@ -63,7 +64,8 @@ class CONTENT_EXPORT DevToolsAgent : public RenderFrameObserver,
   void OnDestruct() override;
 
   // WebDevToolsAgentClient implementation.
-  void SendProtocolMessage(int session_id,
+  void SendProtocolMessage(int worker_id,
+                           int session_id,
                            int call_id,
                            const blink::WebString& response,
                            const blink::WebString& state) override;
@@ -79,12 +81,13 @@ class CONTENT_EXPORT DevToolsAgent : public RenderFrameObserver,
 
   void SetCPUThrottlingRate(double rate) override;
 
-  void OnAttach(const std::string& host_id, int session_id);
-  void OnReattach(const std::string& host_id,
+  void OnAttach(int worker_id, int session_id);
+  void OnReattach(int worker_id,
                   int session_id,
                   const std::string& agent_state);
-  void OnDetach(int session_id);
-  void OnDispatchOnInspectorBackend(int session_id,
+  void OnDetach(int worker_id, int session_id);
+  void OnDispatchOnInspectorBackend(int worker_id,
+                                    int session_id,
                                     int call_id,
                                     const std::string& method,
                                     const std::string& message);

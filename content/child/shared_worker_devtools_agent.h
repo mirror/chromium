@@ -27,18 +27,20 @@ class SharedWorkerDevToolsAgent {
 
   // Called on the Worker thread.
   bool OnMessageReceived(const IPC::Message& message);
-  void SendDevToolsMessage(int session_id,
+  void SendDevToolsMessage(int worker_id,
+                           int session_id,
                            int call_id,
                            const blink::WebString& message,
                            const blink::WebString& post_state);
 
  private:
-  void OnAttach(const std::string& host_id, int session_id);
-  void OnReattach(const std::string& host_id,
+  void OnAttach(int worker_id, int session_id);
+  void OnReattach(int worker_id,
                   int session_id,
                   const std::string& state);
-  void OnDetach(int session_id);
+  void OnDetach(int worker_id, int session_id);
   void OnDispatchOnInspectorBackend(
+      int worker_id,
       int session_id,
       int call_id,
       const std::string& method,
