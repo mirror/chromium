@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ea704a8_b535f504",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-17T00:20:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f09eb495_f8514d97",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "10a7441fe2b524c3b6e592ff34587456d7ca934a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7148006_3dfe66ae",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "fe21b8a3_8cc20113",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-17T00:20:13Z",
+      "side": 1,
+      "message": "I could create a table indexed by width and mod that had \"draw start\", \"draw end\", \"offset start\", \"offset_end\", \"size start\", \"size_end\", \"dash_delta_start\" and \"dash_delta_end\". That sounds reasonable; it would be no easier to understand, but easier to read.",
+      "parentUuid": "f7148006_3dfe66ae",
+      "revId": "10a7441fe2b524c3b6e592ff34587456d7ca934a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3e7049e_6dc89a9b",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.h",
         "patchSetId": 6
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-16T21:41:40Z",
       "side": 1,
       "message": "This is only used in GraphicsContext.cpp - can you make it static/anonymous and hide it from GC.h?",
+      "revId": "10a7441fe2b524c3b6e592ff34587456d7ca934a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0675f2c_c6e1ebc6",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-17T00:20:13Z",
+      "side": 1,
+      "message": "If I make it static or anonymous I need to pass in a bunch more arguments. That\u0027s not impossible, but I thought private was the next best thing. I\u0027ll check again what would be involved.",
+      "parentUuid": "b3e7049e_6dc89a9b",
       "revId": "10a7441fe2b524c3b6e592ff34587456d7ca934a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
