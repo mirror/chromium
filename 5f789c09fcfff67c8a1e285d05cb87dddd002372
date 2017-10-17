@@ -267,6 +267,24 @@
     },
     {
       "key": {
+        "uuid": "91e29f8c_f3020676",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-17T18:10:26Z",
+      "side": 1,
+      "message": "login state can, but the TestSessionControllerClient change not so much\nIt DCHECKs in ash (https://cs.chromium.org/chromium/src/ash/wm/system_modal_container_layout_manager.cc?rcl\u003dc37f22b2029987406c70d64b88939d820aa60f85\u0026l\u003d82)\nso the issue is that test session controller does not pick up on session state changes in chrome..",
+      "parentUuid": "cef251df_fdd363e6",
+      "revId": "5f789c09fcfff67c8a1e285d05cb87dddd002372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41350f2c_c440612b",
         "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
         "patchSetId": 3
