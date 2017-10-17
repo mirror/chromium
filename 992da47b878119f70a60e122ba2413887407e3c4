@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1732e883_91741797",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1809,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-17T21:20:27Z",
+      "side": 1,
+      "message": "Ah, that makes sense. Thanks.",
+      "parentUuid": "377584f4_70607a1a",
+      "range": {
+        "startLine": 1809,
+        "startChar": 50,
+        "endLine": 1809,
+        "endChar": 0
+      },
+      "revId": "992da47b878119f70a60e122ba2413887407e3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34dd422b_878aaec1",
         "filename": "net/quic/chromium/quic_stream_factory.cc",
         "patchSetId": 4
