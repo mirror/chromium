@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f2a8de1_c185f18c",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4623,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-17T19:20:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f330fbe_b28b4067",
+      "range": {
+        "startLine": 4623,
+        "startChar": 19,
+        "endLine": 4623,
+        "endChar": 20
+      },
+      "revId": "fec504e674d980a54c1997ba263ebd23b35b0963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96ea165d_fd52ef56",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 12
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "I\u0027ll try to take a look at more of the CL this afternoon to understand the context, but I agree that we should not expose test-only bindings to WebUI pages in release builds, even temporarily.",
       "parentUuid": "96ea165d_fd52ef56",
+      "revId": "fec504e674d980a54c1997ba263ebd23b35b0963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c8cd2b_410746ed",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4630,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-17T19:20:05Z",
+      "side": 1,
+      "message": "This isn\u0027t for layout tests but for WebUI tests. We don\u0027t currently have a way to tell the renderer that we\u0027re running a WebUI test and need additional bindings. I\u0027m planning on fixing that.\n\nFor context, prior to this CL we exposed the addInterfaceOverrideForTesting and clearInterfaceOverridesForTesting methods to WebUI through custom GIN wrappers. This CL removes those methods. The tests that required them now use the MojoInterfaceInterceptor object which is what this line (moved from MojoBindingsController::DidCreateScriptContext) enables.",
+      "parentUuid": "98d9c6d1_1a3a250b",
       "revId": "fec504e674d980a54c1997ba263ebd23b35b0963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
