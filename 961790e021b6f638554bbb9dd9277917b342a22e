@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc86405d_470cb45f",
+        "filename": "chrome/browser/shell_integration_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-17T20:58:30Z",
+      "side": 1,
+      "message": "I don’t think that this needs to be way out here, when you only use it in one function.",
+      "revId": "961790e021b6f638554bbb9dd9277917b342a22e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c5f2461_b5d195e1",
+        "filename": "chrome/browser/shell_integration_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-17T20:58:30Z",
+      "side": 1,
+      "message": "This isn’t really “next” relative to anything other than its “previous”. Calling it “next” gets confusing when you get to the point of activating it: which application does it refer to? Just “application” or “running_application”?",
+      "range": {
+        "startLine": 77,
+        "startChar": 31,
+        "endLine": 77,
+        "endChar": 46
+      },
+      "revId": "961790e021b6f638554bbb9dd9277917b342a22e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
