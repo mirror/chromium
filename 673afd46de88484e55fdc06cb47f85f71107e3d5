@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40139e52_b4abd2f0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-enabled.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-10-17T22:02:12Z",
+      "side": 1,
+      "message": "Can you instead `assert_true(dialog instanceof HTMLDialogElement)`? dialog-autofocus-multiple-times.html already assumes that show is a function by calling it.\n\n(Just removing this test would be fine too, but it\u0027s not wrong, so meh.)",
+      "revId": "673afd46de88484e55fdc06cb47f85f71107e3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb50a74_874b6f6a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-enabled.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-10-17T22:02:12Z",
+      "side": 1,
+      "message": "Can you drop the \"if the dialog feature is on\" part of the description? It won\u0027t make as much sense in other engines.",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "673afd46de88484e55fdc06cb47f85f71107e3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ceaf6b_b312c18b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-return-value.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-10-17T22:02:12Z",
+      "side": 1,
+      "message": "These tests are great :)",
+      "range": {
+        "startLine": 51,
+        "startChar": 10,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "673afd46de88484e55fdc06cb47f85f71107e3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
