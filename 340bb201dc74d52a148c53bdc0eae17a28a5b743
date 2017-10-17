@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07a4c30a_fb3e2dd0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-17T00:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ed16a4_5bc56892",
+      "range": {
+        "startLine": 186,
+        "startChar": 25,
+        "endLine": 186,
+        "endChar": 40
+      },
+      "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f473db52_513ab74d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5bb255_4c16319b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-17T00:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f473db52_513ab74d",
+      "range": {
+        "startLine": 184,
+        "startChar": 3,
+        "endLine": 187,
+        "endChar": 64
+      },
+      "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "94948156_c8ad44a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-17T00:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21f75ff7_370afa14",
+      "range": {
+        "startLine": 232,
+        "startChar": 24,
+        "endLine": 232,
+        "endChar": 41
+      },
+      "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7c98b38_d08d058a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da84421_9b0a6dde",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-17T00:17:37Z",
+      "side": 1,
+      "message": "Besides removing these logs, is there anything we need to do to mark the histogram as obsolete?",
+      "parentUuid": "c7c98b38_d08d058a",
+      "range": {
+        "startLine": 387,
+        "startChar": 16,
+        "endLine": 387,
+        "endChar": 82
+      },
+      "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "95a92bba_f9616ace",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-17T00:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e49371f1_9b9ce32e",
+      "range": {
+        "startLine": 392,
+        "startChar": 20,
+        "endLine": 392,
+        "endChar": 41
+      },
+      "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0e41bd2_b30e210b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 5
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "cac037a7_95e957cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-17T00:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0e41bd2_b30e210b",
+      "range": {
+        "startLine": 402,
+        "startChar": 15,
+        "endLine": 403,
+        "endChar": 72
+      },
+      "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c696de_19bf2013",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 5
@@ -151,6 +295,30 @@
       "writtenOn": "2017-10-16T21:28:38Z",
       "side": 1,
       "message": "This feels odd. If we want to limit this method to a single filename, then I think we should look at changing mergeState() to take a filename as a param.",
+      "range": {
+        "startLine": 438,
+        "startChar": 83,
+        "endLine": 438,
+        "endChar": 91
+      },
+      "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57cc535_f0fb9215",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-17T00:17:37Z",
+      "side": 1,
+      "message": "Do you mean we should not assume index 0 is the filename for multi-window merging? And we should check whether the multi-window merging file is contained in the return list?",
+      "parentUuid": "d7c696de_19bf2013",
       "range": {
         "startLine": 438,
         "startChar": 83,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "708b799a_6ad09bfc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-17T00:17:37Z",
+      "side": 1,
+      "message": "The problem is inside deleteFileAsync we iterate through mMergeFileNames and delete item from it. So if here we also iterate through mMergeFileNames, I am afraid it will cause some problem.",
+      "parentUuid": "58b0f5cd_d3691c5e",
+      "range": {
+        "startLine": 1222,
+        "startChar": 44,
+        "endLine": 1222,
+        "endChar": 93
+      },
+      "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93f677e3_3dae8892",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 5
@@ -206,6 +398,30 @@
       "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f25a87_4cb6dbf8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-17T00:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93f677e3_3dae8892",
+      "range": {
+        "startLine": 1269,
+        "startChar": 74,
+        "endLine": 1269,
+        "endChar": 95
+      },
+      "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
