@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e546b2c8_f6bc356d",
+        "filename": "chrome/browser/chromeos/extensions/input_method_apitest_chromeos.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "No needed.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86aeb96_f0b5137f",
+        "filename": "chrome/browser/chromeos/extensions/input_method_apitest_chromeos.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "When you add a ctor, would you be so kind as to add an override dtor as well? Applies to the entire CL.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2285802_dc2c4a4a",
+        "filename": "chrome/browser/chromeos/extensions/input_method_apitest_chromeos.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "And if you add a private section, can you add a DISALLOW_COPY_AND_ASSIGN() ? Applies to the entire CL.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb184d47_ac3debc4",
+        "filename": "chrome/browser/media/encrypted_media_supported_types_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c8c874_4cfb0a6d",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf89be3_0aed63da",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25c3873_06fa78b9",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf10d470_c46dc87b",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "Reminder again to add a blank line before DISALLOW_COPY_AND_ASSIGN(). My previous comment regarding the same issue in a different file really meant to also say \"applies everywhere\".",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb8dba3_10227c92",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browser_test_harness.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80e8ffe_77542b0e",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browser_test_harness.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414b461a_c83b4b4f",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller_interactive_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620b3c53_1787b9fb",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller_interactive_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49995473_1fe1e277",
+        "filename": "content/browser/appcache/appcache_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "Not needed, replace with a blank line.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254c6b0e_203c2d4e",
+        "filename": "content/browser/appcache/appcache_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb1fa3a_63533050",
+        "filename": "content/browser/generic_sensor_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d37f555_d94d1f1c",
+        "filename": "content/browser/generic_sensor_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "764531d3_3127f044",
+        "filename": "content/browser/shared_worker/worker_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 1,
+      "message": "Not needed anymore, and content/public/common/content_switches.h below.",
+      "revId": "a9ee0be3aa21f9ed020cfaba1a56443698d94dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

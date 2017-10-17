@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3c4eaac_f1b57a43",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-17T22:14:03Z",
+      "side": 0,
+      "message": "Please retain existing dtors too. See other comment about adding them.",
+      "revId": "2ab2d8b4167ded955e29d04bb9b23ea6cd623f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
