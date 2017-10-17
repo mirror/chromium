@@ -63,6 +63,15 @@ bool SetAsDefaultBrowser() {
     return false;
 
   [[NSWorkspace sharedWorkspace] setDefaultBrowserWithIdentifier:identifier];
+
+  // The CoreServicesUIAgent presents the dialog asking the user to confirm
+  // their new default browser choice, but the agent sometimes orders the dialog
+  // behind the Chrome window. The user never sees the dialog, and therefore
+  // never confirms the change. CoreServicesUIAgent is already running at this
+  // point - asking NSWorkspace to launch it makes it the active UI element and
+  // brings the dialog to the front.
+  [[NSWorkspace sharedWorkspace] launchApplication:@"CoreServicesUIAgent"];
+
   return true;
 }
 
