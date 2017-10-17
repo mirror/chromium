@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "184a4713_2f6d70e2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/Dictionary.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-17T07:10:44Z",
+      "side": 1,
+      "message": "Sorry, I was misunderstanding that you\u0027re rethrowing an exception to V8, not ExceptionState. The code totally looks good.",
+      "parentUuid": "fdafd0a0_72883f97",
+      "revId": "1818dff8d0bedda907a06277c2e51f977139474b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fd21137_8cf223d0",
         "filename": "third_party/WebKit/Source/bindings/core/v8/Dictionary.h",
         "patchSetId": 5
