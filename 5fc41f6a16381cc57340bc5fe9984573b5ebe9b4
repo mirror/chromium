@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "586d4836_87d8f300",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7479,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-17T13:23:26Z",
+      "side": 1,
+      "message": "Switch unit to something like \u0027losses\u0027?",
+      "revId": "5fc41f6a16381cc57340bc5fe9984573b5ebe9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063e1be9_69a6429d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7482,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-17T13:23:26Z",
+      "side": 1,
+      "message": "Can you reword? I find this hard to parse. Something like\n\nRecords an occurance of a Bluetooth adapter being lost.\n\n?",
+      "revId": "5fc41f6a16381cc57340bc5fe9984573b5ebe9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
