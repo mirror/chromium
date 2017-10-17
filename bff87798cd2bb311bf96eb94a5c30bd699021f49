@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c8a652bc_586b1aa6",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-17T21:11:19Z",
+      "side": 1,
+      "message": "There is a bug for that - https://bugs.chromium.org/p/chromium/issues/detail?id\u003d712733 but it sounds like it is an expensive proposition.",
+      "parentUuid": "8e1bf563_31ed6b6e",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "bff87798cd2bb311bf96eb94a5c30bd699021f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7459c0d8_1c93e16c",
         "filename": "ios/web/public/BUILD.gn",
         "patchSetId": 4
@@ -141,6 +165,30 @@
       "revId": "bff87798cd2bb311bf96eb94a5c30bd699021f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1b7fd1_61701a24",
+        "filename": "ios/web/public/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-17T21:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d550b977_77ac24b6",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 15
+      },
+      "revId": "bff87798cd2bb311bf96eb94a5c30bd699021f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
