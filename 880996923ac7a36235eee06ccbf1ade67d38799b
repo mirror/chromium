@@ -1,0 +1,435 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76677d8a_03d54990",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "nit: const would be more consistent with the surrounding code",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62bbaac8_23d0c155",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer just returning the value and having the actual expectations in the code calling this method. That way when an expectation fails it\u0027s clearer which get actually failed.",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152b29f3_bb0a9e32",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "nit: not really any reason to call this, since it\u0027s about to go out of scope anyway (but if you call it, at least be consistent and also reset dummy_wrapper)",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fdcfb8b_f48b2c55",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "not sure why you need this callback? GetAll is sync, so you should just be able to call the sync overload directly to get it to fill data. In which case you probably don\u0027t need to wait for GetAllCallback to get called anymore either.",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3913a6d_fc927e8f",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "nit: std::move()",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67897db4_a446fc73",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "this comment definitely doesn\u0027t match the implementation of the test anymore.",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0776fd6b_965c9727",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "return after ReportBadMessage?",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd3a5970_38d81af4",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "nit: I\u0027d reword this to something like \"No need to store values in |commit_batch_| if values are already available in |keys_values_map_|, since CommitChanges() will take values from there.\"",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d579ae_8338da7a",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "nit: I think I\u0027d find it clearer if this explicitly assigned nullopt",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e8fb9a_423b062c",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "return after ReportBadMessage?",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22bad7e5_7c8071e0",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "nit: here too I think the code is clearer if it is explicit that this actually modified something, probably by assigning nullopt to the key.",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1224e5a4_ed66bcc6",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "no NOTREACHED, just calling the callback with false is enough (or reporting a bad message). Although if that really is the API we\u0027re going for we should just get rid of Get entirely.",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68cb21f1_d2868695",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "what would happen if this unconditionally calls UnloadMapIfDesired? From the name of that method it sounds like it should only unload the map if it is actually desired, but from this code is seems like it might sometimes unload the map even when it isn\u0027t desired?\n(in other words, either the name of UnloadMapIfDesired is wrong, or this check isn\u0027t needed)",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe27c6f_fb0946ca",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "nit (and not your change), but I wonder if we could std::move from it-\u003evalue into the keys_values_map_ here? Of course we\u0027d have to make sure the next line still somehow gets the correct value size, but otherwise that seems like it might be a nice (small) performance improvement?",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df9bc57_f78d3063",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "nit: here too I think the code is cleaner if it explicitly assigns something to changed_values, rather than relying on the implicit insertion that is part of operator[]",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09cbd5aa_869447a6",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "here too, either UnloadMapIfDesired is named badly, or the if condition isn\u0027t really needed.",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940a8c78_a17c38b4",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "nit: make this a non-const iterator and you should somehow be able to move the value from the commit batch into the mojom structs, avoiding a copy",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0614bbe6_2e68a586",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "nit: maybe add a DCHECK that at most one of keys_only_map_ and keys_values_map_ is non-null?",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64d0a5a_0c87d5bc",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "Could you change the bool to some kind of enum? Or maybe even replace all of max_size, default_commit_delay, max_bytes_per_hour, max_commits_per_hour and cache_only_keys_when_possible with an Options struct (per the Function Argument Comments section of https://google.github.io/styleguide/cppguide.html#Implementation_Comments)",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15dee49_9a5d95a2",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer to not have order be important and instead just change IsMapReloadNeeded to state \u003d\u003d UNLOADED || (state \u003d\u003d KEYS_ONLY \u0026\u0026 desired_state \u003d\u003d KEYS_AND_VALUES) or something like that that makes it explicit what we\u0027re checking for. Also change the enum to an enum class.",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c286dcf8_5e895a6e",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "not quite sure why we need this method? GetAll is already sync after all. And the one usage of this method doesn\u0027t really care if the GetAllCallback is called with the correct value or not (or not called at all), it just wants the data.",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4c2d3f_49900ae1",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "nit: *synchronously",
+      "range": {
+        "startLine": 634,
+        "startChar": 31,
+        "endLine": 634,
+        "endChar": 44
+      },
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e0f613_3bd3d6d6",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "why should they happen synchronously? And your assertions below don\u0027t actually check that they are happening synchronously. As in you have no EXPECT_ after calling the methods to make sure the callbacks were actually called.",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6111c8_1bfe5a95",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "this is a very long test, that seems to test all kinds of things, but I\u0027m not entirely sure what all. Is it possible to split it up into separate tests, and preferably add some comments about what it is testing/verifying?",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a71a58_abead58b",
+        "filename": "content/common/leveldb_wrapper.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "I\u0027m not sure what I make of change Get to be essentially useless. Especially combined with the comment below for GetAll (\"Only used with small databases\") this doesn\u0027t really make sense anymore.\n\nMaybe we should give up on this being a generic key-value store interface (but then I\u0027d be in favor of renaming it to something like DOMStorageArea) or we should figure out a way to keep the interface sane for a generic key-value store while still providing the optimizations we want for DOMStorage (or another option would be to make the value-caching it does explicit in the interface, get rid of the Get method entirely, etc...). Adding cmumford@ since he has in the past expressed some thoughts about this interface as a generic key value store interface, and as such might have some opinions here too....",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

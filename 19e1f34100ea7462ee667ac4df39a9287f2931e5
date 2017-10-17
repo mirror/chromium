@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "20f7c685_4b9dfccf",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "new code seems fine. the main thing I was concerned about is that no matter what a renderer process sends, we shouldn\u0027t crash the browser process. So either call the callback with false, or kill the renderer (probably depending on whether a non-compromised renderer could ever fail the checks)",
+      "parentUuid": "6180d4c4_7650d9c1",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5995fd98_8e537a0b",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 1
@@ -294,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "6a5f947e_d98397f3",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "We really shouldn\u0027t be exposing test-only methods over IPC. So I\u0027d prefer either getting rid of Get, or making it work...",
+      "parentUuid": "d418e921_0bb11d78",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3d3ac71_ba865a80",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 1
@@ -469,6 +505,30 @@
       "side": 1,
       "message": "When commit is in flight, we clear the map and if some event causes reload we will try a read after write. I am not sure about the guarantees of LevelDBDatabase since it might also make IPC because it is service. Can I remove it?",
       "parentUuid": "9544a61f_513d3fd9",
+      "range": {
+        "startLine": 621,
+        "startChar": 37,
+        "endLine": 621,
+        "endChar": 62
+      },
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702eb2af_53a67860",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-17T20:09:04Z",
+      "side": 1,
+      "message": "so you\u0027re worried about a call t database_-\u003eGetPrefixed somehow overtaking an earlier call t Write? That is pretty much guaranteed not to happen. Method calls on the same mojo pipe are always processed in order, so you should not have to worry about earlier writes not being reflected in later reads.",
+      "parentUuid": "3914d22b_48be8472",
       "range": {
         "startLine": 621,
         "startChar": 37,
