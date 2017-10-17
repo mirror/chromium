@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "bcb0f45c_6fa9e651",
+        "filename": "chrome/common/chrome_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-17T15:29:24Z",
+      "side": 1,
+      "message": "Moved to a flag instead.",
+      "parentUuid": "0261713a_af5aa0ed",
+      "revId": "d63a44a6e0c4fea469e30e607a112ef38bb3241a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4c3e875_89e0896e",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 6
@@ -47,6 +65,24 @@
       "writtenOn": "2017-10-13T18:44:39Z",
       "side": 1,
       "message": "How does this work on webview_android? It\u0027s not wired up to anything yet, is it?",
+      "revId": "d63a44a6e0c4fea469e30e607a112ef38bb3241a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9efac2e_1a2bc7ca",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-17T15:29:24Z",
+      "side": 1,
+      "message": "Removed. Asanka told me this list in a previous comment. I just assumed webview worked the same as android. Are you saying that the NTLM code doesn\u0027t even run in Android webview, or just that these flags will have no effect there?",
+      "parentUuid": "e4c3e875_89e0896e",
       "revId": "d63a44a6e0c4fea469e30e607a112ef38bb3241a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
