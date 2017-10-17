@@ -34,7 +34,9 @@
 #include "core/dom/events/EventDispatchMediator.h"
 #include "core/dom/events/ScopedEventQueue.h"
 #include "core/dom/events/WindowEventContext.h"
+#include "core/events/FocusEvent.h"
 #include "core/events/MouseEvent.h"
+#include "core/events/PointerEvent.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrameView.h"
@@ -186,12 +188,6 @@ DispatchEventResult EventDispatcher::Dispatch() {
   }
   DispatchEventPostProcess(activation_target,
                            pre_dispatch_event_handler_result);
-
-  // Ensure that after event dispatch, the event's target object is the
-  // outermost shadow DOM boundary.
-  event_->SetTarget(event_->GetEventPath().GetWindowEventContext().Target());
-  event_->SetCurrentTarget(nullptr);
-
   return EventTarget::GetDispatchEventResult(*event_);
 }
 
@@ -272,7 +268,22 @@ inline void EventDispatcher::DispatchEventPostProcess(
   event_->SetStopImmediatePropagation(false);
   // 15. Set event’s eventPhase attribute to NONE.
   event_->SetEventPhase(0);
-  // 16. Set event’s currentTarget attribute to null.
+
+  // Save event's target to be used later, before
+  EventTarget* original_target = event->target();
+  // 16. If target's root is a shadow root, then set event's target attribute
+  // and event's relatedTarget to null.
+  event_->SetTarget(event_->GetEventPath().GetWindowEventContext().Target());
+  if (!event_->target()) {
+    if (event_->IsMouseEvent()) {
+      ToMouseEvent(event_)->SetRelatedTarget(nullptr);
+    } else if (event_->IsPointerEvent()) {
+      ToPointerEvent(event_)->SetRelatedTarget(nullptr);
+    } else if (event_->IsFocusEvent()) {
+      ToFocusEvent(event_)->SetRelatedTarget(nullptr);
+    }
+  }
+  // 17. Set event’s currentTarget attribute to null.
   event_->SetCurrentTarget(nullptr);
 
   bool is_click = event_->IsMouseEvent() &&
@@ -280,8 +291,10 @@ inline void EventDispatcher::DispatchEventPostProcess(
   if (is_click) {
     // Fire an accessibility event indicating a node was clicked on.  This is
     // safe if m_event->target()->toNode() returns null.
-    if (AXObjectCache* cache = node_->GetDocument().ExistingAXObjectCache())
-      cache->HandleClicked(event_->target()->ToNode());
+    if (AXObjectCache* cache = node_->GetDocument().ExistingAXObjectCache()) {
+      cache->HandleClicked(
+          EventPath::EventTargetRespectingTargetRules(*node_)->ToNode());
+    }
 
     // Pass the data from the PreDispatchEventHandler to the
     // PostDispatchEventHandler.
