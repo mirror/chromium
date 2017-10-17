@@ -34,6 +34,24 @@
       "revId": "9ce8e085391d43426f86bf104c328440d05ad0a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3aa1b9f_f7cdf92a",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-17T21:35:58Z",
+      "side": 1,
+      "message": "My bad: the primaries obtained from the malformed example have\nthe same orientation as the correct ones, but the , G and B \nprimaries are in the wrong areas of the triangle. But that means\nwe can\u0027t use the orientation of the triangle :-/\n\nI loosened up a bit the condition to reflect that Bx \u003c\u003d Rx and\nGx \u003c\u003d Rx, but not necessarily Bx \u003c\u003d Gx, which will allow for a \nGreen primary \"to the left\" of the Blue. \n\nAlso added a sanity check for not-too-small-area, and added a \nunittest for it with the same SST210 with the primaries\u0027 order\ncorrected.",
+      "parentUuid": "3bd7f37d_f1fdf6b3",
+      "revId": "9ce8e085391d43426f86bf104c328440d05ad0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
