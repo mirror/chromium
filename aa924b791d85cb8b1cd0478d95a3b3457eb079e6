@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5ec24c3_1c9f74bb",
+        "filename": "ash/display/mirror_window_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-17T17:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8dc6560_2411099a",
+      "range": {
+        "startLine": 104,
+        "startChar": 24,
+        "endLine": 104,
+        "endChar": 56
+      },
+      "revId": "aa924b791d85cb8b1cd0478d95a3b3457eb079e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b24c9a57_32fb0814",
         "filename": "ash/display/unified_mouse_warp_controller.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "aa924b791d85cb8b1cd0478d95a3b3457eb079e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3aaee7_be7f0501",
+        "filename": "ash/display/unified_mouse_warp_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-17T17:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b24c9a57_32fb0814",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 62
+      },
+      "revId": "aa924b791d85cb8b1cd0478d95a3b3457eb079e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e67379a7_53d0a58d",
+        "filename": "ash/display/unified_mouse_warp_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-17T17:05:38Z",
+      "side": 1,
+      "message": "Done. Renamed the variable and added a comment.",
+      "parentUuid": "b5c6fbb0_b5f697da",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 23
+      },
+      "revId": "aa924b791d85cb8b1cd0478d95a3b3457eb079e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fbff8b4_1822850f",
         "filename": "ash/host/ash_window_tree_host.cc",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "53889854_cd28ad9c",
+        "filename": "ash/host/ash_window_tree_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-17T17:05:38Z",
+      "side": 1,
+      "message": "No, this function is not invoked at all in the tests.",
+      "parentUuid": "8fbff8b4_1822850f",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "aa924b791d85cb8b1cd0478d95a3b3457eb079e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63a09104_35e62d7f",
         "filename": "ash/host/ash_window_tree_host_unified.cc",
         "patchSetId": 7
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-17T03:11:44Z",
       "side": 1,
       "message": "None of the code in this file is used in mus/mash.",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 37
+      },
+      "revId": "aa924b791d85cb8b1cd0478d95a3b3457eb079e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a24427f_003675fe",
+        "filename": "ash/host/ash_window_tree_host_unified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-17T17:05:38Z",
+      "side": 1,
+      "message": "Yes, this is the actual reason why the tests are failing. It is because of this NOTIMPLEMENTED(); https://cs.chromium.org/chromium/src/ash/mus/ash_window_tree_host_mus.cc?type\u003dcs\u0026q\u003dAshWindowTreeHostMus::RegisterMirroringHost\u0026sq\u003dpackage:chromium\u0026l\u003d66\n\nI filed a bug previously about this here: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d770243\n\nHow do you want to move forward with this?",
+      "parentUuid": "63a09104_35e62d7f",
       "range": {
         "startLine": 29,
         "startChar": 19,
@@ -283,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "ed223143_39783beb",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-17T17:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae71c000_05a70d29",
+      "range": {
+        "startLine": 297,
+        "startChar": 12,
+        "endLine": 297,
+        "endChar": 14
+      },
+      "revId": "aa924b791d85cb8b1cd0478d95a3b3457eb079e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "036106c8_a9e61c3a",
         "filename": "ui/display/manager/display_manager_utilities.h",
         "patchSetId": 7
@@ -306,6 +450,30 @@
     },
     {
       "key": {
+        "uuid": "70f2844f_78d79638",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-17T17:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "036106c8_a9e61c3a",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "aa924b791d85cb8b1cd0478d95a3b3457eb079e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c8d8d0b_aa36f3fc",
         "filename": "ui/display/unified_desktop_utils.h",
         "patchSetId": 7
@@ -317,6 +485,30 @@
       "writtenOn": "2017-10-17T03:11:44Z",
       "side": 1,
       "message": "optional: seems to me a real class would be easier to use and not necessitate functions like ValidateMatrix.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "aa924b791d85cb8b1cd0478d95a3b3457eb079e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd4d748_f285f951",
+        "filename": "ui/display/unified_desktop_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-17T17:05:38Z",
+      "side": 1,
+      "message": "Makes sense, thanks for suggesting. This CL is already too large, and I would like to avoid making it larger. I plan to do a follow-up pass to refactor the code and extract the unified related code outside of the DisplayManager into its own class too.",
+      "parentUuid": "5c8d8d0b_aa36f3fc",
       "range": {
         "startLine": 18,
         "startChar": 6,
