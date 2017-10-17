@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "076ef20d_723f9cc0",
+        "filename": "media/formats/mp4/track_run_iterator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-17T20:06:39Z",
+      "side": 1,
+      "message": "Note, the resize(), below, still is done for insane sample counts. More fully avoiding even the large allocation attempt might involve incremental (and less performant) tri.samples resizing.",
+      "range": {
+        "startLine": 393,
+        "startChar": 20,
+        "endLine": 393,
+        "endChar": 57
+      },
+      "revId": "e81a4c8ddc1105a69ce8378994462ae6d4150e57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa906f5f_23ebe840",
         "filename": "media/formats/mp4/track_run_iterator.cc",
         "patchSetId": 1
