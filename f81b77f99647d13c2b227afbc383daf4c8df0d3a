@@ -22,6 +22,30 @@
       "revId": "f81b77f99647d13c2b227afbc383daf4c8df0d3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08063f19_6a2c758e",
+        "filename": "chrome/browser/chromeos/file_manager/file_browser_handlers.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-17T09:33:48Z",
+      "side": 1,
+      "message": "Yes, we should remove kEnableZipArchiverPacker from this condition and show default file handler if none of zip extensions is enabled.",
+      "parentUuid": "29c781b4_bf4c1664",
+      "range": {
+        "startLine": 150,
+        "startChar": 35,
+        "endLine": 150,
+        "endChar": 59
+      },
+      "revId": "f81b77f99647d13c2b227afbc383daf4c8df0d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
