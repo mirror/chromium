@@ -3539,7 +3539,8 @@
       },
       {
         "args": [
-          "--disable-browser-side-navigation"
+          "--disable-browser-side-navigation",
+          "--gtest_filter=ExtensionWebRequestApiTest.WebRequestUnloadImmediately"
         ],
         "name": "renderer_side_navigation_browser_tests",
         "swarming": {
