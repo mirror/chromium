@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af221208_1f456f59",
+        "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-17T18:01:03Z",
+      "side": 1,
+      "message": "Who owns sink_? Should this be std::unique_ptr or scoped_refptr?",
+      "revId": "b19910cb75829d971640a05deeef6c286766f674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
