@@ -14,7 +14,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow DIV id='scroller'",
-          "rect": [0, 0, 302, 302],
+          "rect": [-1, -1, 304, 304],
           "reason": "subtree"
         },
         {

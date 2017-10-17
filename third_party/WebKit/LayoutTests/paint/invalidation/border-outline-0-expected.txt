@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow (positioned) DIV id='border-image'",
-          "rect": [10, 10, 200, 200],
+          "rect": [9, 9, 202, 202],
           "reason": "style change"
         }
       ]

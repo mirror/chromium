@@ -7,8 +7,13 @@
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
+          "object": "LayoutTable TABLE",
+          "rect": [7, 7, 116, 155],
+          "reason": "geometry"
+        },
+        {
           "object": "LayoutTableSection TBODY id='tbody'",
-          "rect": [8, 8, 114, 104],
+          "rect": [7, 7, 116, 106],
           "reason": "style change"
         },
         {
@@ -27,14 +32,19 @@
           "reason": "style change"
         },
         {
-          "object": "LayoutTable TABLE",
-          "rect": [8, 159, 114, 2],
-          "reason": "incremental"
-        },
-        {
           "object": "LayoutTableRow TR",
           "rect": [8, 58, 109, 52],
           "reason": "style change"
+        },
+        {
+          "object": "LayoutTableCell TD",
+          "rect": [9, 9, 57, 52],
+          "reason": "geometry"
+        },
+        {
+          "object": "LayoutTableCell TD",
+          "rect": [8, 8, 56, 52],
+          "reason": "geometry"
         },
         {
           "object": "LayoutTableCell TD",
@@ -63,22 +73,12 @@
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [10, 10, 55, 50],
-          "reason": "geometry"
-        },
-        {
-          "object": "LayoutTableCell TD",
           "rect": [9, 109, 54, 50],
           "reason": "geometry"
         },
         {
           "object": "LayoutTableCell TD",
           "rect": [9, 59, 54, 50],
-          "reason": "geometry"
-        },
-        {
-          "object": "LayoutTableCell TD",
-          "rect": [9, 9, 54, 50],
           "reason": "geometry"
         },
         {
@@ -95,11 +95,6 @@
           "object": "LayoutTableCell TD",
           "rect": [63, 9, 53, 50],
           "reason": "geometry"
-        },
-        {
-          "object": "LayoutTable TABLE",
-          "rect": [115, 8, 7, 153],
-          "reason": "incremental"
         }
       ]
     }
@@ -107,7 +102,7 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutTable TABLE",
-      "reason": "incremental"
+      "reason": "geometry"
     },
     {
       "object": "LayoutTableSection TBODY id='tbody'",

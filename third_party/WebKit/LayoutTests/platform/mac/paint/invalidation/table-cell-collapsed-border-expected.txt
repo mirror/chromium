@@ -28,17 +28,17 @@
         },
         {
           "object": "LayoutTableCell TD id='t3'",
-          "rect": [225, 265, 112, 100],
+          "rect": [224, 264, 114, 102],
           "reason": "style change"
         },
         {
           "object": "LayoutTableCell TD id='t1'",
-          "rect": [225, 65, 112, 100],
+          "rect": [224, 64, 114, 102],
           "reason": "style change"
         },
         {
           "object": "LayoutTableCell TD id='t2'",
-          "rect": [8, 265, 110, 100],
+          "rect": [7, 264, 112, 102],
           "reason": "style change"
         }
       ]

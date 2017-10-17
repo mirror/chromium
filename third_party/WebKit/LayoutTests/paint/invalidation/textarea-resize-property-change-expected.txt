@@ -8,12 +8,12 @@
       "paintInvalidations": [
         {
           "object": "LayoutTextControl (positioned) TEXTAREA id='textarea'",
-          "rect": [0, 50, 106, 106],
+          "rect": [-1, 49, 108, 108],
           "reason": "style change"
         },
         {
           "object": "LayoutTextControl (positioned) TEXTAREA id='textarea'",
-          "rect": [90, 140, 15, 15],
+          "rect": [89, 139, 17, 17],
           "reason": "scroll control"
         }
       ]

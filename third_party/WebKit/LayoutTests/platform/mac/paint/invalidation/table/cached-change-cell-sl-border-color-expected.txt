@@ -13,7 +13,7 @@
         },
         {
           "object": "LayoutTableCell TD id='foo'",
-          "rect": [10, 10, 56, 50],
+          "rect": [9, 9, 58, 52],
           "reason": "style change"
         },
         {

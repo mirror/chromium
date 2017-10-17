@@ -18,142 +18,142 @@
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 537, 62, 37],
+          "rect": [60, 536, 64, 39],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 531, 62, 37],
+          "rect": [60, 530, 64, 39],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 498, 62, 22],
+          "rect": [60, 497, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 492, 62, 22],
+          "rect": [60, 491, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 459, 62, 22],
+          "rect": [60, 458, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 453, 62, 22],
+          "rect": [60, 452, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 420, 62, 22],
+          "rect": [60, 419, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 414, 62, 22],
+          "rect": [60, 413, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutDeprecatedFlexibleBox DIV class='outer box'",
-          "rect": [61, 249, 62, 22],
+          "rect": [60, 248, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutDeprecatedFlexibleBox DIV class='outer box'",
-          "rect": [61, 243, 62, 22],
+          "rect": [60, 242, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutDeprecatedFlexibleBox DIV class='outer box'",
-          "rect": [61, 210, 62, 22],
+          "rect": [60, 209, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutDeprecatedFlexibleBox DIV class='outer box'",
-          "rect": [61, 204, 62, 22],
+          "rect": [60, 203, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 171, 62, 22],
+          "rect": [60, 170, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 165, 62, 22],
+          "rect": [60, 164, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 132, 62, 22],
+          "rect": [60, 131, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 126, 62, 22],
+          "rect": [60, 125, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 93, 62, 22],
+          "rect": [60, 92, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 87, 62, 22],
+          "rect": [60, 86, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 54, 62, 22],
+          "rect": [60, 53, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 48, 62, 22],
+          "rect": [60, 47, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 15, 62, 22],
+          "rect": [60, 14, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow DIV class='outer'",
-          "rect": [61, 9, 62, 22],
+          "rect": [60, 8, 64, 24],
           "reason": "geometry"
         },
         {
           "object": "LayoutTable TABLE class='outer'",
-          "rect": [61, 366, 58, 28],
+          "rect": [60, 365, 60, 30],
           "reason": "geometry"
         },
         {
           "object": "LayoutTable TABLE class='outer'",
-          "rect": [61, 360, 58, 28],
+          "rect": [60, 359, 60, 30],
           "reason": "geometry"
         },
         {
           "object": "LayoutTable TABLE class='outer'",
-          "rect": [61, 327, 58, 28],
+          "rect": [60, 326, 60, 30],
           "reason": "geometry"
         },
         {
           "object": "LayoutTable TABLE class='outer'",
-          "rect": [61, 321, 58, 28],
+          "rect": [60, 320, 60, 30],
           "reason": "geometry"
         },
         {
           "object": "LayoutTable TABLE class='outer'",
-          "rect": [61, 288, 58, 28],
+          "rect": [60, 287, 60, 30],
           "reason": "geometry"
         },
         {
           "object": "LayoutTable TABLE class='outer'",
-          "rect": [61, 282, 58, 28],
+          "rect": [60, 281, 60, 30],
           "reason": "geometry"
         },
         {

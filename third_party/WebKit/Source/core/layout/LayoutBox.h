@@ -1505,6 +1505,8 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
 
   LayoutRect LocalVisualRectIgnoringVisibility() const override;
 
+  LayoutUnit VisualRectOutsetForRasterEffects() const override;
+
  private:
   void UpdateShapeOutsideInfoAfterStyleChange(const ComputedStyle&,
                                               const ComputedStyle* old_style);

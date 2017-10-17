@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutIFrame (positioned) IFRAME",
-          "rect": [2, 65, 236, 235],
+          "rect": [2, 64, 236, 237],
           "reason": "invalidate paint rectangle"
         },
         {

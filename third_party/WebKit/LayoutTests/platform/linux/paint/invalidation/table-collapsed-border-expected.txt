@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutTable TABLE",
-          "rect": [8, 194, 108, 82],
+          "rect": [7, 193, 110, 84],
           "reason": "full"
         },
         {
@@ -23,7 +23,12 @@
         },
         {
           "object": "LayoutTable TABLE",
-          "rect": [8, 102, 99, 82],
+          "rect": [7, 285, 101, 84],
+          "reason": "geometry"
+        },
+        {
+          "object": "LayoutTable TABLE",
+          "rect": [7, 101, 101, 84],
           "reason": "full"
         },
         {
@@ -63,7 +68,7 @@
         },
         {
           "object": "LayoutTable TABLE id='t'",
-          "rect": [8, 10, 95, 82],
+          "rect": [7, 9, 97, 84],
           "reason": "style change"
         },
         {
@@ -150,11 +155,6 @@
           "object": "LayoutText #text",
           "rect": [23, 225, 34, 19],
           "reason": "disappeared"
-        },
-        {
-          "object": "LayoutTable TABLE",
-          "rect": [76, 286, 31, 82],
-          "reason": "incremental"
         },
         {
           "object": "LayoutTableCell TD",
@@ -310,7 +310,7 @@
     },
     {
       "object": "LayoutTable TABLE",
-      "reason": "incremental"
+      "reason": "geometry"
     },
     {
       "object": "LayoutTableRow TR",

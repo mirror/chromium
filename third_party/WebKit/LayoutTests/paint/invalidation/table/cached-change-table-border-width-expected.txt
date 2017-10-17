@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutTable TABLE id='tbl'",
-          "rect": [8, 8, 60, 54],
+          "rect": [7, 7, 62, 56],
           "reason": "style change"
         },
         {
@@ -18,12 +18,12 @@
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [10, 10, 56, 50],
+          "rect": [9, 9, 58, 52],
           "reason": "geometry"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [9, 9, 54, 50],
+          "rect": [8, 8, 56, 52],
           "reason": "geometry"
         }
       ]

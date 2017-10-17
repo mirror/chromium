@@ -23,7 +23,7 @@
         },
         {
           "object": "LayoutIFrame IFRAME id='iframe'",
-          "rect": [8, 92, 732, 94],
+          "rect": [7, 91, 734, 96],
           "reason": "appeared"
         },
         {

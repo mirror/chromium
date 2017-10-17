@@ -7,33 +7,28 @@
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
+          "object": "LayoutTable TABLE",
+          "rect": [7, 7, 122, 58],
+          "reason": "geometry"
+        },
+        {
           "object": "LayoutTableRow TR id='row'",
           "rect": [8, 8, 120, 56],
           "reason": "style change"
         },
         {
-          "object": "LayoutTable TABLE",
-          "rect": [8, 59, 120, 5],
-          "reason": "incremental"
-        },
-        {
-          "object": "LayoutTable TABLE",
-          "rect": [65, 8, 63, 56],
-          "reason": "incremental"
-        },
-        {
           "object": "LayoutTableCell TD",
-          "rect": [67, 11, 58, 50],
+          "rect": [66, 10, 60, 52],
           "reason": "appeared"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [10, 11, 57, 50],
+          "rect": [9, 10, 59, 52],
           "reason": "geometry"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [10, 10, 56, 50],
+          "rect": [9, 9, 58, 52],
           "reason": "geometry"
         }
       ]
@@ -42,7 +37,7 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutTable TABLE",
-      "reason": "incremental"
+      "reason": "geometry"
     },
     {
       "object": "LayoutTableRow TR id='row'",

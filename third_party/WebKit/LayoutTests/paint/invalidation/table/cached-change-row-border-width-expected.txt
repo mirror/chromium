@@ -7,8 +7,13 @@
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
+          "object": "LayoutTable TABLE",
+          "rect": [7, 7, 62, 105],
+          "reason": "geometry"
+        },
+        {
           "object": "LayoutTableRow TR id='row'",
-          "rect": [8, 8, 60, 54],
+          "rect": [7, 7, 62, 56],
           "reason": "style change"
         },
         {
@@ -17,9 +22,14 @@
           "reason": "style change"
         },
         {
-          "object": "LayoutTable TABLE",
-          "rect": [8, 109, 60, 2],
-          "reason": "incremental"
+          "object": "LayoutTableCell TD",
+          "rect": [9, 9, 58, 52],
+          "reason": "geometry"
+        },
+        {
+          "object": "LayoutTableCell TD",
+          "rect": [8, 8, 56, 52],
+          "reason": "geometry"
         },
         {
           "object": "LayoutTableCell TD",
@@ -28,23 +38,8 @@
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [10, 10, 56, 50],
-          "reason": "geometry"
-        },
-        {
-          "object": "LayoutTableCell TD",
           "rect": [9, 59, 54, 50],
           "reason": "geometry"
-        },
-        {
-          "object": "LayoutTableCell TD",
-          "rect": [9, 9, 54, 50],
-          "reason": "geometry"
-        },
-        {
-          "object": "LayoutTable TABLE",
-          "rect": [62, 8, 6, 103],
-          "reason": "incremental"
         }
       ]
     }
@@ -52,7 +47,7 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutTable TABLE",
-      "reason": "incremental"
+      "reason": "geometry"
     },
     {
       "object": "LayoutTableRow TR id='row'",

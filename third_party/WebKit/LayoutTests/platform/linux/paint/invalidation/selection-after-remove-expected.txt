@@ -7,14 +7,14 @@
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
+          "object": "LayoutBlockFlow DIV id='test'",
+          "rect": [37, 77, 154, 104],
+          "reason": "geometry"
+        },
+        {
           "object": "LayoutText #text",
           "rect": [39, 79, 154, 99],
           "reason": "disappeared"
-        },
-        {
-          "object": "LayoutBlockFlow DIV id='test'",
-          "rect": [38, 78, 152, 102],
-          "reason": "geometry"
         },
         {
           "object": "LayoutText #text",

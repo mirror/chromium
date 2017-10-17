@@ -13,7 +13,7 @@
         },
         {
           "object": "LayoutIFrame IFRAME",
-          "rect": [0, 0, 104, 104],
+          "rect": [-1, -1, 106, 106],
           "reason": "appeared"
         },
         {

@@ -8,37 +8,37 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow (positioned) DIV id='scrollable'",
-          "rect": [18, 145, 285, 15],
+          "rect": [7, 49, 322, 122],
+          "reason": "geometry"
+        },
+        {
+          "object": "LayoutBlockFlow (positioned) DIV id='scrollable'",
+          "rect": [17, 144, 287, 17],
           "reason": "scroll control"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV id='scrollable'",
-          "rect": [118, 50, 210, 120],
-          "reason": "incremental"
-        },
-        {
-          "object": "LayoutBlockFlow (positioned) DIV id='scrollable'",
-          "rect": [18, 145, 85, 15],
+          "rect": [17, 144, 87, 17],
           "reason": "scroll control"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV id='scrollable'",
-          "rect": [303, 60, 15, 85],
+          "rect": [302, 59, 17, 87],
           "reason": "scroll control"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV id='scrollable'",
-          "rect": [103, 60, 15, 85],
+          "rect": [102, 59, 17, 87],
           "reason": "scroll control"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV id='scrollable'",
-          "rect": [303, 145, 15, 15],
+          "rect": [302, 144, 17, 17],
           "reason": "scroll control"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV id='scrollable'",
-          "rect": [103, 145, 15, 15],
+          "rect": [102, 144, 17, 17],
           "reason": "scroll control"
         }
       ]
@@ -47,7 +47,7 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutBlockFlow (positioned) DIV id='scrollable'",
-      "reason": "incremental"
+      "reason": "geometry"
     },
     {
       "object": "LayoutBlockFlow (positioned) DIV id='scrollable'",

@@ -13,7 +13,7 @@
         },
         {
           "object": "LayoutEmbeddedObject OBJECT",
-          "rect": [0, 0, 402, 202],
+          "rect": [-1, -1, 404, 204],
           "reason": "style change"
         },
         {

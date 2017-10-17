@@ -8,8 +8,8 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow P",
-          "rect": [8, 569, 418, 7],
-          "reason": "incremental"
+          "rect": [7, 73, 420, 504],
+          "reason": "geometry"
         },
         {
           "object": "LayoutText #text",
@@ -127,11 +127,11 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutBlockFlow P",
-      "reason": "incremental"
+      "reason": "geometry"
     },
     {
       "object": "RootInlineBox",
-      "reason": "incremental"
+      "reason": "geometry"
     },
     {
       "object": "LayoutText #text",

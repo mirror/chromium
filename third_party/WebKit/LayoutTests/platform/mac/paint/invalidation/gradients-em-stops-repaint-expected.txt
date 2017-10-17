@@ -13,12 +13,12 @@
         },
         {
           "object": "LayoutBlockFlow DIV id='box4' class='box'",
-          "rect": [344, 18, 302, 122],
+          "rect": [343, 17, 304, 124],
           "reason": "style change"
         },
         {
           "object": "LayoutBlockFlow DIV id='box3' class='box'",
-          "rect": [18, 18, 302, 122],
+          "rect": [17, 17, 304, 124],
           "reason": "geometry"
         },
         {

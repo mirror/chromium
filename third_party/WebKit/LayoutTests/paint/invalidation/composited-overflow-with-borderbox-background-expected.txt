@@ -15,7 +15,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow DIV id='scroller'",
-          "rect": [0, 0, 220, 220],
+          "rect": [-1, -1, 222, 222],
           "reason": "style change"
         }
       ]

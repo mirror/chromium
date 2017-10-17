@@ -24,7 +24,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutTextControl INPUT id='text'",
-          "rect": [-1, 999, 207, 24],
+          "rect": [-2, 998, 209, 26],
           "reason": "subtree"
         },
         {

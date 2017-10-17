@@ -8,12 +8,12 @@
       "paintInvalidations": [
         {
           "object": "LayoutTableCell TD",
-          "rect": [256, 306, 204, 104],
+          "rect": [255, 305, 206, 106],
           "reason": "geometry"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [256, 156, 204, 104],
+          "rect": [255, 155, 206, 106],
           "reason": "geometry"
         },
         {

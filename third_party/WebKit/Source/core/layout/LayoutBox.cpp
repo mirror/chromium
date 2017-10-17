@@ -2449,6 +2449,12 @@ LayoutRect LayoutBox::LocalVisualRectIgnoringVisibility() const {
   return SelfVisualOverflowRect();
 }
 
+LayoutUnit LayoutBox::VisualRectOutsetForRasterEffects() const {
+  // Borders may trigger Skia's hairline stroker, which can spill up to 0.5
+  // units in device space.
+  return LayoutUnit(StyleRef().HasBorder() ? 0.5f : 0);
+}
+
 void LayoutBox::InflateVisualRectForFilterUnderContainer(
     TransformState& transform_state,
     const LayoutObject& container,

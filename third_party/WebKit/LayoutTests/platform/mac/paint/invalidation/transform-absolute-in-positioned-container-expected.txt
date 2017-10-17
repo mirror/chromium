@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow (relative positioned) DIV id='box' class='rotated'",
-          "rect": [76, 186, 286, 286],
+          "rect": [75, 185, 288, 288],
           "reason": "subtree"
         }
       ]

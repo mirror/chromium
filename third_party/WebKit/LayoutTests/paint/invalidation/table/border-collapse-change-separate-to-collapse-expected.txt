@@ -28,22 +28,22 @@
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [118, 10, 108, 108],
+          "rect": [117, 9, 110, 110],
           "reason": "style change"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [10, 10, 106, 108],
+          "rect": [9, 9, 108, 110],
           "reason": "style change"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [113, 9, 105, 105],
+          "rect": [112, 8, 107, 107],
           "reason": "style change"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [9, 9, 104, 105],
+          "rect": [8, 8, 106, 107],
           "reason": "style change"
         }
       ]
