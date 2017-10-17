@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "f1a88c43_a0d55597",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T21:31:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46cb4ff8_e9f30c3b",
+      "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b16bbce_87071bf7",
         "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
         "patchSetId": 4
@@ -104,6 +122,24 @@
     },
     {
       "key": {
+        "uuid": "ca824968_4627eff8",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLParserScriptRunner.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T21:31:05Z",
+      "side": 1,
+      "message": "Done. Previously this ScriptLoader null check was coupled with the check whether the element is script element or not. This CL decouples these two checks, and thus we can turn this DCHECK() now.",
+      "parentUuid": "4eccf046_d7dca1bc",
+      "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df968391_2aabb50e",
         "filename": "third_party/WebKit/Source/core/xml/parser/XMLParserScriptRunner.cpp",
         "patchSetId": 4
@@ -115,6 +151,24 @@
       "writtenOn": "2017-10-17T08:02:26Z",
       "side": 1,
       "message": "Do you happen to know what this means? (was copied from original code)",
+      "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb0e964_545f1fbd",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLParserScriptRunner.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T21:31:05Z",
+      "side": 1,
+      "message": "I don\u0027t know.\nI git blamed and this comment itself has existed since 2003.\nhttps://chromium.googlesource.com/chromium/src/+/8cfa00f1ae442d9f6c23627266e9359182a35ed6\n\nPreviously, this comment seems to attached to the check for frame existence (corresponds to the current |has_view_| check).\nIn the latest patchset, I removed |has_view_| flag, and instead make XMLParserScriptRunner to be nullptr and check |script_runner_| instead of |has_view_|.",
+      "parentUuid": "df968391_2aabb50e",
       "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +192,24 @@
     },
     {
       "key": {
+        "uuid": "fca81c6f_fa894388",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLParserScriptRunner.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T21:31:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5e40699_5a55c671",
+      "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0d9144f_f38479d5",
         "filename": "third_party/WebKit/Source/core/xml/parser/XMLParserScriptRunner.h",
         "patchSetId": 4
@@ -152,6 +224,24 @@
       "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdceca30_cdc3e7ea",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLParserScriptRunner.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-17T21:31:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0d9144f_f38479d5",
+      "revId": "ff8b05b8a46d39005bf50adcd080bfb758d479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
