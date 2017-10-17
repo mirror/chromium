@@ -88,6 +88,30 @@
     },
     {
       "key": {
+        "uuid": "4beffe4f_f69fffbb",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-17T15:41:01Z",
+      "side": 1,
+      "message": "Drive by: We now prefer std::make_unique\u003c\u003e. All our compilers support it. There are people going through the codebase and converting all base::MakeUnique\u003c\u003e to make_unique\u003c\u003e.",
+      "parentUuid": "91f99636_82fbc5ee",
+      "range": {
+        "startLine": 85,
+        "startChar": 25,
+        "endLine": 85,
+        "endChar": 41
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "943bcee5_3fcd3c2a",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
         "patchSetId": 16
