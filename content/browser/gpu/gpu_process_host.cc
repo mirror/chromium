@@ -41,7 +41,6 @@
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
-#include "content/public/browser/gpu_utils.h"
 #include "content/public/common/connection_filter.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
@@ -50,7 +49,6 @@
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
-#include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/config/gpu_driver_bug_list.h"
 #include "gpu/config/gpu_driver_bug_workaround_type.h"
@@ -596,8 +594,6 @@ bool GpuProcessHost::Init() {
 
   process_->GetHost()->CreateChannelMojo();
 
-  gpu::GpuPreferences gpu_preferences = GetGpuPreferencesFromCommandLine();
-  GpuDataManagerImpl::GetInstance()->UpdateGpuPreferences(&gpu_preferences);
   if (in_process_) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     DCHECK(GetGpuMainThreadFactory());
@@ -627,7 +623,7 @@ bool GpuProcessHost::Init() {
   viz::mojom::GpuHostPtr host_proxy;
   gpu_host_binding_.Bind(mojo::MakeRequest(&host_proxy));
   gpu_main_ptr_->CreateGpuService(mojo::MakeRequest(&gpu_service_ptr_),
-                                  std::move(host_proxy), gpu_preferences,
+                                  std::move(host_proxy),
                                   activity_flags_.CloneHandle());
 
 #if defined(USE_OZONE)
