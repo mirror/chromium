@@ -52,6 +52,24 @@
       "revId": "2cea02bb974351bb0ccbb035307c4e46fa016a87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca15ae74_c4f3b45f",
+        "filename": "android_webview/tools/apk_merger.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-10-17T15:28:15Z",
+      "side": 1,
+      "message": "Apparently you *can* pass a string to sys.exit, but it\u0027s probably better to be consistent with l277.\n\nTBH, both should be logging.fatal() or a string return. I think it\u0027s a bad idea to write an error to stdout.",
+      "parentUuid": "94495157_df3e88b4",
+      "revId": "2cea02bb974351bb0ccbb035307c4e46fa016a87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
