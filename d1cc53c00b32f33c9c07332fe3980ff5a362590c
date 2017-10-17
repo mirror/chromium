@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf66946d_c48f5e14",
+        "filename": "base/trace_event/trace_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-17T17:23:01Z",
+      "side": 1,
+      "message": "This one\u0027s actually pretty interesting. TraceLog is in namespace base::trace_event, and this file defines base::internal::DeleteTraceLogForTesting at the top. In this TU, base::trace_event doesn\u0027t contain a \"internal\" subnamespace, so unqualified lookup of \"internal\" finds \"base::internal\". But the jumbo build brings in another file that does have base::trace_event::internal, so now unqualified lookup of \"internal\" finds that namespace instead – and that namespace doesn\u0027t contain DeleteTraceLogForTesting.\n\nAnother fix would be to put DeleteTraceLogForTesting at the top into base::trace_event::internal.\n\n(...but then base/memory/singleton.h also has to have its `friend class internal::DeleteTraceLogForTesting;` line changed -- why is that there?? I figured I\u0027d keep that can of worms closed and just do this here instead.)\n\nHOWEVER, this type of problem means that jumbo builds can change how name resolution works, and it\u0027s easy to imagine a TU that silently changes behavior in jumbo builds because of this. (I suppose the same thing could happen with function overloading, where a jumbo\u0027d file could provide a better overload than previously available.) Before writing this CL, it wasn\u0027t clear to me that jumbo builds can silently change behavior of existing code.",
+      "revId": "d1cc53c00b32f33c9c07332fe3980ff5a362590c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
