@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dea85dc1_de901120",
+        "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-17T22:01:00Z",
+      "side": 1,
+      "message": "Why does the ordering here matter and how does the change of delegate affect the ink drop? It seems like the InkDrop will change to ACTION_TRIGGERED either way here: https://cs.chromium.org/chromium/src/ash/shelf/shelf_view.cc?l\u003d1741\nI don\u0027t quite understand how this fix helps anything, but it probably won\u0027t work for mash, where the callback is run in a separate process for ash (and thus not guaranteed to run before the LaunchApp call below). It may even be a flaky fix on regular ToT Classic Ash ChromeOS, since afaik, it\u0027s still an async mojo callback even when running Ash in the Chrome process.",
+      "revId": "3f3eb49c18e72c5d52bb0367acccb838f956a785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
