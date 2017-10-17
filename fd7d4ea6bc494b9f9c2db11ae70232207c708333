@@ -344,6 +344,30 @@
     },
     {
       "key": {
+        "uuid": "3137091a_814825c7",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-17T17:22:51Z",
+      "side": 1,
+      "message": "Actually it\u0027s not just implementation details of the CQ. It\u0027s part of our style guide:\n https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md\n\nIt\u0027s widely used throughout the Chromium code already. Also, ForTesting() methods are usually public: as you can confirm with something like the following:\n\n $ egrep -e \u0027(public:|protected:|private:|ForTesting\\()\u0027 `git grep -l ForTesting base/ chrome/ components/` | grep .h:\n\nSpeaking of least visibility and compiler checks, \u0027friend class XXXTest;\u0027 completely disables compiler\u0027s visibility checks of course, and such a test may end up depending on implementation details of the testee class. That\u0027s my main concern.\n\nIn components/arc/, all ForTesting() functions are public: at this point, and we don\u0027t use \u0027friend class\u0027 for testing at all. Could you move it to public: to be consistent with existing code?",
+      "parentUuid": "48cc0ed1_77bf540c",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 58
+      },
+      "revId": "fd7d4ea6bc494b9f9c2db11ae70232207c708333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ea6c9fc_dc6ba977",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
         "patchSetId": 16
