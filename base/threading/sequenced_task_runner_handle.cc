@@ -17,7 +17,7 @@ namespace base {
 namespace {
 
 LazyInstance<ThreadLocalPointer<SequencedTaskRunnerHandle>>::Leaky
-    lazy_tls_ptr = LAZY_INSTANCE_INITIALIZER;
+    sequenced_task_runner_tls = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
@@ -32,14 +32,15 @@ scoped_refptr<SequencedTaskRunner> SequencedTaskRunnerHandle::Get() {
   // https://crbug.com/618530#c14
   if (ThreadTaskRunnerHandle::IsSet()) {
     // Various modes of setting SequencedTaskRunnerHandle don't combine.
-    DCHECK(!lazy_tls_ptr.Pointer()->Get());
+    DCHECK(!sequenced_task_runner_tls.Pointer()->Get());
     DCHECK(!SequencedWorkerPool::GetSequenceTokenForCurrentThread().IsValid());
 
     return ThreadTaskRunnerHandle::Get();
   }
 
   // Return the registered SequencedTaskRunner, if any.
-  const SequencedTaskRunnerHandle* handle = lazy_tls_ptr.Pointer()->Get();
+  const SequencedTaskRunnerHandle* handle =
+      sequenced_task_runner_tls.Pointer()->Get();
   if (handle) {
     // Various modes of setting SequencedTaskRunnerHandle don't combine.
     DCHECK(!SequencedWorkerPool::GetSequenceTokenForCurrentThread().IsValid());
@@ -67,7 +68,7 @@ scoped_refptr<SequencedTaskRunner> SequencedTaskRunnerHandle::Get() {
 
 // static
 bool SequencedTaskRunnerHandle::IsSet() {
-  return lazy_tls_ptr.Pointer()->Get() ||
+  return sequenced_task_runner_tls.Pointer()->Get() ||
          SequencedWorkerPool::GetSequenceTokenForCurrentThread().IsValid() ||
          ThreadTaskRunnerHandle::IsSet();
 }
@@ -77,13 +78,13 @@ SequencedTaskRunnerHandle::SequencedTaskRunnerHandle(
     : task_runner_(std::move(task_runner)) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
   DCHECK(!SequencedTaskRunnerHandle::IsSet());
-  lazy_tls_ptr.Pointer()->Set(this);
+  sequenced_task_runner_tls.Pointer()->Set(this);
 }
 
 SequencedTaskRunnerHandle::~SequencedTaskRunnerHandle() {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
-  DCHECK_EQ(lazy_tls_ptr.Pointer()->Get(), this);
-  lazy_tls_ptr.Pointer()->Set(nullptr);
+  DCHECK_EQ(sequenced_task_runner_tls.Pointer()->Get(), this);
+  sequenced_task_runner_tls.Pointer()->Set(nullptr);
 }
 
 }  // namespace base
