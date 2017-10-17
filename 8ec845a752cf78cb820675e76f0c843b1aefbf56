@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cc8fd30_a0b54b39",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-17T06:15:46Z",
+      "side": 1,
+      "message": "I assume that an off-origin POST request will hit the isUrlInScope check in WebappActivity\u0027s tab observer and hence drop the browser controls if necessary?",
+      "range": {
+        "startLine": 34,
+        "startChar": 20,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "8ec845a752cf78cb820675e76f0c843b1aefbf56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
