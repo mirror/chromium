@@ -52,6 +52,24 @@
       "revId": "38c9457989a22c686d2848c5c40f74457a8c7b67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40acc0f_33a6519c",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-10-17T20:32:45Z",
+      "side": 1,
+      "message": "I think in this case \"restart\" is referring to rebooting the machine.\n\nPerhaps the added all the added context necessary would be:\n\"Can\u0027t add printer. Restart system and try again.\"\n\nWe can replace \"system\" with computer, machine, etc.",
+      "parentUuid": "db9b4745_05638704",
+      "revId": "38c9457989a22c686d2848c5c40f74457a8c7b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
