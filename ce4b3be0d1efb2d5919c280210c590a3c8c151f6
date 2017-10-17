@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eca13660_e7c77995",
+        "filename": "cc/raster/playback_image_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:25:22Z",
+      "side": 1,
+      "message": "nit: frame_index \u003d std::min(frame_index, paint_image.FrameCount() - 1);",
+      "revId": "ce4b3be0d1efb2d5919c280210c590a3c8c151f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac41730_b47e8c34",
+        "filename": "cc/test/skia_common.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-17T20:25:22Z",
+      "side": 1,
+      "message": "nit: PaintImage::GetNextId()? and remove the check in the implementation",
+      "range": {
+        "startLine": 52,
+        "startChar": 23,
+        "endLine": 52,
+        "endChar": 46
+      },
+      "revId": "ce4b3be0d1efb2d5919c280210c590a3c8c151f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
