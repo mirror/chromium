@@ -88,6 +88,7 @@ QuicEndpoint::QuicEndpoint(Simulator* simulator,
                            new NullDecrypter(perspective));
   connection_.SetDefaultEncryptionLevel(ENCRYPTION_FORWARD_SECURE);
   connection_.SetDataProducer(&producer_);
+  connection_.SetStreamNotifier(&producer_);
 
   // Configure the connection as if it received a handshake.  This is important
   // primarily because
