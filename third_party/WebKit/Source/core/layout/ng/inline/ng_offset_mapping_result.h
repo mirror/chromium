@@ -14,6 +14,7 @@
 
 namespace blink {
 
+class LayoutNGBlockFlow;
 class Node;
 
 enum class NGOffsetMappingUnitType { kIdentity, kCollapsed, kExpanded };
@@ -130,6 +131,10 @@ class CORE_EXPORT NGOffsetMappingResult {
   // Returns true if the offset is right after a non-collapsed character. If the
   // offset is at the beginning of the node, returns false.
   bool IsAfterNonCollapsedCharacter(const Node&, unsigned offset) const;
+
+  // Maps the given DOM offset to text content, and then returns the text
+  // content character before the offset. Returns 0 if it does not exist.
+  UChar GetCharacterBefore(const Node&, unsigned offset) const;
 
   // TODO(xiaochengh): Add APIs for reverse mapping.
 
