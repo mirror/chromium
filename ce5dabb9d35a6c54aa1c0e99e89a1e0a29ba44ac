@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24c72ec8_d5b8ba9b",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-10-17T00:18:24Z",
+      "side": 1,
+      "message": "Will do",
+      "parentUuid": "7e737d62_bea436a3",
+      "range": {
+        "startLine": 137,
+        "startChar": 27,
+        "endLine": 137,
+        "endChar": 57
+      },
+      "revId": "ce5dabb9d35a6c54aa1c0e99e89a1e0a29ba44ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "914d090b_7fdfaa99",
         "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.mm",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "55c9d2e4_7713768e",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-10-17T00:18:24Z",
+      "side": 1,
+      "message": "Yep, was planning to deal with this in a follow up CL.\n\nThe plan was to do something similar. When this coordinator presents, it would keep a reference to the VC it is presenting. Then, if presentTopViewController was called, it would be able to present on top of the presentedVC without walking the hierarchy.",
+      "parentUuid": "914d090b_7fdfaa99",
+      "range": {
+        "startLine": 138,
+        "startChar": 15,
+        "endLine": 138,
+        "endChar": 39
+      },
+      "revId": "ce5dabb9d35a6c54aa1c0e99e89a1e0a29ba44ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92e688f7_029ca2cd",
         "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.mm",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "ce5dabb9d35a6c54aa1c0e99e89a1e0a29ba44ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4eb20cd_f847dc08",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-10-17T00:18:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92e688f7_029ca2cd",
+      "range": {
+        "startLine": 155,
+        "startChar": 44,
+        "endLine": 155,
+        "endChar": 74
+      },
+      "revId": "ce5dabb9d35a6c54aa1c0e99e89a1e0a29ba44ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
