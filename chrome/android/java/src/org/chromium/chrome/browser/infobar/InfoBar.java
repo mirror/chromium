@@ -174,7 +174,7 @@ public abstract class InfoBar implements InfoBarView {
      * @return whether the infobar actually needed closing.
      */
     @CalledByNative
-    private boolean closeInfoBar() {
+    protected boolean closeInfoBar() {
         if (!mIsDismissed) {
             mIsDismissed = true;
             if (!mContainer.hasBeenDestroyed()) {
