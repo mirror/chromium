@@ -215,10 +215,8 @@ class CONTENT_EXPORT DelegatedFrameHost
 
   bool ShouldSkipFrame(const gfx::Size& size_in_dip);
 
-  // Called when surface is being scheduled for a draw. This is provided as a
-  // callback to |support_|.
-  void WillDrawSurface(const viz::LocalSurfaceId& id,
-                       const gfx::Rect& damage_rect);
+  void OnAggregatedSurfaceDamage(const viz::LocalSurfaceId& id,
+                                 const gfx::Rect& damage_rect);
 
   // Lazily grab a resize lock if the aura window size doesn't match the current
   // frame size, to give time to the renderer.
