@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "604e76e6_b20898c1",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFaceSrcValue.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-18T02:03:39Z",
+      "side": 1,
+      "message": "Doesn\u0027t a forward declaration suffice?",
+      "revId": "6c77ff99c39dd7065d1fdaf84644d9e641342d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a7bee4_1552ddf1",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontSelector.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-18T02:03:39Z",
+      "side": 1,
+      "message": "Probably we don\u0027t need this anymore.",
+      "revId": "6c77ff99c39dd7065d1fdaf84644d9e641342d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1270d2_095b9475",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-18T02:03:39Z",
+      "side": 1,
+      "message": "Maybe we should add\nvirtual FontSelector* ExecutionContext::GetFontSelector() ?",
+      "revId": "6c77ff99c39dd7065d1fdaf84644d9e641342d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7bb23f2_51498597",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-18T02:03:39Z",
+      "side": 1,
+      "message": "Can we make this a virtual function of ExecutionContext?",
+      "revId": "6c77ff99c39dd7065d1fdaf84644d9e641342d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
