@@ -18518,6 +18518,13 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="VoiceInteraction.Started.HeadphoneVoiceCommandKey">
+  <owner>muyuanli@chromium.org</owner>
+  <description>
+    User launched voice interaction session through headphone voice command key.
+  </description>
+</action>
+
 <action name="VoiceInteraction.Started.Search_A">
   <owner>muyuanli@chromium.org</owner>
   <description>
