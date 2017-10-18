@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e59bae84_86cb8d2a",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-18T02:15:57Z",
+      "side": 1,
+      "message": "Nit: maybe you should extract this into another function, as it is used 3 times.",
+      "revId": "a39316af2e131e1866c4f83bff9873a13d3624ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
