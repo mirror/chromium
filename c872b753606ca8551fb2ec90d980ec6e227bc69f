@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "6aa0efc9_e2588b11",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-18T18:44:54Z",
+      "side": 1,
+      "message": "Hmm, so with your fix, the ItemSelected callback (ShelfView::AfterItemSelected) should be run/sent before Chrome destroys the item delegate in LaunchApp, but I guess the destruction still occurs before the FlushForTesting callback can be run... I hope the production use case isn\u0027t problematic (ie. the ItemSelected callback really is run/sent before the item delegate\u0027s binding is destroyed), and I hope this test doesn\u0027t flake as-is. Thanks for trying the ShelfItemDelegate::FlushForTesting suggestion, maybe put a comment here with RunUntilIdle, like \"// Flush RemoteShelfItemDelegate::ItemSelected and callback mojo messages.\"\n\nThe real fix is not swapping item delegates on launch! (or maybe passing ownership of the item delegate\u0027s binding to the ItemSelected function stack when the delegate is destroyed...)",
+      "parentUuid": "0406b3e5_bfd42666",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b344c7b_98015e33",
         "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
         "patchSetId": 2
