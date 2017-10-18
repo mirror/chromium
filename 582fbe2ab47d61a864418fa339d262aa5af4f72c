@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8aa654c3_444df6fe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webaudio/the-audio-api/chrome/resources/audit.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-18T21:00:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44be3994_0e372924",
+      "revId": "582fbe2ab47d61a864418fa339d262aa5af4f72c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b3a6006_e9697d93",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webaudio/the-audio-api/chrome/resources/audit.js",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "582fbe2ab47d61a864418fa339d262aa5af4f72c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38aac8a5_0def270f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webaudio/the-audio-api/chrome/resources/audit.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-18T21:00:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b3a6006_e9697d93",
+      "range": {
+        "startLine": 1365,
+        "startChar": 4,
+        "endLine": 1369,
+        "endChar": 36
+      },
+      "revId": "582fbe2ab47d61a864418fa339d262aa5af4f72c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
