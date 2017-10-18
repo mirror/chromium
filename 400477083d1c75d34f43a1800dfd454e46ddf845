@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f827ed0_9a3937bb",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-18T18:39:02Z",
+      "side": 1,
+      "message": "std::move, though it may complain about moving a temporary. I forget if that is necessary.",
+      "revId": "400477083d1c75d34f43a1800dfd454e46ddf845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b79530_0d4a7a1a",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-18T18:39:02Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "400477083d1c75d34f43a1800dfd454e46ddf845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd309f6_0a9ddf26",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-18T18:39:02Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "400477083d1c75d34f43a1800dfd454e46ddf845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd49548_f08d1d35",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-18T18:39:02Z",
+      "side": 1,
+      "message": "ditto on std::move",
+      "revId": "400477083d1c75d34f43a1800dfd454e46ddf845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0089fd42_983dabbd",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-18T18:39:02Z",
+      "side": 1,
+      "message": "ditto on std::move",
+      "revId": "400477083d1c75d34f43a1800dfd454e46ddf845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618debc6_dd94b10f",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-18T18:39:02Z",
+      "side": 1,
+      "message": "ditto on std::move",
+      "revId": "400477083d1c75d34f43a1800dfd454e46ddf845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9ddf2f_18a49ecf",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-18T18:39:02Z",
+      "side": 1,
+      "message": "Function doesn\u0027t really add much, so you could just delete this and use notify_error_cb_.Run() directly in call sites for clarity.",
+      "revId": "400477083d1c75d34f43a1800dfd454e46ddf845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8beb7c21_1707d98c",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-18T18:39:02Z",
+      "side": 1,
+      "message": "Needs to be posted to task_runner_ or use media::BindToCurrentLoop for the passed in callbacks.",
+      "revId": "400477083d1c75d34f43a1800dfd454e46ddf845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ad1ee1_e83e89ad",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-18T18:39:02Z",
+      "side": 1,
+      "message": "Needs to be posted to task_runner_. You can do that explicitly or use media::BindToCurrentLoop() on the callbacks you pass into this class.",
+      "revId": "400477083d1c75d34f43a1800dfd454e46ddf845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71b5d316_6aeeb481",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-18T18:39:02Z",
+      "side": 1,
+      "message": "std::move",
+      "revId": "400477083d1c75d34f43a1800dfd454e46ddf845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff330fb_60c71eba",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-18T18:39:02Z",
+      "side": 1,
+      "message": "Keep in mind this runs the risk of notifying errors and leaving frames in flight returning from encoding.",
+      "revId": "400477083d1c75d34f43a1800dfd454e46ddf845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3b2113_75704813",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-18T18:39:02Z",
+      "side": 1,
+      "message": "encoder_.get() instead.",
+      "revId": "400477083d1c75d34f43a1800dfd454e46ddf845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
