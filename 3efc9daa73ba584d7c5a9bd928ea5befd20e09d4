@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4074038b_d74b0d48",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-18T22:39:17Z",
+      "side": 1,
+      "message": "nit: Suggest \"Value of ...\" to make clearer that it\u0027s not the full argument including the --gtest_filter prefix.",
+      "revId": "3efc9daa73ba584d7c5a9bd928ea5befd20e09d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a61731e1_689bbcef",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-18T22:39:17Z",
+      "side": 1,
+      "message": "nit: Suggest \"Use the given gtest_filter, rather than the default filter-file, if any.\"",
+      "revId": "3efc9daa73ba584d7c5a9bd928ea5befd20e09d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19c952b_cc6cae45",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-18T22:39:17Z",
+      "side": 1,
+      "message": "nit: This seems super inefficient; all we\u0027re doing is map()ing tuples of (index,)+(args, isolated_hash, args.gtest_filter) so can we just have:\n\n  map(lambda index: (index, ....), xrange(args.copies))",
+      "revId": "3efc9daa73ba584d7c5a9bd928ea5befd20e09d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
