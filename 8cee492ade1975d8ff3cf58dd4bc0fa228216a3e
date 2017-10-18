@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deb5e856_681b0414",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-18T20:53:37Z",
+      "side": 1,
+      "message": "nit: is this space needed?",
+      "revId": "8cee492ade1975d8ff3cf58dd4bc0fa228216a3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
