@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af276de7_a188a320",
+        "filename": "components/signin/core/browser/about_signin_internals.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-18T13:06:52Z",
+      "side": 1,
+      "message": "Why this change?",
+      "range": {
+        "startLine": 582,
+        "startChar": 6,
+        "endLine": 582,
+        "endChar": 28
+      },
+      "revId": "bdba941209b81e1c72ccb3c47e6e66ff515b6e3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d405336_3d0854eb",
+        "filename": "components/signin/core/common/profile_management_switches.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-18T13:06:52Z",
+      "side": 1,
+      "message": "s/IsAccountConsistencyDiceAvailable/IsDiceMigrationEnabled",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 38
+      },
+      "revId": "bdba941209b81e1c72ccb3c47e6e66ff515b6e3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
