@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e60215d3_3130b0f6",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-18T14:11:46Z",
+      "side": 1,
+      "message": "Yes, I am claiming that there is no need to call CloneFaviconMappingsForPage() if SetFavicons() is going to be called anyways for expired favicons.\n\nI agree that the database write is not the issue.\n\nPersonally I think that doing the database write via CloneFaviconMappingsForPage() at the end of a code path (right before a return) makes more sense. I am unconvinced that your approach is simpler.",
+      "parentUuid": "c22cbecf_eff17152",
+      "revId": "a1444cf27fd074c347f5332b5157c74bd46ede6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb495b72_150a56ac",
         "filename": "components/history/core/browser/history_backend.cc",
         "patchSetId": 5
