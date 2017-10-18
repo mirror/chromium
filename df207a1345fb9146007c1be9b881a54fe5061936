@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a234b8ab_629411ca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afdb0c14_3ae46156",
+      "range": {
+        "startLine": 13,
+        "startChar": 24,
+        "endLine": 13,
+        "endChar": 32
+      },
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1abbfa2_1e91dd5b",
         "filename": "content/network/cookie_manager_impl.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ced7cbd_595cf4d0",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1abbfa2_1e91dd5b",
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,48 @@
     },
     {
       "key": {
+        "uuid": "e2cd0659_7f6a1185",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7bb11ad_e2e7cff6",
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a79ce9d6_d78e1ddb",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:51:16Z",
+      "side": 1,
+      "message": "This looks like a bug to me.  Altered order to match BrowsingDataFilterBuilderImpl.",
+      "parentUuid": "9d063d8c_a50fa2c4",
+      "range": {
+        "startLine": 73,
+        "startChar": 54,
+        "endLine": 73,
+        "endChar": 55
+      },
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73e07b6d_07091ef9",
         "filename": "content/network/cookie_manager_impl_unittest.cc",
         "patchSetId": 2
@@ -96,6 +180,24 @@
       "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b646f65_41161800",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:51:16Z",
+      "side": 1,
+      "message": "Looking at how frequently the default cookies are used at this point, I agree with you, but I\u0027m going to split that change out as a separate CL.",
+      "parentUuid": "73e07b6d_07091ef9",
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "4871c2b8_ca448d4b",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:51:16Z",
+      "side": 1,
+      "message": "Done.  I put the host/domain annotation in the leading comment rather than interspersed with the cookies.",
+      "parentUuid": "adb79924_0a245fed",
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0045c347_3b64d361",
         "filename": "content/network/cookie_manager_impl_unittest.cc",
         "patchSetId": 2
@@ -127,6 +247,24 @@
       "writtenOn": "2017-10-13T19:42:49Z",
       "side": 1,
       "message": "nit: Same here with \"Private\". Maybe use \"private registry\" to be explicit.",
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a63a90_8bfb3830",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:51:16Z",
+      "side": 1,
+      "message": "Happy to switch to PrivateRegistry (done), but I don\u0027t follow your reference to \"same here\", so I\u0027m not sure if that captures all of your concern.",
+      "parentUuid": "0045c347_3b64d361",
       "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "d4a5857c_9237fdd3",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b788c66_6457b2f8",
+      "range": {
+        "startLine": 860,
+        "startChar": 30,
+        "endLine": 860,
+        "endChar": 57
+      },
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0de531_49b7d2fb",
         "filename": "content/network/cookie_manager_impl_unittest.cc",
         "patchSetId": 2
@@ -170,6 +332,24 @@
       "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a69ae0_cce10a6f",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:51:16Z",
+      "side": 1,
+      "message": "Well, too late for that :-}, but done for the next reader.",
+      "parentUuid": "7c0de531_49b7d2fb",
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +393,48 @@
     },
     {
       "key": {
+        "uuid": "799dd5b7_c2e31d7c",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60ac17c3_5e60feeb",
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d642132b_8c8c7a02",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:51:16Z",
+      "side": 1,
+      "message": "I don\u0027t believe I\u0027ve previously run this test, though I can\u0027t reconcile that with the try jobs passing.  Weird.",
+      "parentUuid": "ea01203c_1d536218",
+      "range": {
+        "startLine": 968,
+        "startChar": 15,
+        "endLine": 968,
+        "endChar": 19
+      },
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a30a04c0_a4dadb2c",
         "filename": "content/public/common/cookie_manager.mojom",
         "patchSetId": 2
@@ -236,6 +458,30 @@
     },
     {
       "key": {
+        "uuid": "5d100085_94da0c9c",
+        "filename": "content/public/common/cookie_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a30a04c0_a4dadb2c",
+      "range": {
+        "startLine": 97,
+        "startChar": 29,
+        "endLine": 97,
+        "endChar": 30
+      },
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0637d4a3_cb2449e2",
         "filename": "content/public/common/cookie_manager.mojom",
         "patchSetId": 2
@@ -256,6 +502,30 @@
       "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2092b2a6_e8c7bfff",
+        "filename": "content/public/common/cookie_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0637d4a3_cb2449e2",
+      "range": {
+        "startLine": 103,
+        "startChar": 42,
+        "endLine": 103,
+        "endChar": 43
+      },
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
