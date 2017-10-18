@@ -104,6 +104,24 @@
       "revId": "c604d48b1c8b93e4ca4823ebc18a93ee553c0db3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5af09a6_9fd0d253",
+        "filename": "third_party/WebKit/Source/modules/gamepad/NavigatorGamepad.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:48:15Z",
+      "side": 1,
+      "message": "I agree on Index, Mapping, and DisplayId. Hand is actually something that COULD change from frame to frame, believe it or not. On Daydream there\u0027s an option that users can toggle to select left handed or right handed controls, for example, which can change in real time.",
+      "parentUuid": "c59696df_4ec1c76d",
+      "revId": "c604d48b1c8b93e4ca4823ebc18a93ee553c0db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
