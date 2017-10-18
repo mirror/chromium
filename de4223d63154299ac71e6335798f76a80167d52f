@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a716e4a7_83fb0968",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-18T21:01:06Z",
+      "side": 1,
+      "message": "I\u0027ll run debug tests.",
+      "parentUuid": "03318080_fe6c887c",
+      "revId": "de4223d63154299ac71e6335798f76a80167d52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca1b4279_ded5bb92",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c9800bb8_a92b9732",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-18T21:01:06Z",
+      "side": 1,
+      "message": "Sure, but given the bugs I found I\u0027m pretty sure they are all hit.",
+      "parentUuid": "ca1b4279_ded5bb92",
+      "revId": "de4223d63154299ac71e6335798f76a80167d52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7cc46e1_05ae2844",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
         "patchSetId": 12
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-18T20:48:48Z",
       "side": 1,
       "message": "These used to be else-ifs but are now ifs (except the last one). Can the conditionals be written to only set p1 or p2 once?",
+      "revId": "de4223d63154299ac71e6335798f76a80167d52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b55f93_9aa4d884",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-18T21:01:06Z",
+      "side": 1,
+      "message": "They can\u0027t be else-if because each block only changes one dash or dot and some edges need to change more than one thing. Some of the clauses in the conditionals are repeated and need to fire more than once.\n\nIt is the case that any code path through only touches p1, p2 start_dot or end_dot at most once. I know this because it breaks if that is not the case.\n\nThe last one is still if/else because it can be (the if conditions have no duplicate clauses).",
+      "parentUuid": "b7cc46e1_05ae2844",
       "revId": "de4223d63154299ac71e6335798f76a80167d52f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
