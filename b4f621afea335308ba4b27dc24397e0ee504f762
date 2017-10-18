@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6047f72_dbaa6f60",
+        "filename": "breakpad/src",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-10-18T07:39:29Z",
+      "side": 1,
+      "message": "This change looks strange to me",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 58
+      },
+      "revId": "b4f621afea335308ba4b27dc24397e0ee504f762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
