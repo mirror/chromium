@@ -3500,15 +3500,8 @@ void LayoutObject::MutableForPainting::ClearFirstFragment() {
 }
 
 void LayoutObject::InvalidatePaintForSelection() {
-  // setSelectionState() propagates the state up the containing block chain to
-  // tell if a block contains selected nodes or not. If this layout object is
-  // not a block, we need to get the selection state from the containing block
-  // to tell if we have any selected node children.
-  LayoutBlock* block =
-      IsLayoutBlock() ? ToLayoutBlock(this) : ContainingBlock();
-  if (!block)
-    return;
-  if (!block->HasSelectedChildren())
+  // If we don't have any selected children, do nothing.
+  if (GetSelectionState() != SelectionState::kContain)
     return;
 
   // ::selection style only applies to direct selection leaf children of the
