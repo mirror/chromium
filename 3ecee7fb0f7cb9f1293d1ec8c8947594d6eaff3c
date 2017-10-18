@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "15a38e85_dd5859fc",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 1977,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-18T17:11:23Z",
+      "side": 1,
+      "message": "Leaving unresolved until we solve the other comment.",
+      "parentUuid": "a09425fc_2dce4fc2",
+      "range": {
+        "startLine": 1977,
+        "startChar": 8,
+        "endLine": 1977,
+        "endChar": 33
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6682fe6c_0ac22c61",
         "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator.h",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-18T10:51:09Z",
       "side": 1,
       "message": "This doesn\u0027t host a view controller, so I don\u0027t know if the coordinator pattern is actually needed (or useful) here. Should this just be a simple \u0027handler\u0027 class? All it does is catch the external search command and plug in the provider values before opening the URL. (Technically this seems like the Mediator pattern, since it encapsulates the interaction of the command, the provider output, and the UIApplication calls. But we\u0027ve created expectations around a specific usage of that pattern, so calling this a \u0027Mediator\u0027 might be confusing).",
+      "range": {
+        "startLine": 14,
+        "startChar": 39,
+        "endLine": 14,
+        "endChar": 56
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8accb305_dc54d557",
+        "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-18T17:11:23Z",
+      "side": 1,
+      "message": "My initial rational was that a coordinator handles a flow within the app. It happens to be that the flow I am adding is to launch another app, but conceptually, I could as well present a view controller (what QRScannerLegacyCoordinator is doing).\n\nThat being said, our definition of a coordinator in Chrome is a bit more precise. What about if I keep this coordinator, to be parallel to the QRScannerLegacyCoordinator coordinator, and add a real mediator to it? We still don\u0027t have real view controller creation\u0026presentation but the handler fits the description and the ownership pattern?",
+      "parentUuid": "6682fe6c_0ac22c61",
       "range": {
         "startLine": 14,
         "startChar": 39,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "47a93cb0_d148b04e",
+        "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-18T17:11:23Z",
+      "side": 1,
+      "message": "I followed the pattern of the other coordinators in BVC:\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/browser_view_controller.mm?type\u003dcs\u0026q\u003d%22Create+child+coordinators%22\u0026sq\u003dpackage:chromium\u0026l\u003d1935-1970\n\nWithout this, I can\u0027t do the start/stop in -setDispatcher:.\n\nI think this is a comment I should address once we settle on the \"coordinator or not\" comment. Keeping it unresolved here for now.",
+      "parentUuid": "6587fcd8_c3128f61",
+      "range": {
+        "startLine": 22,
+        "startChar": 37,
+        "endLine": 22,
+        "endChar": 54
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36825b1c_4290e7ec",
         "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator.mm",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2651caf1_6fc159ac",
+        "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-18T17:11:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36825b1c_4290e7ec",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 42
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "74760b20_0a921084",
+        "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-18T17:11:23Z",
+      "side": 1,
+      "message": "This is used line 38, as launchExternalSearch is declared in ExternalSearchCommands.",
+      "parentUuid": "376f48d5_580171b7",
+      "range": {
+        "startLine": 21,
+        "startChar": 1,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14d64534_a71f0edd",
         "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator_unittest.mm",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf70f8e_b2afc9b8",
+        "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-18T17:11:23Z",
+      "side": 1,
+      "message": "Actually, it didn\u0027t even pass as is, as the TestExternalSearchProvider returned nil for the URL. Fixed.",
+      "parentUuid": "14d64534_a71f0edd",
+      "range": {
+        "startLine": 29,
+        "startChar": 9,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e348c133_7833ff7d",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views_utils.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-18T17:11:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bba0ea76_258e27d1",
+      "range": {
+        "startLine": 65,
+        "startChar": 31,
+        "endLine": 65,
+        "endChar": 56
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66ee12f5_32fba8aa",
         "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views_utils.mm",
         "patchSetId": 10
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "ed0d8898_fb63fc49",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views_utils.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-18T17:11:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66ee12f5_32fba8aa",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 29
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b108a78_5ec9c7a4",
         "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views_utils.mm",
         "patchSetId": 10
@@ -206,6 +398,30 @@
       "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a392a54_adfe9828",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views_utils.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-18T17:11:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b108a78_5ec9c7a4",
+      "range": {
+        "startLine": 73,
+        "startChar": 38,
+        "endLine": 73,
+        "endChar": 63
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
