@@ -26,8 +26,7 @@ class ScriptState;
 // made inside the same event loop. When a MediaMetadata is created and assigned
 // to a MediaSession, the MediaSession will automatically update.
 class MODULES_EXPORT MediaMetadata final
-    : public GarbageCollectedFinalized<MediaMetadata>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

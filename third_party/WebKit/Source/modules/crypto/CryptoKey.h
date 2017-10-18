@@ -44,8 +44,7 @@ namespace blink {
 class CryptoResult;
 
 class MODULES_EXPORT CryptoKey final
-    : public GarbageCollectedFinalized<CryptoKey>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -73,8 +72,6 @@ class MODULES_EXPORT CryptoKey final
   static bool ParseUsageMask(const Vector<String>&,
                              WebCryptoKeyUsageMask&,
                              CryptoResult*);
-
-  DEFINE_INLINE_TRACE() {}
 
  protected:
   explicit CryptoKey(const WebCryptoKey&);

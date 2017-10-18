@@ -31,6 +31,7 @@ void VREyeParameters::Update(
 DEFINE_TRACE(VREyeParameters) {
   visitor->Trace(offset_);
   visitor->Trace(field_of_view_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

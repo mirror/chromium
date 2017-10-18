@@ -33,12 +33,10 @@
 
 #include "core/svg/SVGString.h"
 #include "core/svg/properties/SVGAnimatedProperty.h"
-#include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
 
-class SVGAnimatedString : public SVGAnimatedProperty<SVGString>,
-                          public ScriptWrappable {
+class SVGAnimatedString : public SVGAnimatedProperty<SVGString> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -50,8 +48,6 @@ class SVGAnimatedString : public SVGAnimatedProperty<SVGString>,
   virtual String baseVal();
   virtual void setBaseVal(const String&, ExceptionState&);
   virtual String animVal();
-
-  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
   SVGAnimatedString(SVGElement* context_element,

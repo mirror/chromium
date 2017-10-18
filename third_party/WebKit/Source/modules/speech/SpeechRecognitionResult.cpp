@@ -47,6 +47,7 @@ SpeechRecognitionResult::SpeechRecognitionResult(
 
 DEFINE_TRACE(SpeechRecognitionResult) {
   visitor->Trace(alternatives_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

@@ -45,8 +45,7 @@ class File;
 class ExceptionState;
 
 class DataTransferItemList final
-    : public GarbageCollected<DataTransferItemList>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

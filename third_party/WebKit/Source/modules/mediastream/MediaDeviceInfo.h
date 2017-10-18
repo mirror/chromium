@@ -37,8 +37,7 @@ class ScriptState;
 class ScriptValue;
 
 class MODULES_EXPORT MediaDeviceInfo final
-    : public GarbageCollectedFinalized<MediaDeviceInfo>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -50,8 +49,6 @@ class MODULES_EXPORT MediaDeviceInfo final
   String groupId() const;
 
   ScriptValue toJSONForBinding(ScriptState*);
-
-  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit MediaDeviceInfo(const WebMediaDeviceInfo&);
