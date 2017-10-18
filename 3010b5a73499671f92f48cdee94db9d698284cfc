@@ -16,6 +16,24 @@
       "revId": "3010b5a73499671f92f48cdee94db9d698284cfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58609f11_aa3220b1",
+        "filename": "third_party/WebKit/LayoutTests/fast/borders/thin-dotted-horizontal-borders.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-18T13:34:07Z",
+      "side": 1,
+      "message": "I can do that. It would also allow for only one test file.\n\nThere is another minor annoyance that we always draw lines left to right or top to bottom. In the width 1 case the dashes end up concentrated in the top left corner. That\u0027s not worth fixing.",
+      "parentUuid": "70803c2a_60660169",
+      "revId": "3010b5a73499671f92f48cdee94db9d698284cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
