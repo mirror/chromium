@@ -21,7 +21,6 @@
 #include "base/strings/string16.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
-#include "chrome/browser/resource_coordinator/tab_manager_observer.h"
 #include "chrome/browser/resource_coordinator/tab_stats.h"
 #include "chrome/browser/sessions/session_restore_observer.h"
 #include "chrome/browser/ui/browser_list_observer.h"
@@ -42,6 +41,7 @@ class WebContents;
 namespace resource_coordinator {
 
 class BackgroundTabNavigationThrottle;
+class TabDiscardObserver;
 
 #if defined(OS_CHROMEOS)
 class TabManagerDelegate;
@@ -152,8 +152,8 @@ class TabManager : public TabStripModelObserver,
       const std::vector<gfx::NativeWindow>& windows_sorted_by_z_index =
           std::vector<gfx::NativeWindow>()) const;
 
-  void AddObserver(TabManagerObserver* observer);
-  void RemoveObserver(TabManagerObserver* observer);
+  void AddObserver(TabDiscardObserver* observer);
+  void RemoveObserver(TabDiscardObserver* observer);
 
   // Used in tests to change the protection time of the tabs.
   void set_minimum_protection_time_for_tests(
@@ -544,7 +544,7 @@ class TabManager : public TabStripModelObserver,
   std::vector<BrowserInfo> test_browser_info_list_;
 
   // List of observers that will receive notifications on state changes.
-  base::ObserverList<TabManagerObserver> observers_;
+  base::ObserverList<TabDiscardObserver> observers_;
 
   bool is_session_restore_loading_tabs_;
 

@@ -21,9 +21,9 @@ using content::WebContents;
 
 namespace resource_coordinator {
 
-class TabManagerObserverTest : public InProcessBrowserTest {
+class TabDiscardObserverTest : public InProcessBrowserTest {
  public:
-  TabManagerObserverTest() {}
+  TabDiscardObserverTest() {}
 
   // Helper functions.
   void set_tab_strip_model(TabStripModel* tsm) { tab_strip_model_ = tsm; }
@@ -44,15 +44,15 @@ class TabManagerObserverTest : public InProcessBrowserTest {
   TabStripModel* tab_strip_model_;
 };
 
-class MockTabManagerObserver : public TabManagerObserver {
+class MockTabDiscardObserver : public TabDiscardObserver {
  public:
-  MockTabManagerObserver()
+  MockTabDiscardObserver()
       : nb_events_(0),
         contents_(nullptr),
         is_discarded_(false),
         is_auto_discardable_(true) {}
 
-  // TabManagerObserver implementation:
+  // TabDiscardObserver implementation:
   void OnDiscardedStateChange(content::WebContents* contents,
                               bool is_discarded) override {
     nb_events_++;
@@ -78,10 +78,10 @@ class MockTabManagerObserver : public TabManagerObserver {
   bool is_discarded_;
   bool is_auto_discardable_;
 
-  DISALLOW_COPY_AND_ASSIGN(MockTabManagerObserver);
+  DISALLOW_COPY_AND_ASSIGN(MockTabDiscardObserver);
 };
 
-IN_PROC_BROWSER_TEST_F(TabManagerObserverTest, OnDiscardStateChange) {
+IN_PROC_BROWSER_TEST_F(TabDiscardObserverTest, OnDiscardStateChange) {
   TabManager* tab_manager = g_browser_process->GetTabManager();
   auto* tsm = browser()->tab_strip_model();
   set_tab_strip_model(tsm);
@@ -98,7 +98,7 @@ IN_PROC_BROWSER_TEST_F(TabManagerObserverTest, OnDiscardStateChange) {
   int index_2 = GetIndex(browser()->OpenURL(open2));
 
   // Subscribe observer to TabManager's observer list.
-  MockTabManagerObserver tabmanager_observer;
+  MockTabDiscardObserver tabmanager_observer;
   tab_manager->AddObserver(&tabmanager_observer);
 
   // Discards both tabs and make sure the events were observed properly.
@@ -149,7 +149,7 @@ IN_PROC_BROWSER_TEST_F(TabManagerObserverTest, OnDiscardStateChange) {
   EXPECT_EQ(4, tabmanager_observer.nb_events());
 }
 
-IN_PROC_BROWSER_TEST_F(TabManagerObserverTest, OnAutoDiscardableStateChange) {
+IN_PROC_BROWSER_TEST_F(TabDiscardObserverTest, OnAutoDiscardableStateChange) {
   TabManager* tab_manager = g_browser_process->GetTabManager();
   auto* tsm = browser()->tab_strip_model();
   set_tab_strip_model(tsm);
@@ -161,7 +161,7 @@ IN_PROC_BROWSER_TEST_F(TabManagerObserverTest, OnAutoDiscardableStateChange) {
   WebContents* contents = browser()->OpenURL(open);
 
   // Subscribe observer to TabManager's observer list.
-  MockTabManagerObserver observer;
+  MockTabDiscardObserver observer;
   tab_manager->AddObserver(&observer);
 
   // No events initially.
