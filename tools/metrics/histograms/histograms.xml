@@ -62675,6 +62675,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PowerButtonScreenshot.DelayBetweenAccelKeyPressed" units="ms">
+  <owner>warx@chromium.org</owner>
+  <summary>
+    Record the delay within one second between power button pressed and volume
+    down key pressed. This will help us determine the best screenshot chord
+    delay for users.
+  </summary>
+</histogram>
+
 <histogram name="Precache.BatteryPercentage.Start" units="%">
   <obsolete>
     Deprecated July 11 2017.
