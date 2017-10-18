@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "742528ec_4db6e910",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_last_visit_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-18T09:27:25Z",
+      "side": 1,
+      "message": "Is this called on every opened URL?\n\nIf so, this feels like a misuse.\nThe BeginExtensiceChanges comment talks about \"extensive set of changes ... such as during import or sync\". Are you sure that other observer are not doing expensive work on EndExtensiveChanges? What if they all fetch all bookmarks (which feels natural after sync or import)?\n\nImaginary example (A, B - other clients, WE - BookmarksProvider):\n+ Previously on each opened page\n    (a) Client with 100 bookmarks for the same URL\n       - A, B quickly process one notification, WE introduce long delay.\n    (b) Average client with few duplicates, but many bookmarks\n       - All clients quickly process one notification.\n\n+ In this CL on each opened page\n    (a) Client with 100 bookmarks for the same URL\n       - WE quickly process, A, B fetch everything.\n    (b) Average client with few duplicates, but many bookmarks\n       - WE quickly process, A, B fetch everything.\n\nWhile this CL improves rare case (a), it may negatively affect much more common case (b).",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 42
+      },
+      "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8483b5_5d519ee1",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-18T09:27:25Z",
+      "side": 1,
+      "message": "A separate test explicitly for ExtensiveBookmarkChangesBeginning/Ended seems nice.",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 60
+      },
+      "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800f15e1_55ba9ac8",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-18T09:27:25Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 87,
+        "startChar": 5,
+        "endLine": 87,
+        "endChar": 10
+      },
+      "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4962641c_2371642a",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-18T09:27:25Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 25
+      },
+      "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb58904_218b187a",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-18T09:27:25Z",
+      "side": 1,
+      "message": "nit: replace with first.",
+      "range": {
+        "startLine": 91,
+        "startChar": 55,
+        "endLine": 91,
+        "endChar": 56
+      },
+      "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
