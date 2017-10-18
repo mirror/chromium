@@ -93,6 +93,30 @@
       "revId": "9718297a3600ea603c832c81b8a89507f8d4bbf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c9a5e8_6bb1e7c8",
+        "filename": "content/browser/download/download_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-18T23:03:19Z",
+      "side": 1,
+      "message": "Sorry, missed it. The Resume() actually calls StreamActive, and it should early return if network service is disabled.",
+      "parentUuid": "c709ea85_4a1974d2",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 44
+      },
+      "revId": "9718297a3600ea603c832c81b8a89507f8d4bbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
