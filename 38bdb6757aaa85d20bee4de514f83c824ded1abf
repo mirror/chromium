@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89fcf517_a05dfc0b",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-18T22:01:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74986420_124f2bcf",
+      "revId": "38bdb6757aaa85d20bee4de514f83c824ded1abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcabd638_bd9c0fe5",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7f6d685e_a97b4086",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-18T22:01:14Z",
+      "side": 1,
+      "message": "This line actually broke things. I\u0027ll save this value on CLM instead.\n\nThe reason is because from the perspective of the pre-paint walk, we only knew the squashing layer is in the same property state as the main graphics layer, but the actually offset is unknown, and is difficult to compute due to lost of context that CLM has. Knowning the relative position to the pre-transform snapped border box makes the job easier.\n\nBut this broke things because GraphicsLayer does use OffsetFromLayoutObject to adjust visual rect, and CLM use it to adjust invalidation rect.",
+      "parentUuid": "bcabd638_bd9c0fe5",
+      "revId": "38bdb6757aaa85d20bee4de514f83c824ded1abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a36f2c74_96d5e1d4",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-18T16:08:30Z",
       "side": 1,
       "message": "Can you explain this change? Does it also apply to SPv1?",
+      "revId": "38bdb6757aaa85d20bee4de514f83c824ded1abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6d5dc7_1c7ba7cb",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-18T22:01:14Z",
+      "side": 1,
+      "message": "It is a drive-by change not related to the goal of this CL. It was a harmless error, because scrolling_layer never paints. However as a matter of principle it\u0027s better to be corrected.",
+      "parentUuid": "a36f2c74_96d5e1d4",
       "revId": "38bdb6757aaa85d20bee4de514f83c824ded1abf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "ebef7c2c_edc3dbd8",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-18T22:01:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12c38d5a_10df1679",
+      "range": {
+        "startLine": 689,
+        "startChar": 48,
+        "endLine": 689,
+        "endChar": 71
+      },
+      "revId": "38bdb6757aaa85d20bee4de514f83c824ded1abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "798dd202_7db57090",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
         "patchSetId": 3
@@ -87,6 +165,24 @@
       "writtenOn": "2017-10-18T16:08:30Z",
       "side": 1,
       "message": "Can this be a FragmentData method similar to FragmentData::ContentsProperties()?",
+      "revId": "38bdb6757aaa85d20bee4de514f83c824ded1abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12b6c06_85ee4be3",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-18T22:01:14Z",
+      "side": 1,
+      "message": "Sounds good. I\u0027ll try that.",
+      "parentUuid": "798dd202_7db57090",
       "revId": "38bdb6757aaa85d20bee4de514f83c824ded1abf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "a81f9679_432e93fe",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-18T22:01:14Z",
+      "side": 1,
+      "message": "I think yes, as border_box_properties is no longer a part of ObjectPaintProperties. A LayoutBoxModelObject with layer always have border_box_properties, but not necessarily create any property node.",
+      "parentUuid": "57749955_36d6b62a",
+      "revId": "38bdb6757aaa85d20bee4de514f83c824ded1abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44d35b76_eee4e23b",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
         "patchSetId": 3
@@ -121,6 +235,24 @@
       "writtenOn": "2017-10-18T16:08:30Z",
       "side": 1,
       "message": "Can properties be null?",
+      "revId": "38bdb6757aaa85d20bee4de514f83c824ded1abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3315513_78039970",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-18T22:01:14Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "44d35b76_eee4e23b",
       "revId": "38bdb6757aaa85d20bee4de514f83c824ded1abf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -141,6 +273,24 @@
       "revId": "38bdb6757aaa85d20bee4de514f83c824ded1abf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c43751_316bc0e5",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-18T22:01:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17ddb0b9_7f819c51",
+      "revId": "38bdb6757aaa85d20bee4de514f83c824ded1abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
