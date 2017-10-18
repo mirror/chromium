@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ce18c6a_987adb86",
+        "filename": "ios/chrome/browser/tabs/tab_model_closing_web_state_observer.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-18T20:47:10Z",
+      "side": 1,
+      "message": "The event webStateList:willCloseWebState:atIndex:userAction: is not called when a WebState is swapped for another (i.e. when pre-rendered Tab is converted to a real Tab). Before this change the snapshot was removed from Tab -dealloc, so it was happening even if it was swapped out.\n\nAs this CL move the call outside of Tab -dealloc, it need to be added to all location where a Tab can be deallocated following a user action (not sure if this is the correct term, maybe should say \"for all code path that are not shutdown\"), including when swapped out due to replacement by another Tab.\n\nSo it is not a bug fix, just moving the logic out of Tab -dealloc into the two location where a Tab can be deallocated due to user action. Since we never swap out Tabs during shutdown, I didn\u0027t pass a \"userAction\" boolean here, but I could have.",
+      "parentUuid": "4c6b72a8_3289687b",
+      "revId": "a9827dec1da39df5ff674e38e64e41ab25c1dfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59cd11eb_3174ac6b",
         "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "589861a5_84fcdf31",
+        "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-18T20:47:10Z",
+      "side": 1,
+      "message": "\u003e s/Removes/Remove/\n\nDone.\n\n\u003e Should this be named DestroyingWebState instead of ClosingWebState?\n\nThe name was chosen for consistency with TabStripModel naming. I can change it, but then I would prefer to do it in a separate CL.",
+      "parentUuid": "59cd11eb_3174ac6b",
+      "range": {
+        "startLine": 419,
+        "startChar": 38,
+        "endLine": 419,
+        "endChar": 45
+      },
+      "revId": "a9827dec1da39df5ff674e38e64e41ab25c1dfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bccf356_2105e0e6",
         "filename": "ios/chrome/browser/web_state_list/web_state_list_observer_bridge.mm",
         "patchSetId": 1
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "81142afb_f7a5f582",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list_observer_bridge.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-18T20:47:10Z",
+      "side": 1,
+      "message": "They can be used interchangeably because of:\n\n1. Integral conversion rules (bool -\u003e BOOL)\n\n\u003e If the source type is bool, the value false is converted to zero and the value true is converted to the value one of the destination type (note that if the destination type is int, this is an integer promotion, not an integer conversion).\n\nhttp://en.cppreference.com/w/cpp/language/implicit_conversion#Integral_conversions\n\n2. Boolean conversions rules (BOOL -\u003e bool)\n\n\u003e A prvalue of integral, floating-point, unscoped enumeration, pointer, and pointer-to-member types can be converted to a prvalue of type bool.\n\u003e \n\u003e The value zero (for integral, floating-point, and unscoped enumeration) and the null pointer and the null pointer-to-member values become false. All other values become true.\n\nhttp://en.cppreference.com/w/cpp/language/implicit_conversion#Boolean_conversions\n\nHowever, this requires that YES is equal to 1. It currently is defined to 1 according to objc.h:\n\n  #if __has_feature(objc_bool)\n  #define YES __objc_yes\n  #define NO  __objc_no\n  #else\n  #define YES ((BOOL)1)\n  #define NO  ((BOOL)0)\n  #endif\n\nAccording to clang documentation __objc_yes and __objc_no are there to allow @YES and @NO to work, but still expand to (BOOL)1 or (BOOL)0 respectively.\n\n\u003e The compiler implicitly converts __objc_yes and __objc_no to (BOOL)1 and (BOOL)0. The keywords are used to disambiguate BOOL and integer literals.\n\nhttps://releases.llvm.org/3.1/tools/clang/docs/ObjectiveCLiterals.html\n\nSo, yes, the conversion is always correct (for the moment). However, the compiler is smart enough to generate the same code when using ?: operator than when not using it, and the result of the ?: will always be correct, even if the definition of YES changes.\n\nThe following two functions cause the same code to be generated:\n\n  BOOL ConvertToBoolImplicit(bool value) {\n    return value;\n  }\n  \n  BOOL ConvertToBoolExplicit(bool value) {\n    return value ? YES : NO;\n  }\n\nGenerated code (x86_64):\n\n  movzbl\t%dil, %eax\n  retq\n\nBTW, using the double negation \"!!value\" also generates the same code.\n\nTL;DR: the implicit conversion works at the condition that YES be equals to 1. The explicit conversion always works and generates the same code. I don\u0027t mind using one or the other here if you feel strongly about it.",
+      "parentUuid": "6bccf356_2105e0e6",
+      "revId": "a9827dec1da39df5ff674e38e64e41ab25c1dfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d706c724_e66ea91a",
         "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue_manager_unittest.mm",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "a9827dec1da39df5ff674e38e64e41ab25c1dfa3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618a7ba6_b3db1675",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue_manager_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-18T20:47:10Z",
+      "side": 1,
+      "message": "Copy-n-paste. Fixed.",
+      "parentUuid": "d706c724_e66ea91a",
+      "revId": "a9827dec1da39df5ff674e38e64e41ab25c1dfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
