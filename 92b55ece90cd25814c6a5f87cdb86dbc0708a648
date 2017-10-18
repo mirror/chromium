@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4178c7c8_971265d8",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T13:31:12Z",
+      "side": 1,
+      "message": "Good point. Theoretically that won\u0027t happen, but it is always good to check that.",
+      "parentUuid": "c16898c4_e16865c9",
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff21ba95_978509ca",
         "filename": "cc/scheduler/compositor_timing_history.cc",
         "patchSetId": 35
@@ -33,6 +51,24 @@
       "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c1978a_aa8b0948",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T13:31:12Z",
+      "side": 1,
+      "message": "Done, I put it at the beginning of this function.",
+      "parentUuid": "ff21ba95_978509ca",
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "647740ba_2f9b875f",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T13:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efb6b0c5_984900c4",
+      "range": {
+        "startLine": 46,
+        "startChar": 32,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b496a1e8_ab7a6448",
         "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
         "patchSetId": 35
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "1481e5fe_cf8d9095",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T13:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b496a1e8_ab7a6448",
+      "range": {
+        "startLine": 63,
+        "startChar": 32,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d1f179c_d94a52c8",
         "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
         "patchSetId": 35
@@ -93,6 +177,30 @@
       "writtenOn": "2017-10-16T17:55:05Z",
       "side": 1,
       "message": "Is this normally 0 or would it continue to report the value from the last main frame (1)?",
+      "range": {
+        "startLine": 401,
+        "startChar": 40,
+        "endLine": 401,
+        "endChar": 41
+      },
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a49a5fb_a3c38506",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T13:31:12Z",
+      "side": 1,
+      "message": "This is expected because this frame doesn\u0027t have main thread animation. If we report it, then the 234 microsecond is incorrect. Does that make sense?",
+      "parentUuid": "3d1f179c_d94a52c8",
       "range": {
         "startLine": 401,
         "startChar": 40,
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "c61a888e_a3c7f5a9",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T13:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94f87013_5b18a5a2",
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a11f85b7_729632bd",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.h",
         "patchSetId": 35
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "5c46e812_e3a1c139",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T13:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a11f85b7_729632bd",
+      "range": {
+        "startLine": 78,
+        "startChar": 29,
+        "endLine": 78,
+        "endChar": 42
+      },
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c28fbb12_0514ab59",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimationsTest.cpp",
         "patchSetId": 35
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "341ae8f2_0bf397b9",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimationsTest.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T13:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c28fbb12_0514ab59",
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02e0a288_8b915254",
         "filename": "third_party/WebKit/Source/core/animation/DocumentAnimations.cpp",
         "patchSetId": 35
@@ -176,6 +344,24 @@
       "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882de7bd_d3e0abc9",
+        "filename": "third_party/WebKit/Source/core/animation/DocumentAnimations.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T13:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02e0a288_8b915254",
+      "revId": "92b55ece90cd25814c6a5f87cdb86dbc0708a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
