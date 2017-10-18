@@ -319,6 +319,7 @@ static_library("content_shell_lib") {
 
   if (is_linux) {
     deps += [
+      "//third_party/content_shell_fonts",
       "//third_party/fontconfig",
       "//ui/gfx:test_support",
     ]
