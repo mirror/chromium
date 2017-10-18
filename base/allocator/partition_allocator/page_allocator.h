@@ -27,6 +27,12 @@ static const size_t kPageAllocationGranularityOffsetMask =
 static const size_t kPageAllocationGranularityBaseMask =
     ~kPageAllocationGranularityOffsetMask;
 
+#if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_AIX)
+static const bool kHasLazyCommits = true;
+#else
+static const bool kHasLazyCommits = false;
+#endif
+
 // All Blink-supported systems have 4096 sized system pages and can handle
 // permissions and commit / decommit at this granularity.
 static const size_t kSystemPageSize = 4096;
