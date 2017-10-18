@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b3bfdac_e8a1e766",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T03:59:11Z",
+      "side": 1,
+      "message": "nit: How about \"Returns the last known Geoposition\"?",
+      "revId": "cae3be0370c152e82bbe00b4f931bf5dfd94f227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05060060_644c5c0d",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T03:59:11Z",
+      "side": 1,
+      "message": "I think breaking this into \"when first called\" and \"when subsequently called\" really helps the readability, but:\n\nI would prefer to keep specific implementation details like this away from interface definitions, even if they\u0027re only sort-of-hypothetical. They can be confusing and muddy both consumer and implementor expectations of what they\u0027re consuming or what they should implement.\n\nI also don\u0027t think it\u0027s necessarily part of the contract that an implementation must respond at any particular time. What about something like this?\n\n   Issues a request for a single position update, which the implementation \n   may fulfill at its discretion (e.g. when the next geoposition change is\n   detected.)",
+      "revId": "cae3be0370c152e82bbe00b4f931bf5dfd94f227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96659b1e_f226e43b",
+        "filename": "services/device/public/interfaces/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T03:59:11Z",
+      "side": 1,
+      "message": "nit: the \":interfaces\" is redundant because it\u0027s the same name as the path leaf. GN convention is to omit redundant target names",
+      "revId": "cae3be0370c152e82bbe00b4f931bf5dfd94f227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349f31b1_b18bf5e9",
+        "filename": "services/device/public/interfaces/public_ip_address_geolocation_provider.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T03:59:11Z",
+      "side": 1,
+      "message": "nit: How about\n\n// \u003cvertical space\u003e\n// WARNING: DO NOT USE WITHOUT PRIVACY REVIEW.\n\n:)",
+      "revId": "cae3be0370c152e82bbe00b4f931bf5dfd94f227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
