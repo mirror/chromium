@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad51fa8f_63437a57",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-18T14:33:43Z",
+      "side": 1,
+      "message": "return entry-\u003ewriters; should suffice",
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0789214a_2a391935",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-18T14:33:43Z",
+      "side": 1,
+      "message": "Why these conditions? Why not just call StopCachingImpl?",
+      "range": {
+        "startLine": 443,
+        "startChar": 2,
+        "endLine": 445,
+        "endChar": 25
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7c321d_3a20c5cf",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-18T14:33:43Z",
+      "side": 1,
+      "message": "I must be missing something. If the writer that reads the last byte saves the transaction info and resets writer\u0027s network transaction, how are the other shared writer transactions supposed to save the network transaction info?",
+      "range": {
+        "startLine": 2109,
+        "startChar": 0,
+        "endLine": 2110,
+        "endChar": 51
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adab6110_39863e20",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 3327,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-18T14:33:43Z",
+      "side": 1,
+      "message": "Replace above with:\n\ntransaction.GetFullRequestHeaders(\u0026network_transaction_info.full_request_headers);\n\nMore succinct and saves a copy.",
+      "range": {
+        "startLine": 3325,
+        "startChar": 0,
+        "endLine": 3327,
+        "endChar": 75
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b4616b5_f8118659",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-18T14:33:43Z",
+      "side": 1,
+      "message": "need braces for this condition since it\u0027s more than one line",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 13
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
