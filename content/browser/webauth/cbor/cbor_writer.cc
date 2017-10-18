@@ -59,6 +59,7 @@ void CBORWriter::EncodeCBOR(const CBORValue& node) {
       const CBORValue::ArrayValue& array = node.GetArray();
       StartItem(CborMajorType::kArray, array.size());
       for (const auto& value : array) {
+        CHECK(GetMaxDepth(value) < maxNestingLayerSize);
         EncodeCBOR(value);
       }
       return;
@@ -68,7 +69,9 @@ void CBORWriter::EncodeCBOR(const CBORValue& node) {
     case CBORValue::Type::MAP: {
       const CBORValue::MapValue& map = node.GetMap();
       StartItem(CborMajorType::kMap, map.size());
+
       for (const auto& value : map) {
+        CHECK(GetMaxDepth(value.second) < maxNestingLayerSize);
         EncodeCBOR(CBORValue(value.first));
         EncodeCBOR(value.second);
       }
@@ -139,6 +142,33 @@ size_t CBORWriter::GetNumUintBytes(uint64_t value) {
     return 4;
   }
   return 8;
+}
+
+// private static helper function to ensure that all nested CBOR have at most 4
+// layers (CANOCICAL CBOR) If the input CBOR node value is of type
+// NONE,UNSIGNED,BYTESTRING,STRING then return 1 else, recursively call nested
+// CBOR values of the node and return the max depth.
+uint8_t CBORWriter::GetMaxDepth(const CBORValue& node) {
+  if (!node.is_array() && !node.is_map()) {
+    return 1;
+  } else {
+    size_t max = 0;
+    if (node.is_array()) {
+      for (const auto& cbor_element : node.GetArray()) {
+        uint8_t lower_layer_depth = GetMaxDepth(cbor_element);
+        if (max < lower_layer_depth)
+          max = lower_layer_depth;
+      }
+    } else {
+      CHECK(node.is_map());
+      for (auto it = node.GetMap().begin(); it != node.GetMap().end(); ++it) {
+        uint8_t lower_layer_depth = GetMaxDepth(it->second);
+        if (max < lower_layer_depth)
+          max = lower_layer_depth;
+      }
+    }
+    return max + 1;
+  }
 }
 
 }  // namespace content
