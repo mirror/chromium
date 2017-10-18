@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "186b6e7b_b4ff7554",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-18T16:34:05Z",
+      "side": 1,
+      "message": "Could we follow the same approach as used for quota_service_ here?\nhttps://cs.chromium.org/chromium/src/extensions/browser/info_map.h?rcl\u003d38636aa257a86a0464b0c5805575e998511404ae\u0026l\u003d111\n\nSimilar pattern here:\nhttps://cs.chromium.org/chromium/src/extensions/browser/content_hash_fetcher.cc?rcl\u003d839ffb0ca9ee76001c8b56c063fc6a6a06d3b70d\u0026l\u003d147",
+      "revId": "69ddaf7e9a61bf32b9e12fe168843e14d9bf0820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

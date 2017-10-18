@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "27d55d8d_1862a4d8",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-18T16:34:05Z",
+      "side": 1,
+      "message": "Thanks for the reference. SG.",
+      "parentUuid": "c8850393_b33f64cb",
+      "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "114fc312_3ecb4ff0",
         "filename": "chrome/browser/vr/speech_recognizer.cc",
         "patchSetId": 14
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "My understanding is that it makes sure that the function is not called. If I don\u0027t add the expectation here. The test would still pass if OnSpeechResult was called. The test also wants to make sure that canceling speech recognition would also cancel the result callback. So I added times(0) here.",
       "parentUuid": "ebf2bfe2_1db64615",
+      "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0059640a_707fd866",
+        "filename": "chrome/browser/vr/speech_recognizer_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-18T16:34:05Z",
+      "side": 1,
+      "message": "Got it. Thanks.",
+      "parentUuid": "4afa47a8_0996ad6d",
       "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
