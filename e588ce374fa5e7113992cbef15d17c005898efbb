@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c105100e_ef6f08e2",
+        "filename": "headless/app/headless_example.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-18T11:04:30Z",
+      "side": 1,
+      "message": "Please remove this too.",
+      "range": {
+        "startLine": 110,
+        "startChar": 14,
+        "endLine": 110,
+        "endChar": 17
+      },
+      "revId": "e588ce374fa5e7113992cbef15d17c005898efbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d7cccb_f4e462f9",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-18T11:04:30Z",
+      "side": 1,
+      "message": "This works but the common blink trick would be a little more concise:\n\nif (const base::Value* landscape_value \u003d ...)\n  settings-\u003elandscape \u003d landscape_value-\u003eGetBool();",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 187,
+        "endChar": 6
+      },
+      "revId": "e588ce374fa5e7113992cbef15d17c005898efbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
