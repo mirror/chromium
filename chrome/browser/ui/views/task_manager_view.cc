@@ -384,3 +384,15 @@ void TaskManagerView::RetrieveSavedAlwaysOnTopState() {
 }
 
 }  // namespace task_manager
+
+namespace chrome {
+
+task_manager::TaskManagerTableModel* ShowTaskManagerViews(Browser* browser) {
+  return task_manager::TaskManagerView::Show(browser);
+}
+
+void HideTaskManagerViews() {
+  task_manager::TaskManagerView::Hide();
+}
+
+}  // namespace chrome
