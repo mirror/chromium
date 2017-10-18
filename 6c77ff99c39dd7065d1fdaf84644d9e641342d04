@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a4294f88_0a555783",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFaceSrcValue.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T15:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "604e76e6_b20898c1",
+      "revId": "6c77ff99c39dd7065d1fdaf84644d9e641342d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7a7bee4_1552ddf1",
         "filename": "third_party/WebKit/Source/core/css/CSSFontSelector.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "6c77ff99c39dd7065d1fdaf84644d9e641342d04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464b37e5_7a6d08dc",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontSelector.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T15:41:44Z",
+      "side": 1,
+      "message": "I was being silly and looking for calls on CodeSearch, but I think I\u0027ve removed all the GetDocument() usages with this CL. :) Done.",
+      "parentUuid": "c7a7bee4_1552ddf1",
+      "revId": "6c77ff99c39dd7065d1fdaf84644d9e641342d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7402ac58_2a5573a3",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T15:41:44Z",
+      "side": 1,
+      "message": "hmmmm. I\u0027m not sure how people will feel about that. This has been brought up a couple times already. I\u0027ll create a separate CL.",
+      "parentUuid": "0a1270d2_095b9475",
+      "revId": "6c77ff99c39dd7065d1fdaf84644d9e641342d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7bb23f2_51498597",
         "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "6c77ff99c39dd7065d1fdaf84644d9e641342d04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cfafe12_8897007f",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T15:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7bb23f2_51498597",
+      "revId": "6c77ff99c39dd7065d1fdaf84644d9e641342d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
