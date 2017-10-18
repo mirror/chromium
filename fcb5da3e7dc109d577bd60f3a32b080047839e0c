@@ -16,6 +16,24 @@
       "revId": "fcb5da3e7dc109d577bd60f3a32b080047839e0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c792b884_08ba867e",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-18T21:26:50Z",
+      "side": 1,
+      "message": "Good question.  After looking more closely at the file, it looks like every case statement has a blank line before and after.  So this change is consistent with that.  The cases on lines 615-622 aren\u0027t consistent with that style, but did group related messages together.",
+      "parentUuid": "58c16de7_19017f36",
+      "revId": "fcb5da3e7dc109d577bd60f3a32b080047839e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
