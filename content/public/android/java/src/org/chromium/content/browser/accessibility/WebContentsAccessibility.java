@@ -58,6 +58,8 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
     protected static final int ACTION_SCROLL_LEFT = 0x01020039;
     protected static final int ACTION_SCROLL_RIGHT = 0x0102003b;
 
+    private static boolean sAccessibilityEnabledForTesting = false;
+
     protected final AccessibilityManager mAccessibilityManager;
     private final Context mContext;
     private final RenderCoordinates mRenderCoordinates;
@@ -101,6 +103,13 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
         }
     }
 
+    /**
+     * Pretend that accessibility is enabled, for testing.
+     */
+    static void setAccessibilityEnabledForTesting() {
+        sAccessibilityEnabledForTesting = true;
+    }
+
     protected WebContentsAccessibility(Context context, ViewGroup containerView,
             WebContents webContents, RenderCoordinates renderCoordinates,
             boolean shouldFocusOnPageLoad) {
@@ -139,9 +148,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
 
     @Override
     public AccessibilityNodeInfo createAccessibilityNodeInfo(int virtualViewId) {
-        if (!mAccessibilityManager.isEnabled()) {
-            return null;
-        }
+        if (!isAccessibilityEnabled()) return null;
         int rootId = nativeGetRootId(mNativeObj);
 
         if (virtualViewId == View.NO_ID) {
@@ -188,7 +195,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
     public boolean performAction(int virtualViewId, int action, Bundle arguments) {
         // We don't support any actions on the host view or nodes
         // that are not (any longer) in the tree.
-        if (!mAccessibilityManager.isEnabled() || !nativeIsNodeValid(mNativeObj, virtualViewId)) {
+        if (!isAccessibilityEnabled() || !nativeIsNodeValid(mNativeObj, virtualViewId)) {
             return false;
         }
 
@@ -329,21 +336,21 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
     }
 
     public void onAutofillPopupDisplayed(View autofillPopupView) {
-        if (mAccessibilityManager.isEnabled()) {
+        if (isAccessibilityEnabled()) {
             mAutofillPopupView = autofillPopupView;
             nativeOnAutofillPopupDisplayed(mNativeObj);
         }
     }
 
     public void onAutofillPopupDismissed() {
-        if (mAccessibilityManager.isEnabled()) {
+        if (isAccessibilityEnabled()) {
             nativeOnAutofillPopupDismissed(mNativeObj);
             mAutofillPopupView = null;
         }
     }
 
     public void onAutofillPopupAccessibilityFocusCleared() {
-        if (mAccessibilityManager.isEnabled()) {
+        if (isAccessibilityEnabled()) {
             int id = nativeGetIdForElementAfterElementHostingAutofillPopup(mNativeObj);
             if (id == 0) return;
 
@@ -355,9 +362,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
     // Returns true if the hover event is to be consumed by accessibility feature.
     @CalledByNative
     private boolean onHoverEvent(int action) {
-        if (!mAccessibilityManager.isEnabled()) {
-            return false;
-        }
+        if (!isAccessibilityEnabled()) return false;
 
         if (action == MotionEvent.ACTION_HOVER_EXIT) {
             mIsHovering = false;
@@ -595,9 +600,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
         // If we don't have any frame info, then the virtual hierarchy
         // doesn't exist in the view of the Android framework, so should
         // never send any events.
-        if (!mAccessibilityManager.isEnabled() || !isFrameInfoInitialized()) {
-            return null;
-        }
+        if (!isAccessibilityEnabled() || !isFrameInfoInitialized()) return null;
 
         // This is currently needed if we want Android to visually highlight
         // the item that has accessibility focus. In practice, this doesn't seem to slow
@@ -1203,6 +1206,10 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
     protected int getAccessibilityServiceCapabilitiesMask() {
         // Implemented in KitKatWebContentsAccessibility.
         return 0;
+    }
+
+    private boolean isAccessibilityEnabled() {
+        return sAccessibilityEnabledForTesting || mAccessibilityManager.isEnabled();
     }
 
     private native long nativeInit(WebContents webContents);
