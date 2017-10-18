@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "140ec95a_5e2b1ce5",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-18T16:15:00Z",
+      "side": 1,
+      "message": "nit: no explicit",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31283630_22554d42",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-18T16:15:00Z",
+      "side": 1,
+      "message": "do we need this proliferation of classes? How many children of AutofillPopupChildView do you expect? For example it seems fine to have one class which handles either text only or text + image.",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 60
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a341552d_8d5ff9bf",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-18T16:15:00Z",
+      "side": 1,
+      "message": "nit: move closer to the rest of label_ initialization. Something like:\n\nlabel_ \u003d ...\nlabel_-\u003e...\nlabel_-\u003e...\nlabel_-\u003e...\nAddChildView(label_);\n\nbox_layout \u003d ...\nbox_layout-\u003e...\nSetLayoutManager(box_layout);",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 11
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd36ec6_2e81a2bb",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-18T16:15:00Z",
+      "side": 1,
+      "message": "nit: order of functions should match order in header",
+      "range": {
+        "startLine": 142,
+        "startChar": 37,
+        "endLine": 142,
+        "endChar": 57
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cde9d8b_ff5e629f",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-18T16:15:00Z",
+      "side": 1,
+      "message": "nit: might be more accurate to say \"password suggestion\" (?).",
+      "range": {
+        "startLine": 17,
+        "startChar": 45,
+        "endLine": 17,
+        "endChar": 68
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22d4f4b_5049726a",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-18T16:15:00Z",
+      "side": 1,
+      "message": "This still doesn\u0027t really help me understand what \"Expanded\" means. Maybe AutofillPopupViewNativeViews? Also it would be nice to explain what the difference to AutofillPopupViewViews is, and possibly a link to the tracking bug.",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 20,
+        "endChar": 11
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa775ee7_01f8cd20",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-18T16:15:00Z",
+      "side": 1,
+      "message": "is this used for something? I don\u0027t see it being read from anywhere, and anyway you can use child_at() for the same purpose.",
+      "range": {
+        "startLine": 39,
+        "startChar": 28,
+        "endLine": 39,
+        "endChar": 34
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c41fa1a_b28ae150",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-18T16:15:00Z",
+      "side": 1,
+      "message": "nit: layout_model_ \u003d std::make_unique...",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

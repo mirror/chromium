@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "250d38ee_6286d3d0",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-18T16:15:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure what I\u0027m looking at in that screenshot but I stand by the assertion that colors should match context menu colors. GetBackgroundColorIDForRow may be equally in need of updating. Fine to make this a TODO.",
+      "parentUuid": "0f43a30c_7ae7589a",
+      "range": {
+        "startLine": 124,
+        "startChar": 29,
+        "endLine": 124,
+        "endChar": 66
+      },
+      "revId": "a9c02112f7e226b9a60c2954692a2ddd7ba5920e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b727d67e_59266279",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
         "patchSetId": 20
