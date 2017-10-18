@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b14aecb2_2425e9ac",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a13b5134_d5ed3ead",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3ccccce_73e69659",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 15
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "3eed3cf7_c2148eec",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "OK.  Per my other comment, please document this clearly at the appropriate place.",
+      "parentUuid": "b147f60a_8b94d7ab",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ce40332_ce90ffd6",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.h",
         "patchSetId": 15
@@ -139,6 +175,24 @@
       "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9425228_2259cdf8",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Although I think there would be some benefits to refactoring both registration and access to MRP ptrs, I think the benefits mostly come from not having special cases creep throughout the code as we add/migrate more MRPs over time.  To unblock the wired MRP work and make progress, it\u0027s okay to land a transitional state (especially as these details are mostly hidden in a couple of classes).",
+      "parentUuid": "3be54c57_2cb2da27",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -177,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "432bc90a_8bd77167",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Ok, got it.  How does the config object get populated here?",
+      "parentUuid": "43e07e1e_6149d1d8",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07a9d965_0f86100e",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 15
@@ -209,6 +281,24 @@
       "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d5558d_fdaab847",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2377e1c0_1e44464b",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -282,6 +372,24 @@
     },
     {
       "key": {
+        "uuid": "b8f153ab_7ab617e6",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8827ae55_ae6d2723",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec8ff2fc_a36718b6",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 15
@@ -352,6 +460,24 @@
     },
     {
       "key": {
+        "uuid": "f7b59f7f_114fcba8",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "I think I prefer the newer patchset, even with the boilerplate, as it leads to more readable code.  Thanks for making the changes.",
+      "parentUuid": "84aa8f8b_9583b30d",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a323ad1b_a3607741",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
         "patchSetId": 15
@@ -366,6 +492,24 @@
       "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3742a51d_c8ee5a6b",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a323ad1b_a3607741",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -401,6 +545,24 @@
       "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1edbcc3_47882745",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c66816c1_4bfe7cce",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

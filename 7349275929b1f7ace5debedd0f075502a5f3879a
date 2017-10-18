@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d65f0c90_84cca143",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "What about castouts and cloud?",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238daa92_96255a3c",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Is this equivalent to \"no sinks found\" for the code that is passing this callback?",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb619ec6_19450cbc",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "s/merging/concatenating/ to be precise.\n\nIs the order of sinks important?",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb27b6f_be4135c7",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Is there a check somewhere to prevent duplicates by route ID?",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1856680_80c2cff7",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Similar question here.",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "405e7032_bc443c16",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "ISTM it would be easier to add a provider_id field to MediaRoute (and we should stop passing routes around by ID whenever possible).",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b36740e2_54143618",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Similarly adding a provider_id field to MediaSink seems like a win.",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7e404d_a3e7f954",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Do you mean to say \"may be terminated at any later time?\"\n\nWhat is the behavior if a caller uses the pointer on a terminated connection?",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abdc117a_dae34160",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "This can probably be just GetProviderByName()?",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e456b7_84a5c92d",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Should this take mojom::MediaRouteProvider::Id?",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ce237f_d7b0e83a",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "A better test would verify that the route returned by CreateRouteInternal matched the one passed to SetRouteToReturn above (and was tied to kSinkId).",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f72b93f7_f98e8858",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Similar comment as above for CreateMediaRoute2/kSinkId2",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e5246a_896d183a",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "The naming of the test fixture API doesn\u0027t seem super consistent and I have to read the comments carefully to figure out what these functions do.\n\nA more expressive API might help, e.g.\n\nmock_provider_-\u003eProvideTestRoute(kRouteId)\nmock_provider2_-\u003eProvideTestRoute(kRouteId2)",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c874740_eb385878",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Is WIRED_DISPLAY the same as mock_provider2_?",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7fa32b_623c2209",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "To save a few lines, instead of adding expectations with Times(0), you can create the providers as StrictMocks which will fail if there\u0027s a call without a matching expectation.",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dfc88b9_63bfeb0e",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-18T22:32:48Z",
+      "side": 1,
+      "message": "Won\u0027t these be guaranteed to be in the same order they are passed to router-\u003eOnSinksReceived by the implementation?  Or is it that you don\u0027t want to make that guarantee explicit?",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
