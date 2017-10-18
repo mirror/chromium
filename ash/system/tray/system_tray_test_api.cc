@@ -10,6 +10,7 @@
 #include "ash/system/enterprise/tray_enterprise.h"
 #include "ash/system/network/tray_network.h"
 #include "ash/system/tray/system_tray.h"
+#include "ash/system/tray/system_tray_bubble.h"
 #include "base/run_loop.h"
 #include "base/strings/string16.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
