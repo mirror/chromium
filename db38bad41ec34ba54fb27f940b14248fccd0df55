@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "525ea104_d0adfafc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-18T10:25:47Z",
+      "side": 1,
+      "message": "If we were targeting api 24+, we could just wrap our collection in this:\nhttps://developer.android.com/reference/java/util/Collections.html#synchronizedSet(java.util.Set\u003cT\u003e)\n\nAlthough it undoes the List -\u003e Set migration, we could switch it back to a List and then use https://developer.android.com/reference/java/util/Collections.html#synchronizedList(java.util.List\u003cT\u003e)\n\nAlternatively, we could simply just lock on mMergeFileNames everywhere.  We might be able to add @GuardedBy(\"mMergeFileNames\") to it and have it be lint checked as well.",
+      "parentUuid": "c17acdf5_c1d244c2",
+      "range": {
+        "startLine": 1225,
+        "startChar": 45,
+        "endLine": 1225,
+        "endChar": 63
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae43d3cd_2fe34d61",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 6
@@ -273,6 +297,30 @@
       "side": 1,
       "message": "Yea, mMergeFileName should be fine for a Set. The problem I don\u0027t use remove is because we need to iterate through mPersistencePolicy.getStateToBeMergedFileNames() not mMergeFileName. Then then reference comparison does not work. So we need to iterate through the mMergeFileName again to compare the content.",
       "parentUuid": "ae43d3cd_2fe34d61",
+      "range": {
+        "startLine": 1274,
+        "startChar": 25,
+        "endLine": 1274,
+        "endChar": 31
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa52194e_0c7fac54",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-18T10:25:47Z",
+      "side": 1,
+      "message": "Umm...we\u0027re not iterating through getStateToBeMergedFileNames() though?  We are iterating over mMergeFileNames, are you saying that isn\u0027t intended?",
+      "parentUuid": "380c0bfd_302b0080",
       "range": {
         "startLine": 1274,
         "startChar": 25,
