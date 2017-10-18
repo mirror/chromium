@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddedf21a_0edfff5e",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T08:03:42Z",
+      "side": 1,
+      "message": "Nit: std::queue is pretty heavy: please switch this to use base/queue.h in a followup, per the guidance in https://chromium.googlesource.com/chromium/src/+/master/base/containers/README.md#deque",
+      "revId": "16e3475cf4b1bafbdaf905f188827df3ded45148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
