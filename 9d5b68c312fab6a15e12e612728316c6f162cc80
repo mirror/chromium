@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4ff8f4a_a3fb4760",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5335,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:38:23Z",
+      "side": 1,
+      "message": "Maybe this should always be false in the case of OnFailedNavigation?  I can\u0027t think of why we would want to do the debug URL actions in the failed case.\n\n(I\u0027m wondering if this is just a matter of reusing too much code between the success and failed cases.)",
+      "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673944ff_167078f7",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6450,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:38:23Z",
+      "side": 1,
+      "message": "nit: should_handle_debug_url",
+      "range": {
+        "startLine": 6450,
+        "startChar": 15,
+        "endLine": 6450,
+        "endChar": 31
+      },
+      "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc3018f_d80f1360",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6455,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:38:23Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m concerned about continuing when the parameter is false.  We don\u0027t expect to get a committed URL of chrome://kill, for example, even if it\u0027s just for error pages.\n\nMaybe we should move where MaybeHandleDebugURL is called instead?  That might (1) let us avoid calling it from the OnFailedNavigation case without a bool parameter, and (2) let us more sanely handle the case that the process doesn\u0027t crash and the URL gets committed.",
+      "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
