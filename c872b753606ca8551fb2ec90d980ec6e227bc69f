@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "80f7c378_ecc47d43",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-18T17:45:50Z",
+      "side": 1,
+      "message": "Ah, that\u0027s almost right, but I think it should flush Ash\u0027s ShelfItemDelegate, not Chrome\u0027s:\n  ash::Shell::Get()-\u003eshelf_model()-\u003eGetShelfItemDelegate(ash::ShelfID(app_id))-\u003eFlushForTesting();\nAnd that call probably belongs before the AppAnimatedWaiter (ie. notify Chrome before making Chrome wait)\n(or perhaps the AppAnimatedWaiter isn\u0027t needed at all with this test case, that\u0027d be even better)\nThe test should not need to flush Chrome\u0027s ShelfItemDelegate to execute the callback.\n\nIt would be good to run this test a bunch locally to help make sure it doesn\u0027t flake:\nbrowser_tests --ozone-platform\u003d\"headless\" --gtest_break_on_failure --gtest_repeat\u003d100 --gtest_filter\u003dArcAppDeferredLauncherBrowserTest.StartAppDeferredFromShelfButton",
+      "parentUuid": "285afc57_ef633b85",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b344c7b_98015e33",
         "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
         "patchSetId": 2
