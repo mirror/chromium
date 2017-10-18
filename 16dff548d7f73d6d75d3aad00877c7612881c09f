@@ -22,6 +22,30 @@
       "revId": "16dff548d7f73d6d75d3aad00877c7612881c09f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d1de36_dafd72ab",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 60194,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-10-18T06:41:44Z",
+      "side": 1,
+      "message": "There are a few well-known status codes that I considered declaring in an enum. However, I\u0027m most interested in unexpected status codes due do the script hitting an error and aborting instead of exiting via one of the regular exit paths. My understanding is I\u0027d have to declare an enum with 256 entries so the UMA tooling recognizes the full range of 256 exit statuses. That didn\u0027t seem to be useful given that most of them would be labeled \"exit status N\". If you think that\u0027s the right way to go, I\u0027m happy to do so though.",
+      "parentUuid": "2b0776b3_734def2e",
+      "range": {
+        "startLine": 60194,
+        "startChar": 53,
+        "endLine": 60194,
+        "endChar": 0
+      },
+      "revId": "16dff548d7f73d6d75d3aad00877c7612881c09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
