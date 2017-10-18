@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d078dee_f2d3b292",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-18T23:48:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fbd1ede_f8b873f2",
+      "revId": "e8f6cd27e41bd290d39d8c5719726b02a247af52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e469b72f_07673dfe",
         "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e8f6cd27e41bd290d39d8c5719726b02a247af52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b52a32c_2a252af2",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-18T23:48:39Z",
+      "side": 1,
+      "message": "Done. I removed crazy math but increased the proposed max limit to 10GB to put it more than 1 order of magnitude away from the prefetching monthly download limit.",
+      "parentUuid": "e469b72f_07673dfe",
+      "revId": "e8f6cd27e41bd290d39d8c5719726b02a247af52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
