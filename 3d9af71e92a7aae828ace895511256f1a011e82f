@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5762a38_5a03ffde",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-18T22:13:06Z",
+      "side": 1,
+      "message": "Why are these virtual?",
+      "revId": "3d9af71e92a7aae828ace895511256f1a011e82f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a213a52b_f87b0509",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-18T22:13:06Z",
+      "side": 1,
+      "message": "Can you leave a comment (maybe in the header or here) about what thread these should be called on?\n\nDo you need to implement ReclaimResources as well? (Maybe DidRecieveCompositorFrameAck should call ReclaimResources which should do what this function does?)",
+      "revId": "3d9af71e92a7aae828ace895511256f1a011e82f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
