@@ -310,6 +310,7 @@ const struct DomKeyToKeyboardCodeEntry {
     // http://www.w3.org/TR/DOM-Level-3-Events-key/#keys-device
 #if defined(OS_POSIX)
     {DomKey::LAUNCH_ASSISTANT, VKEY_ASSISTANT},
+    {DomKey::SPEECH_INPUT_TOGGLE, VKEY_ASSISTANT_VOICE_COMMAND},
     {DomKey::BRIGHTNESS_DOWN, VKEY_BRIGHTNESS_DOWN},
     {DomKey::BRIGHTNESS_UP, VKEY_BRIGHTNESS_UP},
     {DomKey::POWER, VKEY_POWER},
@@ -419,6 +420,8 @@ const struct DomCodeToKeyboardCodeEntry {
 #if defined(OS_POSIX)
     {DomCode::LAUNCH_ASSISTANT,
      VKEY_ASSISTANT},                          // 0x000017 Launch Assistant
+    {DomCode::SPEECH_INPUT_TOGGLE,
+     VKEY_ASSISTANT_VOICE_COMMAND},            // voice command mode.
 #endif
     {DomCode::SLEEP, VKEY_SLEEP},               // 0x010082 Sleep
     // DomCode::WAKE_UP                            0x010083 WakeUp

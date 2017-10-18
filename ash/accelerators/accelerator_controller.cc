@@ -615,7 +615,8 @@ bool CanHandleStartVoiceInteraction() {
   return chromeos::switches::IsVoiceInteractionFlagsEnabled();
 }
 
-void HandleToggleVoiceInteraction(const ui::Accelerator& accelerator) {
+void HandleToggleVoiceInteraction(const ui::Accelerator& accelerator,
+                                  bool voice_mode) {
   if (accelerator.IsCmdDown() && accelerator.key_code() == ui::VKEY_SPACE) {
     base::RecordAction(
         base::UserMetricsAction("VoiceInteraction.Started.Search_Space"));
@@ -625,6 +626,9 @@ void HandleToggleVoiceInteraction(const ui::Accelerator& accelerator) {
   } else if (accelerator.key_code() == ui::VKEY_ASSISTANT) {
     base::RecordAction(
         base::UserMetricsAction("VoiceInteraction.Started.Assistant"));
+  } else if (accelerator.key_code() == ui::VKEY_ASSISTANT_VOICE_COMMAND) {
+    base::RecordAction(base::UserMetricsAction(
+        "VoiceInteraction.Started.HeadphoneVoiceCommandKey"));
   }
 
   // Show a toast if the active user is not primary.
@@ -650,7 +654,10 @@ void HandleToggleVoiceInteraction(const ui::Accelerator& accelerator) {
     return;
   }
 
-  Shell::Get()->app_list()->ToggleVoiceInteractionSession();
+  if (voice_mode)
+    Shell::Get()->app_list()->StartVoiceInteractionSession();
+  else
+    Shell::Get()->app_list()->ToggleVoiceInteractionSession();
 }
 
 void HandleSuspend() {
@@ -1072,6 +1079,9 @@ bool AcceleratorController::CanPerformAction(
     case SHOW_STYLUS_TOOLS:
       return CanHandleShowStylusTools();
     case START_VOICE_INTERACTION:
+    case START_VOICE_INTERACTION_VOICE_COMMAND:
+      // Start assistant in voice command mode shares same condition as starting
+      // from assistant key.
       return CanHandleStartVoiceInteraction();
     case SWAP_PRIMARY_DISPLAY:
       return display::Screen::GetScreen()->GetNumDisplays() > 1;
@@ -1326,7 +1336,10 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
       HandleShowTaskManager();
       break;
     case START_VOICE_INTERACTION:
-      HandleToggleVoiceInteraction(accelerator);
+      HandleToggleVoiceInteraction(accelerator, false);
+      break;
+    case START_VOICE_INTERACTION_VOICE_COMMAND:
+      HandleToggleVoiceInteraction(accelerator, true);
       break;
     case SUSPEND:
       HandleSuspend();
