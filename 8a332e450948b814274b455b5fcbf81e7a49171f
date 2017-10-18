@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4772cbcb_4ff3dc62",
+        "filename": "chrome/test/chromedriver/chrome/chrome_desktop_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-18T00:40:40Z",
+      "side": 1,
+      "message": "You need to call SetWindowBounds after this. DevTools doesn\u0027t support exiting fullscreen and changing size/position in one call to SetWindowbounds. See examples in SetWindowSize and SetWindowPosition.",
+      "range": {
+        "startLine": 275,
+        "startChar": 4,
+        "endLine": 275,
+        "endChar": 47
+      },
+      "revId": "8a332e450948b814274b455b5fcbf81e7a49171f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
