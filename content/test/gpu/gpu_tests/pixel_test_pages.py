@@ -150,6 +150,25 @@ def DefaultPages(base_name):
       revision=7),
 
     PixelTestPage(
+      'pixel_webgl_large_canvas.html',
+      base_name + '_WebGL_Large_Canvas',
+      test_rect=[0, 0, 20, 20],
+      revision=0, # This is not used.
+      # This test is not run on Android because it's expected that the
+      # huge canvas allocations will swamp the device. For this reason
+      # we don't need scale factor overrides to handle the odd sizes
+      # of the screenshots.
+      expected_colors=[
+        {
+          'comment': 'green',
+          'location': [2, 2],
+          'size': [18, 18],
+          'color': [0, 255, 0],
+          'tolerance': 3
+        },
+      ]),
+
+    PixelTestPage(
       'pixel_webgl2_blitframebuffer_result_displayed.html',
       base_name + '_WebGL2_BlitFramebuffer_Result_Displayed',
       test_rect=[0, 0, 200, 200],

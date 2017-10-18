@@ -26,6 +26,16 @@ test_data_dirs = [gpu_data_dir,
                       path_util.GetChromiumSrcDir(), 'media/test/data')]
 
 test_harness_script = r"""
+  var testHarness = {};
+  testHarness._messages = '';
+  testHarness._originalLog = window.console.log;
+
+  testHarness.log = function(msg) {
+    testHarness._messages += msg + "\n";
+    testHarness._originalLog.apply(window.console, [msg]);
+  }
+  window.console.log = testHarness.log;
+
   var domAutomationController = {};
 
   domAutomationController._succeeded = false;
@@ -117,7 +127,8 @@ class PixelIntegrationTest(
     tab.action_runner.WaitForJavaScriptCondition(
       'domAutomationController._finished', timeout=300)
     if not tab.EvaluateJavaScript('domAutomationController._succeeded'):
-      self.fail('page indicated test failure')
+      self.fail('page indicated test failure: ' +
+                self._TestHarnessMessages(self.tab))
     if not tab.screenshot_supported:
       self.fail('Browser does not support screenshot capture')
     screenshot = tab.Screenshot(5)
@@ -132,7 +143,8 @@ class PixelIntegrationTest(
     if page.expected_colors:
       # Use expected colors instead of ref images for validation.
       self._ValidateScreenshotSamples(
-          tab, page.name, screenshot, page.expected_colors, dpr)
+          tab, page.name, screenshot, page.expected_colors, dpr,
+          self._TestHarnessMessages(self.tab))
       return
     image_name = self._UrlToImageName(page.name)
     if self.GetParsedCommandLineOptions().upload_refimg_to_cloud_storage:
@@ -211,6 +223,10 @@ class PixelIntegrationTest(
 
     self._WriteImage(image_path, screenshot)
     return screenshot
+
+  @staticmethod
+  def _TestHarnessMessages(tab):
+    return tab.EvaluateJavaScript('testHarness._messages')
 
 def load_tests(loader, tests, pattern):
   del loader, tests, pattern  # Unused.

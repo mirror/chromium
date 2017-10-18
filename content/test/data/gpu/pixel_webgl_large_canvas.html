@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+<title>WebGL Test: Large Canvases Must Be Handled</title>
+<style type="text/css">
+.nomargin {
+  margin: 0px auto;
+}
+</style>
+
+<script>
+function sendResult(status, detail) {
+  console.log(detail);
+  if (window.domAutomationController) {
+    window.domAutomationController.send(status);
+  } else {
+    console.log(status);
+  }
+}
+
+var gl;
+var fbo;
+var width;
+var height;
+var numFramesBeforeClear = 15;
+var numFramesBeforeEnd = 15;
+var maxTextureSize = 0;
+
+function main() {
+  var canvas = document.getElementById("c");
+  gl = canvas.getContext('webgl', {alpha: false, antialias: false,
+                                   depth: false, stencil: false});
+  if (!gl) {
+    sendResult("FAILURE", "WebGL context not supported");
+    return;
+  }
+
+  // Store off max texture size for later.
+  maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+
+  // Clear background of canvas to red.
+  gl.clearColor(1.0, 0.0, 0.0, 1.0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+
+  // Wait a few frames and then clear to green, to ensure
+  // canvas was composited.
+  window.requestAnimationFrame(maybeClearToGreen);
+}
+
+function maybeClearToGreen()
+{
+  if (--numFramesBeforeClear == 0) {
+    // Allocate and resize a huge canvas, and ensure that it was
+    // possible to do so. Handle a couple of modes, but otherwise
+    // expect that the MAX_WEBGL_DRAWINGBUFFER_SIZE_16M driver bug
+    // workaround didn't take effect.
+    var tempCanvas = document.createElement('canvas');
+    var firstSize = 8000;
+    var secondSize = 6000;
+    if (firstSize > maxTextureSize) {
+      firstSize = maxTextureSize - 1;
+      secondSize = firstSize - 1;
+    }
+    tempCanvas.width = firstSize;
+    tempCanvas.height = firstSize;
+    var tempGL = tempCanvas.getContext('webgl');
+    tempCanvas.width = secondSize;
+    tempCanvas.height = secondSize;
+    if (tempGL.drawingBufferWidth == secondSize &&
+        tempGL.drawingBufferHeight == secondSize) {
+      // Clear canvas to green to indicate success.
+      gl.clearColor(0.0, 1.0, 0.0, 1.0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      // That's the only operation done to the canvas. Wait to signal
+      // acknowledgment to the harness.
+      window.requestAnimationFrame(waitForFinish);
+    } else {
+      sendResult("FAILURE", "Drawing buffer size was " +
+                 tempGL.drawingBufferWidth + " x " +
+                 tempGL.drawingBufferHeight);
+    }
+
+  } else {
+    // Do this again
+    window.requestAnimationFrame(maybeClearToGreen);
+  }
+}
+
+function waitForFinish()
+{
+  if (--numFramesBeforeEnd == 0) {
+    sendResult("SUCCESS", "Test complete");
+  } else {
+    window.requestAnimationFrame(waitForFinish);
+  }
+}
+</script>
+</head>
+<body onload="main()">
+<canvas id="c" width="20" height="20" class="nomargin" style="position:absolute; top:0px; left:0px"></canvas>
+</div>
+</body>
+</html>
