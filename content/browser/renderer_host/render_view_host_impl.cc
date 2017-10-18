@@ -942,7 +942,11 @@ void RenderViewHostImpl::ExecuteMediaPlayerActionAtLocation(
 
 void RenderViewHostImpl::ExecutePluginActionAtLocation(
   const gfx::Point& location, const blink::WebPluginAction& action) {
-  Send(new ViewMsg_PluginActionAt(GetRoutingID(), location, action));
+  gfx::Point local_location =
+      GetWidget()->GetView()->TransformRootPointToViewCoordSpace(location);
+  // TODO(wjmaclean): do we need to implement the above function for
+  // RenderWidgetHostViewChildFrame also?
+  Send(new ViewMsg_PluginActionAt(GetRoutingID(), local_location, action));
 }
 
 void RenderViewHostImpl::NotifyMoveOrResizeStarted() {
