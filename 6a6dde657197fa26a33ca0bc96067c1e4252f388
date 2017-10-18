@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c7433aae_8ca173ff",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_fragment_iterator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-18T17:30:02Z",
+      "side": 1,
+      "message": "Done. I\u0027m not very familiar with block traversing pattern but it\u0027s a good point, thank you!",
+      "parentUuid": "257cc0a7_bf5cca3f",
+      "revId": "6a6dde657197fa26a33ca0bc96067c1e4252f388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccfa075b_ce5ea90a",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_fragment_iterator.cc",
         "patchSetId": 18
