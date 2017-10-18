@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfc50eb8_d5bd8578",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-18T21:22:59Z",
+      "side": 1,
+      "message": "- Make it disabled, not hidden.\n- Pass second parameter to toggle: ....toggle(\u0027hidden\u0027, this._isSidebarOpen)",
+      "revId": "ba6f457ce12c94b6f7a1560b181a5c86ff2cba0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

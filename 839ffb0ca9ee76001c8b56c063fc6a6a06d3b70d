@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8963bde_6d682ebf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-18T21:22:59Z",
+      "side": 0,
+      "message": "Please leave this line.",
+      "revId": "839ffb0ca9ee76001c8b56c063fc6a6a06d3b70d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
