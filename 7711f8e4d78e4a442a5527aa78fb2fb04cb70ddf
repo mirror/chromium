@@ -19,6 +19,240 @@
     },
     {
       "key": {
+        "uuid": "4aa55cc5_24250fed",
+        "filename": "chrome/gpu/arc_video_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T09:06:18Z",
+      "side": 1,
+      "message": "Nit: I found this comment a bit hard to parse, given how long the first sentence is. Maybe this could be shortened to simply say:\n\n  When true, only allows use of buffers created with AllocateProtectedBuffer().\n\nCombined with the usage note in UseBuffer() about secure mode, I think that should be sufficient and avoids redundancy in the comments.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 27
+      },
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46665f53_453935b3",
+        "filename": "chrome/gpu/arc_video_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T09:06:18Z",
+      "side": 1,
+      "message": "I would reword this comment to say:\nIn secure mode, |port| and |index| must correspond to a protected buffer allocated using AllocateProtectedBuffer().",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c8fe1e_333fc525",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T09:06:18Z",
+      "side": 1,
+      "message": "FWIW, I would generally expect the allocation function itself to do any necessary alignment, rather than forcing all callers to do it.",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 72
+      },
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19d3398_34876666",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T09:06:18Z",
+      "side": 1,
+      "message": "Instead of downgrading the ScopedFD to an unscoped base::SharedMemoryHandle in the BindSharedMemory() case, is it possible to wrap this protected_shmem-\u003eshm_handle()-\u003eRelease() in a ScopedFD?",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "775537f8_a2c6dfba",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T09:06:18Z",
+      "side": 1,
+      "message": "Nit: remove the explicitly defaulted move ctor if the type isn\u0027t movable anymore (ditto for OutputBufferInfo)",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80f195e_1f410b4d",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T09:06:18Z",
+      "side": 1,
+      "message": "I would strongly consider pulling these changes out into a separate CL; the patch is big enough as it is.",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41c2d6f_9997f974",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T09:06:18Z",
+      "side": 1,
+      "message": "Nit: constexpr to ensure this doesn\u0027t generate a static initializer",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089cc359_05cf23fc",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T09:06:18Z",
+      "side": 1,
+      "message": "Here and other places that scoped_refptr ownership is transferred, please use std::move().",
+      "range": {
+        "startLine": 83,
+        "startChar": 22,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b667f4_1f67e670",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T09:06:18Z",
+      "side": 1,
+      "message": "Is it possible to just use base::SharedMemory directly instead of going through Mojo?",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 3
+      },
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c3779d_cd5edd25",
+        "filename": "chrome/gpu/protected_buffer_manager_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T09:06:18Z",
+      "side": 1,
+      "message": "Nit: DCHECK, not CHECK",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2beee390_8b5d7742",
+        "filename": "chrome/gpu/protected_buffer_manager_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T09:06:18Z",
+      "side": 1,
+      "message": "Nit: is this separate check required? I would kind of expect the right thing to already happen below.",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff4c8bf_8206362d",
+        "filename": "chrome/gpu/protected_buffer_manager_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T09:06:18Z",
+      "side": 1,
+      "message": "Ditto: is special handling needed here?",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41af25a7_20203512",
         "filename": "gpu/ipc/service/gpu_memory_buffer_factory_native_pixmap.cc",
         "patchSetId": 6
@@ -117,6 +351,23 @@
       "writtenOn": "2017-10-11T22:05:42Z",
       "side": 1,
       "message": "nit: no need for this since you can\u0027t instantiate this class and it has no member variable.",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aec3e98_f15b49f2",
+        "filename": "ui/gfx/gpu_memory_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T09:06:18Z",
+      "side": 1,
+      "message": "FWIW, it seems like just calling close() directly would be simpler and not require a comment.",
       "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
