@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad07402a_2aa510b5",
+        "filename": "pdf/pdf_engine.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-18T18:33:47Z",
+      "side": 1,
+      "message": "false?",
+      "revId": "db09f0553d3ae949d0b4dfd1fd2ef515f8b2e444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695f596e_6da28fb6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 58174,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-18T18:33:47Z",
+      "side": 1,
+      "message": "I\u0027d improve the wording here.\n\nSomething like:\n\nMeasures if PDFs opened in the PDF viewer have attachments. This is logged whenever any(?) PDF is opened in the viewer.\n\nWDYT -  i think it\u0027s a bit more explicit when it\u0027s logged? Similar for the next.",
+      "revId": "db09f0553d3ae949d0b4dfd1fd2ef515f8b2e444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
