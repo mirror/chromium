@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f8827a2_14eba303",
+        "filename": "chrome/browser/ntp_snippets/bookmark_last_visit_updater.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T09:46:21Z",
+      "side": 1,
+      "message": "I don\u0027t think this necessarily runs off the UI thread, unless you specify base::MayBlock(). The BACKGROUND here refers to a _priority_ for the task, but not which sequence or thread it will run on.",
+      "range": {
+        "startLine": 81,
+        "startChar": 17,
+        "endLine": 81,
+        "endChar": 49
+      },
+      "revId": "613e3f391cd092102f5866d4263dfacf12f19ba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee51c3a_98550245",
+        "filename": "chrome/browser/ntp_snippets/bookmark_last_visit_updater.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T09:46:21Z",
+      "side": 1,
+      "message": "Once you do run on a background thread, you\u0027re going to have to think about thread-safety though. Specifically, weak pointers are sequence-affine -- if something were to access this object on a background thread, it might get simultaneously destroyed on the UI thread, so WeakPtrFactory is going to guard against concurrent access. So you need to make sure that the object is alive when (and stays alive while) you\u0027re doing your background work, in addition to making sure that the bookmark model can be accessed on a background thread.\n\nThen, you also need to make sure that the effects ultimately take place back on the UI thread again, at the very least once we get to updating the UI with new suggestions (y\u0027know... hence the name UI thread 😃), but really, the earlier the better (as anything you access in the background has to be thread-safe).\n\n***\n\nBut taking a step back, even having 192 duplicated bookmarks for a single URL doesn\u0027t seem like that much of an extreme case. The problem comes from the fact that we trigger a fetch for every single one of the updated bookmark nodes on the same iteration of the message loop, which leads to the 192 * 387 operations. So, what we could do instead is deduplicate the fetches and make them asynchronous: In FetchBookmarks(), instead of immediately triggering a fetch, we set a flag that a fetch has been requested, and post a task to the current TaskRunnerHandle to trigger the fetch and clear the flag. If we find in FetchBookmarks() that the flag has already been set, we simply do nothing. This would mean 192 operations in the first loop iteration, and 387 operations on the later iteration, which seems much more acceptable.\n\n(As an aside, I think you\u0027re also running into a limitation of your model here, because the  last visit time is treated as a property of a URL but stored on a bookmark, which don\u0027t correspond 1:1, so the problem becomes worse the more the relation moves away from 1:1 😊)",
+      "range": {
+        "startLine": 84,
+        "startChar": 10,
+        "endLine": 84,
+        "endChar": 40
+      },
+      "revId": "613e3f391cd092102f5866d4263dfacf12f19ba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
