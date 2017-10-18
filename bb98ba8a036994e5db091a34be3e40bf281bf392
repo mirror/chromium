@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "7e4d18cc_5910fa09",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-18T21:13:58Z",
+      "side": 1,
+      "message": "In this specific case, since it is partial, there is no other writer. \nFor non-partial cases:\n- 304 transactions reset their own network transactions and that\u0027s when we store the headers for them.\n- 200 transaction stores the header when network transaction is reset via WriterAboutToBeRemovedFromEntry",
+      "parentUuid": "620a7566_2c337302",
+      "range": {
+        "startLine": 2109,
+        "startChar": 0,
+        "endLine": 2110,
+        "endChar": 51
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91a12a47_c29e6084",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 64
