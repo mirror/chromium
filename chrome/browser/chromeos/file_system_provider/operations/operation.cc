@@ -18,12 +18,12 @@ namespace {
 // Default implementation for dispatching an event. Can be replaced for unit
 // tests by Operation::SetDispatchEventImplForTest().
 bool DispatchEventImpl(extensions::EventRouter* event_router,
-                       const std::string& extension_id,
+                       const std::string& provider_id,
                        std::unique_ptr<extensions::Event> event) {
-  if (!event_router->ExtensionHasEventListener(extension_id, event->event_name))
+  if (!event_router->ExtensionHasEventListener(provider_id, event->event_name))
     return false;
 
-  event_router->DispatchEventToExtension(extension_id, std::move(event));
+  event_router->DispatchEventToExtension(provider_id, std::move(event));
   return true;
 }
 
@@ -34,8 +34,7 @@ Operation::Operation(extensions::EventRouter* event_router,
     : file_system_info_(file_system_info),
       dispatch_event_impl_(base::Bind(&DispatchEventImpl,
                                       event_router,
-                                      file_system_info_.extension_id())) {
-}
+                                      file_system_info_.provider_id())) {}
 
 Operation::~Operation() {
 }
