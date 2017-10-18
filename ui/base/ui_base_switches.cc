@@ -16,7 +16,7 @@ const base::Feature kDirectManipulationStylus = {
 // Applies the material design mode passed via --top-chrome-md to elements
 // throughout Chrome (not just top Chrome).
 const base::Feature kSecondaryUiMd = {"SecondaryUiMd",
-                                      base::FEATURE_DISABLED_BY_DEFAULT};
+                                      base::FEATURE_ENABLED_BY_DEFAULT};
 
 }  // namespace features
 
