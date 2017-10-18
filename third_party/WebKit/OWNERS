@@ -11,4 +11,8 @@ per-file PRESUBMIT*.py=qyearsley@chromium.org
 per-file PRESUBMIT*.py=thakis@chromium.org
 per-file PRESUBMIT*.py=tkent@chromium.org
 
+per-file non_blink_scanner.py=dcheng@chromium.org
+per-file non_blink_scanner.py=haraken@chromium.org
+per-file non_blink_scanner.py=jbroman@chromium.org
+
 # COMPONENT: Blink
