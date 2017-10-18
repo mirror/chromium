@@ -47,8 +47,7 @@ class ScriptState;
 class V8FunctionStringCallback;
 
 class CORE_EXPORT DataTransferItem final
-    : public GarbageCollected<DataTransferItem>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
   WTF_MAKE_NONCOPYABLE(DataTransferItem);
 

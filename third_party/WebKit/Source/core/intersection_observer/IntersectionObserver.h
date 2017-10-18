@@ -26,8 +26,7 @@ class ScriptState;
 class V8IntersectionObserverCallback;
 
 class CORE_EXPORT IntersectionObserver final
-    : public GarbageCollectedFinalized<IntersectionObserver>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

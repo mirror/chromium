@@ -48,8 +48,7 @@ using PerformanceEntryType = unsigned;
 using PerformanceEntryTypeMask = unsigned;
 
 class CORE_EXPORT PerformanceEntry
-    : public GarbageCollectedFinalized<PerformanceEntry>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -95,8 +94,6 @@ class CORE_EXPORT PerformanceEntry
   }
 
   static PerformanceEntry::EntryType ToEntryTypeEnum(const String& entry_type);
-
-  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   PerformanceEntry(const String& name,

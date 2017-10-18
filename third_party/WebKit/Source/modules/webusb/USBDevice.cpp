@@ -474,6 +474,7 @@ void USBDevice::ContextDestroyed(ExecutionContext*) {
 
 DEFINE_TRACE(USBDevice) {
   visitor->Trace(device_requests_);
+  ScriptWrappable::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);
 }
 

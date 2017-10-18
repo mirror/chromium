@@ -24,8 +24,7 @@ typedef USVStringSequenceSequenceOrUSVStringUSVStringRecordOrUSVString
     URLSearchParamsInit;
 
 class CORE_EXPORT URLSearchParams final
-    : public GarbageCollectedFinalized<URLSearchParams>,
-      public ScriptWrappable,
+    : public ScriptWrappable,
       public PairIterable<String, String> {
   DEFINE_WRAPPERTYPEINFO();
 

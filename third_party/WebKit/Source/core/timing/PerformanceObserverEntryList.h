@@ -15,8 +15,7 @@ class PerformanceEntry;
 using PerformanceEntryVector = HeapVector<Member<PerformanceEntry>>;
 
 class PerformanceObserverEntryList
-    : public GarbageCollectedFinalized<PerformanceObserverEntryList>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

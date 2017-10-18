@@ -49,8 +49,7 @@ class LocalFrame;
 class ExecutionContext;
 
 class MODULES_EXPORT Geolocation final
-    : public GarbageCollectedFinalized<Geolocation>,
-      public ScriptWrappable,
+    : public ScriptWrappable,
       public ContextLifecycleObserver,
       public PageVisibilityObserver {
   DEFINE_WRAPPERTYPEINFO();

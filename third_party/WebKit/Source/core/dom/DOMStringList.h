@@ -37,8 +37,7 @@ namespace blink {
 // FIXME: Some consumers of this class may benefit from lazily fetching items
 // rather than creating the list statically as is currently the only option.
 class CORE_EXPORT DOMStringList final
-    : public GarbageCollectedFinalized<DOMStringList>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -56,8 +55,6 @@ class CORE_EXPORT DOMStringList final
   bool contains(const String&) const;
 
   operator const Vector<String>&() const { return strings_; }
-
-  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit DOMStringList() {}

@@ -11,8 +11,7 @@
 namespace blink {
 
 class OverconstrainedError final
-    : public GarbageCollectedFinalized<OverconstrainedError>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -22,8 +21,6 @@ class OverconstrainedError final
   String name() const { return "OverconstrainedError"; }
   const String& constraint() const { return constraint_; }
   const String& message() const { return message_; }
-
-  DEFINE_INLINE_TRACE() {}
 
  private:
   OverconstrainedError(const String& constraint, const String& message);
