@@ -10,12 +10,23 @@ import "device/geolocation/public/interfaces/geoposition.mojom";
 // provides updates with low accuracy, but |SetHighAccuracy()| may be called
 // to change this.
 interface Geolocation {
+  // Select between high and low accuracy, if supported by the implementation.
+  // Ignored if unsupported.
   SetHighAccuracy(bool high_accuracy);
 
-  // Position is reported once it changes or immediately (to report the initial
-  // position) if this is the first call to QueryNextPosition on this instance.
-  // Position updates may be throttled by the service. Overlapping calls to
-  // this method are prohibited and will be treated as a connection error.
+  // Use this method to get notified of future position updates, by calling
+  // QueryNextPosition once, and then calling it again when/if it returns.
+  //
+  // When first called:
+  //   Returns a Geoposition.
+  // When subsequently called:
+  //   Waits until the inferred location changes, then returns the updated
+  //   location. Depending on the implementation, updates may happen when e.g.
+  //   the user's network changes, or the set of visible Wifi networks change,
+  //   etc.
+  //
+  // Overlapping calls to this method are prohibited and will be treated as a
+  // connection error. Position updates may be throttled by the service.
   QueryNextPosition() => (Geoposition geoposition);
 };
 
