@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b36648ab_5d256e3a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T23:58:12Z",
+      "side": 1,
+      "message": "Whoops, bad copy-and-paste.",
+      "parentUuid": "52ab9f3c_e67aeab5",
+      "range": {
+        "startLine": 231,
+        "startChar": 12,
+        "endLine": 231,
+        "endChar": 13
+      },
+      "revId": "498dbb27bba06139cf745fb87059177c0ab1ce9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "737b0bed_7ca048fd",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-18T21:39:42Z",
       "side": 1,
       "message": "Mixing signed and unsigned like this is a bit dicey. If you can\u0027t change the function signature to take an unsigned then please clamp it to zero or add a check before converting to unsigned.",
+      "revId": "498dbb27bba06139cf745fb87059177c0ab1ce9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdaf32b2_80095c84",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T23:58:12Z",
+      "side": 1,
+      "message": "Added DCHECK_GE(text_offset, 0) here and also in LayoutText.cpp.",
+      "parentUuid": "737b0bed_7ca048fd",
       "revId": "498dbb27bba06139cf745fb87059177c0ab1ce9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "498dbb27bba06139cf745fb87059177c0ab1ce9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08c634f_5b58be48",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragmentTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T23:58:12Z",
+      "side": 1,
+      "message": "Added test for length + 1. -1 is prohibited by DCHECK.\n\nThis actually caught that the last version doesn\u0027t handle out-of-range offsets in LayoutTextFragment well. Fixed in the latest version.",
+      "parentUuid": "dad4060e_21221cb7",
+      "revId": "498dbb27bba06139cf745fb87059177c0ab1ce9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "b65b9d38_13c7598f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T23:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47cd4b81_14e358e3",
+      "range": {
+        "startLine": 191,
+        "startChar": 42,
+        "endLine": 191,
+        "endChar": 61
+      },
+      "revId": "498dbb27bba06139cf745fb87059177c0ab1ce9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29c11e41_cbc3e6ea",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.h",
         "patchSetId": 6
@@ -102,6 +186,30 @@
       "revId": "498dbb27bba06139cf745fb87059177c0ab1ce9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56aeac0f_a6ea73d5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T23:58:12Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "29c11e41_cbc3e6ea",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 23
+      },
+      "revId": "498dbb27bba06139cf745fb87059177c0ab1ce9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
