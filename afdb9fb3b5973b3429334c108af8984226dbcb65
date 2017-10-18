@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3fa2f95b_1b3a4708",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-18T21:15:13Z",
+      "side": 1,
+      "message": "That\u0027s historical :) We should follow up and align them to devtools_xxx_token. I think this would happen together with switching from string to base::UnguessableToken in blink.",
+      "parentUuid": "b6cc0da1_63ccd5c7",
+      "revId": "afdb9fb3b5973b3429334c108af8984226dbcb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aff03b8_b3ebff61",
         "filename": "third_party/WebKit/Source/core/exported/WorkerShadowPage.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "afdb9fb3b5973b3429334c108af8984226dbcb65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1002ac46_433a5a8d",
+        "filename": "third_party/WebKit/Source/core/exported/WorkerShadowPage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-18T21:15:13Z",
+      "side": 1,
+      "message": "Yeah, this is similar to WorkerShadowPage::Client inheriting from WebDevToolsAgentClient. I don\u0027t like it this way, but it is here currently.\n\nI can alternatively pass it to WorkerShadowPage constructor, but I\u0027d rather leave it in workers, given that long-term plan is to eliminate shadow page (IIUC).",
+      "parentUuid": "7aff03b8_b3ebff61",
+      "revId": "afdb9fb3b5973b3429334c108af8984226dbcb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "93034662_73df3507",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-18T21:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d480c07_d40bef67",
+      "revId": "afdb9fb3b5973b3429334c108af8984226dbcb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66e98ea4_e383ba85",
         "filename": "third_party/WebKit/public/web/WebEmbeddedWorkerStartData.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "afdb9fb3b5973b3429334c108af8984226dbcb65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c57120_4ca91a18",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorkerStartData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-18T21:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e98ea4_e383ba85",
+      "revId": "afdb9fb3b5973b3429334c108af8984226dbcb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
