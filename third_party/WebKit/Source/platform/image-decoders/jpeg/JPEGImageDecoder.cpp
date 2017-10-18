@@ -42,6 +42,14 @@
 #include "platform/instrumentation/PlatformInstrumentation.h"
 
 extern "C" {
+#if defined(OS_WIN)
+// Windows headers define boolean to be an unsigned char while libjpeg
+// by default defines boolean to int. Force the Windows definition to
+// avoid type collisions.
+typedef unsigned char boolean;
+#define HAVE_BOOLEAN 1
+#endif  // defined(OS_WIN)
+
 #include <stdio.h>  // jpeglib.h needs stdio FILE.
 #include "jpeglib.h"
 #include "iccjpeg.h"
