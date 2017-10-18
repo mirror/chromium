@@ -83,7 +83,7 @@ void NotificationMenuModel::ExecuteCommand(int command_id, int event_flags) {
       MessageCenter::Get()->RemoveNotification(notification_.id(), false);
       break;
     case kShowSettingsCommand:
-      tray_->ShowNotifierSettingsBubble();
+      tray_->ShowMessageCenterWithNotifierSettingsTab();
       break;
     default:
       NOTREACHED();
@@ -106,7 +106,7 @@ MessageCenterTray::~MessageCenterTray() {
   message_center_->RemoveObserver(this);
 }
 
-bool MessageCenterTray::ShowMessageCenterBubble(bool show_by_click) {
+bool MessageCenterTray::ShowMessageCenter(bool show_by_click) {
   if (message_center_visible_)
     return true;
 
@@ -120,7 +120,7 @@ bool MessageCenterTray::ShowMessageCenterBubble(bool show_by_click) {
   return message_center_visible_;
 }
 
-bool MessageCenterTray::HideMessageCenterBubble() {
+bool MessageCenterTray::HideMessageCenter() {
   if (!message_center_visible_)
     return false;
   delegate_->HideMessageCenter();
@@ -178,7 +178,7 @@ void MessageCenterTray::HidePopupBubbleInternal() {
   popups_visible_ = false;
 }
 
-void MessageCenterTray::ShowNotifierSettingsBubble() {
+void MessageCenterTray::ShowMessageCenterWithNotifierSettingsTab() {
   if (popups_visible_)
     HidePopupBubbleInternal();
 
@@ -224,7 +224,7 @@ void MessageCenterTray::OnNotificationButtonClicked(
 
 void MessageCenterTray::OnNotificationSettingsClicked(bool handled) {
   if (!handled)
-    ShowNotifierSettingsBubble();
+    ShowMessageCenterWithNotifierSettingsTab();
 }
 
 void MessageCenterTray::OnNotificationDisplayed(
@@ -243,7 +243,7 @@ void MessageCenterTray::OnBlockingStateChanged(NotificationBlocker* blocker) {
 
 void MessageCenterTray::OnMessageCenterChanged() {
   if (message_center_visible_ && message_center_->NotificationCount() == 0)
-    HideMessageCenterBubble();
+    HideMessageCenter();
 
   if (popups_visible_ && !message_center_->HasPopupNotifications())
     HidePopupBubbleInternal();
