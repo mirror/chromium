@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "457847d6_e1963cf4",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 0,
+      "message": "Wow, this is super complex logic for how to show the tab (especially the else branch).  Will using NEW_FOREGROUND_TAB be a sufficient replacement?  (I hope so.)",
+      "revId": "8a8997210055ba84753f6a333def51f830006bf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

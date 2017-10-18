@@ -2,6 +2,211 @@
   "comments": [
     {
       "key": {
+        "uuid": "5e6cf003_3f4456c8",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1931,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "Why is this switched away from embedder_web_contents_?  It looks like that was an intentional change in r316843 to fix https://crbug.com/449919 (context menus for PDFs, which are inside GuestViews).",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b6027e_874ca6bc",
+        "filename": "chrome/browser/tab_contents/view_source_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "nit: frame",
+      "range": {
+        "startLine": 240,
+        "startChar": 26,
+        "endLine": 240,
+        "endChar": 33
+      },
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef7603ee_20cee8bd",
+        "filename": "chrome/browser/tab_contents/view_source_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "Maybe it\u0027s more reliable to compare SiteInstances here?  (For example, I imagine the test would fail if run with --renderer-process-limit\u003d1.  We don\u0027t need it to pass in that mode, but might as well.)",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f0563e_6ac397b9",
+        "filename": "chrome/browser/tab_contents/view_source_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "nit: s/that/the/",
+      "range": {
+        "startLine": 259,
+        "startChar": 12,
+        "endLine": 259,
+        "endChar": 17
+      },
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfac5f16_e88ae3f9",
+        "filename": "chrome/browser/tab_contents/view_source_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "Copy/paste error?  (Looks like this page has only one frame.)",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f25d6a0_2e8ee90c",
+        "filename": "chrome/browser/tab_contents/view_source_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "Main frame?",
+      "range": {
+        "startLine": 302,
+        "startChar": 39,
+        "endLine": 302,
+        "endChar": 47
+      },
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11919fa3_dd4f1dfa",
+        "filename": "chrome/browser/tab_contents/view_source_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "Would it be worth using b.com here, to test the OOPIF case as well on the Site Isolation bots?",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708cf586_c24faff8",
+        "filename": "content/browser/frame_host/render_frame_host_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "nit: Rephrase, since there\u0027s no |entry| parameter.  Maybe something like:\n\nOpens a new view-source tab for the last committed document in |frame|.",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20ff228_f1e4d751",
+        "filename": "content/browser/frame_host/render_frame_host_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "nit: Can we include the {} in this file and not change the .cc file?  Seems like that would be consistent with the void methods above.",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6af32ac_8e3dcc1b",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3937,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "nit: last_committed_entry\n\nAlso, please keep the previous comment (either here or below for cloned_entry):\n  // Use the last committed entry, since the pending entry hasn\u0027t loaded yet and\n  // won\u0027t be copied into the cloned tab.",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a871b117_24658d4c",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3952,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "nit: cloned_entry",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbac1e84_a15be266",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 15
@@ -13,6 +218,75 @@
       "writtenOn": "2017-10-17T20:00:08Z",
       "side": 1,
       "message": "FWIW, my original goal was to try to remove the page state cloning, and only copy over the bits that were needed to the new page state. It would probably be nice to keep a TODO for that still: it seems unnecessary that view-source would require cloning the entire page state.",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54bc5cf8_8a523cb9",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3964,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "I agree.  We may not need to include that work in this already large and useful CL, but I hope we can avoid cloning the whole PageState for view source.  Seems like we just need the URL and POST data.",
+      "parentUuid": "cbac1e84_a15be266",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fda4cd5_e60911b9",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3970,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "...and because the desired subframe may be in a different process than cloned_entry\u0027s main frame.",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfa36b5_9c8b582c",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3980,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "Nice.  Did this move from somewhere else?  It seems like a good check to have, but I don\u0027t see where we were doing it before.",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721d4a80_628d8f0a",
+        "filename": "net/test/embedded_test_server/default_handlers.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:01:21Z",
+      "side": 1,
+      "message": "Hopefully this won\u0027t affect the assumptions of other tests that use /echoall?",
       "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
