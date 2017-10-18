@@ -125,6 +125,7 @@ bool LoadsFromCacheOnly(const ResourceRequest& request) {
   switch (request.GetCachePolicy()) {
     case WebCachePolicy::kUseProtocolCachePolicy:
     case WebCachePolicy::kValidatingCacheData:
+    case WebCachePolicy::kDisablingCache:
     case WebCachePolicy::kBypassingCache:
     case WebCachePolicy::kReturnCacheDataElseLoad:
       return false;
