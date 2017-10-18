@@ -13,5 +13,6 @@ public interface FeedbackReporter {
      *
      * @param collector the {@link FeedbackCollector} to use for extra data.
      */
-    void reportFeedback(FeedbackCollector collector);
+    default void
+        reportFeedback(FeedbackCollector collector) {}
 }
