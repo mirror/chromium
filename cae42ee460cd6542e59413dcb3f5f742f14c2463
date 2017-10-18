@@ -16,6 +16,23 @@
       "revId": "cae42ee460cd6542e59413dcb3f5f742f14c2463",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44343e0e_654f4252",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-18T20:46:53Z",
+      "side": 1,
+      "message": "Should we always return |intentStartUrl| when the |loggedIntentUrlParam| is present?\n\nFor www.google.com/q\u003da\u0026q\u003db I don\u0027t know if there is a guarantee about the precedence of the query parameters. When a web app retrieves the query parameter will it get q\u003da or q\u003db or q\u003d[a,b]",
+      "revId": "cae42ee460cd6542e59413dcb3f5f742f14c2463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
