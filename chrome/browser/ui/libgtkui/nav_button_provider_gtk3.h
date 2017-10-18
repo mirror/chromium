@@ -28,6 +28,14 @@ class LIBGTKUI_EXPORT NavButtonProviderGtk3 : public views::NavButtonProvider {
       chrome::FrameButtonDisplayType type) const override;
   gfx::Insets GetTopAreaSpacing() const override;
   int GetInterNavButtonSpacing() const override;
+  std::unique_ptr<views::Background> CreateAvatarButtonBackground(
+      std::unique_ptr<views::ButtonBackgroundPainterDelegate> delegate)
+      const override;
+  void CalculateCaptionButtonLayout(
+      const gfx::Size& content_size,
+      int top_area_height,
+      gfx::Size* caption_button_size,
+      gfx::Insets* caption_button_spacing) const override;
 
  private:
   std::map<chrome::FrameButtonDisplayType,

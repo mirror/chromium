@@ -82,6 +82,15 @@ void BrowserNonClientFrameView::UpdateClientArea() {}
 
 void BrowserNonClientFrameView::UpdateMinimumSize() {}
 
+bool BrowserNonClientFrameView::ShouldRenderNativeNavButtons() const {
+  return false;
+}
+
+const views::NavButtonProvider*
+BrowserNonClientFrameView::GetNavButtonProvider() const {
+  return nullptr;
+}
+
 void BrowserNonClientFrameView::ChildPreferredSizeChanged(views::View* child) {
   if (child == GetProfileSwitcherView()) {
     // Perform a re-layout if the avatar button has changed, since that can

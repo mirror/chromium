@@ -126,6 +126,8 @@ template("libgtkui") {
 if (use_gtk3) {
   libgtkui("libgtk3ui") {
     sources = [
+      "gtk3_background_painter.cc",
+      "gtk3_background_painter.h",
       "native_theme_gtk3.cc",
       "native_theme_gtk3.h",
       "nav_button_layout_manager_gtk3.cc",
