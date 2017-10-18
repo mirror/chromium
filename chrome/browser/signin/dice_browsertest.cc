@@ -58,8 +58,6 @@ using signin::AccountConsistencyMethod;
 
 namespace {
 
-constexpr int kAccountReconcilorDelayMs = 10;
-
 enum SignoutType {
   kSignoutTypeFirst = 0,
 
@@ -251,8 +249,6 @@ class DiceBrowserTestBase : public InProcessBrowserTest,
         base::Bind(&FakeGaia::HandleServiceLoginURL,
                    base::Bind(&DiceBrowserTestBase::OnServiceLoginRequest,
                               base::Unretained(this))));
-    signin::SetDiceAccountReconcilorBlockDelayForTesting(
-        kAccountReconcilorDelayMs);
   }
 
   // Navigates to the given path on the test server.
@@ -310,13 +306,8 @@ class DiceBrowserTestBase : public InProcessBrowserTest,
   // Navigate to a Gaia URL setting the Google-Accounts-SignOut header.
   void SignOutWithDice(SignoutType signout_type) {
     NavigateToURL(base::StringPrintf("%s?%i", kSignoutURL, signout_type));
-    if (signin::IsAccountConsistencyDiceEnabled()) {
-      EXPECT_EQ(1, reconcilor_blocked_count_);
-      WaitForReconcilorUnblockedCount(1);
-    } else {
-      EXPECT_EQ(0, reconcilor_blocked_count_);
-      WaitForReconcilorUnblockedCount(0);
-    }
+    EXPECT_EQ(0, reconcilor_blocked_count_);
+    WaitForReconcilorUnblockedCount(0);
     base::RunLoop().RunUntilIdle();
   }
 
@@ -410,7 +401,6 @@ class DiceBrowserTestBase : public InProcessBrowserTest,
 
   // FakeGaia callbacks:
   void OnSigninRequest(const std::string& dice_request_header) {
-    EXPECT_EQ(signin::IsAccountConsistencyDiceEnabled(), IsReconcilorBlocked());
     dice_request_header_ = dice_request_header;
   }
 
@@ -574,8 +564,6 @@ IN_PROC_BROWSER_TEST_F(DiceBrowserTest, SignoutMainAccount) {
       GetTokenService()->RefreshTokenIsAvailable(GetSecondaryAccountID()));
   EXPECT_EQ(2, token_revoked_notification_count_);
   EXPECT_EQ(2, token_revoked_count_);
-  EXPECT_EQ(1, reconcilor_blocked_count_);
-  WaitForReconcilorUnblockedCount(1);
 }
 
 // Checks that signing out from a secondary account does not delete the main
@@ -596,8 +584,6 @@ IN_PROC_BROWSER_TEST_F(DiceBrowserTest, SignoutSecondaryAccount) {
       GetTokenService()->RefreshTokenIsAvailable(GetSecondaryAccountID()));
   EXPECT_EQ(1, token_revoked_notification_count_);
   EXPECT_EQ(1, token_revoked_count_);
-  EXPECT_EQ(1, reconcilor_blocked_count_);
-  WaitForReconcilorUnblockedCount(1);
 }
 
 // Checks that the Dice signout flow works and deletes all tokens.
@@ -615,8 +601,6 @@ IN_PROC_BROWSER_TEST_F(DiceBrowserTest, SignoutAllAccounts) {
       GetTokenService()->RefreshTokenIsAvailable(GetSecondaryAccountID()));
   EXPECT_EQ(2, token_revoked_notification_count_);
   EXPECT_EQ(2, token_revoked_count_);
-  EXPECT_EQ(1, reconcilor_blocked_count_);
-  WaitForReconcilorUnblockedCount(1);
 }
 
 // Checks that Dice request header is not set from request from WebUI.
