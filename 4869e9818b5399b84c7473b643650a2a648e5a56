@@ -117,6 +117,24 @@
       "revId": "4869e9818b5399b84c7473b643650a2a648e5a56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e326e268_4b167a3e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 5242,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-18T16:36:21Z",
+      "side": 1,
+      "message": "Ok, thanks!\n\nHow about we create a prerender-specific delegate and set that in PreloadController.  That way there\u0027s always a non-null delegate, and the prerender version can implement every method to cancel the prerender.  Ed, does this sound like it would work?",
+      "parentUuid": "a163bdba_b00248ee",
+      "revId": "4869e9818b5399b84c7473b643650a2a648e5a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
