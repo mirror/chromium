@@ -95,7 +95,7 @@ void ChromeLoginPerformer::RunOnlineWhitelistCheck(
   // On enterprise devices, reconfirm login permission with the server.
   policy::BrowserPolicyConnectorChromeOS* connector =
       g_browser_process->platform_part()->browser_policy_connector_chromeos();
-  if (connector->IsEnterpriseManaged() && wildcard_match &&
+  if (connector->IsCloudManaged() && wildcard_match &&
       !connector->IsNonEnterpriseUser(account_id.GetUserEmail())) {
     wildcard_login_checker_.reset(new policy::WildcardLoginChecker());
     if (refresh_token.empty()) {
