@@ -57,6 +57,7 @@ class CORE_EXPORT LayoutNGBlockFlow : public LayoutBlockFlow {
                              RefPtr<NGLayoutResult>);
 
   const NGPaintFragment* PaintFragment() const { return paint_fragment_.get(); }
+  void SetPaintFragment(RefPtr<const NGPhysicalFragment>);
 
  protected:
   bool IsOfType(LayoutObjectType) const override;
