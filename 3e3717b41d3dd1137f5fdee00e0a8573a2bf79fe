@@ -22,6 +22,30 @@
       "revId": "3e3717b41d3dd1137f5fdee00e0a8573a2bf79fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd3f02c_6c790cff",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-18T18:08:33Z",
+      "side": 1,
+      "message": "Alexander suggested moving QueueingTimeEstimator to renderer/ and I agree so I\u0027ve done that. This way we avoid complicating the code just because this is in base/ where it doesn\u0027t belong.",
+      "parentUuid": "ac11226a_b93f4be7",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "3e3717b41d3dd1137f5fdee00e0a8573a2bf79fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

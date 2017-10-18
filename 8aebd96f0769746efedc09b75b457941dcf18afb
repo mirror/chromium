@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "bc7c9edc_98361800",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-18T18:08:33Z",
+      "side": 1,
+      "message": "Done. The drawback is now I have to use MainThreadTaskQueue::QueueType::COUNT as the \"other\" category. And of course string construction when reporting.",
+      "parentUuid": "23c3263a_0cfbad9d",
+      "revId": "8aebd96f0769746efedc09b75b457941dcf18afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5d66cc6_2be2fc01",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
         "patchSetId": 6
