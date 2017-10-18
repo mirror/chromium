@@ -62,6 +62,10 @@ void UiElement::Render(UiElementRenderer* renderer,
 
 void UiElement::Initialize() {}
 
+void UiElement::Initialize(VrSurfaceProvider* provider) {
+  Initialize();
+}
+
 void UiElement::OnHoverEnter(const gfx::PointF& position) {}
 
 void UiElement::OnHoverLeave() {}

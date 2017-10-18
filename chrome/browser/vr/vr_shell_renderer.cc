@@ -877,6 +877,7 @@ void ControllerRenderer::SetUp(std::unique_ptr<VrControllerModel> model) {
       continue;
     }
     glBindTexture(GL_TEXTURE_2D, texture_handles_[i]);
+    LOG(INFO) << "TEXTURE " << texture_handles_[i];
     SetTexParameters(GL_TEXTURE_2D);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixmap.width(), pixmap.height(), 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, pixmap.addr());

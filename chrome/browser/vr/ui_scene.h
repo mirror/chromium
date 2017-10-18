@@ -14,7 +14,11 @@
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_iterator.h"
 #include "chrome/browser/vr/elements/ui_element_name.h"
+#include "chrome/browser/vr/vr_surface_provider.h"
 #include "third_party/skia/include/core/SkColor.h"
+
+class GrContext;
+struct GrGLInterface;
 
 namespace base {
 class TimeTicks;
@@ -32,10 +36,10 @@ namespace vr {
 
 class UiElement;
 
-class UiScene {
+class UiScene : public VrSurfaceProvider {
  public:
   UiScene();
-  virtual ~UiScene();
+  ~UiScene() override;
 
   void AddUiElement(UiElementName parent, std::unique_ptr<UiElement> element);
 
@@ -87,6 +91,8 @@ class UiScene {
 
   void OnGlInitialized();
 
+  sk_sp<SkSurface> MakeSurface(int width, int height) override;
+
  private:
   void Animate(const base::TimeTicks& current_time);
 
@@ -99,6 +105,9 @@ class UiScene {
   bool reticle_rendering_enabled_ = true;
   bool gl_initialized_ = false;
   int first_foreground_draw_phase_ = 0;
+
+  sk_sp<GrContext> gr_context_;
+  sk_sp<const GrGLInterface> gr_interface_;
 
   DISALLOW_COPY_AND_ASSIGN(UiScene);
 };
