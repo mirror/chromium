@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fbd1ede_f8b873f2",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-18T21:21:43Z",
+      "side": 1,
+      "message": "nit: add a comment that namespaces not in the policy controller will not be reported.\nnit: name_space not names_pace",
+      "revId": "e8f6cd27e41bd290d39d8c5719726b02a247af52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e469b72f_07673dfe",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-18T21:21:43Z",
+      "side": 1,
+      "message": "What about another idea: just report the size in KB then this fancy math becomes unnecessary.\nUmaHistogramCustomCounts(name, sample, 1, 1000000, 100);\n\ngets you most of the way there.  I wouldn\u0027t mind confusing reports of 1kb and 0",
+      "revId": "e8f6cd27e41bd290d39d8c5719726b02a247af52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
