@@ -352,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "2f0969a8_d2de1f2c",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-18T16:20:06Z",
+      "side": 1,
+      "message": "OK, makes sense now. This one is fine.",
+      "parentUuid": "65daff4e_7c015e28",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48a9fd31_3c2676f3",
         "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
         "patchSetId": 3
@@ -381,6 +399,24 @@
       "side": 1,
       "message": "To normalize the value in the [0..1] range.\nAs sum of the \u0027color differences from average\u0027 is computed, it can at most be half the 256 range (The extreme case is when half of the pixels are 0 and half 256, and average is 128).\nDoes it need rephrasing or description?",
       "parentUuid": "48a9fd31_3c2676f3",
+      "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9296e3f_dbc8f85d",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-18T16:20:06Z",
+      "side": 1,
+      "message": "I know it\u0027s mathematically equivalent, but I\u0027d find it clearer to divide the\ncolor sum by 128 than to multiply the number of sampled pixels by 128.\nThe compiler will produce the same code either way.\n\nfloat sum \u003d 0;\nfor (const auto\u0026 sample : sampled_pixels)\n  sum +\u003d ColorDifference(sample, average);\nsum /\u003d 128;  // Normalize to 0...1 range\nfloat divergence \u003d sum / sampled_pixels.size();",
+      "parentUuid": "6ce052cf_f17d0ae4",
       "revId": "6c81da2e34180fba7c0ff02e8b5bdb363ec5e3f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
