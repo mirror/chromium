@@ -773,6 +773,33 @@ TEST_F(WebViewSchedulerImplTest, VirtualTimeObserver) {
 }
 
 namespace {
+void InfiniteRepostingTask(RefPtr<WebTaskRunner> task_runner) {
+  task_runner->PostTask(BLINK_FROM_HERE,
+                        WTF::Bind(&InfiniteRepostingTask, task_runner));
+}
+}  // namespace
+
+TEST_F(WebViewSchedulerImplTest, SetMaxVirtualTimeTaskStarvationCount) {
+  web_view_scheduler_->EnableVirtualTime();
+  web_view_scheduler_->SetMaxVirtualTimeTaskStarvationCount(100);
+  web_view_scheduler_->SetVirtualTimePolicy(VirtualTimePolicy::ADVANCE);
+
+  InfiniteRepostingTask(web_frame_scheduler_->ThrottleableTaskRunner());
+
+  web_view_scheduler_->GrantVirtualTimeBudget(
+      base::TimeDelta::FromMilliseconds(1000),
+      WTF::Bind(
+          [](WebViewScheduler* scheduler) {
+            scheduler->SetVirtualTimePolicy(VirtualTimePolicy::PAUSE);
+          },
+          WTF::Unretained(web_view_scheduler_.get())));
+
+  // Unless MaxVirtualTimeTaskStarvationCount is set, this test will never
+  // finish.
+  mock_task_runner_->RunUntilIdle();
+}
+
+namespace {
 
 using ScopedExpensiveBackgroundTimerThrottlingForTest =
     ScopedRuntimeEnabledFeatureForTest<

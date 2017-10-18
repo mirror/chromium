@@ -103,6 +103,8 @@ WebViewSchedulerImpl::WebViewSchedulerImpl(
       renderer_scheduler_(renderer_scheduler),
       virtual_time_policy_(VirtualTimePolicy::ADVANCE),
       background_parser_count_(0),
+      task_starvation_count_while_suspended_(0),
+      max_task_starvation_count_while_suspended_(0),
       page_visible_(true),
       disable_background_timer_throttling_(disable_background_timer_throttling),
       allow_virtual_time_to_advance_(true),
@@ -117,6 +119,9 @@ WebViewSchedulerImpl::WebViewSchedulerImpl(
 }
 
 WebViewSchedulerImpl::~WebViewSchedulerImpl() {
+  if (virtual_time_)
+    renderer_scheduler_->RemoveTaskObserver(this);
+
   // TODO(alexclarke): Find out why we can't rely on the web view outliving the
   // frame.
   for (WebFrameSchedulerImpl* frame_scheduler : frame_schedulers_) {
@@ -181,6 +186,8 @@ void WebViewSchedulerImpl::EnableVirtualTime() {
   if (virtual_time_)
     return;
 
+  renderer_scheduler_->AddTaskObserver(this);
+
   virtual_time_ = true;
   renderer_scheduler_->GetVirtualTimeDomain()->SetCanAdvanceVirtualTime(
       allow_virtual_time_to_advance_);
@@ -204,6 +211,7 @@ void WebViewSchedulerImpl::DisableVirtualTimeForTesting() {
   if (!virtual_time_)
     return;
   virtual_time_ = false;
+  renderer_scheduler_->RemoveTaskObserver(this);
   renderer_scheduler_->DisableVirtualTimeForTesting();
   virtual_time_control_task_queue_ = nullptr;
   ApplyVirtualTimePolicy();
@@ -229,6 +237,7 @@ void WebViewSchedulerImpl::SetAllowVirtualTimeToAdvance(
   } else {
     renderer_scheduler_->VirtualTimePaused();
   }
+  task_starvation_count_while_suspended_ = 0;
 }
 
 bool WebViewSchedulerImpl::VirtualTimeAllowedToAdvance() const {
@@ -296,10 +305,12 @@ void WebViewSchedulerImpl::SetVirtualTimePolicy(VirtualTimePolicy policy) {
 
     case VirtualTimePolicy::PAUSE:
       SetAllowVirtualTimeToAdvance(false);
+      task_starvation_count_while_suspended_ = 0;
       break;
 
     case VirtualTimePolicy::DETERMINISTIC_LOADING:
       ApplyVirtualTimePolicy();
+      task_starvation_count_while_suspended_ = 0;
       break;
   }
 }
@@ -493,6 +504,36 @@ void WebViewSchedulerImpl::UpdateBackgroundBudgetPoolThrottlingState() {
 
 size_t WebViewSchedulerImpl::FrameCount() const {
   return frame_schedulers_.size();
+}
+
+void WebViewSchedulerImpl::SetMaxVirtualTimeTaskStarvationCount(
+    int max_task_starvation_count) {
+  max_task_starvation_count_while_suspended_ = max_task_starvation_count;
+}
+
+void WebViewSchedulerImpl::WillProcessTask(
+    const base::PendingTask& pending_task) {}
+
+void WebViewSchedulerImpl::DidProcessTask(
+    const base::PendingTask& pending_task) {
+  // Don't run any anti-starvation logic if we're paused.
+  if (virtual_time_policy_ == VirtualTimePolicy::PAUSE)
+    return;
+
+  task_starvation_count_while_suspended_++;
+
+  if (max_task_starvation_count_while_suspended_ == 0 ||
+      task_starvation_count_while_suspended_ <
+          max_task_starvation_count_while_suspended_) {
+    return;
+  }
+
+  // Delayed tasks are being excessively starved, so allow virtual time to
+  // advance so the next delayed task can run.
+  base::TimeTicks run_time;
+  renderer_scheduler_->GetVirtualTimeDomain()->NextScheduledRunTime(&run_time);
+  renderer_scheduler_->GetVirtualTimeDomain()->AdvanceTo(run_time);
+  task_starvation_count_while_suspended_ = 0;
 }
 
 // static
