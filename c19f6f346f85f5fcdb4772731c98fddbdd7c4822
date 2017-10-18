@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "f59914c7_cef08b2b",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T09:10:04Z",
+      "side": 1,
+      "message": "Thanks, makes sense.",
+      "parentUuid": "9b97b698_8f017d2f",
+      "range": {
+        "startLine": 547,
+        "startChar": 13,
+        "endLine": 547,
+        "endChar": 42
+      },
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "122a8edf_03b4a8d1",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 1
@@ -616,6 +640,24 @@
       "side": 1,
       "message": "The CreateObjectInfo() returns a bound associated interface ptr, which must be passed via a dedicated message pipe to actually establish the Mojo connection, so I chose to get the registration object host ptr via ServiceWorkerContainerHost.GetRegistration() rather than call CreateObjectInfo() directly. Also, as we\u0027ll merge SWRegistrationHandle into SWRegistration later, I\u0027m trying to avoid involving too much with SWRegistrationHandle class.",
       "parentUuid": "dfa222aa_022a5a80",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0d8f83_e7d26f16",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T09:10:04Z",
+      "side": 1,
+      "message": "Fair enough, thanks:)",
+      "parentUuid": "cb08d49f_994645a6",
       "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
