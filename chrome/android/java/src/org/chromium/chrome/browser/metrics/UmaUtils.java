@@ -30,12 +30,16 @@ public class UmaUtils {
         // then need the start time in the C++ side before we return to Java. As such we
         // save it in a static that the C++ can fetch once it has initialized the JNI.
         sApplicationStartWallClockMs = System.currentTimeMillis();
+        // TODO: uptimeMillis in the next metric
     }
 
     /**
      * Record the time at which Chrome was brought to foreground.
      */
     public static void recordForegroundStartTime() {
+        // Discard startup navigation measurements if Chrome was brought to background once.
+        if (sBackgroundTimeMs != 0) setRunningApplicationStart(false);
+
         // Since this can be called from multiple places (e.g. ChromeActivitySessionTracker
         // and FirstRunActivity), only set the time if it hasn't been set previously or if
         // Chrome has been sent to background since the last foreground time.
@@ -56,6 +60,16 @@ public class UmaUtils {
      */
     public static boolean hasComeToForeground() {
         return sForegroundStartTimeMs != 0;
+    }
+
+    /**
+     * Whether the application is in the early stage since the browser process start. The
+     * "application start" ends right after the last histogram related to browser startup is
+     * recorded. Currently, the very first navigation commit in the lifetime of the process ends the
+     * "application start". Must only be called on the UI thread.
+     */
+    public static boolean isRunningApplicationStart() {
+        return sRunningApplicationStart;
     }
 
     /**

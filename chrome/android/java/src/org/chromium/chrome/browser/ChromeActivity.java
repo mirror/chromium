@@ -46,6 +46,7 @@ import org.chromium.base.Callback;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.DiscardableReferencePool;
+import org.chromium.base.Log;
 import org.chromium.base.SysUtils;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
@@ -310,6 +311,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
 
     @Override
     public void preInflationStartup() {
+        Log.i(TAG, "XXX: preInflationStartup()");
         super.preInflationStartup();
 
         // Force a partner customizations refresh if it has yet to be initialized.  This can happen

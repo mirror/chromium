@@ -14,6 +14,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
@@ -44,13 +45,16 @@ public class TabUmaTest {
             new ChromeActivityTestRule<>(ChromeActivity.class);
 
     private static final String TEST_PATH = "/chrome/test/data/android/about.html";
+    private static final String TAG = "TabUmaTest";
 
     private EmbeddedTestServer mTestServer;
     private String mTestUrl;
 
     @Before
     public void setUp() throws Exception {
+        Log.i(TAG, "XXX: setUp()");
         mActivityTestRule.startMainActivityOnBlankPage();
+        Log.i(TAG, "XXX: after starting main activity");
         mTestServer = EmbeddedTestServer.createAndStartServer(
                 InstrumentationRegistry.getInstrumentation().getContext());
         mTestUrl = mTestServer.getURL(TEST_PATH);
@@ -58,6 +62,7 @@ public class TabUmaTest {
 
     @After
     public void tearDown() throws Exception {
+        Log.i(TAG, "XXX: tearDown()");
         mTestServer.stopAndDestroyServer();
     }
 

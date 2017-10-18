@@ -80521,12 +80521,26 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Startup.FirstCommitNavigationTime3" units="ms">
+  <obsolete>
+    Replaced with Startup.FirstCommitNavigationTime4 on 2017-07.
+  </obsolete>
   <owner>pasko@chromium.org</owner>
   <owner>wnwen@chromium.org</owner>
   <summary>
     [Android only] The time from the first foreground entry point in the app to
     the moment the first navigation is committed, i.e. when renderer gets the
     first byte of the document.
+  </summary>
+</histogram>
+
+<histogram name="Startup.FirstCommitNavigationTime4" units="ms">
+  <owner>lizeb@chromium.org</owner>
+  <owner>pasko@chromium.org</owner>
+  <owner>wnwen@chromium.org</owner>
+  <summary>
+    [Android only] The time from the first foreground entry point in the app
+    lifetime to the moment the first navigation is committed, i.e. when renderer
+    gets the first byte of the document.
   </summary>
 </histogram>
 
@@ -98765,6 +98779,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="CustomTabs.IntentToFirstNavigationStartTime"/>
   <affected-histogram name="Startup.FirstCommitNavigationTime2"/>
   <affected-histogram name="Startup.FirstCommitNavigationTime3"/>
+  <affected-histogram name="Startup.FirstCommitNavigationTime4"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="Interval" separator="_">

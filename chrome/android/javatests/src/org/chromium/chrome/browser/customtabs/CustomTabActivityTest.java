@@ -1286,6 +1286,50 @@ public class CustomTabActivityTest {
     }
 
     /**
+     * Tests that the intent to first navigation commit histograms are recorded once per navigation.
+     */
+    @Test
+    @SmallTest
+    @RetryOnFailure
+    public void testNavigationCommitUmaRecorded() {
+        String zoomedOutHistogramName = "CustomTabs.IntentToFirstCommitNavigationTime3.ZoomedOut";
+        String zoomedInHistogramName = "CustomTabs.IntentToFirstCommitNavigationTime3.ZoomedIn";
+        Assert.assertEquals(
+                0, RecordHistogram.getHistogramTotalCountForTesting(zoomedOutHistogramName));
+        Assert.assertEquals(
+                0, RecordHistogram.getHistogramTotalCountForTesting(zoomedInHistogramName));
+        final ArrayList<Integer> navigationEvents = new ArrayList<>();
+        CustomTabsSession session = bindWithCallback(new CustomTabsCallback() {
+            @Override
+            public void onNavigationEvent(int navigationEvent, Bundle extras) {
+                navigationEvents.add(navigationEvent);
+            }
+        });
+        Intent intent = new CustomTabsIntent.Builder(session).build().intent;
+        intent.setData(Uri.parse(mTestPage));
+        intent.setComponent(
+                new ComponentName(InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                        ChromeLauncherActivity.class));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        try {
+            mCustomTabActivityTestRule.startCustomTabActivityWithIntent(intent);
+            CriteriaHelper.pollInstrumentationThread(new Criteria() {
+                @Override
+                public boolean isSatisfied() {
+                    return navigationEvents.contains(CustomTabsCallback.NAVIGATION_FINISHED);
+                }
+            });
+        } catch (InterruptedException e) {
+            Assert.fail();
+        }
+        Assert.assertEquals(
+                1, RecordHistogram.getHistogramTotalCountForTesting(zoomedOutHistogramName));
+        Assert.assertEquals(
+                1, RecordHistogram.getHistogramTotalCountForTesting(zoomedInHistogramName));
+    }
+
+    /**
      * Tests that TITLE_ONLY state works as expected with a title getting set onload.
      */
     @Test

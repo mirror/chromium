@@ -12,6 +12,7 @@ import org.chromium.base.ApplicationStatus;
 import org.chromium.base.CommandLineInitUtil;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.DiscardableReferencePool;
+import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.annotations.MainDex;
@@ -54,6 +55,8 @@ public class ChromeApplication extends ContentApplication {
      */
     @Override
     public void onCreate() {
+        Log.i(TAG, "XXX: onCreate!!");
+        Log.i(TAG, "XXX: stack trace: " + Log.getStackTraceString(new Throwable()));
         UmaUtils.recordMainEntryPointTime();
         initCommandLine();
         TraceEvent.maybeEnableEarlyTracing();
