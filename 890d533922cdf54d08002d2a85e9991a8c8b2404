@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7470dd41_31763a17",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:32:22Z",
+      "side": 1,
+      "message": "Random question (not blocking at all): Are there other things besides cancelling the request that the consumer could want to do during a redirect?  New headers, delete headers, play with cookies?  (I mostly mean this as \"Are you aware of any need for those abilities among the current consumers of URLFetcher?\")",
+      "range": {
+        "startLine": 78,
+        "startChar": 21,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "890d533922cdf54d08002d2a85e9991a8c8b2404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
