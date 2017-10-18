@@ -16,6 +16,24 @@
       "revId": "b74f734b985b115fb11ad51bf406980bbfb866ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90f204d_6b53f310",
+        "filename": "cc/paint/discardable_image_map_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-18T01:20:03Z",
+      "side": 0,
+      "message": "These checks are redundant now since the rect on PostionScaleDrawImage is set using GetRegionForImage anyway.",
+      "parentUuid": "5e0f68fb_b82c549b",
+      "revId": "b74f734b985b115fb11ad51bf406980bbfb866ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
