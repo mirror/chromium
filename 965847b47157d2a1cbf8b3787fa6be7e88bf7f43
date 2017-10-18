@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ce3b21c1_666dc0f3",
+        "filename": "docs/layout_tests_linux.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-18T17:37:24Z",
+      "side": 1,
+      "message": "Yup, separate CL is totally fine.",
+      "parentUuid": "ca973b48_cfd3f71e",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33b063c7_9d4a04d6",
         "filename": "third_party/content_shell_fonts/README.chromium",
         "patchSetId": 2
