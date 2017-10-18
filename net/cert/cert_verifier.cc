@@ -5,6 +5,7 @@
 #include "net/cert/cert_verifier.h"
 
 #include <algorithm>
+#include <utility>
 
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
@@ -74,15 +75,23 @@ bool CertVerifier::SupportsOCSPStapling() {
   return false;
 }
 
+// static
 std::unique_ptr<CertVerifier> CertVerifier::CreateDefault() {
 #if defined(OS_NACL)
   NOTIMPLEMENTED();
   return std::unique_ptr<CertVerifier>();
 #else
-  return std::make_unique<CachingCertVerifier>(
-      std::make_unique<MultiThreadedCertVerifier>(
-          CertVerifyProc::CreateDefault()));
+  return CreateForVerifier(CertVerifyProc::CreateDefault());
 #endif
 }
+
+#if !defined(OS_NACL)
+// static
+std::unique_ptr<CertVerifier> CertVerifier::CreateForVerifier(
+    scoped_refptr<CertVerifyProc> proc) {
+  return std::make_unique<CachingCertVerifier>(
+      std::make_unique<MultiThreadedCertVerifier>(proc));
+}
+#endif
 
 }  // namespace net

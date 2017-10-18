@@ -7,10 +7,10 @@
 
 #include <memory>
 #include <string>
-#include <vector>
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "build/build_config.h"  // For OS_NACL.
 #include "net/base/completion_callback.h"
 #include "net/base/hash_value.h"
 #include "net/base/net_export.h"
@@ -18,6 +18,7 @@
 
 namespace net {
 
+class CertVerifyProc;
 class CertVerifyResult;
 class CRLSet;
 class NetLogWithSource;
@@ -180,6 +181,13 @@ class NET_EXPORT CertVerifier {
   // Creates a CertVerifier implementation that verifies certificates using
   // the preferred underlying cryptographic libraries.
   static std::unique_ptr<CertVerifier> CreateDefault();
+
+#if !defined(OS_NACL)
+  // Creates a CertVerifier implementation that verifies certificates for a
+  // given CertVerifyProc.
+  static std::unique_ptr<CertVerifier> CreateForVerifier(
+      scoped_refptr<CertVerifyProc> proc);
+#endif
 };
 
 }  // namespace net
