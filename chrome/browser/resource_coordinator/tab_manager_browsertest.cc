@@ -822,16 +822,8 @@ Browser* CreateBrowserWithTabs(int num_tabs) {
 
 }  // namespace
 
-// Flaky on Linux.  Times out on Windows debug builds. http://crbug.com/772839.
-#if defined(OS_LINUX) || (defined(OS_WIN) && !defined(NDEBUG))
-#define MAYBE_DiscardTabsWithMinimizedAndOccludedWindows \
-  DISABLED_DiscardTabsWithMinimizedAndOccludedWindows
-#else
-#define MAYBE_DiscardTabsWithMinimizedAndOccludedWindows \
-  DiscardTabsWithMinimizedAndOccludedWindows
-#endif
 IN_PROC_BROWSER_TEST_F(TabManagerTest,
-                       MAYBE_DiscardTabsWithMinimizedAndOccludedWindows) {
+                       DiscardTabsWithMinimizedAndOccludedWindows) {
   TabManager* tab_manager = g_browser_process->GetTabManager();
 
   // Disable the protection of recent tabs.
