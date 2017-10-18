@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "ac223ec1_f6a572ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-18T04:37:32Z",
+      "side": 1,
+      "message": "Removed mStopped member variable. From reading NativeBackgroundTask#buildStartWithNativeRunnable() it looks like NativeBackgroundTask#onStartTaskWithNative() cannot be called after the tasked has been stopped.",
+      "parentUuid": "0c5f0113_64ba4256",
+      "range": {
+        "startLine": 65,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6c28099_2ea04d4d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
         "patchSetId": 3
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "01e6f4ad_1d514e43",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-18T04:37:32Z",
+      "side": 1,
+      "message": "This is my understanding:\n\nI expect updateManager.updateNow() to be called just once per task execution. However, if there is more work to be done, onStartTaskWithNative() schedules the task to be run again. This will create a new instance of the WebApkUpdateTask and will run updateManager.updateNow() again.\n\nI have changed \"whether there is more work to be done\" to be a class member variable. Hopefully this makes things clearer.",
+      "parentUuid": "c6c28099_2ea04d4d",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd887497_b4396013",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
         "patchSetId": 3
@@ -128,6 +176,30 @@
       "writtenOn": "2017-10-16T21:10:01Z",
       "side": 1,
       "message": "I presume that this code does not invoke native anywhere based on being called from  onStartTaskBeforeNativeLoaded. Is that correct?",
+      "range": {
+        "startLine": 112,
+        "startChar": 30,
+        "endLine": 112,
+        "endChar": 67
+      },
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "139c2eaa_8c578a61",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-18T04:37:32Z",
+      "side": 1,
+      "message": "That is correct",
+      "parentUuid": "dd887497_b4396013",
       "range": {
         "startLine": 112,
         "startChar": 30,
