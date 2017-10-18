@@ -95,6 +95,14 @@ void RecordUnexpectedNotGoingAway(Location location) {
                             NUM_LOCATIONS);
 }
 
+std::unique_ptr<base::Value> NetLogQuicConnectionMigrationTriggerCallback(
+    std::string trigger,
+    NetLogCaptureMode capture_mode) {
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  dict->SetString("trigger", trigger);
+  return std::move(dict);
+}
+
 std::unique_ptr<base::Value> NetLogQuicConnectionMigrationFailureCallback(
     QuicConnectionId connection_id,
     std::string reason,
@@ -638,6 +646,8 @@ QuicChromiumClientSession::QuicChromiumClientSession(
     std::unique_ptr<QuicServerInfo> server_info,
     const QuicServerId& server_id,
     bool require_confirmation,
+    bool migrate_session_early,
+    bool migrate_sessions_on_network_change,
     int yield_after_packets,
     QuicTime::Delta yield_after_duration,
     int cert_verify_flags,
@@ -654,6 +664,8 @@ QuicChromiumClientSession::QuicChromiumClientSession(
     : QuicSpdyClientSessionBase(connection, push_promise_index, config),
       server_id_(server_id),
       require_confirmation_(require_confirmation),
+      migrate_session_early_(migrate_session_early),
+      migrate_session_on_network_change_(migrate_sessions_on_network_change),
       clock_(clock),
       yield_after_packets_(yield_after_packets),
       yield_after_duration_(yield_after_duration),
@@ -1458,15 +1470,24 @@ int QuicChromiumClientSession::HandleWriteError(
 }
 
 void QuicChromiumClientSession::MigrateSessionOnWriteError(int error_code) {
+  // TODO(zhongyi): collect metrics on write errors.
   // If migration_pending_ is false, an earlier task completed migration.
   if (!migration_pending_)
     return;
 
   MigrationResult result = MigrationResult::FAILURE;
-  if (stream_factory_ != nullptr)
-    result = stream_factory_->MaybeMigrateSingleSessionOnWriteError(this,
-                                                                    error_code);
-
+  if (stream_factory_ != nullptr) {
+    const NetLogWithSource migration_net_log = NetLogWithSource::Make(
+        net_log_.net_log(), NetLogSourceType::QUIC_CONNECTION_MIGRATION);
+    migration_net_log.BeginEvent(
+        NetLogEventType::QUIC_CONNECTION_MIGRATION_TRIGGERED,
+        base::Bind(&NetLogQuicConnectionMigrationTriggerCallback,
+                   "WriteError"));
+    result = MigrateToAlternateNetwork(/*close_session_on_error*/ false,
+                                       migration_net_log);
+    migration_net_log.EndEvent(
+        NetLogEventType::QUIC_CONNECTION_MIGRATION_TRIGGERED);
+  }
   if (result == MigrationResult::SUCCESS)
     return;
 
@@ -1567,8 +1588,23 @@ void QuicChromiumClientSession::OnWriteUnblocked() {
 }
 
 void QuicChromiumClientSession::OnPathDegrading() {
+  // TODO(zhongyi): collect metrics on path degrading.
+
   if (stream_factory_) {
-    stream_factory_->MaybeMigrateSingleSessionOnPathDegrading(this);
+    const NetLogWithSource migration_net_log = NetLogWithSource::Make(
+        net_log_.net_log(), NetLogSourceType::QUIC_CONNECTION_MIGRATION);
+    migration_net_log.BeginEvent(
+        NetLogEventType::QUIC_CONNECTION_MIGRATION_TRIGGERED,
+        base::Bind(&NetLogQuicConnectionMigrationTriggerCallback,
+                   "PathDegrading"));
+    if (migrate_session_early_ && stream_factory_) {
+      MigrateToAlternateNetwork(true, migration_net_log);
+    } else {
+      HistogramAndLogMigrationFailure(net_log_, MIGRATION_STATUS_DISABLED,
+                                      connection_id(), "Migration disabled");
+    }
+    migration_net_log.EndEvent(
+        NetLogEventType::QUIC_CONNECTION_MIGRATION_TRIGGERED);
   }
 }
 
@@ -1776,6 +1812,37 @@ void QuicChromiumClientSession::NotifyFactoryOfSessionClosed() {
   // Will delete |this|.
   if (stream_factory_)
     stream_factory_->OnSessionClosed(this);
+}
+
+MigrationResult QuicChromiumClientSession::MigrateToAlternateNetwork(
+    bool close_session_on_error,
+    const NetLogWithSource& migration_net_log) {
+  DCHECK(stream_factory_);
+
+  if (!migrate_session_on_network_change_ || HasNonMigratableStreams() ||
+      config()->DisableConnectionMigration()) {
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_DISABLED, connection_id(),
+                                    "Migration disabled");
+    return MigrationResult::FAILURE;
+  }
+
+  NetworkChangeNotifier::NetworkHandle new_network =
+      stream_factory_->FindAlternateNetwork(
+          GetDefaultSocket()->GetBoundNetwork());
+
+  if (new_network == NetworkChangeNotifier::kInvalidNetworkHandle) {
+    // No alternate network found.
+    HistogramAndLogMigrationFailure(
+        migration_net_log, MIGRATION_STATUS_NO_ALTERNATE_NETWORK,
+        connection_id(), "No alternate network found");
+    return MigrationResult::NO_NEW_NETWORK;
+  }
+
+  stream_factory_->OnSessionGoingAway(this);
+  return Migrate(new_network,
+                 connection()->peer_address().impl().socket_address(),
+                 close_session_on_error, migration_net_log);
 }
 
 MigrationResult QuicChromiumClientSession::Migrate(
