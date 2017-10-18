@@ -5,6 +5,8 @@
 #ifndef CONTENT_CHILD_SERVICE_WORKER_CONTROLLER_SERVICE_WORKER_CONNECTOR_H_
 #define CONTENT_CHILD_SERVICE_WORKER_CONTROLLER_SERVICE_WORKER_CONNECTOR_H_
 
+#include <map>
+
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
@@ -30,6 +32,10 @@ class CONTENT_EXPORT ControllerServiceWorkerConnector
   // browser process) is already terminated.
   mojom::ControllerServiceWorker* GetControllerServiceWorker();
 
+  void AddControllerConnectionErrorHandler(uint64_t handler_id,
+                                           base::RepeatingClosure handler);
+  void RemoveControllerConnectionErrorHandler(uint64_t handler_id);
+
   void OnContainerHostConnectionClosed();
 
  private:
@@ -50,6 +56,9 @@ class CONTENT_EXPORT ControllerServiceWorkerConnector
   // but will eventually be directly connected to the controller service worker
   // in the renderer process)
   mojom::ControllerServiceWorkerPtr controller_service_worker_;
+
+  std::map<uint64_t, base::RepeatingClosure>
+      controller_connection_error_handlers_;
 
   DISALLOW_COPY_AND_ASSIGN(ControllerServiceWorkerConnector);
 };
