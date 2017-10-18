@@ -16,6 +16,7 @@
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm/wm_event.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -231,6 +232,70 @@ Orientation SizeToOrientation(const gfx::Size& size) {
   return size.width() > size.height() ? Orientation::LANDSCAPE
                                       : Orientation::PORTRAIT;
 }
+
+class ClientWindowStateDelegate
+    : public ash::CustomFrameViewAshWindowStateDelegate {
+ public:
+  ClientWindowStateDelegate(
+      ash::wm::WindowState* window_state,
+      const ShellSurface::StateChangedCallback& state_changed_callback)
+      : ash::CustomFrameViewAshWindowStateDelegate(window_state),
+        state_changed_callback_(state_changed_callback) {}
+
+  bool HandleWMEvent(ash::wm::WindowState* window_state,
+                     const ash::wm::WMEvent* event) override {
+    ash::mojom::WindowStateType next_state_type =
+        ash::mojom::WindowStateType::NORMAL;
+    switch (event->type()) {
+      case ash::wm::WM_EVENT_NORMAL:
+        next_state_type = ash::mojom::WindowStateType::NORMAL;
+        break;
+      case ash::wm::WM_EVENT_MAXIMIZE:
+        next_state_type = ash::mojom::WindowStateType::MAXIMIZED;
+        break;
+      case ash::wm::WM_EVENT_FULLSCREEN:
+        next_state_type = ash::mojom::WindowStateType::FULLSCREEN;
+        break;
+      case ash::wm::WM_EVENT_MINIMIZE:
+      case ash::wm::WM_EVENT_SNAP_LEFT:
+      case ash::wm::WM_EVENT_SNAP_RIGHT:
+      case ash::wm::WM_EVENT_SET_BOUNDS:
+      case ash::wm::WM_EVENT_TOGGLE_MAXIMIZE_CAPTION:
+      case ash::wm::WM_EVENT_TOGGLE_MAXIMIZE:
+      case ash::wm::WM_EVENT_TOGGLE_VERTICAL_MAXIMIZE:
+      case ash::wm::WM_EVENT_TOGGLE_HORIZONTAL_MAXIMIZE:
+      case ash::wm::WM_EVENT_TOGGLE_FULLSCREEN:
+      case ash::wm::WM_EVENT_CYCLE_SNAP_LEFT:
+      case ash::wm::WM_EVENT_CYCLE_SNAP_RIGHT:
+      case ash::wm::WM_EVENT_CENTER:
+      case ash::wm::WM_EVENT_SHOW_INACTIVE:
+      case ash::wm::WM_EVENT_ADDED_TO_WORKSPACE:
+      case ash::wm::WM_EVENT_DISPLAY_BOUNDS_CHANGED:
+      case ash::wm::WM_EVENT_WORKAREA_BOUNDS_CHANGED:
+      case ash::wm::WM_EVENT_PIN:
+      case ash::wm::WM_EVENT_TRUSTED_PIN:
+        return false;  // Default implementation.
+    }
+
+    const gfx::Rect& requested_bounds =
+        static_cast<const ash::wm::SetBoundsEvent*>(event)->requested_bounds();
+    if (!requested_bounds.IsEmpty()) {
+      // Bounds are passed, so continue with default implementation.
+      return false;
+    }
+
+    // Request changing the state in the client and revert the show state type
+    // set in advance.
+    // window_state->UpdateWindowPropertiesFromStateType();
+
+    state_changed_callback_.Run(window_state->GetStateType(), next_state_type);
+    return true;
+  }
+
+ private:
+  ShellSurface::StateChangedCallback state_changed_callback_;
+  DISALLOW_COPY_AND_ASSIGN(ClientWindowStateDelegate);
+};
 
 }  // namespace
 
@@ -465,23 +530,27 @@ void ShellSurface::Activate() {
   widget_->Activate();
 }
 
+void ShellSurface::MaximizeWithCommit() {
+  pending_window_state_ = ui::SHOW_STATE_MAXIMIZE;
+}
+
 void ShellSurface::Maximize() {
   TRACE_EVENT0("exo", "ShellSurface::Maximize");
 
   if (!widget_)
-    CreateShellSurfaceWidget(ui::SHOW_STATE_MAXIMIZED);
+    CreateShellSurfaceWidget(ui::SHOW_STATE_NORMAL);
 
   // Note: This will ask client to configure its surface even if already
   // maximized.
-  ScopedConfigure scoped_configure(this, true);
-  widget_->Maximize();
+  ScopedConfigure scoped_configure(this, true);  
+  ash::wm::Maximize(requested_bounds);
 }
 
 void ShellSurface::Minimize() {
   TRACE_EVENT0("exo", "ShellSurface::Minimize");
 
   if (!widget_)
-    CreateShellSurfaceWidget(ui::SHOW_STATE_MINIMIZED);
+    CreateShellSurfaceWidget(ui::SHOW_STATE_NORMAL);
 
   // Note: This will ask client to configure its surface even if already
   // minimized.
@@ -498,18 +567,23 @@ void ShellSurface::Restore() {
   // Note: This will ask client to configure its surface even if not already
   // maximized or minimized.
   ScopedConfigure scoped_configure(this, true);
-  widget_->Restore();
+  ash::wm::Restore(requested_bounds);
 }
 
-void ShellSurface::SetFullscreen(bool fullscreen) {
+void ShellSurface::RestoreWithCommit() {
+  pending_window_state_ = ui::SHOW_STATE_NORMAL;
+}
+
+void ShellSurface::SetFullscreen(bool fullscreen, const gfx::Rect& requested_bounds) {
   TRACE_EVENT1("exo", "ShellSurface::SetFullscreen", "fullscreen", fullscreen);
 
   if (!widget_)
-    CreateShellSurfaceWidget(ui::SHOW_STATE_FULLSCREEN);
+    CreateShellSurfaceWidget(ui::SHOW_STATE_NORMAL);
 
   // Note: This will ask client to configure its surface even if fullscreen
   // state doesn't change.
   ScopedConfigure scoped_configure(this, true);
+  // TODO: ash::wm::SetFullscreen(requested_bounds, fullscreen);
   widget_->SetFullscreen(fullscreen);
 }
 
@@ -989,8 +1063,13 @@ views::NonClientFrameView* ShellSurface::CreateNonClientFrameView(
   aura::Window* window = widget_->GetNativeWindow();
   // ShellSurfaces always use immersive mode.
   window->SetProperty(aura::client::kImmersiveFullscreenKey, true);
-  if (frame_enabled_)
-    return new ash::CustomFrameViewAsh(widget);
+  if (frame_enabled_) {
+    ash::CustomFrameViewAsh* frame_view = new ash::CustomFrameViewAsh(widget);
+    if (bounds_mode_ == BoundsMode::CLIENT) {
+      // static_cast<ClientWindowStateDelegate*>(ash::wm::GetWindowState(window)->delegate())->InitImmersive(frame_view);
+    }
+    return frame_view;
+  }
 
   return new CustomFrameView(widget);
 }
@@ -1413,6 +1492,11 @@ void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
   // Allow the client to request bounds that do not fill the entire work area
   // when maximized, or the entire display when fullscreen.
   window_state->set_allow_set_bounds_direct(bounds_mode_ == BoundsMode::CLIENT);
+
+  if (bounds_mode_ == BoundsMode::CLIENT) {
+    window_state->SetDelegate(base::MakeUnique<ClientWindowStateDelegate>(
+        window_state, state_changed_callback_));
+  }
 
   // Notify client of initial state if different than normal.
   if (window_state->GetStateType() != ash::mojom::WindowStateType::NORMAL &&

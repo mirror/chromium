@@ -274,6 +274,8 @@ void WindowState::RestoreAlwaysOnTop() {
 }
 
 void WindowState::OnWMEvent(const WMEvent* event) {
+  if (delegate() && delegate()->HandleWMEvent(this, event))
+    return;
   current_state_->OnWMEvent(this, event);
 }
 

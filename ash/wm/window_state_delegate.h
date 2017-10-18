@@ -10,6 +10,7 @@
 
 namespace ash {
 namespace wm {
+class WMEvent;
 class WindowState;
 
 class ASH_EXPORT WindowStateDelegate {
@@ -29,6 +30,13 @@ class ASH_EXPORT WindowStateDelegate {
   // reassert its always on top state. Returns true if delegate has handled this
   // and no additional work is needed, false otherwise.
   virtual bool RestoreAlwaysOnTop(WindowState* window_state);
+
+  // Invoked when a WM event arrives. Returns true if delegate handles this and
+  // no additional work is needed. If false is returned, then falls back to the
+  // default implementation.
+  // TODO(mtomasz, oshima): Replace this with a custom window state
+  // implementation for client side controlled windows.
+  virtual bool HandleWMEvent(WindowState* window_state, const WMEvent* event);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WindowStateDelegate);

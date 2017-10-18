@@ -19,5 +19,10 @@ bool WindowStateDelegate::RestoreAlwaysOnTop(WindowState* window_state) {
   return false;
 }
 
+bool WindowStateDelegate::HandleWMEvent(WindowState* window_state,
+                                        const WMEvent* event) {
+  return false;
+}
+
 }  // namespace wm
 }  // namespace ash

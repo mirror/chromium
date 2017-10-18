@@ -16,5 +16,15 @@ SetBoundsEvent::SetBoundsEvent(WMEventType type, const gfx::Rect& bounds)
 
 SetBoundsEvent::~SetBoundsEvent() {}
 
+MaximizeEvent::MaximizeEvent(const gfx::Rect& bounds)
+    : SetBoundsEvent(WM_EVENT_MAXIMIZE, bounds) {}
+
+MaximizeEvent::~MaximizeEvent() {}
+
+RestoreEvent::RestoreEvent(const gfx::Rect& bounds)
+    : SetBoundsEvent(WM_EVENT_NORMAL, bounds) {}
+
+RestoreEvent::~RestoreEvent() {}
+
 }  // namespace wm
 }  // namespace ash

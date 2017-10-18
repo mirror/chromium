@@ -130,8 +130,14 @@ class ShellSurface : public SurfaceTreeHost,
   // Maximizes the shell surface.
   void Maximize();
 
+  // Maximizes the shell surface.
+  void MaximizeWithCommit();
+
   // Minimize the shell surface.
   void Minimize();
+
+  // Minimize the shell surface.
+  void MinimizeWithCommit();
 
   // Restore the shell surface.
   void Restore();
@@ -411,6 +417,7 @@ class ShellSurface : public SurfaceTreeHost,
   bool system_modal_ = false;
   bool non_system_modal_window_was_active_ = false;
   gfx::ImageSkia icon_;
+  ui::WindowShowState pending_window_state_ = ui::SHOW_STATE_DEFAULT;
 
   DISALLOW_COPY_AND_ASSIGN(ShellSurface);
 };

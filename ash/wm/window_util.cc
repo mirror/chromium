@@ -215,5 +215,15 @@ void InstallResizeHandleWindowTargeterForWindow(
       window, immersive_fullscreen_controller));
 }
 
+void Maximize(aura::Window* window, const gfx::Rect& bounds) {
+  wm::MaximizeEvent event(bounds);
+  wm::GetWindowState(window)->OnWMEvent(&event);
+}
+
+void Restore(aura::Window* window, const gfx::Rect& bounds) {
+  wm::RestoreEvent event(bounds);
+  wm::GetWindowState(window)->OnWMEvent(&event);
+}
+
 }  // namespace wm
 }  // namespace ash

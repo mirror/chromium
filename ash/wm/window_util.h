@@ -16,6 +16,7 @@ class Window;
 
 namespace gfx {
 class Point;
+class Rect;
 }
 
 namespace ui {
@@ -118,6 +119,14 @@ ASH_EXPORT void RemoveLimitedPreTargetHandlerForWindow(
 ASH_EXPORT void InstallResizeHandleWindowTargeterForWindow(
     aura::Window* window,
     ImmersiveFullscreenController* immersive_fullscreen_controller);
+
+// Restores a window to the specified bounds. If the bounds are null, then
+// uses default bounds.
+ASH_EXPORT void Restore(aura::Window* window, const gfx::Rect& bounds);
+
+// Maximizes a window to the specified bounds. If the bounds are null, then
+// uses default bounds.
+ASH_EXPORT void Maximize(aura::Window* window, const gfx::Rect& bounds);
 
 }  // namespace wm
 }  // namespace ash

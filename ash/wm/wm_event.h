@@ -120,6 +120,18 @@ class ASH_EXPORT SetBoundsEvent : public WMEvent {
   DISALLOW_COPY_AND_ASSIGN(SetBoundsEvent);
 };
 
+class ASH_EXPORT MaximizeEvent : public SetBoundsEvent {
+ public:
+  explicit MaximizeEvent(const gfx::Rect& requested_bounds);
+  ~MaximizeEvent() override;
+};
+
+class ASH_EXPORT RestoreEvent : public SetBoundsEvent {
+ public:
+  explicit RestoreEvent(const gfx::Rect& requested_bounds);
+  ~RestoreEvent() override;
+};
+
 }  // namespace wm
 }  // namespace ash
 

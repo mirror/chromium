@@ -141,5 +141,9 @@ TEST_F(WindowUtilTest, MoveWindowToDisplay) {
   EXPECT_EQ(original_root, window->GetRootWindow());
 }
 
+TEST_F(WindowUtilTest, Maximize) {}
+
+TEST_F(WindowUtilTest, Restore) {}
+
 }  // namespace wm
 }  // namespace ash

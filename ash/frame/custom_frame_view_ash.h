@@ -9,9 +9,13 @@
 
 #include "ash/ash_export.h"
 #include "ash/public/interfaces/window_style.mojom.h"
+#include "ash/wm/tablet_mode/tablet_mode_observer.h"
+#include "ash/wm/window_state_delegate.h"
+#include "ash/wm/window_state_observer.h"
 #include "base/macros.h"
 #include "base/optional.h"
 #include "third_party/skia/include/core/SkColor.h"
+#include "ui/aura/window_observer.h"
 #include "ui/views/window/non_client_view.h"
 
 namespace views {
@@ -123,6 +127,43 @@ class ASH_EXPORT CustomFrameViewAsh : public views::NonClientFrameView {
   static bool use_empty_minimum_size_for_test_;
 
   DISALLOW_COPY_AND_ASSIGN(CustomFrameViewAsh);
+};
+
+///////////////////////////////////////////////////////////////////////////////
+// CustomFrameViewAshWindowStateDelegate
+
+// Handles a user's fullscreen request (Shift+F4/F4). Puts the window into
+// immersive fullscreen if immersive fullscreen is enabled for non-browser
+// windows.
+ASH_EXPORT class CustomFrameViewAshWindowStateDelegate
+    : public wm::WindowStateDelegate,
+      public wm::WindowStateObserver,
+      public aura::WindowObserver,
+      public TabletModeObserver {
+ public:
+  explicit CustomFrameViewAshWindowStateDelegate(wm::WindowState* window_state);
+  ~CustomFrameViewAshWindowStateDelegate() override;
+
+  // Initializes immersive mode.
+  void InitImmersive(CustomFrameViewAsh* custom_frame_view);
+
+  // TabletModeObserver:
+  void OnTabletModeStarted() override;
+  void OnTabletModeEnded() override;
+
+ private:
+  // wm::WindowStateDelegate:
+  bool ToggleFullscreen(wm::WindowState* window_state) override;
+  // aura::WindowObserver:
+  void OnWindowDestroying(aura::Window* window) override;
+  // wm::WindowStateObserver:
+  void OnPostWindowStateTypeChange(wm::WindowState* window_state,
+                                   mojom::WindowStateType old_type) override;
+  wm::WindowState* window_state_;
+  std::unique_ptr<ImmersiveFullscreenController>
+      immersive_fullscreen_controller_;
+
+  DISALLOW_COPY_AND_ASSIGN(CustomFrameViewAshWindowStateDelegate);
 };
 
 }  // namespace ash

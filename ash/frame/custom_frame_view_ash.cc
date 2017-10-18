@@ -16,15 +16,11 @@
 #include "ash/shell_port.h"
 #include "ash/wm/resize_handle_window_targeter.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
-#include "ash/wm/tablet_mode/tablet_mode_observer.h"
 #include "ash/wm/window_state.h"
-#include "ash/wm/window_state_delegate.h"
-#include "ash/wm/window_state_observer.h"
 #include "ash/wm/window_util.h"
 #include "base/memory/ptr_util.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
-#include "ui/aura/window_observer.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size.h"
@@ -36,46 +32,32 @@
 
 namespace ash {
 
-namespace {
+CustomFrameViewAshWindowStateDelegate::CustomFrameViewAshWindowStateDelegate(
+    wm::WindowState* window_state)
+    : window_state_(window_state) {
+  // Add a window state observer to exit fullscreen properly in case
+  // fullscreen is exited without going through
+  // WindowState::ToggleFullscreen(). This is the case when exiting
+  // immersive fullscreen via the "Restore" window control.
+  // TODO(pkotwicz): This is a hack. Remove ASAP. http://crbug.com/319048
+  window_state_->AddObserver(this);
+  window_state_->window()->AddObserver(this);
+}
 
-///////////////////////////////////////////////////////////////////////////////
-// CustomFrameViewAshWindowStateDelegate
+void CustomFrameViewAshWindowStateDelegate::InitImmersive(
+    CustomFrameViewAsh* custom_frame_view) {
+  Shell::Get()->tablet_mode_controller()->AddObserver(this);
 
-// Handles a user's fullscreen request (Shift+F4/F4). Puts the window into
-// immersive fullscreen if immersive fullscreen is enabled for non-browser
-// windows.
-class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
-                                              public wm::WindowStateObserver,
-                                              public aura::WindowObserver,
-                                              public TabletModeObserver {
- public:
-  CustomFrameViewAshWindowStateDelegate(wm::WindowState* window_state,
-                                        CustomFrameViewAsh* custom_frame_view,
-                                        bool enable_immersive)
-      : window_state_(nullptr) {
-    // Add a window state observer to exit fullscreen properly in case
-    // fullscreen is exited without going through
-    // WindowState::ToggleFullscreen(). This is the case when exiting
-    // immersive fullscreen via the "Restore" window control.
-    // TODO(pkotwicz): This is a hack. Remove ASAP. http://crbug.com/319048
-    window_state_ = window_state;
-    window_state_->AddObserver(this);
-    window_state_->window()->AddObserver(this);
-
-    if (!enable_immersive)
-      return;
-
-    Shell::Get()->tablet_mode_controller()->AddObserver(this);
-
-    immersive_fullscreen_controller_ =
-        ShellPort::Get()->CreateImmersiveFullscreenController();
-    if (immersive_fullscreen_controller_) {
-      custom_frame_view->InitImmersiveFullscreenControllerForView(
-          immersive_fullscreen_controller_.get());
-    }
+  immersive_fullscreen_controller_ =
+      ShellPort::Get()->CreateImmersiveFullscreenController();
+  if (immersive_fullscreen_controller_) {
+    custom_frame_view->InitImmersiveFullscreenControllerForView(
+        immersive_fullscreen_controller_.get());
+  }
   }
 
-  ~CustomFrameViewAshWindowStateDelegate() override {
+  CustomFrameViewAshWindowStateDelegate::
+      ~CustomFrameViewAshWindowStateDelegate() {
     if (Shell::Get()->tablet_mode_controller())
       Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
 
@@ -85,8 +67,7 @@ class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
     }
   }
 
-  // TabletModeObserver:
-  void OnTabletModeStarted() override {
+  void CustomFrameViewAshWindowStateDelegate::OnTabletModeStarted() {
     if (window_state_->IsFullscreen())
       return;
 
@@ -96,7 +77,7 @@ class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
     }
   }
 
-  void OnTabletModeEnded() override {
+  void CustomFrameViewAshWindowStateDelegate::OnTabletModeEnded() {
     if (window_state_->IsFullscreen())
       return;
 
@@ -104,9 +85,8 @@ class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
         ImmersiveFullscreenController::WINDOW_TYPE_OTHER, false);
   }
 
- private:
-  // wm::WindowStateDelegate:
-  bool ToggleFullscreen(wm::WindowState* window_state) override {
+  bool CustomFrameViewAshWindowStateDelegate::ToggleFullscreen(
+      wm::WindowState* window_state) {
     bool enter_fullscreen = !window_state->IsFullscreen();
     if (enter_fullscreen) {
       window_state_->window()->SetProperty(aura::client::kShowStateKey,
@@ -121,16 +101,16 @@ class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
     return true;
   }
 
-  // aura::WindowObserver:
-  void OnWindowDestroying(aura::Window* window) override {
+  void CustomFrameViewAshWindowStateDelegate::OnWindowDestroying(
+      aura::Window* window) {
     window_state_->RemoveObserver(this);
     window->RemoveObserver(this);
     window_state_ = nullptr;
   }
 
-  // wm::WindowStateObserver:
-  void OnPostWindowStateTypeChange(wm::WindowState* window_state,
-                                   mojom::WindowStateType old_type) override {
+  void CustomFrameViewAshWindowStateDelegate::OnPostWindowStateTypeChange(
+      wm::WindowState* window_state,
+      mojom::WindowStateType old_type) {
     if (Shell::Get()->tablet_mode_controller() &&
         Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars()) {
       DCHECK(immersive_fullscreen_controller_);
@@ -154,15 +134,6 @@ class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
           ImmersiveFullscreenController::WINDOW_TYPE_OTHER, false);
     }
   }
-
-  wm::WindowState* window_state_;
-  std::unique_ptr<ImmersiveFullscreenController>
-      immersive_fullscreen_controller_;
-
-  DISALLOW_COPY_AND_ASSIGN(CustomFrameViewAshWindowStateDelegate);
-};
-
-}  // namespace
 
 // static
 bool CustomFrameViewAsh::use_empty_minimum_size_for_test_ = false;
@@ -319,9 +290,11 @@ CustomFrameViewAsh::CustomFrameViewAsh(
   // be set. This is the case for packaged apps.
   wm::WindowState* window_state = wm::GetWindowState(frame_window);
   if (!window_state->HasDelegate()) {
-    window_state->SetDelegate(std::unique_ptr<wm::WindowStateDelegate>(
-        new CustomFrameViewAshWindowStateDelegate(window_state, this,
-                                                  enable_immersive)));
+    std::unique_ptr<CustomFrameViewAshWindowStateDelegate> delegate(
+        new CustomFrameViewAshWindowStateDelegate(window_state));
+    if (enable_immersive)
+      delegate->InitImmersive(this);
+    window_state->SetDelegate(std::move(delegate));
   }
 }
 
