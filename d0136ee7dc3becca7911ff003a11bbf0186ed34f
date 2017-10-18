@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8820b26a_2fd67894",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-18T17:49:05Z",
+      "side": 1,
+      "message": "Done. Although there are no dchecks that it is currently ASYNC without this patch, so these DCHECKs might fail if the image is marked as sync for some other unrelated reason.",
+      "parentUuid": "5a881d04_4bb41edf",
+      "range": {
+        "startLine": 265,
+        "startChar": 4,
+        "endLine": 265,
+        "endChar": 30
+      },
+      "revId": "d0136ee7dc3becca7911ff003a11bbf0186ed34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cfb4645_ce36644d",
         "filename": "cc/tiles/checker_image_tracker.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "d0136ee7dc3becca7911ff003a11bbf0186ed34f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce857c2_d6a339a6",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-18T17:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cfb4645_ce36644d",
+      "range": {
+        "startLine": 475,
+        "startChar": 8,
+        "endLine": 476,
+        "endChar": 48
+      },
+      "revId": "d0136ee7dc3becca7911ff003a11bbf0186ed34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
