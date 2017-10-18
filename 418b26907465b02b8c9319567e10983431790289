@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1838377_2a91e868",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-18T05:30:55Z",
+      "side": 1,
+      "message": "do we need to use runtime polymorphism for this? Could we make it compile time by using a template trait. that would reduce the code a bit and also make it more efficient. something like:\n\ntemplate\u003ctypename Traits\u003e\nclass ScopedLayerAnimationObserver {\n public:\n  // ui::ImplicitAnimationObserver overrides:\n  void OnImplicitAnimationsCompleted() override {\n    if (layer_) {\n      Traits::RemoveRequest(layer);\n      layer_-\u003eGetAnimator()-\u003eRemoveAndDestroyOwnedObserver(this);\n    }\n  }\n  ...\n};\n\nstruct RenderSurfaceCachingTraits {\n  static void AddRequest(ui::Layer* layer) {\n    layer-\u003eAddCacheRenderSurfaceRequest();\n  }\n  static void RemoveRequest(ui::Layer* layer) {\n    layer-\u003eRemoveCacheRenderSurfaceRequest();\n  }\n};\nusing ScopedRenderSurfaceCaching \u003d ScopedLayerAnimationObserver\u003cRenderSurfaceCachingTraits\u003e;",
+      "revId": "418b26907465b02b8c9319567e10983431790289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
