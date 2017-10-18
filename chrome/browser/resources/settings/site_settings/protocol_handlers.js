@@ -59,6 +59,16 @@ Polymer({
     /* Labels for the toggle on/off positions. */
     toggleOffLabel: String,
     toggleOnLabel: String,
+
+    playStoreEnabled: {
+      type: Boolean,
+      value: false,
+    },
+
+    settingsAppAvailable: {
+      type: Boolean,
+      value: false,
+    },
   },
 
   /** @override */
@@ -71,6 +81,28 @@ Polymer({
         'setIgnoredProtocolHandlers',
         this.setIgnoredProtocolHandlers_.bind(this));
     this.browserProxy.observeProtocolHandlers();
+  },
+
+  /** @override */
+  attached: function() {
+    if (settings.AndroidAppsBrowserProxyImpl) {
+      cr.addWebUIListener(
+          'android-apps-info-update', this.androidAppsInfoUpdate_.bind(this));
+    }
+  },
+
+  /**
+   * @param {!AndroidAppsInfo} info - keeps track of ARC flags.
+   * @private
+   */
+  androidAppsInfoUpdate_: function(info) {
+    this.playStoreEnabled = info.playStoreEnabled;
+    this.settingsAppAvailable = info.settingsAppAvailable;
+    if (!this.playStoreEnabled || !this.settingsAppAvailable) {
+      this.$.manageApps.hidden = true;
+    } else {
+      this.$.manageApps.hidden = false;
+    }
   },
 
   /**
@@ -177,5 +209,13 @@ Polymer({
         .showAt(
             /** @type {!Element} */ (
                 Polymer.dom(/** @type {!Event} */ (event)).localTarget));
-  }
+  },
+
+  /**
+   * Opens an activity to handle App links (preferred apps).
+   * @private
+   */
+  onManageAndroidAppsTap_: function() {
+    this.browserProxy.showAndroidManageAppLinks();
+  },
 });
