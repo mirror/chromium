@@ -16,6 +16,24 @@
       "revId": "0b16d309a559bf9cfb40adb029a1cd625c486d38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7619ee_baf45181",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-18T16:42:19Z",
+      "side": 1,
+      "message": "Tried but margin collapsing code crashes. Probably there are some data parents/siblings need to refer to?\n\nAdded TODO to review. Note, you must be aware but this is copying block properties, not the one creating RootInlineBox.",
+      "parentUuid": "34528962_5e3dbcba",
+      "revId": "0b16d309a559bf9cfb40adb029a1cd625c486d38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
