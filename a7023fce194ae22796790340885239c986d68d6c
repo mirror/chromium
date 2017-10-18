@@ -22,6 +22,30 @@
       "revId": "a7023fce194ae22796790340885239c986d68d6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce1ed39_026174bc",
+        "filename": "content/common/resource_messages.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-18T20:28:17Z",
+      "side": 1,
+      "message": "The upload request will fail, since DataPipeElementReader will keep trying to read the larger size from the data pipe but that\u0027ll close as there is no more data.\n\nTo answer what I think you\u0027re also asking, we don\u0027t use this size as offsets in buffers.",
+      "parentUuid": "f232b5e7_0055a2e4",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 44
+      },
+      "revId": "a7023fce194ae22796790340885239c986d68d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
