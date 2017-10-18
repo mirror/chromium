@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05770ef8_9f0c39d2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 90324,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T18:29:12Z",
+      "side": 1,
+      "message": "Could you associate an enum here, rather than listing examples below?  (Before doing so, please make sure that it\u0027s ok for the labels to appear publicly.  I\u0027d guess it\u0027s ok for most or all of them, but better to double-check that ahead of time.)",
+      "range": {
+        "startLine": 90324,
+        "startChar": 53,
+        "endLine": 90324,
+        "endChar": 65
+      },
+      "revId": "a628c07fb1dbfb964396b68a1bbed3818299f60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d5f7910_d7ef434b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 90331,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T18:29:12Z",
+      "side": 1,
+      "message": "I believe that it\u0027s discouraged to publicly share internal links like this one.  Please wrap it in a go/ link, which is ok to share publicly.",
+      "range": {
+        "startLine": 90331,
+        "startChar": 4,
+        "endLine": 90331,
+        "endChar": 162
+      },
+      "revId": "a628c07fb1dbfb964396b68a1bbed3818299f60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
