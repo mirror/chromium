@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dfbc2cf_fff6169d",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-18T16:51:02Z",
+      "side": 1,
+      "message": "Is there a way a compromised renderer could decrement the ref counts, and cause the browser to free the object while other valid refs remain?",
+      "range": {
+        "startLine": 19,
+        "startChar": 14,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "632f017ae40d8618ff542a0833e53adee877b26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
