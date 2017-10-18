@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "4a5eb787_7fd2f45f",
+        "filename": "chrome/browser/chromeos/extensions/input_method_apitest_chromeos.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-18T16:41:28Z",
+      "side": 1,
+      "message": "CommandLine is being dereferenced here, so command_line.h should stay.",
+      "revId": "2570d832201261ee794311ba0d6265f7e14b9c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b862f3_cc5d0926",
+        "filename": "chrome/browser/net/predictor_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-18T16:41:28Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "2570d832201261ee794311ba0d6265f7e14b9c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e9e1aa3_21372aef",
         "filename": "content/browser/renderer_host/media/video_capture_browsertest.cc",
         "patchSetId": 14
@@ -13,6 +47,30 @@
       "writtenOn": "2017-10-18T14:33:42Z",
       "side": 1,
       "message": "Should I move this to top of protected?",
+      "range": {
+        "startLine": 222,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 53
+      },
+      "revId": "2570d832201261ee794311ba0d6265f7e14b9c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9264f26_1d3c0693",
+        "filename": "content/browser/renderer_host/media/video_capture_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-18T16:41:28Z",
+      "side": 1,
+      "message": "Yes please. I\u0027ll make a note of this and clean it up a bit more afterwards. DISALLOW_COPY_AND_ASSIGN needs to stay private though.",
+      "parentUuid": "8e9e1aa3_21372aef",
       "range": {
         "startLine": 222,
         "startChar": 2,
