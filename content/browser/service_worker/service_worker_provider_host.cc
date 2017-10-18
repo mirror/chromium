@@ -27,6 +27,7 @@
 #include "content/common/service_worker/service_worker_messages.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/common/service_worker/service_worker_utils.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
@@ -38,6 +39,7 @@
 #include "content/public/common/resource_request_body.h"
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "net/base/url_util.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "storage/browser/blob/blob_storage_context.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
@@ -135,6 +137,25 @@ void GetInterfaceImpl(const std::string& interface_name,
     return;
 
   // TODO(sammc): Dispatch interface requests.
+}
+
+void FilterInterfacesOnUiThread(
+    int process_id,
+    service_manager::mojom::InterfaceProviderPtr provider,
+    service_manager::mojom::InterfaceProviderRequest request) {
+  auto* process = RenderProcessHost::FromID(process_id);
+  if (!process)
+    return;
+
+  service_manager::Connector* connector =
+      BrowserContext::GetConnectorFor(process->GetBrowserContext());
+  // |connector| is null in unit tests.
+  if (!connector)
+    return;
+
+  connector->FilterInterfaces(mojom::kNavigation_ServiceWorkerSpec,
+                              process->GetChildIdentity(), std::move(request),
+                              std::move(provider));
 }
 
 }  // anonymous namespace
@@ -726,8 +747,13 @@ ServiceWorkerProviderHost::CompleteStartWorkerPreparation(
   binding_.set_connection_error_handler(
       base::BindOnce(&RemoveProviderHost, context_, process_id, provider_id()));
 
-  interface_provider_binding_.Bind(
-      mojo::MakeRequest(&provider_info->interface_provider));
+  service_manager::mojom::InterfaceProviderPtr interface_provider;
+  interface_provider_binding_.Bind(mojo::MakeRequest(&interface_provider));
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&FilterInterfacesOnUiThread, process_id,
+                     std::move(interface_provider),
+                     mojo::MakeRequest(&provider_info->interface_provider)));
 
   // Set the document URL to the script url in order to allow
   // register/unregister/getRegistration on ServiceWorkerGlobalScope.
