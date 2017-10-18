@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d7a604d_a357f9f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-18T19:57:13Z",
+      "side": 1,
+      "message": "Actually, probably a better option is to not make this protected, and have the VR test framework itself hold onto the TestVrShellDelegate reference, so that getInstanceForTesting() can just return the one the framework created, without using ApplicationStatus.getLastTrackedFocusedActivity() in TestVrShellDelegate.\n\nFeel free to ignore if you disagree.",
+      "range": {
+        "startLine": 444,
+        "startChar": 4,
+        "endLine": 444,
+        "endChar": 13
+      },
+      "revId": "9a701b2b7410f43fa841a8d3f30e21f7495ee952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
