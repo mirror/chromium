@@ -22,6 +22,30 @@
       "revId": "c80b6d511ffcee2612a87b807b8b2425ef655b00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07b87a4_55caac14",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-18T17:37:48Z",
+      "side": 1,
+      "message": "Added UMA to track for available space after freeing up unimportant storage. As unimportant storage size is not significant compares with cache size, I ignored it previously.",
+      "parentUuid": "9fb55783_56dccbb9",
+      "range": {
+        "startLine": 182,
+        "startChar": 16,
+        "endLine": 182,
+        "endChar": 54
+      },
+      "revId": "c80b6d511ffcee2612a87b807b8b2425ef655b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
