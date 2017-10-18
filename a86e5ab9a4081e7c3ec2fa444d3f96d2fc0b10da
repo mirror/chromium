@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d2e69e7_c3240d4a",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-18T19:10:41Z",
+      "side": 1,
+      "message": "In a way yes: ToT code didn\u0027t check the returned scoped_refptr\nand used it directly, but it could be nullptr, which would lead\nto a crash, potentially.  GetActiveModeForDisplayId() is supposed\nto never give back a null (from the comments in the impl), but\nother callers do test the result.",
+      "parentUuid": "e80fa964_4e278685",
+      "revId": "a86e5ab9a4081e7c3ec2fa444d3f96d2fc0b10da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "608cd213_7e92bafd",
         "filename": "ui/display/manager/display_manager_utilities.h",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "a86e5ab9a4081e7c3ec2fa444d3f96d2fc0b10da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3f8d28_1866869d",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-18T19:10:41Z",
+      "side": 1,
+      "message": "GetDisplayModeForUIScale() is only used in display_manager_test_api.cc,\nso I moved it there as a file-static function. Since it\u0027s limited to\na file now, I left the signature as-is.\n\nGetDisplayModeForUIScale() and GetDisplayModeForNextResolution()\nare only used from display_manager.cc, so I moved them there. I found\nwhat could be a bug: find_if() was not tested against the end() of\nthe vector. So i changed the signature to return a boolean and fill\nin (if successful) a ManagedDisplayMode, similar to what is done in \nthis CL for Get{Active,Selected}ModeForDisplayId().",
+      "parentUuid": "608cd213_7e92bafd",
+      "revId": "a86e5ab9a4081e7c3ec2fa444d3f96d2fc0b10da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
