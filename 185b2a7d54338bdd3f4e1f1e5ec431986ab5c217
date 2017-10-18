@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ff3943f_7598d7d3",
+        "filename": "tools/perf/contrib/cros_benchmarks/tab_switching_bench.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-10-18T09:58:00Z",
+      "side": 1,
+      "message": "would be more clear to specify it\u0027s the pause between tab creation and tab switch",
+      "revId": "185b2a7d54338bdd3f4e1f1e5ec431986ab5c217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
