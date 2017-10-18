@@ -45,6 +45,46 @@
       "revId": "21b71d01c4b0e119df8770b042b53ea3d6a1f3c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca19f64_baa97b40",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-18T17:32:19Z",
+      "side": 1,
+      "message": "Would it be simpler to just change the logic in RenderWidgetHostInputEventRouter, sending the entire scroll sequence to the current bubble target after the GSB gets bubbled?",
+      "revId": "21b71d01c4b0e119df8770b042b53ea3d6a1f3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa98f0a4_6dfdb7c1",
+        "filename": "content/public/browser/render_widget_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-18T17:32:19Z",
+      "side": 1,
+      "message": "Is this only used for testing?\n\nAnd would it be simpler to just pass the InputEventAckState, rather than having all the callers compare the ack state to see if the boolean should be set?",
+      "range": {
+        "startLine": 227,
+        "startChar": 67,
+        "endLine": 227,
+        "endChar": 75
+      },
+      "revId": "21b71d01c4b0e119df8770b042b53ea3d6a1f3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
