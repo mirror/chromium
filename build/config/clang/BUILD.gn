@@ -4,6 +4,11 @@
 
 import("clang.gni")
 
+declare_args() {
+  # Additional arguments when using the chrome plugin for clang.
+  clang_chrome_plugin_extra_args = []
+}
+
 config("find_bad_constructs") {
   if (clang_use_chrome_plugins) {
     cflags = []
@@ -48,6 +53,8 @@ config("find_bad_constructs") {
         "check-ipc",
       ]
     }
+
+    cflags += clang_chrome_plugin_extra_args
   }
 }
 
