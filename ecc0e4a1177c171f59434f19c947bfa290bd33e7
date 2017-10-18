@@ -33,6 +33,24 @@
       "revId": "ecc0e4a1177c171f59434f19c947bfa290bd33e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d50e5de_efdc2310",
+        "filename": "android_webview/tools/apk_merger.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-10-18T16:28:34Z",
+      "side": 1,
+      "message": "Looking at the usage of ApkMergeFailure above, it looks like the intention of the original author was to use that exception as a way to quickly exit with some clear error message of what went wrong.\n\nAs in there was no \"internal error\" because of some unexpected situation happened (when you would like to see an Exception and stack), but an actual case of the script _handling_ an expected error by, well, showing you an error message and exiting.\n\nwtyt?",
+      "parentUuid": "cd37a1ee_2ca7d6aa",
+      "revId": "ecc0e4a1177c171f59434f19c947bfa290bd33e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
