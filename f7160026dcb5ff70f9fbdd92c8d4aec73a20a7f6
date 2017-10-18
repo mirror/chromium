@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e20621a_7f5abc5a",
+        "filename": "components/machine_intelligence/generic_logistic_regression_inference.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-18T20:47:33Z",
+      "side": 1,
+      "message": "keep as a const ref instead of a copy? also create a const ref alias for weight_it.second?",
+      "range": {
+        "startLine": 26,
+        "startChar": 21,
+        "endLine": 26,
+        "endChar": 22
+      },
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127a789e_12a2ba05",
+        "filename": "components/machine_intelligence/generic_logistic_regression_inference.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-18T20:47:33Z",
+      "side": 1,
+      "message": "can be shrunk to\n\n  if (...)\n    return foo;\n  return bar;\n\nor ..\n\n  return (...) ? foo : bar;",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a30a9d_40ce5446",
+        "filename": "components/machine_intelligence/proto/generic_logistic_regression_model.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-18T20:47:33Z",
+      "side": 1,
+      "message": "add [packed\u003dtrue] for all of these.",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1a33ba_a021ab3a",
+        "filename": "components/machine_intelligence/proto/generic_logistic_regression_model.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-18T20:47:33Z",
+      "side": 1,
+      "message": "documentation?",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe84947b_9b9f7529",
+        "filename": "components/machine_intelligence/ranker_example_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-18T20:47:33Z",
+      "side": 1,
+      "message": "I think you can:\n\n  return base::ContainsKey(example.features(), key);",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6debd79_330c09c0",
+        "filename": "components/machine_intelligence/ranker_example_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-18T20:47:33Z",
+      "side": 1,
+      "message": "this can lead to truncation. Should the feature value be int32 and/or the returned value from this function be a double?",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3f3549_f1fdaee6",
+        "filename": "components/machine_intelligence/ranker_example_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-18T20:47:33Z",
+      "side": 1,
+      "message": "log an error here? dvlog?",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da88515_593043e1",
+        "filename": "components/machine_intelligence/ranker_example_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-18T20:47:33Z",
+      "side": 1,
+      "message": "Do you need this helper? i.e., are there use cases where you want to know if the feature is in the example but you don\u0027t want to actually retrieve the value? If not, then I\u0027d get rid of this.\n\nOtherwise, someone will eventually write:\n\n  // Does twice as much work as needed.\n  if (HasFeature(\"foo\", example))\n    SafeGetFeature(\"foo\", example, \u0026foo);\n\nYou could consider accepting nullptr for the last param?",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd3ae43_aa116789",
+        "filename": "components/machine_intelligence/ranker_example_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-18T20:47:33Z",
+      "side": 1,
+      "message": "WARN_UNUSED_RESULT for all of these?",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
