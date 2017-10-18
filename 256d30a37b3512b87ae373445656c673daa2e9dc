@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f97259c2_9b68349d",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-10-18T00:14:52Z",
+      "side": 1,
+      "message": "I feel that when we fix the flashing of the previous card, this change won\u0027t be necessary.\nFlashing happens when we show an incompletely rendered web view.\nWhen we are able to show the web view only after it\u0027s rendered, both flashing and showing an empty card should go away, right?\nSo, would it make sense to just fix flashing?",
+      "range": {
+        "startLine": 108,
+        "startChar": 9,
+        "endLine": 108,
+        "endChar": 19
+      },
+      "revId": "256d30a37b3512b87ae373445656c673daa2e9dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
