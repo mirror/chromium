@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6ac84b3_bb344d9e",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1411,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T13:22:02Z",
+      "side": 1,
+      "message": "I\u0027m not 100% convinced with the name but it\u0027s a name so I\u0027m not going to bother you more with this :)",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d979b92b_4bcc131d",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T13:22:02Z",
+      "side": 1,
+      "message": "Can you file a bug and link to it here?",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16be73b9_f38e5441",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T13:22:02Z",
+      "side": 1,
+      "message": "Sorry for missing that in the previous review. Why do you call `SetHasReceivedUserGesture(false)`. Is it to deprecate it? If yes, why calling it with `false` all the time?",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f78ffc_bd47551f",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1172,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T13:22:02Z",
+      "side": 1,
+      "message": "Why do you need to static_cast? Is the compiler confused with the downcast?",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7aa9248_1e4d07ce",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T13:22:02Z",
+      "side": 1,
+      "message": "ditto wrt to static_cast",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428f15a7_649dddfe",
+        "filename": "third_party/WebKit/Source/core/frame/UserActivationState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T13:22:02Z",
+      "side": 1,
+      "message": "Maybe add a comment giving some context with regards to where this number is coming from?",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ff9c92_70781cb4",
+        "filename": "third_party/WebKit/Source/core/frame/UserActivationState.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T13:22:02Z",
+      "side": 1,
+      "message": "Can you add a class-level description.",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8ead795_070346c6",
+        "filename": "third_party/WebKit/Source/core/frame/UserActivationState.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T13:22:02Z",
+      "side": 1,
+      "message": "style: it would follow modern C++ if you were to assign these members directly in the declaration, see below.",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5acbc8_47ffce01",
+        "filename": "third_party/WebKit/Source/core/frame/UserActivationState.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T13:22:02Z",
+      "side": 1,
+      "message": "```\nbool has_been_active_ \u003d false;\nbool is_active_ \u003d false;\n```",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af8377e_c8630ce3",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 9
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T13:22:02Z",
+      "side": 1,
+      "message": "You might want to say that it is enabled by //content using flag kUserActivationWoToken (or whatever the flag name is :))",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
