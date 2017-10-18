@@ -9,12 +9,17 @@
 #include "ash/system/power/power_button_controller.h"
 #include "ash/system/power/tablet_power_button_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/time/tick_clock.h"
 #include "ui/events/event.h"
 
 namespace ash {
 
 namespace {
+
+constexpr base::TimeDelta kKeyPressDelayThresholdForUma =
+    base::TimeDelta::FromSeconds(1);
 
 bool IsTabletMode() {
   return Shell::Get()
@@ -139,11 +144,26 @@ void PowerButtonScreenshotController::OnKeyEvent(ui::KeyEvent* event) {
 bool PowerButtonScreenshotController::InterceptScreenshotChord() {
   if (volume_down_key_pressed_ && power_button_pressed_) {
     base::TimeTicks now = tick_clock_->NowTicks();
+
+    // Record the delay within one second between power button pressed and
+    // volume down key pressed. This will help us determine the best screenshot
+    // chord delay for users.
+    if (now <= volume_down_key_pressed_time_ + kKeyPressDelayThresholdForUma &&
+        now <= power_button_pressed_time_ + kKeyPressDelayThresholdForUma) {
+      const base::TimeDelta key_pressed_delay =
+          power_button_pressed_time_ - volume_down_key_pressed_time_;
+      UMA_HISTOGRAM_TIMES("PowerButtonScreenshot.DelayBetweenAccelKeyPressed",
+                          key_pressed_delay.magnitude());
+    }
+
     if (now <= volume_down_key_pressed_time_ + kScreenshotChordDelay &&
         now <= power_button_pressed_time_ + kScreenshotChordDelay) {
       Shell::Get()->accelerator_controller()->PerformActionIfEnabled(
           TAKE_SCREENSHOT);
       consume_volume_down_ = true;
+
+      base::RecordAction(
+          base::UserMetricsAction("Accel_PowerButtonScreenshot"));
       return true;
     }
   }
