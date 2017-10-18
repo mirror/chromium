@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "628fcd3c_a1ae48aa",
+        "filename": "third_party/content_shell_fonts/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-18T17:40:34Z",
+      "side": 1,
+      "message": "Cool, thank you for the very quick reply!",
+      "parentUuid": "859f832b_008cffa1",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33b063c7_9d4a04d6",
         "filename": "third_party/content_shell_fonts/README.chromium",
         "patchSetId": 2
