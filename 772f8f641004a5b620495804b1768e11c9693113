@@ -521,6 +521,30 @@
     },
     {
       "key": {
+        "uuid": "ac227964_067a244c",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T16:59:03Z",
+      "side": 1,
+      "message": "Noticed that I do actually use () more than not, so update to add them everywhere instead.",
+      "parentUuid": "71e3897e_30f1d20c",
+      "range": {
+        "startLine": 209,
+        "startChar": 47,
+        "endLine": 209,
+        "endChar": 49
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3854fae8_c964fef2",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 6
@@ -544,6 +568,30 @@
     },
     {
       "key": {
+        "uuid": "fdf3cf7f_6db56fef",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T16:59:03Z",
+      "side": 1,
+      "message": "Whoops, comment was from when the code actually skipped a couple here. I\u0027ll just remove it since it\u0027s not actually accurate anyways (.a files can have 1 or 2 chunks to skip)",
+      "parentUuid": "3854fae8_c964fef2",
+      "range": {
+        "startLine": 309,
+        "startChar": 6,
+        "endLine": 309,
+        "endChar": 43
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a1755e1_1530dad9",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 6
@@ -555,6 +603,30 @@
       "writtenOn": "2017-10-18T14:40:02Z",
       "side": 1,
       "message": "First and last bytes of an ELF string table is always \u0027\\0\u0027:\n\nhttp://refspecs.linuxbase.org/elf/gabi4+/ch4.strtab.html",
+      "range": {
+        "startLine": 347,
+        "startChar": 0,
+        "endLine": 348,
+        "endChar": 51
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74bd5508_59b630a1",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T16:59:03Z",
+      "side": 1,
+      "message": "Didn\u0027t know that! I don\u0027t think it\u0027s actually applicable to this comment though. I don\u0027t think the .rodata section is actually a string table (just a section full of strings). The comment is referring to the indices spit out by nm that have the string offsets within .rodata. I\u0027ve only ever seen it where the first string is at offset 0... but for some reason this is necessary anyways when run over all of chrome (perhaps has to do with multiple .rodata.str sections exist)",
+      "parentUuid": "4a1755e1_1530dad9",
       "range": {
         "startLine": 347,
         "startChar": 0,
@@ -613,6 +685,30 @@
       "writtenOn": "2017-10-18T14:40:02Z",
       "side": 1,
       "message": "This always gets reassigned in line 397. Should this initialization occur elsewhere, or maybe a comment should be added?",
+      "range": {
+        "startLine": 395,
+        "startChar": 8,
+        "endLine": 395,
+        "endChar": 28
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da11a55_5c085fb6",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T16:59:03Z",
+      "side": 1,
+      "message": "It\u0027s also used as an input on line 397. Added a comment.",
+      "parentUuid": "6b0ac3cd_4ada5871",
       "range": {
         "startLine": 395,
         "startChar": 8,
@@ -684,6 +780,30 @@
       "side": 1,
       "message": "Maybe update comment?",
       "parentUuid": "4dba332f_02f3fcf5",
+      "range": {
+        "startLine": 613,
+        "startChar": 0,
+        "endLine": 614,
+        "endChar": 51
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "557cd6ca_86d56884",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T16:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6717a4d4_027d3ad9",
       "range": {
         "startLine": 613,
         "startChar": 0,
