@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script type="module">
+// Run with --js-flags=--harmony-import-meta, e.g.
+// $ ./third_party/WebKit/Tools/Scripts/run-blink-wptserve &
+// $ ./out/Release/content_shell --js-flags=--harmony-import-meta http://localhost:8001/html/semantics/scripting-1/the-script-element/module/import-meta-url-1.html
+
+import { importMetaOnRootModule, importMetaOnDependentModule }
+    from "./import-meta-root.js";
+
+var importMetaOnRootInlineModule = import.meta.url;
+
+test(() => {
+  var base = location.href.slice(0, location.href.lastIndexOf('/'));
+  assert_equals(importMetaOnRootInlineModule, location.href, 'root inline script');
+  assert_equals(importMetaOnRootModule.url, base + "/import-meta-root.js", 'root external script');
+  assert_equals(importMetaOnDependentModule.url, base + "/import-meta-dependent.js", 'dependent external script');
+}, "import.meta.url");
+
+</script>
