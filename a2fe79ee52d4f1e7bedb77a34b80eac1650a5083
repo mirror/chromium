@@ -46,6 +46,40 @@
       "revId": "a2fe79ee52d4f1e7bedb77a34b80eac1650a5083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9495a6d2_771499e2",
+        "filename": "ui/views/controls/native/native_view_host_mac.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T23:45:08Z",
+      "side": 1,
+      "message": "something to try for Mac... \n\nThere\u0027s also\n\n[host_-\u003enative_view() setLayerContentsPlacement:NSViewLayerContentsPlacementScaleProportionallyToFit];\n\nwhich might just magically do what you\u0027re trying to achieve. But I that might only affect layer-backed NSViews (we use layer-hosting NSViews for WebContents).\n\nI suspect you actually need to change the contents gravity on the layer like we discussed over email. But setting this property on the NSView could be a way to communicate to AcceleratedWidgetMac what contentsGravity it should be using in GotIOSurfaceFrame()",
+      "revId": "a2fe79ee52d4f1e7bedb77a34b80eac1650a5083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091a621b_e31c7901",
+        "filename": "ui/views/controls/native/native_view_host_mac_unittest.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T23:45:08Z",
+      "side": 1,
+      "message": "The bounds of \n\n[[[native_view layer] subLayer] bounds] is probably the thing you\u0027re interested in to get the render size. AcceleratedWidgetMac automatically resizes that whenever a frame is swapped in from the GPU process (it will always match the renderer size). But that subLayer is only *created* once the first frame is received (since frames can be provided from different sources..), so you might need to pump some events.",
+      "revId": "a2fe79ee52d4f1e7bedb77a34b80eac1650a5083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
