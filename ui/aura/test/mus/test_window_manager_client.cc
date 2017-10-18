@@ -54,6 +54,7 @@ void TestWindowManagerClient::SetDisplayRoot(
     ui::mojom::WmViewportMetricsPtr viewport_metrics,
     bool is_primary_display,
     Id window_id,
+    const std::vector<display::Display>& software_mirroring_display_list,
     const SetDisplayRootCallback& callback) {}
 
 void TestWindowManagerClient::SetDisplayConfiguration(

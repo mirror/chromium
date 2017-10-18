@@ -317,14 +317,20 @@ std::unique_ptr<AshWindowTreeHost> ShellPortMash::CreateAshWindowTreeHost(
       init_params.device_scale_factor;
   display_params->viewport_metrics.ui_scale_factor =
       init_params.ui_scale_factor;
+  display::DisplayManager* display_manager = Shell::Get()->display_manager();
   display::Display mirrored_display =
-      Shell::Get()->display_manager()->GetMirroringDisplayById(
-          init_params.display_id);
+      display_manager->GetMirroringDisplayById(init_params.display_id);
   if (mirrored_display.is_valid()) {
     display_params->display =
         std::make_unique<display::Display>(mirrored_display);
   }
   display_params->is_primary_display = true;
+  // TODO(crbug.com/764472): Support unified mode in Mus/Mash.
+  if (init_params.display_id == display::DisplayManager::kUnifiedDisplayId) {
+    display_params->software_mirroring_display_list =
+        display_manager->software_mirroring_display_list();
+  }
+  LOG(ERROR) << "MSW ShellPortMash::CreateAshWindowTreeHost " << display_manager->software_mirroring_display_list().size() << " / " << display_params->software_mirroring_display_list.size();
   aura::WindowTreeHostMusInitParams aura_init_params =
       window_manager_->window_manager_client()->CreateInitParamsForNewDisplay();
   aura_init_params.display_id = init_params.display_id;

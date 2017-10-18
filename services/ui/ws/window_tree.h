@@ -428,7 +428,8 @@ class WindowTree : public mojom::WindowTree,
       const display::Display& display_to_create,
       const display::ViewportMetrics& transport_viewport_metrics,
       bool is_primary_display,
-      const ClientWindowId& client_window_id);
+      const ClientWindowId& client_window_id,
+      const std::vector<display::Display>& software_mirroring_display_list);
 
   bool ProcessSwapDisplayRoots(int64_t display_id1, int64_t display_id2);
   bool ProcessSetBlockingContainers(std::vector<mojom::BlockingContainersPtr>
@@ -577,6 +578,7 @@ class WindowTree : public mojom::WindowTree,
                       mojom::WmViewportMetricsPtr viewport_metrics,
                       bool is_primary_display,
                       Id window_id,
+                      const std::vector<display::Display>& software_mirroring_display_list,
                       const SetDisplayRootCallback& callback) override;
   void SetDisplayConfiguration(
       const std::vector<display::Display>& displays,
