@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23c9fa38_87168069",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-10-18T23:29:36Z",
+      "side": 1,
+      "message": "Maybe setAccessibilityEnabledForTesting should be done in a @Before method? If setup happens as a side-effect of running certain tests, then behavior might change based on the order that tests are run.",
+      "revId": "ffa3018922b9cc53f393373410aab71451cafe8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b9d01c_a457d7e2",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-10-18T23:29:36Z",
+      "side": 1,
+      "message": "Possible race condition? What happens if the tree is updated between findNodeWithClassName and waitForCallback? (Or even between getCallCount and waitForCallback?)",
+      "revId": "ffa3018922b9cc53f393373410aab71451cafe8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9664643f_e6b58560",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-10-18T23:29:36Z",
+      "side": 1,
+      "message": "We could break (or remove foundSetTextAction and just return) here.",
+      "revId": "ffa3018922b9cc53f393373410aab71451cafe8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d64985_e81ae07b",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-10-18T23:29:36Z",
+      "side": 1,
+      "message": "What\u0027s the depth argument for? Same with findNodeWithClassName.",
+      "revId": "ffa3018922b9cc53f393373410aab71451cafe8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f180b79e_10d95e00",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-10-18T23:29:36Z",
+      "side": 1,
+      "message": "Is createAccessibilityNodeInfo expensive? It looks like we\u0027re calling it twice for every child node. Same with findNodeWithText.",
+      "revId": "ffa3018922b9cc53f393373410aab71451cafe8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
