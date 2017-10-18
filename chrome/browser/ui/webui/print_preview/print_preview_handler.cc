@@ -1217,12 +1217,6 @@ void PrintPreviewHandler::OnPrintRequestCancelled() {
   HandleCancelPendingPrintRequest(nullptr);
 }
 
-#if BUILDFLAG(ENABLE_BASIC_PRINT_DIALOG)
-void PrintPreviewHandler::ShowSystemDialog() {
-  HandleShowSystemDialog(NULL);
-}
-#endif
-
 void PrintPreviewHandler::ClearInitiatorDetails() {
   WebContents* initiator = GetInitiator();
   if (!initiator)
