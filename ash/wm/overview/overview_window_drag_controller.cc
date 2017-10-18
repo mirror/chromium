@@ -112,6 +112,7 @@ void OverviewWindowDragController::CompleteDrag(
                      : SplitViewController::LEFT);
     } else {
       window_selector_->PositionWindows(false /* animate */);
+      split_view_controller_->ShowAppCannotSnapToast();
     }
   } else {
     did_move_ = false;
