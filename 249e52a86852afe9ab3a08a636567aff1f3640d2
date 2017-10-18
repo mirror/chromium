@@ -34,6 +34,24 @@
       "revId": "249e52a86852afe9ab3a08a636567aff1f3640d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30efcbe4_be4fd402",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-18T15:46:04Z",
+      "side": 1,
+      "message": "You don\u0027t need extra indentation, since a try with resource block is a normal try block.\nUp to you :)",
+      "parentUuid": "dc8671f1_c70d5154",
+      "revId": "249e52a86852afe9ab3a08a636567aff1f3640d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
