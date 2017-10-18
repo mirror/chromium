@@ -1102,6 +1102,7 @@ test("browser_tests") {
     "//printing/features",
     "//rlz/features",
     "//third_party/WebKit/public:features",
+    "//tools/v8_context_snapshot",
   ]
 
   data_deps = [
