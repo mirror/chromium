@@ -22,6 +22,53 @@
       "revId": "a533b6dc097f7a6dca331af8ed610cb601d7ae10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7bbb02_a3046133",
+        "filename": "chrome/browser/extensions/api/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-10-18T17:14:28Z",
+      "side": 1,
+      "message": "Just wondering if you\u0027re fine with this change.",
+      "parentUuid": "00415dfa_cd4ba69c",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 35
+      },
+      "revId": "a533b6dc097f7a6dca331af8ed610cb601d7ae10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27cb9c5_2a3e947c",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-10-18T17:14:28Z",
+      "side": 1,
+      "message": "browser_view.h is needed here.",
+      "range": {
+        "startLine": 585,
+        "startChar": 27,
+        "endLine": 585,
+        "endChar": 64
+      },
+      "revId": "a533b6dc097f7a6dca331af8ed610cb601d7ae10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
