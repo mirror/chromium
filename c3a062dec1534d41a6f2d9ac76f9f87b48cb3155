@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "518eb4cd_3dc563c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-18T00:40:22Z",
+      "side": 1,
+      "message": "Since we kept these, let\u0027s make the logging consistent above as well instead of removing it. We\u0027ll record MergeStateInternalFetchTime and MergeStateInternalTime for each file that\u0027s being merged, which seems fine to me.",
+      "range": {
+        "startLine": 444,
+        "startChar": 16,
+        "endLine": 444,
+        "endChar": 70
+      },
+      "revId": "c3a062dec1534d41a6f2d9ac76f9f87b48cb3155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

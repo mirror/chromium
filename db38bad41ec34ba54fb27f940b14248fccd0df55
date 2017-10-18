@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "c17acdf5_c1d244c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-18T00:40:22Z",
+      "side": 1,
+      "message": "+1 We shouldn\u0027t rely on the tab persistency policy to tell us which files were actually merged. There are other ways to avoid the ConcurrentModificationException e.g. make a copy of mMergeFileNames list and iterate over that.",
+      "parentUuid": "9428486d_35b2a55f",
+      "range": {
+        "startLine": 1225,
+        "startChar": 45,
+        "endLine": 1225,
+        "endChar": 63
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae43d3cd_2fe34d61",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 6

@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "8bb0a29c_e06c6c75",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-18T00:40:22Z",
+      "side": 1,
+      "message": "Looking at the newest patch -- these are still used so we can\u0027t mark them obsolete. I\u0027ll leave comments on the latest set.",
+      "parentUuid": "0da84421_9b0a6dde",
+      "range": {
+        "startLine": 387,
+        "startChar": 16,
+        "endLine": 387,
+        "endChar": 82
+      },
+      "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e49371f1_9b9ce32e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 5
@@ -422,6 +446,29 @@
       "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "510d2f9a_79e28e37",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-18T00:40:22Z",
+      "side": 1,
+      "message": "Why aren\u0027t we checking getTabAt(1) anymore?",
+      "range": {
+        "startLine": 556,
+        "startChar": 8,
+        "endLine": 556,
+        "endChar": 67
+      },
+      "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
