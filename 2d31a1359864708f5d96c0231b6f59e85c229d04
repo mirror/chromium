@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36a75dfa_e5dcbf3b",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-18T05:45:14Z",
+      "side": 1,
+      "message": "This class actually implements another mojo interface which is shared between the ARC++(Android side) and Chromium. \n\nhttps://cs.chromium.org/chromium/src/components/arc/common/video_encode_accelerator.mojom\n\nI don\u0027t think we are ready to use the interface you mentioned. It will pull too many dependencies to the Android side.",
+      "parentUuid": "72f6307f_de327ea5",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 22
+      },
+      "revId": "2d31a1359864708f5d96c0231b6f59e85c229d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9aac49eb_e657c80d",
         "filename": "media/video/video_encode_accelerator.h",
         "patchSetId": 3
