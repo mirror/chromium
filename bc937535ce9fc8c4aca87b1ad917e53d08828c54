@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cf32cf09_77d66ecc",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-18T03:24:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ca494f72_9c76f36b",
+      "revId": "bc937535ce9fc8c4aca87b1ad917e53d08828c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38e4eea4_fa65e3ca",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2017-10-18T00:31:36Z",
       "side": 1,
       "message": "this line is too long now, why this change?",
+      "revId": "bc937535ce9fc8c4aca87b1ad917e53d08828c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f066c88a_a380ad9f",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-18T03:24:12Z",
+      "side": 1,
+      "message": "uhhh, this was the same in the previous patch and apparently was missed. fixed.",
+      "parentUuid": "38e4eea4_fa65e3ca",
       "revId": "bc937535ce9fc8c4aca87b1ad917e53d08828c54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
