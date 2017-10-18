@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4186c46_80c4216f",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T19:25:01Z",
+      "side": 1,
+      "message": "I was also confused by the class-level comments.\nNetworkChangeNotifierFactoryAndroid and its delegate do not need to be on the UI/main thread after Paul\u0027s CL (https://chromium.googlesource.com/chromium/src/+/6815aefeae88a9e62065ca8084075e3e98dec267)\n\nI will do a follow-up CL to correct the class-level comments.",
+      "parentUuid": "9c476259_820367d5",
+      "range": {
+        "startLine": 83,
+        "startChar": 30,
+        "endLine": 83,
+        "endChar": 65
+      },
+      "revId": "9a3cdae4368e7e06f7b264b91bb13f93e87a92bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abccbc4f_58571fb8",
         "filename": "content/public/common/network_connection_tracker.cc",
         "patchSetId": 30
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bf26b529_72089a3a",
+        "filename": "content/public/common/network_connection_tracker.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T19:25:01Z",
+      "side": 1,
+      "message": "Ack. Me too. I think it\u0027s safer to leave this inside the synchronized block, and make it easier to reason.",
+      "parentUuid": "abccbc4f_58571fb8",
+      "range": {
+        "startLine": 125,
+        "startChar": 32,
+        "endLine": 125,
+        "endChar": 43
+      },
+      "revId": "9a3cdae4368e7e06f7b264b91bb13f93e87a92bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58d802b8_06acfed3",
         "filename": "content/public/common/network_connection_tracker.h",
         "patchSetId": 30
@@ -68,6 +116,30 @@
       "revId": "9a3cdae4368e7e06f7b264b91bb13f93e87a92bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea53d4e_1a517514",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T19:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58d802b8_06acfed3",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "9a3cdae4368e7e06f7b264b91bb13f93e87a92bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
