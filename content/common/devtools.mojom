@@ -1,0 +1,21 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+// Pprovides extra capabilities required for DevTools frontend to function.
+// Instances of this interface must be associated with the legacy IPC channel.
+interface DevToolsFrontend {
+  // Sets up a main frame as a DevTools frontend.
+  SetupDevToolsFrontend(string api_script,
+                        associated DevToolsFrontendHost host);
+  // Sets up child frame to expose DevTools extension API.
+  SetupDevToolsExtensionAPI(string extension_api);
+};
+
+// Provides host functionality to a frame serving as DevTools frontend.
+interface DevToolsFrontendHost {
+  // Sends a message to DevTools frontend embedder.
+  DispatchEmbedderMessage(string message);
+};
