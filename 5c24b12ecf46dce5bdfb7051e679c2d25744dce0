@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88f3179a_69ddd56c",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-18T16:08:30Z",
+      "side": 1,
+      "message": "I think the nullptr check is not necessary, because we just dereferenced |navigation| on the previous line?\n\nIf there are no response headers, should we add the page to history or ignore it?  I would lean towards continuing to add it for now.",
+      "revId": "5c24b12ecf46dce5bdfb7051e679c2d25744dce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
