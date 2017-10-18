@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a238eb48_29ca6ae4",
+        "filename": "chrome/browser/ui/views/task_manager_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T22:45:20Z",
+      "side": 1,
+      "message": "these should probably be guarded with\n\n#if defined(OS_MACOSX)",
+      "revId": "0b40227750c9fa664b699ade4aeb26bc137bfdf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
