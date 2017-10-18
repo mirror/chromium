@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08c1dec4_715373c6",
+        "filename": "third_party/WebKit/Tools/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T20:36:51Z",
+      "side": 1,
+      "message": "Hm... I put this here for now, because the presubmit is trying to check Tools/Source/OWNERS for python style... will try to fix that and upload a fixed CL.\n\n(I\u0027m not even sure that this works--in fact, pretty sure it doesn\u0027t)",
+      "revId": "b15e29cf8f21743f5c385555fc94fb0163223290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
