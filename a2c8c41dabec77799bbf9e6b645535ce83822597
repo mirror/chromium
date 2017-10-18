@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "864e0e05_967f4a43",
+        "filename": "components/machine_intelligence/proto/ranker_example.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-18T00:08:42Z",
+      "side": 1,
+      "message": "Do you want to mention that this needs to be kept in sync with the google3 version?",
+      "range": {
+        "startLine": 5,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 29
+      },
+      "revId": "a2c8c41dabec77799bbf9e6b645535ce83822597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9a084ce_f1e10a9f",
+        "filename": "components/machine_intelligence/ranker_example_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-18T00:08:42Z",
+      "side": 1,
+      "message": "Unused?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "a2c8c41dabec77799bbf9e6b645535ce83822597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959c8f8d_febe0cf9",
+        "filename": "components/machine_intelligence/ranker_example_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-18T00:08:42Z",
+      "side": 1,
+      "message": "Nit: mismatched ||s",
+      "range": {
+        "startLine": 17,
+        "startChar": 53,
+        "endLine": 17,
+        "endChar": 60
+      },
+      "revId": "a2c8c41dabec77799bbf9e6b645535ce83822597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
