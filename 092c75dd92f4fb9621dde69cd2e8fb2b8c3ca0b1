@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5b738d0_598edd8a",
+        "filename": "chromecast/public/avsettings.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-18T21:49:17Z",
+      "side": 1,
+      "message": "Just a thought - it might be clearer/more conventional to have separate functions OnKeyDown/OnKeyUp?",
+      "revId": "092c75dd92f4fb9621dde69cd2e8fb2b8c3ca0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
