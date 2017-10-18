@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6df0d23a_17a0c8ab",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-18T18:51:46Z",
+      "side": 1,
+      "message": "I would also add a TODO about trying to select something based on the actual number of paints. I.e. if there are typically 1000s of paint calls we probably don\u0027t want only 1-3% of them using the initial global scope.",
+      "revId": "f983e5929d53e4acf745e7fb93ffde23b63ab9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b9e85e_83ab9266",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-18T18:51:46Z",
+      "side": 1,
+      "message": "Why they are virtual isn\u0027t really necessary - you can tell from looking up the override in the unit test. But do describe what they return.",
+      "revId": "f983e5929d53e4acf745e7fb93ffde23b63ab9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a308cc1_9da4c089",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-18T18:51:46Z",
+      "side": 1,
+      "message": "This doesn\u0027t set anything, Calculate/Get?",
+      "range": {
+        "startLine": 60,
+        "startChar": 14,
+        "endLine": 60,
+        "endChar": 17
+      },
+      "revId": "f983e5929d53e4acf745e7fb93ffde23b63ab9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c42f8f_ca8d7dac",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-18T18:51:46Z",
+      "side": 1,
+      "message": "This doesn\u0027t actually set anything, SelectNewGlobalScope?",
+      "range": {
+        "startLine": 61,
+        "startChar": 17,
+        "endLine": 61,
+        "endChar": 26
+      },
+      "revId": "f983e5929d53e4acf745e7fb93ffde23b63ab9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c54a41f_58443cb6",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-18T18:51:46Z",
+      "side": 1,
+      "message": "Document these variables.",
+      "revId": "f983e5929d53e4acf745e7fb93ffde23b63ab9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0eb211_d8860e69",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-18T18:51:46Z",
+      "side": 1,
+      "message": "Also document the intention here - i.e. always switch global scopes so that we can tell how often it was switched in the test. We could alternately just record on the test class that it switched and call into the real function.\n\nDoesn\u0027t this return invalid numbers? i.e. 2 - 0 \u003d 2",
+      "revId": "f983e5929d53e4acf745e7fb93ffde23b63ab9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c52633_b1da4ca5",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-18T18:51:46Z",
+      "side": 1,
+      "message": "Perhaps just test the three explicit cases? Is there any reason to loop over every value from 101 to 1?",
+      "revId": "f983e5929d53e4acf745e7fb93ffde23b63ab9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517ba11d_6859a86d",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-18T18:51:46Z",
+      "side": 1,
+      "message": "But we should also verify that the scope switches at the beginning of each frame.",
+      "revId": "f983e5929d53e4acf745e7fb93ffde23b63ab9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
