@@ -16,6 +16,24 @@
       "revId": "a9753d0f5e574c286bf70875742f56a5345da4b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a27e61_90536f2a",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-18T16:55:32Z",
+      "side": 0,
+      "message": "I\u0027d need to know what error is terminating the process.  Generally, the process launches but then terminates due to either being multithreaded before the sandbox is applied at startup, or because a blocked syscall is encountered.",
+      "parentUuid": "5650a8f7_d56ac093",
+      "revId": "a9753d0f5e574c286bf70875742f56a5345da4b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
