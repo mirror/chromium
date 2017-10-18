@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c04d8d2d_d39aeedf",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-features\u003dNetworkService",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-18T15:32:45Z",
+      "side": 1,
+      "message": "also virtual/mojo-blobs, since network service enables it (https://chromium-review.googlesource.com/c/chromium/src/+/646504)",
+      "revId": "3067f7bb98c64b1548ac6ec2c3aa6fb8d32db898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
