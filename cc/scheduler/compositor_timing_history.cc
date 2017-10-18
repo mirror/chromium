@@ -551,9 +551,19 @@ void CompositorTimingHistory::DidCreateAndInitializeLayerTreeFrameSink() {
 
 void CompositorTimingHistory::WillBeginImplFrame(
     bool new_active_tree_is_likely,
+    bool is_draw_throttled,
     base::TimeTicks frame_time,
     viz::BeginFrameArgs::BeginFrameArgsType frame_type,
     base::TimeTicks now) {
+
+
+  TRACE_EVENT2("cc",
+               "CompositorTimingHistory::WillBeginImplFrame",
+               "frame_type", frame_type,
+               "is_draw_throttled", is_draw_throttled);
+
+  begin_impl_frame_start_time_ = now;
+
   // The check for whether a BeginMainFrame was sent anytime between two
   // BeginImplFrames protects us from not detecting a fast main thread that
   // does all it's work and goes idle in between BeginImplFrames.
@@ -594,8 +604,14 @@ void CompositorTimingHistory::BeginImplFrameNotExpectedSoon() {
 void CompositorTimingHistory::WillBeginMainFrame(
     bool on_critical_path,
     base::TimeTicks main_frame_time) {
+
   DCHECK_EQ(base::TimeTicks(), begin_main_frame_sent_time_);
   DCHECK_EQ(base::TimeTicks(), begin_main_frame_frame_time_);
+
+  TRACE_EVENT2("cc",
+               "CompositorTimingHistory::WillBeginMainFrame",
+               "on_critical_path", on_critical_path,
+               "main_frame_time", main_frame_time);
 
   begin_main_frame_on_critical_path_ = on_critical_path;
   begin_main_frame_sent_time_ = Now();

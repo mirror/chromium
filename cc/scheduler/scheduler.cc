@@ -479,7 +479,8 @@ void Scheduler::BeginImplFrame(const viz::BeginFrameArgs& args,
   state_machine_.OnBeginImplFrame(args.source_id, args.sequence_number);
   devtools_instrumentation::DidBeginFrame(layer_tree_host_id_);
   compositor_timing_history_->WillBeginImplFrame(
-      state_machine_.NewActiveTreeLikely(), args.frame_time, args.type, now);
+      state_machine_.NewActiveTreeLikely(), state_machine_.IsDrawThrottled(),
+      args.frame_time, args.type, now);
   client_->WillBeginImplFrame(begin_impl_frame_tracker_.Current());
 
   ProcessScheduledActions();
@@ -554,6 +555,15 @@ void Scheduler::ScheduleBeginImplFrameDeadlineIfNeeded() {
 void Scheduler::OnBeginImplFrameDeadline() {
   TRACE_EVENT0("cc,benchmark", "Scheduler::OnBeginImplFrameDeadline");
   begin_impl_frame_deadline_task_.Cancel();
+
+  if (state_machine_.needs_redraw() && state_machine_.IsDrawThrottled()) {
+    TRACE_EVENT_ASYNC_BEGIN_WITH_TIMESTAMP0("cc", "Scheduler:Impl:Backpressure",
+                                            this,
+                                            compositor_timing_history_->begin_impl_frame_start_time());
+    TRACE_EVENT_ASYNC_END_WITH_TIMESTAMP0("cc", "Scheduler:Impl:Backpressure",
+                                          this, Now());
+  }
+
   // We split the deadline actions up into two phases so the state machine
   // has a chance to trigger actions that should occur durring and after
   // the deadline separately. For example:
