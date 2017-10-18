@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d0643be_7d2084d2",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-18T23:31:14Z",
+      "side": 1,
+      "message": "It looks to me like this would be a better fit in OmniboxEditController, alongside the analogous OnAutocompleteAccept. The controller is implemented in part by the location bar classes on Views and Cocoa, which are subclasses of OmniboxEditController, so this logic could go in LocationBarView. That seems like a natural fit, since location_bar_view_ is mostly what we\u0027re interacting with here.",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1d3710_0f9dd80a",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-18T23:31:14Z",
+      "side": 1,
+      "message": "LocationBarView also has access to the profile and can determine if we\u0027re in incognito mode, so I think you wouldn\u0027t need to pass this value. Better yet, I think you could restrict the search to browser objects with the same profile like you\u0027re doing in ChromeAutocompleteProviderClient.",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4ddaf9_7d968e7d",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-18T23:31:14Z",
+      "side": 1,
+      "message": "Do we need the same check in the provider so we don\u0027t suggest the current page as a tab switch result?",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbbf90b_180593b3",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-18T23:31:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure we want to do either of these things (close the current tab or focus the web contents. But I\u0027m eager to try this out and see how if feels in practice, so I think these make sense to have them for now.",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d708c417_48f9f39e",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-18T23:31:14Z",
+      "side": 1,
+      "message": "It think this needs to include a check for TAB_SEARCH. Something like:\n\n  // Revert for all dispositions except opening a new tab in the\n  // background. Tab search matches always open a different tab so revert\n  // in that case regardless of the disposition.\n  if (disposition !\u003d WindowOpenDisposition::NEW_BACKGROUND_TAB ||\n      match.type \u003d\u003d AutocompleteMatchType::TAB_SEARCH) {",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a73f43a_aa32f28e",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-18T23:31:14Z",
+      "side": 1,
+      "message": "Looking through this entire method, this looks like the correct spot to me. There are some fuzzy implications about how the metrics recorded above should apply to opening an existing tab but nothing that\u0027s obviously wrong. Obviously mpearson will know best.",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f51072_9633466b",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-18T23:31:14Z",
+      "side": 1,
+      "message": "Maybe client_-\u003eIsNewTabPage(client_-\u003eGetURL())?",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d25a7bf_36929ca2",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-18T23:31:14Z",
+      "side": 1,
+      "message": "Can we have SwitchToTabWithURL return a success bool and only return here if true? Navigating to the URL is probably a better fallback in case of failure than doing nothing.",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
