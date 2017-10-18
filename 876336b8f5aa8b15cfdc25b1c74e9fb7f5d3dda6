@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f361c12_62f46fc7",
+        "filename": "media/blink/webmediaplayer_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-18T21:56:56Z",
+      "side": 1,
+      "message": "From offline chat of a code smell I mentioned to sandersd@, I\u0027ll simplify this test signficantly in next patch set.",
+      "range": {
+        "startLine": 1012,
+        "startChar": 24,
+        "endLine": 1012,
+        "endChar": 26
+      },
+      "revId": "876336b8f5aa8b15cfdc25b1c74e9fb7f5d3dda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
