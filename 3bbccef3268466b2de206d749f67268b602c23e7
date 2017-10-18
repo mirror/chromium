@@ -22,6 +22,30 @@
       "revId": "3bbccef3268466b2de206d749f67268b602c23e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af506ca6_c096682e",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-18T02:53:57Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand the question here. In general, you can check the stack traces to find the expected event types. Are you pointing out that CallbackHelper#waitForCallback does not produce a proper error message when waitForCallBack times out?",
+      "parentUuid": "3b05be89_8d0f612f",
+      "range": {
+        "startLine": 819,
+        "startChar": 39,
+        "endLine": 819,
+        "endChar": 40
+      },
+      "revId": "3bbccef3268466b2de206d749f67268b602c23e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
