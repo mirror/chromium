@@ -22,6 +22,30 @@
       "revId": "d88ebf8b17284d37b9dc083b8282c6e34786676c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dedcc9e9_3a8c95d6",
+        "filename": "testing/libfuzzer/fuzzer_test.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-18T02:00:20Z",
+      "side": 1,
+      "message": "Ah, it\u0027s probably because this is a template and it\u0027s a relative path to the template rather than to the instantiation.",
+      "parentUuid": "8f0df4f5_b9d7c37a",
+      "range": {
+        "startLine": 141,
+        "startChar": 21,
+        "endLine": 141,
+        "endChar": 42
+      },
+      "revId": "d88ebf8b17284d37b9dc083b8282c6e34786676c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
