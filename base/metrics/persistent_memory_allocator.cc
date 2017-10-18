@@ -409,25 +409,24 @@ PersistentMemoryAllocator::PersistentMemoryAllocator(Memory memory,
         shared_meta()->queue.next.load(std::memory_order_relaxed) == 0) {
       SetCorrupt();
     }
-    if (!readonly) {
-      // The allocator is attaching to a previously initialized segment of
-      // memory. If the initialization parameters differ, make the best of it
-      // by reducing the local construction parameters to match those of
-      // the actual memory area. This ensures that the local object never
-      // tries to write outside of the original bounds.
-      // Because the fields are const to ensure that no code other than the
-      // constructor makes changes to them as well as to give optimization
-      // hints to the compiler, it's necessary to const-cast them for changes
-      // here.
-      if (shared_meta()->size < mem_size_)
-        *const_cast<uint32_t*>(&mem_size_) = shared_meta()->size;
-      if (shared_meta()->page_size < mem_page_)
-        *const_cast<uint32_t*>(&mem_page_) = shared_meta()->page_size;
 
-      // Ensure that settings are still valid after the above adjustments.
-      if (!IsMemoryAcceptable(memory.base, mem_size_, mem_page_, readonly))
-        SetCorrupt();
-    }
+    // The allocator is attaching to a previously initialized segment of
+    // memory. If the initialization parameters differ, make the best of it
+    // by reducing the local construction parameters to match those of
+    // the actual memory area. This ensures that the local object never
+    // tries to write outside of the original bounds.
+    // Because the fields are const to ensure that no code other than the
+    // constructor makes changes to them as well as to give optimization
+    // hints to the compiler, it's necessary to const-cast them for changes
+    // here.
+    if (shared_meta()->size < mem_size_)
+      *const_cast<uint32_t*>(&mem_size_) = shared_meta()->size;
+    if (shared_meta()->page_size < mem_page_)
+      *const_cast<uint32_t*>(&mem_page_) = shared_meta()->page_size;
+
+    // Ensure that settings are still valid after the above adjustments.
+    if (!IsMemoryAcceptable(memory.base, mem_size_, mem_page_, readonly))
+      SetCorrupt();
   }
 }
 
