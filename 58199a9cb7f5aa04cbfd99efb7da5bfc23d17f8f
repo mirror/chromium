@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40456f57_9c3cfdd7",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-18T18:21:36Z",
+      "side": 1,
+      "message": "This text is in logical order. Do we do this in visual order today? I think a \"word\" can be found in logical text, no?",
+      "revId": "58199a9cb7f5aa04cbfd99efb7da5bfc23d17f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53457351_03e881aa",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-18T18:21:36Z",
+      "side": 1,
+      "message": "Ensure16Bit()?",
+      "revId": "58199a9cb7f5aa04cbfd99efb7da5bfc23d17f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427fbe54_cbe2e66c",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-18T18:21:36Z",
+      "side": 1,
+      "message": "Looks like this uses ICU. ICU break iterator works on logical order string.",
+      "revId": "58199a9cb7f5aa04cbfd99efb7da5bfc23d17f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
