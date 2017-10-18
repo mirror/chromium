@@ -93,8 +93,9 @@ LayoutSize StyleFetchedImageSet::ImageSize(
   // border-image, etc.)
   //
   // https://drafts.csswg.org/css-images-3/#the-image-orientation
-  LayoutSize scaled_image_size =
-      best_fit_image_->ImageSize(kDoNotRespectImageOrientation, multiplier);
+  LayoutSize scaled_image_size(
+      best_fit_image_->IntrinsicSize(kDoNotRespectImageOrientation));
+  scaled_image_size = ApplyZoom(scaled_image_size, multiplier);
   scaled_image_size.Scale(1 / image_scale_factor_);
   return scaled_image_size;
 }
