@@ -155,6 +155,8 @@
          max_varying_vectors_16)                             \
   GPU_OP(MAX_VERTEX_UNIFORM_VECTORS_256,                     \
          max_vertex_uniform_vectors_256)                     \
+  GPU_OP(MAX_WEBGL_DRAWINGBUFFER_SIZE_16M,                   \
+         max_webgl_drawingbuffer_size_16m)                   \
   GPU_OP(MSAA_IS_SLOW,                                       \
          msaa_is_slow)                                       \
   GPU_OP(MULTISAMPLE_RENDERBUFFER_RESIZE_EMULATION,          \

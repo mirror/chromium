@@ -60,6 +60,11 @@ class PixelExpectations(GpuTestExpectations):
     self.Flaky('Pixel_OffscreenCanvasWebGLSoftwareCompositingWorker',
         ['mac', ('nvidia', 0xfe9), 'debug'], bug=751328)
 
+    # This test is expected to fail on Mac NVIDIA and on Android, so
+    # skip it there, but it's expected to pass on the other platforms.
+    self.Skip('Pixel_WebGL_Large_Canvas', ['mac', 'nvidia'], bug=756347)
+    self.Skip('Pixel_WebGL_Large_Canvas', ['android'], bug=756347)
+
     # Failing on Nexus 5; haven't investigated why yet.
     self.Skip('Pixel_WebGL2_BlitFramebuffer_Result_Displayed',
         ['android', ('qualcomm', 'Adreno (TM) 330')], bug=773293)

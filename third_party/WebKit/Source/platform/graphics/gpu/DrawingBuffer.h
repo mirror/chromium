@@ -97,6 +97,15 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
     virtual void DrawingBufferClientRestoreFramebufferBinding() = 0;
     virtual void DrawingBufferClientRestorePixelUnpackBufferBinding() = 0;
     virtual void DrawingBufferClientRestorePixelPackBufferBinding() = 0;
+    // Captures all of the current GL errors from the underlying context
+    // and stores them for later retrieval, so that the DrawingBuffer
+    // implementation can legally call glGetError() internally and know
+    // that the result is due to a command it called. Returns false if
+    // something went wrong (usually that the context was lost).
+    virtual bool DrawingBufferClientCaptureGLErrorsFromContext() = 0;
+    // Forces the client's context to be lost, likely due to internal
+    // out-of-memory error.
+    virtual void DrawingBufferClientForceLostContext() = 0;
   };
 
   enum PreserveDrawingBuffer {
@@ -144,12 +153,6 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
   bool HasImplicitStencilBuffer() const { return has_implicit_stencil_buffer_; }
   bool HasDepthBuffer() const { return !!depth_stencil_buffer_; }
   bool HasStencilBuffer() const { return !!depth_stencil_buffer_; }
-
-  // Given the desired buffer size, provides the largest dimensions that will
-  // fit in the pixel budget.
-  static IntSize AdjustSize(const IntSize& desired_size,
-                            const IntSize& cur_size,
-                            int max_texture_size);
 
   // Resizes (or allocates if necessary) all buffers attached to the default
   // framebuffer. Returns whether the operation was successful.
@@ -357,6 +360,10 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
    private:
     WTF_MAKE_NONCOPYABLE(ColorBuffer);
   };
+
+  // Given the desired buffer size, provides the largest dimensions that will
+  // fit in the pixel budget.
+  IntSize AdjustSize(const IntSize& desired_size, const IntSize& cur_size);
 
   // The same as clearFramebuffers(), but leaves GL state dirty.
   void ClearFramebuffersInternal(GLbitfield clear_mask);
