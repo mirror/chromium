@@ -102,6 +102,7 @@ DeprecatedStorageQuota* DeprecatedStorageInfo::GetStorageQuota(
 DEFINE_TRACE(DeprecatedStorageInfo) {
   visitor->Trace(temporary_storage_);
   visitor->Trace(persistent_storage_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

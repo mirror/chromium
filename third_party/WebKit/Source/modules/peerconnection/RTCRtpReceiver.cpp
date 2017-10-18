@@ -78,6 +78,7 @@ DEFINE_TRACE(RTCRtpReceiver) {
   visitor->Trace(track_);
   visitor->Trace(contributing_sources_by_source_id_);
   visitor->Trace(contributing_sources_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

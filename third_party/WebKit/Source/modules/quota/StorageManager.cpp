@@ -143,8 +143,6 @@ ScriptPromise StorageManager::estimate(ScriptState* script_state) {
   return promise;
 }
 
-DEFINE_TRACE(StorageManager) {}
-
 PermissionService* StorageManager::GetPermissionService(
     ExecutionContext* execution_context) {
   if (!permission_service_ &&
