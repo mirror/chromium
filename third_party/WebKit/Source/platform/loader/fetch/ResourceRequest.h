@@ -310,6 +310,25 @@ class PLATFORM_EXPORT ResourceRequest final {
   bool IsExternalRequest() const { return is_external_request_; }
   void SetExternalRequestStateFromRequestorAddressSpace(WebAddressSpace);
 
+  bool IsCORSPreventPreflight() const { return cors_prevent_preflight_; }
+  void SetCORSPreventPreflight(bool cors_prevent_preflight) {
+    cors_prevent_preflight_ = cors_prevent_preflight;
+  }
+
+  bool IsCORSRedirect() const { return cors_redirect_; }
+  void SetCORSRedirect(bool cors_redirect) { cors_redirect_ = cors_redirect; }
+
+  KURL GetCORSPreRedirectURL() const { return cors_pre_redirect_url_; }
+  void SetCORSPreRedirectURL(KURL cors_pre_redirect_url) {
+    cors_pre_redirect_url_ = cors_pre_redirect_url;
+  }
+
+  RefPtr<SecurityOrigin> CORSOrigin() const { return cors_origin_; }
+
+  void SetCORSOrigin(RefPtr<SecurityOrigin> requestor_origin) {
+    requestor_origin_ = std::move(requestor_origin);
+  }
+
   void OverrideLoadingIPCType(WebURLRequest::LoadingIPCType loading_ipc_type) {
     loading_ipc_type_ = loading_ipc_type;
   }
@@ -378,6 +397,10 @@ class PLATFORM_EXPORT ResourceRequest final {
   bool check_for_browser_side_navigation_;
   double ui_start_time_;
   bool is_external_request_;
+  bool cors_prevent_preflight_;
+  bool cors_redirect_;
+  KURL cors_pre_redirect_url_;
+  RefPtr<SecurityOrigin> cors_origin_;
   WebURLRequest::LoadingIPCType loading_ipc_type_;
   bool is_same_document_navigation_;
   InputToLoadPerfMetricReportPolicy input_perf_metric_report_policy_;
@@ -440,6 +463,10 @@ struct CrossThreadResourceRequestData {
   bool check_for_browser_side_navigation_;
   double ui_start_time_;
   bool is_external_request_;
+  bool cors_prevent_preflight_;
+  bool cors_redirect_;
+  KURL cors_pre_redirect_url_;
+  RefPtr<SecurityOrigin> cors_origin_;
   WebURLRequest::LoadingIPCType loading_ipc_type_;
   InputToLoadPerfMetricReportPolicy input_perf_metric_report_policy_;
   ResourceRequest::RedirectStatus redirect_status_;

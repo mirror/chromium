@@ -31,6 +31,7 @@
 #include <string>
 #include "base/containers/flat_set.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/wtf/ThreadSpecific.h"
 #include "public/platform/WebHTTPHeaderMap.h"
 #include "public/platform/WebHTTPHeaderSet.h"
 #include "public/platform/WebNonCopyable.h"

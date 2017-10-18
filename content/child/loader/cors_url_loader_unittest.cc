@@ -24,12 +24,14 @@ class TestURLLoaderFactory : public mojom::URLLoaderFactory {
   TestURLLoaderFactory() = default;
   ~TestURLLoaderFactory() override = default;
 
-  void NotifyClientOnReceiveResponse() {
+  void NotifyClientOnReceiveResponse(const std::string& extra_header) {
     DCHECK(client_ptr_);
     ResourceResponseHead response;
     response.headers = new net::HttpResponseHeaders(
-        "HTTP/1.1 200 OK\n"
-        "Content-Type: text/html; charset=utf-8\n");
+        "HTTP/1.1 200 OK\0"
+        "Content-Type: image/png\0");
+    if (!extra_header.empty())
+      response.headers->AddHeader(extra_header);
 
     client_ptr_->OnReceiveResponse(response, base::nullopt /* ssl_info */,
                                    nullptr /* downloaded_file */);
@@ -39,6 +41,8 @@ class TestURLLoaderFactory : public mojom::URLLoaderFactory {
     DCHECK(client_ptr_);
     client_ptr_->OnComplete(ResourceRequestCompletionStatus(error_code));
   }
+
+  bool IsCreateLoaderAndStartCalled() { return !!client_ptr_; }
 
  private:
   // mojom::URLLoaderFactory implementation.
@@ -67,7 +71,9 @@ class CORSURLLoaderTest : public testing::Test {
       : test_network_factory_binding_(&test_network_loader_factory_) {}
 
  protected:
-  void CreateLoaderAndStart(const GURL& origin, const GURL& url) {
+  void CreateLoaderAndStart(const GURL& origin,
+                            const GURL& url,
+                            FetchRequestMode fetch_request_mode) {
     mojom::URLLoaderFactoryPtr network_factory_ptr;
     test_network_factory_binding_.Bind(mojo::MakeRequest(&network_factory_ptr));
 
@@ -78,6 +84,7 @@ class CORSURLLoaderTest : public testing::Test {
     ResourceRequest request;
     request.resource_type = RESOURCE_TYPE_IMAGE;
     request.fetch_request_context_type = REQUEST_CONTEXT_TYPE_IMAGE;
+    request.fetch_request_mode = fetch_request_mode;
     request.method = net::HttpRequestHeaders::kGetMethod;
     request.url = url;
     request.request_initiator = url::Origin(origin);
@@ -93,8 +100,13 @@ class CORSURLLoaderTest : public testing::Test {
     loader_factory_ptr.FlushForTesting();
   }
 
-  void NotifyLoaderClientOnReceiveResponse() {
-    test_network_loader_factory_.NotifyClientOnReceiveResponse();
+  bool IsNetworkLoaderStarted() {
+    return test_network_loader_factory_.IsCreateLoaderAndStartCalled();
+  }
+
+  void NotifyLoaderClientOnReceiveResponse(
+      const std::string& extra_header = std::string()) {
+    test_network_loader_factory_.NotifyClientOnReceiveResponse(extra_header);
   }
 
   void NotifyLoaderClientOnComplete(int error_code) {
@@ -124,17 +136,116 @@ class CORSURLLoaderTest : public testing::Test {
 
 TEST_F(CORSURLLoaderTest, SameOriginRequest) {
   const GURL url("http://example.com/foo.png");
-  CreateLoaderAndStart(url.GetOrigin(), url);
+  CreateLoaderAndStart(url.GetOrigin(), url, FETCH_REQUEST_MODE_SAME_ORIGIN);
 
   NotifyLoaderClientOnReceiveResponse();
   NotifyLoaderClientOnComplete(net::OK);
 
   RunUntilComplete();
 
+  EXPECT_TRUE(IsNetworkLoaderStarted());
   EXPECT_FALSE(client().has_received_redirect());
   EXPECT_TRUE(client().has_received_response());
   EXPECT_TRUE(client().has_received_completion());
   EXPECT_EQ(net::OK, client().completion_status().error_code);
+}
+
+TEST_F(CORSURLLoaderTest, CrossOriginRequestFetchRequestModeSameOrigin) {
+  const GURL origin("http://example.com");
+  const GURL url("http://other.com/foo.png");
+  CreateLoaderAndStart(origin, url, FETCH_REQUEST_MODE_SAME_ORIGIN);
+
+  RunUntilComplete();
+
+  // This call never hits the network URLLoader (i.e. the TestURLLoaderFactory)
+  // because it is fails right away.
+  EXPECT_FALSE(IsNetworkLoaderStarted());
+  EXPECT_FALSE(client().has_received_redirect());
+  EXPECT_FALSE(client().has_received_response());
+  EXPECT_EQ(net::ERR_ACCESS_DENIED, client().completion_status().error_code);
+  EXPECT_EQ("Cross origin requests are not supported.",
+            client().completion_status().error_description);
+}
+
+TEST_F(CORSURLLoaderTest, CrossOriginRequestFetchRequestModeNoCORS) {
+  const GURL origin("http://example.com");
+  const GURL url("http://other.com/foo.png");
+  CreateLoaderAndStart(origin, url, FETCH_REQUEST_MODE_NO_CORS);
+
+  NotifyLoaderClientOnReceiveResponse();
+  NotifyLoaderClientOnComplete(net::OK);
+
+  RunUntilComplete();
+
+  EXPECT_TRUE(IsNetworkLoaderStarted());
+  EXPECT_FALSE(client().has_received_redirect());
+  EXPECT_TRUE(client().has_received_response());
+  EXPECT_TRUE(client().has_received_completion());
+  EXPECT_EQ(net::OK, client().completion_status().error_code);
+}
+
+TEST_F(CORSURLLoaderTest, CrossOriginRequestFetchRequestModeCORSNoCORSHeader) {
+  const GURL origin("http://example.com");
+  const GURL url("http://other.com/foo.png");
+  CreateLoaderAndStart(origin, url, FETCH_REQUEST_MODE_CORS);
+
+  NotifyLoaderClientOnReceiveResponse();
+  NotifyLoaderClientOnComplete(net::OK);
+
+  RunUntilComplete();
+
+  EXPECT_TRUE(IsNetworkLoaderStarted());
+  EXPECT_FALSE(client().has_received_redirect());
+  EXPECT_FALSE(client().has_received_response());
+  EXPECT_EQ(net::ERR_ACCESS_DENIED, client().completion_status().error_code);
+  const std::string expected_description(
+      "No 'Access-Control-Allow-Origin' header is present on the requested "
+      "resource. Origin 'http://example.com' is therefore not allowed access.");
+  EXPECT_EQ(expected_description,
+            client().completion_status().error_description);
+}
+
+TEST_F(CORSURLLoaderTest,
+       CrossOriginRequestFetchRequestModeCORSWithCORSHeader) {
+  const GURL origin("http://example.com");
+  const GURL url("http://other.com/foo.png");
+  CreateLoaderAndStart(origin, url, FETCH_REQUEST_MODE_CORS);
+
+  NotifyLoaderClientOnReceiveResponse(
+      "Access-Control-Allow-Origin: http://example.com");
+  NotifyLoaderClientOnComplete(net::OK);
+
+  RunUntilComplete();
+
+  EXPECT_TRUE(IsNetworkLoaderStarted());
+  EXPECT_FALSE(client().has_received_redirect());
+  EXPECT_TRUE(client().has_received_response());
+  EXPECT_TRUE(client().has_received_completion());
+  EXPECT_EQ(net::OK, client().completion_status().error_code);
+}
+
+TEST_F(CORSURLLoaderTest,
+       CrossOriginRequestFetchRequestModeCORSWithCORSHeaderMismatch) {
+  const GURL origin("http://example.com");
+  const GURL url("http://other.com/foo.png");
+  CreateLoaderAndStart(origin, url, FETCH_REQUEST_MODE_CORS);
+
+  NotifyLoaderClientOnReceiveResponse(
+      "Access-Control-Allow-Origin: http://some-other-domain.com");
+  NotifyLoaderClientOnComplete(net::OK);
+
+  RunUntilComplete();
+
+  EXPECT_TRUE(IsNetworkLoaderStarted());
+  EXPECT_FALSE(client().has_received_redirect());
+  EXPECT_FALSE(client().has_received_response());
+  EXPECT_EQ(net::ERR_ACCESS_DENIED, client().completion_status().error_code);
+  const std::string expected_description(
+      "The 'Access-Control-Allow-Origin' header has a value "
+      "'http://some-other-domain.com' that is not equal to the supplied "
+      "origin. Origin 'http://example.com' is therefore not allowed access.");
+  EXPECT_EQ(expected_description,
+            client().completion_status().error_description);
 }
 
 }  // namespace
