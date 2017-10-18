@@ -78,6 +78,9 @@ class BookmarkSuggestionsProvider : public ContentSuggestionsProvider,
   void BookmarkAllUserNodesRemoved(
       bookmarks::BookmarkModel* model,
       const std::set<GURL>& removed_urls) override {}
+  void ExtensiveBookmarkChangesBeginning(
+      bookmarks::BookmarkModel* model) override;
+  void ExtensiveBookmarkChangesEnded(bookmarks::BookmarkModel* model) override;
 
   void ConvertBookmark(const bookmarks::BookmarkNode& bookmark,
                        std::vector<ContentSuggestion>* suggestions);
@@ -106,6 +109,10 @@ class BookmarkSuggestionsProvider : public ContentSuggestionsProvider,
   // deciding which bookmarks to suggest. Should we also consider visits on
   // desktop platforms?
   bool consider_bookmark_visits_from_desktop_;
+
+  // If extensive changes are in progress we postpone fetches until this is
+  // over.
+  bool extensive_bookmark_changes_in_progress_;
 
   DISALLOW_COPY_AND_ASSIGN(BookmarkSuggestionsProvider);
 };

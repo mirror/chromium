@@ -106,6 +106,7 @@ void UpdateBookmarkOnURLVisitedInMainFrame(BookmarkModel* bookmark_model,
 
   // If there are bookmarks for |url|, set their last visit date to now.
   std::string now = FormatLastVisitDate(base::Time::Now());
+  bookmark_model->BeginExtensiveChanges();
   for (const BookmarkNode* node : bookmarks_for_url) {
     bookmark_model->SetNodeMetaInfo(node,
                                     is_mobile_platform
@@ -116,6 +117,7 @@ void UpdateBookmarkOnURLVisitedInMainFrame(BookmarkModel* bookmark_model,
     // such a dismissal.
     bookmark_model->DeleteNodeMetaInfo(node, kBookmarkDismissedFromNTP);
   }
+  bookmark_model->EndExtensiveChanges();
 }
 
 bool GetLastVisitDateForNTPBookmark(const BookmarkNode& node,

@@ -82,6 +82,29 @@ TEST_F(BookmarkSuggestionsProviderTest, ShouldProvideBookmarkSuggestions) {
 }
 
 TEST_F(BookmarkSuggestionsProviderTest,
+       ShouldProvideBookmarkSuggestionsOnlyOnceForDuplicates) {
+  GURL url("http://my-new-bookmarked.url");
+  // Note, this update to the model does not trigger OnNewSuggestions() on the
+  // observer as the provider realizes no new nodes were added.
+  // don't have new data.
+  model_->AddURL(model_->bookmark_bar_node(), 0,
+                 base::ASCIIToUTF16("cool page's title 1"), url);
+  model_->AddURL(model_->bookmark_bar_node(), 1,
+                 base::ASCIIToUTF16("cool page's title 2"), url);
+
+  // Once we provided the last-visited meta information, _only one_ update with
+  // the suggestion containing the bookmark should follow.
+  EXPECT_CALL(
+      observer_,
+      OnNewSuggestions(
+          _, Category::FromKnownCategory(KnownCategories::BOOKMARKS),
+          UnorderedElementsAre(Property(&ContentSuggestion::url, GURL(url)))))
+      .Times(1);
+  UpdateBookmarkOnURLVisitedInMainFrame(model_.get(), url,
+                                        /*is_mobile_platform=*/true);
+}
+
+TEST_F(BookmarkSuggestionsProviderTest,
        ShouldEnsureToBeClearedBookmarksDontAppearAfterClear) {
   // Set up the provider with 2 entries: one dismissed and one active.
 

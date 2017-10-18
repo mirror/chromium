@@ -72,7 +72,8 @@ BookmarkSuggestionsProvider::BookmarkSuggestionsProvider(
       bookmark_model_(bookmark_model),
       fetch_requested_(false),
       end_of_list_last_visit_date_(GetThresholdTime()),
-      consider_bookmark_visits_from_desktop_(AreDesktopVisitsConsidered()) {
+      consider_bookmark_visits_from_desktop_(AreDesktopVisitsConsidered()),
+      extensive_bookmark_changes_in_progress_(false) {
   observer->OnCategoryStatusChanged(this, provided_category_, category_status_);
   bookmark_model_->AddObserver(this);
   FetchBookmarks();
@@ -249,6 +250,21 @@ void BookmarkSuggestionsProvider::BookmarkNodeAdded(
   FetchBookmarks();
 }
 
+void BookmarkSuggestionsProvider::ExtensiveBookmarkChangesBeginning(
+    bookmarks::BookmarkModel* model) {
+  extensive_bookmark_changes_in_progress_ = true;
+}
+
+void BookmarkSuggestionsProvider::ExtensiveBookmarkChangesEnded(
+    bookmarks::BookmarkModel* model) {
+  extensive_bookmark_changes_in_progress_ = false;
+
+  if (fetch_requested_) {
+    fetch_requested_ = false;
+    FetchBookmarksInternal();
+  }
+}
+
 void BookmarkSuggestionsProvider::ConvertBookmark(
     const BookmarkNode& bookmark,
     std::vector<ContentSuggestion>* suggestions) {
@@ -293,11 +309,11 @@ void BookmarkSuggestionsProvider::FetchBookmarksInternal() {
 }
 
 void BookmarkSuggestionsProvider::FetchBookmarks() {
-  if (bookmark_model_->loaded()) {
-    FetchBookmarksInternal();
-  } else {
+  if (!bookmark_model_->loaded() || extensive_bookmark_changes_in_progress_) {
     fetch_requested_ = true;
+    return;
   }
+  FetchBookmarksInternal();
 }
 
 void BookmarkSuggestionsProvider::NotifyStatusChanged(
