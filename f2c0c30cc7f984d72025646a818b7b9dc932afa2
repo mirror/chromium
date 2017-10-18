@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40e659cd_0e9dc19d",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-18T19:52:50Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem like the coordinate transformation belongs here, but I think the real issue is that these *AtLocation methods are concerning, and seem unlikely to work properly with OOPIFs; |location| doesn\u0027t mean anything for a RenderView in an OOPIF process. I wonder if they should be moved to RenderWidgetHostImpl.\n\nI think this needs investigation (and maybe a comment, possibly also a bug), but it is unrelated to your CL so it shouldn\u0027t hold it up.",
+      "revId": "f2c0c30cc7f984d72025646a818b7b9dc932afa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
