@@ -435,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "455f57ce_c1b87efb",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T18:03:42Z",
+      "side": 1,
+      "message": "It probably always returned false here because the GURL is invalid.",
+      "parentUuid": "d642132b_8c8c7a02",
+      "range": {
+        "startLine": 968,
+        "startChar": 15,
+        "endLine": 968,
+        "endChar": 19
+      },
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a30a04c0_a4dadb2c",
         "filename": "content/public/common/cookie_manager.mojom",
         "patchSetId": 2

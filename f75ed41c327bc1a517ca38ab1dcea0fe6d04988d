@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e80bc840_3a13dba1",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T18:03:42Z",
+      "side": 1,
+      "message": "Were you able to figure out why flipping the GetDomainAndRegistry and this check didn\u0027t result in any test failing? \n\nIf GetDomainAndRegistry already handles domains that start with a dot, then we can just get rid of this line.",
+      "revId": "f75ed41c327bc1a517ca38ab1dcea0fe6d04988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8a6c06_d866ba55",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T18:03:42Z",
+      "side": 1,
+      "message": "nit: consider adding a comment to annotate this line. It isn\u0027t obvious why |effective_domain| can be empty.\n \ne.g.\n// This means cookie\u0027s domain is an IP address or an internal hostname.",
+      "revId": "f75ed41c327bc1a517ca38ab1dcea0fe6d04988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93ad6c5_30852522",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T18:03:42Z",
+      "side": 1,
+      "message": "BrowsingDataFilterBuilderImplTest.RegistrableDomainMatchesCookiesWhitelist has both https and http urls. Any reason that you choose to do only http here?",
+      "revId": "f75ed41c327bc1a517ca38ab1dcea0fe6d04988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3927f2_1eb973fe",
+        "filename": "services/network/public/interfaces/cookie_manager.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T18:03:42Z",
+      "side": 1,
+      "message": "Are these tabs here? Suggest to use spaces instead to match the indentation elsewhere.",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 3
+      },
+      "revId": "f75ed41c327bc1a517ca38ab1dcea0fe6d04988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726841eb_5c565584",
+        "filename": "services/network/public/interfaces/cookie_manager.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T18:03:42Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "f75ed41c327bc1a517ca38ab1dcea0fe6d04988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
