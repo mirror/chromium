@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81869530_c6dc54fe",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-18T00:04:11Z",
+      "side": 1,
+      "message": "Where is 1 specified?\n\nI have replied to the 0..1000 comment on the W3C issue\nhttps://github.com/w3c/csswg-drafts/issues/1579#issuecomment-320089628\n\u003e search down to 0, then search up to 1000.\n\u003e remove the \"round to nearest 100\" behavior from animations\n\nShould the syntax support \u003cnumber\u003e, and clamping to the range 0..1000, so animated values can round-trip?",
+      "revId": "f808c3c45b7fc757c3384d550d3fde6ae1b5cd47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
