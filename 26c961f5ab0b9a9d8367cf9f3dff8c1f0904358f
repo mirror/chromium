@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d071f652_fefd0ba1",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1224415
+      },
+      "writtenOn": "2017-10-18T21:20:51Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure it necessarily has to be static though, or that it helps being static. \nStatic helps since it cannot possible keep any other object alive.\n\n\u003e Also, I\u0027m not sure how that would work when we use method references? Would they be static?\nIt could\u0027ve been a method reference to a static method (the method reference itself is just a sugar for a lambda which itself is an object).\n\n\u003e I think I\u0027d be more inclined to keep the documentation for the important part here, which is to say that it should have no reference back to the referent (the object that should be garbage collected).\n\nSGTM as long as there\u0027s a clear warning there :).",
+      "parentUuid": "34f9f5a2_a8c4cfa9",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f362ca5_012b8c70",
         "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
         "patchSetId": 3
@@ -540,6 +558,24 @@
       "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c77a75_f5b561a2",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1224415
+      },
+      "writtenOn": "2017-10-18T21:20:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "30ddc9f4_48d89596",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
