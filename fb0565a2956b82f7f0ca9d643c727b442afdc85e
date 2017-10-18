@@ -22,6 +22,30 @@
       "revId": "fb0565a2956b82f7f0ca9d643c727b442afdc85e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d63f73_9421e38e",
+        "filename": "cc/tiles/checker_image_tracker_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-18T19:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d5ec444_6b8f3ecf",
+      "range": {
+        "startLine": 631,
+        "startChar": 2,
+        "endLine": 631,
+        "endChar": 67
+      },
+      "revId": "fb0565a2956b82f7f0ca9d643c727b442afdc85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
