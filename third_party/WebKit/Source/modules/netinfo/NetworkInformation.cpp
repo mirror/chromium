@@ -201,18 +201,19 @@ void NetworkInformation::ContextDestroyed(ExecutionContext*) {
 void NetworkInformation::StartObserving() {
   if (!observing_ && !context_stopped_) {
     type_ = GetNetworkStateNotifier().ConnectionType();
-    GetNetworkStateNotifier().AddConnectionObserver(
-        this,
-        TaskRunnerHelper::Get(TaskType::kNetworking, GetExecutionContext()));
+    DCHECK(!connection_observer_handle_);
+    connection_observer_handle_ =
+        GetNetworkStateNotifier().AddConnectionObserver(
+            this, TaskRunnerHelper::Get(TaskType::kNetworking,
+                                        GetExecutionContext()));
     observing_ = true;
   }
 }
 
 void NetworkInformation::StopObserving() {
   if (observing_) {
-    GetNetworkStateNotifier().RemoveConnectionObserver(
-        this,
-        TaskRunnerHelper::Get(TaskType::kNetworking, GetExecutionContext()));
+    DCHECK(connection_observer_handle_);
+    connection_observer_handle_ = nullptr;
     observing_ = false;
   }
 }
