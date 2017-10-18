@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "257cc0a7_bf5cca3f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_fragment_iterator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-18T17:14:13Z",
+      "side": 1,
+      "message": "Thanks! Could you also add a TODO about updating this once we have fragment painting enabled everywhere?",
+      "parentUuid": "f83c4393_f138c767",
+      "revId": "6a6dde657197fa26a33ca0bc96067c1e4252f388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccfa075b_ce5ea90a",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_fragment_iterator.cc",
         "patchSetId": 18
