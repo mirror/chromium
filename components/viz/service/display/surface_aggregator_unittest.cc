@@ -1,4 +1,3 @@
-
 // Copyright 2014 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -67,10 +66,10 @@ gfx::Rect NoDamage() {
 }
 
 // Helper class to use with CompositorFrameSinkSupport::WillDrawCallback.
-struct WillDrawSurfaceResult : base::SupportsWeakPtr<WillDrawSurfaceResult> {
+struct AggregatedDamageResult : base::SupportsWeakPtr<AggregatedDamageResult> {
  public:
-  WillDrawSurfaceResult() = default;
-  ~WillDrawSurfaceResult() = default;
+  AggregatedDamageResult() = default;
+  ~AggregatedDamageResult() = default;
 
   const gfx::Rect& last_damage_rect() const { return last_damage_rect_; }
   const LocalSurfaceId& last_local_surface_id() const {
@@ -78,13 +77,13 @@ struct WillDrawSurfaceResult : base::SupportsWeakPtr<WillDrawSurfaceResult> {
   }
 
   CompositorFrameSinkSupport::WillDrawCallback GetCallback() {
-    return base::BindRepeating(&WillDrawSurfaceResult::WillDrawSurface,
+    return base::BindRepeating(&AggregatedDamageResult::OnAggregatedDamage,
                                AsWeakPtr());
   }
 
  private:
-  void WillDrawSurface(const LocalSurfaceId& local_surface_id,
-                       const gfx::Rect& damage_rect) {
+  void OnAggregatedDamage(const LocalSurfaceId& local_surface_id,
+                          const gfx::Rect& damage_rect) {
     last_local_surface_id_ = local_surface_id;
     last_damage_rect_ = damage_rect;
   }
@@ -92,7 +91,7 @@ struct WillDrawSurfaceResult : base::SupportsWeakPtr<WillDrawSurfaceResult> {
   gfx::Rect last_damage_rect_;
   LocalSurfaceId last_local_surface_id_;
 
-  DISALLOW_COPY_AND_ASSIGN(WillDrawSurfaceResult);
+  DISALLOW_COPY_AND_ASSIGN(AggregatedDamageResult);
 };
 
 class SurfaceAggregatorTest : public testing::Test {
@@ -417,7 +416,7 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, SimpleFrame) {
   Pass passes[] = {Pass(quads, arraysize(quads), SurfaceSize())};
 
   // Add a callback for when surface is scheduled to draw.
-  WillDrawSurfaceResult will_draw_result;
+  AggregatedDamageResult will_draw_result;
   support_->SetWillDrawSurfaceCallback(will_draw_result.GetCallback());
 
   SubmitCompositorFrame(support_.get(), passes, arraysize(passes),
@@ -432,8 +431,8 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, SimpleFrame) {
   EXPECT_EQ(gfx::Rect(SurfaceSize()), will_draw_result.last_damage_rect());
   EXPECT_EQ(root_local_surface_id_, will_draw_result.last_local_surface_id());
 
-  // Check that SurfaceObserver::OnSurfaceWillDraw was called.
-  EXPECT_TRUE(observer_.SurfaceWillDrawCalled(root_surface_id));
+  // Check that SurfaceObserver::OnSurfaceSubtreeDamaged was called.
+  EXPECT_TRUE(observer_.IsSurfaceSubtreeDamaged(root_surface_id));
 }
 
 TEST_F(SurfaceAggregatorValidSurfaceTest, OpacityCopied) {
@@ -626,7 +625,7 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReference) {
                         SK_ColorWHITE, surface_quad_rect, 1.f)};
   Pass root_passes[] = {Pass(root_quads, arraysize(root_quads), SurfaceSize())};
 
-  WillDrawSurfaceResult will_draw_result;
+  AggregatedDamageResult will_draw_result;
   support_->SetWillDrawSurfaceCallback(will_draw_result.GetCallback());
 
   SubmitCompositorFrame(support_.get(), root_passes, arraysize(root_passes),
@@ -665,10 +664,10 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReference) {
   // The damage should be equal to whole size of the primary SurfaceDrawQuad.
   EXPECT_EQ(surface_quad_rect, will_draw_result.last_damage_rect());
 
-  // Check that SurfaceObserver::OnSurfaceWillDraw was called only
+  // Check that SurfaceObserver::OnSurfaceSubtreeDamaged was called only
   // for the fallback surface.
-  EXPECT_FALSE(observer_.SurfaceWillDrawCalled(primary_child_surface_id));
-  EXPECT_TRUE(observer_.SurfaceWillDrawCalled(fallback_child_surface_id));
+  EXPECT_FALSE(observer_.IsSurfaceSubtreeDamaged(primary_child_surface_id));
+  EXPECT_TRUE(observer_.IsSurfaceSubtreeDamaged(fallback_child_surface_id));
 
   observer_.Reset();
 
@@ -701,10 +700,10 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReference) {
   // surface.
   EXPECT_EQ(primary_surface_size, will_draw_result.last_damage_rect().size());
 
-  // Check that SurfaceObserver::OnSurfaceWillDraw was called only
+  // Check that SurfaceObserver::OnSurfaceSubtreeDamaged was called only
   // for the primary surface.
-  EXPECT_TRUE(observer_.SurfaceWillDrawCalled(primary_child_surface_id));
-  EXPECT_FALSE(observer_.SurfaceWillDrawCalled(fallback_child_surface_id));
+  EXPECT_TRUE(observer_.IsSurfaceSubtreeDamaged(primary_child_surface_id));
+  EXPECT_FALSE(observer_.IsSurfaceSubtreeDamaged(fallback_child_surface_id));
 
   primary_child_support->EvictCurrentSurface();
   fallback_child_support->EvictCurrentSurface();
@@ -758,7 +757,7 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReferenceWithPrimary) {
   Pass root_passes[] = {
       Pass(root_quads, arraysize(root_quads), root_size, NoDamage())};
 
-  WillDrawSurfaceResult will_draw_result;
+  AggregatedDamageResult will_draw_result;
   support_->SetWillDrawSurfaceCallback(will_draw_result.GetCallback());
 
   SubmitCompositorFrame(support_.get(), root_passes, arraysize(root_passes),
