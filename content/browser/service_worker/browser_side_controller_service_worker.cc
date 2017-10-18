@@ -56,7 +56,7 @@ class BrowserSideControllerServiceWorker::ResponseCallback
     callback->OnResponse(response, dispatch_event_time);
   }
   void OnResponseBlob(const ServiceWorkerResponse& response,
-                      storage::mojom::BlobPtr body_as_blob,
+                      blink::mojom::BlobPtr body_as_blob,
                       base::Time dispatch_event_time) override {
     // Calling FinishRequest will destroy |this|, so save the callback now.
     auto callback = std::move(forwarding_callback_);

@@ -98,7 +98,6 @@ jumbo_source_set("loader") {
 
     # "//services/network/public/interfaces:interfaces_blink" is included in
     # "//third_party/WebKit/Source/platform", which will contain this source set
-    "//storage/public/interfaces:interfaces_blink",
     "//third_party/WebKit/Source/platform:make_platform_generated",
     "//third_party/WebKit/common:blink_common",
     "//third_party/WebKit/public:mojo_bindings_blink",
