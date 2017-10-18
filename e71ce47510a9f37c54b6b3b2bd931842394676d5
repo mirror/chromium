@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "8b0a9c50_13e7d472",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-18T14:25:35Z",
+      "side": 1,
+      "message": "It is still true, but one part is in a second method (called by the first).\nUpdated.",
+      "parentUuid": "5a4084dd_4b7984d7",
+      "range": {
+        "startLine": 891,
+        "startChar": 3,
+        "endLine": 891,
+        "endChar": 30
+      },
+      "revId": "e71ce47510a9f37c54b6b3b2bd931842394676d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b881fb2b_d165a086",
         "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
         "patchSetId": 2
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "72415f79_ca4c74fb",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-18T14:25:35Z",
+      "side": 1,
+      "message": "Wow, I did not know for(...of...)\nDone",
+      "parentUuid": "b881fb2b_d165a086",
+      "range": {
+        "startLine": 946,
+        "startChar": 7,
+        "endLine": 946,
+        "endChar": 30
+      },
+      "revId": "e71ce47510a9f37c54b6b3b2bd931842394676d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06701471_17968fe1",
         "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
         "patchSetId": 2
@@ -91,6 +139,30 @@
       "revId": "e71ce47510a9f37c54b6b3b2bd931842394676d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c1b6e64_11bcd8db",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-18T14:25:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06701471_17968fe1",
+      "range": {
+        "startLine": 958,
+        "startChar": 2,
+        "endLine": 958,
+        "endChar": 62
+      },
+      "revId": "e71ce47510a9f37c54b6b3b2bd931842394676d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
