@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69a1acce_abf7cafc",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-18T23:22:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a0d603f_876dfab3",
+      "revId": "64dc33c7ba51b8d78d265db91e6fbca08dd8d4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52d74540_7f15b847",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fc0e4d61_4690ac39",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-18T23:22:39Z",
+      "side": 1,
+      "message": "Actually I did what you suggested in Patch Set 1, but changed to the above code when I was confused by how the other place of the change handled the test cases.\n\nDone.",
+      "parentUuid": "52d74540_7f15b847",
+      "revId": "64dc33c7ba51b8d78d265db91e6fbca08dd8d4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f92e3f9_352ceb21",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-18T22:31:31Z",
       "side": 1,
       "message": "This counter adjustment won\u0027t be needed if the above change was made?",
+      "revId": "64dc33c7ba51b8d78d265db91e6fbca08dd8d4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14478b6c_2fb3a72e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-18T23:22:39Z",
+      "side": 1,
+      "message": "With this change we do have more passing tests. Will look into the tests and may make another patch for this. Removed this change from this CL.",
+      "parentUuid": "0f92e3f9_352ceb21",
       "revId": "64dc33c7ba51b8d78d265db91e6fbca08dd8d4e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
