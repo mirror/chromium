@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7001da5_e26685f4",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-18T15:21:41Z",
+      "side": 1,
+      "message": "I prefer to do that in another patch. Since this should be merged into M63.",
+      "parentUuid": "84b9712a_aa5f993b",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 20
+      },
+      "revId": "270ac2794a3ae19fab08898e855a4530989af577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73e6b359_53dfbc67",
         "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
         "patchSetId": 4
