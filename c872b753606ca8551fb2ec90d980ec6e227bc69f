@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "691e7e17_58ddb2ca",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-18T20:37:21Z",
+      "side": 1,
+      "message": "Comment added.\n\n\u003e\u003e The real fix is not swapping item delegates on launch! \nWell, I considered this alternative solution but decided that to be safe is more important (we don\u0027t have restriction not to change item delegate during the call). I will try this approach bit later. It may require ARC tests changes.",
+      "parentUuid": "6aa0efc9_e2588b11",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b344c7b_98015e33",
         "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
         "patchSetId": 2
