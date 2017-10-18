@@ -45,7 +45,6 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image_skia.h"
-#include "ui/message_center/notification.h"
 
 namespace {
 
@@ -114,13 +113,6 @@ base::string16 CreateNotificationTitle(
   }
   title += notification.title();
   return title;
-}
-
-gfx::Image DeepCopyImage(const gfx::Image& image) {
-  if (image.IsEmpty())
-    return gfx::Image();
-  std::unique_ptr<gfx::ImageSkia> image_skia(image.CopyImageSkia());
-  return gfx::Image(*image_skia);
 }
 
 void EscapeUnsafeCharacters(std::string* message) {
@@ -301,15 +293,8 @@ class NotificationPlatformBridgeLinuxImpl
     // notification and its images.  Wrap the notification in a
     // unique_ptr to transfer ownership of the notification (and the
     // non-thread-safe reference counts) to the task runner thread.
-    auto notification_copy =
-        std::make_unique<message_center::Notification>(notification);
-    notification_copy->set_icon(DeepCopyImage(notification_copy->icon()));
-    notification_copy->set_image(body_images_supported_.value()
-                                     ? DeepCopyImage(notification_copy->image())
-                                     : gfx::Image());
-    notification_copy->set_small_image(gfx::Image());
-    for (size_t i = 0; i < notification_copy->buttons().size(); i++)
-      notification_copy->SetButtonIcon(i, gfx::Image());
+    auto notification_copy = message_center::Notification::DeepCopy(
+        notification, body_images_supported_.value(), false, false);
 
     PostTaskToTaskRunnerThread(base::BindOnce(
         &NotificationPlatformBridgeLinuxImpl::DisplayOnTaskRunner, this,
