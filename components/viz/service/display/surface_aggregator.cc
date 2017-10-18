@@ -444,14 +444,10 @@ void SurfaceAggregator::EmitSurfaceContent(
                     parent_device_scale_factor, child_to_parent_map,
                     surface_transform, quads_clip, dest_pass, surface_id);
   } else {
-    fprintf(stderr, ">>>NOT MERGING\n");
     RenderPassId remapped_pass_id = RemapPassId(last_pass.id, surface_id);
 
     // TODO(fsamuel): It seems like we can reduce the clip rect here as well
     // as we do above in the merge case.
-    // auto* shared_quad_state =
-    //    CopySharedQuadState(source_sqs, target_transform, clip_rect,
-    //    dest_pass);
     auto* shared_quad_state = dest_pass->CreateAndAppendSharedQuadState();
     gfx::Transform new_transform = scaled_quad_to_target_transform;
     new_transform.ConcatTransform(target_transform);
