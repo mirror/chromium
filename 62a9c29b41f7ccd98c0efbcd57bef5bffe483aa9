@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e5e6ad9b_6c8cf666",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/blink_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80097118_a57fffae",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e259fc3_c82938d7",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/blink_types.py",
         "patchSetId": 16
@@ -50,6 +68,24 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ae2e43_5c8ca038",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/blink_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e259fc3_c82938d7",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "fc879afd_5920e520",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/callback_function.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "No. Callback function is a \u0027definition\u0027. \nIt can be referred as callback function type (2.12.23).",
+      "parentUuid": "04a07904_7abee441",
+      "range": {
+        "startLine": 7,
+        "startChar": 23,
+        "endLine": 7,
+        "endChar": 29
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bd25cc2_16c25c6b",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 16
@@ -90,6 +150,24 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2296c8a5_60452999",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Callback interface is an interface, and you can filter them with interface.is_callback.\nIt depends on the caller whether he/she wants all interfaces or only non-callback interfaces.",
+      "parentUuid": "2bd25cc2_16c25c6b",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +194,30 @@
     },
     {
       "key": {
+        "uuid": "c8f5056d_b85010d9",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82e88ec1_c0834219",
+      "range": {
+        "startLine": 34,
+        "startChar": 55,
+        "endLine": 34,
+        "endChar": 77
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a96be5f_befbd16a",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 16
@@ -130,6 +232,24 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0d3df7_155603d4",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a96be5f_befbd16a",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +270,24 @@
     },
     {
       "key": {
+        "uuid": "c200a3cb_a02fdbc7",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Makes sense.\nUpdated to be foobar_identifers.",
+      "parentUuid": "7f7f9a75_0cf6b461",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a835ebf_3cd972a7",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 16
@@ -164,6 +302,24 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5deccd7b_89525749",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a835ebf_3cd972a7",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +340,24 @@
     },
     {
       "key": {
+        "uuid": "d6d35772_2aa6c247",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "523e49b2_f5b68624",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be5f0960_fcc5bafa",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
         "patchSetId": 16
@@ -198,6 +372,24 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b1fb1b_362f8833",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be5f0960_fcc5bafa",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -218,6 +410,24 @@
     },
     {
       "key": {
+        "uuid": "871d634a_6adde5d4",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef15e1ee_76b0e4cc",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b422132_20da3585",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
         "patchSetId": 16
@@ -232,6 +442,24 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0960a69a_8f025dab",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b422132_20da3585",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -252,6 +480,24 @@
     },
     {
       "key": {
+        "uuid": "147d5bf4_0dde11f2",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "TypeReference itself is not a type, just having a name of a named definition (and few other information).\n\n\u003e In this CL, collection.py says:\n\u003e   elif type(definition) \u003d\u003d Enumeration:\n\u003e where Enumeration doesn\u0027t inherit from TypeBase, nor TypeReference is never used in  Collection.register_definition or other functions.\nCorrect, and simply because |definition| is independent from TypeReference.\n\nTypeReference just says, for example, the type of an argument in an operation is a definition named \"foobar\". It does not know whether it is an interface or a dictionary, or undefined in the collection.",
+      "parentUuid": "19d1c4a4_1ac6ae55",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4409890e_6026057e",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
         "patchSetId": 16
@@ -266,6 +512,24 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46e20b3_068ac2fc",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4409890e_6026057e",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -292,6 +556,30 @@
     },
     {
       "key": {
+        "uuid": "8a8c1d62_c4bb78f4",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1c15c8b_68c8722d",
+      "range": {
+        "startLine": 201,
+        "startChar": 22,
+        "endLine": 201,
+        "endChar": 34
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6eb9b0c_af85893c",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
         "patchSetId": 16
@@ -312,6 +600,30 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b536f086_067ce72c",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "This is True when we write \"record\u003cK, V\u003e?\".",
+      "parentUuid": "e6eb9b0c_af85893c",
+      "range": {
+        "startLine": 202,
+        "startChar": 45,
+        "endLine": 202,
+        "endChar": 53
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -338,6 +650,30 @@
     },
     {
       "key": {
+        "uuid": "0c424d22_2ef4a18b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f5059e3_e5a4a9ab",
+      "range": {
+        "startLine": 237,
+        "startChar": 42,
+        "endLine": 237,
+        "endChar": 54
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4675f10_549c946f",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
         "patchSetId": 16
@@ -352,6 +688,24 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6395a5fb_ad5506eb",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4675f10_549c946f",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -372,6 +726,24 @@
     },
     {
       "key": {
+        "uuid": "d7e95ccb_e3d4c091",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "No. As a binding behavior, they should work in same, but the descriptions are not same.\nWe don\u0027t want to do such invisible reductions.",
+      "parentUuid": "bb52db77_d2a2bc16",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1d5cf30_68b387b3",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
         "patchSetId": 16
@@ -386,6 +758,24 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd2ed9aa_6f67db51",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "ditto.\nWe want to distinguish \"(A or B?)\" from \"(A or B)?\".",
+      "parentUuid": "a1d5cf30_68b387b3",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -406,6 +796,24 @@
     },
     {
       "key": {
+        "uuid": "bca71e30_51ccb891",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Agreed. It may be good to define __eq__ for all TypeBase instances.\nBut I\u0027ll work for it when it seems necessary.",
+      "parentUuid": "8b0e9737_0e1c36c1",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46d2e2ea_079433cf",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
         "patchSetId": 16
@@ -423,6 +831,24 @@
     },
     {
       "key": {
+        "uuid": "f60dc85e_822b65d6",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "I think this is rarely used, and can be unused for some instances.",
+      "parentUuid": "46d2e2ea_079433cf",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "297f7879_416441df",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/implements.py",
         "patchSetId": 16
@@ -437,6 +863,24 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476e75cf_1f4d3ae6",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/implements.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "297f7879_416441df",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -463,6 +907,30 @@
     },
     {
       "key": {
+        "uuid": "a842ac05_21a7cdf2",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "538cf18f_b84ae4d5",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b6eec06_b079ab46",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
         "patchSetId": 16
@@ -477,6 +945,24 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc77eeb_0ae39e30",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "A callback interface is an interface. I think it is all and enough reason to define them in one class.",
+      "parentUuid": "1b6eec06_b079ab46",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -497,6 +983,24 @@
     },
     {
       "key": {
+        "uuid": "7c6fe783_1ea16935",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082aa16f_5fc75d53",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0ff57a1_0b6c0273",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
         "patchSetId": 16
@@ -511,6 +1015,24 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b053dadd_e61f19f5",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0ff57a1_0b6c0273",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -531,6 +1053,24 @@
     },
     {
       "key": {
+        "uuid": "cf9656cb_f938eac3",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Except for test files, we have map-like serializers and an anonymous serializer (in PushSubscription.idl).\nAnd in test files for IDL compiler (not only for IDL parser), an operation-like serializer is defined.\n\nIf we decide to support serializer styles only in Chromium repository, we can remove more members.",
+      "parentUuid": "8b6ff4f4_c297c7a3",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c141ab9c_024c24f1",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
         "patchSetId": 16
@@ -545,6 +1085,24 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f26b863_464e9a3c",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c141ab9c_024c24f1",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -571,6 +1129,30 @@
     },
     {
       "key": {
+        "uuid": "0eb4c622_4c411b1e",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/literal.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0adf8533_2c434c23",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ff70ff9_eebea3c6",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/literal.py",
         "patchSetId": 16
@@ -591,6 +1173,30 @@
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ac9235_1163b021",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/literal.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-18T09:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ff70ff9_eebea3c6",
+      "range": {
+        "startLine": 30,
+        "startChar": 34,
+        "endLine": 30,
+        "endChar": 38
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
