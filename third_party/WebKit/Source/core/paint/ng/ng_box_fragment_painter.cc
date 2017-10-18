@@ -140,6 +140,9 @@ void NGBoxFragmentPainter::PaintBoxDecorationBackgroundWithRect(
 }
 
 static bool RequiresLegacyFallback(const NGPhysicalFragment& fragment) {
+  if (fragment.IsBlockLayoutRoot())
+    return true;
+
   LayoutObject* layout_object = fragment.GetLayoutObject();
   return layout_object->IsLayoutReplaced();
 }
