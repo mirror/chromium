@@ -87,6 +87,7 @@ class KeepAliveDelegateTest : public testing::Test {
 };
 
 TEST_F(KeepAliveDelegateTest, TestErrorHandledBeforeStarting) {
+  EXPECT_CALL(*inner_delegate_, OnError(ChannelError::CONNECT_ERROR));
   keep_alive_->OnError(ChannelError::CONNECT_ERROR);
 }
 
@@ -98,7 +99,7 @@ TEST_F(KeepAliveDelegateTest, TestPing) {
       .WillOnce(PostCompletionCallbackTask<1>(net::OK));
   EXPECT_CALL(*inner_delegate_, Start());
   EXPECT_CALL(*ping_timer_, ResetTriggered()).Times(2);
-  EXPECT_CALL(*liveness_timer_, ResetTriggered()).Times(2);
+  EXPECT_CALL(*liveness_timer_, ResetTriggered()).Times(3);
   EXPECT_CALL(*ping_timer_, Stop());
 
   keep_alive_->Start();
@@ -139,7 +140,7 @@ TEST_F(KeepAliveDelegateTest, TestPingAndLivenessTimeout) {
   EXPECT_CALL(*inner_delegate_, OnError(ChannelError::PING_TIMEOUT));
   EXPECT_CALL(*inner_delegate_, Start());
   EXPECT_CALL(*ping_timer_, ResetTriggered()).Times(1);
-  EXPECT_CALL(*liveness_timer_, ResetTriggered()).Times(1);
+  EXPECT_CALL(*liveness_timer_, ResetTriggered()).Times(2);
   EXPECT_CALL(*liveness_timer_, Stop()).Times(2);
   EXPECT_CALL(*ping_timer_, Stop()).Times(2);
 
