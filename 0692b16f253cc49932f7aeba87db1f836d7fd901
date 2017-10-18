@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5330d348_02d49d14",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T07:52:57Z",
+      "side": 1,
+      "message": "I thought about that. The main reason was to make this easier to import from the PRESUBMIT. I don\u0027t feel strongly, but if people are in favor of moving it to Tools/Scripts, then I\u0027m happy to do that.",
+      "parentUuid": "f66875d7_afa171be",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "311b969e_8141fe71",
         "filename": "third_party/WebKit/non_blink_scanner.py",
         "patchSetId": 1
@@ -88,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "41683921_7bec8e1f",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T07:52:57Z",
+      "side": 1,
+      "message": "I did it for consistency between all the different lists. It\u0027s not unheard of (https://cs.chromium.org/search/?q\u003d,%5C+?%5D+lang:python\u0026sq\u003dpackage:chromium\u0026type\u003dcs) and the style guide appears to be silent on this point, but since I don\u0027t feel strongly, removed the commas from single-element lists that are one line.\n\nFWIW, the one argument I have in favor of this comes when doing string substitutions:\n  \u0027%s\u0027 % x\nworks great until x is a tuple, whereas\n  \u0027%s\u0027 % (x,)\nalways works \u003d)",
+      "parentUuid": "14fa2071_5f34f6e1",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13f83230_f2969bd5",
         "filename": "third_party/WebKit/non_blink_scanner.py",
         "patchSetId": 1
@@ -140,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "53a402d5_a2a95291",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T07:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3689c0c_b02f09fb",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fd21537_0cad7b3d",
         "filename": "third_party/WebKit/non_blink_scanner.py",
         "patchSetId": 1
@@ -154,6 +208,24 @@
       "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467a7b5f_334b4d2d",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T07:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fd21537_0cad7b3d",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "e1130c43_1db0005a",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T07:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a449210_a1531ca5",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "130361d6_216857aa",
         "filename": "third_party/WebKit/non_blink_scanner.py",
         "patchSetId": 1
@@ -188,6 +278,24 @@
       "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476ee415_95f2fe9e",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T07:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "130361d6_216857aa",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "75d08a6c_ed043e25",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T07:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c8f7dbc_32afbb19",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2819ed33_8592094e",
         "filename": "third_party/WebKit/non_blink_scanner.py",
         "patchSetId": 1
@@ -222,6 +348,24 @@
       "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd7fba3_237e2dfc",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T07:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2819ed33_8592094e",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
