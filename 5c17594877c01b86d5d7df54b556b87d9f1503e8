@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "137069e7_61004a3a",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-10-18T17:36:00Z",
+      "side": 1,
+      "message": "Fair point, but there\u0027s an issue with this code as it stands where resend_last_frame can get set to true when there\u0027s no frame to resend if capture fails for the first two frames. I would prefer it if we didn\u0027t track basically the same information in captured_first_frame_ and newest_frame_time_--it seems error prone to do so. Perhaps you can eliminate the former and set newest_frame_time_ if (frame || resent_last_frame) in place of setting \ncaptured_first_frame_, below?",
+      "parentUuid": "9a16f4dc_c8b69273",
+      "range": {
+        "startLine": 211,
+        "startChar": 27,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "5c17594877c01b86d5d7df54b556b87d9f1503e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cdb9ad3_9640f1f4",
         "filename": "remoting/protocol/webrtc_frame_scheduler_simple.h",
         "patchSetId": 1
