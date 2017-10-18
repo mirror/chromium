@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83b8a054_e8284dba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-10-18T00:12:53Z",
+      "side": 1,
+      "message": "Explain reason for change. Why does the current method have low coverage?",
+      "revId": "a20a61ed495c02ffeceac53ad9079d137d798258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
