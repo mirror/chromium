@@ -169,9 +169,6 @@
       status: "stable",
     },
     {
-      name: "ColorCanvasExtensions",
-    },
-    {
       name: "CompositedSelectionUpdate",
     },
     {
