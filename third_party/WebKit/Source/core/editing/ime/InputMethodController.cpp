@@ -273,6 +273,14 @@ int CalculateAfterDeletionLengthsInCodePoints(
 }
 
 Element* RootEditableElementOfSelection(const FrameSelection& frameSelection) {
+  // TODO(editing-dev): We should update layout before computing visible
+  // selection instead of here.
+
+  // This is workaround for http://crbug.com/711366
+  // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited. see http://crbug.com/590369 for more details.
+  frameSelection.GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
   const SelectionInDOMTree& selection = frameSelection.GetSelectionInDOMTree();
   if (selection.IsNone())
     return nullptr;
@@ -281,13 +289,6 @@ Element* RootEditableElementOfSelection(const FrameSelection& frameSelection) {
   if (Element* editable = RootEditableElementOf(selection.Base()))
     return editable;
 
-  // This is work around for applications assumes a position before editable
-  // element as editable[1]
-  // [1] http://crbug.com/712761
-
-  // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
-  // needs to be audited. see http://crbug.com/590369 for more details.
-  frameSelection.GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
   const VisibleSelection& visibleSeleciton =
       frameSelection.ComputeVisibleSelectionInDOMTree();
   return RootEditableElementOf(visibleSeleciton.Start());
