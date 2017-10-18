@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "93900f4f_fb2c2b36",
+        "filename": "components/machine_intelligence/proto/ranker_example.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-18T16:27:43Z",
+      "side": 1,
+      "message": "I was wondering about not pointing to google3 -- I think your plan to document it there sounds fine.",
+      "parentUuid": "aed87588_bbbf863e",
+      "range": {
+        "startLine": 5,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 29
+      },
+      "revId": "a2c8c41dabec77799bbf9e6b645535ce83822597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9a084ce_f1e10a9f",
         "filename": "components/machine_intelligence/ranker_example_util.h",
         "patchSetId": 3
