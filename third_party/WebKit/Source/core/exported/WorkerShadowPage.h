@@ -64,9 +64,7 @@ class CORE_EXPORT WorkerShadowPage : public WebFrameClient {
   // so the shadow page must also manually call Close() on the corresponding
   // frame and its widget.
   void DidFinishDocumentLoad() override;
-  std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
-      const WebURLRequest&,
-      SingleThreadTaskRunnerRefPtr) override;
+  std::unique_ptr<blink::WebURLLoaderFactory> CreateURLLoaderFactory() override;
 
   Document* GetDocument() { return main_frame_->GetFrame()->GetDocument(); }
   WebSettings* GetSettings() { return web_view_->GetSettings(); }

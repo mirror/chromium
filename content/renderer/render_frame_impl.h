@@ -710,9 +710,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const blink::WebSecurityOrigin& security_origin,
       blink::WebSetSinkIdCallbacks* web_callbacks) override;
   blink::WebPageVisibilityState VisibilityState() const override;
-  std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
-      const blink::WebURLRequest& request,
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner) override;
+  std::unique_ptr<blink::WebURLLoaderFactory> CreateURLLoaderFactory() override;
   void DraggableRegionsChanged() override;
 
   // WebFrameSerializerClient implementation:
@@ -884,6 +882,8 @@ class CONTENT_EXPORT RenderFrameImpl
     T* scoped_variable_;
     T original_value_;
   };
+
+  class FrameURLLoaderFactory;
 
   typedef std::map<GURL, double> HostZoomLevels;
   typedef std::pair<url::Origin, blink::mojom::EngagementLevel>
@@ -1209,6 +1209,10 @@ class CONTENT_EXPORT RenderFrameImpl
   void BindWidget(mojom::WidgetRequest request);
 
   void ShowDeferredContextMenu(const ContextMenuParams& params);
+
+  mojom::URLLoaderFactory* custom_url_loader_factory() {
+    return custom_url_loader_factory_.get();
+  }
 
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
