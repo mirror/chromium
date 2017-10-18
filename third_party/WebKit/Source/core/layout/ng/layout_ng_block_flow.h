@@ -56,6 +56,9 @@ class CORE_EXPORT LayoutNGBlockFlow : public LayoutBlockFlow {
                              NGBreakToken*,
                              RefPtr<NGLayoutResult>);
 
+  // For testing only.
+  RefPtr<NGLayoutResult> CachedLayoutResultForTesting();
+
   const NGPaintFragment* PaintFragment() const { return paint_fragment_.get(); }
 
  protected:
