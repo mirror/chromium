@@ -61,6 +61,7 @@
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "core/typed_arrays/DOMArrayBufferView.h"
 #include "core/workers/WorkerGlobalScope.h"
+#include "platform/FontFamilyNames.h"
 #include "platform/Histogram.h"
 #include "platform/SharedBuffer.h"
 #include "platform/WebTaskRunner.h"
@@ -674,6 +675,11 @@ bool ContextAllowsDownload(ExecutionContext* context) {
   // TODO(fserb): ideally, we would like to have the settings value available
   // on workers. Right now, we don't support that.
   return true;
+}
+
+void FontFace::MaybeLoad() {
+  if (status_ == kUnloaded)
+    css_font_face_->Load();
 }
 
 void FontFace::InitCSSFontFace(ExecutionContext* context, const CSSValue* src) {

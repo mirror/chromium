@@ -265,6 +265,7 @@ FontFaceSet* FontFaceSetDocument::addForBinding(ScriptState*,
       GetDocument()->GetStyleEngine().GetFontSelector();
   non_css_connected_faces_.insert(font_face);
   font_selector->GetFontFaceCache()->AddFontFace(font_face, false);
+  font_face->MaybeLoad();
   if (font_face->LoadStatus() == FontFace::kLoading)
     AddToLoadingFonts(font_face);
   font_selector->FontFaceInvalidated();
