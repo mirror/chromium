@@ -161,3 +161,5 @@ TEST_F('InterventionsInternalsUITest', 'LogNewMessage', function() {
 
   mocha.run();
 });
+
+// TODO(thanhdle): Add tests for blacklist update events behaviors.

@@ -41,4 +41,13 @@ interface InterventionsInternalsPage {
   // InterventionsInternalsPageHandler when it receives a new MessageLog, and
   // publishes it on the javscript side.
   LogNewMessage(MessageLog log);
+
+  // Update information of blacklist status to the page. These methods are
+  // called by InterventionsInternalsPageHandler when PreviewsUIService receives
+  // new new information of the blacklist (e.g. A host or the user is
+  // blacklisted, or the blacklist is cleared).
+  UpdateBlacklistedHost(string host, int64 time);
+  UpdateUserBlacklisted(int64 time);
+  UpdateUserNotBlacklisted(int64 time);
+  UpdateBlacklistCleared(int64 time);
 };
