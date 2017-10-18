@@ -45,6 +45,40 @@
       "revId": "ad5cf5622874dc6f710837d5925049f805794208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744f1be8_4ca85486",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-18T23:13:47Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like code that should live outside of ProfileManager. |profile_id| is actually a profile path I guess? This entire function seems like it should be something like ProfileManager::GetProfileFromPath(id, incognito), or, since |profile_id| comes from NotificationUIManager::GetProfileID(), implement this there.",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4839e28_5817dc2f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-18T23:13:47Z",
+      "side": 1,
+      "message": "Currently we seem to rely on these never being removed. I know this code is in development, but I\u0027d prefer to either implement removal and not assume this will succeed immediately, or at least have a comment somewhere noting that these need to be removed and eventually this might return null.",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
