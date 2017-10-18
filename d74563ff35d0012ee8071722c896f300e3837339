@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c58cde2d_acea6200",
+        "filename": "chromeos/components/tether/ble_scanner_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-18T00:02:56Z",
+      "side": 1,
+      "message": "Since there are a ton of classes with this same pattern, I filed a bug to fix them all. I will prioritize that once the more important issues have been tackled.\n\nSee https://bugs.chromium.org/p/chromium/issues/detail?id\u003d775753.",
+      "parentUuid": "9a67cd32_8636500a",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 16
+      },
+      "revId": "d74563ff35d0012ee8071722c896f300e3837339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c4313b3_62564317",
         "filename": "chromeos/components/tether/ble_scanner_impl.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "d74563ff35d0012ee8071722c896f300e3837339",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e92575_5d8fb19d",
+        "filename": "chromeos/components/tether/ble_scanner_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-18T00:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c4313b3_62564317",
+      "range": {
+        "startLine": 66,
+        "startChar": 31,
+        "endLine": 66,
+        "endChar": 39
+      },
+      "revId": "d74563ff35d0012ee8071722c896f300e3837339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
