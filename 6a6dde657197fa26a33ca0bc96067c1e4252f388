@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db48c1f6_cc628624",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_fragment_iterator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-18T15:54:55Z",
+      "side": 1,
+      "message": "Why are we checking the LayoutObjects instead of the fragments?",
+      "revId": "6a6dde657197fa26a33ca0bc96067c1e4252f388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccfa075b_ce5ea90a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_fragment_iterator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-18T15:54:55Z",
+      "side": 1,
+      "message": "Expand on why we\u0027re doing this please.",
+      "revId": "6a6dde657197fa26a33ca0bc96067c1e4252f388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6cbfac0_f0d28058",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_fragment_iterator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-18T15:54:55Z",
+      "side": 1,
+      "message": "Is The container always a box? If so should we make this take a PhysicalBoxFragment?",
+      "revId": "6a6dde657197fa26a33ca0bc96067c1e4252f388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
