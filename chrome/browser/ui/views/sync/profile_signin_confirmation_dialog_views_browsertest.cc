@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
@@ -38,9 +39,10 @@ class ProfileSigninConfirmationDialogTest : public DialogBrowserTest {
  public:
   ProfileSigninConfirmationDialogTest() {}
 
-  // content::BrowserTestBase:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitch(switches::kExtendMdToSecondaryUi);
+  // testing::Test:
+  void SetUp() override {
+    scoped_feature_list_.InitAndEnableFeature(features::kSecondaryUiMd);
+    DialogBrowserTest::SetUp();
   }
 
   // DialogBrowserTest:
@@ -63,6 +65,8 @@ class ProfileSigninConfirmationDialogTest : public DialogBrowserTest {
   }
 
  private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+
   DISALLOW_COPY_AND_ASSIGN(ProfileSigninConfirmationDialogTest);
 };
 

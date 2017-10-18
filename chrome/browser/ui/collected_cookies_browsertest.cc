@@ -5,6 +5,7 @@
 #include <string>
 
 #include "base/command_line.h"
+#include "base/test/scoped_feature_list.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/content_settings/cookie_settings_factory.h"
 #include "chrome/browser/ui/browser.h"
@@ -49,12 +50,15 @@ class CollectedCookiesTestMd : public CollectedCookiesTest {
  public:
   CollectedCookiesTestMd() {}
 
-  // content::BrowserTestBase:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitch(switches::kExtendMdToSecondaryUi);
+  // CollectedCookiesTest:
+  void SetUp() override {
+    scoped_feature_list_.InitAndEnableFeature(features::kSecondaryUiMd);
+    CollectedCookiesTest::SetUp();
   }
 
  private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+
   DISALLOW_COPY_AND_ASSIGN(CollectedCookiesTestMd);
 };
 
