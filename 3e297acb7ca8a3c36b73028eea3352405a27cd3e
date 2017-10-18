@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "927facdf_fbe60c5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T20:40:28Z",
+      "side": 1,
+      "message": "Please use RecordHistogram.recordBooleanHistogram here.",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 49
+      },
+      "revId": "3e297acb7ca8a3c36b73028eea3352405a27cd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
