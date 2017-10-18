@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "c86bf4aa_ec452536",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-18T17:51:24Z",
+      "side": 1,
+      "message": "Sorry my understanding was a bit off. Maybe it\u0027s a better idea to remove the \"if (...)\" code since I am not sure if it\u0027s useful. And I\u0027ve removed it.",
+      "parentUuid": "422fc258_d18aa822",
+      "range": {
+        "startLine": 222,
+        "startChar": 30,
+        "endLine": 222,
+        "endChar": 47
+      },
+      "revId": "ccfd759ed17b5a7e2440dd783e0e1eeb7672d0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98c41aee_2182f71d",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 15
@@ -227,6 +251,30 @@
       "side": 1,
       "message": "profile_id and incognito are going to be fairly consistent for any given user and will not provide much in the way of differentiating, so it falls down to the notification_id to provide uniqueness. Similar concern was raised in the design for temp files for notifications and the decision there was to use the origin as well as a differentiatior. By doing that, you ensure that data from one origin is never accidentally used with another origin.",
       "parentUuid": "1d5f016c_667f9307",
+      "range": {
+        "startLine": 351,
+        "startChar": 26,
+        "endLine": 351,
+        "endChar": 28
+      },
+      "revId": "ccfd759ed17b5a7e2440dd783e0e1eeb7672d0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c52caa1_379f17ba",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-18T17:51:24Z",
+      "side": 1,
+      "message": "I\u0027ve added the origin_url for comparison. Thanks for the explanation.",
+      "parentUuid": "05a64571_c072dc86",
       "range": {
         "startLine": 351,
         "startChar": 26,
