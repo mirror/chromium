@@ -183,6 +183,75 @@
       "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873749f5_261e2998",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-18T09:46:35Z",
+      "side": 1,
+      "message": "Perhaps add a comment to say this is a FinishedCallback (same for similar methods).\n\nThe reason I say this, is my first instinct was this is a non-virtual function that takes a parameter that it doesn\u0027t use. Removing it however would cause a compile failure, so let\u0027s not do that:)",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 37
+      },
+      "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca68b8b_8fa773b4",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-18T09:46:35Z",
+      "side": 1,
+      "message": "I\u0027m sure I\u0027m being dense, but it feels like there\u0027s a way for the callback to not get executed, if a) it\u0027s added when there\u0027s an observer and then b) no error occurs.\n\nIs that supposed to happen?",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 74
+      },
+      "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93736640_6bc0ed72",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-18T09:46:35Z",
+      "side": 1,
+      "message": "nit: Successful",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
