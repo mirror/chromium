@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bce486a_a695749c",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-18T03:54:36Z",
+      "side": 1,
+      "message": "Don\u0027t you need a return here?",
+      "range": {
+        "startLine": 92,
+        "startChar": 3,
+        "endLine": 92,
+        "endChar": 0
+      },
+      "revId": "79666f11d7cbcc9770a246029a6fb5f16c4b2ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b69c74eb_385ab4a7",
+        "filename": "ui/base/ui_base_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-18T03:54:36Z",
+      "side": 1,
+      "message": "keep sorted",
+      "range": {
+        "startLine": 57,
+        "startChar": 33,
+        "endLine": 57,
+        "endChar": 52
+      },
+      "revId": "79666f11d7cbcc9770a246029a6fb5f16c4b2ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
