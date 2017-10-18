@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69eafb24_cf647800",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-18T11:01:15Z",
+      "side": 1,
+      "message": "why is this unreachable?",
+      "range": {
+        "startLine": 456,
+        "startChar": 7,
+        "endLine": 456,
+        "endChar": 73
+      },
+      "revId": "778f9e04a4b97da8f5cd7bc02b4c78ae41701385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11975552_54ebeb54",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-18T11:01:15Z",
+      "side": 1,
+      "message": "Remove this.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 83
+      },
+      "revId": "778f9e04a4b97da8f5cd7bc02b4c78ae41701385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d079eda_0bf0effb",
+        "filename": "components/password_manager/core/browser/password_manager_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-18T11:01:15Z",
+      "side": 1,
+      "message": "will we send a metric every context menu initialization? \n\npassword_manager::metrics_util::LogContextOfShowAllSavedPasswordsShown?",
+      "range": {
+        "startLine": 138,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 57
+      },
+      "revId": "778f9e04a4b97da8f5cd7bc02b4c78ae41701385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb4a786_c787b5e0",
+        "filename": "components/password_manager/core/browser/password_manager_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-18T11:01:15Z",
+      "side": 1,
+      "message": "can we add UKM histogram to find origins where the fallback is really needed?",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 57
+      },
+      "revId": "778f9e04a4b97da8f5cd7bc02b4c78ae41701385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
