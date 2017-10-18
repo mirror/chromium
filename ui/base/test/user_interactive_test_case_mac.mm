@@ -6,14 +6,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "base/run_loop.h"
-
 namespace test {
 
-void RunTestInteractively() {
+void TestBrowserDialogFixture() {
   [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
   [NSApp activateIgnoringOtherApps:YES];
-  base::RunLoop().Run();
 }
 
 }  // namespace test

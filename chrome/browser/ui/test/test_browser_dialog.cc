@@ -51,8 +51,10 @@ class WidgetCloser : public views::WidgetObserver {
   void OnWidgetDestroyed(views::Widget* widget) override {
     widget_->RemoveObserver(this);
     widget_ = nullptr;
-    base::RunLoop::QuitCurrentDeprecated();
+    run_loop_.Quit();
   }
+
+  void Wait() { run_loop_.Run(); }
 
  private:
   void CloseAction() {
@@ -72,6 +74,7 @@ class WidgetCloser : public views::WidgetObserver {
     }
   }
 
+  base::RunLoop run_loop_;
   const DialogAction action_;
   views::Widget* widget_;
 
@@ -149,7 +152,8 @@ void TestBrowserDialog::RunDialog() {
   }
 
   WidgetCloser closer(added[0], action);
-  ::test::RunTestInteractively();
+  ::test::TestBrowserDialogFixture();
+  closer.Wait()
 }
 
 bool TestBrowserDialog::AlwaysCloseAsynchronously() {
