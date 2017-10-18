@@ -2,9 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/safe_browsing/db/v4_get_hash_interceptor.h"
+#include "components/safe_browsing/db/v4_embedded_test_server_util.h"
 
-#include <utility>
+#include <memory>
+#include <string>
 #include <vector>
 
 #include "base/base64.h"
@@ -18,10 +19,10 @@
 #include "base/strings/string_util.h"
 #include "components/safe_browsing/db/util.h"
 #include "components/safe_browsing/db/v4_test_util.h"
-#include "net/url_request/url_request_filter.h"
-#include "net/url_request/url_request_job.h"
-#include "net/url_request/url_request_test_job.h"
-#include "url/gurl.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
+#include "net/test/embedded_test_server/http_request.h"
+#include "net/test/embedded_test_server/http_response.h"
+#include "net/test/embedded_test_server/request_handler_util.h"
 
 namespace safe_browsing {
 
@@ -60,58 +61,52 @@ std::vector<HashPrefix> GetPrefixesForRequest(const GURL& url) {
   return prefixes;
 }
 
-}  // namespace
-
-// static
-void V4GetHashInterceptor::Register(
-    std::unique_ptr<V4GetHashInterceptor> interceptor,
-    scoped_refptr<base::SequencedTaskRunner> io_task_runner) {
-  io_task_runner->PostTask(FROM_HERE,
-                           base::Bind(&V4GetHashInterceptor::AddInterceptor,
-                                      base::Passed(&interceptor)));
-}
-
-void V4GetHashInterceptor::AddInterceptor(
-    std::unique_ptr<V4GetHashInterceptor> interceptor) {
-  const GURL url(kSbV4UrlPrefix);
-  net::URLRequestFilter::GetInstance()->AddHostnameInterceptor(
-      url.scheme(), url.host(), std::move(interceptor));
-}
-
-V4GetHashInterceptor::V4GetHashInterceptor(const ResponseMap& response_map)
-    : response_map_(response_map) {}
-
-V4GetHashInterceptor::V4GetHashInterceptor(const GURL& url, ThreatMatch match)
-    : V4GetHashInterceptor({{GetFullHash(url), match}}) {}
-
-V4GetHashInterceptor::~V4GetHashInterceptor() {}
-
-net::URLRequestJob* V4GetHashInterceptor::MaybeInterceptRequest(
-    net::URLRequest* request,
-    net::NetworkDelegate* delegate) const {
-  const char kHeaders[] = "HTTP/1.1 200 OK\n\n";
-
+// This function listens for requests to /v4/fullHashes:find, and responds with
+// predetermined responses.
+std::unique_ptr<net::test_server::HttpResponse> HandleFullHashRequest(
+    std::map<GURL, ThreatMatch> response_map,
+    const net::test_server::HttpRequest& request) {
+  if (!(net::test_server::ShouldHandle(request, "/v4/fullHashes:find")))
+    return nullptr;
   FindFullHashesResponse find_full_hashes_response;
   find_full_hashes_response.mutable_negative_cache_duration()->set_seconds(600);
 
-  // Mock a response based on |response_map_| and the prefixes scraped from the
+  // Mock a response based on |response_map| and the prefixes scraped from the
   // request URL.
+  //
+  // This loops through all prefixes requested, and finds all of the full hashes
+  // that match the prefix.
   std::vector<HashPrefix> request_prefixes =
-      GetPrefixesForRequest(request->url());
+      GetPrefixesForRequest(request.GetURL());
   for (const HashPrefix& prefix : request_prefixes) {
-    auto it = response_map_.find(prefix);
-    if (it == response_map_.end())
-      continue;
-
-    ThreatMatch* match = find_full_hashes_response.add_matches();
-    *match = it->second;
+    for (const auto& response : response_map) {
+      FullHash full_hash = GetFullHash(response.first);
+      if (base::StartsWith(full_hash, prefix, base::CompareCase::SENSITIVE)) {
+        ThreatMatch* match = find_full_hashes_response.add_matches();
+        *match = response.second;
+      }
+    }
   }
+
   std::string serialized_response;
   find_full_hashes_response.SerializeToString(&serialized_response);
 
-  return new net::URLRequestTestJob(request, delegate, kHeaders,
-                                    serialized_response,
-                                    true /* auto_advance */);
+  auto http_response = base::MakeUnique<net::test_server::BasicHttpResponse>();
+  http_response->set_content(serialized_response);
+  return http_response;
+}
+
+}  // namespace
+
+void StartRedirectingV4RequestsForTesting(
+    std::map<GURL, ThreatMatch> response_map,
+    net::test_server::EmbeddedTestServer* embedded_test_server) {
+  // Static so accessing the underlying buffer won't cause use-after-free.
+  static std::string url_prefix;
+  url_prefix = embedded_test_server->GetURL("/v4").spec();
+  SetSbV4UrlPrefixForTesting(url_prefix.c_str());
+  embedded_test_server->RegisterRequestHandler(
+      base::Bind(&HandleFullHashRequest, response_map));
 }
 
 }  // namespace safe_browsing
