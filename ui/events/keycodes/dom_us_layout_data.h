@@ -397,6 +397,9 @@ const struct DomKeyToKeyboardCodeEntry {
     {DomKey::MEDIA_REWIND, VKEY_OEM_103},
 #endif
     {DomKey::ZOOM_TOGGLE, VKEY_ZOOM},
+#if defined(OS_POSIX)
+    {DomKey::SPEECH_INPUT_TOGGLE, VKEY_ASSISTANT_VOICE_COMMAND},
+#endif
 };
 
 // This table, used by DomCodeToUsLayoutKeyboardCode() and
@@ -419,6 +422,8 @@ const struct DomCodeToKeyboardCodeEntry {
 #if defined(OS_POSIX)
     {DomCode::LAUNCH_ASSISTANT,
      VKEY_ASSISTANT},                          // 0x000017 Launch Assistant
+    {DomCode::SPEECH_INPUT_TOGGLE,
+     VKEY_ASSISTANT_VOICE_COMMAND},            // voice command mode.
 #endif
     {DomCode::SLEEP, VKEY_SLEEP},               // 0x010082 Sleep
     // DomCode::WAKE_UP                            0x010083 WakeUp
