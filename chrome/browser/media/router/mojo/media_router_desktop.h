@@ -20,6 +20,7 @@ class Extension;
 namespace media_router {
 class CastMediaSinkService;
 class DialMediaSinkServiceProxy;
+class LocalMediaRouteProvider;
 
 // MediaRouter implementation that uses the MediaRouteProvider implemented in
 // the component extension.
@@ -45,18 +46,22 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   void OnUserGesture() override;
 
  protected:
-  // Error handler callback for |binding_|.
-  void OnConnectionError() override;
-
-  // Issues 0+ calls to |media_route_provider_| to ensure its state is in sync
-  // with MediaRouter on a best-effort basis.
-  // The extension might have become out of sync with MediaRouter due to one
-  // of few reasons:
+  // Issues 0+ calls to the MRP to ensure its state is in sync with MediaRouter
+  // on a best-effort basis.
+  // In the case of the extension MRP, it might have become out of sync with
+  // MediaRouter due to one of a few reasons:
   // (1) The extension crashed and lost unpersisted changes.
   // (2) The extension was updated; temporary data is cleared.
   // (3) The extension has an unforseen bug which causes temporary data to be
   //     persisted incorrectly on suspension.
-  void SyncStateToMediaRouteProvider() override;
+  void SyncStateToMediaRouteProvider(
+      mojom::MediaRouteProvider::Id provider_id) override;
+
+  // MediaRouterMojoImpl:
+  mojom::MediaRouteProvider* GetProviderForPresentation(
+      const std::string& presentation_id) override;
+  mojom::MediaRouteProvider* GetCanonicalProvider(
+      const std::string& provider_name) override;
 
  private:
   friend class MediaRouterDesktopTest;
@@ -75,11 +80,16 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
                      FirewallCheck check_firewall = FirewallCheck::RUN);
 
   // mojom::MediaRouter implementation.
-  // Notifies |request_manager_| that the Mojo connection to MediaRouteProvider
-  // is valid.
   void RegisterMediaRouteProvider(
+      mojom::MediaRouteProvider::Id provider_id,
       mojom::MediaRouteProviderPtr media_route_provider_ptr,
       mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) override;
+
+  // Registers a Mojo pointer to the extension MRP with
+  // |extension_provider_proxy_| and does initializations specific to the
+  // extension MRP.
+  void RegisterExtensionMediaRouteProvider(
+      mojom::MediaRouteProviderPtr extension_provider_ptr);
 
   // Binds |this| to a Mojo interface request, so that clients can acquire a
   // handle to a MediaRouter instance via the Mojo service connector.
@@ -89,6 +99,9 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
 
   // Starts browser side sink discovery.
   void StartDiscovery();
+
+  // Initializes MRPs and adds them to |media_route_providers_|.
+  void InitializeMediaRouteProviders();
 
 #if defined(OS_WIN)
   // Ensures that mDNS discovery is enabled in the MRPM extension. This can be
@@ -104,7 +117,9 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
 
   // MediaRouteProvider proxy that forwards calls to the MRPM in the component
   // extension.
-  ExtensionMediaRouteProviderProxy extension_provider_;
+  std::unique_ptr<ExtensionMediaRouteProviderProxy> extension_provider_proxy_;
+
+  std::unique_ptr<LocalMediaRouteProvider> local_provider_;
 
   // Media sink service for DIAL devices.
   scoped_refptr<DialMediaSinkServiceProxy> dial_media_sink_service_proxy_;
