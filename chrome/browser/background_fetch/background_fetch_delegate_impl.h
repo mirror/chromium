@@ -107,6 +107,7 @@ class BackgroundFetchDelegateImpl
     const url::Origin origin;
     int completed_parts;
     const int total_parts;
+    std::vector<std::string> current_download_guids;
 
     offline_items_collection::OfflineItem offline_item;
 
