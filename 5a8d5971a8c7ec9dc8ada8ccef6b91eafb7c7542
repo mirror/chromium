@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "b3ed0663_9759f9bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-18T18:22:08Z",
+      "side": 1,
+      "message": "Oh I\u0027m wrong. But you should use the other version of getInstance that takes a ChromeActivity argument. So this one should be private, and the other protected.",
+      "parentUuid": "6f63f36a_647c4259",
+      "range": {
+        "startLine": 438,
+        "startChar": 4,
+        "endLine": 438,
+        "endChar": 13
+      },
+      "revId": "5a8d5971a8c7ec9dc8ada8ccef6b91eafb7c7542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e4d5a3a_8762d7e5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 3
