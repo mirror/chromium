@@ -1,0 +1,15 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//components/arc/common/timer.mojom"
+public_headers = [ "//chromeos/dbus/power_manager_client.h" ]
+traits_headers = [ "//components/arc/timer/arc_timer_traits.h" ]
+sources = [
+  "//components/arc/timer/arc_timer_traits.cc",
+]
+deps = [
+  "//chromeos",
+]
+type_mappings =
+    [ "arc.mojom.ArcTimerArgs=chromeos::PowerManagerClient::ArcTimerArgs" ]
