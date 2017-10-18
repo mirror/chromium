@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "434288a2_ce74d1b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 28
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T18:58:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b46a832c_906c85a7",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58ac9f12_ffc89156",
         "filename": "cc/animation/animation_host.cc",
         "patchSetId": 28
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-16T13:16:55Z",
       "side": 1,
       "message": "Say, eg, we\u0027re operating on scroll or complementing a CSS animation (perhaps we\u0027re animating a blurry shadow which is a non linear transform on the shadow caster\u0027s position). In these cases, we\u0027ll have new data (if only time fractions) that need to be propagated to the Worklet in order for it to do its job, no? Is this plumbed to the Worklet by some other means than the input state?",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35c3888_6608bbd1",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T18:58:43Z",
+      "side": 1,
+      "message": "The first example, scroll position should be done via a scroll timeline which is going to\nbe part of the input state.\n\nThe second example, at the moment there is no timeline that covers that. One way to do it \nis to  pass in a keyframe effect (for the shaddow caster position) and then evaluate its\noutput and use that to drive the animation. That works well if animation controls both \nelements though but it can fall out-of-sync otherwise. Those keyframes will be part of the\ninput state (currently we don\u0027t send them but will in future).\n\nAs per offline discussion trying to animate one property based on the output of another\n*independent* animation is not really supported with current API.",
+      "parentUuid": "58ac9f12_ffc89156",
       "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "246d8026_8efb5292",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T18:58:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcf26331_c3c0e52d",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc874131_9a5125fb",
         "filename": "cc/animation/animation_ticker.cc",
         "patchSetId": 28
@@ -67,6 +121,24 @@
       "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "412abaaa_7903e068",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T18:58:43Z",
+      "side": 1,
+      "message": "The time value here is actually only used to calculate pause time in animations.\nThat calculation depends on having the wall tick time. It does not really\ncontrol whether the animation is started or not.\n\n\u003e How are AW animations started?\n\nA WorkletAnimationPlayer is considered ticking if it has at least one active\nanimation. This is no different from other animation players.\n\nThe plan is to only create a WorkletAnimationPlayer when there is an\nactive and playing worklet animation on main thread. That will be \nin a follow up patch though. [1]\n\nSo in Javascript one does:\nanim \u003d new WorkletAnimation(\"blah\",...).play();\n\nand that causes a cc WorkletAnimationPlayer to be spawned with appropriate\nanimations.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/690856",
+      "parentUuid": "dc874131_9a5125fb",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "17805af7_24eb4082",
+        "filename": "cc/animation/worklet_animation_player.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T18:58:43Z",
+      "side": 1,
+      "message": "There is a single player for each animation and in particular a single WAP per\nworklet animation. This wiring is going to land in [1]\n\nSo in your examples, each animation will have its own player but they are mutating \nthe same underlying animation target (i.e., layer of property tree node)\n\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/690856",
+      "parentUuid": "b833e713_54306015",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee2bc5c8_88a8e9f1",
         "filename": "cc/animation/worklet_animation_player.h",
         "patchSetId": 28
@@ -101,6 +191,24 @@
       "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a96baf05_a1ed9bc6",
+        "filename": "cc/animation/worklet_animation_player.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T18:58:43Z",
+      "side": 1,
+      "message": "No particular reason. I have only seen std::string used in cc so I cargo\nculted that. base::string16 is not used in cc so I think we should \nkeep this.",
+      "parentUuid": "ee2bc5c8_88a8e9f1",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "849a4e98_56a4d377",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T18:58:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84834bf0_246a28db",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f32af4a3_3bf9d96f",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
         "patchSetId": 28
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-14T01:07:34Z",
       "side": 1,
       "message": "Would you help me understand why this needs to be TraceWrapperMember?",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb40045_88d75b7d",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T18:58:43Z",
+      "side": 1,
+      "message": "Here is the lifetime chain:\n AnimationWorkletGlobalScope \n    -\u003e animator_ \n        -\u003e animator\n          -\u003e instance_  (Type: v8::Object)\n          -\u003e definition_\n              -\u003e constructor_ (Type: v8::Function)\n              -\u003e animate_     (Type: v8::Function)\n\nSo I am basically making sure that when tracing machinery traces the \nworklet global scope it also traces those v8 objects. To this end\nI use TraceWrapper* types here. If there is a better please let me\nknow.",
+      "parentUuid": "f32af4a3_3bf9d96f",
       "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "52e1fb44_2c0a419a",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T18:58:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4585b687_fb5c21e5",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d04a4d7_c039684c",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
         "patchSetId": 28
@@ -169,6 +331,24 @@
       "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12154370_d7c7fe74",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T18:58:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d04a4d7_c039684c",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ab93090b_20cd6327",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/Animator.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T18:58:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d33dcfd_4bd96f80",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20c6cd65_32412524",
         "filename": "third_party/WebKit/Source/modules/compositorworker/EffectProxy.idl",
         "patchSetId": 28
@@ -203,6 +401,24 @@
       "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093a4996_6a34f614",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/EffectProxy.idl",
+        "patchSetId": 28
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T18:58:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20c6cd65_32412524",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "4d0c7e7c_8775eb0b",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorAnimatorsState.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T18:58:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1df58ced_f5be3ba7",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d001b93d_3aa7ddd7",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorAnimatorsState.h",
         "patchSetId": 28
@@ -234,6 +468,24 @@
       "writtenOn": "2017-10-14T01:07:34Z",
       "side": 1,
       "message": "Is there any issue in directly using cc:: in other files?",
+      "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a061df_53f5f73a",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorAnimatorsState.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T18:58:43Z",
+      "side": 1,
+      "message": "These types are used in core/animation interfaces.\n\nWe cannot depend on cc directly from core so these cc\ntypes are usually aliased in platform/graphics which\ncan then be user by core.",
+      "parentUuid": "d001b93d_3aa7ddd7",
       "revId": "75329acb70e9ff36eefa98ca716e246944e8f1b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
