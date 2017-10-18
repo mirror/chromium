@@ -15,6 +15,9 @@ const char kSwitchValueTrue[] = "true";
 // Value indicating whether flag from command line switch is false.
 const char kSwitchValueFalse[] = "false";
 
+// Disable appending the Cast information to the user agent string.
+const char kHideCastUserAgent[] = "hide-cast-user-agent";
+
 // Server url to upload crash data to.
 // Default is "http://clients2.google.com/cr/report" for prod devices.
 // Default is "http://clients2.google.com/cr/staging_report" for non prod.

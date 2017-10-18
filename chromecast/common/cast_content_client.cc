@@ -10,6 +10,7 @@
 #include "base/sys_info.h"
 #include "build/build_config.h"
 #include "chromecast/base/cast_constants.h"
+#include "chromecast/base/chromecast_switches.h"
 #include "chromecast/base/version.h"
 #include "content/public/common/user_agent.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -72,8 +73,13 @@ std::string GetUserAgent() {
       content::BuildOSCpuInfo().c_str()
 #endif
       );
-  return content::BuildUserAgentFromOSAndProduct(os_info, product) +
-      " CrKey/" CAST_BUILD_REVISION;
+  std::string base_user_agent =
+      content::BuildUserAgentFromOSAndProduct(os_info, product);
+  if (GetSwitchValueBoolean(switches::kHideCastUserAgent,
+                            false /* default_value */)) {
+    return base_user_agent;
+  }
+  return base_user_agent + " CrKey/" CAST_BUILD_REVISION;
 }
 
 CastContentClient::~CastContentClient() {

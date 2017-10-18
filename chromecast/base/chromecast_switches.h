@@ -15,6 +15,9 @@ namespace switches {
 extern const char kSwitchValueTrue[];
 extern const char kSwitchValueFalse[];
 
+// Browser switches
+extern const char kHideCastUserAgent[];
+
 // Url to upload crash data to.
 extern const char kCrashServerUrl[];
 
