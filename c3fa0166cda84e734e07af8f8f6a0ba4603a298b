@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1db3be67_7474752b",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-18T17:16:11Z",
+      "side": 1,
+      "message": "Reverted this change due to piman comment",
+      "parentUuid": "510ffcf9_e2eb2fc3",
+      "revId": "c3fa0166cda84e734e07af8f8f6a0ba4603a298b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fb2eb39_e5d64d64",
         "filename": "content/browser/gpu/gpu_process_host.cc",
         "patchSetId": 4
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "How about getting the GpuPreferences from the GpuDataManager in GpuProcessHost, and passing it to this function? \nI don\u0027t even think we set the browser\u0027s command line to have this flag for the in-process case.",
       "parentUuid": "aae1b17d_da160fd4",
+      "revId": "c3fa0166cda84e734e07af8f8f6a0ba4603a298b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ce4fea_c3fcf993",
+        "filename": "content/gpu/in_process_gpu_thread.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-18T17:16:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df54d555_a5b80ebb",
       "revId": "c3fa0166cda84e734e07af8f8f6a0ba4603a298b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
