@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "6861c1fa_97bc6022",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T22:52:43Z",
+      "side": 1,
+      "message": "I\u0027m not convinced that it makes sense for tests to be modifying the command-line in this way.  If it\u0027s really needed, it would be best to hide this detail within the ScopedFeatureList (as you suggest below, by providing a helper function).  Even better would be to skip the command-line entirely – could the SFL just internally cache this data in some other data structure?",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 336,
+        "endChar": 71
+      },
+      "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036f7a6c_496f35f6",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T22:52:43Z",
+      "side": 1,
+      "message": "Why are you associating an empty map of parameters with the trial?",
+      "range": {
+        "startLine": 337,
+        "startChar": 50,
+        "endLine": 337,
+        "endChar": 0
+      },
+      "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "233bef4f_904b1aa4",
         "filename": "chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc",
         "patchSetId": 2
@@ -18,6 +64,99 @@
         "startChar": 4,
         "endLine": 339,
         "endChar": 72
+      },
+      "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16877370_0b00d979",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T22:52:43Z",
+      "side": 1,
+      "message": "Yes, I do think we should have a helper function for this.  Why do you have the string \"scoped_feature_list_trial_name\" – where is that used?  If it\u0027s just an unused placeholder string, then please choose a shorter name for it.",
+      "parentUuid": "233bef4f_904b1aa4",
+      "range": {
+        "startLine": 328,
+        "startChar": 4,
+        "endLine": 339,
+        "endChar": 72
+      },
+      "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7efcc429_1b5226ea",
+        "filename": "components/variations/field_trial_config/field_trial_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T22:52:43Z",
+      "side": 1,
+      "message": "nit: Something like:\n\n  DVLOG(1) \u003c\u003c \"Failed to associate variation params for group \\\"\" \u003c\u003c group \u003c\u003c \"\\\" in trial \\\"\" \u003c\u003c trial \u003c\u003c \"\\\"\";",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 25
+      },
+      "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506e5df8_1f2ed874",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T22:52:43Z",
+      "side": 1,
+      "message": "Why is this needed?  It would probably be more appropriate to define this within the ScopedFeatureList, rather than here; and when doing so, provide documentation explaining what it\u0027s doing.",
+      "range": {
+        "startLine": 110,
+        "startChar": 70,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d9354c0_eea97f7e",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T22:52:43Z",
+      "side": 1,
+      "message": "So, I don\u0027t really understand why this is needed / what it is doing.  Are there field trial parameters being incorrectly associated before this point in the code is reached?  Do we need to migrate them to the ScopedFeatureList somehow prior to clearing them?",
+      "range": {
+        "startLine": 263,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 41
       },
       "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
