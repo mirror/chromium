@@ -19,7 +19,8 @@ namespace blink {
 class Hyphenation;
 class NGInlineBreakToken;
 class NGInlineItem;
-class NGFragmentBuilder;
+class NGLineBoxFragmentBuilder;
+class NGInlineLayoutStateStack;
 
 // Represents a line breaker.
 //
@@ -31,7 +32,7 @@ class CORE_EXPORT NGLineBreaker {
  public:
   NGLineBreaker(NGInlineNode,
                 const NGConstraintSpace&,
-                NGFragmentBuilder*,
+                NGLineBoxFragmentBuilder*,
                 Vector<RefPtr<NGUnpositionedFloat>>*,
                 const NGInlineBreakToken* = nullptr);
   ~NGLineBreaker() {}
@@ -43,7 +44,8 @@ class CORE_EXPORT NGLineBreaker {
                 NGLineInfo*);
 
   // Create an NGInlineBreakToken for the last line returned by NextLine().
-  RefPtr<NGInlineBreakToken> CreateBreakToken() const;
+  RefPtr<NGInlineBreakToken> CreateBreakToken(
+      std::unique_ptr<const NGInlineLayoutStateStack>) const;
 
   NGExclusionSpace* ExclusionSpace() { return line_.exclusion_space.get(); }
 
@@ -141,7 +143,7 @@ class CORE_EXPORT NGLineBreaker {
   LineData line_;
   NGInlineNode node_;
   const NGConstraintSpace& constraint_space_;
-  NGFragmentBuilder* container_builder_;
+  NGLineBoxFragmentBuilder* container_builder_;
   Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats_;
   unsigned item_index_ = 0;
   unsigned offset_ = 0;
