@@ -98,6 +98,7 @@ class FindNotificationDetails;
                      withText:(const base::string16&)findText;
 - (BOOL)isFindBarVisible;
 - (BOOL)isFindBarAnimating;
+- (void)updateFindBarVisibility;
 
 // Returns the FindBar's position in the superview's coordinates, but with
 // the Y coordinate growing down.
