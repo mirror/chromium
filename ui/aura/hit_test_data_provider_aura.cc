@@ -20,12 +20,8 @@ viz::mojom::HitTestRegionPtr CreateHitTestRegion(const aura::Window* window,
   auto hit_test_region = viz::mojom::HitTestRegion::New();
   DCHECK(window->GetFrameSinkId().is_valid());
   hit_test_region->frame_sink_id = window->GetFrameSinkId();
-  if (layer->GetPrimarySurfaceInfo()) {
-    DCHECK(window->GetFrameSinkId() ==
-           layer->GetPrimarySurfaceInfo()->id().frame_sink_id());
-    hit_test_region->local_surface_id =
-        layer->GetPrimarySurfaceInfo()->id().local_surface_id();
-  }
+  if (window->GetLocalSurfaceId().is_valid())
+    hit_test_region->local_surface_id = window->GetLocalSurfaceId();
   hit_test_region->flags = flags;
   hit_test_region->rect = rect;
   hit_test_region->transform = layer->transform();
@@ -82,7 +78,7 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
       gfx::Rect rect_mouse(child->bounds());
       gfx::Rect rect_touch;
       bool touch_and_mouse_are_same = true;
-      uint32_t flags = child->layer()->GetPrimarySurfaceInfo()
+      uint32_t flags = child->GetLocalSurfaceId().is_valid()
                            ? viz::mojom::kHitTestChildSurface
                            : viz::mojom::kHitTestMine;
       WindowTargeter* targeter =
