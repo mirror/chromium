@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e0f68fb_b82c549b",
+        "filename": "cc/paint/discardable_image_map_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-18T00:24:52Z",
+      "side": 0,
+      "message": "It would be good if we kept some sort of a check in these tests.",
+      "revId": "b74f734b985b115fb11ad51bf406980bbfb866ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

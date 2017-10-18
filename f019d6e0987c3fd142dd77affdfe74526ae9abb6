@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9c06249_7b94b31a",
+        "filename": "cc/base/invalidation_region.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-18T00:24:52Z",
+      "side": 1,
+      "message": "I think we can do better with only doing bounds of one of the regions, but I also don\u0027t think it matters too much.",
+      "revId": "f019d6e0987c3fd142dd77affdfe74526ae9abb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd04064e_f9d47a24",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-18T00:24:52Z",
+      "side": 1,
+      "message": "nit: s/::/ / here and below\n\nalso should we return here?",
+      "range": {
+        "startLine": 1568,
+        "startChar": 67,
+        "endLine": 1568,
+        "endChar": 69
+      },
+      "revId": "f019d6e0987c3fd142dd77affdfe74526ae9abb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f738a369_3107797f",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-18T00:24:52Z",
+      "side": 1,
+      "message": "Can you leave a comment that using bounds here is ok, since it only used to track damage and will not cause raster invalidation.",
+      "range": {
+        "startLine": 1589,
+        "startChar": 2,
+        "endLine": 1591,
+        "endChar": 33
+      },
+      "revId": "f019d6e0987c3fd142dd77affdfe74526ae9abb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a56d7b1_93347481",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-18T00:24:52Z",
+      "side": 1,
+      "message": "technically speaking, you should first union and then check the complexity, since unioning does not necessarily increase the region complexity which means that you might do the bounds unnecessarily.",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 29
+      },
+      "revId": "f019d6e0987c3fd142dd77affdfe74526ae9abb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
