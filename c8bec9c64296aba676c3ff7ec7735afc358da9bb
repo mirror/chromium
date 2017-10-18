@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9f675fb_e9be7d67",
+        "filename": "pdf/pdf_engine.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-10-18T17:27:03Z",
+      "side": 1,
+      "message": "Why not a bool if we only care if the document has attachments?",
+      "revId": "c8bec9c64296aba676c3ff7ec7735afc358da9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
