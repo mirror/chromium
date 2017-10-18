@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00dad223_a68000bc",
+        "filename": "base/memory/swap_thrashing_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-18T07:11:44Z",
+      "side": 1,
+      "message": "I\u0027m not convinced if these intervals should be here or not. The only reason why I declared them is to make sure that the platform specific implementation think about these and implement this as described in the swap_thrashing_monitor.h header file (i.e. monitor the swap-thrash rate over some given period of time). Any opinion on this?",
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
