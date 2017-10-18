@@ -257,6 +257,10 @@ class WebLocalFrame : public WebFrame {
 
   // Navigation State -------------------------------------------------------
 
+  // Returns true if the document hosted by this frame has been fully parsed
+  // (i.e. the DOMContentLoaded event has already fired).
+  virtual bool HasFinishedParsing() const = 0;
+
   // Returns true if the current frame's load event has not completed.
   virtual bool IsLoading() const = 0;
 

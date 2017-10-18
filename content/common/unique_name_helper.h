@@ -75,6 +75,7 @@ class CONTENT_EXPORT UniqueNameHelper {
     virtual ~FrameAdapter();
 
     virtual bool IsMainFrame() const = 0;
+    virtual bool IsDynamicFrame() const = 0;
     virtual bool IsCandidateUnique(base::StringPiece name) const = 0;
     // Returns the number of sibling frames of this frame. Note this should not
     // include this frame in the count.
@@ -134,7 +135,8 @@ class CONTENT_EXPORT UniqueNameHelper {
   // egg problem, this method is designed to be called on the *parent* frame of
   // the future new child frame and return the value the new child frame should
   // use.
-  std::string GenerateNameForNewChildFrame(const std::string& name) const;
+  std::string GenerateNameForNewChildFrame(const std::string& name,
+                                           bool is_new_child_dynamic) const;
 
   // Called after a browsing context name change to generate a new name. Note
   // that this should not be called if the frame is no longer displaying the
@@ -154,6 +156,12 @@ class CONTENT_EXPORT UniqueNameHelper {
 
   static std::string CalculateLegacyNameForTesting(const FrameAdapter* frame,
                                                    const std::string& name);
+
+  // Removes the random, unique suffix that is appended to unique names
+  // for dynamically (see |is_new_child_dynamic| parameter of
+  // GenerateNameForNewChildFrame) created frames.
+  static std::string RemoveDynamicFrameSuffixForTesting(
+      const std::string& name);
 
  private:
   FrameAdapter* const frame_;
