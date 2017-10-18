@@ -66,7 +66,8 @@ class SafeBrowsingTriggeredPopupBlocker
     // Add new entries before this one
     kCount
   };
-  explicit SafeBrowsingTriggeredPopupBlocker(
+
+  static std::unique_ptr<SafeBrowsingTriggeredPopupBlocker> MaybeCreate(
       content::WebContents* web_contents,
       std::unique_ptr<ConsoleLogger> logger);
   ~SafeBrowsingTriggeredPopupBlocker() override;
@@ -75,6 +76,13 @@ class SafeBrowsingTriggeredPopupBlocker
       const content::OpenURLParams* open_url_params);
 
  private:
+  // The |web_contents|, |observer_manager|, and |logger| are expected to be
+  // non-nullptr.
+  explicit SafeBrowsingTriggeredPopupBlocker(
+      content::WebContents* web_contents,
+      subresource_filter::SubresourceFilterObserverManager* observer_manager,
+      std::unique_ptr<ConsoleLogger> logger);
+
   // content::WebContentsObserver:
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
@@ -86,6 +94,18 @@ class SafeBrowsingTriggeredPopupBlocker
       const safe_browsing::ThreatMetadata& threat_metadata) override;
   void OnSubresourceFilterGoingAway() override;
 
+  // Data scoped to a single page. Will be reset at navigation commit.
+  struct PageData {
+    ~PageData();
+
+    // How many popups are blocked in this page.
+    int num_popups_blocked = 0;
+
+    // Whether the current committed page load should trigger the stronger popup
+    // blocker.
+    bool is_triggered = false;
+  };
+
   ScopedObserver<subresource_filter::SubresourceFilterObserverManager,
                  subresource_filter::SubresourceFilterObserver>
       scoped_observer_;
@@ -95,16 +115,16 @@ class SafeBrowsingTriggeredPopupBlocker
   base::Optional<safe_browsing::SubresourceFilterLevel>
       level_for_next_committed_navigation_;
 
+  // Should never be nullptr.
   std::unique_ptr<ConsoleLogger> logger_;
+
+  // Should never be nullptr.
+  std::unique_ptr<PageData> current_page_data_;
 
   // Whether to ignore the threat pattern type. Useful for flexibility because
   // we have to wait until metadata patterns reach Stable before using them
   // without error. Governed by a variation param.
   bool ignore_sublists_ = false;
-
-  // Whether the current committed page load should trigger the stronger popup
-  // blocker.
-  bool is_triggered_for_current_committed_load_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingTriggeredPopupBlocker);
 };
