@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "feca6b21_4d46c364",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list_observer_bridge.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-18T21:19:03Z",
+      "side": 1,
+      "message": "We used to do an explicit conversion in the mac codebase, but then someone decided that it wasn\u0027t necessary, so we stopped.  I don\u0027t care much either way, but I believe we\u0027ve moved away from explicit conversions in general.",
+      "parentUuid": "81142afb_f7a5f582",
+      "revId": "a9827dec1da39df5ff674e38e64e41ab25c1dfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d706c724_e66ea91a",
         "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue_manager_unittest.mm",
         "patchSetId": 1
