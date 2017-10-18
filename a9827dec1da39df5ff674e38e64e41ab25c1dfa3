@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "72b7a82f_7229c190",
+        "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-18T21:20:26Z",
+      "side": 1,
+      "message": "Sorry, I meant just the test, not the WebStateList method.  Closing a WebState generally does remove a snapshot, but destroying it (without closing it first) should not.  That was the distinction I was trying to draw.",
+      "parentUuid": "589861a5_84fcdf31",
+      "range": {
+        "startLine": 419,
+        "startChar": 38,
+        "endLine": 419,
+        "endChar": 45
+      },
+      "revId": "a9827dec1da39df5ff674e38e64e41ab25c1dfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bccf356_2105e0e6",
         "filename": "ios/chrome/browser/web_state_list/web_state_list_observer_bridge.mm",
         "patchSetId": 1
