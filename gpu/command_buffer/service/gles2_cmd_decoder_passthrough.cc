@@ -567,7 +567,8 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
 
   // Extensions that are enabled via emulation on the client side or needed for
   // basic command buffer functionality.  Make sure they are always enabled.
-  if (IsWebGLContextType(attrib_helper.context_type)) {
+  if (request_extensions_at_initialization_ &&
+      IsWebGLContextType(attrib_helper.context_type)) {
     static constexpr const char* kEnableByDefaultExtensions[] = {
         "GL_ANGLE_depth_texture",
         "GL_ANGLE_framebuffer_blit",
@@ -1385,6 +1386,11 @@ const char* GLES2DecoderPassthroughImpl::GetCommandName(
     return gles2::GetCommandName(static_cast<CommandId>(command_id));
   }
   return GetCommonCommandName(static_cast<cmd::CommandId>(command_id));
+}
+
+void GLES2DecoderPassthroughImpl::SetExtensionsRequestedAtInitialization(
+    bool request_extensions) {
+  request_extensions_at_initialization_ = request_extensions;
 }
 
 void* GLES2DecoderPassthroughImpl::GetScratchMemory(size_t size) {
