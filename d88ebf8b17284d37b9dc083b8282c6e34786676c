@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f0df4f5_b9d7c37a",
+        "filename": "testing/libfuzzer/fuzzer_test.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-18T01:36:08Z",
+      "side": 1,
+      "message": "this appears to be wrong: https://logs.chromium.org/v/?s\u003dchromium%2Fbb%2Fchromium.fyi%2FLibfuzzer_Upload_Mac_ASan%2F25613%2F%2B%2Frecipes%2Fsteps%2Fgenerate_build_files%2F0%2Fstdout\n\nI\u0027ll upload a CL with an absolute path specified.",
+      "range": {
+        "startLine": 141,
+        "startChar": 21,
+        "endLine": 141,
+        "endChar": 42
+      },
+      "revId": "d88ebf8b17284d37b9dc083b8282c6e34786676c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
