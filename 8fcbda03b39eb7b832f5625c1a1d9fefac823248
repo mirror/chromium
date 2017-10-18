@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "df6ebbc4_c1d1f048",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-18T23:41:50Z",
+      "side": 1,
+      "message": "as a tip for future reference, there\u0027s also Array.prototype.some. Returns true if the predicate function is true for any item in the collection, so you don\u0027t need the !!.\n\nhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some\n\nRelated, Array.prototype.every() is a similar function that tests that every item fulfills the condition. These Array methods were recently allowed in our ES6 guide.",
+      "parentUuid": "f1af4d5c_94f6277e",
+      "revId": "8fcbda03b39eb7b832f5625c1a1d9fefac823248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea12d251_a761f368",
         "filename": "chrome/test/data/webui/extensions/extension_manager_test.js",
         "patchSetId": 6
