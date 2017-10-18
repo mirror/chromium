@@ -22,6 +22,30 @@
       "revId": "37803321f1ac6d3fb89ed701905de18a3c6cc979",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b197c0_3494f2ce",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-10-18T17:41:00Z",
+      "side": 1,
+      "message": "Thanks for the comment! \n\nHow about removing the whole thing? I just realized that we don\u0027t need num_browsers in the code below anyway. And 0\u003cnum_browsers should hold, otherwise we wouldn\u0027t be able to execute this code.",
+      "parentUuid": "1e4242d1_8ee13c2b",
+      "range": {
+        "startLine": 1254,
+        "startChar": 4,
+        "endLine": 1260,
+        "endChar": 31
+      },
+      "revId": "37803321f1ac6d3fb89ed701905de18a3c6cc979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
