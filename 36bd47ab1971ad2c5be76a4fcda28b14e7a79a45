@@ -16,6 +16,24 @@
       "revId": "36bd47ab1971ad2c5be76a4fcda28b14e7a79a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a75c2d_097c4bee",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T14:11:00Z",
+      "side": 1,
+      "message": "You are right, we should call UpdateTouchAckTImeoutEnabled() in here.",
+      "parentUuid": "c56588b1_8da979db",
+      "revId": "36bd47ab1971ad2c5be76a4fcda28b14e7a79a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
