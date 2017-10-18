@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62db21a5_ce988880",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-18T16:00:38Z",
+      "side": 1,
+      "message": "Can you add comment that LocalFrame should be nullptr if not on the main thread. And that checkIfMainThread should be true.. Probably can add a dcheck in the implementation.\n\nThis code is really hard to reason about in this CL because nobody calls it in this change. Would it make more sense to remove these methods and just roll it into the adjusted callers?\n\nI presume that that would be a temporary change because once V2 is enabled then you could just eliminate the call because it would always return false?",
+      "revId": "1ce7d5f36fc3e0275b9665f247e04afc83bcf611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
