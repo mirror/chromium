@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e1e0176_922a44b6",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-18T11:21:57Z",
+      "side": 1,
+      "message": "Remove the comment? I don\u0027t think it\u0027s in line with chromium practices (at least I was requested to remove such comments a couple of time)",
+      "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
