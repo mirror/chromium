@@ -109,6 +109,24 @@
       "revId": "6059b74d0b779ca9af2e6b144ada5e28ef9d4530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48e2522_766a3cbe",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-18T19:48:50Z",
+      "side": 1,
+      "message": "Can you actually ave style for un-attached object?\nBoth these return empty string \"\":\n \u003e getComputedStyle(document.createElement(\"div\")).overflow\n \u003e var el \u003d document.createElement(\"div\"); el.style.overflow\u003d\"visible\"; getComputedStyle(el).overflow\n\nTo me this test feels a bit artificial given that it creates the\nscroll chain using an internal method. In practice, will we ever\nend up customizing scroll on an unattached element? Those element\nare never target of a scroll gesture.\n\nGiven this I am not sure if we should go out of our way to support\nthis property on un-attached elements.",
+      "parentUuid": "0a04f964_3dc856a0",
+      "revId": "6059b74d0b779ca9af2e6b144ada5e28ef9d4530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
