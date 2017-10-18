@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b7990e09_5d3c0399",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioParam/worklet-warnings-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-18T14:43:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d41a51a9_eea99775",
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a54f15ff_0b0105dd",
         "filename": "third_party/WebKit/LayoutTests/webaudio/AudioParam/worklet-warnings.html",
         "patchSetId": 1
@@ -77,6 +95,48 @@
     },
     {
       "key": {
+        "uuid": "fe4de83d_473f145a",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioParam/worklet-warnings.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-18T14:43:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "779a63ae_d2935632",
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "223bc8ff_55863449",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioParam/worklet-warnings.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-18T14:43:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a54f15ff_0b0105dd",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41f97e7b_9d760837",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.cpp",
         "patchSetId": 1
@@ -100,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "03fa7976_e27a7c0e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-18T14:43:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41f97e7b_9d760837",
+      "range": {
+        "startLine": 141,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 16
+      },
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d19f103_5c5e6e8c",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.cpp",
         "patchSetId": 1
@@ -120,6 +204,30 @@
       "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e9e953_4f697535",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-18T14:43:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d19f103_5c5e6e8c",
+      "range": {
+        "startLine": 154,
+        "startChar": 42,
+        "endLine": 154,
+        "endChar": 62
+      },
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "90c30484_f60a5916",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-18T14:43:13Z",
+      "side": 1,
+      "message": "As discussed, we\u0027re going to add this to the constructor.",
+      "parentUuid": "042a773c_69359ad5",
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b114a97_52f90a54",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.h",
         "patchSetId": 1
@@ -178,6 +304,30 @@
       "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "403d4dba_8a9af5a4",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-18T14:43:13Z",
+      "side": 1,
+      "message": "As discussed, it will be used for everything.",
+      "parentUuid": "2b114a97_52f90a54",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 33
+      },
+      "revId": "08fa62026a27665b2447970187c8d90c5823b70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
