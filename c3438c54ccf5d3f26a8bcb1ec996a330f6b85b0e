@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4065d206_1a276053",
+        "filename": "content/public/browser/non_network_protocol_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-18T14:24:31Z",
+      "side": 1,
+      "message": "nit: the non-network part seems redundant, i.e. network protocols are handled inside network service, so anything outside must be non-network\n\nhow about content::ProtocolHandler?",
+      "revId": "c3438c54ccf5d3f26a8bcb1ec996a330f6b85b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011c2bc7_ddd403ac",
+        "filename": "content/public/browser/non_network_protocol_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-18T14:24:31Z",
+      "side": 1,
+      "message": "Why add this restriction regarding threads?\n\nI think one of the nice performance wins we will get soon is the ability to avoid multiple I/O hops, now that protocol handlers aren\u0027t tied to net/. For example, once plznavigate uses URLLoader interface and we can use the new webui protocol handler, I was planning on making all of them run on the UI thread which reduces hops \u0026 removes a bunch of complexity. Seems other protocol handlers like extensions will also be easier to live on the UI thread?",
+      "revId": "c3438c54ccf5d3f26a8bcb1ec996a330f6b85b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
