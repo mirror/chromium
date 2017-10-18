@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "526c9fb5_d6fd5b23",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-10-18T21:39:13Z",
+      "side": 1,
+      "message": "Done\n\nOK. Create the new encoder for H264 for now. Will revisit when other hw encoder will be enabled.\nPS: I guess it\u0027s safe(and necessary) to \"if we get a config frame, then prepend SPS/PPS\" to VP9/H265 too. VP8 won\u0027t have config frame.",
+      "parentUuid": "d2aff249_3553a30d",
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b032d61_c3e22390",
         "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
         "patchSetId": 6
