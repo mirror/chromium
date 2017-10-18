@@ -16,6 +16,24 @@
       "revId": "46bc9f5ca83d8cf9fc9d349a0b50acf461e51771",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49399c25_99d1942c",
+        "filename": "components/offline_pages/webui/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-18T08:44:53Z",
+      "side": 1,
+      "message": "Related drive-by: What\u0027s the motivation for moving the webui into //components? Presumably it\u0027s to use this webui for something other than //chrome? If it\u0027s iOS, then having the //content dependency here defeats that purpose :).",
+      "parentUuid": "aa9a1585_32782917",
+      "revId": "46bc9f5ca83d8cf9fc9d349a0b50acf461e51771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
