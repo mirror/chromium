@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa7af5d1_0d90b06a",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 4164,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-18T18:11:17Z",
+      "side": 1,
+      "message": "This test step doesn\u0027t actually do anything, right? My understanding is that you\u0027re adding it in order to trigger the matching build target.\n\nHowever, the Linux bots are actually already configured to build \"all\", so this isn\u0027t needed; if you wanted to be sure something was built on a bot that wasn\u0027t building \"all\", you could add \"third_party/closure_compiler:webui_closure_compile\" as a separate \"additional_compile_target\".",
+      "revId": "2bbdb85b7c70882fbb0df221e066f9281ac2e105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b44214e_916cb822",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 13
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-18T18:11:17Z",
+      "side": 1,
+      "message": "You don\u0027t need this, I think; see the other comments.",
+      "revId": "2bbdb85b7c70882fbb0df221e066f9281ac2e105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549e5c78_db1f8c6f",
+        "filename": "testing/scripts/run_webui_check.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-18T18:11:17Z",
+      "side": 1,
+      "message": "I think you don\u0027t need this; see the other comments.\n\nApart from that, the docstring is wrong, since this isn\u0027t actually being run under an isolate :).",
+      "revId": "2bbdb85b7c70882fbb0df221e066f9281ac2e105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86aeead9_134274c4",
+        "filename": "third_party/closure_compiler/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-18T18:11:17Z",
+      "side": 1,
+      "message": "Does this comment go away with this CL?",
+      "revId": "2bbdb85b7c70882fbb0df221e066f9281ac2e105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
