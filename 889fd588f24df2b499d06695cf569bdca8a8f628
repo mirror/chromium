@@ -16,6 +16,91 @@
       "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7ad99f_4dbff1b1",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-18T12:00:58Z",
+      "side": 1,
+      "message": "This comment does not look sufficient to me. I would prefer to see something like this, so that we keep ourselves accountable of how threading model in tests differs from the real one:\n\nIn the real life we have AudioManager leaving on separate thread (or on UI thread on Mac), but AudioInputDelegate interacts with it on IO thread via AudioInputController, so we don\u0027t care much about AudioManager threading and can use the main thread to run it.\n\nAudioInputDelegate lives on IO thread, it only posts notifications to UI thread.\nMediaStreamManager lives on UI thread, but AID interacts with it on IO thread. So we can have IO thread as a main thread for tests.",
+      "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e578a9e4_3bfce9f7",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-18T12:00:58Z",
+      "side": 1,
+      "message": "In real life AudioManager is shut down after IO thread https://cs.chromium.org/chromium/src/content/browser/browser_main_loop.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d1398",
+      "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a4100e_d1c42184",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-18T12:00:58Z",
+      "side": 1,
+      "message": "Could make it function-level comment for MakeDeviceAvailable()?",
+      "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7c87fd_9e72dcae",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-18T12:00:58Z",
+      "side": 1,
+      "message": "kDefaultDeviceName and kDefaultDeviceId would help reading as well.",
+      "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692d07bc_9e40d4b3",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-18T12:00:58Z",
+      "side": 1,
+      "message": "Random \u0027d\u0027 found its way into \u0027an\u0027?",
+      "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

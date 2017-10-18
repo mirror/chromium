@@ -387,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "7d7a8007_11e89be6",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-18T12:00:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1ee0c094_c85bceb6",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c826c8e8_c88eed5b",
         "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
         "patchSetId": 2
@@ -632,6 +650,24 @@
     },
     {
       "key": {
+        "uuid": "7121f3b6_8f5c13a6",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-18T12:00:58Z",
+      "side": 1,
+      "message": "Does it matter if they are synchronous or not? Will it break a contract? Could you add a comment that we are specifically testing that here?",
+      "parentUuid": "7e1e387b_0e7d0aec",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa52011b_6a66ef39",
         "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
         "patchSetId": 2
@@ -661,6 +697,24 @@
       "side": 1,
       "message": "I tried to clarify by making the AGC-ness of the stream part of the CreateDelegate call, hopefully it makes sense to EXPECT it now. For the others, I\u0027m not sure what useful comment I could add (a comment like \"the delegate is expected to open the streams\" is equivalent to what is already written in code).",
       "parentUuid": "aa52011b_6a66ef39",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "528d2c21_9cc82595",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-18T12:00:58Z",
+      "side": 1,
+      "message": "Yes, that sgtm - thanks!",
+      "parentUuid": "6ca2aa47_f0a57e42",
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -801,6 +855,24 @@
       "side": 1,
       "message": "It calls Send.",
       "parentUuid": "cee768f4_49fa910e",
+      "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0e239c2_4cc2c098",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-18T12:00:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "264b2347_cca0d224",
       "revId": "1952d5c316d1b860f43cf2582e165679f8650588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
