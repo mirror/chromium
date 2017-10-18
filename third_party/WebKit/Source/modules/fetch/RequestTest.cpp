@@ -63,8 +63,7 @@ TEST(ServiceWorkerRequestTest, FromAndToWebRequest) {
       WebURLRequest::kFetchRequestModeNavigate;
   const WebURLRequest::FetchCredentialsMode kCredentialsMode =
       WebURLRequest::kFetchCredentialsModeInclude;
-  const WebURLRequest::FetchRequestCacheMode kCacheMode =
-      WebURLRequest::kFetchRequestCacheModeNoCache;
+  const auto kCacheMode = mojom::FetchCacheMode::NO_CACHE;
   const WebURLRequest::FetchRedirectMode kRedirectMode =
       WebURLRequest::kFetchRedirectModeError;
 
