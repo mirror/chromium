@@ -70,6 +70,30 @@
       "revId": "069197544a1e1a9701aa8478e1d3a311c0ccc09e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f608016_a48f0d25",
+        "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-18T01:34:57Z",
+      "side": 0,
+      "message": "\u003e These are replaced with [Extension|Arc]AppWindowLauncherItemController instances when launched.\n\nMaybe, but not in the case of a v1 packaged app. In this repro case, only this class, AppShortcutLauncherItemController, is instantiated. Perhaps that\u0027s the cause of this bug, that we\u0027re using it for a running app but shouldn\u0027t be?\n\nI\u0027ve verified that the AppShortcutLauncherItemController::Close() is the function being executed. And that makes sense -- that\u0027s the function that calls GetV1ApplicationsFromAppId().\n\nNotably, AppWindowLauncherItemController::Close() does *not* run, again at least in this v1 packaged app case. (That\u0027s what would run when calling Close() on an instance of the Extension* subclass.) In fact, in my repro steps AppWindowLauncherItemController\u0027s constructor never runs.\n\nBTW, it\u0027s also worth noting that this class and ChromeLauncherController\u0027s tests are referring to *hosted* apps as v1 apps. Hosted apps and v1 packaged apps aren\u0027t quite the same. https://chromium.googlesource.com/chromium/src/+/master/extensions/docs/extension_and_app_types.md#Hosted-app",
+      "parentUuid": "16a1a450_2a39c42d",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 58
+      },
+      "revId": "069197544a1e1a9701aa8478e1d3a311c0ccc09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
