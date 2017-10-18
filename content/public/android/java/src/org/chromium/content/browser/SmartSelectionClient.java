@@ -12,6 +12,7 @@ import android.view.textclassifier.TextClassifier;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content_public.browser.SelectionClient;
+import org.chromium.content_public.browser.SelectionMetricsLogger;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.WindowAndroid;
 
@@ -45,6 +46,7 @@ public class SmartSelectionClient implements SelectionClient {
     private long mNativeSmartSelectionClient;
     private SmartSelectionProvider mProvider;
     private ResultCallback mCallback;
+    private SmartSelectionMetricsLogger mSmartSelectionMetricLogger;
 
     /**
      * Creates the SmartSelectionClient. Returns null in case SmartSelectionProvider does not exist
@@ -63,6 +65,8 @@ public class SmartSelectionClient implements SelectionClient {
         assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
         mProvider = provider;
         mCallback = callback;
+        mSmartSelectionMetricLogger =
+                SelectionMetricsLogger.createSmartSelectionMetricsLogger(webContents);
         mNativeSmartSelectionClient = nativeInit(webContents);
     }
 
@@ -99,6 +103,11 @@ public class SmartSelectionClient implements SelectionClient {
         }
 
         mProvider.cancelAllRequests();
+    }
+
+    @Override
+    public SelectionMetricsLogger getSelectionMetricsLogger() {
+        return mSmartSelectionMetricLogger;
     }
 
     @Override
