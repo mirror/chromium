@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f750d816_a357268f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-18T16:05:50Z",
+      "side": 1,
+      "message": "Way too difficult to do this one.  :)\n\nDone.",
+      "parentUuid": "c1e00e19_001f02fe",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "abb8f2b01509f0895c760639f0502db9e0dbcc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "024abb5b_b1353994",
         "filename": "content/public/common/simple_url_loader_unittest.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "abb8f2b01509f0895c760639f0502db9e0dbcc3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6a6c0e_a88a4f94",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-18T16:05:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "024abb5b_b1353994",
+      "range": {
+        "startLine": 530,
+        "startChar": 36,
+        "endLine": 530,
+        "endChar": 40
+      },
+      "revId": "abb8f2b01509f0895c760639f0502db9e0dbcc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b78e2bf9_8a4dcccc",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-18T16:05:50Z",
+      "side": 1,
+      "message": "I\u0027ll add it the binding to binding_set and then remove it.  I\u0027ve gone back and forth on whether the difference between the two mattered.  Experimentally, tests behave the same way, both before the Mojo bug fix and after it.",
+      "parentUuid": "4cd24346_bbae7dd3",
+      "range": {
+        "startLine": 1035,
+        "startChar": 14,
+        "endLine": 1035,
+        "endChar": 18
+      },
+      "revId": "abb8f2b01509f0895c760639f0502db9e0dbcc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25caea41_164fbbf6",
         "filename": "content/public/common/simple_url_loader_unittest.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "abb8f2b01509f0895c760639f0502db9e0dbcc3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0620d4_6cd811ef",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-18T16:05:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25caea41_164fbbf6",
+      "range": {
+        "startLine": 1713,
+        "startChar": 30,
+        "endLine": 1713,
+        "endChar": 34
+      },
+      "revId": "abb8f2b01509f0895c760639f0502db9e0dbcc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

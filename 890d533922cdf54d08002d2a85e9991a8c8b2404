@@ -22,6 +22,30 @@
       "revId": "890d533922cdf54d08002d2a85e9991a8c8b2404",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9902a7_7caf19c5",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-18T16:05:50Z",
+      "side": 0,
+      "message": "It\u0027s an assertion failure in the test infrastructure, followed by a connection failure due to the URLLoaderClientPtr being dropped on the fail, and the request failing.  The test should neither hang nor crash.\n\nThe hanging case below is when we have events that result in a request neither completing or failing, as opposed to having no events at all for a URLLoader.",
+      "parentUuid": "1b23cdea_9aaede64",
+      "range": {
+        "startLine": 1553,
+        "startChar": 47,
+        "endLine": 1553,
+        "endChar": 64
+      },
+      "revId": "890d533922cdf54d08002d2a85e9991a8c8b2404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
