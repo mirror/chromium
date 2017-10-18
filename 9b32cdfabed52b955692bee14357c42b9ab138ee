@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d69c313a_61745d1f",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-18T18:54:06Z",
+      "side": 1,
+      "message": "Removed this. Also, I changed this to: #enabled-section .enabled-text\n\nUsing just .enabled-text is not specific enough. The color is overridden by the #enable-section span css rule.",
+      "parentUuid": "0d4b2d3f_74fe804d",
+      "revId": "9b32cdfabed52b955692bee14357c42b9ab138ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9614992_8788718f",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "42096f9a_0f7b1af4",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-18T18:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9614992_8788718f",
+      "revId": "9b32cdfabed52b955692bee14357c42b9ab138ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "399b4316_8bd0c1cc",
         "filename": "chrome/browser/resources/md_extensions/detail_view.js",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "9b32cdfabed52b955692bee14357c42b9ab138ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8affc59_cb70ded2",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-18T18:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "399b4316_8bd0c1cc",
+      "revId": "9b32cdfabed52b955692bee14357c42b9ab138ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
