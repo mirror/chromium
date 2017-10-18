@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c01ceca_cb009ef3",
+        "filename": "content/app/strings/content_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T10:58:49Z",
+      "side": 1,
+      "message": "What about swapping \"header\" with \"title\"? Just a suggestion. We want to have something that allows someone to understand how to translate this without looking at it in any context.",
+      "revId": "ecb91ec0846f7c20f003fc4f6c62bd678f2a76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35abd590_06dfc765",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T10:58:49Z",
+      "side": 1,
+      "message": "The current design also has a capped height but only in appearance. In other words, if you set an \u003caudio\u003e to height: 400px, it will still looks the same with it will have a large padding on top. Wouldn\u0027t this work?",
+      "revId": "ecb91ec0846f7c20f003fc4f6c62bd678f2a76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a577ba3f_84660b3e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTextTrackListElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T10:58:49Z",
+      "side": 1,
+      "message": "Could this interfere with the watcher that hides the menu on click?",
+      "revId": "ecb91ec0846f7c20f003fc4f6c62bd678f2a76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7fd7458_69e15781",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T10:58:49Z",
+      "side": 1,
+      "message": "Do you have a spec that shows the difference in size between audio and video?",
+      "revId": "ecb91ec0846f7c20f003fc4f6c62bd678f2a76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
