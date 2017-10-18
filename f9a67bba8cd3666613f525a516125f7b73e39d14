@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "488419b8_dc7e70af",
+        "filename": "third_party/content_shell_fonts/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-18T14:51:26Z",
+      "side": 1,
+      "message": "dpranke@, I am not sure usage in testing mandates a \"yes\" here or whether a \"no\" is sufficient in this case, please advice?",
+      "revId": "f9a67bba8cd3666613f525a516125f7b73e39d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
