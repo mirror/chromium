@@ -60,6 +60,10 @@ constexpr base::TimeDelta kBandwidthAveragingInterval =
 // time intervals between frames (i.e. FPS).
 const int kEncoderBitrateChangePercentage = 33;
 
+// Minimum interval between frames needed to keep the connection alive.
+constexpr base::TimeDelta kKeepAliveInterval =
+    base::TimeDelta::FromMilliseconds(200);
+
 int64_t GetRegionArea(const webrtc::DesktopRegion& region) {
   int64_t result = 0;
   for (webrtc::DesktopRegion::Iterator r(region); !r.IsAtEnd(); r.Advance()) {
@@ -188,12 +192,23 @@ bool WebrtcFrameSchedulerSimple::OnFrameCaptured(
     // send, i.e. there is nothing to send if first capture request failed.
     bool resend_last_frame =
         captured_first_frame_ && (top_off_is_active_ || key_frame_request_);
+
+    // Also send previous frame if there haven't been any frame updates for a
+    // while, to keep the video stream alive. Otherwise, the client will
+    // think the video stream is frozen and will attempt to recover it by
+    // requesting a key-frame every few seconds, wasting network resources.
+    bool need_keep_alive = !newest_frame_time_.is_null() &&
+                           (now - newest_frame_time_ > kKeepAliveInterval);
+    resend_last_frame |= need_keep_alive;
+
     if (!resend_last_frame) {
       frame_pending_ = false;
       ScheduleNextFrame(now);
       return false;
     }
   }
+
+  newest_frame_time_ = now;
 
   if (frame) {
     captured_first_frame_ = true;

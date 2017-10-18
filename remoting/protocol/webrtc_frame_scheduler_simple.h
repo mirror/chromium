@@ -79,6 +79,9 @@ class WebrtcFrameSchedulerSimple : public VideoChannelStateObserver,
 
   base::TimeTicks last_capture_started_time_;
 
+  // Set whenever a new frame is captured and sent to the encoder.
+  base::TimeTicks newest_frame_time_;
+
   LeakyBucket pacing_bucket_;
 
   EncoderBitrateFilter encoder_bitrate_;
