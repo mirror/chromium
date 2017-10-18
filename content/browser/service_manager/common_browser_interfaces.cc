@@ -28,7 +28,6 @@ class ConnectionFilterImpl : public ConnectionFilter {
   ConnectionFilterImpl()
       : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
     RegisterMainThreadInterface(base::Bind(&device::GeolocationConfig::Create));
-
     auto* browser_main_loop = BrowserMainLoop::GetInstance();
     if (browser_main_loop) {
       auto* manager = browser_main_loop->discardable_shared_memory_manager();

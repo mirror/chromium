@@ -15,3 +15,11 @@ interface ChildHistogramFetcher{
   // Send to all the child processes to send back histogram data.
   GetChildNonPersistentHistogramData() => (array<string> deltas);
 };
+
+interface BrowserHistogramFetcher {
+  // Request a histogram from the browser. The browser will send the histogram
+  // data only if it has been passed the command line flag
+  // switches::kDomAutomationController.
+  [Sync]
+  GetBrowserHistogram(string name) => (string histogram_json);
+};
