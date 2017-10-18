@@ -2,29 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-window.chrome = {
-  commandLinePrivate: {
-    hasSwitch: function(name, callback) {
-      callback(false);
-    }
-  },
-  fileManagerPrivate: {
-    getFileTasks: function(entries, callback) {
-      setTimeout(callback.bind(null, [
-        {
-          taskId: 'handler-extension-id|app|any',
-          isDefault: false,
-          isGenericFileHandler: true
-        }
-      ]), 0);
-    },
-    executeTask: function(taskId, entries, onViewFiles) {
-      onViewFiles('failed');
-    }
-  },
-  runtime: {id: 'test-extension-id'}
-};
-
 window.metrics = {
   recordEnum: function() {}
 };
@@ -35,8 +12,36 @@ loadTimeData.data = {
   NO_TASK_FOR_FILE: 'NO_TASK_FOR_FILE',
   NO_TASK_FOR_DMG: 'NO_TASK_FOR_DMG',
   NO_TASK_FOR_CRX: 'NO_TASK_FOR_CRX',
-  NO_TASK_FOR_CRX_TITLE: 'NO_TASK_FOR_CRX_TITLE'
+  NO_TASK_FOR_CRX_TITLE: 'NO_TASK_FOR_CRX_TITLE',
+  OPEN_WITH_BUTTON_LABEL: 'OPEN_WITH_BUTTON_LABEL',
+  TASK_OPEN: 'TASK_OPEN',
+  MORE_ACTIONS_BUTTON_LABEL: 'MORE_ACTIONS_BUTTON_LABEL'
 };
+
+function setUp() {
+  window.chrome = {
+    commandLinePrivate: {
+      hasSwitch: function(name, callback) {
+        callback(false);
+      }
+    },
+    fileManagerPrivate: {
+      getFileTasks: function(entries, callback) {
+        setTimeout(
+            callback.bind(null, [{
+                            taskId: 'handler-extension-id|app|any',
+                            isDefault: false,
+                            isGenericFileHandler: true
+                          }]),
+            0);
+      },
+      executeTask: function(taskId, entries, onViewFiles) {
+        onViewFiles('failed');
+      }
+    },
+    runtime: {id: 'test-extension-id'}
+  };
+}
 
 /**
  * Returns a mock file manager.
@@ -111,6 +116,39 @@ function openSuggestAppsDialogIsCalled(entries, mimeTypes) {
     FileTasks.create(
         fileManager.volumeManager, fileManager.metadataModel,
         fileManager.directoryModel, fileManager.ui, entries, mimeTypes)
+        .then(function(tasks) {
+          tasks.executeDefault();
+        });
+  });
+}
+
+/**
+ * Returns a promise which is resolved when task picker is shown.
+ *
+ * @param {!Array<!Entry>} entries Entries.
+ * @param {!Array<?string>} mimeTypes Mime types.
+ * @return {!Promise}
+ */
+function showDefaultTaskDialogCalled(entries, mimeTypes) {
+  var mockTaskHistory = {
+    getLastExecutedTime: function(id) {
+      return 0;
+    }
+  };
+  return new Promise(function(resolve, reject) {
+    var fileManager = getMockFileManager();
+    fileManager.ui.defaultTaskPicker = {
+      showDefaultTaskDialog: function(
+          title, message, items, defaultIdx, onSuccess) {
+        resolve();
+      }
+    };
+
+    FileTasks
+        .create(
+            fileManager.volumeManager, fileManager.metadataModel,
+            fileManager.directoryModel, fileManager.ui, entries, mimeTypes,
+            mockTaskHistory)
         .then(function(tasks) {
           tasks.executeDefault();
         });
@@ -221,4 +259,37 @@ function testOpenSuggestAppsDialogFailure(callback) {
   });
 
   reportPromise(onFailureIsCalled, callback);
+}
+
+/**
+ * Test case for opening task picker with an entry which doesn't have default
+ * app but multiple apps that can open it.
+ */
+function testOpenTaskPicker(callback) {
+  window.chrome.fileManagerPrivate.getFileTasks = function(entries, callback) {
+    setTimeout(
+        callback.bind(
+            null,
+            [
+              {
+                taskId: 'handler-extension-id1|app|any',
+                isDefault: false,
+                isGenericFileHandler: false,
+                title: 'app 1',
+              },
+              {
+                taskId: 'handler-extension-id2|app|any',
+                isDefault: false,
+                isGenericFileHandler: false,
+                title: 'app 2',
+              }
+            ]),
+        0);
+  };
+
+  var mockFileSystem = new MockFileSystem('volumeId');
+  var mockEntry = new MockFileEntry(mockFileSystem, '/test.tiff');
+
+  reportPromise(
+      showDefaultTaskDialogCalled([mockEntry], ['image/tiff']), callback);
 }
