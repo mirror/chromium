@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f232b5e7_0055a2e4",
+        "filename": "content/common/resource_messages.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-18T20:18:58Z",
+      "side": 1,
+      "message": "what happens on the read side if a compromised renderer lies about the size?",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 44
+      },
+      "revId": "a7023fce194ae22796790340885239c986d68d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
