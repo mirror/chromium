@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5112b81_ac642afc",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-18T03:59:36Z",
+      "side": 1,
+      "message": "FYI, body is the only thing with default margins, so you could just put this in the body selector.",
+      "range": {
+        "startLine": 1249,
+        "startChar": 13,
+        "endLine": 1249,
+        "endChar": 19
+      },
+      "revId": "a1771dcb70431b6c66efede58f220dc7e3fc6f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
