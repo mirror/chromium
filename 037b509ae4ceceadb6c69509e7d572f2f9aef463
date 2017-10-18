@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df450e4a_3bd3c959",
+        "filename": "ui/chromeos/ime/candidate_window_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-18T18:17:47Z",
+      "side": 1,
+      "message": "Please document where the -1 comes from.",
+      "range": {
+        "startLine": 36,
+        "startChar": 31,
+        "endLine": 36,
+        "endChar": 55
+      },
+      "revId": "037b509ae4ceceadb6c69509e7d572f2f9aef463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
