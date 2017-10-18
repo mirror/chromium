@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5cdb2c2_dc36a78f",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-18T20:58:36Z",
+      "side": 1,
+      "message": "attempts on proxy config changes had kProxyChangeDelaySec delay",
+      "revId": "5e7dc80ff86ec8cabffc989fbf9a6ee358486593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16ce421_9b611b74",
+        "filename": "chrome/browser/ui/webui/chromeos/login/network_state_informer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-18T20:58:36Z",
+      "side": 1,
+      "message": "not needed anymore",
+      "range": {
+        "startLine": 176,
+        "startChar": 14,
+        "endLine": 176,
+        "endChar": 30
+      },
+      "revId": "5e7dc80ff86ec8cabffc989fbf9a6ee358486593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fac20f7_618c03db",
+        "filename": "chrome/browser/ui/webui/chromeos/login/network_state_informer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-18T20:58:36Z",
+      "side": 1,
+      "message": "my personal preference would be something like:\nif (new_state \u003d\u003d state_ \u0026\u0026 new_network_path \u003d\u003d network_path_)\n  return false;\n\nstate_ \u003d new_state;\n...",
+      "revId": "5e7dc80ff86ec8cabffc989fbf9a6ee358486593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753c5db7_9bf50689",
+        "filename": "chrome/browser/ui/webui/chromeos/login/network_state_informer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-18T20:58:36Z",
+      "side": 1,
+      "message": "I find this slightly more readable:\n\nif (!proxy_config_ || *proxy_config_ \u003d\u003d default_network-\u003eproxy_config())\n  return false;\n\nproxy_config_ \u003d std::make_unique\u003c\u003e();\nreturn true;",
+      "revId": "5e7dc80ff86ec8cabffc989fbf9a6ee358486593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1970e804_29afcb42",
+        "filename": "chrome/browser/ui/webui/chromeos/login/network_state_informer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-18T20:58:36Z",
+      "side": 1,
+      "message": "This would leave proxy_config unset when state changes (given that UpdateState only resets proxy_config_)",
+      "revId": "5e7dc80ff86ec8cabffc989fbf9a6ee358486593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
