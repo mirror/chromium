@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90e03030_0cbbf5e0",
+        "filename": "content/browser/service_manager/common_browser_interfaces.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-18T02:25:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9127b1a6_2928cd05",
+      "revId": "b9faec17154d42a8fdafd467e6849c685c20e924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91e49da9_d52223af",
         "filename": "content/common/histogram_fetcher.mojom",
         "patchSetId": 7
@@ -65,6 +83,24 @@
       "writtenOn": "2017-10-18T01:20:45Z",
       "side": 1,
       "message": "Optional: Consider changing this to just return a RenderViewImpl* and then the remaining caller below could be\n\nStatsCollectionObserver* observer \u003d\n      CurrentRenderViewImpl()-\u003eGetStatsCollectionObserver();",
+      "revId": "b9faec17154d42a8fdafd467e6849c685c20e924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650fdce3_17d38c3d",
+        "filename": "content/renderer/stats_collection_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-18T02:25:11Z",
+      "side": 1,
+      "message": "Wouldn\u0027t we still need to check the return value for nullptr?",
+      "parentUuid": "6c081f0d_6656ad68",
       "revId": "b9faec17154d42a8fdafd467e6849c685c20e924",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
