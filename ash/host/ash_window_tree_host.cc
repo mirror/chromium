@@ -47,6 +47,7 @@ void AshWindowTreeHost::TranslateLocatedEvent(ui::LocatedEvent* event) {
     screen_position_client->ConvertHostPointToScreen(root_window, &location);
     screen_position_client->ConvertPointFromScreen(root_window, &location);
     wth->ConvertDIPToPixels(&location);
+
     event->set_location(location);
     event->set_root_location(location);
   }
