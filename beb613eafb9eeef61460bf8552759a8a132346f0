@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3e47eef_680c0835",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFaceSrcValue.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T05:19:48Z",
+      "side": 1,
+      "message": "Oh by the way, please also go over and take a look if we should use kUnspecedLoading or other task types in some cases.",
+      "revId": "beb613eafb9eeef61460bf8552759a8a132346f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
