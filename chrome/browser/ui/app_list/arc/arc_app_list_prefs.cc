@@ -881,11 +881,14 @@ void ArcAppListPrefs::AddAppAndShortcut(
   const bool was_tracked = tracked_apps_.count(app_id);
   if (was_tracked) {
     std::unique_ptr<ArcAppListPrefs::AppInfo> app_old_info = GetApp(app_id);
-    DCHECK(app_old_info);
-    DCHECK(launchable);
-    if (updated_name != app_old_info->name) {
-      for (auto& observer : observer_list_)
-        observer.OnAppNameUpdated(app_id, updated_name);
+    if (app_old_info) {
+      DCHECK(launchable);
+      if (updated_name != app_old_info->name) {
+        for (auto& observer : observer_list_)
+          observer.OnAppNameUpdated(app_id, updated_name);
+      }
+    } else {
+      VLOG(2) << "Failed to get app info: " << app_id << ".";
     }
   }
 
