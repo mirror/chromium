@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1c091d7_b4edb722",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-10-18T16:49:53Z",
+      "side": 1,
+      "message": "Not sure about this. Currently only H264 encoder is enabled on Android.\nVPx encoder may be enabled in the future. So far it\u0027s hard to tell whether any tweaking will be added or not for VPx encoder. Maybe it\u0027s better to keep the new subclass for all encoders. WDYT?",
+      "parentUuid": "a4e419b5_e2ea16f6",
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b032d61_c3e22390",
         "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9815185_af799f6c",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-10-18T16:49:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b032d61_c3e22390",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 62
+      },
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "69aec987_282ad51d",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-10-18T16:49:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7edd7b23_7a5b1850",
+      "range": {
+        "startLine": 25,
+        "startChar": 36,
+        "endLine": 25,
+        "endChar": 50
+      },
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fb62ce8_66135e65",
         "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
         "patchSetId": 6
@@ -79,6 +145,24 @@
       "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ce04fd_a87b92fe",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-10-18T16:49:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fb62ce8_66135e65",
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "acf2ed23_da843c0c",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-10-18T16:49:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9521037_257897ab",
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9bc8efe_1c6c23fe",
         "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
         "patchSetId": 6
@@ -113,6 +215,24 @@
       "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68eb3f8d_9b77ac60",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-10-18T16:49:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9bc8efe_1c6c23fe",
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "04d627f5_71e2a49b",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-10-18T16:49:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcafa50b_2c46117c",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 9
+      },
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78eb39fd_aa4c493f",
         "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
         "patchSetId": 6
@@ -153,6 +297,24 @@
       "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c13659c8_7c2053b5",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-10-18T16:49:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78eb39fd_aa4c493f",
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
