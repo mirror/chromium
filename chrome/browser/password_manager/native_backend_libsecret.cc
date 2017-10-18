@@ -172,6 +172,12 @@ NativeBackendLibsecret::~NativeBackendLibsecret() {
 }
 
 bool NativeBackendLibsecret::Init() {
+  // Force OSCrypt to initialise itself before Password Manager uses its
+  // backends. This removes any racing calls to Keyring between
+  // Password Manager and OSCrypt.
+  std::string encrypted;
+  OSCrypt::EncryptString("Foo", &encrypted);
+
   return LibsecretLoader::EnsureLibsecretLoaded();
 }
 

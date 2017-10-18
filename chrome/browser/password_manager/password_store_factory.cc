@@ -44,6 +44,7 @@
 // Don't do anything. We're going to use the default store.
 #elif defined(USE_X11)
 #include "components/os_crypt/key_storage_util_linux.h"
+#include "components/os_crypt/os_crypt.h"
 #if defined(USE_GNOME_KEYRING)
 #include "chrome/browser/password_manager/native_backend_gnome_x.h"
 #endif

@@ -318,6 +318,12 @@ NativeBackendKWallet::~NativeBackendKWallet() {
 }
 
 bool NativeBackendKWallet::Init() {
+  // Force OSCrypt to initialise itself before Password Manager uses its
+  // backends. This removes any racing calls to Keyring/KWallet between
+  // Password Manager and OSCrypt.
+  std::string encrypted;
+  OSCrypt::EncryptString("Foo", &encrypted);
+
   // Without the |optional_bus| parameter, a real bus will be instantiated.
   return InitWithBus(scoped_refptr<dbus::Bus>());
 }
