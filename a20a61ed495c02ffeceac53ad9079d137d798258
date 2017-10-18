@@ -16,6 +16,52 @@
       "revId": "a20a61ed495c02ffeceac53ad9079d137d798258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b5fc21_ca1f8066",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-18T02:41:57Z",
+      "side": 1,
+      "message": "it\u0027s worth to add the following:\n\nif (size \u003c\u003d 4)\n  return 0;\n\nit help fuzzing engine to avoid generating too short inputs",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 1
+      },
+      "revId": "a20a61ed495c02ffeceac53ad9079d137d798258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d780c5d_08fc0247",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-18T02:41:57Z",
+      "side": 1,
+      "message": "This check seems to be redundant after adding an early check suggested above",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 13
+      },
+      "revId": "a20a61ed495c02ffeceac53ad9079d137d798258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
