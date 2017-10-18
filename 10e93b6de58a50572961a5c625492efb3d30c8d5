@@ -379,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "e532b0bc_d5ea78be",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-18T20:43:30Z",
+      "side": 1,
+      "message": "\u003e Here we will loop over and try to lock a candidate which we will then pass to DoDecodeImage. Which part are you referring to that locks existing entry?\n\nThat\u0027s what I meant, try to find an existing entry and lock it. Before we get to this block, DecodeImageIfNecessary tries to do the same thing, I thought maybe that could be shared in a seperate method. But you can look into those details in the next change.\n\n\u003e \n\u003e Basically this part gets a candidate from the full image, but it doesn\u0027t have to get the candidate from that: it can get the candidate from any other size/decoded image.",
+      "parentUuid": "aaea6492_dbfcf6d0",
+      "range": {
+        "startLine": 421,
+        "startChar": 6,
+        "endLine": 421,
+        "endChar": 77
+      },
+      "revId": "10e93b6de58a50572961a5c625492efb3d30c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "714f8bc5_f1301756",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
