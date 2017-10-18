@@ -13,7 +13,6 @@
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/callback.h"
-#include "base/command_line.h"
 #include "base/json/json_string_value_serializer.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -23,6 +22,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/synchronization/lock.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -32,6 +32,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
@@ -512,7 +513,10 @@ class PredictorBrowserTest : public InProcessBrowserTest {
         Predictor::kMaxSpeculativeResolveQueueDelayMs + 300);
     rule_based_resolver_proc_->AddRuleWithLatency("delay.google.com",
                                                   "127.0.0.1", 1000 * 60);
+    scoped_feature_list_.InitAndEnableFeature(features::kPreconnectMore);
   }
+
+  ~PredictorBrowserTest() override {}
 
  protected:
   void SetUpInProcessBrowserTestFixture() override {
@@ -523,8 +527,6 @@ class PredictorBrowserTest : public InProcessBrowserTest {
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitch(
         switches::kEnableExperimentalWebPlatformFeatures);
-    command_line->AppendSwitchASCII(switches::kEnableFeatures,
-                                    "PreconnectMore");
   }
 
   void SetUpOnMainThread() override {
@@ -809,12 +811,15 @@ class PredictorBrowserTest : public InProcessBrowserTest {
   std::unique_ptr<ConnectionListener> cross_site_connection_listener_;
 
  private:
+  base::test::ScopedFeatureList scoped_feature_list_;
   scoped_refptr<net::RuleBasedHostResolverProc> rule_based_resolver_proc_;
   std::unique_ptr<net::ScopedDefaultHostResolverProc>
       scoped_host_resolver_proc_;
   std::unique_ptr<net::EmbeddedTestServer> cross_site_test_server_;
   std::unique_ptr<CrossSitePredictorObserver> observer_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
+  DISALLOW_COPY_AND_ASSIGN(PredictorBrowserTest);
 };
 
 IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, SingleLookupTest) {
