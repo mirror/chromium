@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf742df1_d4c2cef9",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-18T22:27:47Z",
+      "side": 1,
+      "message": "Just musing here.. instead of finding the absolute depth, would it be better to have the function verify that the max depth is 4 or less? Something like IsValidDepth()? I\u0027m just imagining a scenario where this method was used to check a very large nested structure. Once we know it\u0027s over 4 levels deep, it would be unnecessary (possibly dangerous) to continue re-cursing.",
+      "revId": "f99ac030c4255c6a6b4a275697daabec17179747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc38f2ad_b694796f",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-18T22:27:47Z",
+      "side": 1,
+      "message": "Portions of the CL comment would be perfect here. Could you add the parts that explain that this is a canonical implementation, and list the four canonical requirements that it meets? Then we can include a link to the CTAP spec requirement here and omit CTAP references in all the other comments (like in line 50, 97, etc).",
+      "revId": "f99ac030c4255c6a6b4a275697daabec17179747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed294010_eaa332c0",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-18T22:27:47Z",
+      "side": 1,
+      "message": "nit: comments should end in periods (i.e. they should all be well-formed sentences or statements in terms of grammar, punctuation, etc.)",
+      "revId": "f99ac030c4255c6a6b4a275697daabec17179747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25445062_ee7d46e0",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-18T22:27:47Z",
+      "side": 1,
+      "message": "Accidental spaces added?",
+      "revId": "f99ac030c4255c6a6b4a275697daabec17179747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341e5432_94870898",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-18T22:27:47Z",
+      "side": 1,
+      "message": "One possibility to avoid testing the static private method would be to try and serialize a CBORValue with too many nested maps and verify that it fails.",
+      "revId": "f99ac030c4255c6a6b4a275697daabec17179747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
