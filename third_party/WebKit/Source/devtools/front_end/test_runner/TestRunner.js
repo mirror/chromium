@@ -1153,12 +1153,15 @@ TestRunner.waitForUISourceCodeRemoved = function(callback) {
 };
 
 /**
- * @param {string} relativeURL
+ * @param {string} url
  * @return {string}
  */
-TestRunner.url = function(relativeURL) {
-  var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
-  return new URL(testScriptURL + '/../' + relativeURL).href;
+TestRunner.url = function(url) {
+  // TODO(chenwilliam): only new-style tests will have a test queryParam;
+  // remove inspectedURL() after all tests have been migrated to new test framework.
+  var testScriptURL =
+      /** @type {string} */ (Runtime.queryParam('test')) || SDK.targetManager.mainTarget().inspectedURL();
+  return new URL(url, testScriptURL + '/../').href;
 };
 
 /**
