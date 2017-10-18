@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90a719b4_3e08c5e6",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T14:38:23Z",
+      "side": 1,
+      "message": "Um, sorry what are they for?",
+      "revId": "bcf8f2e92912f4680f2d5a839b7713a0dcba5957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4744c7_79c66220",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T14:38:23Z",
+      "side": 1,
+      "message": "It\u0027s probably not too obvious what this code pattern\u0027s doing, could we document that loader_callback_ is still there if MaybeLoad* didn\u0027t create a job?\n\n(Is job_ always null if loader_callback_ is there?  Could this instead be if (!job_) and DCHECK(loader_callback_)?)",
+      "revId": "bcf8f2e92912f4680f2d5a839b7713a0dcba5957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6309bd8_1f620fb5",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T14:38:23Z",
+      "side": 1,
+      "message": "nit: \u003d nullptr; is probably not needed",
+      "revId": "bcf8f2e92912f4680f2d5a839b7713a0dcba5957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "584b1a52_0be83d44",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T14:38:23Z",
+      "side": 1,
+      "message": "This is actually now spec\u0027ed. Maybe something like\n\n// Max number of http redirects to follow. The Fetch spec says: \"If request’s\n// redirect count is twenty, return a network error.\"\n// https://fetch.spec.whatwg.org/#http-redirect-fetch",
+      "revId": "bcf8f2e92912f4680f2d5a839b7713a0dcba5957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
