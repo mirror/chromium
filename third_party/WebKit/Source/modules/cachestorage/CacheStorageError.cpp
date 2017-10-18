@@ -27,6 +27,9 @@ DOMException* CacheStorageError::CreateException(
       return DOMException::Create(kNotFoundError, "Cache was not found.");
     case kWebServiceWorkerCacheErrorTooLarge:
       return DOMException::Create(kAbortError, "Operation too large.");
+    case kWebServiceWorkerCacheErrorStorage:
+      // TODO(cmumford): Verify this IAW the IDL.
+      return DOMException::Create(kAbortError, "Storage backend error.");
   }
   NOTREACHED();
   return nullptr;
