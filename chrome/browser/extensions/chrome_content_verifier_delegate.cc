@@ -21,6 +21,8 @@
 #include "base/version.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/extension_service.h"
+#include "chrome/browser/extensions/install_verifier.h"
+
 #include "chrome/browser/extensions/policy_extension_reinstaller.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/extension_constants.h"
@@ -59,7 +61,7 @@ ContentVerifierDelegate::Mode ChromeContentVerifierDelegate::GetDefaultMode() {
 #if defined(GOOGLE_CHROME_BUILD)
   experiment_value = ContentVerifierDelegate::ENFORCE_STRICT;
 #else
-  experiment_value = ContentVerifierDelegate::NONE;
+  experiment_value = ContentVerifierDelegate::ENFORCE_STRICT;
 #endif
   const std::string group =
       base::FieldTrialList::FindFullName(kContentVerificationExperimentName);
@@ -129,8 +131,10 @@ ContentVerifierDelegate::Mode ChromeContentVerifierDelegate::ShouldBeVerified(
     return ContentVerifierDelegate::NONE;
   if (!Manifest::IsAutoUpdateableLocation(extension.location()))
     return ContentVerifierDelegate::NONE;
-
-  if (!ManifestURL::UpdatesFromGallery(&extension)) {
+  // Use the InstallVerifier's |IsFromStore| method to avoid discrepancies
+  // between which extensions are considered in-store.
+  // See https://crbug.com/766806 for details.
+  if (!InstallVerifier::IsFromStore(extension)) {
     // It's possible that the webstore update url was overridden for testing
     // so also consider extensions with the default (production) update url
     // to be from the store as well.
