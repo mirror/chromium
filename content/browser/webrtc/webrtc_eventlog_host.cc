@@ -88,7 +88,9 @@ void WebRTCEventLogHost::PeerConnectionAdded(int peer_connection_local_id) {
     active_peer_connection_local_ids_.push_back(peer_connection_local_id);
     if (rtc_event_logging_enabled_ &&
         number_active_log_files_ < kMaxNumberLogFiles) {
-      StartEventLogForPeerConnection(peer_connection_local_id);
+      StartEventLogForPeerConnection(
+          peer_connection_local_id);  // TODO(eladalon): !!! When do things come
+                                      // through here? (2)
     }
   }
 }
@@ -103,7 +105,9 @@ void WebRTCEventLogHost::PeerConnectionRemoved(int peer_connection_local_id) {
   }
 }
 
-bool WebRTCEventLogHost::StartWebRTCEventLog(const base::FilePath& file_path) {
+bool WebRTCEventLogHost::StartWebRTCEventLog(
+    const base::FilePath& file_path) {  // TODO(eladalon): !!! When do things
+                                        // come through here? (2)
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (rtc_event_logging_enabled_)
     return false;
@@ -155,8 +159,8 @@ void WebRTCEventLogHost::SendEventLogFileToRenderer(
   }
   RenderProcessHost* rph = RenderProcessHost::FromID(render_process_id_);
   if (rph) {
-    rph->Send(new PeerConnectionTracker_StartEventLog(peer_connection_local_id,
-                                                      file_for_transit));
+    rph->Send(new PeerConnectionTracker_StartEventLogFile(
+        peer_connection_local_id, file_for_transit));
   } else {
     --number_active_log_files_;
     IPC::PlatformFileForTransitToFile(file_for_transit).Close();

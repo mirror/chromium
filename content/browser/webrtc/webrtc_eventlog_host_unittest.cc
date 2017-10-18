@@ -76,7 +76,7 @@ class WebRtcEventlogHostTest : public testing::Test {
                                            const int peer_connection_id) {
     ASSERT_TRUE(msg);
     std::tuple<int, IPC::PlatformFileForTransit> start_params;
-    PeerConnectionTracker_StartEventLog::Read(msg, &start_params);
+    PeerConnectionTracker_StartEventLogFile::Read(msg, &start_params);
     EXPECT_EQ(peer_connection_id, std::get<0>(start_params));
     ASSERT_NE(IPC::InvalidPlatformFileForTransit(), std::get<1>(start_params));
     IPC::PlatformFileForTransitToFile(std::get<1>(start_params)).Close();
@@ -88,7 +88,7 @@ class WebRtcEventlogHostTest : public testing::Test {
     EXPECT_TRUE(msg);
     if (msg) {
       std::tuple<int, IPC::PlatformFileForTransit> start_params;
-      PeerConnectionTracker_StartEventLog::Read(msg, &start_params);
+      PeerConnectionTracker_StartEventLogFile::Read(msg, &start_params);
       EXPECT_NE(IPC::InvalidPlatformFileForTransit(),
                 std::get<1>(start_params));
       if (std::get<1>(start_params) != IPC::InvalidPlatformFileForTransit()) {
