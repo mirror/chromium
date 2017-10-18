@@ -159,27 +159,6 @@ TEST_F(BackgroundFetchRegistrationNotifierTest, NotifyMultipleObservers) {
 }
 
 TEST_F(BackgroundFetchRegistrationNotifierTest,
-       NotifyFollowingNotifierInitiatedRemoval) {
-  auto observer = std::make_unique<TestRegistrationObserver>();
-
-  notifier_->AddObserver(kPrimaryUniqueId, observer->GetPtr());
-  ASSERT_EQ(observer->progress_updates().size(), 0u);
-
-  Notify(kPrimaryUniqueId, kDownloadTotal, kDownloaded);
-
-  ASSERT_EQ(observer->progress_updates().size(), 1u);
-
-  // Remove the observers from |kPrimaryUniqueId| from the notifier.
-  notifier_->RemoveObservers(kPrimaryUniqueId);
-
-  Notify(kPrimaryUniqueId, kDownloadTotal, kDownloaded);
-
-  // The observers for |kPrimaryUniqueId| were removed, so no second update
-  // should have been received by the |observer|.
-  ASSERT_EQ(observer->progress_updates().size(), 1u);
-}
-
-TEST_F(BackgroundFetchRegistrationNotifierTest,
        NotifyFollowingObserverInitiatedRemoval) {
   auto observer = std::make_unique<TestRegistrationObserver>();
 
