@@ -211,11 +211,25 @@ ScriptPromise PresentationRequest::getAvailability(ScriptState* script_state) {
         ExecutionContext::From(script_state), this,
         PresentationAvailabilityProperty::kReady);
 
+    DoGetAvailability();
+    /*
     client->GetAvailability(urls_,
                             WTF::MakeUnique<PresentationAvailabilityCallbacks>(
                                 availability_property_, urls_));
+    */
   }
   return availability_property_->Promise(script_state->World());
+}
+
+// TODO(imcheng): Relocate
+void PresentationRequest::DoGetAvailability() {
+  PresentationController* controller =
+      PresentationController::FromContext(GetExecutionContext());
+  DCHECK(controller);
+
+  controller->GetAvailability(
+      urls_, std::make_unique<PresentationAvailabilityCallbacks>(
+                 availability_property_, urls_));
 }
 
 const Vector<KURL>& PresentationRequest::Urls() const {

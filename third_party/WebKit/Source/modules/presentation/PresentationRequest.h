@@ -64,6 +64,8 @@ class MODULES_EXPORT PresentationRequest final
   PresentationRequest(ExecutionContext*, const Vector<KURL>&);
   static void RecordConstructorOriginTypeAccess(ExecutionContext&);
 
+  void DoGetAvailability();
+
   Member<PresentationAvailabilityProperty> availability_property_;
   Vector<KURL> urls_;
 };
