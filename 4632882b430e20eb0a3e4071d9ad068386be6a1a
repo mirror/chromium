@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "207a3e43_ab9e3ed3",
+        "filename": "components/cronet/android/test/javaperftests/android_rndis_forwarder.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-18T15:13:19Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "ee3b0f3b_926678f0",
+      "range": {
+        "startLine": 231,
+        "startChar": 51,
+        "endLine": 231,
+        "endChar": 0
+      },
+      "revId": "4632882b430e20eb0a3e4071d9ad068386be6a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98ba4c7f_f50258e8",
         "filename": "components/cronet/android/test/javaperftests/android_rndis_forwarder.py",
         "patchSetId": 2
@@ -60,6 +84,30 @@
       "side": 0,
       "message": "IP address didn\u0027t seem to get set otherwise on Nougat; didn\u0027t seem to make a difference on Lollipop.",
       "parentUuid": "98ba4c7f_f50258e8",
+      "range": {
+        "startLine": 266,
+        "startChar": 3,
+        "endLine": 266,
+        "endChar": 11
+      },
+      "revId": "4632882b430e20eb0a3e4071d9ad068386be6a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1283f15_1ca32c19",
+        "filename": "components/cronet/android/test/javaperftests/android_rndis_forwarder.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-18T15:13:19Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "bb3db1c3_7a0083e3",
       "range": {
         "startLine": 266,
         "startChar": 3,
