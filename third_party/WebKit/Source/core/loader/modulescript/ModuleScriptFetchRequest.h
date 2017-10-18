@@ -22,13 +22,24 @@ class ModuleScriptFetchRequest final {
       : ModuleScriptFetchRequest(url,
                                  options,
                                  Referrer::NoReferrer(),
-                                 TextPosition::MinimumPosition()) {}
+                                 TextPosition::MinimumPosition(),
+                                 false) {}
+  // For link rel=modulepreload requests
+  ModuleScriptFetchRequest(const KURL& url,
+                           WebURLRequest::FetchCredentialsMode credentials_mode)
+      : ModuleScriptFetchRequest(
+            url,
+            ScriptFetchOptions(String(), kParserInserted, credentials_mode),
+            Referrer::NoReferrer(),
+            TextPosition::MinimumPosition(),
+            true) {}
   ~ModuleScriptFetchRequest() = default;
 
   const KURL& Url() const { return url_; }
   const ScriptFetchOptions& Options() const { return options_; }
   const AtomicString& GetReferrer() const { return referrer_; }
   const TextPosition& GetReferrerPosition() const { return referrer_position_; }
+  bool IsModulePreload() const { return is_module_preload_; }
 
  private:
   // Referrer is set only for internal module script fetch algorithms triggered
@@ -37,16 +48,19 @@ class ModuleScriptFetchRequest final {
   ModuleScriptFetchRequest(const KURL& url,
                            const ScriptFetchOptions& options,
                            const String& referrer,
-                           const TextPosition& referrer_position)
+                           const TextPosition& referrer_position,
+                           bool is_module_preload)
       : url_(url),
         options_(options),
         referrer_(referrer),
-        referrer_position_(referrer_position) {}
+        referrer_position_(referrer_position),
+        is_module_preload_(is_module_preload) {}
 
   const KURL url_;
   const ScriptFetchOptions options_;
   const AtomicString referrer_;
   const TextPosition referrer_position_;
+  const bool is_module_preload_;
 };
 
 }  // namespace blink

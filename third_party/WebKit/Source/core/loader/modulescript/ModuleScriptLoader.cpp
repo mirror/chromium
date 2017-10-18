@@ -14,6 +14,7 @@
 #include "core/loader/modulescript/ModuleScriptLoaderRegistry.h"
 #include "core/loader/modulescript/WorkletModuleScriptFetcher.h"
 #include "core/workers/MainThreadWorkletGlobalScope.h"
+#include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceLoadingLog.h"
@@ -107,10 +108,14 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
   // [spec text]
   options.parser_disposition = options_.ParserState();
 
-  // As initiator for module script fetch is not specified in HTML spec,
-  // we specity "" as initiator per:
-  // https://fetch.spec.whatwg.org/#concept-request-initiator
-  options.initiator_info.name = g_empty_atom;
+  if (module_request.IsModulePreload()) {
+    options.initiator_info.name = FetchInitiatorTypeNames::link;
+  } else {
+    // As initiator for module script fetch is not specified in HTML spec,
+    // we specity "" as initiator per:
+    // https://fetch.spec.whatwg.org/#concept-request-initiator
+    options.initiator_info.name = g_empty_atom;
+  }
 
   if (level == ModuleGraphLevel::kDependentModuleFetch) {
     options.initiator_info.imported_module_referrer =
@@ -156,6 +161,9 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
   // [spec text]
   fetch_params.SetDecoderOptions(
       TextResourceDecoderOptions::CreateAlwaysUseUTF8ForText());
+
+  // if (module_request.IsModulePreload())
+  //   fetch_params.SetLinkPreload(true);
 
   // Step 7. "If the caller specified custom steps to perform the fetch,
   // perform them on request, setting the is top-level flag if the top-level
