@@ -10,14 +10,11 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/permission_manager.h"
 #include "content/public/browser/permission_type.h"
 #include "content/public/browser/render_frame_host.h"
-#include "content/public/common/content_features.h"
-#include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
 
 using blink::mojom::PermissionDescriptorPtr;
 using blink::mojom::PermissionName;
@@ -64,51 +61,6 @@ PermissionType PermissionDescriptorToPermissionType(
   return PermissionType::NUM;
 }
 
-blink::WebFeaturePolicyFeature PermissionTypeToFeaturePolicyFeature(
-    PermissionType type) {
-  switch (type) {
-    case PermissionType::MIDI:
-    case PermissionType::MIDI_SYSEX:
-      return blink::WebFeaturePolicyFeature::kMidiFeature;
-    case PermissionType::GEOLOCATION:
-      return blink::WebFeaturePolicyFeature::kGeolocation;
-    case PermissionType::PROTECTED_MEDIA_IDENTIFIER:
-      return blink::WebFeaturePolicyFeature::kEncryptedMedia;
-    case PermissionType::AUDIO_CAPTURE:
-      return blink::WebFeaturePolicyFeature::kMicrophone;
-    case PermissionType::VIDEO_CAPTURE:
-      return blink::WebFeaturePolicyFeature::kCamera;
-    case PermissionType::PUSH_MESSAGING:
-    case PermissionType::NOTIFICATIONS:
-    case PermissionType::DURABLE_STORAGE:
-    case PermissionType::BACKGROUND_SYNC:
-    case PermissionType::FLASH:
-    case PermissionType::SENSORS:
-    case PermissionType::ACCESSIBILITY_EVENTS:
-    case PermissionType::NUM:
-      // These aren't exposed by feature policy.
-      return blink::WebFeaturePolicyFeature::kNotFound;
-  }
-
-  NOTREACHED();
-  return blink::WebFeaturePolicyFeature::kNotFound;
-}
-
-bool AllowedByFeaturePolicy(RenderFrameHost* rfh, PermissionType type) {
-  if (!base::FeatureList::IsEnabled(
-          features::kUseFeaturePolicyForPermissions)) {
-    // Default to ignoring the feature policy.
-    return true;
-  }
-
-  blink::WebFeaturePolicyFeature feature_policy_feature =
-      PermissionTypeToFeaturePolicyFeature(type);
-  if (feature_policy_feature == blink::WebFeaturePolicyFeature::kNotFound)
-    return true;
-
-  return rfh->IsFeatureEnabled(feature_policy_feature);
-}
-
 // This function allows the usage of the the multiple request map with single
 // requests.
 void PermissionRequestResponseCallbackWrapper(
@@ -122,52 +74,31 @@ void PermissionRequestResponseCallbackWrapper(
 
 class PermissionServiceImpl::PendingRequest {
  public:
-  PendingRequest(std::vector<PermissionType> types,
+  PendingRequest(const std::vector<PermissionType>& types,
                  RequestPermissionsCallback callback)
-      : types_(types),
-        callback_(std::move(callback)),
-        has_result_been_set_(types.size(), false),
-        results_(types.size(), PermissionStatus::DENIED) {}
+      : callback_(std::move(callback)), request_size_(types.size()) {}
 
   ~PendingRequest() {
     if (callback_.is_null())
       return;
 
-    std::vector<PermissionStatus> result(types_.size(),
-                                         PermissionStatus::DENIED);
-    std::move(callback_).Run(result);
+    std::move(callback_).Run(
+        std::vector<PermissionStatus>(request_size_, PermissionStatus::DENIED));
   }
 
   int id() const { return id_; }
   void set_id(int id) { id_ = id; }
+  RequestPermissionsCallback* callback() { return &callback_; }
 
-  size_t RequestSize() const { return types_.size(); }
-
-  void SetResult(int index, PermissionStatus result) {
-    DCHECK_EQ(false, has_result_been_set_[index]);
-    has_result_been_set_[index] = true;
-    results_[index] = result;
-  }
-
-  bool HasResultBeenSet(size_t index) const {
-    return has_result_been_set_[index];
-  }
-
-  void RunCallback() {
-    // Check that all results have been set.
-    DCHECK(std::find(has_result_been_set_.begin(), has_result_been_set_.end(),
-                     false) == has_result_been_set_.end());
-    std::move(callback_).Run(results_);
+  void RunCallback(const std::vector<PermissionStatus>& results) {
+    std::move(callback_).Run(results);
   }
 
  private:
   // Request ID received from the PermissionManager.
   int id_;
-  std::vector<PermissionType> types_;
   RequestPermissionsCallback callback_;
-
-  std::vector<bool> has_result_been_set_;
-  std::vector<PermissionStatus> results_;
+  size_t request_size_;
 };
 
 PermissionServiceImpl::PermissionServiceImpl(PermissionServiceContext* context)
@@ -234,19 +165,10 @@ void PermissionServiceImpl::RequestPermissions(
 
   std::unique_ptr<PendingRequest> pending_request =
       base::MakeUnique<PendingRequest>(types, std::move(callback));
-  std::vector<PermissionType> request_types;
-  for (size_t i = 0; i < types.size(); ++i) {
-    // Check feature policy.
-    if (!AllowedByFeaturePolicy(context_->render_frame_host(), types[i]))
-      pending_request->SetResult(i, PermissionStatus::DENIED);
-    else
-      request_types.push_back(types[i]);
-  }
 
   int pending_request_id = pending_requests_.Add(std::move(pending_request));
   int id = browser_context->GetPermissionManager()->RequestPermissions(
-      request_types, context_->render_frame_host(), origin.GetURL(),
-      user_gesture,
+      types, context_->render_frame_host(), origin.GetURL(), user_gesture,
       base::Bind(&PermissionServiceImpl::OnRequestPermissionsResponse,
                  weak_factory_.GetWeakPtr(), pending_request_id));
 
@@ -261,23 +183,9 @@ void PermissionServiceImpl::RequestPermissions(
 
 void PermissionServiceImpl::OnRequestPermissionsResponse(
     int pending_request_id,
-    const std::vector<PermissionStatus>& partial_result) {
+    const std::vector<PermissionStatus>& results) {
   PendingRequest* request = pending_requests_.Lookup(pending_request_id);
-  auto partial_result_it = partial_result.begin();
-  // Fill in the unset results in the request. Some results in the request are
-  // set synchronously because they are blocked by feature policy. Others are
-  // determined by a call to RequestPermission. All unset results will be
-  // contained in |partial_result| in the same order that they were requested.
-  // We fill in the unset results in the request with |partial_result|.
-  for (size_t i = 0; i < request->RequestSize(); ++i) {
-    if (!request->HasResultBeenSet(i)) {
-      request->SetResult(i, *partial_result_it);
-      ++partial_result_it;
-    }
-  }
-  DCHECK(partial_result.end() == partial_result_it);
-
-  request->RunCallback();
+  request->RunCallback(results);
   pending_requests_.Remove(pending_request_id);
 }
 
@@ -339,12 +247,6 @@ PermissionStatus PermissionServiceImpl::GetPermissionStatusFromType(
 
   if (!browser_context->GetPermissionManager())
     return PermissionStatus::DENIED;
-
-  // If there is no frame (i.e. this is a worker) ignore the feature policy.
-  if (context_->render_frame_host() &&
-      !AllowedByFeaturePolicy(context_->render_frame_host(), type)) {
-    return PermissionStatus::DENIED;
-  }
 
   GURL requesting_origin(origin.Serialize());
   // If the embedding_origin is empty we'll use |origin| instead.
