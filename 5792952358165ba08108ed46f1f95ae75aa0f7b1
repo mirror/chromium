@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "90d046ee_efffa0fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-18T22:52:52Z",
+      "side": 1,
+      "message": "Your observation is correct. Sequence I was worried about, however, is:\n* onStartTaskWithNative called,\n* task runs out of time, or is terminated by OS, leading to:\n* onStopTaskWithNative, sets mStopped \u003d true; -\u003e Task is finished from the perspective of BTS. \n* Your code finishes and calls the callback, which is going to be ignored.",
+      "parentUuid": "ac223ec1_f6a572ef",
+      "range": {
+        "startLine": 65,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6c28099_2ea04d4d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
         "patchSetId": 3
@@ -153,6 +177,30 @@
       "side": 1,
       "message": "This is my understanding:\n\nI expect updateManager.updateNow() to be called just once per task execution. However, if there is more work to be done, onStartTaskWithNative() schedules the task to be run again. This will create a new instance of the WebApkUpdateTask and will run updateManager.updateNow() again.\n\nI have changed \"whether there is more work to be done\" to be a class member variable. Hopefully this makes things clearer.",
       "parentUuid": "c6c28099_2ea04d4d",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea210a7_f519bd48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-18T22:52:52Z",
+      "side": 1,
+      "message": "You are accepting the possibility that the task is scheduled at some point later, is that correct?\n\nI\u0027d put a comment on top of updateNow() call:\n// Updates one WebAPK and finishes indicating if more work is needed.",
+      "parentUuid": "01e6f4ad_1d514e43",
       "range": {
         "startLine": 69,
         "startChar": 32,
@@ -209,6 +257,30 @@
       "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb84784c_af8d32da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-18T22:52:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "139c2eaa_8c578a61",
+      "range": {
+        "startLine": 112,
+        "startChar": 30,
+        "endLine": 112,
+        "endChar": 67
+      },
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
