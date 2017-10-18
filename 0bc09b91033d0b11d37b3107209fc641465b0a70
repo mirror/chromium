@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbdd8634_7c3742c4",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-18T22:31:57Z",
+      "side": 1,
+      "message": "Feel free to add a TODO with my username to remove the Clone() later.",
+      "revId": "0bc09b91033d0b11d37b3107209fc641465b0a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e42946_fd4ab564",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-18T22:31:57Z",
+      "side": 1,
+      "message": "Can this function return just base::Value instead? Then line 135 becomes just auto out_list \u003d list-\u003eClone(), and you don\u0027t need to call Clone() on line 269.",
+      "revId": "0bc09b91033d0b11d37b3107209fc641465b0a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123a2a8d_2fae6bb6",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-18T22:31:57Z",
+      "side": 1,
+      "message": "Also not needed here.",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 27
+      },
+      "revId": "0bc09b91033d0b11d37b3107209fc641465b0a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a92c0b_01fa26d6",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-18T22:31:57Z",
+      "side": 1,
+      "message": "You can use base::EraseIf() here if it helps.",
+      "revId": "0bc09b91033d0b11d37b3107209fc641465b0a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f96bcb1_757059f5",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-18T22:31:57Z",
+      "side": 1,
+      "message": "Another opportunity to use is_none(). At least 1 more below.",
+      "range": {
+        "startLine": 106,
+        "startChar": 42,
+        "endLine": 106,
+        "endChar": 76
+      },
+      "revId": "0bc09b91033d0b11d37b3107209fc641465b0a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "324aa9bf_a306bc3c",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-18T22:31:57Z",
+      "side": 1,
+      "message": "Do you need to call GetString() in all these comparisons?",
+      "revId": "0bc09b91033d0b11d37b3107209fc641465b0a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4454cdb_d182ed1d",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-18T22:31:57Z",
+      "side": 1,
+      "message": "Can we use the same pattern as line 413 below to avoid the Clone() ? Same for other test cases.",
+      "revId": "0bc09b91033d0b11d37b3107209fc641465b0a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8ebe7e_ec99a2c9",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-18T22:31:57Z",
+      "side": 1,
+      "message": "Can this be cdd.SetPath(kPrinter, printer.Clone()); ?",
+      "revId": "0bc09b91033d0b11d37b3107209fc641465b0a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
