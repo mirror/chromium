@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad4cd032_89736471",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-18T23:54:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "827edd2c_60b4a7f8",
+      "revId": "0167e6368a4c4876cd1fdd44a31777553d2b724b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6738ff8_debb883c",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-18T21:20:04Z",
       "side": 1,
       "message": "DCHECK",
+      "revId": "0167e6368a4c4876cd1fdd44a31777553d2b724b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a75d9f_7b912b0b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-18T23:54:09Z",
+      "side": 1,
+      "message": "HostImportModuleDynamically() checks modulator against nullptr. Is there any difference?",
+      "parentUuid": "e6738ff8_debb883c",
       "revId": "0167e6368a4c4876cd1fdd44a31777553d2b724b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "451d52f7_6d2e507c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-18T23:54:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc0daebe_bf79d240",
+      "range": {
+        "startLine": 430,
+        "startChar": 16,
+        "endLine": 430,
+        "endChar": 0
+      },
+      "revId": "0167e6368a4c4876cd1fdd44a31777553d2b724b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f53d7ed_b4852695",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "0167e6368a4c4876cd1fdd44a31777553d2b724b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5592fb_ae6a0fc8",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-18T23:54:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f53d7ed_b4852695",
+      "revId": "0167e6368a4c4876cd1fdd44a31777553d2b724b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "0167e6368a4c4876cd1fdd44a31777553d2b724b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e15face_91d81a2f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-18T23:54:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3980cc3d_dd3d6b1a",
+      "range": {
+        "startLine": 472,
+        "startChar": 6,
+        "endLine": 472,
+        "endChar": 28
+      },
+      "revId": "0167e6368a4c4876cd1fdd44a31777553d2b724b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
