@@ -18,6 +18,7 @@
 #include "base/compiler_specific.h"
 #include "base/files/file_enumerator.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
 #include "base/sequenced_task_runner.h"
@@ -77,7 +78,21 @@ namespace history {
 const base::Feature kAvoidStrippingRefFromFaviconPageUrls{
     "AvoidStrippingRefFromFaviconPageUrls", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// TODO(crbug.com/759631): Clean this up after impact is measured via Finch.
+const base::Feature kPropagateFaviconsAcrossClientRedirects{
+    "PropagateFaviconsAcrossClientRedirects", base::FEATURE_ENABLED_BY_DEFAULT};
+
 namespace {
+
+// Submodes for the features kPropagateFaviconsAcrossClientRedirects.
+// Supported parameter values listed in enum FaviconPropagationMode.
+const char kPropagateFaviconsAcrossClientRedirectsModeParam[] = "mode";
+
+enum class FaviconPropagationMode {
+  AGGRESSIVE = 0,
+  MODERATE = 1,
+  DISABLED = 2,
+};
 
 void RunUnlessCanceled(
     const base::Closure& closure,
@@ -532,6 +547,11 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
         DCHECK_EQ(request.referrer, redirects[0]);
         redirects.erase(redirects.begin());
 
+        int mode = base::GetFieldTrialParamByFeatureAsInt(
+            kPropagateFaviconsAcrossClientRedirects,
+            kPropagateFaviconsAcrossClientRedirectsModeParam,
+            static_cast<int>(FaviconPropagationMode::AGGRESSIVE));
+
         // If the navigation entry for this visit has replaced that for the
         // first visit, remove the CHAIN_END marker from the first visit. This
         // can be called a lot, for example, the page cycler, and most of the
@@ -543,9 +563,16 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
           visit_row.transition = ui::PageTransitionFromInt(
               visit_row.transition & ~ui::PAGE_TRANSITION_CHAIN_END);
           db_->UpdateVisitRow(visit_row);
+          // Moderate client redirect favicon propagation.
+          if (mode == static_cast<int>(FaviconPropagationMode::MODERATE)) {
+            GetCachedRecentRedirects(request.referrer,
+                                     &extended_redirect_chain);
+          }
         }
 
-        GetCachedRecentRedirects(request.referrer, &extended_redirect_chain);
+        // Aggressive client redirect favicon propagation (default).
+        if (mode == static_cast<int>(FaviconPropagationMode::AGGRESSIVE))
+          GetCachedRecentRedirects(request.referrer, &extended_redirect_chain);
       }
     }
 
