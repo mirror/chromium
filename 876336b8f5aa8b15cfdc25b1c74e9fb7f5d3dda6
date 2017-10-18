@@ -22,6 +22,30 @@
       "revId": "876336b8f5aa8b15cfdc25b1c74e9fb7f5d3dda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3255c5fa_3493fe99",
+        "filename": "media/blink/webmediaplayer_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-18T22:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f361c12_62f46fc7",
+      "range": {
+        "startLine": 1012,
+        "startChar": 24,
+        "endLine": 1012,
+        "endChar": 26
+      },
+      "revId": "876336b8f5aa8b15cfdc25b1c74e9fb7f5d3dda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
