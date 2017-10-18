@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96dda4b2_cbb8f11d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-18T13:55:44Z",
+      "side": 1,
+      "message": "This CL also added some logic about using only autocomplete fields that are not-off.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "e71ce47510a9f37c54b6b3b2bd931842394676d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4084dd_4b7984d7",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-18T13:55:44Z",
+      "side": 1,
+      "message": "Is this comment still true? The current implementation might have changed.",
+      "range": {
+        "startLine": 891,
+        "startChar": 3,
+        "endLine": 891,
+        "endChar": 30
+      },
+      "revId": "e71ce47510a9f37c54b6b3b2bd931842394676d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b881fb2b_d165a086",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-18T13:55:44Z",
+      "side": 1,
+      "message": "Style guide https://engdoc.corp.google.com/eng/doc/devguide/js/styleguide.md?cl\u003dhead#features-for-loops said for-in loops should not be used to enumerate over an array.\n\nHow about:\n  for (var keyword of keywords) {\n    // You can now use title.includes(keyword) || path.includes(keyword)...\n  }\nwhich reads event better ?",
+      "range": {
+        "startLine": 946,
+        "startChar": 7,
+        "endLine": 946,
+        "endChar": 30
+      },
+      "revId": "e71ce47510a9f37c54b6b3b2bd931842394676d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06701471_17968fe1",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-18T13:55:44Z",
+      "side": 1,
+      "message": "Can also use:\n  for (var element of controlElements) {\n  }\nto enumerate elements of Array\u003c\u003e.",
+      "range": {
+        "startLine": 958,
+        "startChar": 2,
+        "endLine": 958,
+        "endChar": 62
+      },
+      "revId": "e71ce47510a9f37c54b6b3b2bd931842394676d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
