@@ -7,7 +7,6 @@
 
 #include <memory>
 #include <string>
-#include <vector>
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -18,6 +17,7 @@
 
 namespace net {
 
+class CertVerifyProc;
 class CertVerifyResult;
 class CRLSet;
 class NetLogWithSource;
@@ -180,6 +180,11 @@ class NET_EXPORT CertVerifier {
   // Creates a CertVerifier implementation that verifies certificates using
   // the preferred underlying cryptographic libraries.
   static std::unique_ptr<CertVerifier> CreateDefault();
+
+  // Creates a CertVerifier implementation that verifies certificates for a
+  // given CertVerifyProc.
+  static std::unique_ptr<CertVerifier> CreateForVerifier(
+      scoped_refptr<CertVerifyProc> proc);
 };
 
 }  // namespace net

@@ -177,28 +177,25 @@ base::FilePath GetSSLKeyLogFile(const base::CommandLine& command_line) {
 std::unique_ptr<net::HostResolver> CreateGlobalHostResolver(
     net::NetLog* net_log) {
   TRACE_EVENT0("startup", "IOThread::CreateGlobalHostResolver");
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
 
-  net::HostResolver::Options options;
-  std::unique_ptr<net::HostResolver> global_host_resolver;
-#if defined OS_CHROMEOS
-  global_host_resolver =
-      chromeos::HostResolverImplChromeOS::CreateSystemResolver(options,
-                                                               net_log);
+#if defined(OS_CHROMEOS)
+  using resolver = chromeos::HostResolverImplChromeOS;
 #else
-  global_host_resolver =
-      net::HostResolver::CreateSystemResolver(options, net_log);
+  using resolver = net::HostResolver;
 #endif
+  std::unique_ptr<net::HostResolver> global_host_resolver =
+      resolver::CreateSystemResolver(net::HostResolver::Options(), net_log);
 
   // If hostname remappings were specified on the command-line, layer these
   // rules on top of the real host resolver. This allows forwarding all requests
   // through a designated test server.
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
   if (!command_line.HasSwitch(switches::kHostResolverRules))
     return global_host_resolver;
 
-  std::unique_ptr<net::MappedHostResolver> remapped_resolver(
-      new net::MappedHostResolver(std::move(global_host_resolver)));
+  auto remapped_resolver = std::make_unique<net::MappedHostResolver>(
+      std::move(global_host_resolver));
   remapped_resolver->SetRulesFromString(
       command_line.GetSwitchValueASCII(switches::kHostResolverRules));
   return std::move(remapped_resolver);
@@ -777,9 +774,8 @@ void IOThread::ConstructSystemRequestContext() {
   std::unique_ptr<net::CertVerifier> cert_verifier;
 #if defined(OS_CHROMEOS)
   // Creates a CertVerifyProc that doesn't allow any profile-provided certs.
-  cert_verifier = base::MakeUnique<net::CachingCertVerifier>(
-      base::MakeUnique<net::MultiThreadedCertVerifier>(
-          new chromeos::CertVerifyProcChromeOS()));
+  cert_verifier = net::CertVerifier::CreateForVerifier(
+      base::MakeRefCounted<chromeos::CertVerifyProcChromeOS>());
 #else
   cert_verifier = net::CertVerifier::CreateDefault();
 #endif
