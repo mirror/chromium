@@ -54,6 +54,40 @@
     },
     {
       "key": {
+        "uuid": "a28d9aba_01896ee0",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentWriteIntervention.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-18T10:33:36Z",
+      "side": 1,
+      "message": "Is just returning ScriptOwner\u003cScriptResource\u003e enough?",
+      "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9e9e5c_8492dcd4",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-18T10:33:36Z",
+      "side": 1,
+      "message": "client_for_intervention is not strongly referenced by anyone, so it will be collected, right?",
+      "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0a9a7b2_4b28d393",
         "filename": "third_party/WebKit/Source/core/html/parser/PreloadRequest.cpp",
         "patchSetId": 5
