@@ -1,0 +1,6 @@
+{"traceEvents":[{"pid":1588,"tid":1588,"ts":1402501052774,"ph":"c","cat":"__metadata","name":"clock_sync","args":{"sync_id":"a19381e3-2ac0-417c-bbfa-02f4b3226dc4"},"tts":2158077},
+{"pid":1588,"tid":0,"ts":0,"ph":"M","cat":"__metadata","name":"num_cpus","args":{"number":48}},
+{"pid":1588,"tid":1677,"ts":0,"ph":"M","cat":"__metadata","name":"process_sort_index","args":{"sort_index":-6}},
+{"pid":1588,"tid":1677,"ts":0,"ph":"M","cat":"__metadata","name":"process_name","args":{"name":"Browser"}},
+{"pid":1588,"tid":1677,"ts":0,"ph":"M","cat":"__metadata","name":"process_uptime_seconds","args":{"uptime":5}},
+{"pid":1588,"tid":1588,"ts":0,"ph":"M","cat":"__metadata","name":"thread_name","args":{"name":"CrBrowserMain"}}]}
