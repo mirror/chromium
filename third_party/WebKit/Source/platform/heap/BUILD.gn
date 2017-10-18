@@ -68,6 +68,7 @@ source_set("heap") {
     "//base",
     "//third_party/WebKit/Source/platform:make_platform_generated",
     "//third_party/WebKit/Source/platform/heap/asm",
+    "//third_party/WebKit/public:mojo_bindings_blink",
     "//third_party/icu",
     "//v8",
   ]
