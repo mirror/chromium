@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c459edd0_29192f97",
+        "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-18T20:25:57Z",
+      "side": 1,
+      "message": "Who are the clients?  Can any untrusted process initiate one of these?",
+      "range": {
+        "startLine": 17,
+        "startChar": 22,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7f153a_c0920c69",
+        "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-18T20:25:57Z",
+      "side": 1,
+      "message": "who generates these IDs?  Are the guessable?  What happens if an untrusted client sends crafted values?",
+      "range": {
+        "startLine": 20,
+        "startChar": 27,
+        "endLine": 20,
+        "endChar": 36
+      },
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
