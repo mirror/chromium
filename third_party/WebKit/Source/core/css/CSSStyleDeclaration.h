@@ -36,8 +36,7 @@ class CSSValue;
 class ExceptionState;
 
 class CORE_EXPORT CSSStyleDeclaration
-    : public GarbageCollectedFinalized<CSSStyleDeclaration>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
   WTF_MAKE_NONCOPYABLE(CSSStyleDeclaration);
 
@@ -82,8 +81,6 @@ class CORE_EXPORT CSSStyleDeclaration
 
   virtual bool CssPropertyMatches(CSSPropertyID, const CSSValue*) const = 0;
   virtual CSSStyleSheet* ParentStyleSheet() const { return 0; }
-
-  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   CSSStyleDeclaration() {}

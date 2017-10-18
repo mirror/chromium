@@ -16,8 +16,7 @@ class ExecutionContext;
 class Report;
 
 class CORE_EXPORT ReportingObserver final
-    : public GarbageCollected<ReportingObserver>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

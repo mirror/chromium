@@ -16,8 +16,7 @@ class ScriptPromiseResolver;
 
 // Implementation of the MediaCapabilitiesInfo interface.
 class MediaCapabilitiesInfo final
-    : public GarbageCollectedFinalized<MediaCapabilitiesInfo>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -28,8 +27,6 @@ class MediaCapabilitiesInfo final
   bool supported() const;
   bool smooth() const;
   bool powerEfficient() const;
-
-  DECLARE_VIRTUAL_TRACE();
 
  private:
   MediaCapabilitiesInfo() = delete;

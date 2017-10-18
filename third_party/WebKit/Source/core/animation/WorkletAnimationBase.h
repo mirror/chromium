@@ -6,12 +6,12 @@
 #define WorkletAnimationBase_h
 
 #include "core/CoreExport.h"
-#include "platform/heap/GarbageCollected.h"
+#include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
 
 class CORE_EXPORT WorkletAnimationBase
-    : public GarbageCollectedFinalized<WorkletAnimationBase> {
+    : public ScriptWrappable {
  public:
   virtual ~WorkletAnimationBase() {}
 
@@ -22,8 +22,6 @@ class CORE_EXPORT WorkletAnimationBase
   // compositor later (e.g. if an incompatible property is removed from the
   // element), so the caller should try again next main frame.
   virtual bool StartOnCompositor() = 0;
-
-  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
 }  // namespace blink

@@ -23,8 +23,7 @@ class DOMPoint;
 class DOMPointInit;
 
 class CORE_EXPORT DOMMatrixReadOnly
-    : public GarbageCollectedFinalized<DOMMatrixReadOnly>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -105,8 +104,6 @@ class CORE_EXPORT DOMMatrixReadOnly
   ScriptValue toJSONForBinding(ScriptState*) const;
 
   const TransformationMatrix& Matrix() const { return *matrix_; }
-
-  DEFINE_INLINE_TRACE() {}
 
  protected:
   DOMMatrixReadOnly() {}
