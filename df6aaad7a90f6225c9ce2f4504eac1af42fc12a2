@@ -22,6 +22,30 @@
       "revId": "df6aaad7a90f6225c9ce2f4504eac1af42fc12a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a1b810_aeb17521",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-18T10:37:22Z",
+      "side": 1,
+      "message": "\u003e tabindex\u003d\"0\" means it\u0027ll be sorted into the natural order?\n\nExactly.\n\n\u003e I guess the alternative would be to make the things we want tabbable be \u003cbutton\u003es. But probably that\u0027ll mess up something else...\n\nI think we should do this also, but not in this CL :)\n\nI started looking into https://crbug.com/696272 a little because I touched the mv-* links below and this stuff is fresh in my head. Apparently, they respond to enter but not space, and I think that would be fixed by using \u003cbutton\u003e.",
+      "parentUuid": "b57c2b76_c7e09eca",
+      "range": {
+        "startLine": 52,
+        "startChar": 63,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "df6aaad7a90f6225c9ce2f4504eac1af42fc12a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
