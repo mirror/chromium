@@ -171,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "66b62c93_b396f044",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-18T10:23:44Z",
+      "side": 1,
+      "message": "Yes, it is, and it depends.\n\nThe question here is who actually wants to handle interfaces and callback interfaces in the same manner.  I don\u0027t come up with anything.  My gut feeling is that the code generator never needs to handle the mixture of interfaces and callback interfaces.  Then, mixing them doesn\u0027t make sense.",
+      "parentUuid": "2296c8a5_60452999",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82e88ec1_c0834219",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 16
@@ -498,6 +516,24 @@
     },
     {
       "key": {
+        "uuid": "7748d747_d15c70b9",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-18T10:23:44Z",
+      "side": 1,
+      "message": "Then, it\u0027s super confusing to define TypeReference here, between ObjectType and SequenceType, both of them are well-defined types.  The name |TypeReference| itself doesn\u0027t look so clear to me.\n\nWhat about |ToBeResolvedTypeIdentifier| for example?  And let\u0027s write the role of this class as the comment.",
+      "parentUuid": "147d5bf4_0dde11f2",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4409890e_6026057e",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
         "patchSetId": 16
@@ -615,6 +651,30 @@
       "side": 1,
       "message": "This is True when we write \"record\u003cK, V\u003e?\".",
       "parentUuid": "e6eb9b0c_af85893c",
+      "range": {
+        "startLine": 202,
+        "startChar": 45,
+        "endLine": 202,
+        "endChar": 53
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "524dfb95_846c7f10",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-18T10:23:44Z",
+      "side": 1,
+      "message": "Oops, my bad.  \"True if the type if nullable\" is correct as we\u0027re thinking of record\u003cK, V\u003e?.",
+      "parentUuid": "b536f086_067ce72c",
       "range": {
         "startLine": 202,
         "startChar": 45,
@@ -849,6 +909,24 @@
     },
     {
       "key": {
+        "uuid": "c43e105f_7efe3541",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-18T10:23:44Z",
+      "side": 1,
+      "message": "We need flattened member types when converting an ECMAScript value to an IDL value.\nhttps://heycam.github.io/webidl/#es-union\nThus, the code generator always needs flattened member types, I think.",
+      "parentUuid": "f60dc85e_822b65d6",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "297f7879_416441df",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/implements.py",
         "patchSetId": 16
@@ -1065,6 +1143,24 @@
       "side": 1,
       "message": "Except for test files, we have map-like serializers and an anonymous serializer (in PushSubscription.idl).\nAnd in test files for IDL compiler (not only for IDL parser), an operation-like serializer is defined.\n\nIf we decide to support serializer styles only in Chromium repository, we can remove more members.",
       "parentUuid": "8b6ff4f4_c297c7a3",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a909167_f2c18700",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-18T10:23:44Z",
+      "side": 1,
+      "message": "Given the production code doesn\u0027t use any named serializer, I think it\u0027s meaningless to support it.  I\u0027d vote to retire unnecessary things.",
+      "parentUuid": "cf9656cb_f938eac3",
       "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
