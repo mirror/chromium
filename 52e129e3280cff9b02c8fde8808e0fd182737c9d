@@ -16,6 +16,24 @@
       "revId": "52e129e3280cff9b02c8fde8808e0fd182737c9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14098fc0_07aad399",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_controller_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-18T15:30:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b869ad21_4dcbc361",
+      "revId": "52e129e3280cff9b02c8fde8808e0fd182737c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
