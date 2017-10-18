@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4d9582d0_c9ee4df9",
+        "filename": "content/network/network_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-18T18:57:59Z",
+      "side": 1,
+      "message": "Done.  I have no real preference between the two styles.",
+      "parentUuid": "10603bf0_0d1040ee",
+      "range": {
+        "startLine": 35,
+        "startChar": 10,
+        "endLine": 35,
+        "endChar": 16
+      },
+      "revId": "39af0243641753c19dad67e40ee56d52ee7460ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e30ee18b_880c9f56",
         "filename": "content/network/network_service_impl.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "39af0243641753c19dad67e40ee56d52ee7460ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7496b779_803a156e",
+        "filename": "content/network/network_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-18T18:57:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e30ee18b_880c9f56",
+      "range": {
+        "startLine": 36,
+        "startChar": 49,
+        "endLine": 36,
+        "endChar": 77
+      },
+      "revId": "39af0243641753c19dad67e40ee56d52ee7460ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
