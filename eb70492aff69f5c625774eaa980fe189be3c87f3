@@ -16,6 +16,23 @@
       "revId": "eb70492aff69f5c625774eaa980fe189be3c87f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25689dbe_48ed1d7b",
+        "filename": "gpu/ipc/gl_in_process_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T00:48:45Z",
+      "side": 1,
+      "message": "nit: or combine l.202-205 to just \u0027return result;\u0027",
+      "revId": "eb70492aff69f5c625774eaa980fe189be3c87f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

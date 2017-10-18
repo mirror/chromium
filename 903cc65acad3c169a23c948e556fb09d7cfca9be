@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "2ec21fbd_320e71e3",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T00:48:45Z",
+      "side": 1,
+      "message": "TBH I\u0027m not sure what happens to these GL errors if we get a lost context. This is good enough as a first pass.",
+      "parentUuid": "9138022b_5f650a41",
+      "revId": "903cc65acad3c169a23c948e556fb09d7cfca9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21276776_e749ffbb",
         "filename": "gpu/command_buffer/service/texture_manager.cc",
         "patchSetId": 6
@@ -98,6 +116,24 @@
       "writtenOn": "2017-10-17T23:44:43Z",
       "side": 1,
       "message": "If the gpu process went away, it\u0027s fatal, right?",
+      "revId": "903cc65acad3c169a23c948e556fb09d7cfca9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6446870_083924ae",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T00:48:45Z",
+      "side": 1,
+      "message": "This would be a channel loss, so it would be transient, we can try again (recreate a channel, come back here, hopefully succeeds?)",
+      "parentUuid": "916e7368_5ce16cc9",
       "revId": "903cc65acad3c169a23c948e556fb09d7cfca9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
