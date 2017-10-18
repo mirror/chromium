@@ -22,6 +22,30 @@
       "revId": "15fd9be736d67234b314add7d5abfd7fde89527b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa8efd5_dca2c0ea",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T18:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f1797ae_a3e415ee",
+      "range": {
+        "startLine": 176,
+        "startChar": 13,
+        "endLine": 176,
+        "endChar": 14
+      },
+      "revId": "15fd9be736d67234b314add7d5abfd7fde89527b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
