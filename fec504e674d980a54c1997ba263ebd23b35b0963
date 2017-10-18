@@ -117,6 +117,24 @@
       "revId": "fec504e674d980a54c1997ba263ebd23b35b0963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1083b6da_0ff5c450",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4630,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-18T00:17:52Z",
+      "side": 1,
+      "message": "The test bindings were being granted to WebUI in MojoBindingsController::DidCreateScriptContext().\n\nFiled a tracking issue as crbug.com/775760.",
+      "parentUuid": "d08f55c1_a370e9cb",
+      "revId": "fec504e674d980a54c1997ba263ebd23b35b0963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
