@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7f696ae8_803ff726",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-18T13:15:38Z",
+      "side": 1,
+      "message": "Were you signed in when you tried this?  That history entry may have come from tab sync, not from the history db.",
+      "parentUuid": "2a44318d_306658d3",
+      "revId": "fa660fe714de209696ce048269f56fd692b253ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6f61bd8_a0d48b43",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 1
