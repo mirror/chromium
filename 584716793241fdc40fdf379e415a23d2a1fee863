@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e0cfd0f_1aa1de4a",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-18T15:33:06Z",
+      "side": 1,
+      "message": "Any reason why this is not just one line:\nreturn g_browser_process-\u003eplatform_part()-\u003ebrowser_policy_connector_chromeos()-\u003eIsActiveDirectoryManaged();\n\nSeems like the way you have it, it\u0027s actually more unnecessary characters.",
+      "revId": "584716793241fdc40fdf379e415a23d2a1fee863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
