@@ -185,4 +185,12 @@ bool NGOffsetMappingResult::IsAfterNonCollapsedCharacter(
          unit->GetType() != NGOffsetMappingUnitType::kCollapsed;
 }
 
+UChar NGOffsetMappingResult::GetCharacterBefore(const Node& node,
+                                                unsigned offset) const {
+  const size_t text_content_offset = GetTextContentOffset(node, offset);
+  if (text_content_offset == kNotFound || !text_content_offset)
+    return 0;
+  return text_[text_content_offset - 1];
+}
+
 }  // namespace blink
