@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdc155f4_ddc1c517",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_owner.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-18T17:11:24Z",
+      "side": 1,
+      "message": "So I also introduced another protocol that does the same stuff with respect to transferring ownership of a view between objects (LogoAnimationControllerOwner).  In that interface, we just have a readwrite property; setting the property to nil means the ownership is relinquished, and setting it to non-nil means that the receiver takes ownership of the controller object again.  While it is nice that the current interface here is explicit in the ownership transfer paradigm, it might be better to copy the settable property pattern here.  One benefit of that would be that you could read the property without relinquishing the toolbar, meaning you can call |-triggerToolsMenuButtonAnimation| directly on the toolbar controller that is owned by the NTP.  This will require a bit of refactoring to implement, but I think the final state would be something pretty similar to what we expect to occur when the NTP toolbar is moved out of the NTP\u0027s scroll view.",
+      "revId": "a0080f29b0913c29530674a18c687a8cf2638dad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
