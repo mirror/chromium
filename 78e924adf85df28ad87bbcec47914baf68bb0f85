@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afe7dd5e_9d0c8307",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-18T18:36:51Z",
+      "side": 1,
+      "message": "This doesn\u0027t look promising. I don\u0027t think you can have kernel\u003dNone before a positional arg, either.",
+      "range": {
+        "startLine": 200,
+        "startChar": 60,
+        "endLine": 200,
+        "endChar": 61
+      },
+      "revId": "78e924adf85df28ad87bbcec47914baf68bb0f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
