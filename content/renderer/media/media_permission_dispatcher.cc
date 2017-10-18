@@ -85,7 +85,6 @@ void MediaPermissionDispatcher::HasPermission(
 
   GetPermissionService()->HasPermission(
       MediaPermissionTypeToPermissionDescriptor(type),
-      url::Origin(security_origin),
       base::BindOnce(&MediaPermissionDispatcher::OnPermissionStatus, weak_ptr_,
                      request_id));
 }
@@ -110,7 +109,6 @@ void MediaPermissionDispatcher::RequestPermission(
 
   GetPermissionService()->RequestPermission(
       MediaPermissionTypeToPermissionDescriptor(type),
-      url::Origin(security_origin),
       blink::WebUserGestureIndicator::IsProcessingUserGesture(),
       base::BindOnce(&MediaPermissionDispatcher::OnPermissionStatus, weak_ptr_,
                      request_id));

@@ -4,7 +4,11 @@
 
 #include "content/browser/worker_interface_binders.h"
 
+#include "base/bind.h"
+#include "content/browser/permissions/permission_service_context.h"
+#include "content/browser/renderer_host/render_process_host_impl.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "third_party/WebKit/public/platform/modules/permissions/permission.mojom.h"
 
 namespace content {
 namespace {
@@ -18,6 +22,9 @@ WorkerBinderRegistry& GetWorkerBinderRegistry() {
   CR_DEFINE_STATIC_LOCAL(WorkerBinderRegistry, registry, ());
   if (!initialized) {
     initialized = true;
+
+    registry.AddInterface(
+        base::Bind(&PermissionServiceContext::CreateServiceForWorker));
   }
   return registry;
 }

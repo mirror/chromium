@@ -157,7 +157,6 @@ ScriptPromise Permissions::query(ScriptState* script_state,
   PermissionDescriptorPtr descriptor_copy = descriptor->Clone();
   service->HasPermission(
       std::move(descriptor),
-      ExecutionContext::From(script_state)->GetSecurityOrigin(),
       ConvertToBaseCallback(WTF::Bind(
           &Permissions::TaskComplete, WrapPersistent(this),
           WrapPersistent(resolver), WTF::Passed(std::move(descriptor_copy)))));
@@ -189,7 +188,6 @@ ScriptPromise Permissions::request(ScriptState* script_state,
   PermissionDescriptorPtr descriptor_copy = descriptor->Clone();
   service->RequestPermission(
       std::move(descriptor),
-      ExecutionContext::From(script_state)->GetSecurityOrigin(),
       UserGestureIndicator::ProcessingUserGestureThreadSafe(),
       ConvertToBaseCallback(WTF::Bind(
           &Permissions::TaskComplete, WrapPersistent(this),
@@ -222,7 +220,6 @@ ScriptPromise Permissions::revoke(ScriptState* script_state,
   PermissionDescriptorPtr descriptor_copy = descriptor->Clone();
   service->RevokePermission(
       std::move(descriptor),
-      ExecutionContext::From(script_state)->GetSecurityOrigin(),
       ConvertToBaseCallback(WTF::Bind(
           &Permissions::TaskComplete, WrapPersistent(this),
           WrapPersistent(resolver), WTF::Passed(std::move(descriptor_copy)))));
@@ -280,7 +277,6 @@ ScriptPromise Permissions::requestAll(
 
   service->RequestPermissions(
       std::move(internal_permissions),
-      ExecutionContext::From(script_state)->GetSecurityOrigin(),
       UserGestureIndicator::ProcessingUserGestureThreadSafe(),
       ConvertToBaseCallback(
           WTF::Bind(&Permissions::BatchTaskComplete, WrapPersistent(this),
