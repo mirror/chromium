@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e3253fa_0afbfd9a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-18T17:56:52Z",
+      "side": 1,
+      "message": "Can there be a bug?",
+      "revId": "72dc9fe9c7dddfbc8585339b94a0aa9a61d5e31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491071f1_51ec1a5d",
+        "filename": "ui/views/accessibility/ax_window_obj_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-18T17:56:52Z",
+      "side": 1,
+      "message": "Who is going to be setting this flag?",
+      "revId": "72dc9fe9c7dddfbc8585339b94a0aa9a61d5e31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
