@@ -55,6 +55,23 @@
     },
     {
       "key": {
+        "uuid": "859f832b_008cffa1",
+        "filename": "third_party/content_shell_fonts/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-10-18T17:38:50Z",
+      "side": 1,
+      "message": "Make them data in the relevant target and or use data_deps. That\u0027s how you ensure they are mapped in when necessary. You can get more info with:\n\ngn help data\ngn help data_deps",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33b063c7_9d4a04d6",
         "filename": "third_party/content_shell_fonts/README.chromium",
         "patchSetId": 2
