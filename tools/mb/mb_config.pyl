@@ -571,7 +571,7 @@
       'closure_compilation': 'closure_compilation',
       'fuchsia': 'release_trybot_fuchsia',
       'fuchsia_arm64': 'release_trybot_fuchsia_arm64',
-      'fuchsia_compile': 'release_trybot_fuchsia',
+      'fuchsia_x64': 'release_trybot_fuchsia',
       # TODO(kjellander): Remove linux_arm after tryserver restart.
       'linux_arm': 'release_trybot_arm',
       'linux_arm_dbg': 'debug_trybot_arm',
