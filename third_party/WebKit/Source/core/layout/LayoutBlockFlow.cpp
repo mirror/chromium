@@ -4486,12 +4486,17 @@ void LayoutBlockFlow::PositionDialog() {
     return;
   }
 
-  LocalFrameView* frame_view = GetDocument().View();
-  LayoutUnit top = LayoutUnit((Style()->GetPosition() == EPosition::kFixed)
-                                  ? 0
-                                  : frame_view->ScrollOffsetInt().Height());
+  auto* scrollable_area = GetDocument().View()->LayoutViewportScrollableArea();
+  LayoutUnit top =
+      LayoutUnit((Style()->GetPosition() == EPosition::kFixed)
+                     ? 0
+                     : scrollable_area->ScrollOffsetInt().Height());
+  // This is called during layout and the scrollable area's height may not be
+  // set yet (when root layer scrolling is enabled, the scrollable area is not
+  // equal to the FrameView). The FrameView's visible content rect is available
+  // before layout and can be used.
   int visible_height =
-      frame_view->VisibleContentRect(kIncludeScrollbars).Height();
+      GetDocument().View()->VisibleContentRect(kIncludeScrollbars).Height();
   if (Size().Height() < visible_height)
     top += (visible_height - Size().Height()) / 2;
   SetY(top);
