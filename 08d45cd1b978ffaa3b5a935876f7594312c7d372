@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c0c1e7f_2b328135",
+        "filename": "ui/base/test/user_interactive_test_case.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-18T18:11:19Z",
+      "side": 0,
+      "message": "Trent, where we intending to use this anywhere else? I would be inclined to move it to the single test that actually uses it.",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "08d45cd1b978ffaa3b5a935876f7594312c7d372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
