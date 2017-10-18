@@ -34,6 +34,24 @@
       "revId": "e7ea5a63917498acab44ce7de846c3b6e5d1aafd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5097b8f_182bb9b4",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-18T18:27:06Z",
+      "side": 1,
+      "message": "Maybe smth like\ndouble primariesAreaTwice \u003d det(blablabla);\nif (primariesAreaTwice \u003c kBT709PrimariesArea)\n   ...",
+      "parentUuid": "de21e3cf_8c9b0771",
+      "revId": "e7ea5a63917498acab44ce7de846c3b6e5d1aafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
