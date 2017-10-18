@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73df6d20_d4cef167",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-18T18:17:33Z",
+      "side": 1,
+      "message": "Sure; Weidong, do you have a feature bug for the work on the new search box? Thanks!",
+      "parentUuid": "3e3253fa_0afbfd9a",
+      "revId": "72dc9fe9c7dddfbc8585339b94a0aa9a61d5e31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "491071f1_51ec1a5d",
         "filename": "ui/views/accessibility/ax_window_obj_wrapper.cc",
         "patchSetId": 3
