@@ -18,6 +18,8 @@
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
+#include "chrome/browser/chromeos/file_system_provider/service.h"
 #include "chrome/browser/chromeos/printing/cups_printers_manager.h"
 #include "chrome/browser/chromeos/printing/ppd_provider_factory.h"
 #include "chrome/browser/chromeos/printing/printer_configurer.h"
@@ -510,6 +512,17 @@ void CupsPrintersHandler::OnAutoconfQueried(const std::string& callback_id,
 
 void CupsPrintersHandler::HandleAddCupsPrinter(const base::ListValue* args) {
   AllowJavascript();
+  LOG(ERROR) << "******** Cups native code";
+
+  chromeos::file_system_provider::Service* const service =
+      chromeos::file_system_provider::Service::Get(Profile::FromBrowserContext(
+          web_ui()->GetWebContents()->GetBrowserContext()));
+  chromeos::file_system_provider::MountOptions mo;
+  mo.file_system_id = "foo";
+  mo.display_name = "display name";
+
+  const base::File::Error result = service->MountFileSystem("extension_id", mo);
+  LOG(ERROR) << "***** Mount result=" << result;
 
   const base::DictionaryValue* printer_dict = nullptr;
   CHECK(args->GetDictionary(0, &printer_dict));
