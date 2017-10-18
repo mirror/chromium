@@ -5,6 +5,7 @@
 #ifndef FeaturePolicy_h
 #define FeaturePolicy_h
 
+#include "common/feature_policy/feature_policy.h"
 #include "platform/PlatformExport.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/HashMap.h"
@@ -12,7 +13,6 @@
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/StringHash.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/platform/WebFeaturePolicy.h"
 
 #include <memory>
 

@@ -7,4 +7,5 @@ include_rules = [
     # Allowed only inside INSIDE_BLINK
     "+platform/heap",
     "+platform/wtf",
+    "+common/feature_policy",
 ]

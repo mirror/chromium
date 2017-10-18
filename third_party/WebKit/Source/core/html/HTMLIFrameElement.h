@@ -24,11 +24,11 @@
 #ifndef HTMLIFrameElement_h
 #define HTMLIFrameElement_h
 
+#include "common/feature_policy/feature_policy.h"
 #include "core/CoreExport.h"
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/html/HTMLIFrameElementSandbox.h"
 #include "platform/Supplementable.h"
-#include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebVector.h"
 
 namespace blink {

@@ -187,7 +187,7 @@ void Frame::UpdateUserActivationInFrameTree() {
 }
 
 bool Frame::IsFeatureEnabled(WebFeaturePolicyFeature feature) const {
-  WebFeaturePolicy* feature_policy = GetSecurityContext()->GetFeaturePolicy();
+  FeaturePolicy* feature_policy = GetSecurityContext()->GetFeaturePolicy();
   // The policy should always be initialized before checking it to ensure we
   // properly inherit the parent policy.
   DCHECK(feature_policy);

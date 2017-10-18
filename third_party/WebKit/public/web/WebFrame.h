@@ -34,9 +34,9 @@
 #include <memory>
 #include "WebIconURL.h"
 #include "WebNode.h"
+#include "common/feature_policy/feature_policy.h"
 #include "public/platform/WebCanvas.h"
 #include "public/platform/WebCommon.h"
-#include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/web/WebFrameLoadType.h"
 #include "public/web/WebTreeScopeType.h"

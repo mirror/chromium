@@ -2,26 +2,26 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/feature_policy/feature_policy.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy.h"
 
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
-namespace content {
+namespace blink {
 
 namespace {
 
-blink::WebFeaturePolicyFeature kDefaultOnFeature =
-    static_cast<blink::WebFeaturePolicyFeature>(
-        static_cast<int>(blink::WebFeaturePolicyFeature::LAST_FEATURE) + 1);
+WebFeaturePolicyFeature kDefaultOnFeature =
+    static_cast<WebFeaturePolicyFeature>(
+        static_cast<int>(WebFeaturePolicyFeature::LAST_FEATURE) + 1);
 
-blink::WebFeaturePolicyFeature kDefaultSelfFeature =
-    static_cast<blink::WebFeaturePolicyFeature>(
-        static_cast<int>(blink::WebFeaturePolicyFeature::LAST_FEATURE) + 2);
+WebFeaturePolicyFeature kDefaultSelfFeature =
+    static_cast<WebFeaturePolicyFeature>(
+        static_cast<int>(WebFeaturePolicyFeature::LAST_FEATURE) + 2);
 
-blink::WebFeaturePolicyFeature kDefaultOffFeature =
-    static_cast<blink::WebFeaturePolicyFeature>(
-        static_cast<int>(blink::WebFeaturePolicyFeature::LAST_FEATURE) + 3);
+WebFeaturePolicyFeature kDefaultOffFeature =
+    static_cast<WebFeaturePolicyFeature>(
+        static_cast<int>(WebFeaturePolicyFeature::LAST_FEATURE) + 3);
 
 }  // namespace
 
@@ -1004,4 +1004,4 @@ TEST_F(FeaturePolicyTest, TestCombineFrameAndHeaderPolicies) {
       policy4->IsFeatureEnabledForOrigin(kDefaultSelfFeature, origin_c_));
 }
 
-}  // namespace content
+}  // namespace blink
