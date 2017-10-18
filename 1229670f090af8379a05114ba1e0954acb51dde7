@@ -16,6 +16,24 @@
       "revId": "1229670f090af8379a05114ba1e0954acb51dde7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0349c8ac_edc24ba7",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-10-18T12:56:48Z",
+      "side": 0,
+      "message": "Ohhh, okay - I finally understand what your original comment meant. Done.",
+      "parentUuid": "b6b1b8e7_78f0d932",
+      "revId": "1229670f090af8379a05114ba1e0954acb51dde7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
