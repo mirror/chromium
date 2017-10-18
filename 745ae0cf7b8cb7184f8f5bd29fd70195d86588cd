@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03622e64_76687868",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1437,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-10-18T18:44:21Z",
+      "side": 1,
+      "message": "I don\u0027t think this is how we want to approach this. I would rather we disable them explicitly on the ANGLE try waterfall rather than listing every bot here. Is there a way in this file to know if we\u0027re on the angle master rather than GPU.FYI?",
+      "range": {
+        "startLine": 1437,
+        "startChar": 11,
+        "endLine": 1437,
+        "endChar": 34
+      },
+      "revId": "745ae0cf7b8cb7184f8f5bd29fd70195d86588cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
