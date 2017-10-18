@@ -1343,8 +1343,10 @@ void QuicStreamFactory::MaybeMigrateOrCloseSessions(
       continue;
     }
 
-    MigrateSessionToNewNetwork(session, new_network,
-                               /*close_session_on_error=*/true, net_log);
+    session->Migrate(
+        new_network,
+        session->connection()->peer_address().impl().socket_address(),
+        /*close_session_on_error=*/true, net_log);
   }
 }
 
@@ -1360,8 +1362,9 @@ MigrationResult QuicStreamFactory::MaybeMigrateSingleSessionOnWriteError(
       NetLogEventType::QUIC_CONNECTION_MIGRATION_TRIGGERED,
       base::Bind(&NetLogQuicConnectionMigrationTriggerCallback, "WriteError"));
 
-  MigrationResult result =
-      MaybeMigrateSingleSession(session, false, migration_net_log);
+  MigrationResult result = session->MigrateToAlternateNetwork(
+      /*close_session_on_error*/ false, /*mark_session_going_away*/ true,
+      migration_net_log);
   migration_net_log.EndEvent(
       NetLogEventType::QUIC_CONNECTION_MIGRATION_TRIGGERED);
   return result;
@@ -1381,7 +1384,9 @@ MigrationResult QuicStreamFactory::MaybeMigrateSingleSessionOnPathDegrading(
 
   MigrationResult result = MigrationResult::FAILURE;
   if (migrate_sessions_early_) {
-    result = MaybeMigrateSingleSession(session, true, migration_net_log);
+    result = session->MigrateToAlternateNetwork(
+        /*close_session_on_error*/ true, /*mark_session_going_away*/ true,
+        migration_net_log);
   } else {
     HistogramAndLogMigrationFailure(
         migration_net_log, MIGRATION_STATUS_DISABLED, session->connection_id(),
@@ -1390,32 +1395,6 @@ MigrationResult QuicStreamFactory::MaybeMigrateSingleSessionOnPathDegrading(
   migration_net_log.EndEvent(
       NetLogEventType::QUIC_CONNECTION_MIGRATION_TRIGGERED);
   return result;
-}
-
-MigrationResult QuicStreamFactory::MaybeMigrateSingleSession(
-    QuicChromiumClientSession* session,
-    bool close_session_on_error,
-    const NetLogWithSource& net_log) {
-  if (!migrate_sessions_on_network_change_ ||
-      session->HasNonMigratableStreams() ||
-      session->config()->DisableConnectionMigration()) {
-    HistogramAndLogMigrationFailure(net_log, MIGRATION_STATUS_DISABLED,
-                                    session->connection_id(),
-                                    "Migration disabled");
-    return MigrationResult::FAILURE;
-  }
-  NetworkHandle new_network =
-      FindAlternateNetwork(session->GetDefaultSocket()->GetBoundNetwork());
-  if (new_network == NetworkChangeNotifier::kInvalidNetworkHandle) {
-    // No alternate network found.
-    HistogramAndLogMigrationFailure(
-        net_log, MIGRATION_STATUS_NO_ALTERNATE_NETWORK,
-        session->connection_id(), "No alternate network found");
-    return MigrationResult::NO_NEW_NETWORK;
-  }
-  OnSessionGoingAway(session);
-  return MigrateSessionToNewNetwork(session, new_network,
-                                    close_session_on_error, net_log);
 }
 
 void QuicStreamFactory::MigrateSessionToNewPeerAddress(
@@ -1433,16 +1412,6 @@ void QuicStreamFactory::MigrateSessionToNewPeerAddress(
   // causes the session to use the default network for the new socket.
   session->Migrate(NetworkChangeNotifier::kInvalidNetworkHandle, peer_address,
                    /*close_session_on_error*/ true, net_log);
-}
-
-MigrationResult QuicStreamFactory::MigrateSessionToNewNetwork(
-    QuicChromiumClientSession* session,
-    NetworkHandle network,
-    bool close_session_on_error,
-    const NetLogWithSource& net_log) {
-  return session->Migrate(
-      network, session->connection()->peer_address().impl().socket_address(),
-      close_session_on_error, net_log);
 }
 
 std::unique_ptr<DatagramClientSocket> QuicStreamFactory::CreateSocket(
@@ -1621,8 +1590,9 @@ int QuicStreamFactory::CreateSession(const QuicSessionKey& key,
   *session = new QuicChromiumClientSession(
       connection, std::move(socket), this, quic_crypto_client_stream_factory_,
       clock_, transport_security_state_, std::move(server_info), server_id,
-      require_confirmation, yield_after_packets_, yield_after_duration_,
-      cert_verify_flags, config, &crypto_config_,
+      require_confirmation, migrate_sessions_early_,
+      migrate_sessions_on_network_change_, yield_after_packets_,
+      yield_after_duration_, cert_verify_flags, config, &crypto_config_,
       network_connection_.connection_description(), dns_resolution_start_time,
       dns_resolution_end_time, &push_promise_index_, push_delegate_,
       task_runner_, std::move(socket_performance_watcher), net_log.net_log());

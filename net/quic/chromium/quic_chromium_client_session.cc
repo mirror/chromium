@@ -638,6 +638,8 @@ QuicChromiumClientSession::QuicChromiumClientSession(
     std::unique_ptr<QuicServerInfo> server_info,
     const QuicServerId& server_id,
     bool require_confirmation,
+    bool migrate_session_early,
+    bool migrate_sessions_on_network_change,
     int yield_after_packets,
     QuicTime::Delta yield_after_duration,
     int cert_verify_flags,
@@ -654,6 +656,8 @@ QuicChromiumClientSession::QuicChromiumClientSession(
     : QuicSpdyClientSessionBase(connection, push_promise_index, config),
       server_id_(server_id),
       require_confirmation_(require_confirmation),
+      migrate_session_early_(migrate_session_early),
+      migrate_session_on_network_change_(migrate_sessions_on_network_change),
       clock_(clock),
       yield_after_packets_(yield_after_packets),
       yield_after_duration_(yield_after_duration),
@@ -1548,8 +1552,8 @@ void QuicChromiumClientSession::OnNetworkConnected(
   // and that it's always called at the same time in the whole
   // migration process. Allows tests to be more uniform.
   stream_factory_->OnSessionGoingAway(this);
-  stream_factory_->MigrateSessionToNewNetwork(
-      this, network, /*close_session_on_error=*/true, net_log);
+  Migrate(network, connection()->peer_address().impl().socket_address(),
+          /*close_session_on_error=*/true, net_log);
 }
 
 void QuicChromiumClientSession::OnWriteError(int error_code) {
@@ -1776,6 +1780,37 @@ void QuicChromiumClientSession::NotifyFactoryOfSessionClosed() {
   // Will delete |this|.
   if (stream_factory_)
     stream_factory_->OnSessionClosed(this);
+}
+
+MigrationResult QuicChromiumClientSession::MigrateToAlternateNetwork(
+    bool close_session_on_error,
+    bool mark_session_going_away,
+    const NetLogWithSource& migration_net_log) {
+  if (!migrate_session_on_network_change_ || HasNonMigratableStreams() ||
+      config()->DisableConnectionMigration()) {
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_DISABLED, connection_id(),
+                                    "Migration disabled");
+    return MigrationResult::FAILURE;
+  }
+
+  DCHECK(stream_factory_);
+  NetworkChangeNotifier::NetworkHandle new_network =
+      stream_factory_->FindAlternateNetwork(
+          GetDefaultSocket()->GetBoundNetwork());
+
+  if (new_network == NetworkChangeNotifier::kInvalidNetworkHandle) {
+    // No alternate network found.
+    HistogramAndLogMigrationFailure(
+        migration_net_log, MIGRATION_STATUS_NO_ALTERNATE_NETWORK,
+        connection_id(), "No alternate network found");
+    return MigrationResult::NO_NEW_NETWORK;
+  }
+  if (mark_session_going_away)
+    stream_factory_->OnSessionGoingAway(this);
+  return Migrate(new_network,
+                 connection()->peer_address().impl().socket_address(),
+                 close_session_on_error, migration_net_log);
 }
 
 MigrationResult QuicChromiumClientSession::Migrate(
