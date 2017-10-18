@@ -332,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "fdbe3ee6_28f65c10",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T09:15:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b2944757_ee8dff18",
+      "range": {
+        "startLine": 897,
+        "startChar": 28,
+        "endLine": 897,
+        "endChar": 76
+      },
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc1212e1_e5dec819",
         "filename": "content/common/service_worker/service_worker_messages.h",
         "patchSetId": 2
