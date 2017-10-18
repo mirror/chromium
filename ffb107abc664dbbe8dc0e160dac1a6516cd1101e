@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcb681a8_30087f4a",
+        "filename": "tools/perf/contrib/cros_benchmarks/tab_switching_bench.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113294
+      },
+      "writtenOn": "2017-10-18T05:04:43Z",
+      "side": 1,
+      "message": "Is the new option called --switch-delay or --halftime? Personally I think halftime is not a good name, as there should be only one halftime throughout the whole duration but the delay is introduced every time before tabs are added, right? Actually switch-delay is a better name to me.",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 18
+      },
+      "revId": "ffb107abc664dbbe8dc0e160dac1a6516cd1101e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
