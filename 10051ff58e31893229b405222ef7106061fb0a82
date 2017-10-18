@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "76860b90_d781d958",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T22:37:48Z",
+      "side": 1,
+      "message": "Nit: use mojo.common.mojom.TimeDelta here please.",
+      "revId": "10051ff58e31893229b405222ef7106061fb0a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f4b5ca1_64435adf",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
         "patchSetId": 3
@@ -19,6 +36,23 @@
         "endLine": 78,
         "endChar": 14
       },
+      "revId": "10051ff58e31893229b405222ef7106061fb0a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da9e251_560a30d6",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T22:37:48Z",
+      "side": 1,
+      "message": "Just wondering: GRC actually require this to be the real PID? My understanding is we currently leaking the child PID to child processes, and we do want to fix this at some point down the road.",
       "revId": "10051ff58e31893229b405222ef7106061fb0a82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
