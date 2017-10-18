@@ -89,7 +89,7 @@ class ImageBitmapTest : public ::testing::Test {
 };
 
 TEST_F(ImageBitmapTest, ImageResourceConsistency) {
-  ScopedColorCanvasExtensionsForTest color_canvas_extensions(true);
+  ScopedExperimentalCanvasFeaturesForTest experimental_canvas_features(true);
   const ImageBitmapOptions default_options;
   HTMLImageElement* image_element =
       HTMLImageElement::Create(*Document::CreateForTest());
@@ -158,7 +158,7 @@ TEST_F(ImageBitmapTest, ImageResourceConsistency) {
 // Verifies that ImageBitmaps constructed from HTMLImageElements hold a
 // reference to the original Image if the HTMLImageElement src is changed.
 TEST_F(ImageBitmapTest, ImageBitmapSourceChanged) {
-  ScopedColorCanvasExtensionsForTest color_canvas_extensions(true);
+  ScopedExperimentalCanvasFeaturesForTest experimental_canvas_features(true);
   HTMLImageElement* image =
       HTMLImageElement::Create(*Document::CreateForTest());
   sk_sp<SkColorSpace> src_rgb_color_space = SkColorSpace::MakeSRGB();
@@ -249,7 +249,6 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
 
   // Set the runtime flags
   RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
 
   return options;
 }
