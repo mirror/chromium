@@ -12,7 +12,11 @@
 #include "modules/vr/latest/VRDevice.h"
 #include "modules/vr/latest/VRFrameOfReference.h"
 #include "modules/vr/latest/VRFrameOfReferenceOptions.h"
+#include "modules/vr/latest/VRFrameProvider.h"
+#include "modules/vr/latest/VRFrameRequestCallback.h"
+#include "modules/vr/latest/VRPresentationFrame.h"
 #include "modules/vr/latest/VRSessionEvent.h"
+#include "platform/wtf/AutoReset.h"
 
 namespace blink {
 
@@ -28,7 +32,11 @@ const char kNonEmulatedStageNotSupported[] =
 }  // namespace
 
 VRSession::VRSession(VRDevice* device, bool exclusive)
-    : device_(device), exclusive_(exclusive) {}
+    : device_(device),
+      exclusive_(exclusive),
+      callback_collection_(device->GetExecutionContext()) {
+  presentation_frame_ = new VRPresentationFrame(this);
+}
 
 void VRSession::setDepthNear(double value) {
   depth_near_ = value;
@@ -87,6 +95,24 @@ ScriptPromise VRSession::requestFrameOfReference(
   return promise;
 }
 
+int VRSession::requestFrame(VRFrameRequestCallback* callback) {
+  // Don't allow any new frame requests once the session is ended.
+  if (detached_)
+    return 0;
+
+  int id = callback_collection_.RegisterCallback(callback);
+  if (!pending_frame_) {
+    // Kick off a request for a new VR frame.
+    device_->frameProvider()->RequestFrame(this);
+    pending_frame_ = true;
+  }
+  return id;
+}
+
+void VRSession::cancelFrame(int id) {
+  callback_collection_.CancelCallback(id);
+}
+
 ScriptPromise VRSession::end(ScriptState* script_state) {
   // Don't allow a session to end twice.
   if (detached_) {
@@ -94,13 +120,13 @@ ScriptPromise VRSession::end(ScriptState* script_state) {
         script_state, DOMException::Create(kInvalidStateError, kSessionEnded));
   }
 
+  ForceEnd();
+
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
 
   // TODO(bajones): If there's any work that needs to be done asynchronously on
   // session end it should be completed before this promise is resolved.
-
-  ForceEnd();
 
   resolver->Resolve();
   return promise;
@@ -109,6 +135,12 @@ ScriptPromise VRSession::end(ScriptState* script_state) {
 void VRSession::ForceEnd() {
   // Detach this session from the device.
   detached_ = true;
+
+  // If this session is the active exclusive session for the device, notify the
+  // frameProvider that it's ended.
+  if (device_->frameProvider()->exclusive_session() == this) {
+    device_->frameProvider()->OnExclusiveSessionEnded();
+  }
 
   DispatchEvent(VRSessionEvent::Create(EventTypeNames::end, this));
 }
@@ -129,8 +161,30 @@ void VRSession::OnBlur() {
   DispatchEvent(VRSessionEvent::Create(EventTypeNames::blur, this));
 }
 
+void VRSession::OnFrame(
+    std::unique_ptr<TransformationMatrix> base_pose_matrix) {
+  DVLOG(2) << __FUNCTION__;
+  // Don't process any outstanding frames once the session is ended.
+  if (detached_)
+    return;
+
+  presentation_frame_->UpdateBasePose(std::move(base_pose_matrix));
+
+  if (pending_frame_) {
+    pending_frame_ = false;
+
+    // Resolve the queued requestFrame callbacks. All VR rendering will happen
+    // within these calls. resolving_frame_ will be true for the duration of the
+    // callbacks.
+    AutoReset<bool> resolving(&resolving_frame_, true);
+    callback_collection_.ExecuteCallbacks(presentation_frame_);
+  }
+}
+
 DEFINE_TRACE(VRSession) {
   visitor->Trace(device_);
+  visitor->Trace(presentation_frame_);
+  visitor->Trace(callback_collection_);
   EventTargetWithInlineData::Trace(visitor);
 }
 
