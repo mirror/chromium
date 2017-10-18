@@ -16,6 +16,24 @@
       "revId": "5085a56eec9cbd52b8aea80821aa55202dcb16c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ca673e_f6bd6443",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 25912,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-10-18T15:01:38Z",
+      "side": 1,
+      "message": "This is now the default mode, replacing mode #2.",
+      "parentUuid": "41accdf2_ed45671c",
+      "revId": "5085a56eec9cbd52b8aea80821aa55202dcb16c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
