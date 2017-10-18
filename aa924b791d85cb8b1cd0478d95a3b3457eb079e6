@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "184ed2e9_696e62c7",
+        "filename": "ash/host/ash_window_tree_host_unified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-18T19:09:30Z",
+      "side": 1,
+      "message": "sky@, I spent sometime debugging. The difference after my CL is that we\u0027re no longer using the default ash test base EventGenerator [https://cs.chromium.org/chromium/src/ash/test/ash_test_base.cc?q\u003dGetEventGenera\u0026sq\u003dpackage:chromium\u0026l\u003d201]. This event generator has a delegate that will always return the host of unified display rather than the target mirroring display host [https://cs.chromium.org/chromium/src/ash/test/ash_test_base.cc?type\u003dcs\u0026q\u003dAshEventGeneratorDelegate\u0026l\u003d71]. That\u0027s not what we want. We want to dispatch the event to the mirroring display host, so instead we create our own event generator here [https://chromium-review.googlesource.com/c/chromium/src/+/683094/7/ash/display/unified_mouse_warp_controller_unittest.cc#68] using the window of the mirroring host.\n\nNow the reason why this works in classic ash, but not MUS is that in classic ash we have the AshWindowTreeHostUnified which sets the event targeter for the mirroring host when it registers it [https://cs.chromium.org/chromium/src/ash/host/ash_window_tree_host_unified.cc?type\u003dcs\u0026q\u003dAshWindowTreeHostUnified::RegisterMirroringHost\u0026l\u003d72].\n\nwhereas with AshWindowTreeHostMus, it does nothing [https://cs.chromium.org/chromium/src/ash/mus/ash_window_tree_host_mus.cc?type\u003dcs\u0026q\u003dAshWindowTreeHostMus::RegisterMirroringHost\u0026l\u003d66].\n\nWhen I copied the exact same event targeter code to AshWindowTreeHostMus, all tests pass.\n\nIt used to work before just by coincidence, since we only supported mouse warping between 2 displays only, and we didn\u0027t depend on the knowledge of which mirroring host the event is dispatched to. But now, we do [https://chromium-review.googlesource.com/c/chromium/src/+/683094/7/ash/display/unified_mouse_warp_controller.cc#71]. Otherwise, with a complicated display matrix such as the one which is being tested by the test  UnifiedMouseWarpControllerTest.BoundaryTestGrid  in this file (which looks like this https://screenshot.googleplex.com/SDB8wKqdz3E.png), trying to detect which host it is by point_in_unified_host [https://chromium-review.googlesource.com/c/chromium/src/+/683094/7/ash/display/unified_mouse_warp_controller.cc#b101] will often return the wrong host due to rounding errors when converting from native points to screen points and back.\n\nHope this explains the reasons.",
+      "parentUuid": "2f16fc0e_b36abc34",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 37
+      },
+      "revId": "aa924b791d85cb8b1cd0478d95a3b3457eb079e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd63125c_ca798b99",
         "filename": "testing/buildbot/filters/ash_unittests_mus.filter",
         "patchSetId": 7
