@@ -12971,8 +12971,10 @@ TEST_F(LayerTreeHostImplTest, CheckerImagingTileInvalidation) {
     else
       EXPECT_FALSE(tile->HasRasterTask());
   }
-  Region expected_invalidation(
-      raster_source->GetRectForImage(checkerable_image.stable_id()));
+  Region expected_invalidation =
+      raster_source->GetDisplayItemList()
+          ->discardable_image_map()
+          .GetRegionForImage(checkerable_image.stable_id());
   EXPECT_EQ(expected_invalidation, *(root->GetPendingInvalidation()));
 }
 
