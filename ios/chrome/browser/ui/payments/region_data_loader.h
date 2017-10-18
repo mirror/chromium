@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "components/autofill/core/browser/region_combobox_model.h"
+#include "ios/chrome/browser/ui/payments/payment_request_edit_consumer.h"
 #include "ui/base/models/combobox_model_observer.h"
 
 namespace autofill {
@@ -19,12 +20,24 @@ namespace ui {
 class ComboboxModel;
 }  // namespace ui
 
+@interface RegionData : NSObject<EditorFieldOption>
+
+@property(nonatomic, strong, readonly) NSString* regionCode;
+@property(nonatomic, strong, readonly) NSString* regionName;
+
+- (instancetype)initWithRegionCode:(NSString*)regionCode
+                        regionName:(NSString*)regionName
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
+
+@end
+
 @protocol RegionDataLoaderConsumer
 
 // To be called with a map of region codes to region names when region data for
 // the given country code is loaded asynchronously.
-- (void)regionDataLoaderDidSucceedWithRegions:
-    (NSDictionary<NSString*, NSString*>*)regions;
+- (void)regionDataLoaderDidSucceedWithRegions:(NSArray<RegionData*>*)regions;
 
 @end
 
