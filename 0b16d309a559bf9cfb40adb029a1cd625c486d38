@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34528962_5e3dbcba",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-18T15:44:40Z",
+      "side": 1,
+      "message": "This should probably go in an else block in line 158, we don\u0027t want to copy fragments if we\u0027re going to paint them.",
+      "revId": "0b16d309a559bf9cfb40adb029a1cd625c486d38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
