@@ -227,22 +227,30 @@ void SurfaceAggregator::HandleSurfaceQuad(
     return;
   }
 
-  const CompositorFrame& fallback_frame = fallback_surface->GetActiveFrame();
+  if (!surface_quad->stretch_content_to_fill_bounds) {
+    const CompositorFrame& fallback_frame = fallback_surface->GetActiveFrame();
 
-  gfx::Rect fallback_rect(fallback_surface->GetActiveFrame().size_in_pixels());
-  fallback_rect = gfx::IntersectRects(fallback_rect, surface_quad->rect);
+    gfx::Rect fallback_rect(
+        fallback_surface->GetActiveFrame().size_in_pixels());
 
-  EmitGutterQuadsIfNecessary(
-      surface_quad->rect, fallback_rect, surface_quad->shared_quad_state,
-      target_transform, clip_rect,
-      fallback_frame.metadata.root_background_color, dest_pass);
+    float scale_ratio =
+        parent_device_scale_factor / fallback_frame.device_scale_factor();
+    fallback_rect =
+        gfx::ScaleToEnclosingRect(fallback_rect, scale_ratio, scale_ratio);
+    fallback_rect = gfx::IntersectRects(fallback_rect, surface_quad->rect);
+
+    EmitGutterQuadsIfNecessary(
+        surface_quad->rect, fallback_rect, surface_quad->shared_quad_state,
+        target_transform, clip_rect,
+        fallback_frame.metadata.root_background_color, dest_pass);
+  }
 
   // TODO(fsamuel): We might not be able to use the primary SurfaceDrawQuad's
   // SharedQuadState if we need to scale the fallback differently. This may be
   // the case if the device scale factor differs between the primary and
   // fallback or we need to stretch the content to fill the bounds of the quad.
   EmitSurfaceContent(fallback_surface, parent_device_scale_factor,
-                     surface_quad->shared_quad_state, fallback_rect,
+                     surface_quad->shared_quad_state, surface_quad->rect,
                      surface_quad->visible_rect,
                      surface_quad->shared_quad_state->quad_to_target_transform,
                      target_transform, clip_rect,
@@ -294,8 +302,8 @@ void SurfaceAggregator::EmitSurfaceContent(
         parent_device_scale_factor;
   }
 
-  scaled_rect = gfx::ScaleToEnclosingRect(
-      source_rect, layer_to_content_scale_x, layer_to_content_scale_y);
+  scaled_rect = gfx::ScaleToEnclosingRect(source_rect, layer_to_content_scale_x,
+                                          layer_to_content_scale_y);
   scaled_visible_rect = gfx::ScaleToEnclosingRect(
       source_visible_rect, layer_to_content_scale_x, layer_to_content_scale_y);
   // scaled_visible_rect = gfx::IntersectRects(rect, scaled_visible_rect);
@@ -457,9 +465,9 @@ void SurfaceAggregator::EmitSurfaceContent(
         source_sqs->blend_mode, source_sqs->sorting_context_id);
 
     auto* quad = dest_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
-    quad->SetNew(shared_quad_state, scaled_rect, scaled_visible_rect, remapped_pass_id,
-                 0, gfx::RectF(), gfx::Size(), gfx::Vector2dF(), gfx::PointF(),
-                 gfx::RectF(scaled_rect),
+    quad->SetNew(shared_quad_state, scaled_rect, scaled_visible_rect,
+                 remapped_pass_id, 0, gfx::RectF(), gfx::Size(),
+                 gfx::Vector2dF(), gfx::PointF(), gfx::RectF(scaled_rect),
                  /*force_anti_aliasing_off=*/false);
   }
 
