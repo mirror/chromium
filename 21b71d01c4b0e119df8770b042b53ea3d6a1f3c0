@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "8c7b4727_cccfc040",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-10-18T19:27:37Z",
+      "side": 1,
+      "message": "It would certainly be nice to have scroll bubbling where events are sent directly to the bubbling target as you mention. But this would involve a larger redesign.\n\nNotably, classes like the MouseWheelEventQueue create gesture scroll events that are forwarded directly to their associated host without going through the RWHIER. I also imagine there could be issues with event ordering.\n\nOne thing we could do here to simplify things is to not make guests a special case. So replace |bubbled_scroll_sequence_consumable_by_child_| with |currently_bubbling_scroll_| that is also true for the OOPIF case. \n\nThat way even though we still get gesture scroll events through RenderWidgetHostViewChildFrame when we\u0027re bubbling, they are immediately acked and bubbled without going to the renderer. For guests, this is necessary for correctness, but we could also do it for OOPIFs where it would be an optimization and make the logic more general.\n\nWhat do you think?",
+      "parentUuid": "4ca19f64_baa97b40",
+      "revId": "21b71d01c4b0e119df8770b042b53ea3d6a1f3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa98f0a4_6dfdb7c1",
         "filename": "content/public/browser/render_widget_host.h",
         "patchSetId": 3
@@ -76,6 +94,30 @@
       "writtenOn": "2017-10-18T17:32:19Z",
       "side": 1,
       "message": "Is this only used for testing?\n\nAnd would it be simpler to just pass the InputEventAckState, rather than having all the callers compare the ack state to see if the boolean should be set?",
+      "range": {
+        "startLine": 227,
+        "startChar": 67,
+        "endLine": 227,
+        "endChar": 75
+      },
+      "revId": "21b71d01c4b0e119df8770b042b53ea3d6a1f3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1960b66_b6bc1164",
+        "filename": "content/public/browser/render_widget_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-10-18T19:27:37Z",
+      "side": 1,
+      "message": "InputEventObserver itself is not test only, though I need the consumption for the test.\n\nInputEventAckState is defined in content/common/, but InputEventObserver is in content/public/. There are several uses of InputEventObserver in chrome/.",
+      "parentUuid": "fa98f0a4_6dfdb7c1",
       "range": {
         "startLine": 227,
         "startChar": 67,
