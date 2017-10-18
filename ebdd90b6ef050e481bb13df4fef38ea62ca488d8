@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c10392e_f1fe0d58",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-18T22:12:25Z",
+      "side": 1,
+      "message": "can\u0027t you remove the:\n\"  for (NGOutOfFlowPositionedDescendant descendant :\n       result-\u003eOutOfFlowPositionedDescendants())\n    descendant.node.UseOldOutOfFlowPositioning();\"\n if this becomes true?",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 182,
+        "endChar": 16
+      },
+      "revId": "ebdd90b6ef050e481bb13df4fef38ea62ca488d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acbb262b_8811f0ce",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-18T22:12:25Z",
+      "side": 1,
+      "message": ".nit make same order as header file.",
+      "revId": "ebdd90b6ef050e481bb13df4fef38ea62ca488d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc2d7e7_5f658301",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-18T22:12:25Z",
+      "side": 1,
+      "message": "DCHECK(cached_result_) ?",
+      "range": {
+        "startLine": 306,
+        "startChar": 9,
+        "endLine": 306,
+        "endChar": 23
+      },
+      "revId": "ebdd90b6ef050e481bb13df4fef38ea62ca488d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87643bce_0b7f662b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-18T22:12:25Z",
+      "side": 1,
+      "message": "typically for bools we also add the param name as an inline comment, e.g.\n\nblock-\u003eLayoutPositionedObjects(/* something */ false);",
+      "range": {
+        "startLine": 331,
+        "startChar": 35,
+        "endLine": 331,
+        "endChar": 40
+      },
+      "revId": "ebdd90b6ef050e481bb13df4fef38ea62ca488d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a98ed0ee_d1281961",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-18T22:12:25Z",
+      "side": 1,
+      "message": "why the change for the bool?",
+      "range": {
+        "startLine": 331,
+        "startChar": 11,
+        "endLine": 331,
+        "endChar": 34
+      },
+      "revId": "ebdd90b6ef050e481bb13df4fef38ea62ca488d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eedc934b_e558322a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-18T22:12:25Z",
+      "side": 1,
+      "message": "can you add a comment here what update_legacy does?",
+      "revId": "ebdd90b6ef050e481bb13df4fef38ea62ca488d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
