@@ -16,6 +16,24 @@
       "revId": "db4802cd7a7c179ed6d54ff0e33bc6b01b6fd5d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e554197_d689283f",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T20:28:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43418cf7_b652553a",
+      "revId": "db4802cd7a7c179ed6d54ff0e33bc6b01b6fd5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

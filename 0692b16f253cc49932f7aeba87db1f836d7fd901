@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "099ef76c_8e0a8de1",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T20:28:41Z",
+      "side": 1,
+      "message": "Hmm, so I briefly investigated this. To match existing style conventions, we\u0027d have to move this to Tools/Scripts/check-non-blink-usage. However, the resulting module won\u0027t be importable (due to the use of dashes and the missing .py suffix).\n\nTo get around that, we can use imp.load_source()... which is a bit ugly, but probably good enough, so I moved it into Tools/Scripts.",
+      "parentUuid": "8a0b31fa_66cc6185",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "311b969e_8141fe71",
         "filename": "third_party/WebKit/non_blink_scanner.py",
         "patchSetId": 1
