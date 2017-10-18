@@ -31,7 +31,7 @@ class CORE_EXPORT NGOutOfFlowLayoutPart {
                         const NGConstraintSpace& container_space,
                         const ComputedStyle& container_style,
                         NGFragmentBuilder* container_builder);
-  void Run();
+  void Run(bool update_legacy = true);
 
  private:
   RefPtr<NGLayoutResult> LayoutDescendant(NGBlockNode descendant,

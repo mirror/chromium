@@ -328,7 +328,7 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
       intrinsic_block_size +=
           PreviouslyUsedBlockSpace(constraint_space, physical_fragment);
     }
-    block->LayoutPositionedObjects(true);
+    block->LayoutPositionedObjects(false);
 
     if (flow_thread) {
       UpdateLegacyMultiColumnFlowThread(*this, flow_thread, constraint_space,
