@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9ad754df_1e2138e0",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-18T13:48:47Z",
+      "side": 1,
+      "message": "Indeed, if I am not signed in the history entry disappear and if I go to the 404 it is not in the history.",
+      "parentUuid": "7f696ae8_803ff726",
+      "revId": "fa660fe714de209696ce048269f56fd692b253ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6f61bd8_a0d48b43",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "fa660fe714de209696ce048269f56fd692b253ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59328ae7_521ace2a",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-18T13:48:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6f61bd8_a0d48b43",
+      "revId": "fa660fe714de209696ce048269f56fd692b253ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
