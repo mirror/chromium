@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89f1d862_37e32e6d",
+        "filename": "components/previews/content/previews_content_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-18T23:36:09Z",
+      "side": 1,
+      "message": "this was calling previews::params::IsClientLoFiEnabled(), and I don\u0027t believe the check in previews_service will handle this correctly. At the very least I\u0027d want that removed in a separate CL. (other server preview flags can screw with the check I think)",
+      "revId": "6cd9b1d01ee81367167ed297cb110b820908d0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a977271_c2a27f36",
+        "filename": "components/previews/content/previews_content_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-18T23:36:09Z",
+      "side": 1,
+      "message": "might as well be private unless its used in the test below.",
+      "revId": "6cd9b1d01ee81367167ed297cb110b820908d0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
