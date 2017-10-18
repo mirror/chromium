@@ -50,6 +50,7 @@
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_image.h"
 #include "ui/gl/gl_implementation.h"
+#include "ui/gl/gl_surface_egl.h"
 #include "ui/gl/gl_switches.h"
 #include "ui/gl/gl_workarounds.h"
 #include "ui/gl/init/gl_factory.h"
@@ -313,6 +314,8 @@ bool GpuCommandBufferStub::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_WaitSyncToken, OnWaitSyncToken)
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_SignalSyncToken, OnSignalSyncToken)
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_SignalQuery, OnSignalQuery)
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_FetchNativeSyncPointFd,
+                        OnFetchNativeSyncPointFd)
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_CreateImage, OnCreateImage);
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_DestroyImage, OnDestroyImage);
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_CreateStreamTexture,
@@ -1081,6 +1084,51 @@ void GpuCommandBufferStub::OnSignalQuery(uint32_t query_id, uint32_t id) {
   }
   // Something went wrong, run callback immediately.
   OnSignalAck(id);
+}
+
+void GpuCommandBufferStub::OnFetchNativeSyncPointFd(uint32_t fetch_id) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  // LOG(INFO) << __FUNCTION__ << ";;; start, fetch_id=" << fetch_id;
+
+  EGLDisplay display = eglGetCurrentDisplay();
+  TRACE_EVENT_BEGIN0("gpu", "CreateSyncKHR");
+  EGLSyncKHR native_fence =
+      eglCreateSyncKHR(display, EGL_SYNC_NATIVE_FENCE_ANDROID, nullptr);
+  TRACE_EVENT_END0("gpu", "CreateSyncKHR");
+
+  if (native_fence == EGL_NO_SYNC_KHR) {
+    LOG(INFO) << __FUNCTION__ << ";;; ERROR, EGL_NO_SYNC_KHR";
+  }
+  {
+    TRACE_EVENT0("gpu", "Flush");
+    glFlush();
+  }
+
+  EGLint sync_fd = -1;
+
+  if (gl::GLSurfaceEGL::IsAndroidNativeFenceSyncSupported()) {
+    TRACE_EVENT_BEGIN0("gpu", "DupNativeFenceFD");
+    sync_fd = eglDupNativeFenceFDANDROID(display, native_fence);
+    TRACE_EVENT_END0("gpu", "DupNativeFenceFD");
+    //LOG(INFO) << __FUNCTION__ << ";;; sync_fd=" << sync_fd;
+  } else {
+    LOG(INFO) << __FUNCTION__ << ";;; eglDupNativeFenceFDANDROID not supported";
+  }
+
+  // It's OK to destroy the fence after extracting the FD, the underlying
+  // sync object takes care of needed lifetime tracking.
+  eglDestroySyncKHR(display, native_fence);
+
+  GpuCommandBufferMsg_SyncPointFd_Return sync_point;
+  // IPC Send takes ownership of the file descriptor.
+  sync_point.sync_fd = base::FileDescriptor(sync_fd, true /* auto_close */);
+  {
+    TRACE_EVENT0("gpu", "SendReply");
+    Send(new GpuCommandBufferMsg_FetchNativeSyncPointFdComplete(
+        route_id_, fetch_id, sync_point));
+  }
+
+  //LOG(INFO) << __FUNCTION__ << ";;; end";
 }
 
 void GpuCommandBufferStub::OnFenceSyncRelease(uint64_t release) {
