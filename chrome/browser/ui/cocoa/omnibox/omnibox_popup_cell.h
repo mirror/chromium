@@ -17,6 +17,9 @@ class OmniboxPopupViewMac;
 // Left hand side of the separator (e.g. a hyphen).
 @property(readonly, retain, nonatomic) NSAttributedString* contents;
 
+// The same string attributed as if selected. Invisible tail prefix is visible.
+@property(readonly, retain, nonatomic) NSAttributedString* selected_contents;
+
 // Right hand side of the separator (e.g. a hyphen).
 @property(readonly, retain, nonatomic) NSAttributedString* description;
 
