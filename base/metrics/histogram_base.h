@@ -210,10 +210,6 @@ class BASE_EXPORT HistogramBase {
   virtual void WriteHTMLGraph(std::string* output) const = 0;
   virtual void WriteAscii(std::string* output) const = 0;
 
-  // TODO(bcwhite): Remove this after crbug/736675.
-  virtual bool ValidateHistogramContents(bool crash_if_invalid,
-                                         int corrupted_count) const;
-
   // Produce a JSON representation of the histogram. This is implemented with
   // the help of GetParameters and GetCountAndBucketData; overwrite them to
   // customize the output.
