@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "98433045_df40576c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-18T21:56:39Z",
+      "side": 1,
+      "message": "I test directly traverse mMergedFileNames and weirdly it works fine. But from what it mentions here: https://stackoverflow.com/questions/1196586/calling-remove-in-foreach-loop-in-java, the right thing to do is using iterator.remove(). (Collections.synchronizedList seems also not work because the ConcurrentModificationException is fired by iterator.next() even in a single thread(https://www.journaldev.com/378/java-util-concurrentmodificationexception)) \n\nSo I move the check and deletion out of deleteFileAsync so then I can use iterator.remove().",
+      "parentUuid": "525ea104_d0adfafc",
+      "range": {
+        "startLine": 1225,
+        "startChar": 45,
+        "endLine": 1225,
+        "endChar": 63
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae43d3cd_2fe34d61",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 6
@@ -321,6 +345,30 @@
       "side": 1,
       "message": "Umm...we\u0027re not iterating through getStateToBeMergedFileNames() though?  We are iterating over mMergeFileNames, are you saying that isn\u0027t intended?",
       "parentUuid": "380c0bfd_302b0080",
+      "range": {
+        "startLine": 1274,
+        "startChar": 25,
+        "endLine": 1274,
+        "endChar": 31
+      },
+      "revId": "db38bad41ec34ba54fb27f940b14248fccd0df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "160be8f5_a800958a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-18T21:56:39Z",
+      "side": 1,
+      "message": "Move all these check and deletion out of deleteFileAsync so we could use iterator.remove(). This will not cause ConcurrentModificationException.",
+      "parentUuid": "aa52194e_0c7fac54",
       "range": {
         "startLine": 1274,
         "startChar": 25,
