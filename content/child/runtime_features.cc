@@ -386,6 +386,11 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableModernMediaControls(
       base::FeatureList::IsEnabled(media::kUseModernMediaControls));
 
+  if (base::FeatureList::IsEnabled(features::kUseFeaturePolicyForPermissions)) {
+    WebRuntimeFeatures::EnableFeatureFromString("FeaturePolicyForPermissions",
+                                                true);
+  }
+
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.
   for (const std::string& feature :
