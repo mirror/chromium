@@ -676,6 +676,11 @@ bool ContextAllowsDownload(ExecutionContext* context) {
   return true;
 }
 
+void FontFace::MaybeLoad() {
+  if (status_ == kUnloaded)
+    css_font_face_->Load();
+}
+
 void FontFace::InitCSSFontFace(ExecutionContext* context, const CSSValue* src) {
   css_font_face_ = CreateCSSFontFace(this, unicode_range_.Get());
   if (error_)
