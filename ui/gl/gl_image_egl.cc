@@ -4,6 +4,7 @@
 
 #include "ui/gl/gl_image_egl.h"
 
+#include "base/trace_event/trace_event.h"
 #include "ui/gl/egl_util.h"
 #include "ui/gl/gl_surface_egl.h"
 
@@ -13,6 +14,7 @@ GLImageEGL::GLImageEGL(const gfx::Size& size)
     : egl_image_(EGL_NO_IMAGE_KHR), size_(size) {}
 
 GLImageEGL::~GLImageEGL() {
+  TRACE_EVENT0("gpu", "eglDestroyImageKHR");
   DCHECK(thread_checker_.CalledOnValidThread());
   if (egl_image_ != EGL_NO_IMAGE_KHR) {
     EGLBoolean result =
@@ -39,6 +41,17 @@ bool GLImageEGL::Initialize(EGLenum target,
   return true;
 }
 
+bool GLImageEGL::InitializeFromHardwareBuffer(
+    const struct AHardwareBuffer* buffer,
+    const EGLint* attrs) {
+  TRACE_EVENT0("gpu", "InitializeFromHardwareBuffer");
+  if (!buffer)
+    return false;
+
+  EGLClientBuffer clientBuffer = eglGetNativeClientBufferANDROID(buffer);
+  return Initialize(EGL_NATIVE_BUFFER_ANDROID, clientBuffer, attrs);
+}
+
 gfx::Size GLImageEGL::GetSize() {
   return size_;
 }
@@ -46,6 +59,7 @@ gfx::Size GLImageEGL::GetSize() {
 unsigned GLImageEGL::GetInternalFormat() { return GL_RGBA; }
 
 bool GLImageEGL::BindTexImage(unsigned target) {
+  TRACE_EVENT0("gpu", "glEGLImageTargetTexture2DOES");
   DCHECK(thread_checker_.CalledOnValidThread());
   if (egl_image_ == EGL_NO_IMAGE_KHR)
     return false;
@@ -72,5 +86,9 @@ bool GLImageEGL::ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
                                       const gfx::RectF& crop_rect) {
   return false;
 }
+
+void GLImageEGL::OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
+                              uint64_t process_tracing_id,
+                              const std::string& dump_name) {}
 
 }  // namespace gl

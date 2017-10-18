@@ -65,6 +65,31 @@ void ParamTraits<gfx::ScopedRefCountedIOSurfaceMachPort>::Log(
 }
 #endif  // defined(OS_MACOSX) && !defined(OS_IOS)
 
+#if defined(OS_ANDROID)
+void ParamTraits<gfx::ScopedAndroidHardwareBuffer>::Write(base::Pickle* m,
+                                                          const param_type p) {
+  base::FileDescriptor read_fd(p.GetSingleUseReadFDForIPC());
+  ParamTraits<base::FileDescriptor>::Write(m, read_fd);
+}
+
+bool ParamTraits<gfx::ScopedAndroidHardwareBuffer>::Read(
+    const base::Pickle* m,
+    base::PickleIterator* iter,
+    param_type* r) {
+  base::FileDescriptor read_fd;
+  if (!ParamTraits<base::FileDescriptor>::Read(m, iter, &read_fd))
+    return false;
+  r->AdoptFromSingleUseReadFD(base::ScopedFD(read_fd.fd));
+  return true;
+}
+
+void ParamTraits<gfx::ScopedAndroidHardwareBuffer>::Log(const param_type& p,
+                                                        std::string* l) {
+  l->append("Scoped AHardwareBuffer send");
+  // LogParam(p.get(), l);
+}
+#endif  // defined(OS_ANDROID)
+
 void ParamTraits<gfx::SelectionBound>::Write(base::Pickle* m,
                                              const param_type& p) {
   WriteParam(m, static_cast<uint32_t>(p.type()));

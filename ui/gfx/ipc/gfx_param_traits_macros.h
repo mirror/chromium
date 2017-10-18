@@ -8,6 +8,7 @@
 #ifndef UI_GFX_IPC_GFX_PARAM_TRAITS_MACROS_H_
 #define UI_GFX_IPC_GFX_PARAM_TRAITS_MACROS_H_
 
+#include "build/build_config.h"
 #include "ipc/ipc_message_macros.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -17,6 +18,11 @@
 
 #if defined(OS_LINUX)
 #include "ui/gfx/native_pixmap_handle.h"
+#endif
+
+#if defined(OS_ANDROID)
+#include "ui/gfx/android/hardware_buffer_handle.h"
+#include "ui/gfx/android/scoped_android_hardware_buffer.h"
 #endif
 
 #undef IPC_MESSAGE_EXPORT
@@ -43,6 +49,8 @@ IPC_STRUCT_TRAITS_BEGIN(gfx::GpuMemoryBufferHandle)
   IPC_STRUCT_TRAITS_MEMBER(native_pixmap_handle)
 #elif defined(OS_MACOSX)
   IPC_STRUCT_TRAITS_MEMBER(mach_port)
+#elif defined(OS_ANDROID)
+  IPC_STRUCT_TRAITS_MEMBER(hardware_buffer_handle)
 #endif
 IPC_STRUCT_TRAITS_END()
 
@@ -61,6 +69,12 @@ IPC_STRUCT_TRAITS_END()
 IPC_STRUCT_TRAITS_BEGIN(gfx::NativePixmapHandle)
   IPC_STRUCT_TRAITS_MEMBER(fds)
   IPC_STRUCT_TRAITS_MEMBER(planes)
+IPC_STRUCT_TRAITS_END()
+#endif
+
+#if defined(OS_ANDROID)
+IPC_STRUCT_TRAITS_BEGIN(gfx::AndroidHardwareBufferHandle)
+  IPC_STRUCT_TRAITS_MEMBER(scoped_ahardwarebuffer)
 IPC_STRUCT_TRAITS_END()
 #endif
 

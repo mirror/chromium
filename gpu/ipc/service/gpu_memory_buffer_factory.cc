@@ -16,6 +16,10 @@
 #include "gpu/ipc/service/gpu_memory_buffer_factory_native_pixmap.h"
 #endif
 
+#if defined(OS_ANDROID)
+#include "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.h"
+#endif
+
 namespace gpu {
 
 // static
@@ -26,6 +30,9 @@ GpuMemoryBufferFactory::CreateNativeType() {
 #endif
 #if defined(OS_LINUX)
   return base::WrapUnique(new GpuMemoryBufferFactoryNativePixmap);
+#endif
+#if defined(OS_ANDROID)
+  return base::WrapUnique(new GpuMemoryBufferFactoryAndroidHardwareBuffer);
 #endif
   return nullptr;
 }
