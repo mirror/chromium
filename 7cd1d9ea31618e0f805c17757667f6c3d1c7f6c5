@@ -417,6 +417,24 @@
     },
     {
       "key": {
+        "uuid": "5c7db850_c3789def",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T06:10:26Z",
+      "side": 1,
+      "message": "Ahh, sorry, it\u0027s not needed to be empty since the data could be received until calling this method.",
+      "parentUuid": "68faf2ec_8453cb8a",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21925e42_3fb80cab",
         "filename": "content/renderer/service_worker/thread_safe_script_container.h",
         "patchSetId": 14
