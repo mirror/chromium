@@ -307,10 +307,7 @@ void UDPSocketWin::Close() {
   recv_from_address_ = NULL;
   write_callback_.Reset();
 
-  base::TimeTicks start_time = base::TimeTicks::Now();
   closesocket(socket_);
-  UMA_HISTOGRAM_TIMES("Net.UDPSocketWinClose",
-                      base::TimeTicks::Now() - start_time);
   socket_ = INVALID_SOCKET;
   addr_family_ = 0;
   is_connected_ = false;
@@ -981,7 +978,6 @@ int UDPSocketWin::DoBind(const IPEndPoint& address) {
   if (rv == 0)
     return OK;
   int last_error = WSAGetLastError();
-  UMA_HISTOGRAM_SPARSE_SLOWLY("Net.UdpSocketBindErrorFromWinOS", last_error);
   // Map some codes that are special to bind() separately.
   // * WSAEACCES: If a port is already bound to a socket, WSAEACCES may be
   //   returned instead of WSAEADDRINUSE, depending on whether the socket
