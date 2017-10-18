@@ -39,13 +39,13 @@ class HEADLESS_EXPORT ErrorReporter {
 
   // Returns a list of reported errors.
   const std::vector<std::string>& errors() const { return errors_; }
-#else  // DCHECK_IS_ON()
-  inline void Push() {}
-  inline void Pop() {}
-  inline void SetName(const char* name) {}
-  inline void AddError(base::StringPiece description) {}
-  inline bool HasErrors() const { return false; }
-  std::vector<std::string> errors() const { return std::vector<std::string>(); }
+#else   // DCHECK_IS_ON()
+  void Push() {}
+  void Pop() {}
+  void SetName(const char* name) {}
+  void AddError(base::StringPiece description) {}
+  bool HasErrors() const { return false; }
+  std::vector<std::string> errors() const { return {}; }
 #endif  // DCHECK_IS_ON()
 
  private:
