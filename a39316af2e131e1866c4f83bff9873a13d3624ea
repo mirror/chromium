@@ -16,6 +16,24 @@
       "revId": "a39316af2e131e1866c4f83bff9873a13d3624ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb52947c_5c4b8d53",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-18T06:07:57Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "e59bae84_86cb8d2a",
+      "revId": "a39316af2e131e1866c4f83bff9873a13d3624ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
