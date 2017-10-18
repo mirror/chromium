@@ -693,4 +693,8 @@ void KeyboardController::ReportLingeringState() {
                             state_, KeyboardControllerState::COUNT);
 }
 
+ContainerBehavior* KeyboardController::GetContainerBehavior() {
+  return container_behavior_.get();
+}
+
 }  // namespace keyboard

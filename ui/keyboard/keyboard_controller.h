@@ -139,6 +139,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
 
   KeyboardControllerState GetStateForTest() const { return state_; }
 
+  ContainerBehavior* GetContainerBehavior();
+
  private:
   // For access to Observer methods for simulation.
   friend class KeyboardControllerTest;

@@ -28,6 +28,9 @@ class ContainerFullWidthBehavior : public ContainerBehavior {
       aura::Window* window,
       ui::ScopedLayerAnimationSettings* animation_settings) override;
   void InitializeShowAnimationStartingState(aura::Window* container) override;
+  const gfx::Rect AdjustSetBoundsRequest(
+      const gfx::Rect& workspace_bounds,
+      const gfx::Rect& requested_bounds) override;
 };
 
 }  // namespace keyboard
