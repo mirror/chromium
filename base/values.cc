@@ -80,6 +80,17 @@ std::unique_ptr<Value> Value::CreateWithCopiedBuffer(const char* buffer,
   return std::make_unique<Value>(BlobStorage(buffer, buffer + size));
 }
 
+// static
+Value Value::FromUniquePtrValue(std::unique_ptr<Value> val) {
+  Value* val_ptr = val.release();
+  return std::move(*val_ptr);
+}
+
+// static
+std::unique_ptr<Value> Value::ToUniquePtrValue(Value val) {
+  return std::make_unique<Value>(std::move(val));
+}
+
 Value::Value(Value&& that) noexcept {
   InternalMoveConstructFrom(std::move(that));
 }
