@@ -82,8 +82,10 @@ class CORE_EXPORT ScriptResource final : public TextResource {
 
   AccessControlStatus CalculateAccessControlStatus() const;
 
- protected:
-  size_t ComputeDecodedSize() const override;
+  // For InspectorPageAgent::CachedResourceContent.
+  String CurrentDecodedText() const {
+    return TextResource::CurrentDecodedText();
+  }
 
  private:
   class ScriptResourceFactory : public ResourceFactory {
@@ -105,8 +107,6 @@ class CORE_EXPORT ScriptResource final : public TextResource {
                  const TextResourceDecoderOptions&);
 
   bool CanUseCacheValidator() const override;
-
-  AtomicString source_text_;
 };
 
 DEFINE_RESOURCE_TYPE_CASTS(Script);

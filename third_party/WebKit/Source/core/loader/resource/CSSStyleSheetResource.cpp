@@ -127,19 +127,13 @@ const String CSSStyleSheetResource::SheetText(
   if (!CanUseSheet(mime_type_check))
     return String();
 
-  // Use cached decoded sheet text when available
-  if (!decoded_sheet_text_.IsNull()) {
-    // We should have the decoded sheet text cached when the resource is fully
-    // loaded.
-    DCHECK_EQ(GetStatus(), ResourceStatus::kCached);
+  // The CSSPreloadScanner may request the resource's text before the resource
+  // has finished loading. To satisfy this, we will return the current (and
+  // potentially incomplete) resource text in this case.
+  if (!IsLoaded())
+    return CurrentDecodedText();
 
-    return decoded_sheet_text_;
-  }
-
-  if (!Data() || Data()->IsEmpty())
-    return String();
-
-  return DecodedText();
+  return CachedDecodedText();
 }
 
 void CSSStyleSheetResource::AppendData(const char* data, size_t length) {
@@ -153,10 +147,6 @@ void CSSStyleSheetResource::AppendData(const char* data, size_t length) {
 }
 
 void CSSStyleSheetResource::NotifyFinished() {
-  // Decode the data to find out the encoding and cache the decoded sheet text.
-  if (Data())
-    SetDecodedSheetText(DecodedText());
-
   ReferrerPolicy referrer_policy = kReferrerPolicyDefault;
   String referrer_policy_header =
       GetResponse().HttpHeaderField(HTTPNames::Referrer_Policy);
@@ -172,13 +162,6 @@ void CSSStyleSheetResource::NotifyFinished() {
     c->SetCSSStyleSheet(GetResourceRequest().Url(), GetResponse().Url(),
                         referrer_policy, Encoding(), this);
   }
-
-  // Clear raw bytes as now we have the full decoded sheet text.
-  // We wait for all LinkStyle::setCSSStyleSheet to run (at least once)
-  // as SubresourceIntegrity checks require raw bytes.
-  // Note that LinkStyle::setCSSStyleSheet can be called from didAddClient too,
-  // but is safe as we should have a cached ResourceIntegrityDisposition.
-  ClearData();
 }
 
 void CSSStyleSheetResource::DestroyDecodedDataIfPossible() {
@@ -189,7 +172,7 @@ void CSSStyleSheetResource::DestroyDecodedDataIfPossible() {
 }
 
 void CSSStyleSheetResource::DestroyDecodedDataForFailedRevalidation() {
-  SetDecodedSheetText(String());
+  ClearDecodedTextCache();
   DestroyDecodedDataIfPossible();
 }
 
@@ -246,15 +229,8 @@ void CSSStyleSheetResource::SaveParsedStyleSheet(StyleSheetContents* sheet) {
   SetParsedStyleSheetCache(sheet);
 }
 
-void CSSStyleSheetResource::SetDecodedSheetText(
-    const String& decoded_sheet_text) {
-  decoded_sheet_text_ = decoded_sheet_text;
-  UpdateDecodedSize();
-}
-
 size_t CSSStyleSheetResource::ComputeDecodedSize() const {
-  size_t decoded_size = decoded_sheet_text_.CharactersSizeInBytes() +
-                        StyleSheetResource::ComputeDecodedSize();
+  size_t decoded_size = StyleSheetResource::ComputeDecodedSize();
   if (parsed_style_sheet_cache_)
     decoded_size += parsed_style_sheet_cache_->EstimatedSizeInBytes();
   return decoded_size;

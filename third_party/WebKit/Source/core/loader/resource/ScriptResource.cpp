@@ -78,32 +78,17 @@ void ScriptResource::OnMemoryDump(WebMemoryDumpLevelOfDetail level_of_detail,
   Resource::OnMemoryDump(level_of_detail, memory_dump);
   const String name = GetMemoryDumpName() + "/decoded_script";
   auto dump = memory_dump->CreateMemoryAllocatorDump(name);
-  dump->AddScalar("size", "bytes", source_text_.CharactersSizeInBytes());
+  dump->AddScalar("size", "bytes", DecodedTextCacheSize());
   memory_dump->AddSuballocation(
       dump->Guid(), String(WTF::Partitions::kAllocatedObjectPoolName));
 }
 
 const String& ScriptResource::SourceText() {
-  DCHECK(IsLoaded());
-
-  if (source_text_.IsNull() && Data()) {
-    String source_text = DecodedText();
-    ClearData();
-    UpdateDecodedSize();
-    source_text_ = AtomicString(source_text);
-  }
-
-  return source_text_;
+  return CachedDecodedText();
 }
 
 void ScriptResource::DestroyDecodedDataForFailedRevalidation() {
-  source_text_ = AtomicString();
-  UpdateDecodedSize();
-}
-
-size_t ScriptResource::ComputeDecodedSize() const {
-  return TextResource::ComputeDecodedSize() +
-         source_text_.CharactersSizeInBytes();
+  ClearDecodedTextCache();
 }
 
 AccessControlStatus ScriptResource::CalculateAccessControlStatus() const {

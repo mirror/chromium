@@ -91,10 +91,6 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
   void DestroyDecodedDataIfPossible() override;
   void DestroyDecodedDataForFailedRevalidation() override;
 
-  // Decoded sheet text cache is available iff loading this CSS resource is
-  // successfully complete.
-  String decoded_sheet_text_;
-
   Member<StyleSheetContents> parsed_style_sheet_cache_;
 
   bool did_notify_first_data_;
