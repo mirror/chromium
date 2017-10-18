@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85cda43c_71edf43a",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-18T05:53:43Z",
+      "side": 1,
+      "message": "What value is this when there was a range selection?",
+      "range": {
+        "startLine": 162,
+        "startChar": 40,
+        "endLine": 162,
+        "endChar": 63
+      },
+      "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b5e0c0a_7635b633",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-18T05:53:43Z",
+      "side": 1,
+      "message": "could you add unit tests for this method?",
+      "range": {
+        "startLine": 210,
+        "startChar": 17,
+        "endLine": 210,
+        "endChar": 29
+      },
+      "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29414e2e_f5ac634e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-18T05:53:43Z",
+      "side": 1,
+      "message": "unit test?",
+      "range": {
+        "startLine": 242,
+        "startChar": 16,
+        "endLine": 242,
+        "endChar": 34
+      },
+      "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39231d7_6842b6d5",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-18T05:53:43Z",
+      "side": 1,
+      "message": "unit tests? especially for nonbreaking white space...",
+      "range": {
+        "startLine": 270,
+        "startChar": 20,
+        "endLine": 270,
+        "endChar": 32
+      },
+      "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c2308f_8dfe5b24",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-18T05:53:43Z",
+      "side": 1,
+      "message": "I think you\u0027ll need to make this @VisibleForTesting protected and override it in testing.",
+      "range": {
+        "startLine": 293,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 25
+      },
+      "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236694a6_323fff84",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-18T05:53:43Z",
+      "side": 1,
+      "message": "could you make this static and add unit tests?",
+      "range": {
+        "startLine": 419,
+        "startChar": 20,
+        "endLine": 419,
+        "endChar": 27
+      },
+      "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19603da_8c8a573e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-18T05:53:43Z",
+      "side": 1,
+      "message": "could you make this static and add unit tests?",
+      "range": {
+        "startLine": 427,
+        "startChar": 20,
+        "endLine": 427,
+        "endChar": 28
+      },
+      "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
