@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "668683cc_0c3dc408",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-18T22:02:51Z",
+      "side": 0,
+      "message": "/apps should\u0027ve been removed in an earlier CL but I missed it, so removing it now while we\u0027re changing this code.",
+      "revId": "c45de7bbe3dffcbbd1e044f5d13542c79861ac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
