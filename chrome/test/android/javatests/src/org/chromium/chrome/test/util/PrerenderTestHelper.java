@@ -6,7 +6,7 @@ package org.chromium.chrome.test.util;
 
 import android.graphics.Rect;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.chrome.browser.TabLoadStatus;
