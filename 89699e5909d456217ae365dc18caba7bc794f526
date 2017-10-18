@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "114532ad_b42f8512",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-18T09:58:18Z",
+      "side": 1,
+      "message": "I tested this out\n\nThis will return false positives. For instance, the facebook.com icon is on the fbcdn.net domain and the gmail.com icon is on the gstatic.com domain\n\nI think that kKnownUnrelatedHostSuffixes should be a std::map from the page URL domain to the expected icon URL domain",
+      "revId": "89699e5909d456217ae365dc18caba7bc794f526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e18adb_a5c6f15c",
+        "filename": "components/favicon/core/large_icon_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-18T09:58:18Z",
+      "side": 1,
+      "message": "Can you rename these constants so that they have more semantic meaning?\n\nFor instance:\nkNonBlacklistedPageUrl1\nkNonBlacklistedPageUrl2\nkBlacklistedPageUrl1\nkBlacklistedPageUrl2",
+      "revId": "89699e5909d456217ae365dc18caba7bc794f526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68637e80_78b38037",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 24238,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-18T09:58:18Z",
+      "side": 1,
+      "message": "The histogram comment is a bit misleading. LargeIconService is used by callers other than the NTP. For instance, I think that the bookmarks page on Android uses the LargeIconService too",
+      "revId": "89699e5909d456217ae365dc18caba7bc794f526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
