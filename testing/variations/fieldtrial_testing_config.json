@@ -3292,6 +3292,26 @@
             ]
         }
     ],
+    "SupportIetfQuicAltSvcFormat": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "ios",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "SupportIetfQuicAltSvcFormat"
+                    ]
+                }
+            ]
+        }
+    ],
     "SyncPasswordReuseEvent": [
         {
             "platforms": [

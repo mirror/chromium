@@ -5,6 +5,8 @@
 #include "net/spdy/core/spdy_alt_svc_wire_format.h"
 
 #include "base/logging.h"
+#include "base/metrics/field_trial.h"
+#include "net/spdy/platform/api/spdy_string_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/platform_test.h"
 
@@ -48,10 +50,18 @@ class SpdyAltSvcWireFormatPeer {
 
 namespace {
 
+bool IsIetfQuicAltSvcFormatSupported() {
+  const std::string group_name =
+      base::FieldTrialList::FindFullName("SupportIetfQuicAltSvcFormat");
+  return base::StartsWith(group_name, "Enabled",
+                          base::CompareCase::INSENSITIVE_ASCII);
+}
+
 // Generate header field values, possibly with multiply defined parameters and
 // random case, and corresponding AlternativeService entries.
 void FuzzHeaderFieldValue(
     int i,
+    bool is_ietf_altsvc_format_supported,
     SpdyString* header_field_value,
     SpdyAltSvcWireFormat::AlternativeService* expected_altsvc) {
   if (!header_field_value->empty()) {
@@ -59,7 +69,8 @@ void FuzzHeaderFieldValue(
   }
   // TODO(wangyix): use struct of bools instead of int |i| to generate the
   // header field value.
-  bool is_ietf_format_quic = (i & 1 << 0) != 0;
+  bool is_ietf_format_quic =
+      ((i & 1 << 0) != 0) && is_ietf_altsvc_format_supported;
   if (i & 1 << 0) {
     expected_altsvc->protocol_id = "hq";
     header_field_value->append("hq=\"");
@@ -187,10 +198,13 @@ TEST(SpdyAltSvcWireFormatTest, ParseHeaderFieldValueClear) {
 // parameters, duplicate parameters, trailing space, trailing alternate service
 // separator, etc.  Single alternative service at a time.
 TEST(SpdyAltSvcWireFormatTest, ParseHeaderFieldValue) {
+  const bool is_ietf_altsvc_format_supported =
+      IsIetfQuicAltSvcFormatSupported();
   for (int i = 0; i < 1 << 13; ++i) {
     SpdyString header_field_value;
     SpdyAltSvcWireFormat::AlternativeService expected_altsvc;
-    FuzzHeaderFieldValue(i, &header_field_value, &expected_altsvc);
+    FuzzHeaderFieldValue(i, is_ietf_altsvc_format_supported,
+                         &header_field_value, &expected_altsvc);
     SpdyAltSvcWireFormat::AlternativeServiceVector altsvc_vector;
     ASSERT_TRUE(SpdyAltSvcWireFormat::ParseHeaderFieldValue(header_field_value,
                                                             &altsvc_vector));
@@ -221,6 +235,8 @@ TEST(SpdyAltSvcWireFormatTest, ParseHeaderFieldValue) {
 // parameters, duplicate parameters, trailing space, trailing alternate service
 // separator, etc.  Possibly multiple alternative service at a time.
 TEST(SpdyAltSvcWireFormatTest, ParseHeaderFieldValueMultiple) {
+  const bool is_ietf_altsvc_format_supported =
+      IsIetfQuicAltSvcFormatSupported();
   for (int i = 0; i < 1 << 13;) {
     SpdyString header_field_value;
     SpdyAltSvcWireFormat::AlternativeServiceVector expected_altsvc_vector;
@@ -229,7 +245,8 @@ TEST(SpdyAltSvcWireFormatTest, ParseHeaderFieldValueMultiple) {
     // thousands with a single one.
     do {
       SpdyAltSvcWireFormat::AlternativeService expected_altsvc;
-      FuzzHeaderFieldValue(i, &header_field_value, &expected_altsvc);
+      FuzzHeaderFieldValue(i, is_ietf_altsvc_format_supported,
+                           &header_field_value, &expected_altsvc);
       expected_altsvc_vector.push_back(expected_altsvc);
       ++i;
     } while (i % 6 < i % 7);
