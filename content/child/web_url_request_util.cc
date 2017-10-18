@@ -16,13 +16,13 @@
 #include "net/base/net_errors.h"
 #include "net/http/http_util.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
-#include "third_party/WebKit/public/platform/WebCachePolicy.h"
 #include "third_party/WebKit/public/platform/WebData.h"
 #include "third_party/WebKit/public/platform/WebHTTPHeaderVisitor.h"
 #include "third_party/WebKit/public/platform/WebMixedContent.h"
 #include "third_party/WebKit/public/platform/WebString.h"
+#include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 
-using blink::WebCachePolicy;
+using blink::mojom::FetchCacheMode;
 using blink::WebData;
 using blink::WebHTTPBody;
 using blink::WebString;
@@ -232,25 +232,28 @@ std::string GetWebURLRequestHeadersAsString(
 int GetLoadFlagsForWebURLRequest(const WebURLRequest& request) {
   int load_flags = net::LOAD_NORMAL;
   GURL url = request.Url();
-  switch (request.GetCachePolicy()) {
-    case WebCachePolicy::kValidatingCacheData:
+  switch (request.GetCacheMode()) {
+    case FetchCacheMode::NO_STORE:
+      load_flags |= net::LOAD_DISABLE_CACHE;
+      break;
+    case FetchCacheMode::NO_CACHE:
       load_flags |= net::LOAD_VALIDATE_CACHE;
       break;
-    case WebCachePolicy::kBypassingCache:
+    case FetchCacheMode::RELOAD:
       load_flags |= net::LOAD_BYPASS_CACHE;
       break;
-    case WebCachePolicy::kReturnCacheDataElseLoad:
+    case FetchCacheMode::FORCE_CACHE:
       load_flags |= net::LOAD_SKIP_CACHE_VALIDATION;
       break;
-    case WebCachePolicy::kReturnCacheDataDontLoad:
+    case FetchCacheMode::ONLY_IF_CACHED:
       load_flags |= net::LOAD_ONLY_FROM_CACHE | net::LOAD_SKIP_CACHE_VALIDATION;
       break;
-    case WebCachePolicy::kReturnCacheDataIfValid:
+    case FetchCacheMode::UNSPECIFIED_ONLY_IF_CACHED_STRICT:
       load_flags |= net::LOAD_ONLY_FROM_CACHE;
       break;
-    case WebCachePolicy::kUseProtocolCachePolicy:
+    case FetchCacheMode::DEFAULT:
       break;
-    case WebCachePolicy::kBypassCacheLoadOnlyFromCache:
+    case FetchCacheMode::UNSPECIFIED_FORCE_CACHE_MISS:
       load_flags |= net::LOAD_ONLY_FROM_CACHE | net::LOAD_BYPASS_CACHE;
       break;
   }

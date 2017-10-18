@@ -84,7 +84,6 @@
 #include "platform/wtf/Vector.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebApplicationCacheHost.h"
-#include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "third_party/WebKit/common/device_memory/approximated_device_memory.h"
@@ -97,48 +96,48 @@ enum class RequestMethod { kIsPost, kIsNotPost };
 enum class RequestType { kIsConditional, kIsNotConditional };
 enum class ResourceType { kIsMainResource, kIsNotMainResource };
 
-// Determines WebCachePolicy for a main resource, or WebCachePolicy that is
+// Determines FetchCacheMode for a main resource, or FetchCacheMode that is
 // corresponding to FrameLoadType.
-// TODO(toyoshim): Probably, we should split FrameLoadType to WebCachePolicy
+// TODO(toyoshim): Probably, we should split FrameLoadType to FetchCacheMode
 // conversion logic into a separate function.
-WebCachePolicy DetermineWebCachePolicy(RequestMethod method,
-                                       RequestType request_type,
-                                       ResourceType resource_type,
-                                       FrameLoadType load_type) {
+mojom::FetchCacheMode DetermineCacheMode(RequestMethod method,
+                                         RequestType request_type,
+                                         ResourceType resource_type,
+                                         FrameLoadType load_type) {
   switch (load_type) {
     case kFrameLoadTypeStandard:
     case kFrameLoadTypeReplaceCurrentItem:
     case kFrameLoadTypeInitialInChildFrame:
       return (request_type == RequestType::kIsConditional ||
               method == RequestMethod::kIsPost)
-                 ? WebCachePolicy::kValidatingCacheData
-                 : WebCachePolicy::kUseProtocolCachePolicy;
+                 ? mojom::FetchCacheMode::NO_CACHE
+                 : mojom::FetchCacheMode::DEFAULT;
     case kFrameLoadTypeBackForward:
     case kFrameLoadTypeInitialHistoryLoad:
       // Mutates the policy for POST requests to avoid form resubmission.
       return method == RequestMethod::kIsPost
-                 ? WebCachePolicy::kReturnCacheDataDontLoad
-                 : WebCachePolicy::kReturnCacheDataElseLoad;
+                 ? mojom::FetchCacheMode::ONLY_IF_CACHED
+                 : mojom::FetchCacheMode::FORCE_CACHE;
     case kFrameLoadTypeReload:
       return resource_type == ResourceType::kIsMainResource
-                 ? WebCachePolicy::kValidatingCacheData
-                 : WebCachePolicy::kUseProtocolCachePolicy;
+                 ? mojom::FetchCacheMode::NO_CACHE
+                 : mojom::FetchCacheMode::DEFAULT;
     case kFrameLoadTypeReloadBypassingCache:
-      return WebCachePolicy::kBypassingCache;
+      return mojom::FetchCacheMode::RELOAD;
   }
   NOTREACHED();
-  return WebCachePolicy::kUseProtocolCachePolicy;
+  return mojom::FetchCacheMode::DEFAULT;
 }
 
-// Determines WebCachePolicy for |frame|. This WebCachePolicy should be a base
+// Determines FetchCacheMode for |frame|. This FetchCacheMode should be a base
 // policy to consider one of each resource belonging to the frame, and should
 // not count resource specific conditions in.
 // TODO(toyoshim): Remove |resourceType| to realize the design described above.
 // See also comments in resourceRequestCachePolicy().
-WebCachePolicy DetermineFrameWebCachePolicy(Frame* frame,
-                                            ResourceType resource_type) {
+mojom::FetchCacheMode DetermineFrameWebCachePolicy(Frame* frame,
+                                                   ResourceType resource_type) {
   if (!frame)
-    return WebCachePolicy::kUseProtocolCachePolicy;
+    return mojom::FetchCacheMode::DEFAULT;
   if (!frame->IsLocalFrame())
     return DetermineFrameWebCachePolicy(frame->Tree().Parent(), resource_type);
 
@@ -148,26 +147,26 @@ WebCachePolicy DetermineFrameWebCachePolicy(Frame* frame,
   // navigations.
   if (resource_type == ResourceType::kIsNotMainResource &&
       ToLocalFrame(frame)->GetDocument()->LoadEventFinished()) {
-    return WebCachePolicy::kUseProtocolCachePolicy;
+    return mojom::FetchCacheMode::DEFAULT;
   }
 
   // Respects BypassingCache rather than parent's policy.
   FrameLoadType load_type =
       ToLocalFrame(frame)->Loader().GetDocumentLoader()->LoadType();
   if (load_type == kFrameLoadTypeReloadBypassingCache)
-    return WebCachePolicy::kBypassingCache;
+    return mojom::FetchCacheMode::RELOAD;
 
   // Respects parent's policy if it has a special one.
-  WebCachePolicy parent_policy =
+  mojom::FetchCacheMode parent_cache_mode =
       DetermineFrameWebCachePolicy(frame->Tree().Parent(), resource_type);
-  if (parent_policy != WebCachePolicy::kUseProtocolCachePolicy)
-    return parent_policy;
+  if (parent_cache_mode != mojom::FetchCacheMode::DEFAULT)
+    return parent_cache_mode;
 
   // Otherwise, follows FrameLoadType. Use kIsNotPost, kIsNotConditional, and
   // kIsNotMainResource to obtain a representative policy for the frame.
-  return DetermineWebCachePolicy(RequestMethod::kIsNotPost,
-                                 RequestType::kIsNotConditional,
-                                 ResourceType::kIsNotMainResource, load_type);
+  return DetermineCacheMode(RequestMethod::kIsNotPost,
+                            RequestType::kIsNotConditional,
+                            ResourceType::kIsNotMainResource, load_type);
 }
 
 }  // namespace
@@ -352,16 +351,16 @@ void FrameFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
 // the ResourceRequest's cache policy. The cache policy determination needs to
 // be factored out from FrameFetchContext and moved to the FrameLoader for
 // instance.
-WebCachePolicy FrameFetchContext::ResourceRequestCachePolicy(
+mojom::FetchCacheMode FrameFetchContext::ResourceRequestCachePolicy(
     const ResourceRequest& request,
     Resource::Type type,
     FetchParameters::DeferOption defer) const {
   if (IsDetached())
-    return WebCachePolicy::kUseProtocolCachePolicy;
+    return mojom::FetchCacheMode::DEFAULT;
 
   DCHECK(GetFrame());
   if (type == Resource::kMainResource) {
-    const WebCachePolicy cache_policy = DetermineWebCachePolicy(
+    const auto cache_mode = DetermineCacheMode(
         request.HttpMethod() == "POST" ? RequestMethod::kIsPost
                                        : RequestMethod::kIsNotPost,
         request.IsConditional() ? RequestType::kIsConditional
@@ -373,20 +372,20 @@ WebCachePolicy FrameFetchContext::ResourceRequestCachePolicy(
     // check parent's frame policy here. Once it has a right FrameLoadType,
     // we can remove Resource::Type argument from determineFrameWebCachePolicy.
     // See also crbug.com/332602.
-    if (cache_policy != WebCachePolicy::kUseProtocolCachePolicy)
-      return cache_policy;
+    if (cache_mode != mojom::FetchCacheMode::DEFAULT)
+      return cache_mode;
     return DetermineFrameWebCachePolicy(GetFrame()->Tree().Parent(),
                                         ResourceType::kIsMainResource);
   }
 
-  const WebCachePolicy cache_policy = DetermineFrameWebCachePolicy(
+  const auto cache_policy = DetermineFrameWebCachePolicy(
       GetFrame(), ResourceType::kIsNotMainResource);
 
   // TODO(toyoshim): Revisit to consider if this clause can be merged to
   // determineWebCachePolicy or determineFrameWebCachePolicy.
-  if (cache_policy == WebCachePolicy::kUseProtocolCachePolicy &&
+  if (cache_policy == mojom::FetchCacheMode::DEFAULT &&
       request.IsConditional()) {
-    return WebCachePolicy::kValidatingCacheData;
+    return mojom::FetchCacheMode::NO_CACHE;
   }
   return cache_policy;
 }
