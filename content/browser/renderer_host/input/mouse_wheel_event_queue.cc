@@ -184,7 +184,11 @@ void MouseWheelEventQueue::ProcessMouseWheelAck(
         // Wheel event with phaseBegan must have non-zero deltas.
         DCHECK(needs_update);
         send_wheel_events_async_ = true;
+        UMA_HISTOGRAM_BOOLEAN("WheelScrolling.WasLatched", false);
         SendScrollBegin(scroll_update, false);
+      } else if (needs_update) {
+        UMA_HISTOGRAM_BOOLEAN("WheelScrolling.WasLatched",
+                              !needs_scroll_begin_);
       }
 
       if (needs_update) {
@@ -225,6 +229,7 @@ void MouseWheelEventQueue::ProcessMouseWheelAck(
         }
 
         if (needs_update) {
+          UMA_HISTOGRAM_BOOLEAN("WheelScrolling.WasLatched", false);
           ui::LatencyInfo latency = ui::LatencyInfo(ui::SourceEventType::WHEEL);
           latency.AddLatencyNumber(
               ui::INPUT_EVENT_LATENCY_GENERATE_SCROLL_UPDATE_FROM_MOUSE_WHEEL,
