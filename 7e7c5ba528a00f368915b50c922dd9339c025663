@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35ac3500_ea34206d",
+        "filename": "chrome/renderer/resources/extensions/automation_custom_bindings.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-18T04:58:58Z",
+      "side": 1,
+      "message": "Is it possible to construct a new EventParams object of\nthe right type here? That\u0027d be cleaner than the save/restore.\nBut if not this is okay as a stopgap.",
+      "revId": "7e7c5ba528a00f368915b50c922dd9339c025663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
