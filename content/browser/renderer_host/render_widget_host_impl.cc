@@ -2632,15 +2632,6 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
                          TRACE_EVENT_SCOPE_THREAD,
                          "elapsed time:", elapsed.InMicroseconds());
   }
-  auto new_surface_properties =
-      RenderWidgetSurfaceProperties::FromCompositorFrame(frame);
-
-  if (local_surface_id == last_local_surface_id_ &&
-      new_surface_properties != last_surface_properties_) {
-    bad_message::ReceivedBadMessage(
-        GetProcess(), bad_message::RWH_SURFACE_INVARIANTS_VIOLATION);
-    return;
-  }
 
   uint32_t max_sequence_number = 0;
   for (const auto& resource : frame.resource_list) {
@@ -2664,9 +2655,6 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
     compositor_frame_sink_binding_.PauseIncomingMethodCallProcessing();
     return;
   }
-
-  last_local_surface_id_ = local_surface_id;
-  last_surface_properties_ = new_surface_properties;
 
   last_received_content_source_id_ = frame.metadata.content_source_id;
   uint32_t frame_token = frame.metadata.frame_token;
