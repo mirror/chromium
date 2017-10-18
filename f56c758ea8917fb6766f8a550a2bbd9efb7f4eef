@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fc4161b_e96f6f87",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-18T21:21:02Z",
+      "side": 1,
+      "message": "Do we expect more APIs than just |delegate|? If no, maybe this class should not exist?",
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d68bc62_01e997ef",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-18T21:21:02Z",
+      "side": 1,
+      "message": "Includes should go after include guards.",
+      "range": {
+        "startLine": 5,
+        "startChar": 9,
+        "endLine": 5,
+        "endChar": 19
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a59615_16e006ce",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-18T21:21:02Z",
+      "side": 1,
+      "message": "Is there any value in this typedef? Typedefed blocks force the reader tool look up block definition, which is optimizing for writing rather than fore reading.",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 43
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89049f25_b0b1529e",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-18T21:21:02Z",
+      "side": 1,
+      "message": "How about this comment? \"Called when the form is focused and CRWWebView has autofill suggestions. Client may present UI which allows the user to pick a form autofill suggestion.\".",
+      "range": {
+        "startLine": 27,
+        "startChar": 23,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e0e2ae_b6905983",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-18T21:21:02Z",
+      "side": 1,
+      "message": "How about this comment? \"Clients may call |commitFormSuggestionBlock| to ...\u003cexplain what happens if block is called\u003e.\" Also please document if it\u0027s ok to call the block more than once.",
+      "range": {
+        "startLine": 28,
+        "startChar": 43,
+        "endLine": 28,
+        "endChar": 44
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "170ba09c_e27556d7",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-18T21:21:02Z",
+      "side": 1,
+      "message": "Should we follow existing naming patterns for UI presentation (runContextMenuWithTitle: runJavaScriptConfirmPanelWithMessage:)?",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b6ac9d_2cb27154",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-18T21:21:02Z",
+      "side": 1,
+      "message": "Would it be better to use \"fill form\" term instead of \"commit form suggestion\"?",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1ef6cf_b3ed97cc",
+        "filename": "ios/web_view/public/cwv_autofill_form_suggestion.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-18T21:21:02Z",
+      "side": 1,
+      "message": "What does \"Ignore\" mean? When is this Type present?",
+      "range": {
+        "startLine": 15,
+        "startChar": 25,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3e63ef_bdecbe6c",
+        "filename": "ios/web_view/public/cwv_autofill_form_suggestion.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-18T21:21:02Z",
+      "side": 1,
+      "message": "Why do we need this property? Is this API exist to clear focused field? Is this suggestion passed every time when form is focused? If |type| is |CWVFormSuggestionTypeClear|, then what would be a possible reasonable value for |value| property?\n\nSorry, I did not see it when I reviewed Autofill API doc, probably it was added later.",
+      "range": {
+        "startLine": 36,
+        "startChar": 31,
+        "endLine": 36,
+        "endChar": 52
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f4248aa_0234c8fc",
+        "filename": "ios/web_view/public/cwv_preferences.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-18T21:21:02Z",
+      "side": 1,
+      "message": "Please add comment per Style Guide. In particular what is default value, and what will happen if this is flipped to YES.",
+      "range": {
+        "startLine": 22,
+        "startChar": 60,
+        "endLine": 22,
+        "endChar": 75
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
