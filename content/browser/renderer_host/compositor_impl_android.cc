@@ -780,11 +780,9 @@ void CompositorImpl::OnGpuChannelEstablished(
           shared_context,
           ui::command_buffer_metrics::DISPLAY_COMPOSITOR_ONSCREEN_CONTEXT);
   auto result = context_provider->BindToCurrentThread();
+  LOG_IF(FATAL, result == gpu::ContextResult::kFatalFailure)
+      << "Fatal error making Gpu context";
   if (result != gpu::ContextResult::kSuccess) {
-    // TODO(danakj): Give up on fatal error instead of after 2 tries.
-    LOG(ERROR) << "Failed to init viz::ContextProvider for compositor.";
-    LOG_IF(FATAL, ++num_successive_context_creation_failures_ >= 2)
-        << "Too many context creation failures. Giving up... ";
     HandlePendingLayerTreeFrameSinkRequest();
     return;
   }
