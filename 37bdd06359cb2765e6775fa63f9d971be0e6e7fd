@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c30b650_73f44a00",
+        "filename": "content/test/data/gpu/pixel_webgl_large_canvas.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-18T02:01:47Z",
+      "side": 1,
+      "message": "I thought scaling down internally isn\u0027t considered an error?\n\nFrom what I can remember, if the reported maxTextureSize is close to secondSize, then it\u0027s very likely secondSize x secondSize isn\u0027t supported (our conformance only test one dimension goes to max, never both dimension)",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 16
+      },
+      "revId": "37bdd06359cb2765e6775fa63f9d971be0e6e7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2db7c18_69fc4896",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-18T02:01:47Z",
+      "side": 1,
+      "message": "Should we also try to lose contexts newer than us?",
+      "range": {
+        "startLine": 1538,
+        "startChar": 10,
+        "endLine": 1538,
+        "endChar": 23
+      },
+      "revId": "37bdd06359cb2765e6775fa63f9d971be0e6e7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
