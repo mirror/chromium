@@ -139,14 +139,22 @@ RefPtr<NGLayoutResult> NGBlockNode::Layout(
 
   layout_result =
       LayoutWithAlgorithm(Style(), *this, box_, constraint_space, break_token);
-  if (box_->IsLayoutNGBlockFlow()) {
-    ToLayoutNGBlockFlow(box_)->SetCachedLayoutResult(
-        constraint_space, break_token, layout_result);
+  LayoutNGBlockFlow* block_flow =
+      box_->IsLayoutNGBlockFlow() ? ToLayoutNGBlockFlow(box_) : nullptr;
+  if (block_flow) {
+    block_flow->SetCachedLayoutResult(constraint_space, break_token,
+                                      layout_result);
   }
 
   if (layout_result->Status() == NGLayoutResult::kSuccess &&
-      layout_result->UnpositionedFloats().IsEmpty())
+      layout_result->UnpositionedFloats().IsEmpty()) {
+    DCHECK(layout_result->PhysicalFragment());
     CopyFragmentDataToLayoutBox(constraint_space, *layout_result);
+
+    if (block_flow && FirstChild().IsInline()) {
+      block_flow->SetPaintFragment(layout_result->PhysicalFragment());
+    }
+  }
 
   return layout_result;
 }
