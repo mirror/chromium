@@ -15,6 +15,7 @@
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/themes/theme_service_factory.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/profiles/profile_chooser_view.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/keyed_service/content/browser_context_keyed_service_shutdown_notifier_factory.h"
@@ -29,8 +30,12 @@
 #include "ui/views/animation/ink_drop_impl.h"
 #include "ui/views/animation/ink_drop_mask.h"
 #include "ui/views/controls/button/label_button_border.h"
+#include "ui/views/window/button_background_painter_delegate.h"
+#include "ui/views/window/nav_button_provider.h"
 
-#if defined(OS_WIN)
+#if defined(OS_LINUX)
+#include "ui/views/linux_ui/linux_ui.h"
+#elif defined(OS_WIN)
 #include "base/win/windows_version.h"
 #include "chrome/browser/ui/views/frame/minimize_button_metrics_win.h"
 #endif
@@ -171,7 +176,8 @@ class ShutdownNotifierFactory
 
 AvatarButton::AvatarButton(views::ButtonListener* listener,
                            AvatarButtonStyle button_style,
-                           Profile* profile)
+                           Profile* profile,
+                           BrowserNonClientFrameView* frame_view)
     : LabelButton(listener, base::string16()),
       error_controller_(this, profile),
       profile_(profile),
@@ -201,12 +207,15 @@ AvatarButton::AvatarButton(views::ButtonListener* listener,
   DCHECK_EQ(AvatarButtonStyle::THEMED, button_style);
   apply_ink_drop = true;
 #endif
+  render_native_nav_buttons_ = frame_view->ShouldRenderNativeNavButtons();
+  if (render_native_nav_buttons_)
+    apply_ink_drop = false;
 
+  constexpr int kIconSize = 16;
   if (apply_ink_drop) {
     SetInkDropMode(InkDropMode::ON);
     SetFocusPainter(nullptr);
 #if defined(OS_LINUX)
-    constexpr int kIconSize = 16;
     set_ink_drop_base_color(SK_ColorWHITE);
     SetBorder(base::MakeUnique<AvatarButtonThemedBorder>());
     generic_avatar_ = gfx::CreateVectorIcon(kProfileSwitcherOutlineIcon,
@@ -214,7 +223,7 @@ AvatarButton::AvatarButton(views::ButtonListener* listener,
 #elif defined(OS_WIN)
     DCHECK_EQ(AvatarButtonStyle::NATIVE, button_style);
     SetBorder(views::CreateEmptyBorder(kBorderInsets));
-  } else if (button_style == AvatarButtonStyle::THEMED) {
+  } else {
     const int kNormalImageSet[] = IMAGE_GRID(IDR_AVATAR_THEMED_BUTTON_NORMAL);
     const int kHoverImageSet[] = IMAGE_GRID(IDR_AVATAR_THEMED_BUTTON_HOVER);
     const int kPressedImageSet[] = IMAGE_GRID(IDR_AVATAR_THEMED_BUTTON_PRESSED);
@@ -235,7 +244,41 @@ AvatarButton::AvatarButton(views::ButtonListener* listener,
     SetButtonAvatar(IDR_AVATAR_NATIVE_BUTTON_AVATAR);
     SetBorder(
         CreateThemedBorder(kNormalImageSet, kHoverImageSet, kPressedImageSet));
-#endif
+#endif  // defined(OS_WIN)
+  } else if (render_native_nav_buttons_) {
+    class AvatarButtonBackgroundPainterDelegate
+        : public views::ButtonBackgroundPainterDelegate {
+     public:
+      explicit AvatarButtonBackgroundPainterDelegate(
+          const AvatarButton* avatar_button)
+          : avatar_button_(avatar_button) {}
+
+      views::Button::ButtonState CalculateButtonState() const override {
+        const Browser* bubble_browser =
+            ProfileChooserView::GetCurrentBubbleBrowser();
+        views::Widget* browser_widget =
+            bubble_browser
+                ? BrowserView::GetBrowserViewForBrowser(bubble_browser)
+                      ->GetWidget()
+                : nullptr;
+        if (browser_widget == GetWidget())
+          return views::Button::STATE_PRESSED;
+        return avatar_button_->state();
+      }
+
+      const views::Widget* GetWidget() const override {
+        return avatar_button_->GetWidget();
+      }
+
+     private:
+      const AvatarButton* avatar_button_;
+    };
+    SetBackground(
+        frame_view->GetNavButtonProvider()->CreateAvatarButtonBackground(
+            std::make_unique<AvatarButtonBackgroundPainterDelegate>(this)));
+    SetBorder(nullptr);
+    generic_avatar_ = gfx::CreateVectorIcon(kProfileSwitcherOutlineIcon,
+                                            kIconSize, gfx::kPlaceholderColor);
   }
 
   profile_shutdown_notifier_ =
@@ -294,7 +337,13 @@ gfx::Size AvatarButton::GetMinimumSize() const {
 gfx::Size AvatarButton::CalculatePreferredSize() const {
   // TODO(estade): Calculate the height instead of hardcoding to 20 for the
   // not-condensible case.
+#if defined(OS_LINUX)
+  gfx::Size size = LabelButton::CalculatePreferredSize();
+  if (render_native_nav_buttons_)
+    size.set_height(20);
+#else
   gfx::Size size(LabelButton::CalculatePreferredSize().width(), 20);
+#endif
 
   if (IsCondensible()) {
     // Returns the normal size of the button (when it does not overlap the
@@ -381,6 +430,8 @@ void AvatarButton::OnProfileSupervisedUserIdChanged(
 
 void AvatarButton::OnWidgetDestroying(views::Widget* widget) {
   AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr);
+  if (render_native_nav_buttons_)
+    SchedulePaint();
   widget_observer_.Remove(widget);
 }
 
