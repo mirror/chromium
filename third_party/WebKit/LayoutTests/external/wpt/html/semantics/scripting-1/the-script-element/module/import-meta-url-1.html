@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script type="module">
+// Run with --js-flags=--harmony-import-meta, e.g.
+// $ ./third_party/WebKit/Tools/Scripts/run-blink-wptserve &
+// $ ./out/Release/content_shell --js-flags=--harmony-import-meta http://localhost:8001/html/semantics/scripting-1/the-script-element/module/import-meta-url-1.html
+
+import { importMetaUrlOnImportedModule } from "./import-meta-url.js";
+
+test(() => {
+  var expected = location.href.slice(0, location.href.lastIndexOf('/')) +
+      "/import-meta-url.js";
+  assert_equals(importMetaUrlOnImportedModule, expected);
+}, "import.meta.url");
+</script>
