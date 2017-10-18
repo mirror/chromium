@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c908b85_ad84b2bc",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-18T03:59:44Z",
+      "side": 1,
+      "message": "app_id1(2) is still used at L252,262-263",
+      "parentUuid": "156954b7_9a3b750a",
+      "revId": "0995e818451250eacf9c251ea8b890176906bda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac96cfc3_9bee0970",
         "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-17T23:59:42Z",
       "side": 1,
       "message": "Shouldn\u0027t this be a static_cast? Optionally avoid casting altogether by re-implementing IsItemPresentInMenu using MenuModel, maybe via GetModelAndIndexForCommandId kinda like this?:\n\nbool IsItemPresentInMenu(ui::MenuModel* menu, int command_id) {\n  ui::MenuModel* model \u003d menu;\n  int index \u003d 0;\n  return ui::MenuModel::GetModelAndIndexForCommandId(command_id, \u0026model, \u0026index);\n}",
+      "range": {
+        "startLine": 276,
+        "startChar": 6,
+        "endLine": 276,
+        "endChar": 22
+      },
+      "revId": "0995e818451250eacf9c251ea8b890176906bda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b30946_f17010ed",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-18T03:59:44Z",
+      "side": 1,
+      "message": "Your suggestion is nice!",
+      "parentUuid": "ac96cfc3_9bee0970",
       "range": {
         "startLine": 276,
         "startChar": 6,
