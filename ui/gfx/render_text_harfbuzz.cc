@@ -1640,8 +1640,15 @@ bool RenderTextHarfBuzz::ShapeRunWithFont(const base::string16& text,
     DCHECK_LE(infos[i].codepoint, std::numeric_limits<uint16_t>::max());
     run->glyphs[i] = static_cast<uint16_t>(infos[i].codepoint);
     run->glyph_to_char[i] = infos[i].cluster;
+
+    // Mac 10.9 gives a quirky offset for whitespace glyphs in RTL, which
+    // requires tests relying on the behavior of |glyph_width_for_test_| to also
+    // be given a zero x_offset, otherwise expectations get thrown off.
     const SkScalar x_offset =
-        HarfBuzzUnitsToSkiaScalar(hb_positions[i].x_offset);
+        (glyph_width_for_test_ > 0)
+            ? 0
+            : HarfBuzzUnitsToSkiaScalar(hb_positions[i].x_offset);
+
     const SkScalar y_offset =
         HarfBuzzUnitsToSkiaScalar(hb_positions[i].y_offset);
     run->positions[i].set(run->width + x_offset, -y_offset);
