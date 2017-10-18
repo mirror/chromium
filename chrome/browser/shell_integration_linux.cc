@@ -56,6 +56,10 @@
 
 namespace shell_integration {
 
+// Allows functions in this file to wait for process output.
+class ShellIntegrationLinuxScopedAllowBaseSyncPrimitives
+    : public base::ScopedAllowBaseSyncPrimitives {};
+
 namespace {
 
 // Helper to launch xdg scripts. We don't want them to ask any questions on the
@@ -79,6 +83,7 @@ bool LaunchXdgUtility(const std::vector<std::string>& argv, int* exit_code) {
   close(devnull);
   if (!process.IsValid())
     return false;
+  ShellIntegrationLinuxScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
   return process.WaitForExit(exit_code);
 }
 
@@ -106,6 +111,7 @@ bool GetChromeVersionOfScript(const std::string& script,
   argv.push_back("which");
   argv.push_back(script);
   std::string path_version;
+  ShellIntegrationLinuxScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
   if (base::GetAppOutput(base::CommandLine(argv), &path_version)) {
     // Remove trailing newline
     path_version.erase(path_version.length() - 1, 1);
@@ -183,6 +189,7 @@ DefaultWebClientState GetIsDefaultWebClient(const std::string& protocol) {
 
   std::string reply;
   int success_code;
+  ShellIntegrationLinuxScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
   bool ran_ok = base::GetAppOutputWithExitCode(base::CommandLine(argv), &reply,
                                                &success_code);
   if (ran_ok && success_code == EXIT_XDG_SETTINGS_SYNTAX_ERROR) {
@@ -249,6 +256,7 @@ bool IsFirefoxDefaultBrowser() {
 
   std::string browser;
   // We don't care about the return value here.
+  ShellIntegrationLinuxScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
   base::GetAppOutput(base::CommandLine(argv), &browser);
   return browser.find("irefox") != std::string::npos;
 }
