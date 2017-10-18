@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a7d6541_ddfe40d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-10-18T20:56:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d49df63_d44c5f9a",
+      "revId": "db1536a6df479a8dc73af58c534e7858b97601cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da1db9e5_a788a26d",
         "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
         "patchSetId": 3
@@ -30,6 +48,41 @@
       "writtenOn": "2017-10-17T02:12:53Z",
       "side": 1,
       "message": "Following tests are crashed:\n- editing/execCommand/remove-foramt-mixed-editable-crash.html\nCheck failed: IsOffsetInAnchor()\n- editing/style/make-text-writing-direction-inline-win-crash.html\nheck failed: start_position_ \u003c\u003d end_position_ (DIV (editable)@offsetInAnchor[2] vs. DIV (editable)@offsetInAnchor[1])\n- remove-foramt-mixed-editable-crash-crash.html\n\nSee https://storage.googleapis.com/chromium-layout-test-archives/mac_chromium_rel_ng/566711/layout-test-results/results.html\nfor details.",
+      "revId": "db1536a6df479a8dc73af58c534e7858b97601cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd37204_c32da7c0",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-10-18T20:56:57Z",
+      "side": 1,
+      "message": "There were two problems in my initial patch.\nFirst is at line 279: I used |visible_start| for start and end range \u003d(\nNow it is fixed.",
+      "parentUuid": "da1db9e5_a788a26d",
+      "revId": "db1536a6df479a8dc73af58c534e7858b97601cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015b000b_f5ddbeb4",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-10-18T20:56:57Z",
+      "side": 1,
+      "message": "Second was here.\nLooks like in Layout test, |start| and |end| positions can be reversed, so DCHECK in EphemeralRange was triggered.\nNow I tried to avoid that by constructing a EphemeralRange from the Range object(possibly collapsed). Is that acceptable?\n\nThis Range object should be created at that point, but can we avoid that somehow?\nCan we make a function like |EphemeralRange MakeLikeRange(const Position\u0026 start, const Position\u0026 end)| to mimic the Range behavior and do not create an Oilpan object?",
       "revId": "db1536a6df479a8dc73af58c534e7858b97601cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
