@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+#include "base/containers/flat_set.h"
 #include "base/memory/weak_ptr.h"
 #include "components/download/public/download_params.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -58,6 +59,7 @@ class BackgroundFetchDelegateImpl
                    const GURL& url,
                    const net::NetworkTrafficAnnotationTag& traffic_annotation,
                    const net::HttpRequestHeaders& headers) override;
+  void Abort(const std::string& job_unique_id) override;
 
   void OnDownloadStarted(const std::string& guid,
                          std::unique_ptr<content::BackgroundFetchResponse>);
@@ -107,6 +109,11 @@ class BackgroundFetchDelegateImpl
     const url::Origin origin;
     int completed_parts;
     const int total_parts;
+
+    // Set of DownloadService GUIDs that are currently downloading. They are
+    // added by DownloadUrl and are removed when the download completes, fails
+    // or is cancelled.
+    base::flat_set<std::string> current_download_guids;
 
     offline_items_collection::OfflineItem offline_item;
 
