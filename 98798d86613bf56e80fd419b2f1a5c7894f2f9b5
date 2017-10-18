@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82f21cb1_94ec2b10",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-18T08:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80e28689_b14f8090",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 3
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "296ce89d_3bbc4ff4",
         "filename": "services/shape_detection/BUILD.gn",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4de8f8f_11406229",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-18T08:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "296ce89d_3bbc4ff4",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "89bdc809_ff78a6bb",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-18T08:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d22ca032_632461a7",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 37
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88831e86_c0d4d5ef",
         "filename": "services/shape_detection/detection_utils_win.h",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a38ff73_f0320322",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-18T08:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88831e86_c0d4d5ef",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -464,6 +548,24 @@
     },
     {
       "key": {
+        "uuid": "0a692b67_52b5acdf",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-18T08:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1553dd02_6e153bce",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eebfb6bc_bff214df",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 2
@@ -478,6 +580,24 @@
       "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9ccf32_b9af9827",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-18T08:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eebfb6bc_bff214df",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -578,6 +698,30 @@
     },
     {
       "key": {
+        "uuid": "39fe410d_f5689638",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-18T08:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "640cd3b4_9c413501",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 48
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "561822e9_2217bedc",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 2
@@ -625,6 +769,30 @@
     },
     {
       "key": {
+        "uuid": "460167f6_77d0bf84",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-18T08:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8386b115_b0590bf3",
+      "range": {
+        "startLine": 222,
+        "startChar": 16,
+        "endLine": 222,
+        "endChar": 63
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1213fdd0_e4976fc0",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 2
@@ -639,6 +807,24 @@
       "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45188980_f5f03075",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-18T08:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1213fdd0_e4976fc0",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -782,6 +968,30 @@
       "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc028dce_f0928ddd",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-18T08:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c5b4a9f_fd8493d8",
+      "range": {
+        "startLine": 27,
+        "startChar": 36,
+        "endLine": 27,
+        "endChar": 53
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
