@@ -818,17 +818,11 @@ mojom("mojo_bindings") {
     "//mojo/common:common_custom_types",
     "//services/network/public/interfaces:interfaces",
     "//services/service_manager/public/interfaces",
-    "//storage/public/interfaces",
+    "//third_party/WebKit/common:mojo_platform_bindings",
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
     "//url/mojo:url_mojom_origin",
   ]
-
-  # //storage/public/interfaces is configured to be exported
-  # as STORAGE_COMMON, so override the dependencies to make it
-  # depend via //storage/common.
-  overridden_deps = [ "//storage/public/interfaces" ]
-  component_deps = [ "//storage/common" ]
 
   component_output_prefix = "blink_mojo_bindings"
 
