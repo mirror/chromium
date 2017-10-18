@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a34bd953_3da30478",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-18T23:26:34Z",
+      "side": 1,
+      "message": "nit: \"Hooray\" or \"Hurrah\", plz.\n\nnit: Ehhh, perhaps make the comment a little more to-the-point, e.g. \"On success, the fd in |handle| is no longer valid, so prevent it being double-close()\u0027d.\" or similar.",
+      "revId": "29c33da865b257f65c4f7c10e63f6dfcc755824a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7aeeaf_1f9e741f",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-18T23:26:34Z",
+      "side": 1,
+      "message": "nit: In Chromium we prefer skill, rather than rely on luck.",
+      "revId": "29c33da865b257f65c4f7c10e63f6dfcc755824a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef781b59_7c774043",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-18T23:26:34Z",
+      "side": 1,
+      "message": "nit: Personally I would be tempted to just close the if..else.. out here, and then have a single if(...ZX_OK) clause, without distinguishing the calls.",
+      "revId": "29c33da865b257f65c4f7c10e63f6dfcc755824a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1985cf75_324fae48",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-18T23:26:34Z",
+      "side": 1,
+      "message": "DCHECK-but-then-handle is an anti-pattern in Chromium; we should stick with DLOG(ERROR) and returning |false| - the real problem, I think, is that the failure result is ignored by something higher up the stack.\n\nIf we feel this effectively always means an unrecoverable caller error then we could replace this with a CHECK_EQ(result, ZX_OK), though.",
+      "revId": "29c33da865b257f65c4f7c10e63f6dfcc755824a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
