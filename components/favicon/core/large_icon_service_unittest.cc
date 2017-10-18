@@ -36,6 +36,7 @@
 namespace favicon {
 namespace {
 
+using testing::ElementsAre;
 using testing::IsEmpty;
 using testing::IsNull;
 using testing::Eq;
@@ -91,6 +92,14 @@ favicon_base::FaviconRawBitmapResult CreateTestBitmapResult(int w,
   result.icon_url = GURL(kDummyIconUrl);
   result.icon_type = favicon_base::TOUCH_ICON;
   CHECK(result.is_valid());
+  return result;
+}
+
+favicon_base::FaviconRawBitmapResult CreateTestBitmapResultWithIconUrl(
+    const GURL& icon_url) {
+  favicon_base::FaviconRawBitmapResult result =
+      CreateTestBitmapResult(64, 64, kTestColor);
+  result.icon_url = icon_url;
   return result;
 }
 
@@ -539,6 +548,63 @@ TEST_P(LargeIconServiceGetterTest, FallbackSinceTooPicky) {
   EXPECT_TRUE(HasBackgroundColor(*returned_fallback_style_, kTestColor));
   histogram_tester_.ExpectUniqueSample("Favicons.LargeIconService.FallbackSize",
                                        24, /*expected_count=*/1);
+}
+
+TEST_P(LargeIconServiceGetterTest, ShouldRecordUrlMismtaches) {
+  const std::string kUmaMetricName =
+      "Favicons.LargeIconService.BlacklistedURLMismatch";
+  const GURL kNonBlacklistedPageUrl1("http://www.foo.com/path");
+  const GURL kNonBlacklistedPageUrl2("http://www.bar.com/path");
+  const GURL kBlacklistedPageUrl1("http://www.google.com/path");
+  const GURL kBlacklistedPageUrl2("http://www.youtube.com/path");
+  const GURL kNonBlacklistedIconUrl1("http://www.foo.com/favicon.ico");
+  const GURL kNonBlacklistedIconUrl2("http://www.bar.com/favicon.ico");
+  const GURL kBlacklistedIconUrl1("http://www.google.com/favicon.ico");
+  const GURL kBlacklistedIconUrl2("http://www.youtube.com/favicon.ico");
+
+  // |kNonBlacklistedPageUrl1| and |kNonBlacklistedPageUrl1| are not in the
+  // blacklist, so don't contribute to the histogram.
+  InjectMockResult(kNonBlacklistedPageUrl1,
+                   CreateTestBitmapResultWithIconUrl(kNonBlacklistedIconUrl1));
+  InjectMockResult(kNonBlacklistedPageUrl2,
+                   CreateTestBitmapResultWithIconUrl(kNonBlacklistedIconUrl2));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kNonBlacklistedPageUrl1, 0, 0);
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kNonBlacklistedPageUrl2, 0, 0);
+  EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName), IsEmpty());
+
+  // Even if there is a mismatch, it's irrelevant if none of the URLs match the
+  // blacklist.
+  InjectMockResult(kNonBlacklistedPageUrl1,
+                   CreateTestBitmapResultWithIconUrl(kNonBlacklistedIconUrl2));
+  InjectMockResult(kNonBlacklistedPageUrl2,
+                   CreateTestBitmapResultWithIconUrl(kNonBlacklistedIconUrl1));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kNonBlacklistedPageUrl1, 0, 0);
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kNonBlacklistedPageUrl2, 0, 0);
+  EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName), IsEmpty());
+
+  // Mismatch between a blacklisted site and a non-blacklisted site should
+  // contribute to bucket 0.
+  InjectMockResult(kNonBlacklistedPageUrl1,
+                   CreateTestBitmapResultWithIconUrl(kBlacklistedIconUrl1));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kNonBlacklistedPageUrl1, 0, 0);
+  EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName),
+              ElementsAre(base::Bucket(/*min=*/0, /*count=*/1)));
+
+  // Matching pairs within the blacklist should contribute to bucket 0.
+  InjectMockResult(kBlacklistedPageUrl1,
+                   CreateTestBitmapResultWithIconUrl(kBlacklistedIconUrl1));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kBlacklistedPageUrl1, 0, 0);
+  EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName),
+              ElementsAre(base::Bucket(/*min=*/0, /*count=*/2)));
+
+  // Mismatch between a blacklisted site and another blacklisted site should
+  // contribute to bucket 1.
+  InjectMockResult(kBlacklistedPageUrl1,
+                   CreateTestBitmapResultWithIconUrl(kBlacklistedIconUrl2));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kBlacklistedPageUrl1, 0, 0);
+  EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName),
+              ElementsAre(base::Bucket(/*min=*/0, /*count=*/2),
+                          base::Bucket(/*min=*/1, /*count=*/1)));
 }
 
 // Every test will appear with suffix /0 (param false) and /1 (param true), e.g.
