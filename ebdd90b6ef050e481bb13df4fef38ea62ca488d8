@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b5d4a231_d5f2533d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-18T22:40:11Z",
+      "side": 1,
+      "message": "No. Run(true) adds positioned descendants. This loop adds\nunpositioned descendants.\nThe reason for Run(false) here is that this node is \nalready in Legacy positioned list, we should not add it again.",
+      "parentUuid": "4c10392e_f1fe0d58",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 182,
+        "endChar": 16
+      },
+      "revId": "ebdd90b6ef050e481bb13df4fef38ea62ca488d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acbb262b_8811f0ce",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "817e5a32_8f724555",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-18T22:40:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acbb262b_8811f0ce",
+      "revId": "ebdd90b6ef050e481bb13df4fef38ea62ca488d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cc2d7e7_5f658301",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-18T22:12:25Z",
       "side": 1,
       "message": "DCHECK(cached_result_) ?",
+      "range": {
+        "startLine": 306,
+        "startChar": 9,
+        "endLine": 306,
+        "endChar": 23
+      },
+      "revId": "ebdd90b6ef050e481bb13df4fef38ea62ca488d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd06e74_1f008a67",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-18T22:40:11Z",
+      "side": 1,
+      "message": "Are you sure? Caller might want to check that the result was not cached.",
+      "parentUuid": "7cc2d7e7_5f658301",
       "range": {
         "startLine": 306,
         "startChar": 9,
@@ -111,6 +177,54 @@
     },
     {
       "key": {
+        "uuid": "7956ff6e_de3e2de4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-18T22:40:11Z",
+      "side": 1,
+      "message": "Before, relayout_children did not make any difference because all positioned objects needed layout.\nNow, most of the children have already been positioned by NG, and we do not want to relayout them again.",
+      "parentUuid": "a98ed0ee_d1281961",
+      "range": {
+        "startLine": 331,
+        "startChar": 11,
+        "endLine": 331,
+        "endChar": 34
+      },
+      "revId": "ebdd90b6ef050e481bb13df4fef38ea62ca488d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "342d7965_7afc8ade",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-18T22:40:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87643bce_0b7f662b",
+      "range": {
+        "startLine": 331,
+        "startChar": 35,
+        "endLine": 331,
+        "endChar": 40
+      },
+      "revId": "ebdd90b6ef050e481bb13df4fef38ea62ca488d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eedc934b_e558322a",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.h",
         "patchSetId": 5
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "137d3003_599efd0c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-18T22:40:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eedc934b_e558322a",
+      "revId": "ebdd90b6ef050e481bb13df4fef38ea62ca488d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b502de7_13c0687f",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part_test.cc",
         "patchSetId": 5
@@ -142,6 +274,24 @@
       "revId": "ebdd90b6ef050e481bb13df4fef38ea62ca488d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "434d350e_4e60c722",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-18T22:40:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b502de7_13c0687f",
+      "revId": "ebdd90b6ef050e481bb13df4fef38ea62ca488d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
