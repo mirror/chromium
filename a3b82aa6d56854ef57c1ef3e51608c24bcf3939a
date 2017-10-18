@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "21c637a9_ebfc5159",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-18T01:39:58Z",
+      "side": 1,
+      "message": "Oh, sorry, I thought you meant the whole #ifdef block. Done.",
+      "parentUuid": "b9138590_88fd063d",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 76
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b04a1ad_722d9eb0",
         "filename": "third_party/zlib/google/zip.cc",
         "patchSetId": 5
@@ -155,6 +179,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "0b04a1ad_722d9eb0",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 42
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc1dacca_dd8142e3",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-18T01:39:58Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "bcac0823_dd37afe7",
       "range": {
         "startLine": 119,
         "startChar": 0,
@@ -238,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "51fc2677_55850c8e",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-18T01:39:58Z",
+      "side": 1,
+      "message": "That\u0027s fair, I moved it.",
+      "parentUuid": "ebd451c5_be913ec6",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 3
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a4190c3_aeb674fe",
         "filename": "third_party/zlib/google/zip.cc",
         "patchSetId": 5
@@ -282,6 +354,30 @@
       "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2523007c_c55af8d6",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-18T01:39:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c8e269db_0ea95a40",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 14
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -379,6 +475,30 @@
     },
     {
       "key": {
+        "uuid": "9b1aadaf_03bd7fe5",
+        "filename": "third_party/zlib/google/zip_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-18T01:39:58Z",
+      "side": 1,
+      "message": "Resolving.",
+      "parentUuid": "b2d40978_ff5abafc",
+      "range": {
+        "startLine": 108,
+        "startChar": 20,
+        "endLine": 108,
+        "endChar": 46
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf5cabae_9a58e8af",
         "filename": "third_party/zlib/google/zip_writer.cc",
         "patchSetId": 5
@@ -423,6 +543,30 @@
       "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a5b4b9_72f2c69d",
+        "filename": "third_party/zlib/google/zip_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-18T01:39:58Z",
+      "side": 1,
+      "message": "Resolving.",
+      "parentUuid": "872795d0_10a103c3",
+      "range": {
+        "startLine": 110,
+        "startChar": 20,
+        "endLine": 110,
+        "endChar": 48
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -564,6 +708,30 @@
       "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff918c44_dc49c0d8",
+        "filename": "third_party/zlib/google/zip_writer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-18T01:39:58Z",
+      "side": 1,
+      "message": "Resolving.",
+      "parentUuid": "ccdb9708_5aa15dda",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 40
+      },
+      "revId": "a3b82aa6d56854ef57c1ef3e51608c24bcf3939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
