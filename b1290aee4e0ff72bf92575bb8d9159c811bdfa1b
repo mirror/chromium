@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0c76be6_177c02c5",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-18T18:41:22Z",
+      "side": 1,
+      "message": "optional nit: The code would probably be a bit more readable with:\n\nproperties: {\n  ...\n  assistantOn_: {\n    type: Boolean,\n    computed: \u0027isAssistantTurnedOn_(arcEnabled, voiceInteractionValuePropAccepted)\u0027,\n  }\n  ...\n\nThen we can just use |assistantOn_| (or |assistantTurnedOn_| if you prefer) on line 122 and in the HTML.\n\n(I would also then rename this \u0027coputeAssistantOn\u0027)",
+      "revId": "b1290aee4e0ff72bf92575bb8d9159c811bdfa1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
