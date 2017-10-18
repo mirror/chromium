@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aed87588_bbbf863e",
+        "filename": "components/machine_intelligence/proto/ranker_example.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-18T03:25:40Z",
+      "side": 1,
+      "message": "I am not sure it is good practice to refer to google3 code in chromium. I think it would make more sense the other around, to point to this proto from its mirrored proto in google3.\nAnd, in fact, there is no need for both protos to be exactly in sync, since they are not logged. \nSo, I would not mention it here, but I\u0027ll make a note to add a comment in google3.",
+      "parentUuid": "864e0e05_967f4a43",
+      "range": {
+        "startLine": 5,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 29
+      },
+      "revId": "a2c8c41dabec77799bbf9e6b645535ce83822597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9a084ce_f1e10a9f",
         "filename": "components/machine_intelligence/ranker_example_util.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f13a0697_ce31dfab",
+        "filename": "components/machine_intelligence/ranker_example_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-18T03:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9a084ce_f1e10a9f",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "a2c8c41dabec77799bbf9e6b645535ce83822597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "959c8f8d_febe0cf9",
         "filename": "components/machine_intelligence/ranker_example_util.h",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "a2c8c41dabec77799bbf9e6b645535ce83822597",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3034f133_7c05b929",
+        "filename": "components/machine_intelligence/ranker_example_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-18T03:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "959c8f8d_febe0cf9",
+      "range": {
+        "startLine": 17,
+        "startChar": 53,
+        "endLine": 17,
+        "endChar": 60
+      },
+      "revId": "a2c8c41dabec77799bbf9e6b645535ce83822597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
