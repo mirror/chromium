@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61320cc3_e8503df9",
+        "filename": "android_webview/glue/java/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-18T23:47:23Z",
+      "side": 1,
+      "message": "these two are already in content_public?",
+      "revId": "6a74e6863f0a4b27a2a7177914dd2c9ce0af62a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b249c496_204203d0",
+        "filename": "components/gcm_driver/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-18T23:47:23Z",
+      "side": 1,
+      "message": "you can just remove this instead, if the dependency is not needed",
+      "revId": "6a74e6863f0a4b27a2a7177914dd2c9ce0af62a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
