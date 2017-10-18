@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c4073ce_bca8dfee",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-18T13:44:53Z",
+      "side": 1,
+      "message": "Should we keep this at zero if the max count is zero? Just thinking of a case where you run a bunch of tasks and then enable starvation protection and immediately get advanced to the next run time.",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 24
+      },
+      "revId": "55135543a0713808ee2bba832b41a1e9bcf2b6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
