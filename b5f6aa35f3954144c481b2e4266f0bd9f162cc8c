@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d2265ec6_37b0ef20",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-18T00:04:29Z",
+      "side": 1,
+      "message": "As I mentioned in a reply to brettw, I\u0027m currently blocked on procuring a Windows machine for at least a week. I intend to implement it as soon as I receive it, but would like to move ahead with this change to unblock the follow-up changes that depend on it.\n\n#error seems reasonable now that this is a separate class, but given that this would be a breaking change I\u0027m unclear what platforms should be supported before that change is made. Linux, OS X, Windows, iOS, Android, anything else? I\u0027m not sure how platforms like FreeBSD are handled, are those third-party platforms which would have to upstream fixes back?",
+      "parentUuid": "4744f4a9_8323e637",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0dec68e9_6933fbe3",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f25726c_f5600256",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-18T00:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dec68e9_6933fbe3",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "83719aa9_1a5a95b2",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-18T00:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e865f8e_354d36ec",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dc8648f_34c36550",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa69251_4dbedb69",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-18T00:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dc8648f_34c36550",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "79f3fddb_ecdc18b0",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-18T00:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b084eaf3_f94f210f",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "012d7607_76d48f3c",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 5
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "dde3b406_1dae39a2",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-18T00:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "012d7607_76d48f3c",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a14a161d_3d7c5d3d",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 5
@@ -118,6 +226,24 @@
       "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5e7ed9_2e47791b",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-18T00:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a14a161d_3d7c5d3d",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "00a0df5b_bb184858",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-18T00:04:29Z",
+      "side": 1,
+      "message": "Yes! Thanks for catching it.",
+      "parentUuid": "a96e1d4c_401ed9b1",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "beb2bf86_af2c6162",
         "filename": "base/memory/protected_memory_posix.cc",
         "patchSetId": 5
@@ -169,6 +313,24 @@
       "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad119b3d_173a40c3",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-18T00:04:29Z",
+      "side": 1,
+      "message": "I think this is no longer true per https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Static-variables but I didn\u0027t know about LazyInstance and it\u0027s actually cleaner here so I\u0027m using it--thanks!",
+      "parentUuid": "beb2bf86_af2c6162",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "e046720a_5ba92caa",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-18T00:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a10020b_03ef8954",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e56f6df0_3c7a93e2",
         "filename": "base/memory/protected_memory_posix.cc",
         "patchSetId": 5
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "871cf709_10b4442c",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-18T00:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e56f6df0_3c7a93e2",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fa090d3_8b97785a",
         "filename": "base/memory/protected_memory_unittest.cc",
         "patchSetId": 5
@@ -220,6 +418,24 @@
       "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5bc2e01_fd912450",
+        "filename": "base/memory/protected_memory_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-18T00:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fa090d3_8b97785a",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
