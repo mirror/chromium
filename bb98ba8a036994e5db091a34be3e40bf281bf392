@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a3dfc697_f155f1f8",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-18T20:59:21Z",
+      "side": 1,
+      "message": "I thought so too but it gives an error:\nno viable conversion from returned value of type \u0027std::unique_ptr\u003cWriters\u003e\u0027 to function return type \u0027bool\u0027",
+      "parentUuid": "ad51fa8f_63437a57",
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0789214a_2a391935",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 64
@@ -39,6 +57,30 @@
       "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf533f3a_19cb8eb6",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-18T20:59:21Z",
+      "side": 1,
+      "message": "This is preserving the original condition that network transaction should be present in order to attempt stopcaching.",
+      "parentUuid": "0789214a_2a391935",
+      "range": {
+        "startLine": 443,
+        "startChar": 2,
+        "endLine": 445,
+        "endChar": 25
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "893e8345_f86fee69",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 2871,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-18T20:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91a12a47_c29e6084",
+      "range": {
+        "startLine": 2871,
+        "startChar": 11,
+        "endLine": 2871,
+        "endChar": 18
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adab6110_39863e20",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 64
@@ -111,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "30f42249_1eb1b99e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 3327,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-18T20:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adab6110_39863e20",
+      "range": {
+        "startLine": 3325,
+        "startChar": 0,
+        "endLine": 3327,
+        "endChar": 75
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b4616b5_f8118659",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 64
@@ -131,6 +221,30 @@
       "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e054d81d_fc020604",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-18T20:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b4616b5_f8118659",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 13
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
