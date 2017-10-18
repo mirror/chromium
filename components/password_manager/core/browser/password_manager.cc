@@ -70,6 +70,48 @@ bool URLsEqualUpToHttpHttpsSubstitution(const GURL& a, const GURL& b) {
   return false;
 }
 
+bool IsPasswordFormReappeared(const autofill::PasswordForm& observed_form,
+                              const autofill::PasswordForm& submitted_form) {
+  if (observed_form.action.is_valid() &&
+      URLsEqualUpToHttpHttpsSubstitution(submitted_form.action,
+                                         observed_form.action)) {
+    return true;
+  }
+
+  // Do not try to match forms if we are seeing a less secure action than the
+  // submitted one.
+  if (submitted_form.action.SchemeIsCryptographic() &&
+      !observed_form.action.SchemeIsCryptographic()) {
+    return false;
+  }
+
+  // Don't try to match forms if the action URL hosts/ports are not equal.
+  if (observed_form.action.host_piece() != submitted_form.action.host_piece() ||
+      observed_form.action.port_piece() != submitted_form.action.port_piece()) {
+    return false;
+  }
+
+  // Match the form if username and password fields are same.
+  if (base::EqualsCaseInsensitiveASCII(observed_form.username_element,
+                                       submitted_form.username_element) &&
+      base::EqualsCaseInsensitiveASCII(observed_form.password_element,
+                                       submitted_form.password_element)) {
+    return true;
+  }
+
+  // Match the form if the observed username field has the same value as in
+  // the submitted form.
+  if (!submitted_form.username_value.empty() &&
+      !observed_form.username_element.empty() &&
+      observed_form.username_value == submitted_form.username_value &&
+      !observed_form.password_element.empty() &&
+      observed_form.password_value.empty()) {
+    return true;
+  }
+
+  return false;
+}
+
 // Helper UMA reporting function for differences in URLs during form submission.
 void RecordWhetherTargetDomainDiffers(const GURL& src, const GURL& target) {
   bool target_domain_differs =
@@ -702,10 +744,9 @@ void PasswordManager::OnPasswordFormsRendered(
         // HTTP<->HTTPS substitution for now. If it becomes more complex, it may
         // make sense to consider modifying and using
         // PasswordFormManager::DoesManage for it.
-        if (all_visible_forms_[i].action.is_valid() &&
-            URLsEqualUpToHttpHttpsSubstitution(
-                provisional_save_manager_->pending_credentials().action,
-                all_visible_forms_[i].action)) {
+        if (IsPasswordFormReappeared(
+                all_visible_forms_[i],
+                provisional_save_manager_->pending_credentials())) {
           if (provisional_save_manager_
                   ->is_possible_change_password_form_without_username() &&
               AreAllFieldsEmpty(all_visible_forms_[i]))
