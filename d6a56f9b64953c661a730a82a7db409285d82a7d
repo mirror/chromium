@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7ca65298_40f9b5cc",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-18T05:25:20Z",
+      "side": 1,
+      "message": "Added some comments about what the users of the system should (and shouldn\u0027t) do.",
+      "parentUuid": "d88f1840_069acb10",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81291640_e2a10b84",
         "filename": "base/memory/swap_thrashing_monitor.h",
         "patchSetId": 6
