@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39e256af_88e798d1",
+        "filename": "remoting/webapp/base/js/xmpp_login_handler.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115938
+      },
+      "writtenOn": "2017-10-18T17:11:53Z",
+      "side": 1,
+      "message": "We should probably log the error here as well.",
+      "range": {
+        "startLine": 336,
+        "startChar": 18,
+        "endLine": 336,
+        "endChar": 22
+      },
+      "revId": "98b880a37f651b1e773c4457426eb058b9db3d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
