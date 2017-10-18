@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d2d80c2_d03ba38f",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-18T14:05:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4709c9c0_0a496e5c",
+      "range": {
+        "startLine": 89,
+        "startChar": 31,
+        "endLine": 89,
+        "endChar": 36
+      },
+      "revId": "5b075e3a46605f32860b54543170c2f85420e1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9e53fdf_83ad8375",
         "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "5b075e3a46605f32860b54543170c2f85420e1ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c321d3f2_762538fd",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-18T14:05:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9e53fdf_83ad8375",
+      "range": {
+        "startLine": 93,
+        "startChar": 47,
+        "endLine": 93,
+        "endChar": 51
+      },
+      "revId": "5b075e3a46605f32860b54543170c2f85420e1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bb5d8b52_4d4ce8a7",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-18T14:05:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f2a6ba3_49fcfd28",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 124,
+        "endChar": 21
+      },
+      "revId": "5b075e3a46605f32860b54543170c2f85420e1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb3d1b2c_5f3e1bd8",
         "filename": "content/browser/renderer_host/media/audio_input_renderer_host.h",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2968be73_973df584",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-18T14:05:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb3d1b2c_5f3e1bd8",
+      "range": {
+        "startLine": 183,
+        "startChar": 13,
+        "endLine": 183,
+        "endChar": 17
+      },
+      "revId": "5b075e3a46605f32860b54543170c2f85420e1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d494ea2_129188b7",
         "filename": "media/audio/audio_input_delegate.h",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "5b075e3a46605f32860b54543170c2f85420e1ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c65c043_d235c7e6",
+        "filename": "media/audio/audio_input_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-18T14:05:02Z",
+      "side": 1,
+      "message": "This is called when the AudioManager stream has been constructed; I clarified the comment. Also changed \"playout\" to \"recording\".",
+      "parentUuid": "0d494ea2_129188b7",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 13
+      },
+      "revId": "5b075e3a46605f32860b54543170c2f85420e1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e22dcc23_43e0e156",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-18T14:05:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e1e0176_922a44b6",
+      "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b7ad99f_4dbff1b1",
         "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ae73bc_9f88536e",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-18T14:05:02Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "9b7ad99f_4dbff1b1",
+      "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "58d297a7_e2b80432",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-18T14:05:02Z",
+      "side": 1,
+      "message": "Not possible here, since TestAudioThread requires a message loop when stopping, and the message loop we\u0027re using belongs to the thread bundle.",
+      "parentUuid": "e578a9e4_3bfce9f7",
+      "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36a4100e_d1c42184",
         "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8930e826_71eda14d",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-18T14:05:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36a4100e_d1c42184",
+      "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9cacfab7_f64ab926",
+        "filename": "content/browser/renderer_host/media/audio_input_delegate_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-18T14:05:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e7c87fd_9e72dcae",
+      "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "692d07bc_9e40d4b3",
         "filename": "content/browser/renderer_host/media/audio_input_renderer_host_unittest.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa70fe97_d5bf9036",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-18T14:05:02Z",
+      "side": 1,
+      "message": "I\u0027m impressed you saw this, considering I was just adding a header to this file :D. Fixed.",
+      "parentUuid": "692d07bc_9e40d4b3",
+      "revId": "889fd588f24df2b499d06695cf569bdca8a8f628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
