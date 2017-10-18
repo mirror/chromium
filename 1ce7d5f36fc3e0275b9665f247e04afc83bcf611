@@ -16,6 +16,24 @@
       "revId": "1ce7d5f36fc3e0275b9665f247e04afc83bcf611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee55dfd8_43e77b85",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-18T16:57:37Z",
+      "side": 1,
+      "message": "I agree this is confusing but it\u0027s tricky to DCHECK without more code cleanup and/or changing UGI behavior.\n\nFirst I need to clarify that I added checkIfMain only to wrap the UserGestureIndicator::*ThreadSafe() calls.  So yes, when only v2 would be there, the second bool would be gone.\n\nNow the first param here (LocalFrame ptr) applies only to V2 plus the non-UGI based part of V1 (the sticky bit).  But the second param (checkIfMain) applies only to V1 (UGI-based part).  Conceptually \"frame\u003d\u003dnull\" should be equivalent to \"checkIfMain\u003d\u003dtrue\" but our existing UGI-based code has exceptions to it:\n- We seem to have more checkIfMain than needed:\n  https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/exported/WebUserGestureIndicator.cpp?rcl\u003dda3f2b24e62846c25c5c68883e288b014bff1085\u0026l\u003d48\n\n- We have in-main-thread callers that pass null frame even though they don\u0027t need to check-if-main. crbug.com/730690.\n\nAdded a TODO to defer this, ptal if it addresses your concern.",
+      "parentUuid": "62db21a5_ce988880",
+      "revId": "1ce7d5f36fc3e0275b9665f247e04afc83bcf611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
