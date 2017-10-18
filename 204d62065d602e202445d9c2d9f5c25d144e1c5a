@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b1101c43_95cfaf40",
+        "filename": "ui/base/menu_source_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-18T18:15:32Z",
+      "side": 1,
+      "message": "Done\n\nFile deleted.",
+      "parentUuid": "709d7e47_2101290c",
+      "revId": "204d62065d602e202445d9c2d9f5c25d144e1c5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76ca53ef_3446548e",
         "filename": "ui/base/menu_source_type.h",
         "patchSetId": 5
@@ -69,6 +87,24 @@
       "revId": "204d62065d602e202445d9c2d9f5c25d144e1c5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12dbc06b_551b1078",
+        "filename": "ui/base/menu_source_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-18T18:15:32Z",
+      "side": 1,
+      "message": "Done\n\nGreat, adding the comment worked, no need to separate it out, thanks!",
+      "parentUuid": "a1a9dc76_f304b1f7",
+      "revId": "204d62065d602e202445d9c2d9f5c25d144e1c5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
