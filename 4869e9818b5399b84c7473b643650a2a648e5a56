@@ -81,6 +81,24 @@
       "revId": "4869e9818b5399b84c7473b643650a2a648e5a56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ac05ab_67708837",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 5242,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-18T13:12:36Z",
+      "side": 1,
+      "message": "Mihai, can you confirm that none of the ManageAccounts methods can be triggered without user action?\n\nWe had code in place to specially handle this case before, so I don\u0027t want to remove it without being very confident that it was never used.",
+      "parentUuid": "2fa82fc3_6a451d18",
+      "revId": "4869e9818b5399b84c7473b643650a2a648e5a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
