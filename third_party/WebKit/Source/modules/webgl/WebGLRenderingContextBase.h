@@ -653,6 +653,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   void DrawingBufferClientRestoreFramebufferBinding() override;
   void DrawingBufferClientRestorePixelUnpackBufferBinding() override;
   void DrawingBufferClientRestorePixelPackBufferBinding() override;
+  bool DrawingBufferClientCaptureGLErrorsFromContext() override;
+  void DrawingBufferClientForceLostContext() override;
 
   virtual void DestroyContext();
   void MarkContextChanged(ContentChangeType);
@@ -753,7 +755,6 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   GLint max_cube_map_texture_size_;
   GLint max3d_texture_size_;
   GLint max_array_texture_layers_;
-  GLint max_renderbuffer_size_;
   GLint max_viewport_dims_[2];
   GLint max_texture_level_;
   GLint max_cube_map_texture_level_;
@@ -939,6 +940,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   Vector<GLenum> lost_context_errors_;
   // Other errors raised by synthesizeGLError().
   Vector<GLenum> synthetic_errors_;
+  // Real GL errors that were obtained from the underlying context.
+  Vector<GLenum> real_gl_errors_;
 
   bool is_web_gl2_formats_types_added_;
   bool is_web_gl2_tex_image_source_formats_types_added_;

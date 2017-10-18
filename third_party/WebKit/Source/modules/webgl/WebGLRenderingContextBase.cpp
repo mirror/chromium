@@ -268,15 +268,14 @@ void WebGLRenderingContextBase::RestoreEvictedContext(
       continue;
     }
 
-    IntSize desired_size = DrawingBuffer::AdjustSize(
-        evicted_context->ClampedCanvasSize(), IntSize(),
-        evicted_context->max_texture_size_);
-
-    // If there's room in the pixel budget for this context, restore it.
-    if (!desired_size.IsEmpty()) {
-      ForciblyEvictedContexts().erase(evicted_context);
-      evicted_context->ForceRestoreContext();
-    }
+    // There used to be a notion of pixel budget for the back buffers of
+    // all WebGL contexts hosted in a renderer process, but that's
+    // essentially been removed at this point. It's difficult to get a
+    // guaranteed pointer to a non-null WebGraphicsContext3DProvider here
+    // to call DrawingBuffer::AdjustSize, so don't gate this logic on
+    // whether AdjustSize returned a non-empty rectangle.
+    ForciblyEvictedContexts().erase(evicted_context);
+    evicted_context->ForceRestoreContext();
     break;
   }
 }
@@ -1154,8 +1153,6 @@ void WebGLRenderingContextBase::InitializeNewContext() {
   }
   max_cube_map_texture_level_ = WebGLTexture::ComputeLevelCount(
       max_cube_map_texture_size_, max_cube_map_texture_size_, 1);
-  max_renderbuffer_size_ = 0;
-  ContextGL()->GetIntegerv(GL_MAX_RENDERBUFFER_SIZE, &max_renderbuffer_size_);
 
   // These two values from EXT_draw_buffers are lazily queried.
   max_draw_buffers_ = 0;
@@ -1530,32 +1527,25 @@ void WebGLRenderingContextBase::Reshape(int width, int height) {
     }
   }
 
-  // This is an approximation because at WebGLRenderingContextBase level we
-  // don't know if the underlying FBO uses textures or renderbuffers.
-  GLint max_size = std::min(max_texture_size_, max_renderbuffer_size_);
-  GLint max_width = std::min(max_size, max_viewport_dims_[0]);
-  GLint max_height = std::min(max_size, max_viewport_dims_[1]);
-  width = Clamp(width, 1, max_width);
-  height = Clamp(height, 1, max_height);
-
-  // Limit drawing buffer area to 4k*4k to avoid memory exhaustion. Width or
-  // height may be larger than 4k as long as it's within the max viewport
-  // dimensions and total area remains within the limit.
-  // For example: 5120x2880 should be fine.
-  const int kMaxArea = 4096 * 4096;
-  int current_area = width * height;
-  if (current_area > kMaxArea) {
-    // If we've exceeded the area limit scale the buffer down, preserving
-    // ascpect ratio, until it fits.
-    float scale_factor =
-        sqrtf(static_cast<float>(kMaxArea) / static_cast<float>(current_area));
-    width = std::max(1, static_cast<int>(width * scale_factor));
-    height = std::max(1, static_cast<int>(height * scale_factor));
-  }
-
   // We don't have to mark the canvas as dirty, since the newly created image
   // buffer will also start off clear (and this matches what reshape will do).
-  GetDrawingBuffer()->Resize(IntSize(width, height));
+  bool resized_successfully = false;
+  do {
+    resized_successfully = GetDrawingBuffer()->Resize(IntSize(width, height));
+    if (!resized_successfully) {
+      // Attempt to forcibly lose the oldest context, if there are any that
+      // aren't ourselves.
+      if (OldestContext() != this) {
+        ForciblyLoseOldestContext(
+            "Ran out of memory while resizing another canvas");
+      } else {
+        // Lose this context to clearly indicate to the end user that the
+        // reshape failed.
+        ForceLostContext(kSyntheticLostContext, kManual);
+        return;
+      }
+    }
+  } while (!resized_successfully);
 
   if (buffer) {
     ContextGL()->BindBuffer(GL_PIXEL_UNPACK_BUFFER,
@@ -2751,6 +2741,12 @@ GLenum WebGLRenderingContextBase::getError() {
   if (!synthetic_errors_.IsEmpty()) {
     GLenum error = synthetic_errors_.front();
     synthetic_errors_.EraseAt(0);
+    return error;
+  }
+
+  if (!real_gl_errors_.IsEmpty()) {
+    GLenum error = real_gl_errors_.front();
+    real_gl_errors_.EraseAt(0);
     return error;
   }
 
@@ -6406,6 +6402,37 @@ void WebGLRenderingContextBase::
     DrawingBufferClientRestorePixelUnpackBufferBinding() {}
 void WebGLRenderingContextBase::
     DrawingBufferClientRestorePixelPackBufferBinding() {}
+
+bool WebGLRenderingContextBase::
+    DrawingBufferClientCaptureGLErrorsFromContext() {
+  if (isContextLost())
+    return false;
+
+  // This gets called during initialization, before the DrawingBuffer's
+  // been created.
+  if (!ContextGL())
+    return true;
+
+  std::set<GLenum> errors_seen;
+  while (true) {
+    GLenum err = ContextGL()->GetError();
+    if (err == GL_NO_ERROR)
+      break;
+    auto insert_result = errors_seen.insert(err);
+    if (!insert_result.second) {
+      // This shouldn't happen; each type of error should be returned
+      // at most once. This indicates something deep is wrong, perhaps
+      // that the context was spontaneously lost.
+      return false;
+    }
+    real_gl_errors_.push_back(err);
+  }
+  return true;
+}
+
+void WebGLRenderingContextBase::DrawingBufferClientForceLostContext() {
+  ForceLostContext(kSyntheticLostContext, kManual);
+}
 
 ScriptValue WebGLRenderingContextBase::GetBooleanParameter(
     ScriptState* script_state,

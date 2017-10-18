@@ -102,7 +102,8 @@ class CloudStorageIntegrationTestBase(gpu_integration_test.GpuIntegrationTest):
       default=default_generated_data_dir)
 
   def _CompareScreenshotSamples(self, tab, screenshot, expected_colors,
-                                device_pixel_ratio, test_machine_name):
+                                device_pixel_ratio, test_machine_name,
+                                extra_detail_string=''):
     # First scan through the expected_colors and see if there are any scale
     # factor overrides that would preempt the device pixel ratio. This
     # is mainly a workaround for complex tests like the Maps test.
@@ -156,13 +157,16 @@ class CloudStorageIntegrationTestBase(gpu_integration_test.GpuIntegrationTest):
               expectation["color"][1],
               expectation["color"][2])
           if not actual_color.IsEqual(expected_color, expectation["tolerance"]):
+            if extra_detail_string:
+              extra_detail_string = ' ' + extra_detail_string
             self.fail('Expected pixel at ' + str(location) +
                 ' (actual pixel (' + str(x) + ', ' + str(y) + ')) ' +
                 ' to be ' +
                 str(expectation["color"]) + " but got [" +
                 str(actual_color.r) + ", " +
                 str(actual_color.g) + ", " +
-                str(actual_color.b) + "]")
+                str(actual_color.b) + "]" +
+                extra_detail_string)
 
   ###
   ### Routines working with the local disk (only used for local
@@ -342,7 +346,8 @@ class CloudStorageIntegrationTestBase(gpu_integration_test.GpuIntegrationTest):
       error_image_cloud_storage_bucket, upload_dir)
 
   def _ValidateScreenshotSamples(self, tab, url,
-                                 screenshot, expectations, device_pixel_ratio):
+                                 screenshot, expectations, device_pixel_ratio,
+                                 extra_detail_string=''):
     """Samples the given screenshot and verifies pixel color values.
        The sample locations and expected color values are given in expectations.
        In case any of the samples do not match the expected color, it raises
@@ -352,7 +357,8 @@ class CloudStorageIntegrationTestBase(gpu_integration_test.GpuIntegrationTest):
       self._CompareScreenshotSamples(
         tab, screenshot, expectations,
         device_pixel_ratio,
-        self.GetParsedCommandLineOptions().test_machine_name)
+        self.GetParsedCommandLineOptions().test_machine_name,
+        extra_detail_string=extra_detail_string)
     except Exception:
       # An exception raised from self.fail() indicates a failure.
       image_name = self._UrlToImageName(url)

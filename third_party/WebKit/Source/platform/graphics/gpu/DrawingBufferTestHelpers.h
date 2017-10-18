@@ -316,6 +316,8 @@ class GLES2InterfaceForTests : public gpu::gles2::GLES2InterfaceStub,
   void DrawingBufferClientRestorePixelPackBufferBinding() override {
     state_.pixel_pack_buffer_binding = saved_state_.pixel_pack_buffer_binding;
   }
+  bool DrawingBufferClientCaptureGLErrorsFromContext() override { return true; }
+  void DrawingBufferClientForceLostContext() override {}
 
   // Testing methods.
   gpu::SyncToken MostRecentlyWaitedSyncToken() const {
