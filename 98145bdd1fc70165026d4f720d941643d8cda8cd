@@ -22,6 +22,30 @@
       "revId": "98145bdd1fc70165026d4f720d941643d8cda8cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc36a7f0_e181bb68",
+        "filename": "components/autofill/core/browser/address_normalization_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-18T21:47:22Z",
+      "side": 1,
+      "message": "See the example here: https://www.chromium.org/developers/coding-style/cpp-dos-and-donts",
+      "parentUuid": "b61949ae_99cf4606",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "98145bdd1fc70165026d4f720d941643d8cda8cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
