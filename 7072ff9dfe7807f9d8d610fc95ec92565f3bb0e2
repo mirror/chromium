@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "171b90f6_dae28bec",
+        "filename": "content/browser/renderer_host/p2p/socket_host_tcp.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-18T17:39:59Z",
+      "side": 1,
+      "message": "Please call it kTcpReadBufferSize (lowercase \u0027cp\u0027). Style guide says \"Prefer to capitalize acronyms as single words (i.e. StartRpc(), not StartRPC()).\"",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "7072ff9dfe7807f9d8d610fc95ec92565f3bb0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028d1560_c9f6190b",
+        "filename": "content/browser/renderer_host/p2p/socket_host_udp.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-18T17:39:59Z",
+      "side": 1,
+      "message": "lower-case DP please",
+      "range": {
+        "startLine": 29,
+        "startChar": 10,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "7072ff9dfe7807f9d8d610fc95ec92565f3bb0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
