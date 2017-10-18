@@ -24,6 +24,7 @@
 #include "platform/graphics/GraphicsContextStateSaver.h"
 #include "platform/graphics/paint/DisplayItemCacheSkipper.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
+#include "platform/graphics/paint/ScopedPaintChunkProperties.h"
 #include "platform/wtf/Optional.h"
 
 namespace blink {
@@ -47,6 +48,7 @@ void BoxPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info,
                                               const LayoutPoint& paint_offset) {
   LayoutRect paint_rect;
   Optional<ScrollRecorder> scroll_recorder;
+  Optional<ScopedPaintChunkProperties> scoped_scroll_property;
   if (BoxModelObjectPainter::
           IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
               &layout_box_, paint_info)) {
@@ -54,8 +56,21 @@ void BoxPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info,
     // contents layer of a composited scroller we need to include the entire
     // overflow rect.
     paint_rect = layout_box_.LayoutOverflowRect();
+
     scroll_recorder.emplace(paint_info.context, layout_box_, paint_info.phase,
                             layout_box_.ScrolledContentOffset());
+    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+      const auto* object_properties =
+          layout_box_.FirstFragment()->PaintProperties();
+      PaintChunkProperties properties(paint_info.context.GetPaintController()
+                                          .CurrentPaintChunkProperties());
+      properties.property_tree_state.SetTransform(
+          object_properties->ScrollTranslation());
+      properties.property_tree_state.SetClip(object_properties->OverflowClip());
+      scoped_scroll_property.emplace(
+          paint_info.context.GetPaintController(), layout_box_,
+          DisplayItem::PaintPhaseToScrollType(paint_info.phase), properties);
+    }
 
     // The background painting code assumes that the borders are part of the
     // paintRect so we expand the paintRect by the border size when painting the

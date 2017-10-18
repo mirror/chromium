@@ -29,7 +29,7 @@ class CORE_EXPORT FragmentData {
   ObjectPaintProperties& EnsurePaintProperties();
   void ClearPaintProperties();
 
-  FragmentData* NextFragment() { return next_fragment_.get(); }
+  FragmentData* NextFragment() const { return next_fragment_.get(); }
   FragmentData& EnsureNextFragment();
   void ClearNextFragment() { next_fragment_.reset(); }
 
