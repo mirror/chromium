@@ -603,7 +603,7 @@
     { "name": "static.googleadsserving.cn", "include_subdomains": true, "pins": "google" },
     { "name": "urchin.com", "include_subdomains": true, "pins": "google" },
     { "name": "www.googlegroups.com", "include_subdomains": true, "pins": "google", "expect_ct": true, "expect_ct_report_uri": "https://clients3.google.com/ct_upload" },
-    { "name": "youtube.com", "include_subdomains": true, "pins": "google" },
+    { "name": "youtube.com", "include_subdomains": true, "mode": "force-https", "pins": "google" },
     { "name": "youtu.be", "include_subdomains": true, "pins": "google" },
     { "name": "youtube-nocookie.com", "include_subdomains": true, "pins": "google" },
     { "name": "ytimg.com", "include_subdomains": true, "pins": "google" },
