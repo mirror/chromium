@@ -20,10 +20,10 @@ class CORE_EXPORT NGPhysicalBoxFragment final
                         const ComputedStyle& style,
                         NGPhysicalSize size,
                         const NGPhysicalOffsetRect& contents_visual_rect,
-                        Vector<RefPtr<NGPhysicalFragment>>& children,
+                        Vector<scoped_refptr<NGPhysicalFragment>>& children,
                         Vector<NGBaseline>& baselines,
                         unsigned,  // NGBorderEdges::Physical
-                        RefPtr<NGBreakToken> break_token = nullptr);
+                        scoped_refptr<NGBreakToken> break_token = nullptr);
 
   const NGBaseline* Baseline(const NGBaselineRequest&) const;
 
@@ -36,7 +36,7 @@ class CORE_EXPORT NGPhysicalBoxFragment final
     return contents_visual_rect_;
   }
 
-  RefPtr<NGPhysicalFragment> CloneWithoutOffset() const;
+  scoped_refptr<NGPhysicalFragment> CloneWithoutOffset() const;
 
  private:
   NGPhysicalOffsetRect contents_visual_rect_;
