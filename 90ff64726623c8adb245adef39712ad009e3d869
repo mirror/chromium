@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03f9e7d0_38b565ec",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-18T11:24:58Z",
+      "side": 1,
+      "message": "Done: Introduced IsObserving() for code readability",
+      "parentUuid": "b0c133fe_e68127d6",
+      "range": {
+        "startLine": 209,
+        "startChar": 3,
+        "endLine": 209,
+        "endChar": 22
+      },
+      "revId": "90ff64726623c8adb245adef39712ad009e3d869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb155dd1_8c61641a",
         "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
         "patchSetId": 2
@@ -101,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "a64948f5_f81bb895",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-18T11:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4310922c_f8c6d3e4",
+      "range": {
+        "startLine": 123,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 55
+      },
+      "revId": "90ff64726623c8adb245adef39712ad009e3d869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af41564c_63b5f1e0",
         "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
         "patchSetId": 2
@@ -121,6 +169,30 @@
       "revId": "90ff64726623c8adb245adef39712ad009e3d869",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6a18dc_2ac33aac",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-18T11:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af41564c_63b5f1e0",
+      "range": {
+        "startLine": 293,
+        "startChar": 9,
+        "endLine": 293,
+        "endChar": 18
+      },
+      "revId": "90ff64726623c8adb245adef39712ad009e3d869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
