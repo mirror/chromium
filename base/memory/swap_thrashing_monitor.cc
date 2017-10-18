@@ -47,6 +47,15 @@ void SwapThrashingMonitor::CheckSwapThrashingPressureAndRecordStatistics() {
       delegate_->CalculateCurrentSwapThrashingLevel(
           current_swap_thrashing_level_);
 
+  if (swap_thrashing_pressure == SwapThrashingLevel::SWAP_THRASHING_LEVEL_NONE)
+    LOG(ERROR) << "Thrashing level NONE";
+  else if (swap_thrashing_pressure ==
+           SwapThrashingLevel::SWAP_THRASHING_LEVEL_SUSPECTED)
+    LOG(ERROR) << "Thrashing level SUSPECTED";
+  else if (swap_thrashing_pressure ==
+           SwapThrashingLevel::SWAP_THRASHING_LEVEL_CONFIRMED)
+    LOG(ERROR) << "Thrashing level CONFIRMED";
+
   if (swap_thrashing_pressure == current_swap_thrashing_level_)
     return;
 

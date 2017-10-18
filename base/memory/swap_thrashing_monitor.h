@@ -57,9 +57,14 @@
 
 #include "base/base_export.h"
 #include "base/macros.h"
-#include "base/memory/swap_thrashing_delegate.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
+
+#if defined(OS_WIN)
+#include "base/memory/swap_thrashing_delegate_win.h"
+#else
+#include "base/memory/swap_thrashing_delegate.h"
+#endif
 
 namespace base {
 

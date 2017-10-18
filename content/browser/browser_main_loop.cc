@@ -21,6 +21,7 @@
 #include "base/memory/memory_coordinator_proxy.h"
 #include "base/memory/memory_pressure_monitor.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/swap_thrashing_monitor.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
@@ -1649,6 +1650,8 @@ void BrowserMainLoop::InitializeMemoryManagementComponent() {
 #elif defined(OS_WIN)
   memory_pressure_monitor_ =
       CreateWinMemoryPressureMonitor(parsed_command_line_);
+  base::SwapThrashingMonitor::SetInstance(
+      std::make_unique<base::SwapThrashingMonitor>());
 #endif
 
   if (base::FeatureList::IsEnabled(features::kMemoryCoordinator))

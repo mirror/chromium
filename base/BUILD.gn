@@ -1373,6 +1373,8 @@ component("base") {
   # Windows.
   if (is_win) {
     sources += [
+      "memory/swap_thrashing_delegate_win.cc",
+      "memory/swap_thrashing_delegate_win.h",
       "power_monitor/power_monitor_device_source_win.cc",
       "profiler/win32_stack_frame_unwinder.cc",
       "profiler/win32_stack_frame_unwinder.h",
@@ -1384,6 +1386,8 @@ component("base") {
       "file_descriptor_store.h",
       "memory/shared_memory_helper.cc",
       "memory/shared_memory_helper.h",
+      "memory/swap_thrashing_delegate.cc",
+      "memory/swap_thrashing_delegate.h",
       "message_loop/message_pump_libevent.cc",
       "strings/string16.cc",
     ]
