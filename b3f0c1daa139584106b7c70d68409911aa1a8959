@@ -70,6 +70,24 @@
       "revId": "b3f0c1daa139584106b7c70d68409911aa1a8959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5c7eaf_7b2c1f31",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-18T16:47:11Z",
+      "side": 1,
+      "message": "John, just to doublecheck, PS6 is the one that introduces CronetScopedAllowBlocking class in cronet_scoped_allow_blocking.h and lists only that class as a friend. PS7 is the one that explicitly lists the classes in base/threading/thread_restrictions.h that temporary allow blocking I/O. Which is the prefered approach?",
+      "parentUuid": "236f0a3d_f192f5be",
+      "revId": "b3f0c1daa139584106b7c70d68409911aa1a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
