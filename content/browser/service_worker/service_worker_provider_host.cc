@@ -899,6 +899,7 @@ void ServiceWorkerProviderHost::SendSetControllerServiceWorker(
   params.should_notify_controllerchange = notify_controllerchange;
   if (version)
     params.used_features = version->used_features();
+  usleep(10000);
   Send(new ServiceWorkerMsg_SetControllerServiceWorker(params));
 }
 
