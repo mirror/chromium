@@ -155,6 +155,19 @@ int FakePowerManagerClient::GetNumPendingSuspendReadinessCallbacks() {
   return num_pending_suspend_readiness_callbacks_;
 }
 
+void FakePowerManagerClient::CreateArcTimers(
+    const std::vector<chromeos::PowerManagerClient::ArcTimerArgs>&
+        arc_timers_args,
+    CreateArcTimersCallback callback) {}
+
+void FakePowerManagerClient::SetArcTimer(int32_t clock_id,
+                                         int64_t seconds,
+                                         int64_t nanoseconds,
+                                         SetArcTimerCallback callback) {}
+
+void FakePowerManagerClient::DeleteArcTimers(DeleteArcTimersCallback callback) {
+}
+
 bool FakePowerManagerClient::PopVideoActivityReport() {
   CHECK(!video_activity_reports_.empty());
   bool fullscreen = video_activity_reports_.front();
