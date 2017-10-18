@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fb2eb39_e5d64d64",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T00:21:57Z",
+      "side": 1,
+      "message": "Where is the encoded GpuPreferences added to the command line? I would expect it around here (or possibly in GpuDataManagerImpl), but I don\u0027t see it.",
+      "revId": "c3fa0166cda84e734e07af8f8f6a0ba4603a298b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a4cb89_f81eed34",
+        "filename": "content/gpu/in_process_gpu_thread.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T00:21:57Z",
+      "side": 1,
+      "message": "For in-process, I think we can pass the GpuPreferences directly, without passing via the (browser) command line. What do you think?",
+      "revId": "c3fa0166cda84e734e07af8f8f6a0ba4603a298b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176a69f7_398d6551",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T00:21:57Z",
+      "side": 1,
+      "message": "nit: should we just move this step to the GpuServiceImpl constructor?",
+      "revId": "c3fa0166cda84e734e07af8f8f6a0ba4603a298b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
