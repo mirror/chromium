@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cfb0d98_c3060008",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-18T12:55:35Z",
+      "side": 1,
+      "message": "I investigated how desktop handles this, and they don\u0027t write 404s to the history DB at all.  What do you think about moving this check up a level, into webState:didFinishNavigation:, and simply not calling addCurrentEntryToHistoryDB at all for 404s?  That would bring us closer to desktop.",
+      "revId": "fa660fe714de209696ce048269f56fd692b253ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f61bd8_a0d48b43",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-18T12:55:35Z",
+      "side": 1,
+      "message": "We\u0027d still want to count the main frame load, I think.  Only the history db call would go behind the 404 check.\n\nThe corresponding desktop code is here:\nhttps://cs.chromium.org/chromium/src/chrome/browser/history/history_tab_helper.cc?l\u003d120",
+      "revId": "fa660fe714de209696ce048269f56fd692b253ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
