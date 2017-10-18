@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bef9e029_47a924c3",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T12:29:12Z",
+      "side": 1,
+      "message": "Move this line to the bottom so it\u0027s next to the other erase?",
+      "range": {
+        "startLine": 171,
+        "startChar": 37,
+        "endLine": 171,
+        "endChar": 42
+      },
+      "revId": "d45581642f46d5301208cd44942dbac377a6bc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8508c1c8_597fbf0b",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T12:29:12Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 215,
+        "startChar": 37,
+        "endLine": 215,
+        "endChar": 42
+      },
+      "revId": "d45581642f46d5301208cd44942dbac377a6bc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316c26ba_9ffd2ea4",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T12:29:12Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this also erase the guid mapping?",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 292,
+        "endChar": 66
+      },
+      "revId": "d45581642f46d5301208cd44942dbac377a6bc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6442da09_8ae26f15",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T12:29:12Z",
+      "side": 1,
+      "message": "Could do with a comment explaining what current means, e.g. when are entries added and removed?",
+      "range": {
+        "startLine": 110,
+        "startChar": 29,
+        "endLine": 110,
+        "endChar": 51
+      },
+      "revId": "d45581642f46d5301208cd44942dbac377a6bc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6221b28f_6d383a5a",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T12:29:12Z",
+      "side": 1,
+      "message": "base::flat_set, since order is arbitrary and need to remove entries by key?",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 15
+      },
+      "revId": "d45581642f46d5301208cd44942dbac377a6bc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
