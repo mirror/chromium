@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9d1411a_3da748d7",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-18T20:36:20Z",
+      "side": 1,
+      "message": "The previous logic would have resulted in a null pointer dereference if this returned nullptr. This should either be a DCHECK or set |error|.",
+      "range": {
+        "startLine": 338,
+        "startChar": 6,
+        "endLine": 338,
+        "endChar": 19
+      },
+      "revId": "dbe022867c0e6a8d4fcd3a59facccceb249820d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a108008d_a34e7be2",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-18T20:36:20Z",
+      "side": 1,
+      "message": "Should there be a DCHECK here as well? The old logic would have crashed.",
+      "revId": "dbe022867c0e6a8d4fcd3a59facccceb249820d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
