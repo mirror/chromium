@@ -2,6 +2,80 @@
   "comments": [
     {
       "key": {
+        "uuid": "cfba00ee_737bf643",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T18:44:39Z",
+      "side": 1,
+      "message": "nit: trailing",
+      "range": {
+        "startLine": 558,
+        "startChar": 11,
+        "endLine": 558,
+        "endChar": 19
+      },
+      "revId": "58199a9cb7f5aa04cbfd99efb7da5bfc23d17f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4b4275_37b2abf0",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T18:44:39Z",
+      "side": 1,
+      "message": "We don\u0027t have an NGInlineNode here if |block-\u003eChildrenInline()| doesn\u0027t hold.",
+      "revId": "58199a9cb7f5aa04cbfd99efb7da5bfc23d17f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81c7b34_1e1ccdd1",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T18:44:39Z",
+      "side": 1,
+      "message": "OffsetMapping doesn\u0027t handle non-text-anchored positions (yet).\n\nMaybe we should adjust the input position with MostForward/BackwardCaretPosition?",
+      "revId": "58199a9cb7f5aa04cbfd99efb7da5bfc23d17f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d833857_56dc761b",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T18:44:39Z",
+      "side": 1,
+      "message": "There\u0027s no |mapping_unit| if position is not text-anchored, currently.",
+      "revId": "58199a9cb7f5aa04cbfd99efb7da5bfc23d17f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40456f57_9c3cfdd7",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 4
@@ -47,6 +121,92 @@
       "writtenOn": "2017-10-18T18:21:36Z",
       "side": 1,
       "message": "Looks like this uses ICU. ICU break iterator works on logical order string.",
+      "revId": "58199a9cb7f5aa04cbfd99efb7da5bfc23d17f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05e163a_f2f617f7",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T18:44:39Z",
+      "side": 1,
+      "message": "mapping_unit-\u003eConvertDOMOffssetToTextContent(position.ComputeOffsetInContainerNode()) seems better.",
+      "range": {
+        "startLine": 602,
+        "startChar": 6,
+        "endLine": 602,
+        "endChar": 38
+      },
+      "revId": "58199a9cb7f5aa04cbfd99efb7da5bfc23d17f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c449b9f0_3bfffee4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T18:44:39Z",
+      "side": 1,
+      "message": "Please use binary search. |units_| is ordered by text content offset.",
+      "range": {
+        "startLine": 175,
+        "startChar": 23,
+        "endLine": 176,
+        "endChar": 27
+      },
+      "revId": "58199a9cb7f5aa04cbfd99efb7da5bfc23d17f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94bb0bc_3b229a00",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T18:44:39Z",
+      "side": 1,
+      "message": "Currently, the only case we get a non-text owner is \u003cbr\u003e.\n\nShould we consider \u003cimg\u003e?",
+      "range": {
+        "startLine": 180,
+        "startChar": 8,
+        "endLine": 180,
+        "endChar": 37
+      },
+      "revId": "58199a9cb7f5aa04cbfd99efb7da5bfc23d17f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd9fee9_10a2877d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T18:44:39Z",
+      "side": 1,
+      "message": "We can reach here when, for example, |offset| is in generated content BiDi control characters generated during CollectInlines. In general, |units_| do not cover the entire text content range; A text content range is covered only when it\u0027s created from a text node or \u003cbr\u003e.\n\nMaybe we should allow \u003cimg\u003e to own units?\n\nAlso, there an edge case where |offset| equals the length of text content.",
       "revId": "58199a9cb7f5aa04cbfd99efb7da5bfc23d17f8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
