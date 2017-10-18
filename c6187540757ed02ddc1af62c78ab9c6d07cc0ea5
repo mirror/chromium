@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcb953af_0404cfc0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T21:33:21Z",
+      "side": 1,
+      "message": "nit: Long line.  Maybe shorten this summary line?",
+      "revId": "c6187540757ed02ddc1af62c78ab9c6d07cc0ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
