@@ -16,6 +16,24 @@
       "revId": "0a760faf004e2dacfceb5bad18a07583f79e4e36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0383443d_8b0a75f2",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-10-18T22:10:05Z",
+      "side": 1,
+      "message": "The problem with doing that is that right now it just prints the list in json format to stdout when listing. Validation has its own output which would be before that. I can have it do both with the run, but I would then have to also have --list take as an argument a location to save the json to I think.",
+      "parentUuid": "a5e3ee25_53a727bf",
+      "revId": "0a760faf004e2dacfceb5bad18a07583f79e4e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
