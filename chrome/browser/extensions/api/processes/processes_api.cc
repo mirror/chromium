@@ -32,7 +32,11 @@
 #include "extensions/common/error_utils.h"
 #include "third_party/WebKit/public/platform/WebCache.h"
 
+#include "base/metrics/statistics_recorder.h"
+#include "base/sequenced_task_runner.h"
+#include "base/task_scheduler/post_task.h"
 #include "chrome/browser/crash_upload_list/crash_upload_list.h"
+#include "content/public/browser/histogram_fetcher.h"
 
 namespace extensions {
 
@@ -732,5 +736,38 @@ void ProcessesGetCrashesFunction::OnUploadListAvailable() {
 }
 
 ProcessesGetCrashesFunction::~ProcessesGetCrashesFunction() {}
+
+////////////////////////////////////////////////////////////////////////////////
+// ProcessesGetStatsFunction:
+////////////////////////////////////////////////////////////////////////////////
+
+ProcessesGetStatsFunction::ProcessesGetStatsFunction() {}
+
+ExtensionFunction::ResponseAction ProcessesGetStatsFunction::Run() {
+  AddRef();
+
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
+
+  base::StatisticsRecorder::ImportProvidedHistograms();
+
+  base::TimeDelta timeout = base::TimeDelta::FromSeconds(10);
+  content::FetchHistogramsAsynchronously(
+      background_task_runner.get(),
+      base::Bind(&ProcessesGetStatsFunction::OnMetricsAvailable,
+                 base::Unretained(this)),
+      timeout);
+
+  return RespondLater();
+}
+
+void ProcessesGetStatsFunction::OnMetricsAvailable() {
+  return Respond(ArgumentList(api::processes::GetStats::Results::Create(
+      base::StatisticsRecorder::ToJSON(""))));
+}
+
+ProcessesGetStatsFunction::~ProcessesGetStatsFunction() {}
 
 }  // namespace extensions

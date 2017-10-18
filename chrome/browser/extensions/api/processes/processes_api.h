@@ -213,6 +213,24 @@ class ProcessesGetCrashesFunction : public UIThreadExtensionFunction {
   scoped_refptr<UploadList> upload_list_;
 };
 
+////////////////////////////////////////////////////////////////////////////////
+// This extension function returns the Process object for the renderer process
+// currently in use by the specified Tab.
+class ProcessesGetStatsFunction : public UIThreadExtensionFunction {
+ public:
+  ProcessesGetStatsFunction();
+
+  // UIThreadExtensionFunction:
+  ExtensionFunction::ResponseAction Run() override;
+
+  DECLARE_EXTENSION_FUNCTION("processes.getStats", PROCESSES_GETSTATS);
+
+ private:
+  ~ProcessesGetStatsFunction() override;
+
+  void OnMetricsAvailable();
+};
+
 }  // namespace extensions
 
 #endif  // CHROME_BROWSER_EXTENSIONS_API_PROCESSES_PROCESSES_API_H__

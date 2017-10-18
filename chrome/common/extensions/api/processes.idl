@@ -127,6 +127,9 @@ namespace processes {
   // Callback for the getCrashes function.
   callback GetCrashesCallback = void(Crash[] crashes);
 
+  // Callback for the getStats function
+  callback GetStatsCallback = void(DOMString stats);
+
   interface Functions {
     // Returns the ID of the renderer process for the specified tab.
     // |tabId|: The ID of the tab for which the renderer process ID is to be
@@ -152,6 +155,9 @@ namespace processes {
 
     // Gets the set of crashes.
     static void getCrashes(GetCrashesCallback callback);
+
+    // Gets the UMA stats since the last call.
+    static void getStats(GetStatsCallback callback);
   };
 
   interface Events {

@@ -1260,6 +1260,7 @@ enum HistogramValue {
   ACCESSIBILITY_PRIVATE_SETNATIVECHROMEVOXARCSUPPORTFORCURRENTAPP,
   LANGUAGESETTINGSPRIVATE_SETENABLETRANSLATIONFORLANGUAGE,
   PROCESSES_GETCRASHES,
+  PROCESSES_GETSTATS,
   // Last entry: Add new entries above, then run:
   // python tools/metrics/histograms/update_extension_histograms.py
   ENUM_BOUNDARY
