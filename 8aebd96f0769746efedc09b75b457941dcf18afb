@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "23c3263a_0cfbad9d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-18T09:57:09Z",
+      "side": 1,
+      "message": "I really, really don\u0027t like having one more histogram for task types. Let\u0027s try our best to avoid having an extra enum here. If we can\u0027t automatically create new object strings (constexpr string concatenation, anyone? :) ) let\u0027s just have a helper function returning histogram name for a given QueueType.",
+      "parentUuid": "2c3665f0_08d42dfc",
+      "revId": "8aebd96f0769746efedc09b75b457941dcf18afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5d66cc6_2be2fc01",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
         "patchSetId": 6
