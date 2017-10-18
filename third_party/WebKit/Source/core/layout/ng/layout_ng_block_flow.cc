@@ -36,10 +36,11 @@ void LayoutNGBlockFlow::UpdateBlockLayout(bool relayout_children) {
     return;
   }
 
-  RefPtr<NGConstraintSpace> constraint_space =
+  scoped_refptr<NGConstraintSpace> constraint_space =
       NGConstraintSpace::CreateFromLayoutObject(*this);
 
-  RefPtr<NGLayoutResult> result = NGBlockNode(this).Layout(*constraint_space);
+  scoped_refptr<NGLayoutResult> result =
+      NGBlockNode(this).Layout(*constraint_space);
 
   // We need to update our margins as these are calculated once and stored in
   // LayoutBox::margin_box_outsets_. Typically this happens within
@@ -77,10 +78,10 @@ void LayoutNGBlockFlow::UpdateOutOfFlowBlockLayout() {
   LayoutBlock* container = ContainingBlock();
   const ComputedStyle* container_style = container->Style();
   const ComputedStyle* parent_style = Parent()->Style();
-  RefPtr<NGConstraintSpace> constraint_space =
+  scoped_refptr<NGConstraintSpace> constraint_space =
       NGConstraintSpace::CreateFromLayoutObject(*this);
   NGFragmentBuilder container_builder(
-      container, RefPtr<const ComputedStyle>(container_style),
+      container, scoped_refptr<const ComputedStyle>(container_style),
       FromPlatformWritingMode(container_style->GetWritingMode()),
       container_style->Direction());
 
@@ -170,20 +171,21 @@ void LayoutNGBlockFlow::UpdateOutOfFlowBlockLayout() {
   NGOutOfFlowLayoutPart(NGBlockNode(ToLayoutBox(css_container)),
                         *constraint_space, *container_style, &container_builder)
       .Run();
-  RefPtr<NGLayoutResult> result = container_builder.ToBoxFragment();
+  scoped_refptr<NGLayoutResult> result = container_builder.ToBoxFragment();
   // These are the OOF descendants of the current OOF block.
   for (NGOutOfFlowPositionedDescendant descendant :
        result->OutOfFlowPositionedDescendants())
     descendant.node.UseOldOutOfFlowPositioning();
 
-  RefPtr<NGPhysicalBoxFragment> fragment =
+  scoped_refptr<NGPhysicalBoxFragment> fragment =
       ToNGPhysicalBoxFragment(result->PhysicalFragment().get());
   DCHECK_GT(fragment->Children().size(), 0u);
   // Copy sizes of all child fragments to Legacy.
   // There could be multiple fragments, when this node has descendants whose
   // container is this node's container.
   // Example: fixed descendant of fixed element.
-  for (RefPtr<NGPhysicalFragment> child_fragment : fragment->Children()) {
+  for (scoped_refptr<NGPhysicalFragment> child_fragment :
+       fragment->Children()) {
     DCHECK(child_fragment->GetLayoutObject()->IsBox());
     LayoutBox* child_legacy_box =
         ToLayoutBox(child_fragment->GetLayoutObject());
@@ -196,7 +198,7 @@ void LayoutNGBlockFlow::UpdateOutOfFlowBlockLayout() {
     }
     child_legacy_box->SetY(child_offset.top);
   }
-  RefPtr<NGPhysicalFragment> child_fragment = fragment->Children()[0];
+  scoped_refptr<NGPhysicalFragment> child_fragment = fragment->Children()[0];
   DCHECK_EQ(fragment->Children()[0]->GetLayoutObject(), this);
   paint_fragment_ = WTF::MakeUnique<NGPaintFragment>(child_fragment.get());
 }
@@ -280,7 +282,7 @@ LayoutUnit LayoutNGBlockFlow::InlineBlockBaseline(
   return LayoutBlockFlow::InlineBlockBaseline(line_direction);
 }
 
-RefPtr<NGLayoutResult> LayoutNGBlockFlow::CachedLayoutResult(
+scoped_refptr<NGLayoutResult> LayoutNGBlockFlow::CachedLayoutResult(
     const NGConstraintSpace& constraint_space,
     NGBreakToken* break_token) const {
   if (!RuntimeEnabledFeatures::LayoutNGFragmentCachingEnabled())
@@ -295,7 +297,7 @@ RefPtr<NGLayoutResult> LayoutNGBlockFlow::CachedLayoutResult(
 void LayoutNGBlockFlow::SetCachedLayoutResult(
     const NGConstraintSpace& constraint_space,
     NGBreakToken* break_token,
-    RefPtr<NGLayoutResult> layout_result) {
+    scoped_refptr<NGLayoutResult> layout_result) {
   if (break_token || constraint_space.UnpositionedFloats().size() ||
       layout_result->UnpositionedFloats().size() ||
       layout_result->Status() != NGLayoutResult::kSuccess) {

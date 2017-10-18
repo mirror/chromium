@@ -31,7 +31,8 @@ class NGBaseLayoutAlgorithmTest
  protected:
   void SetUp() override;
 
-  std::pair<RefPtr<NGPhysicalBoxFragment>, RefPtr<NGConstraintSpace>>
+  std::pair<scoped_refptr<NGPhysicalBoxFragment>,
+            scoped_refptr<NGConstraintSpace>>
   RunBlockLayoutAlgorithmForElement(Element* element);
 };
 
@@ -54,7 +55,7 @@ class FragmentChildIterator {
   unsigned index_;
 };
 
-RefPtr<NGConstraintSpace> ConstructBlockLayoutTestConstraintSpace(
+scoped_refptr<NGConstraintSpace> ConstructBlockLayoutTestConstraintSpace(
     NGWritingMode writing_mode,
     TextDirection direction,
     NGLogicalSize size,
