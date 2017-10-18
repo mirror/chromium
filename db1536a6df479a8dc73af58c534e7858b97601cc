@@ -122,6 +122,24 @@
       "revId": "db1536a6df479a8dc73af58c534e7858b97601cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b22dfe_6a5eb804",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-10-18T22:16:13Z",
+      "side": 1,
+      "message": "Thanks for the clarification!\nIf tests will be fine, I can try to check |start| and |end| to avoid creation of the Range object. Also I can add comments.",
+      "parentUuid": "bce344d3_1bd77374",
+      "revId": "db1536a6df479a8dc73af58c534e7858b97601cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
