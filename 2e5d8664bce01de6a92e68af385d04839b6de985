@@ -2,6 +2,305 @@
   "comments": [
     {
       "key": {
+        "uuid": "4caa6487_fee7f587",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/CompoundTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:33:41Z",
+      "side": 1,
+      "message": "Having these 10-increments feels a bit... arbitrary (and reminds me of BASIC times, where inserting a line in the middle of a program was an expensive operation). Could we just use a list to represent the order? Right now if two entries have the same value, the resulting sorting order already is undefined, so having one defined by the indices in a list (which is never going to have duplicate values) would not be inconsistent.",
+      "range": {
+        "startLine": 35,
+        "startChar": 32,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719cf11f_ff715d97",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/CompoundTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:33:41Z",
+      "side": 1,
+      "message": "Can you add comments for what these are, how they are structured (\"maps foo to bar\"), etc?",
+      "range": {
+        "startLine": 41,
+        "startChar": 64,
+        "endLine": 41,
+        "endChar": 77
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e0367b0_4f3a58aa",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/CompoundTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:33:41Z",
+      "side": 1,
+      "message": "Can this be final?",
+      "range": {
+        "startLine": 45,
+        "startChar": 27,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c7ad8dc_e8b9d9a5",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/CompoundTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:33:41Z",
+      "side": 1,
+      "message": "Throughout this file, periods at the end of sentences please. It\u0027s a bit more important for Javadoc, because that is going to be more visible, but it feels ever so slightly more readable even for plain comments.",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7884f785_a1c5bf68",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/CompoundTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:33:41Z",
+      "side": 1,
+      "message": "Nit: Why don\u0027t you just accept TestRule...testRules?",
+      "range": {
+        "startLine": 55,
+        "startChar": 35,
+        "endLine": 55,
+        "endChar": 54
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e7b7e2d_be3cdb31",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/CompoundTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:33:41Z",
+      "side": 1,
+      "message": "Would it not be okay to just allow returning an empty list?",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 89
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538b9a8e_e479a5bd",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/CompoundTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:33:41Z",
+      "side": 1,
+      "message": "Nit: \"the order map\" (as opposed to an ordered map, which is something different).",
+      "range": {
+        "startLine": 110,
+        "startChar": 51,
+        "endLine": 110,
+        "endChar": 53
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7104f4c9_c88ce351",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/CompoundTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:33:41Z",
+      "side": 1,
+      "message": "This is just so that we can look up the order for the rule from the map while sorting it, right? Couldn\u0027t we just store the order value together with the rule in an object and then sort those instead of looking them up for every comparison?",
+      "range": {
+        "startLine": 115,
+        "startChar": 17,
+        "endLine": 115,
+        "endChar": 44
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c7a0db_316be8ea",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/CompoundTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:33:41Z",
+      "side": 1,
+      "message": "Nit: Add a space before.\n\nAlso, is this a TODO for later? The overall purpose isn\u0027t quite clear to me yet.",
+      "range": {
+        "startLine": 149,
+        "startChar": 10,
+        "endLine": 149,
+        "endChar": 11
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16454db_35606893",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/CompoundTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:33:41Z",
+      "side": 1,
+      "message": "Nit: remove one space",
+      "range": {
+        "startLine": 152,
+        "startChar": 28,
+        "endLine": 152,
+        "endChar": 29
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5623fb42_137cd134",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/CompoundTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:33:41Z",
+      "side": 1,
+      "message": "Space before opening brace",
+      "range": {
+        "startLine": 154,
+        "startChar": 30,
+        "endLine": 154,
+        "endChar": 31
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95867c5b_c3c5baff",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:33:41Z",
+      "side": 1,
+      "message": "[command line flag setting intensifies]",
+      "range": {
+        "startLine": 17,
+        "startChar": 28,
+        "endLine": 17,
+        "endChar": 52
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4a814b1_346918fd",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/SkipRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:33:41Z",
+      "side": 1,
+      "message": "Could we... maybe have the subclass provide an additional explanation for why the test was skipped? That would make it easier to e.g. extract that out to the test runner at a later point (instead of that information just being in a log statement somewhere).\n\nAnd/or, if the abstract method would return a Matcher\u003cDescription\u003e, it would do that, and maybe also allow neat composition or other things?",
+      "range": {
+        "startLine": 25,
+        "startChar": 27,
+        "endLine": 25,
+        "endChar": 51
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "188fe37c_1b1d50eb",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeTestRules.java",
         "patchSetId": 4
@@ -42,6 +341,23 @@
         "endLine": 15,
         "endChar": 28
       },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fada1d_35080182",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeTestRules.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:33:41Z",
+      "side": 1,
+      "message": "Add a private empty constructor so that the class can\u0027t be instantiated?",
       "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
