@@ -2550,4 +2550,37 @@ TEST_F(SplitViewWindowSelectorTest, SplitViewOverviewBothActiveTest) {
   ToggleOverview();
 }
 
+// Verify that when in overview mode, the selector items unsnappable indicator
+// shows up when expected.
+TEST_F(SplitViewWindowSelectorTest, OverviewUnsnappableIndicatorVisibility) {
+  std::unique_ptr<aura::Window> window(CreateTestWindow());
+  std::unique_ptr<aura::Window> window2(CreateTestWindow());
+  std::unique_ptr<aura::Window> unsnappable_window(CreateTestWindow());
+  unsnappable_window->SetProperty(aura::client::kResizeBehaviorKey,
+                                  ui::mojom::kResizeBehaviorNone);
+  ToggleOverview();
+  ASSERT_TRUE(window_selector_controller()->IsSelecting());
+
+  const int grid_index = 0;
+  WindowSelectorItem* snappable_selector_item =
+      GetWindowItemForWindow(grid_index, window2.get());
+  WindowSelectorItem* unsnappable_selector_item =
+      GetWindowItemForWindow(grid_index, unsnappable_window.get());
+
+  EXPECT_FALSE(snappable_selector_item->cannot_snap_label_view_->IsDrawn());
+  EXPECT_FALSE(unsnappable_selector_item->cannot_snap_label_view_->IsDrawn());
+
+  // Snap the extra snappable window to enter split view mode.
+  split_view_controller()->SnapWindow(window.get(), SplitViewController::LEFT);
+  ASSERT_TRUE(split_view_controller()->IsSplitViewModeActive());
+
+  EXPECT_FALSE(snappable_selector_item->cannot_snap_label_view_->IsDrawn());
+  EXPECT_TRUE(unsnappable_selector_item->cannot_snap_label_view_->IsDrawn());
+
+  // TODO(sammiequon|xdai): Exit overview as a stop gap solution to avoid memory
+  // leak during shutdown. Fix and remove the ToggleOverview. See
+  // crbug.com/766725
+  ToggleOverview();
+}
+
 }  // namespace ash
