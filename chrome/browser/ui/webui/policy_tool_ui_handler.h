@@ -31,6 +31,9 @@ class PolicyToolUIHandler : public PolicyUIHandler {
   void HandleLoadSession(const base::ListValue* args);
   void HandleUpdateSession(const base::ListValue* args);
   void HandleResetSession(const base::ListValue* args);
+  void HandleDeleteSession(const base::ListValue* args);
+
+  void OnSessionDeleted(bool is_successful);
 
   std::string ReadOrCreateFileCallback();
   void OnFileRead(const std::string& contents);
@@ -49,6 +52,8 @@ class PolicyToolUIHandler : public PolicyUIHandler {
   void OnSessionsListReceived(base::ListValue list);
 
   void SetDefaultSessionName();
+
+  void ShowErrorMessageToUser(const std::string& message_name);
 
   bool is_saving_enabled_ = true;
 
