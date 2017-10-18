@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d859b267_ebb0b272",
+        "filename": "chrome/browser/chromeos/input_method/candidate_window_controller_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-18T17:05:29Z",
+      "side": 1,
+      "message": "Only 1 unit test uses this class. I thought about hard coding values (like patchset 11) in OnBeforeBubbleWidgetInit() before but since we can\u0027t include ash in ui/chromeos/ime/candidate_window_view.cc so to hard code, we need the exact integer value of  ash::kShellWindowId_SettingBubbleContainer which doesn\u0027t look as clean if the order in enum ash::kShellWindowId changes.",
+      "parentUuid": "84afe13b_fb047d78",
+      "range": {
+        "startLine": 57,
+        "startChar": 14,
+        "endLine": 57,
+        "endChar": 56
+      },
+      "revId": "8cf6d5093f455b80822a288a656cd7b71705f4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8610d832_df5ada68",
         "filename": "ui/chromeos/ime/candidate_window_view.h",
         "patchSetId": 16
@@ -45,6 +69,30 @@
       "revId": "8cf6d5093f455b80822a288a656cd7b71705f4e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e503bec_76f852f5",
+        "filename": "ui/chromeos/ime/candidate_window_view.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-18T17:05:29Z",
+      "side": 1,
+      "message": "this should be -1 as you mention. I uploaded a new patch to change it.",
+      "parentUuid": "8610d832_df5ada68",
+      "range": {
+        "startLine": 35,
+        "startChar": 55,
+        "endLine": 35,
+        "endChar": 78
+      },
+      "revId": "8cf6d5093f455b80822a288a656cd7b71705f4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
