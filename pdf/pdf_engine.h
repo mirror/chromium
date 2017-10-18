@@ -58,9 +58,19 @@ class PDFEngine {
     PERMISSION_PRINT_HIGH_QUALITY,
   };
 
+  enum class FormType {
+    kOther = 0,
+    kNone,
+    kAcroForm,
+    kXFAFull,
+    kXFAForeground
+  };
+
   struct DocumentFeatures {
     // Number of pages in document.
     size_t page_count = 0;
+    // What type of form the document contains.
+    FormType form_type = FormType::kOther;
   };
 
   // The interface that's provided to the rendering engine.

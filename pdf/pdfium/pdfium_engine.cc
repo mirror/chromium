@@ -1281,6 +1281,19 @@ void PDFiumEngine::FinishLoadingDocument() {
   if (doc_) {
     DocumentFeatures document_features;
     document_features.page_count = pages_.size();
+    int form_type = FPDF_GetFormType(doc_);
+    switch (form_type) {
+      case FORMTYPE_NONE:
+        document_features.form_type = FormType::kNone;
+      case FORMTYPE_ACRO_FORM:
+        document_features.form_type = FormType::kAcroForm;
+      case FORMTYPE_XFA_FULL:
+        document_features.form_type = FormType::kXFAFull;
+      case FORMTYPE_XFA_FOREGROUND:
+        document_features.form_type = FormType::kXFAForeground;
+      default:
+        document_features.form_type = FormType::kXFAForeground;
+    }
     client_->DocumentLoadComplete(document_features);
   }
 }
