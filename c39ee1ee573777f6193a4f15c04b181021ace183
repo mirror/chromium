@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ead4e70_d8995576",
+        "filename": "chrome/browser/devtools/device/devtools_android_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-18T18:50:24Z",
+      "side": 1,
+      "message": "I\u0027m being silly.",
+      "parentUuid": "ae908e3e_534c63a0",
+      "revId": "c39ee1ee573777f6193a4f15c04b181021ace183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e334fb9e_9e753669",
         "filename": "components/prefs/pref_registry.cc",
         "patchSetId": 1
