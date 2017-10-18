@@ -175,11 +175,12 @@ TEST_F(ProfileChooserControllerTest, InitialLayoutWithNewMenu) {
   // There should be one button in the option buttons view.
   NSArray* buttonSubviews = [[subviews objectAtIndex:0] subviews];
   NSButton* userSwitcherButton;
-  // There are 2 buttons in the initial layout: "Manage People" and "Guest".
-  ASSERT_EQ(2U, [buttonSubviews count]);
+  // There are 3 buttons in the initial layout: "Guest", "Manage People" and
+  // "Close all your windows".
+  ASSERT_EQ(3U, [buttonSubviews count]);
   // There should be a user switcher button.
   userSwitcherButton =
-      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:0]);
+      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:1]);
 
   EXPECT_EQ(@selector(showUserManager:), [userSwitcherButton action]);
   EXPECT_EQ(controller(), [userSwitcherButton target]);
