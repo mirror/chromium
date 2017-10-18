@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b75c861a_0480e6ad",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-10-18T22:20:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d0452f0f_709150d8",
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5b06c30_13cd4b11",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 1
@@ -283,6 +301,30 @@
     },
     {
       "key": {
+        "uuid": "607cd817_5c717feb",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-10-18T22:20:16Z",
+      "side": 1,
+      "message": "I guess my only concern is how the time relates to caching of the revocation results. Eg, Would using the same time for both attempts ensure that they get the same cached results? So maybe it\u0027s something that can be decided later when the caching is implemented.",
+      "parentUuid": "4d18732c_888f4370",
+      "range": {
+        "startLine": 587,
+        "startChar": 17,
+        "endLine": 587,
+        "endChar": 35
+      },
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85a30770_7c43fefd",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 1
@@ -388,6 +430,24 @@
     },
     {
       "key": {
+        "uuid": "692ed2dd_b3778921",
+        "filename": "net/cert/internal/revocation_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-10-18T22:20:16Z",
+      "side": 1,
+      "message": "Seems reasonable, but I don\u0027t know if the dcheck would break things like https://chromium-review.googlesource.com/c/chromium/src/+/710745 ?\n\nAt least a log(error) would be good in any case (that\u0027s how I noticed crbug.com/736859)",
+      "parentUuid": "add98db3_d6f27918",
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bb63e75_005dafe2",
         "filename": "net/cert/internal/revocation_checker.cc",
         "patchSetId": 1
@@ -417,6 +477,24 @@
       "side": 1,
       "message": "Do you mean this line in particular (I don\u0027t think this line needs a warning), or do you mean the case where soft-fail hit a network error and we skipped it?\n\nI agree that the soft-fail being skipped due to a network error is worthy of a warning (I will probably just TODO that for now).",
       "parentUuid": "6bb63e75_005dafe2",
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa06df0_edc4841b",
+        "filename": "net/cert/internal/revocation_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-10-18T22:20:16Z",
+      "side": 1,
+      "message": "Yeah, I meant in general, haven\u0027t thought about exactly which cases would generate warnings. Leaving as a TODO sounds fine.",
+      "parentUuid": "f6135851_450ac4e5",
       "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -545,6 +623,30 @@
       "side": 1,
       "message": "I like having booleans (note that specified them as width 1 bit) because it reads simpler for consuming code.\n\ni.e.:\n\npolicy.check_revocation\n\nas opposed to something like.\n\npolicy \u0026 CHECK_REVOCATION\n\nBut you are right that the constructor is somewhat unreadable.\nI was alternately trying to initialize with something like:\nRevocationPolicy policy;\npolicy.check_revocation \u003d ...;\npolicy.networking_allowed \u003d ...;\n\nBut that pattern is dangerous in forgetting to assign values.\n\nI could create a builder to handle that case, but seems like overkill.\nSuggestions?",
       "parentUuid": "8ffff756_b7a1672d",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12870b34_0909de21",
+        "filename": "net/cert/internal/revocation_checker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-10-18T22:20:16Z",
+      "side": 1,
+      "message": "I guess you could have enums for each arg but still use bools in the struct,\nlike\nRevocationPolicy policy(kCheckRevocation, kNetworkingNotAllowed, etc, etc);\n\nand in the constructor:\ncheck_revocation_(check_revocation\u003d\u003dkCheckRevocation), etc",
+      "parentUuid": "aa837ef7_0546453a",
       "range": {
         "startLine": 25,
         "startChar": 24,
