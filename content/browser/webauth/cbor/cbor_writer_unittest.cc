@@ -161,17 +161,17 @@ TEST(CBORWriterTest, TestWriteMapWithArray) {
 TEST(CBORWriterTest, TestWriteNestedMap) {
   static const uint8_t kNestedMapTestCase[] = {
       // clang-format off
-      0xa2,  // map of 2 pairs
-        0x61, 0x61,  // "a"
-        0x01,
+       0xa2,  // map of 2 pairs
+         0x61, 0x61,  // "a"
+         0x01,
 
-        0x61, 0x62,  // "b"
-        0xa2,        // map of 2 pairs
-          0x61, 0x63,  // "c"
-          0x02,
+         0x61, 0x62,  // "b"
+         0xa2,        // map of 2 pairs
+           0x61, 0x63,  // "c"
+           0x02,
 
-          0x61, 0x64,  // "d"
-          0x03,
+           0x61, 0x64,  // "d"
+           0x03,
       // clang-format on
   };
   CBORValue::MapValue map;
@@ -183,6 +183,47 @@ TEST(CBORWriterTest, TestWriteNestedMap) {
   std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(map));
   EXPECT_THAT(cbor, testing::ElementsAreArray(kNestedMapTestCase,
                                               arraysize(kNestedMapTestCase)));
+}
+
+// =============================================
+// TEST for CBORWriter::GetMaxDepth Function
+// =============================================
+
+TEST(CBORWriterTest, TestWriterGetMaxDepthMultilayerDepth) {
+  CBORValue::MapValue cbor_map;
+  cbor_map["a"] = CBORValue(1);
+  CBORValue::MapValue nested_map;
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  cbor_map["b"] = CBORValue(nested_map);
+
+  uint8_t depth = CBORWriter::GetMaxDepth(CBORValue(cbor_map));
+  EXPECT_EQ(depth, 3);
+}
+
+TEST(CBORWriterTest, TestWriterGetMaxDepthSingleLayerDepth) {
+  uint8_t depth_one_element = CBORWriter::GetMaxDepth(CBORValue(2));
+  uint8_t depth_none = CBORWriter::GetMaxDepth(CBORValue());
+  EXPECT_EQ(depth_one_element, 1);
+  EXPECT_EQ(depth_none, 1);
+}
+
+TEST(CBORWriterTest, TestWriterGetMaxDepthUnbalancedCbor) {
+  CBORValue::ArrayValue cbor_array;
+  CBORValue::MapValue cbor_map;
+  CBORValue::MapValue nested_map;
+
+  cbor_map["a"] = CBORValue(1);
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  cbor_map["b"] = CBORValue(nested_map);
+  cbor_array.push_back(CBORValue(1));
+  cbor_array.push_back(CBORValue(2));
+  cbor_array.push_back(CBORValue(3));
+  cbor_array.push_back(CBORValue(cbor_map));
+
+  uint8_t depth = CBORWriter::GetMaxDepth(CBORValue(cbor_array));
+  EXPECT_EQ(depth, 4);
 }
 
 }  // namespace content
