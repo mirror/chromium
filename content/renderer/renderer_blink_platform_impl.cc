@@ -106,6 +106,7 @@
 #include "third_party/WebKit/public/platform/WebSocketHandshakeThrottle.h"
 #include "third_party/WebKit/public/platform/WebThread.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
+#include "third_party/WebKit/public/platform/WebURLLoaderFactory.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
 #include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceMotionListener.h"
@@ -328,24 +329,13 @@ void RendererBlinkPlatformImpl::Shutdown() {
 
 //------------------------------------------------------------------------------
 
-std::unique_ptr<blink::WebURLLoader> RendererBlinkPlatformImpl::CreateURLLoader(
-    const blink::WebURLRequest& request,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
-  ChildThreadImpl* child_thread = ChildThreadImpl::current();
-
-  if (!url_loader_factory_getter_ && child_thread)
-    url_loader_factory_getter_ = CreateDefaultURLLoaderFactoryGetter();
-
-  mojom::URLLoaderFactory* factory =
-      url_loader_factory_getter_
-          ? url_loader_factory_getter_->GetFactoryForURL(request.Url())
-          : nullptr;
-
-  // There may be no child thread in RenderViewTests.  These tests can still use
-  // data URLs to bypass the ResourceDispatcher.
-  return base::MakeUnique<WebURLLoaderImpl>(
-      child_thread ? child_thread->resource_dispatcher() : nullptr,
-      std::move(task_runner), factory);
+std::unique_ptr<blink::WebURLLoaderFactory>
+RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactory() {
+  return std::make_unique<WebURLLoaderFactoryImpl>(
+      // ChildThreadImpl is null in some tests, the default factory impl
+      // takes care of that in the case.
+      ChildThreadImpl::current() ? CreateDefaultURLLoaderFactoryGetter()
+                                 : nullptr);
 }
 
 scoped_refptr<ChildURLLoaderFactoryGetter>
