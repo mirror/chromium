@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "fb617326_aafa6f7f",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-10-18T19:32:02Z",
+      "side": 1,
+      "message": "We need a different long-term strategy here because we cannot drop important binding flag from foreground renderer. On high end devices this will cause foreground renderer to get killed a lot more.",
+      "range": {
+        "startLine": 283,
+        "startChar": 25,
+        "endLine": 283,
+        "endChar": 42
+      },
+      "revId": "aa4c0cb3e6f17ecc038fdd279f1af90a81584576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cd74b4_3b3c6798",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-10-18T19:32:02Z",
+      "side": 1,
+      "message": "I think there\u0027s a chrome idiom for doing this using Singleton template",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "aa4c0cb3e6f17ecc038fdd279f1af90a81584576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "788fd86c_fb787df5",
         "filename": "third_party/WebKit/Source/core/dom/Document.h",
         "patchSetId": 2
