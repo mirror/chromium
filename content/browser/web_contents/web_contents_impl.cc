@@ -1980,11 +1980,6 @@ void WebContentsImpl::RenderWidgetWasResized(
     observer.MainFrameWasResized(width_changed);
 }
 
-void WebContentsImpl::ScreenInfoChanged() {
-  if (browser_plugin_embedder_)
-    browser_plugin_embedder_->ScreenInfoChanged();
-}
-
 KeyboardEventProcessingResult WebContentsImpl::PreHandleKeyboardEvent(
     const NativeWebKeyboardEvent& event) {
   return delegate_ ? delegate_->PreHandleKeyboardEvent(this, event)
