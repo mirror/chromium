@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2ee14171_7a534ca4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-18T07:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89a66fd9_0fe6560d",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec2de34a_c24dbd1e",
         "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
         "patchSetId": 2
@@ -219,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "8b790295_db0a6d77",
+        "filename": "content/browser/service_worker/service_worker_handle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-18T07:59:07Z",
+      "side": 1,
+      "message": "See the reply in service_worker_provider_host.cc.",
+      "parentUuid": "5470b000_9d4fc148",
+      "range": {
+        "startLine": 56,
+        "startChar": 40,
+        "endLine": 56,
+        "endChar": 44
+      },
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47a706ae_1ee2a00c",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 2
@@ -254,6 +296,30 @@
       "side": 1,
       "message": "I tried before, but in that case, we need modify the codes use \"GetOrCreateServiceWorkerHandle\" as below in both ServiceWorkerDispatcherHost and ServiceWorkerProviderHost:\nLine 761 --\u003e attrs.installing \u003d *GetOrCreateServiceWorkerHandle(installing_version);\nNot sure if it\u0027s better than using Clone?",
       "parentUuid": "47a706ae_1ee2a00c",
+      "range": {
+        "startLine": 897,
+        "startChar": 28,
+        "endLine": 897,
+        "endChar": 76
+      },
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2944757_ee8dff18",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-18T07:59:07Z",
+      "side": 1,
+      "message": "Because we revert SetController CL now and land this firstly, we can address this comment later.",
+      "parentUuid": "4cde66e8_e7b566c4",
       "range": {
         "startLine": 897,
         "startChar": 28,
@@ -330,6 +396,30 @@
     },
     {
       "key": {
+        "uuid": "5e9ed36f_51f2679e",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-18T07:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a11263b_457ad470",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "959c143d_5debe771",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
         "patchSetId": 2
@@ -365,6 +455,24 @@
     },
     {
       "key": {
+        "uuid": "39bca2ad_cc2299e2",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-18T07:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d651ba3c_2c5d31fd",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d391dda9_8210ca29",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
         "patchSetId": 2
@@ -394,6 +502,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "d391dda9_8210ca29",
+      "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d27aaad_718a18e3",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-18T07:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a62e137c_a2911208",
       "revId": "7947d6da62fbfded967d79ca2524d661f5cb8e0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
