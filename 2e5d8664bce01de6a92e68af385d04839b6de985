@@ -278,6 +278,29 @@
     },
     {
       "key": {
+        "uuid": "31490045_9202a02b",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/MinAndroidSdkLevelRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-18T11:59:53Z",
+      "side": 1,
+      "message": "While I like the robustness, shouldn\u0027t we throw some exception if we get a nonsensical annotation.value()? Given that Chrome has a minSdkVersion of 16 we could throw is annotation.value() is anything less than 17 (since minSdkVersion of 16 would do nothing).",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 21,
+        "endChar": 34
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4a814b1_346918fd",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/util/SkipRule.java",
         "patchSetId": 4
