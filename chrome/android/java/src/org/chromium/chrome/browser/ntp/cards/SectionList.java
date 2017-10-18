@@ -123,8 +123,8 @@ public class SectionList
         // Set the new suggestions.
         section.setStatus(categoryStatus);
         if (!section.isLoading()) {
-            section.appendSuggestions(
-                    suggestions, /* keepSectionSize = */ true, reportPrefetchedSuggestionsCount);
+            section.appendSuggestions(suggestions, /* numberOfPreviousSuggestionsToTrim = */ 0,
+                    reportPrefetchedSuggestionsCount);
         }
     }
 
