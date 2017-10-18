@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bba38ec_9a9b5f14",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_pane.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-18T22:33:13Z",
+      "side": 1,
+      "message": "I suspect this is releasing any existing imageUrl data previosuly created on line 98? It may be worth adding a comment here, that\u0027s not immediately obvious (or wasn\u0027t to me).",
+      "revId": "3391d665c17d2db9323575d0c8524b7a89ae1cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
