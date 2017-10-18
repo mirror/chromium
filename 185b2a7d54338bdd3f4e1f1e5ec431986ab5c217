@@ -16,6 +16,24 @@
       "revId": "185b2a7d54338bdd3f4e1f1e5ec431986ab5c217",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b936a96_6ca3d3a1",
+        "filename": "tools/perf/contrib/cros_benchmarks/tab_switching_bench.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-10-18T13:49:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ff3943f_7598d7d3",
+      "revId": "185b2a7d54338bdd3f4e1f1e5ec431986ab5c217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
