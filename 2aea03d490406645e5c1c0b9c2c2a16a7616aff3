@@ -573,6 +573,30 @@
     },
     {
       "key": {
+        "uuid": "bfab19c5_637ede75",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T01:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "938e85fa_b83dcd98",
+      "range": {
+        "startLine": 258,
+        "startChar": 59,
+        "endLine": 258,
+        "endChar": 64
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "056dbaa4_26e4f212",
         "filename": "chromeos/dbus/power_manager_client.h",
         "patchSetId": 1
