@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa85bf5c_85f72a72",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-18T19:25:06Z",
+      "side": 1,
+      "message": "Back to always using kNullSurfaceHandle here.",
+      "parentUuid": "fe1dc1d6_7e520015",
+      "revId": "af638588b0e5cc8146a3aaf3886947e24221ee28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81748b8a_04c59629",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 20
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "6a70a4b3_bb4d1003",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-18T19:25:06Z",
+      "side": 1,
+      "message": "This will require a decent amount of refactoring to support in viz. Thanks for point this out! I added a TODO and filled a bug here.",
+      "parentUuid": "44b2e813_6e7acd60",
+      "revId": "af638588b0e5cc8146a3aaf3886947e24221ee28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c616702_f5ea8431",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 20
@@ -104,6 +140,24 @@
       "revId": "af638588b0e5cc8146a3aaf3886947e24221ee28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7389569_db0e0d1f",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-18T19:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c616702_f5ea8431",
+      "revId": "af638588b0e5cc8146a3aaf3886947e24221ee28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
