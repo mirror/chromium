@@ -65,6 +65,29 @@
     },
     {
       "key": {
+        "uuid": "91a12a47_c29e6084",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 2871,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T17:38:18Z",
+      "side": 1,
+      "message": "nit: If consuming code is relying on StopCachingImpl() returning true in certain circumstances, the fact that it returns true in those circumstances should be documented in the comment in the header file.  (Not a big deal, since it\u0027s part of the class implementation rather than the interface, but it\u0027s still a good rule of thumb.)",
+      "range": {
+        "startLine": 2871,
+        "startChar": 11,
+        "endLine": 2871,
+        "endChar": 18
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "adab6110_39863e20",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 64
@@ -104,6 +127,29 @@
         "startChar": 0,
         "endLine": 168,
         "endChar": 13
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347bd9dc_d628802d",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 64
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T17:38:18Z",
+      "side": 1,
+      "message": "nit: I find \"this\" confusing in context (it\u0027s just been used in a different way), switch to \".. after calling this function\".",
+      "range": {
+        "startLine": 234,
+        "startChar": 67,
+        "endLine": 234,
+        "endChar": 71
       },
       "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
