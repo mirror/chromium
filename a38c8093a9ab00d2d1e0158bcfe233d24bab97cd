@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0e1e44f4_dbde55e5",
+        "filename": "content/network/network_change_manager_impl.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T18:30:33Z",
+      "side": 1,
+      "message": "Got it. Thanks. Done",
+      "parentUuid": "6d3b3627_20a59ee2",
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45ab5d0c_be26cf15",
         "filename": "content/network/network_change_manager_impl_unittest.cc",
         "patchSetId": 28
@@ -220,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "3aaf777d_0214e40a",
+        "filename": "content/network/network_service_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T18:30:33Z",
+      "side": 1,
+      "message": "Done. Ah, I see. I didn\u0027t see that \"protected\". Thanks.",
+      "parentUuid": "6ab34645_46f7d4a2",
+      "range": {
+        "startLine": 109,
+        "startChar": 1,
+        "endLine": 109,
+        "endChar": 11
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d4e885f_a3470ee2",
         "filename": "content/public/common/network_connection_tracker.h",
         "patchSetId": 28
@@ -240,6 +282,30 @@
       "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66ef25d_26e7c355",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T18:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d4e885f_a3470ee2",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -326,6 +392,30 @@
       "side": 1,
       "message": "OnceCallback is a move only type - which always makes used in conjunction with stl classes fun.",
       "parentUuid": "c1944e7f_df4afafc",
+      "range": {
+        "startLine": 30,
+        "startChar": 16,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "115de7c9_10a0a9ba",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T18:30:33Z",
+      "side": 1,
+      "message": "The compiler doesn\u0027t like I am adding a base::BindOnce to the container.\n\ni.e. connection_type_callbacks_.push_back(base::BindOnce(... std::move(user_callback)));\n\nI can use std::list\u003cstd::unique_ptr\u003cbase::OnceCallback\u003e\u003e, but getting the OnceCallback from the container (std::list::front()) and do std::move(*cb).Run() is more verbose than this approach.",
+      "parentUuid": "f9d42a1c_769faf66",
       "range": {
         "startLine": 30,
         "startChar": 16,
