@@ -107,23 +107,23 @@ TEST_F(MessageCenterTrayTest, BasicMessageCenter) {
   ASSERT_FALSE(message_center_tray_->message_center_visible());
 
   bool shown =
-      message_center_tray_->ShowMessageCenterBubble(false /* show_by_click */);
+      message_center_tray_->ShowMessageCenter(false /* show_by_click */);
   EXPECT_TRUE(shown);
 
   ASSERT_FALSE(message_center_tray_->popups_visible());
   ASSERT_TRUE(message_center_tray_->message_center_visible());
 
-  message_center_tray_->HideMessageCenterBubble();
+  message_center_tray_->HideMessageCenter();
 
   ASSERT_FALSE(message_center_tray_->popups_visible());
   ASSERT_FALSE(message_center_tray_->message_center_visible());
 
-  message_center_tray_->ShowMessageCenterBubble(false /* show_by_click */);
+  message_center_tray_->ShowMessageCenter(false /* show_by_click */);
 
   ASSERT_FALSE(message_center_tray_->popups_visible());
   ASSERT_TRUE(message_center_tray_->message_center_visible());
 
-  message_center_tray_->HideMessageCenterBubble();
+  message_center_tray_->HideMessageCenter();
 
   ASSERT_FALSE(message_center_tray_->popups_visible());
   ASSERT_FALSE(message_center_tray_->message_center_visible());
@@ -159,7 +159,7 @@ TEST_F(MessageCenterTrayTest, MessageCenterClosesPopups) {
   ASSERT_FALSE(message_center_tray_->message_center_visible());
 
   bool shown =
-      message_center_tray_->ShowMessageCenterBubble(false /* show_by_click */);
+      message_center_tray_->ShowMessageCenter(false /* show_by_click */);
   EXPECT_TRUE(shown);
 
   ASSERT_FALSE(message_center_tray_->popups_visible());
@@ -173,14 +173,14 @@ TEST_F(MessageCenterTrayTest, MessageCenterClosesPopups) {
   ASSERT_FALSE(message_center_tray_->popups_visible());
   ASSERT_TRUE(message_center_tray_->message_center_visible());
 
-  message_center_tray_->HideMessageCenterBubble();
+  message_center_tray_->HideMessageCenter();
 
   // There is no queued notification.
   ASSERT_FALSE(message_center_tray_->popups_visible());
   ASSERT_FALSE(message_center_tray_->message_center_visible());
 
-  message_center_tray_->ShowMessageCenterBubble(false /* show_by_click */);
-  message_center_tray_->HideMessageCenterBubble();
+  message_center_tray_->ShowMessageCenter(false /* show_by_click */);
+  message_center_tray_->HideMessageCenter();
   ASSERT_FALSE(message_center_tray_->popups_visible());
   ASSERT_FALSE(message_center_tray_->message_center_visible());
 }
@@ -203,13 +203,13 @@ TEST_F(MessageCenterTrayTest, MessageCenterReopenPopupsForSystemPriority) {
   ASSERT_FALSE(message_center_tray_->message_center_visible());
 
   bool shown =
-      message_center_tray_->ShowMessageCenterBubble(false /* show_by_click */);
+      message_center_tray_->ShowMessageCenter(false /* show_by_click */);
   EXPECT_TRUE(shown);
 
   ASSERT_FALSE(message_center_tray_->popups_visible());
   ASSERT_TRUE(message_center_tray_->message_center_visible());
 
-  message_center_tray_->HideMessageCenterBubble();
+  message_center_tray_->HideMessageCenter();
 
   ASSERT_TRUE(message_center_tray_->popups_visible());
   ASSERT_FALSE(message_center_tray_->message_center_visible());
@@ -231,18 +231,18 @@ TEST_F(MessageCenterTrayTest, ShowBubbleFails) {
   ASSERT_FALSE(message_center_tray_->message_center_visible());
 
   bool shown =
-      message_center_tray_->ShowMessageCenterBubble(false /* show_by_click */);
+      message_center_tray_->ShowMessageCenter(false /* show_by_click */);
   EXPECT_FALSE(shown);
 
   ASSERT_FALSE(message_center_tray_->popups_visible());
   ASSERT_FALSE(message_center_tray_->message_center_visible());
 
-  message_center_tray_->HideMessageCenterBubble();
+  message_center_tray_->HideMessageCenter();
 
   ASSERT_FALSE(message_center_tray_->popups_visible());
   ASSERT_FALSE(message_center_tray_->message_center_visible());
 
-  message_center_tray_->ShowMessageCenterBubble(false /* show_by_click */);
+  message_center_tray_->ShowMessageCenter(false /* show_by_click */);
 
   ASSERT_FALSE(message_center_tray_->popups_visible());
   ASSERT_FALSE(message_center_tray_->message_center_visible());
@@ -287,7 +287,7 @@ TEST_F(MessageCenterTrayTest, ContextMenuTestWithMessageCenter) {
   EXPECT_EQ(1, model->GetItemCount());
 #endif
 
-  message_center_tray_->HideMessageCenterBubble();
+  message_center_tray_->HideMessageCenter();
 
   // The first item is to disable notifications from the notifier id. It also
   // removes the notification.

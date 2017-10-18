@@ -12,6 +12,7 @@
 #include "ash/ash_export.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/shell_observer.h"
+#include "ash/sidebar/sidebar.h"
 #include "ash/wm/workspace/workspace_types.h"
 #include "base/macros.h"
 #include "ui/aura/window.h"
@@ -55,6 +56,7 @@ enum class LoginStatus;
 class PanelLayoutManager;
 class Shelf;
 class ShelfLayoutManager;
+class Sidebar;
 class StackingController;
 class StatusAreaWidget;
 class SystemModalContainerLayoutManager;
@@ -126,6 +128,8 @@ class ASH_EXPORT RootWindowController : public ShellObserver {
 
   // Initializes the shelf for this root window and notifies observers.
   void InitializeShelf();
+
+  Sidebar* sidebar() const { return sidebar_.get(); }
 
   // Get touch HUDs associated with this root window controller.
   TouchHudDebug* touch_hud_debug() const { return touch_hud_debug_; }
@@ -324,6 +328,7 @@ class ASH_EXPORT RootWindowController : public ShellObserver {
   // of the RootWindowController so that it is safe for observers to be added
   // to it during construction of the shelf widget and status tray.
   std::unique_ptr<Shelf> shelf_;
+  std::unique_ptr<Sidebar> sidebar_;
 
   // TODO(jamescook): Eliminate this. It is left over from legacy shelf code and
   // doesn't mean anything in particular.
