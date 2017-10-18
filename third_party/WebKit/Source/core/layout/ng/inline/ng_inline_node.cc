@@ -643,7 +643,8 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
   GetLayoutTextOffsets(&text_offsets);
 
   NGBoxStrut border_padding = ComputeBorders(constraint_space, Style()) +
-                              ComputePadding(constraint_space, Style());
+                              ComputePadding(constraint_space, Style()) +
+                              GetTableCellIntrinsicPadding(box_);
 
   FontBaseline baseline_type =
       IsHorizontalWritingMode(constraint_space.WritingMode())

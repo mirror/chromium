@@ -6,6 +6,7 @@
 
 #include "core/layout/HitTestLocation.h"
 #include "core/layout/LayoutBlockFlow.h"
+#include "core/layout/LayoutTableCell.h"
 #include "core/layout/ng/inline/ng_inline_node_data.h"
 #include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_layout_result.h"
@@ -176,6 +177,7 @@ bool LayoutNGMixin<BASE>::NodeAtPoint(
                                                accumulated_offset, action);
 }
 
+template class LayoutNGMixin<LayoutTableCell>;
 template class LayoutNGMixin<LayoutBlockFlow>;
 
 }  // namespace blink
