@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56790ce9_e1192414",
+        "filename": "docs/layout_tests_linux.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-18T16:28:01Z",
+      "side": 1,
+      "message": "Can we bundle any of the other (non-MS) fonts this way? Or consider switching away from the MS fonts to something openly licensed? The latter would need to be a separate project, obviously ...",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b063c7_9d4a04d6",
+        "filename": "third_party/content_shell_fonts/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-18T16:28:01Z",
+      "side": 1,
+      "message": "This should be \"no\", since we\u0027re not shipping these.",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
