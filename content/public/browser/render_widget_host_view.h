@@ -87,6 +87,9 @@ class CONTENT_EXPORT RenderWidgetHostView {
   virtual gfx::PointF TransformPointToRootCoordSpaceF(
       const gfx::PointF& point) = 0;
 
+  virtual gfx::Point TransformRootPointToViewCoordSpace(
+      const gfx::Point& point) = 0;
+
   // Retrieves the native view used to contain plugins and identify the
   // renderer in IPC messages.
   virtual gfx::NativeView GetNativeView() const = 0;
