@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1703be8_51ac8b30",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_called.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8213cdb3_aaa53f33",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 15
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "427dee9c_9954a0fb",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_invalidhandle.html",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7220871_9380d1ec",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_invalidhandle.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "427dee9c_9954a0fb",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 5
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "df3bb66a_006d6e0d",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_unregister.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8232849_4e960daa",
+      "range": {
+        "startLine": 24,
+        "startChar": 56,
+        "endLine": 24,
+        "endChar": 67
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3acda3d6_894545e4",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_unregister.html",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4ab602_2ec6d450",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_unregister.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "Yes, the page has to release control back to the browser before it can resolve (at least in the implementation provided in this CL.) This is worth making explicit in the spec, though. We\u0027ll probably want to borrow some language from requestAnimationFrame.",
+      "parentUuid": "3acda3d6_894545e4",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "18f4685a_b13f60dc",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrSession_prevent_multiple_exclusive.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "508ddffe_43e7ef19",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae17632b_1623cd54",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrSession_prevent_multiple_exclusive.html",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25e7e81_e86ac0c5",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrSession_prevent_multiple_exclusive.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae17632b_1623cd54",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "682b0857_8a2d33d2",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrSession_prevent_multiple_exclusive.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17b97391_710d6f7c",
+      "range": {
+        "startLine": 50,
+        "startChar": 12,
+        "endLine": 50,
+        "endChar": 13
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d612eea_da81d159",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevicePose.h",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761a51aa_f1efaea4",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevicePose.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "Good catch.",
+      "parentUuid": "4d612eea_da81d159",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "4e7bcfd5_5033a8ee",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "851bac97_96a9138c",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 11
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db7b32d_3266f389",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
         "patchSetId": 1
@@ -229,6 +445,30 @@
       "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3bb56d_9acc4981",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "This is an excellent idea, but at the moment we don\u0027t have the capability to create non-exclusive sessions so I can\u0027t test it just yet. :P Making a note to include a test for this as soon as is feasible, though!",
+      "parentUuid": "2db7b32d_3266f389",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 44
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "06a0b03f_72bc5fd8",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86069894_73c8bdd7",
+      "range": {
+        "startLine": 214,
+        "startChar": 61,
+        "endLine": 217,
+        "endChar": 35
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bddf590_488dce31",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
         "patchSetId": 1
@@ -275,6 +539,30 @@
       "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4b9eb5_b69a1f00",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "You\u0027re right. This WAS a promise at one point and I was rejecting it, this comment was added when the API switched to callbacks again. But there\u0027s really nothing sensible to do with a callback in this scenario. Removed the comment.",
+      "parentUuid": "7bddf590_488dce31",
+      "range": {
+        "startLine": 270,
+        "startChar": 20,
+        "endLine": 270,
+        "endChar": 64
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "3d60edee_c04c1add",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameRequestCallbackCollection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "Good call. This was copied from requestAnimationFrame logic, so I didn\u0027t think much about it but it\u0027s definitely something that deserves a test. Updated exclusive_requestFrame_unregister.html to add a check for this.",
+      "parentUuid": "4a7bb645_1648edbb",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 3
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba4b0638_05e065d8",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRPresentationFrame.h",
         "patchSetId": 1
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "f34633b0_76eed175",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRPresentationFrame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "Nothing standard in Blink, sorry.",
+      "parentUuid": "ba4b0638_05e065d8",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 61
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19a5999d_67651348",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.cpp",
         "patchSetId": 1
@@ -335,6 +671,30 @@
       "writtenOn": "2017-10-18T15:18:53Z",
       "side": 1,
       "message": "I think this would be cleaner if ForceEnd() called device_-\u003eframeProvider()-\u003eEndExclusiveSession(); instead of the other way around.\n\nIf we want to trigger ending the exclusive session from the FrameProvider, it would call exclusive_session()-\u003eForceEnd() and have ForceEnd call EndExclusiveSession.\n\nWe can also rename FrameProvider::EndExclusiveSession() FrameProvider::OnExclusiveSessionEnded()",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 52
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d24097f_0ef53580",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-18T22:52:33Z",
+      "side": 1,
+      "message": "Makes sense to me. Done!",
+      "parentUuid": "19a5999d_67651348",
       "range": {
         "startLine": 131,
         "startChar": 4,
