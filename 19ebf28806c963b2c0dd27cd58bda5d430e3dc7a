@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "265e28d0_8013f23e",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-18T14:27:22Z",
+      "side": 1,
+      "message": "I wonder whether it is possible for a WebAPK to send an intent to itself. Do WebAPKs do this? If WebAPKs do this, will we end up with multiple copies of |loggedIntentUrlParam|?\n\nNit: For the second sentence, how about: \"A query parameter with the original URL is appended to the URL.\" (The code is the one appended the query parameter. The URL is not the one doing the appending)",
+      "revId": "19ebf28806c963b2c0dd27cd58bda5d430e3dc7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
