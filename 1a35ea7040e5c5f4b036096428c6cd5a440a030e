@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99bf822e_cdb1eaae",
+        "filename": "third_party/WebKit/Source/core/animation/CSSLengthInterpolationType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-18T21:27:50Z",
+      "side": 1,
+      "message": "This was the output given by \u0027git cl format\u0027. An empty line does not seem to be required explicitly by the style guide (though it is used in all their examples!).\n\nGiven the CL is already in, I don\u0027t think warrants a follow up.",
+      "parentUuid": "944f5f62_b2629782",
+      "revId": "1a35ea7040e5c5f4b036096428c6cd5a440a030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cae72354_1dfb0253",
         "filename": "third_party/WebKit/Source/core/animation/UnderlyingValueOwner.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "1a35ea7040e5c5f4b036096428c6cd5a440a030e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04e20d5_3daf79e6",
+        "filename": "third_party/WebKit/Source/core/animation/UnderlyingValueOwner.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-18T21:27:50Z",
+      "side": 1,
+      "message": "/usr/local/google/home/smcgruer/chromium/src/out/Release/../../third_party/llvm-build/Release+Asserts/bin/ld.lld: error: undefined symbol: blink::UnderlyingValueOwner::MutableValue()\n\u003e\u003e\u003e referenced by InterpolableValueTest.cpp\n\u003e\u003e\u003e               obj/third_party/WebKit/Source/core/unit_tests/InterpolableValueTest.o:(blink::InterpolationType::Composite(blink::UnderlyingValueOwner\u0026, double, blink::InterpolationValue const\u0026, double) const)",
+      "parentUuid": "cae72354_1dfb0253",
+      "revId": "1a35ea7040e5c5f4b036096428c6cd5a440a030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
