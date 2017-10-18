@@ -21,7 +21,7 @@ namespace blink {
 // Instead, it color converts a pixel and compares the result.
 TEST(CanvasColorParamsTest, MatchSkColorSpaceWithGfxColorSpace) {
   // Enable color canvas extensions for this test
-  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
+  ScopedEnableExperimentalCanvasFeatures experimental_canvas_features_enabler;
 
   const float wide_gamut_color_correction_tolerance = 0.001;
   sk_sp<SkColorSpace> src_rgb_color_space = SkColorSpace::MakeSRGB();
