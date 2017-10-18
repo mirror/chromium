@@ -733,6 +733,12 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
 
     AutofillProvider createAutofillProvider(Context context, ViewGroup containerView) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return null;
+        if (AwContents.activityFromContext(context) == null) {
+            Log.w(TAG,
+                    "WebView autofill is disabled because WebView isn't created with "
+                            + "activity context");
+            return null;
+        }
         return new AwAutofillProvider(context, containerView);
     }
 }
