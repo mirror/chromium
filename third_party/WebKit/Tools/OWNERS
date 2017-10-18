@@ -5,5 +5,9 @@ tansell@chromium.org
 tkent@chromium.org
 wangxianzhu@chromium.org
 
+per-file Scripts/audit-non-blink-usage=dcheng@chromium.org
+per-file Scripts/audit-non-blink-usage=haraken@chromium.org
+per-file Scripts/audit-non-blink-usage=jbroman@chromium.org
+
 # TEAM: blink-infra@chromium.org
 # COMPONENT: Blink>Infra
