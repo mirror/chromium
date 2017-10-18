@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc88b35a_476f4780",
+        "filename": "content/browser/download/download_file_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-18T22:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98a5befa_50e104db",
+      "range": {
+        "startLine": 352,
+        "startChar": 56,
+        "endLine": 352,
+        "endChar": 57
+      },
+      "revId": "9718297a3600ea603c832c81b8a89507f8d4bbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f97d69f0_6db3d24a",
         "filename": "content/browser/download/download_job.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-18T22:24:47Z",
       "side": 1,
       "message": "if network service is not enabled, this will be called, the following request_handle_ call will also be called.\n\nNot sure but this feels risky since the request_handle_ call will eventually reflect some change in StreamActive.",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 44
+      },
+      "revId": "9718297a3600ea603c832c81b8a89507f8d4bbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c709ea85_4a1974d2",
+        "filename": "content/browser/download/download_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-18T22:41:27Z",
+      "side": 1,
+      "message": "The handling of whether network service is enabled is in the DownloadFileImpl now. If network service is not enabled, the is_paused_ variable is not being used in StreamActive. Otherwise, ResumeRequest() below is a noop.",
+      "parentUuid": "f97d69f0_6db3d24a",
       "range": {
         "startLine": 54,
         "startChar": 37,
