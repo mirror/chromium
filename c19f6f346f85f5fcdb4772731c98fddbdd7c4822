@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b1d8816_40201992",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T00:59:50Z",
+      "side": 1,
+      "message": "is this ctor needed?",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122a8edf_03b4a8d1",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T00:59:50Z",
+      "side": 1,
+      "message": "BindOnce?",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de0f05b6_53206f03",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T00:59:50Z",
+      "side": 1,
+      "message": "Make the forms in 557-558 consistent. I think the form in line 557 is preferred over line 558",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daac46e4_802b5e39",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T00:59:50Z",
+      "side": 1,
+      "message": "Is it possible for Update() to return the error type instead of call EXPECT directly here? That is usually easier to understand at the callsite.\n\nIt could return kUnknown if the error was never set (of course we would never EXPECT on it at the callsite). If we really want to be rigorous it could return base::Optional that\u0027s null if the error wasn\u0027t set but that\u0027s probably overkill.",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "058f6b83_92770289",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T00:59:50Z",
+      "side": 1,
+      "message": "MakeRefCounted",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "823a80cd_dd46f26b",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T00:59:50Z",
+      "side": 1,
+      "message": "Is there a particular reason to assert this? If not, could we remove the assert?",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7945e385_b4f84d7f",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T00:59:50Z",
+      "side": 1,
+      "message": "MakeRefCounted",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86ba507_1a8e234a",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T00:59:50Z",
+      "side": 1,
+      "message": "emplace_back",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1cc4788_96a4885c",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T00:59:50Z",
+      "side": 1,
+      "message": "BindOnce?",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399bd9af_7e5f5dd8",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T00:59:50Z",
+      "side": 1,
+      "message": "We don\u0027t need to bother with |called| since the next line would fail anyway.",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f82e16b_8acfd271",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T00:59:50Z",
+      "side": 1,
+      "message": "Mismatching... or just CrossOrigin",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
