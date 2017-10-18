@@ -29,7 +29,7 @@ class GPU_EXPORT GpuMemoryBufferManager {
       gfx::BufferUsage usage,
       gpu::SurfaceHandle surface_handle) = 0;
 
-  // TODO(klausw): add args for size, format, usage?
+  // Create from supplied handle.
   virtual std::unique_ptr<gfx::GpuMemoryBuffer> CreateFromHandle(
       const gfx::GpuMemoryBufferHandle& handle,
       const gfx::Size& size,
