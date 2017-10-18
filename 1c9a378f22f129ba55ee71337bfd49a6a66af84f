@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34fea851_fdaf8854",
+        "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-18T16:11:34Z",
+      "side": 1,
+      "message": "I think you can remove those two imports.",
+      "revId": "1c9a378f22f129ba55ee71337bfd49a6a66af84f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
