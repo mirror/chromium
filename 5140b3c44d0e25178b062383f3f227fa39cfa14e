@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "8437246e_d47a779d",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-18T20:46:27Z",
+      "side": 1,
+      "message": "Why are you only recording the time if it is less than 1 second? Why not always record?\n\n(I suspect the reason is to try to tell the difference between two unrelated screenshots, but I\u0027m not sure and the comment doesn\u0027t explain why.)",
+      "revId": "5140b3c44d0e25178b062383f3f227fa39cfa14e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78acff8b_214abb47",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-18T20:46:27Z",
+      "side": 1,
+      "message": "super nit: Accel_PowerButton_Screenshot (to be consistent with other screenshot user actions)",
+      "revId": "5140b3c44d0e25178b062383f3f227fa39cfa14e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0da834ac_787fbed9",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 3
@@ -42,6 +76,23 @@
         "endLine": 62678,
         "endChar": 38
       },
+      "revId": "5140b3c44d0e25178b062383f3f227fa39cfa14e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c365e72d_e4a57a19",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 62681,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-18T20:46:27Z",
+      "side": 1,
+      "message": "This could use a better comment also, explaining why the 1 second matters (and you\u0027re not just using the fact that the histogram automatically caps at 10 sec).",
       "revId": "5140b3c44d0e25178b062383f3f227fa39cfa14e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
