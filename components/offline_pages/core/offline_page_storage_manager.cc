@@ -53,6 +53,10 @@ void OfflinePageStorageManager::SetClockForTesting(
   clock_ = std::move(clock);
 }
 
+void OfflinePageStorageManager::ResetUsageReportingFlagForTesting() {
+  reported_usage_this_launch_ = false;
+}
+
 void OfflinePageStorageManager::OnGetStorageStatsDoneForClearingPages(
     const ClearStorageCallback& callback,
     const ArchiveManager::StorageStats& stats) {
@@ -207,20 +211,22 @@ void OfflinePageStorageManager::ReportStorageUsageUMA(
     std::map<std::string, int64_t>::iterator found =
         page_sizes.find(name_space);
 
-    if (found != page_sizes.end())
+    if (found != page_sizes.end()) {
       found->second += item.file_size;
-    else if (item.file_size > 0)
+    } else if (item.file_size > 0) {
       // Check that file_size is greater than zero so we don't report for
       // namespaces with no storage usage.
       page_sizes[name_space] = item.file_size;
+    }
   }
 
   // Report the numbers for each namespace.
   std::string base_histogram_name = "OfflinePages.ClearStoragePreRunUsage.";
-  for (auto namespace_summary : page_sizes) {
-    base::UmaHistogramMemoryLargeMB(
-        base_histogram_name + namespace_summary.first,
-        namespace_summary.second);
+  static const int64_t kOneMiB = 1024 * 1024;
+  for (auto namespace_size : page_sizes) {
+    int64_t size_in_mib = namespace_size.second / kOneMiB;
+    base::UmaHistogramMemoryLargeMB(base_histogram_name + namespace_size.first,
+                                    size_in_mib);
   }
 }
 
