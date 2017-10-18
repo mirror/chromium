@@ -37,4 +37,11 @@ void CompositorAnimationHost::TakeOverImplOnlyScrollOffsetAnimation(
   animation_host_->scroll_offset_animations().AddTakeoverUpdate(element_id);
 }
 
+void CompositorAnimationHost::SetMainThreadAnimationsCount(
+    size_t main_thread_animations_count,
+    size_t main_thread_compositable_animations_count) {
+  animation_host_->SetMainThreadAnimationsCount(
+      main_thread_animations_count, main_thread_compositable_animations_count);
+}
+
 }  // namespace blink
