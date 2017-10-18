@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "752c40ba_5c2e66b5",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-textMetrics-all.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-18T15:54:59Z",
+      "side": 0,
+      "message": "No more round?  Nice!",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "6ab54071f662775974467f4262858a9f22e23afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
