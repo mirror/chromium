@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fcc77e3_a8ce7236",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/offlinepages/FakeOfflinePageBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T12:50:27Z",
+      "side": 1,
+      "message": "Inline the initialization where the member is declared?",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 34
+      },
+      "revId": "7daffd0ec5a5cf687e1d7251f0fd3b79d05f6d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
