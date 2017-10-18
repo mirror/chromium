@@ -760,7 +760,8 @@ void Resource::AllClientsAndObserversRemoved() {
     loader_->ScheduleCancel();
 }
 
-void Resource::SetDecodedSize(size_t decoded_size) {
+void Resource::UpdateDecodedSize() {
+  size_t decoded_size = ComputeDecodedSize();
   if (decoded_size == decoded_size_)
     return;
   size_t old_size = size();

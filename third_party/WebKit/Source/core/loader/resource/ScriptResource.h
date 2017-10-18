@@ -82,6 +82,9 @@ class CORE_EXPORT ScriptResource final : public TextResource {
 
   AccessControlStatus CalculateAccessControlStatus() const;
 
+ protected:
+  size_t ComputeDecodedSize() const override;
+
  private:
   class ScriptResourceFactory : public ResourceFactory {
    public:

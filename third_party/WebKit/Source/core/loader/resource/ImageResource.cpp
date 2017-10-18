@@ -117,7 +117,6 @@ class ImageResource::ImageResourceInfoImpl final
   const ResourceError& GetResourceError() const override {
     return resource_->GetResourceError();
   }
-
   void SetDecodedSize(size_t size) override { resource_->SetDecodedSize(size); }
   void WillAddClientOrObserver() override {
     resource_->WillAddClientOrObserver();
@@ -276,7 +275,7 @@ void ImageResource::DestroyDecodedDataForFailedRevalidation() {
   // Clears the image, as we must create a new image for the failed
   // revalidation response.
   UpdateImage(nullptr, ImageResourceContent::kClearAndUpdateImage, false);
-  SetDecodedSize(0);
+  UpdateDecodedSize();
 }
 
 void ImageResource::DestroyDecodedDataIfPossible() {
@@ -709,6 +708,14 @@ void ImageResource::UpdateImage(
     //    (b) after returning ImageResource::updateImage().
     DecodeError(all_data_received);
   }
+}
+
+void ImageResource::SetDecodedSize(size_t size) {
+  decoded_image_size_ = size;
+}
+
+size_t ImageResource::ComputeDecodedSize() const {
+  return decoded_image_size_;
 }
 
 }  // namespace blink

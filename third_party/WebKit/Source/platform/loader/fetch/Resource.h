@@ -350,7 +350,13 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   virtual void DestroyDecodedDataForFailedRevalidation() {}
 
   void SetEncodedSize(size_t);
-  void SetDecodedSize(size_t);
+
+  // Sub-classes that want to track decoded data size should implement
+  // ComputeDecodedSize to return the current size of the decoded data, and
+  // should call UpdateDecodedSize when that value changes.
+  // UpdateDecodedSize will appropriately notify the memory cache.
+  void UpdateDecodedSize();
+  virtual size_t ComputeDecodedSize() const { return 0; }
 
   void FinishPendingClients();
 

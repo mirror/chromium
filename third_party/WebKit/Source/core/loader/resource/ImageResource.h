@@ -100,7 +100,12 @@ class CORE_EXPORT ImageResource final
 
   bool ShouldShowPlaceholder() const;
 
+  void SetDecodedSize(size_t);
+
   DECLARE_VIRTUAL_TRACE();
+
+ protected:
+  size_t ComputeDecodedSize() const override;
 
  private:
   enum class MultipartParsingState : uint8_t {
@@ -176,6 +181,8 @@ class CORE_EXPORT ImageResource final
 
   Timer<ImageResource> flush_timer_;
   double last_flush_time_ = 0.;
+
+  size_t decoded_image_size_ = 0;
 
   bool is_during_finish_as_error_ = false;
 };

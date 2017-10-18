@@ -55,16 +55,24 @@ class MemoryCacheTest : public ::testing::Test {
 
     virtual void AppendData(const char* data, size_t len) {
       Resource::AppendData(data, len);
-      SetDecodedSize(this->size());
+      decoded_size_ += len;
+      UpdateDecodedSize();
     }
+
+    size_t ComputeDecodedSize() const override { return decoded_size_; }
 
    private:
     FakeDecodedResource(const ResourceRequest& request,
                         Type type,
                         const ResourceLoaderOptions& options)
-        : Resource(request, type, options) {}
+        : Resource(request, type, options), decoded_size_(0) {}
 
-    void DestroyDecodedDataIfPossible() override { SetDecodedSize(0); }
+    void DestroyDecodedDataIfPossible() override {
+      decoded_size_ = 0;
+      UpdateDecodedSize();
+    }
+
+    size_t decoded_size_;
   };
 
   class FakeResource final : public Resource {

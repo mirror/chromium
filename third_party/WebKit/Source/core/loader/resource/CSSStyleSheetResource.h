@@ -61,6 +61,9 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
 
   void AppendData(const char* data, size_t length) override;
 
+ protected:
+  size_t ComputeDecodedSize() const override;
+
  private:
   class CSSStyleSheetResourceFactory : public ResourceFactory {
    public:
@@ -87,7 +90,6 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
 
   void DestroyDecodedDataIfPossible() override;
   void DestroyDecodedDataForFailedRevalidation() override;
-  void UpdateDecodedSize();
 
   // Decoded sheet text cache is available iff loading this CSS resource is
   // successfully complete.

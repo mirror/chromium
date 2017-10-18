@@ -89,7 +89,7 @@ const String& ScriptResource::SourceText() {
   if (source_text_.IsNull() && Data()) {
     String source_text = DecodedText();
     ClearData();
-    SetDecodedSize(source_text.CharactersSizeInBytes());
+    UpdateDecodedSize();
     source_text_ = AtomicString(source_text);
   }
 
@@ -98,7 +98,12 @@ const String& ScriptResource::SourceText() {
 
 void ScriptResource::DestroyDecodedDataForFailedRevalidation() {
   source_text_ = AtomicString();
-  SetDecodedSize(0);
+  UpdateDecodedSize();
+}
+
+size_t ScriptResource::ComputeDecodedSize() const {
+  return TextResource::ComputeDecodedSize() +
+         source_text_.CharactersSizeInBytes();
 }
 
 AccessControlStatus ScriptResource::CalculateAccessControlStatus() const {

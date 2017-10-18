@@ -252,11 +252,12 @@ void CSSStyleSheetResource::SetDecodedSheetText(
   UpdateDecodedSize();
 }
 
-void CSSStyleSheetResource::UpdateDecodedSize() {
-  size_t decoded_size = decoded_sheet_text_.CharactersSizeInBytes();
+size_t CSSStyleSheetResource::ComputeDecodedSize() const {
+  size_t decoded_size = decoded_sheet_text_.CharactersSizeInBytes() +
+                        StyleSheetResource::ComputeDecodedSize();
   if (parsed_style_sheet_cache_)
     decoded_size += parsed_style_sheet_cache_->EstimatedSizeInBytes();
-  SetDecodedSize(decoded_size);
+  return decoded_size;
 }
 
 }  // namespace blink
