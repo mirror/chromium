@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1b9fe2_27f07865",
+        "filename": "chrome/browser/chromeos/arc/arc_migration_guide_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-18T16:11:43Z",
+      "side": 1,
+      "message": "Is this modification intentional? If so, lgtm.",
+      "revId": "722134fac7047fee4ee7218c7b66ba7cd5744172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
