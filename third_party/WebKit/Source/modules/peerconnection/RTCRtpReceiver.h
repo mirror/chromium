@@ -32,7 +32,7 @@ class RTCRtpReceiver final : public GarbageCollectedFinalized<RTCRtpReceiver>,
   const WebRTCRtpReceiver& web_receiver() const;
   void UpdateSourcesIfNeeded();
 
-  DECLARE_VIRTUAL_TRACE();
+  virtual void Trace(blink::Visitor*);
 
  private:
   void SetContributingSourcesNeedsUpdating();
