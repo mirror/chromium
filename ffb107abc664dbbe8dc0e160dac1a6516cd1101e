@@ -70,6 +70,30 @@
       "revId": "ffb107abc664dbbe8dc0e160dac1a6516cd1101e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffc5a1f_03396db9",
+        "filename": "tools/perf/contrib/cros_benchmarks/tab_switching_bench.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-10-18T08:44:06Z",
+      "side": 1,
+      "message": "I would use pause-after-creation.",
+      "parentUuid": "bb1f5dc7_f92752d6",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 18
+      },
+      "revId": "ffb107abc664dbbe8dc0e160dac1a6516cd1101e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
