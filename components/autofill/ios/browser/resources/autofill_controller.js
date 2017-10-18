@@ -895,6 +895,15 @@ __gCrWeb.autofill.webFormElementToFormData = function(
  *         const GURL& origin,
  *         ExtractMask extract_mask,
  *         FormData* form)
+ * and
+ *     bool UnownedCheckoutFormElementsAndFieldSetsToFormData(
+ *         const std::vector<blink::WebElement>& fieldsets,
+ *         const std::vector<blink::WebFormControlElement>& control_elements,
+ *         const blink::WebFormControlElement* element,
+ *         const blink::WebDocument& document,
+ *         ExtractMask extract_mask,
+ *         FormData* form,
+ *         FormFieldData* field)
  * in chromium/src/components/autofill/content/renderer/form_autofill_util.cc
  *
  * @param {HTMLFrameElement|Window} frame The window or frame where the
@@ -921,9 +930,53 @@ function unownedFormElementsAndFieldSetsToFormData_(
   form['action'] = ''
   form['is_form_tag'] = false;
 
+  if (document.documentElement.hasAttribute('lang') &&
+      !document.documentElement.getAttribute('lang').
+          toLowerCase().startsWith('en')) {
+    return formOrFieldsetsToFormData_(
+        null /* formElement*/, null /* formControlElement */, fieldsets,
+        controlElements, extractMask, form, null /* field */);
+  }
+
+  var title = document.title.toLowerCase();
+  var path = document.location.pathname.toLowerCase();
+  // The keywords are defined in
+  // UnownedCheckoutFormElementsAndFieldSetsToFormData in
+  // components/autofill/content/renderer/form_autofill_util.cc
+  var keywords = [
+    'payment',
+    'checkout',
+    'address',
+    'delivery',
+    'shipping',
+    'wallet'
+  ];
+
+  for (var keyword of keywords) {
+    if (title.includes(keyword) || path.includes(keyword)) {
+      form['is_formless_checkout'] = true;
+      return formOrFieldsetsToFormData_(
+          null /* formElement*/, null /* formControlElement */, fieldsets,
+          controlElements, extractMask, form, null /* field */);
+    }
+  }
+
+  // Since it's not a checkout flow, only add fields that have a non-"off"
+  // autocomplete attribute to the formless autofill.
+  var controlElementsWithAutocomplete = [];
+  for (var element of controlElements) {
+    if (element.hasAttribute('autocomplete') &&
+        element.getAttribute('autocomplete') !== 'off') {
+      controlElementsWithAutocomplete += element;
+    }
+  }
+
+  if (controlElementsWithAutocomplete.length == 0) {
+    return false;
+  }
   return formOrFieldsetsToFormData_(
       null /* formElement*/, null /* formControlElement */, fieldsets,
-      controlElements, extractMask, form, null /* field */);
+      controlElementsWithAutocomplete, extractMask, form, null /* field */);
 }
 
 /**
