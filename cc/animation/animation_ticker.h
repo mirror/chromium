@@ -106,6 +106,7 @@ class CC_ANIMATION_EXPORT AnimationTicker {
   // Returns true if there are any animations that have neither finished nor
   // aborted.
   bool HasTickingAnimation() const;
+  size_t TickingAnimationsCount() const;
 
   bool HasNonDeletedAnimation() const;
 
