@@ -51,6 +51,7 @@ include_rules = [
     "+third_party/ced/src/compact_enc_det/compact_enc_det.h",
     "+third_party/khronos",
     "+third_party/skia",
+    "+third_party/WebKit/common/feature_policy/feature_policy.h",
     "+ui/gfx",
     "+url",
     "+webp",

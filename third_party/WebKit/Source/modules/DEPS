@@ -8,6 +8,7 @@ include_rules = [
     "!core/exported",
     "!core/frame/WebLocalFrameImpl.h",
     "!core/frame/WebRemoteFrameImpl.h",
+    "+common/feature_policy",
     "+modules",
     "+platform",
     "+public/platform",

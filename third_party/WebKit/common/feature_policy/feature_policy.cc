@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/feature_policy/feature_policy.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy.h"
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 
-namespace content {
+namespace blink {
 
 namespace {
 
@@ -30,7 +30,7 @@ ParsedFeaturePolicyDeclaration::ParsedFeaturePolicyDeclaration()
     : matches_all_origins(false) {}
 
 ParsedFeaturePolicyDeclaration::ParsedFeaturePolicyDeclaration(
-    blink::WebFeaturePolicyFeature feature,
+    WebFeaturePolicyFeature feature,
     bool matches_all_origins,
     std::vector<url::Origin> origins)
     : feature(feature),
@@ -107,14 +107,12 @@ std::unique_ptr<FeaturePolicy> FeaturePolicy::CreateFromPolicyWithOrigin(
   return new_policy;
 }
 
-bool FeaturePolicy::IsFeatureEnabled(
-    blink::WebFeaturePolicyFeature feature) const {
+bool FeaturePolicy::IsFeatureEnabled(WebFeaturePolicyFeature feature) const {
   return IsFeatureEnabledForOrigin(feature, origin_);
 }
 
-bool FeaturePolicy::IsFeatureEnabledForOrigin(
-    blink::WebFeaturePolicyFeature feature,
-    const url::Origin& origin) const {
+bool FeaturePolicy::IsFeatureEnabledForOrigin(WebFeaturePolicyFeature feature,
+                                              const url::Origin& origin) const {
   DCHECK(base::ContainsKey(feature_list_, feature));
   const FeaturePolicy::FeatureDefault default_policy =
       feature_list_.at(feature);
@@ -140,8 +138,8 @@ void FeaturePolicy::SetHeaderPolicy(
   DCHECK(whitelists_.empty());
   for (const ParsedFeaturePolicyDeclaration& parsed_declaration :
        parsed_header) {
-    blink::WebFeaturePolicyFeature feature = parsed_declaration.feature;
-    DCHECK(feature != blink::WebFeaturePolicyFeature::kNotFound);
+    WebFeaturePolicyFeature feature = parsed_declaration.feature;
+    DCHECK(feature != WebFeaturePolicyFeature::kNotFound);
     whitelists_[feature] = WhitelistFromDeclaration(parsed_declaration);
   }
 }
@@ -189,8 +187,8 @@ void FeaturePolicy::AddContainerPolicy(
     // If a feature is enabled in the parent frame, and the parent chooses to
     // delegate it to the child frame, using the iframe attribute, then the
     // feature should be enabled in the child frame.
-    blink::WebFeaturePolicyFeature feature = parsed_declaration.feature;
-    if (feature == blink::WebFeaturePolicyFeature::kNotFound)
+    WebFeaturePolicyFeature feature = parsed_declaration.feature;
+    if (feature == WebFeaturePolicyFeature::kNotFound)
       continue;
     if (WhitelistFromDeclaration(parsed_declaration)->Contains(origin_) &&
         parent_policy->IsFeatureEnabled(feature)) {
@@ -202,43 +200,43 @@ void FeaturePolicy::AddContainerPolicy(
 }
 
 // static
-// See third_party/WebKit/public/platform/WebFeaturePolicy.h for status of each
-// features (in spec, implemented, etc).
+// See third_party/WebKit/common/feature_policy/feature_policy.h for status of
+// each features (in spec, implemented, etc).
 const FeaturePolicy::FeatureList& FeaturePolicy::GetDefaultFeatureList() {
   CR_DEFINE_STATIC_LOCAL(FeatureList, default_feature_list,
-                         ({{blink::WebFeaturePolicyFeature::kCamera,
+                         ({{WebFeaturePolicyFeature::kCamera,
                             FeaturePolicy::FeatureDefault::EnableForSelf},
-                           {blink::WebFeaturePolicyFeature::kEncryptedMedia,
+                           {WebFeaturePolicyFeature::kEncryptedMedia,
                             FeaturePolicy::FeatureDefault::EnableForSelf},
-                           {blink::WebFeaturePolicyFeature::kFullscreen,
+                           {WebFeaturePolicyFeature::kFullscreen,
                             FeaturePolicy::FeatureDefault::EnableForSelf},
-                           {blink::WebFeaturePolicyFeature::kGeolocation,
+                           {WebFeaturePolicyFeature::kGeolocation,
                             FeaturePolicy::FeatureDefault::EnableForSelf},
-                           {blink::WebFeaturePolicyFeature::kMicrophone,
+                           {WebFeaturePolicyFeature::kMicrophone,
                             FeaturePolicy::FeatureDefault::EnableForSelf},
-                           {blink::WebFeaturePolicyFeature::kMidiFeature,
+                           {WebFeaturePolicyFeature::kMidiFeature,
                             FeaturePolicy::FeatureDefault::EnableForSelf},
-                           {blink::WebFeaturePolicyFeature::kPayment,
+                           {WebFeaturePolicyFeature::kPayment,
                             FeaturePolicy::FeatureDefault::EnableForSelf},
-                           {blink::WebFeaturePolicyFeature::kSpeaker,
+                           {WebFeaturePolicyFeature::kSpeaker,
                             FeaturePolicy::FeatureDefault::EnableForSelf},
-                           {blink::WebFeaturePolicyFeature::kVibrate,
+                           {WebFeaturePolicyFeature::kVibrate,
                             FeaturePolicy::FeatureDefault::EnableForSelf},
-                           {blink::WebFeaturePolicyFeature::kDocumentCookie,
+                           {WebFeaturePolicyFeature::kDocumentCookie,
                             FeaturePolicy::FeatureDefault::EnableForAll},
-                           {blink::WebFeaturePolicyFeature::kDocumentDomain,
+                           {WebFeaturePolicyFeature::kDocumentDomain,
                             FeaturePolicy::FeatureDefault::EnableForAll},
-                           {blink::WebFeaturePolicyFeature::kDocumentWrite,
+                           {WebFeaturePolicyFeature::kDocumentWrite,
                             FeaturePolicy::FeatureDefault::EnableForAll},
-                           {blink::WebFeaturePolicyFeature::kSyncScript,
+                           {WebFeaturePolicyFeature::kSyncScript,
                             FeaturePolicy::FeatureDefault::EnableForAll},
-                           {blink::WebFeaturePolicyFeature::kSyncXHR,
+                           {WebFeaturePolicyFeature::kSyncXHR,
                             FeaturePolicy::FeatureDefault::EnableForAll},
-                           {blink::WebFeaturePolicyFeature::kUsb,
+                           {WebFeaturePolicyFeature::kUsb,
                             FeaturePolicy::FeatureDefault::EnableForSelf},
-                           {blink::WebFeaturePolicyFeature::kWebVr,
+                           {WebFeaturePolicyFeature::kWebVr,
                             FeaturePolicy::FeatureDefault::EnableForSelf}}));
   return default_feature_list;
 }
 
-}  // namespace content
+}  // namespace blink
