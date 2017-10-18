@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0da834ac_787fbed9",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T20:45:22Z",
+      "side": 1,
+      "message": "nit: Please add a trailing period.",
+      "range": {
+        "startLine": 734,
+        "startChar": 33,
+        "endLine": 734,
+        "endChar": 0
+      },
+      "revId": "5140b3c44d0e25178b062383f3f227fa39cfa14e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb5f1e50_04126c39",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 62678,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T20:45:22Z",
+      "side": 1,
+      "message": "This is currently adding a new top-level group, \"PowerButtonScreenshot\", which is almost certainly too specific to sit in the top-level namespace.  Please either find an existing top-level group that\u0027s appropriate, or generalize this group name to something that makes sense in a top-level namespace.",
+      "range": {
+        "startLine": 62678,
+        "startChar": 17,
+        "endLine": 62678,
+        "endChar": 38
+      },
+      "revId": "5140b3c44d0e25178b062383f3f227fa39cfa14e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
