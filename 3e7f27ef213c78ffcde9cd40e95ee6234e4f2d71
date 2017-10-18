@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce741190_d4c7d041",
+        "filename": "third_party/WebKit/Source/core/dom/NthIndexCache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T23:11:11Z",
+      "side": 1,
+      "message": "This was relying on the implicit public access qualifier from the macro.",
+      "revId": "3e7f27ef213c78ffcde9cd40e95ee6234e4f2d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a774c1_09f45d1e",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasRenderingContext.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T23:11:11Z",
+      "side": 1,
+      "message": "Had to move both of these, since they were depending on public: from the macro.",
+      "revId": "3e7f27ef213c78ffcde9cd40e95ee6234e4f2d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac1593f8_5278bb4d",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2D.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T23:11:11Z",
+      "side": 1,
+      "message": "Moved due to depending on public: from macro.",
+      "revId": "3e7f27ef213c78ffcde9cd40e95ee6234e4f2d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3472a9_f299824b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlDivElement.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T23:11:11Z",
+      "side": 1,
+      "message": "Added public: here. It happened to work, because the overridden methods below (other than Trace) were only called through base classes, but if a method is public on a base class. I guess we could have made the overrides private, but it\u0027s usually pointless, since you can just downcast to the base class and call them that way instead...",
+      "revId": "3e7f27ef213c78ffcde9cd40e95ee6234e4f2d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ad5f7e_fdb94b39",
+        "filename": "third_party/WebKit/Source/modules/offscreencanvas2d/OffscreenCanvasRenderingContext2D.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T23:11:11Z",
+      "side": 1,
+      "message": "Ditto: moved for public:",
+      "range": {
+        "startLine": 116,
+        "startChar": 37,
+        "endLine": 116,
+        "endChar": 38
+      },
+      "revId": "3e7f27ef213c78ffcde9cd40e95ee6234e4f2d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82434761_9983c9b8",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplayCapabilities.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T23:11:11Z",
+      "side": 1,
+      "message": "This was depending on the macro to add the semicolon.",
+      "range": {
+        "startLine": 32,
+        "startChar": 37,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "3e7f27ef213c78ffcde9cd40e95ee6234e4f2d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5d736f_3eaa19f2",
+        "filename": "third_party/WebKit/Source/modules/vr/VREyeParameters.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T23:11:11Z",
+      "side": 1,
+      "message": "This was depending on the macro to add the semicolon.",
+      "range": {
+        "startLine": 32,
+        "startChar": 37,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "3e7f27ef213c78ffcde9cd40e95ee6234e4f2d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f6dff5_419950a1",
+        "filename": "third_party/WebKit/Source/modules/vr/VRFrameData.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T23:11:11Z",
+      "side": 1,
+      "message": "This was depending on the macro to add the semicolon.",
+      "range": {
+        "startLine": 47,
+        "startChar": 37,
+        "endLine": 47,
+        "endChar": 38
+      },
+      "revId": "3e7f27ef213c78ffcde9cd40e95ee6234e4f2d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49bb7c9b_7ac11a73",
+        "filename": "third_party/WebKit/Source/modules/vr/VRStageParameters.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T23:11:11Z",
+      "side": 1,
+      "message": "This was depending on the macro to add the semicolon.",
+      "range": {
+        "startLine": 32,
+        "startChar": 37,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "3e7f27ef213c78ffcde9cd40e95ee6234e4f2d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
