@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e99d02e_1edea6b8",
+        "filename": "content/browser/download/download_file_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-18T20:12:37Z",
+      "side": 1,
+      "message": "Not sure if bool is better here. download_request_core currently uses int.\n\nMaybe a call sequence like Pause(), Pause(), Resume() can simply resume?",
+      "range": {
+        "startLine": 354,
+        "startChar": 2,
+        "endLine": 354,
+        "endChar": 5
+      },
+      "revId": "0de82373a60687389061c498650aef45c6791061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
