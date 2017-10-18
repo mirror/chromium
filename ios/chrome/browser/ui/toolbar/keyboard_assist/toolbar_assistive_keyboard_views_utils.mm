@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views_utils.h"
 
 #include "base/logging.h"
+#include "ios/chrome/browser/ui/external_search/features.h"
 #import "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_delegate.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -56,5 +57,18 @@ NSArray<UIButton*>* ToolbarAssistiveKeyboardLeadingButtons(
       cameraButton, IDS_IOS_KEYBOARD_ACCESSORY_VIEW_QR_CODE_SEARCH,
       @"QR code Search");
 
-  return @[ voiceSearchButton, cameraButton ];
+  NSArray<UIButton*>* buttons = @[ voiceSearchButton, cameraButton ];
+  if (base::FeatureList::IsEnabled(kExternalSearch)) {
+    UIButton* externalSearchButton =
+        ButtonWithIcon(@"keyboard_accessory_external_search");
+    [externalSearchButton
+               addTarget:delegate
+                  action:@selector(keyboardAccessoryExternalSearchTouchUp)
+        forControlEvents:UIControlEventTouchUpInside];
+    SetA11yLabelAndUiAutomationName(
+        externalSearchButton, IDS_IOS_KEYBOARD_ACCESSORY_VIEW_EXTERNAL_SEARCH,
+        @"External Search");
+    buttons = [buttons arrayByAddingObject:externalSearchButton];
+  }
+  return buttons;
 }
