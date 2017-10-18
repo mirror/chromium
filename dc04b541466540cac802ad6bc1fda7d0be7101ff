@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3e267e5c_3b286e54",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-18T15:46:20Z",
+      "side": 1,
+      "message": "IIRC we used to do this but stopped due to some problems. Creating NGInlineNode being destructive had some bad effects.\n\nCan we do this only when break_token does not exist? If too hard, I can try to find what it was.",
+      "revId": "dc04b541466540cac802ad6bc1fda7d0be7101ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18df1193_7740842c",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
         "patchSetId": 23
@@ -13,6 +30,23 @@
       "writtenOn": "2017-10-18T13:43:43Z",
       "side": 1,
       "message": "One regression here for multicol, if it has inline children. If box_fragment is the multicol container, its children will be columns (with lines inside), so we\u0027re not going to create the necessary RootInlineBox objects, since columns obviously aren\u0027t line boxes.\n\nTest:\n\u003cdiv style\u003d\"width:500px; columns:3; column-fill:auto; height:100px;\"\u003e\n    Hello world\n\u003c/div\u003e\n\nUsed to generate this fragment tree:\n\n.:: LayoutNG Physical Fragment Tree ::.\n  Box offset:0,0 size:800x116\n    Box offset:8,8 size:784x100\nM     Box offset:0,0 size:500x100\nC       Box offset:0,0 size:156x20\nI         Box (anonymous) offset:0,0 size:76x20\nL           LineBox offset:0,0 size:76x20\n              Text offset:0,0 size:76x20 start: 0 end: 11\n\nWith this patch it generates this fragment tree:\n\n.:: LayoutNG Physical Fragment Tree ::.\n  Box offset:0,0 size:800x116\n    Box offset:8,8 size:784x100\nM     Box offset:0,0 size:500x100\nC       Box offset:0,0 size:156x20\nL         LineBox offset:0,0 size:76x20\n            Text offset:0,0 size:76x20 start: 0 end: 11\n\nPreviously we\u0027d get to this code via the fragment marked with \"I\". Now we get here with \"M\".\n\nNGColumnLayoutAlgorithm uncondtionally creates NGBlockLayoutAlgorithm objects for its children. Maybe it should create NGInlineLayoutAlgorithm objects if children are inline? I haven\u0027t had time to look more closely at this yet (and maybe I \"never\" will), though...",
+      "revId": "dc04b541466540cac802ad6bc1fda7d0be7101ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0482b99_a1e2e98c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-18T15:46:20Z",
+      "side": 1,
+      "message": "Before, line box was always in visible coordinates. Does this patch change it to place floats etc.?",
       "revId": "dc04b541466540cac802ad6bc1fda7d0be7101ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
