@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6262cd7b_b7284173",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3160,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-10-18T18:21:42Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we check device scale factor as well?",
+      "revId": "cd78229f54c5bb126e49352d22ca4044929c1a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
