@@ -303,26 +303,15 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
       bool close_if_cannot_migrate,
       const NetLogWithSource& net_log);
 
-  // Method that attempts migration of |session| on write error with
-  // |error_code| if |session| is active and if there is an alternate network
-  // than the one to which |session| is currently bound.
-  MigrationResult MaybeMigrateSingleSessionOnWriteError(
-      QuicChromiumClientSession* session,
-      int error_code);
+  // TODO(zhongyi): move metrics collection to session once connection migration
+  // logic is all in QuicChromiumClientSession.
+  // Method that collects error code data on write error.
+  void CollectDataOnWriteError(int error_code);
 
-  // Method that attempts migration of |session| on path degrading if |session|
-  // is active and if there is an alternate network than the one to which
-  // |session| is currently bound.
-  MigrationResult MaybeMigrateSingleSessionOnPathDegrading(
-      QuicChromiumClientSession* session);
-
-  // Migrates |session| over to using |network|. If |network| is
-  // kInvalidNetworkHandle, default network is used.
-  MigrationResult MigrateSessionToNewNetwork(
-      QuicChromiumClientSession* session,
-      NetworkChangeNotifier::NetworkHandle network,
-      bool close_session_on_error,
-      const NetLogWithSource& net_log);
+  // TODO(zhongyi): move metrics collection to session once connection migration
+  // logic is all in QuicChromiumClientSession.
+  // Method that collects timestamp when some session is on path degrading.
+  void CollectDataOnPathDegrading();
 
   // Migrates |session| over to using |peer_address|. Causes a PING frame
   // to be sent to the new peer address.
@@ -423,13 +412,6 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
                     QuicChromiumClientSession** session);
   void ActivateSession(const QuicSessionKey& key,
                        QuicChromiumClientSession* session);
-
-  // Method that initiates migration of |session| if |session| is
-  // active and if there is an alternate network than the one to which
-  // |session| is currently bound.
-  MigrationResult MaybeMigrateSingleSession(QuicChromiumClientSession* session,
-                                            bool close_session_on_error,
-                                            const NetLogWithSource& net_log);
 
   void ConfigureInitialRttEstimate(const QuicServerId& server_id,
                                    QuicConfig* config);
