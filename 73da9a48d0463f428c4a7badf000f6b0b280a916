@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5255afb8_818b1860",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-10-18T23:48:45Z",
+      "side": 1,
+      "message": "Remove iOS9 tests on CQ as iOS 10 and 11 are more important and we are on the path to drop iOS9. iOS9 test coverage will be put on main waterfall but not CQ.  Feel free to disagree if we still want the coverage on CQ.",
+      "revId": "73da9a48d0463f428c4a7badf000f6b0b280a916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
