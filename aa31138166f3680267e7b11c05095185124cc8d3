@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "3abfd27c_b6d2b1d1",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-18T10:20:08Z",
+      "side": 1,
+      "message": "Don\u0027t you want to use\n\nfavicon_base::GetUmaFaviconType(favicon_base::ICON_TYPE_MAX) + 1\n\ninstead of\n\nfavicon_base::ICON_TYPE_MAX + 1\n\nI think that making this change enables you to use UmaHistogramEnumeration()",
+      "revId": "aa31138166f3680267e7b11c05095185124cc8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cabf0b97_4b59d455",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 17
