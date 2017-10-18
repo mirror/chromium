@@ -48,6 +48,7 @@ def calculate_functions_to_declare(property_):
     # api_class = "some string").
     property_['use_api_in_stylebuilder'] = \
         property_['should_declare_functions'] \
+        and not property_['priority'] == 'Animation' \
         and not (property_['api_custom_apply_functions_initial'] or
                  property_['api_custom_apply_functions_inherit'] or
                  property_['api_custom_apply_functions_value']) \
