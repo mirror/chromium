@@ -2062,6 +2062,8 @@ public class ChromeTabbedActivity
         }
 
         super.onDestroyInternal();
+
+        FeatureUtilities.finalizePendingFeatures();
     }
 
     @Override
