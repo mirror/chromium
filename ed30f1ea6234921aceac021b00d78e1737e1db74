@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "b1cd034c_94ad31fb",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-18T18:12:08Z",
+      "side": 1,
+      "message": "The problems start here:\n\nhttps://cs.chromium.org/chromium/src/cc/trees/layer_tree_frame_sink.cc?l\u003d51\nhttps://cs.chromium.org/chromium/src/services/ui/public/cpp/gpu/context_provider_command_buffer.cc?l\u003d450\n\nContextProviderCommandBuffer doesn\u0027t like having multiple callbacks set.",
+      "parentUuid": "42824b73_0d112cad",
+      "revId": "ed30f1ea6234921aceac021b00d78e1737e1db74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "058a2a7c_6d5deac8",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 17

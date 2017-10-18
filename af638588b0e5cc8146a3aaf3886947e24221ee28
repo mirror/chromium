@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ccef2c72_8f33811f",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-18T18:12:08Z",
+      "side": 1,
+      "message": "What exactly is the issue here? My understanding is that context loss \u003d\u003d GPU crash and yes we do come back here.\n\nThe DisplayPrivatePtr is a message pipe to the GPU process and will become unbound (it goes into an error state automatically and gets unbound by context loss handling code) when the GPU crashes. We can omit this check but it would just DCHECK further downstream in the GPU process in FrameSinkManagerImpl.\n\nDoes context loss not imply GPU crash though? I might totally misunderstand this.",
+      "parentUuid": "ee7e1d42_2e248919",
+      "revId": "af638588b0e5cc8146a3aaf3886947e24221ee28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c616702_f5ea8431",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 20
