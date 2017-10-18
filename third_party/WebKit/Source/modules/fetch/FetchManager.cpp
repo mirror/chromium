@@ -722,6 +722,26 @@ void FetchManager::Loader::PerformHTTPFetch() {
     if (request_->AttachedCredential())
       request.SetAttachedCredential(request_->AttachedCredential());
   }
+  switch (request_->CacheMode()) {
+    case WebURLRequest::kFetchRequestCacheModeDefault:
+      break;
+    case WebURLRequest::kFetchRequestCacheModeNoStore:
+      request.SetCachePolicy(WebCachePolicy::kDisablingCache);
+      break;
+    case WebURLRequest::kFetchRequestCacheModeReload:
+      request.SetCachePolicy(WebCachePolicy::kBypassingCache);
+      break;
+    case WebURLRequest::kFetchRequestCacheModeNoCache:
+      request.SetCachePolicy(WebCachePolicy::kValidatingCacheData);
+      break;
+    case WebURLRequest::kFetchRequestCacheModeForceCache:
+      request.SetCachePolicy(WebCachePolicy::kReturnCacheDataElseLoad);
+      break;
+    case WebURLRequest::kFetchRequestCacheModeOnlyIfCached:
+      request.SetCachePolicy(WebCachePolicy::kReturnCacheDataDontLoad);
+      break;
+  }
+
   request.SetFetchRedirectMode(request_->Redirect());
   request.SetUseStreamOnResponse(true);
   request.SetExternalRequestStateFromRequestorAddressSpace(

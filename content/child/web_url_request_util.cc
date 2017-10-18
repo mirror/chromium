@@ -236,6 +236,9 @@ int GetLoadFlagsForWebURLRequest(const WebURLRequest& request) {
     case WebCachePolicy::kValidatingCacheData:
       load_flags |= net::LOAD_VALIDATE_CACHE;
       break;
+    case WebCachePolicy::kDisablingCache:
+      load_flags |= net::LOAD_DISABLE_CACHE;
+      break;
     case WebCachePolicy::kBypassingCache:
       load_flags |= net::LOAD_BYPASS_CACHE;
       break;

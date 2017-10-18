@@ -10,6 +10,7 @@ namespace blink {
 enum class WebCachePolicy : uint8_t {
   kUseProtocolCachePolicy,   // normal load
   kValidatingCacheData,      // reload
+  kDisablingCache,           // do not use cache at all
   kBypassingCache,           // end-to-end reload
   kReturnCacheDataElseLoad,  // back/forward or encoding change - allow stale
                              // data
