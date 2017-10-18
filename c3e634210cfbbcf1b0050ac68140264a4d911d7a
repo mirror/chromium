@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee3c1899_8903168f",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_controller_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-18T14:58:09Z",
+      "side": 1,
+      "message": "what\u0027s the point of having a constant for this?",
+      "revId": "c3e634210cfbbcf1b0050ac68140264a4d911d7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
