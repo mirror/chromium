@@ -155,6 +155,8 @@ RenderProcessImpl::RenderProcessImpl(
   SetV8FlagIfNotFeature(features::kWebAssembly,
                         "--wasm-disable-structured-cloning");
 
+  SetV8FlagIfHasSwitch(switches::kV8Future, "--future");
+
   SetV8FlagIfFeature(features::kWebAssemblyTrapHandler, "--wasm-trap-handler");
   SetV8FlagIfNotFeature(features::kWebAssemblyTrapHandler,
                         "--no-wasm-trap-handler");
