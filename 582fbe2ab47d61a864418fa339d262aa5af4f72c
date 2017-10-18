@@ -62,6 +62,30 @@
       "revId": "582fbe2ab47d61a864418fa339d262aa5af4f72c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f332afe_cc250635",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webaudio/the-audio-api/chrome/resources/start-stop-exceptions.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-18T20:41:08Z",
+      "side": 1,
+      "message": "It was already webaudio/resources.  That\u0027s why it\u0027s here.",
+      "parentUuid": "f53aaed1_1d86f099",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 8
+      },
+      "revId": "582fbe2ab47d61a864418fa339d262aa5af4f72c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
