@@ -39,7 +39,6 @@
 #include "platform/heap/HeapLinkedStack.h"
 #include "platform/heap/HeapTerminatedArrayBuilder.h"
 #include "platform/heap/HeapTestUtilities.h"
-#include "platform/heap/SafePoint.h"
 #include "platform/heap/SelfKeepAlive.h"
 #include "platform/heap/ThreadState.h"
 #include "platform/heap/Visitor.h"
@@ -327,7 +326,7 @@ namespace blink {
 class TestGCScope {
  public:
   explicit TestGCScope(BlinkGC::StackState state)
-      : state_(ThreadState::Current()), safe_point_scope_(state) {
+      : state_(ThreadState::Current()) {
     DCHECK(state_->CheckThread());
     state_->MarkPhasePrologue(state, BlinkGC::kGCWithSweep,
                               BlinkGC::kPreciseGC);
@@ -340,7 +339,6 @@ class TestGCScope {
 
  private:
   ThreadState* state_;
-  SafePointScope safe_point_scope_;
 };
 
 class SimpleObject : public GarbageCollected<SimpleObject> {

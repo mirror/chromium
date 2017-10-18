@@ -215,6 +215,28 @@ class ThreadHeapStats {
   double estimated_marking_time_per_byte_;
 };
 
+class StackRoots final {
+  WTF_MAKE_NONCOPYABLE(StackRoots);
+
+ public:
+  explicit StackRoots(ThreadHeap*);
+  void Visit(Visitor*);
+  void RecordStackEnd(intptr_t* end_of_stack) { end_of_stack_ = end_of_stack; }
+
+ private:
+  void CopyStackUntilMarker(void* marker);
+  void VisitAsanFakeStackForPointer(Visitor*, Address ptr);
+
+  ThreadHeap* heap_;
+#if defined(ADDRESS_SANITIZER)
+  void* asan_fake_stack_;
+#endif
+  intptr_t* start_of_stack_;
+  intptr_t* end_of_stack_;
+  Vector<Address> stack_copy_;
+  void* marker_;
+};
+
 class PLATFORM_EXPORT ThreadHeap {
  public:
   explicit ThreadHeap(ThreadState*);
@@ -270,8 +292,6 @@ class PLATFORM_EXPORT ThreadHeap {
 
   void VisitPersistentRoots(Visitor*);
   void VisitStackRoots(Visitor*);
-  void EnterSafePoint(ThreadState*);
-  void LeaveSafePoint();
 
   // Is the finalizable GC object still alive, but slated for lazy sweeping?
   // If a lazy sweep is in progress, returns true if the object was found
@@ -540,6 +560,7 @@ class PLATFORM_EXPORT ThreadHeap {
   std::unique_ptr<CallbackStack> weak_callback_stack_;
   std::unique_ptr<CallbackStack> ephemeron_stack_;
   StackFrameDepth stack_frame_depth_;
+  StackRoots stack_roots_;
 
   std::unique_ptr<HeapCompact> compaction_;
 
