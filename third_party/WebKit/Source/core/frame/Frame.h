@@ -29,6 +29,7 @@
 #ifndef Frame_h
 #define Frame_h
 
+#include "common/feature_policy/feature_policy.h"
 #include "core/CoreExport.h"
 #include "core/frame/FrameLifecycle.h"
 #include "core/frame/FrameTypes.h"
@@ -37,7 +38,6 @@
 #include "core/page/FrameTree.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
-#include "public/platform/WebFeaturePolicy.h"
 
 namespace blink {
 

@@ -33,6 +33,7 @@
 
 #include <memory>
 
+#include "common/feature_policy/feature_policy.h"
 #include "core/CoreExport.h"
 #include "core/dom/Document.h"
 #include "core/dom/IconURL.h"
@@ -51,7 +52,6 @@
 #include "platform/wtf/Vector.h"
 #include "public/platform/WebContentSecurityPolicyStruct.h"
 #include "public/platform/WebEffectiveConnectionType.h"
-#include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/WebLoadingBehaviorFlag.h"
 #include "public/platform/WebSuddenTerminationDisablerType.h"

@@ -29,4 +29,5 @@ include_rules = [
 
     # Allowed only inside INSIDE_BLINK
     "+platform",
+    "+common/feature_policy/",
 ]
