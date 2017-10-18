@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d2aff249_3553a30d",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-18T17:51:14Z",
+      "side": 1,
+      "message": "that\u0027s a good question.\n\nas it\u0027s written, the subclass is specifically checking for H264 anyway. it\u0027s doing nothing functionally differently than MediaCodecBridge unless the format matches.  i don\u0027t think there\u0027s an advantage to running the extra code for any other format given that those guards are there.\n\ni think that we should go all the way to one side or the other.  my suggestion is to remove the format guards in the encoder subclass, and then either (a) instantiate the new encoder only for H264, or (b) instantiate the new encoder for all cases when we\u0027re encoding.\n\ni\u0027ll agree with whichever you think is the right thing to do.  is it safe to \"if we get a config frame, then prepend SPS/PPS\"?",
+      "parentUuid": "e1c091d7_b4edb722",
+      "revId": "2ac54c00f7dafc48c6921e794bb4623c6ca8e51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b032d61_c3e22390",
         "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
         "patchSetId": 6

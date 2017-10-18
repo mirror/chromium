@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aa90d9f_2b5aa20d",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-18T17:51:14Z",
+      "side": 1,
+      "message": "since this is a new buffer that\u0027s not used anymore, i think that you don\u0027t need to duplicate() here.\n\nplease note that i might misunderstand what duplicate() does, so i might simply be making bad suggestions.  :)",
+      "range": {
+        "startLine": 109,
+        "startChar": 66,
+        "endLine": 109,
+        "endChar": 77
+      },
+      "revId": "92bb249da21add74d466224564911842826cdcc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0970ae01_fc509cc2",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecEncoder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-18T17:51:14Z",
+      "side": 1,
+      "message": "what happens if one doesn\u0027t call duplicate()?  this one seems more complicated than @109.\n\nis duplicate() just to provide a different \"current offset\" to two holders of the object, sharing the same underlying data?",
+      "range": {
+        "startLine": 111,
+        "startChar": 72,
+        "endLine": 111,
+        "endChar": 83
+      },
+      "revId": "92bb249da21add74d466224564911842826cdcc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
