@@ -11,10 +11,12 @@
 #include "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h"
 #include "content/browser/shared_worker/shared_worker_instance.h"
 #include "content/browser/shared_worker/shared_worker_service_impl.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/content_client.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
 #include "third_party/WebKit/public/platform/web_feature.mojom.h"
 #include "third_party/WebKit/public/web/worker_content_settings_proxy.mojom.h"
@@ -83,8 +85,20 @@ void SharedWorkerHost::Start(mojom::SharedWorkerFactoryPtr factory,
   mojom::SharedWorkerHostPtr host;
   binding_.Bind(mojo::MakeRequest(&host));
 
+  auto* process = RenderProcessHost::FromID(process_id_);
+  service_manager::Connector* connector =
+      BrowserContext::GetConnectorFor(process->GetBrowserContext());
+  service_manager::mojom::InterfaceProviderPtr interface_provider_ptr;
+  interface_provider_binding_.Bind(mojo::MakeRequest(&interface_provider_ptr));
   service_manager::mojom::InterfaceProviderPtr interface_provider;
-  interface_provider_binding_.Bind(mojo::MakeRequest(&interface_provider));
+  auto request = mojo::MakeRequest(&interface_provider);
+  // |connector| is null in unit tests.
+  if (connector) {
+    connector->FilterInterfaces(mojom::kNavigation_SharedWorkerSpec,
+                                process->GetChildIdentity(), std::move(request),
+                                std::move(interface_provider_ptr));
+  }
+
   mojom::SharedWorkerInfoPtr info(mojom::SharedWorkerInfo::New(
       instance_->url(), instance_->name(), instance_->content_security_policy(),
       instance_->content_security_policy_type(),

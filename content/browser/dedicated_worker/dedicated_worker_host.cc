@@ -6,10 +6,13 @@
 #include <utility>
 
 #include "content/browser/dedicated_worker/dedicated_worker_host.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/message_pipe.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 #include "url/origin.h"
 
@@ -54,12 +57,27 @@ class DedicatedWorkerFactoryImpl : public blink::mojom::DedicatedWorkerFactory {
   void CreateDedicatedWorker(
       const url::Origin& origin,
       service_manager::mojom::InterfaceProviderRequest request) override {
+    RenderProcessHost* process = RenderProcessHost::FromID(process_id_);
+    if (!process)
+      return;
+
+    service_manager::Connector* connector =
+        BrowserContext::GetConnectorFor(process->GetBrowserContext());
+    // |connector| is null in unit tests.
+    if (!connector)
+      return;
+
+    service_manager::mojom::InterfaceProviderPtr interface_provider_ptr;
+
     // TODO(crbug.com/729021): Once |parent_context_origin_| is no longer races
     // with the request for |DedicatedWorkerFactory|, enforce that the worker's
     // origin either matches the creating document's origin, or is unique.
     mojo::MakeStrongBinding(
         base::MakeUnique<DedicatedWorkerHost>(process_id_, origin),
-        std::move(request));
+        mojo::MakeRequest(&interface_provider_ptr));
+    connector->FilterInterfaces(blink::mojom::kNavigation_DedicatedWorkerSpec,
+                                process->GetChildIdentity(), std::move(request),
+                                std::move(interface_provider_ptr));
   }
 
  private:
