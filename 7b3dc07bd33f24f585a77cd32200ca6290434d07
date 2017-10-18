@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "eb4347bd_70a49b9f",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2027,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-18T21:44:24Z",
+      "side": 1,
+      "message": "Last time I looked at DidAttachInterstitialPage, it was dispatched at the time of committing the interstitial page. I would expect at that point it is ready to execute JS and I\u0027m not sure why it would fail. Without debugging through it myself, I cannot answer why WaitForRenderFrameReady might be needed, but speculation is that rendering the interstitial takes longer and is spread across multiple iterations of the event loop, so if you are expecting the full contents to be rendered and accessible to the script you are sending it, that would fail.",
+      "parentUuid": "0bb14328_de9567ac",
+      "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a520682_69e0b9df",
         "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
         "patchSetId": 18

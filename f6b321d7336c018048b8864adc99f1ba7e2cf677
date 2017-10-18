@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a51849b_2deaa102",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 2019,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-18T21:44:24Z",
+      "side": 1,
+      "message": "What\u0027s the point of checking the observer state before the navigation has even been started?",
+      "revId": "f6b321d7336c018048b8864adc99f1ba7e2cf677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d99f6da4_78ddc1c4",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 2022,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-18T21:44:24Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we have the above EXPECTations be placed here?",
+      "revId": "f6b321d7336c018048b8864adc99f1ba7e2cf677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
