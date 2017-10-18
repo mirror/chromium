@@ -33,6 +33,10 @@ class ContainerBehavior {
   // animation.
   virtual void InitializeShowAnimationStartingState(
       aura::Window* container) = 0;
+
+  virtual const gfx::Rect AdjustSetBoundsRequest(
+      const gfx::Rect& workspace_bounds,
+      const gfx::Rect& requested_bounds) = 0;
 };
 
 }  // namespace keyboard
