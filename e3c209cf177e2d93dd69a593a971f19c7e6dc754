@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ea54fc7_33ba343a",
+        "filename": "chrome/browser/chooser_controller/fake_bluetooth_chooser_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-18T00:38:22Z",
+      "side": 1,
+      "message": "Done. Trent told me to add it, but I think I agree with you.",
+      "parentUuid": "8d9d6c43_3b5b9097",
+      "revId": "e3c209cf177e2d93dd69a593a971f19c7e6dc754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81cdb028_64e812d4",
         "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "e3c209cf177e2d93dd69a593a971f19c7e6dc754",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e064cd_c9fd3938",
+        "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-18T00:38:22Z",
+      "side": 1,
+      "message": "Done. unique_ptr seems to have worked.",
+      "parentUuid": "81cdb028_64e812d4",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "e3c209cf177e2d93dd69a593a971f19c7e6dc754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b292d499_d3c37ab1",
+        "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-18T00:38:22Z",
+      "side": 1,
+      "message": "The initial underscore is required by the suite. I removed the second one though.",
+      "parentUuid": "cdf4dce1_eea1b31e",
+      "range": {
+        "startLine": 63,
+        "startChar": 46,
+        "endLine": 63,
+        "endChar": 75
+      },
+      "revId": "e3c209cf177e2d93dd69a593a971f19c7e6dc754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecb1cd3a_9bd069de",
         "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
         "patchSetId": 8
@@ -85,6 +151,30 @@
       "revId": "e3c209cf177e2d93dd69a593a971f19c7e6dc754",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc358ef_14fa6032",
+        "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-18T00:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecb1cd3a_9bd069de",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 26
+      },
+      "revId": "e3c209cf177e2d93dd69a593a971f19c7e6dc754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "968fa662_908f3563",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-18T00:38:22Z",
+      "side": 1,
+      "message": "Moved to the other CL.",
+      "parentUuid": "5b59d7fe_34386b09",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 70
+      },
+      "revId": "e3c209cf177e2d93dd69a593a971f19c7e6dc754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c16ad66f_e1c6c3d9",
         "filename": "ui/views/controls/table/table_view.cc",
         "patchSetId": 8
@@ -125,6 +239,24 @@
       "revId": "e3c209cf177e2d93dd69a593a971f19c7e6dc754",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ac137a_0f71cb43",
+        "filename": "ui/views/controls/table/table_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-18T00:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c16ad66f_e1c6c3d9",
+      "revId": "e3c209cf177e2d93dd69a593a971f19c7e6dc754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
