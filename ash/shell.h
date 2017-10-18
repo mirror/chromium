@@ -467,6 +467,9 @@ class ASH_EXPORT Shell : public SessionObserver,
   WindowTreeHostManager* window_tree_host_manager() {
     return window_tree_host_manager_.get();
   }
+  MessageCenterController* message_center_controller() {
+    return message_center_controller_.get();
+  }
 
   // Force the shelf to query for it's current visibility state.
   // TODO(jamescook): Move to Shelf.
