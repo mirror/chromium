@@ -6,10 +6,10 @@
 #define WebFeaturePolicy_h
 
 #include "WebCommon.h"
-#include "WebFeaturePolicyFeature.h"
 #include "WebSecurityOrigin.h"
 #include "WebString.h"
 #include "WebVector.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
 
 namespace blink {
 
