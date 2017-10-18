@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4d12d26_f7e457ea",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fetch/script-tests/request.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-18T02:24:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af1921a3_ee50d0da",
+      "revId": "93c74dea3724462fcde50b4f8cf7a953908b608b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cba720f8_b9334203",
         "filename": "third_party/WebKit/LayoutTests/http/tests/fetch/script-tests/request.js",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dd66e715_8cf30ce9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fetch/script-tests/request.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-18T02:24:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cba720f8_b9334203",
+      "revId": "93c74dea3724462fcde50b4f8cf7a953908b608b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "107ba41a_4f4580b4",
         "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.cpp",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "93c74dea3724462fcde50b4f8cf7a953908b608b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7a771a_4e18d2f2",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-18T02:24:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "107ba41a_4f4580b4",
+      "revId": "93c74dea3724462fcde50b4f8cf7a953908b608b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "da92a081_9379c2bc",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-18T02:24:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cbff32c_4ec59527",
+      "range": {
+        "startLine": 180,
+        "startChar": 42,
+        "endLine": 180,
+        "endChar": 43
+      },
+      "revId": "93c74dea3724462fcde50b4f8cf7a953908b608b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a897ae0b_6624bff1",
         "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.cpp",
         "patchSetId": 7
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "40f0bfcf_8fda0e5d",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-18T02:24:57Z",
+      "side": 1,
+      "message": "I like the current pattern because someone could append some logic at the end of the function. \n\nI moved the logic in the branch to a separate function.",
+      "parentUuid": "a897ae0b_6624bff1",
+      "revId": "93c74dea3724462fcde50b4f8cf7a953908b608b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a03b0fef_d6f2bf68",
         "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.h",
         "patchSetId": 7
@@ -107,6 +203,24 @@
       "revId": "93c74dea3724462fcde50b4f8cf7a953908b608b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89d8669_6c040208",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-18T02:24:57Z",
+      "side": 1,
+      "message": "Sadly, due to JUMBO unnamed namespaces are merged. I really dislike it so I now prefer inner classes to classes defined in unnamed namespaces.",
+      "parentUuid": "a03b0fef_d6f2bf68",
+      "revId": "93c74dea3724462fcde50b4f8cf7a953908b608b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
