@@ -92,6 +92,7 @@ class MockInputQueue : public StreamMixerAlsa::InputQueue {
   void SetContentTypeVolume(float volume, int fade_ms) override {}
   void SetMuted(bool muted) override {}
   float EffectiveVolume() override { return 1.0; }
+  float InstantaneousVolume() override { return 1.0; }
 
   const ::media::AudioBus* data() const { return data_.get(); }
 

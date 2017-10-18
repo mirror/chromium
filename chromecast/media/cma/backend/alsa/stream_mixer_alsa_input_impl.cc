@@ -603,6 +603,10 @@ float StreamMixerAlsaInputImpl::EffectiveVolume() {
   return std::max(0.0f, std::min(volume, 1.0f));
 }
 
+float StreamMixerAlsaInputImpl::InstantaneousVolume() {
+  return slew_volume_.LastBufferMaxMultiplier();
+}
+
 void StreamMixerAlsaInputImpl::VolumeScaleAccumulate(bool repeat_transition,
                                                      const float* src,
                                                      int frames,

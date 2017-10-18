@@ -234,6 +234,7 @@ class MockInputQueue : public StreamMixerAlsa::InputQueue {
   void SetContentTypeVolume(float volume, int fade_ms) override {}
   void SetMuted(bool muted) override {}
   float EffectiveVolume() override { return multiplier_; }
+  float InstantaneousVolume() override { return multiplier_; }
 
   // Setters and getters for test control.
   void SetPaused(bool paused) { paused_ = paused; }
