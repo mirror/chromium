@@ -22,6 +22,30 @@
       "revId": "632f017ae40d8618ff542a0833e53adee877b26f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ac3ae4_1159afce",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T18:22:05Z",
+      "side": 1,
+      "message": "That\u0027s a good worry! We have the same concern in the current implementation: ServiceWorkerHostMsg_DecrementServiceWorkerRefCount can be sent by a compromised renderer and remove the reference held by other renderers.\n\nHowever our code looks resilient to this: all the callsites of GetLiveVersion handle when null is returned. We also kill the renderer when we get a handle_id that no longer exists: https://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_dispatcher_host.cc?l\u003d563\u0026rcl\u003d1c42b7a0d9771845d4d6ec9ef985eb7d0fe54f8f\n\nIn more detail, each handle_id corresponds to a ServiceWorkerHandleReference in the renderer which keeps a ServiceWorkerHandle in the browser alive which has a scoped_refptr to a ServiceWorkerVersion. So the compromised renderer could remove all the ServiceWorkerHandles and cause the ServiceWorkerVersion to be destroyed, if no one else has a scoped_refptr to it.  \n\nThis will get better when we move to Mojo as we would remove the handle_id and the renderer can only remove its own reference by destroying the Mojo object.",
+      "parentUuid": "5dfbc2cf_fff6169d",
+      "range": {
+        "startLine": 19,
+        "startChar": 14,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "632f017ae40d8618ff542a0833e53adee877b26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
