@@ -16,6 +16,24 @@
       "revId": "c3e634210cfbbcf1b0050ac68140264a4d911d7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091bb6a3_5dc84de2",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_controller_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-18T15:09:22Z",
+      "side": 1,
+      "message": "I didn\u0027t see those constants were not really useful anymore after creating ExpectRegularProfileButtons().",
+      "parentUuid": "ee3c1899_8903168f",
+      "revId": "c3e634210cfbbcf1b0050ac68140264a4d911d7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
