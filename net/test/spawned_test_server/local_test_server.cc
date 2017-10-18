@@ -122,6 +122,8 @@ bool LocalTestServer::Stop() {
   if (!process_.IsValid())
     return true;
 
+  base::ScopedAllowBaseSyncPrimitivesForTesting allow_base_sync_primitives;
+
   // First check if the process has already terminated.
   int exit_code;
   bool ret = process_.WaitForExitWithTimeout(base::TimeDelta(), &exit_code);
