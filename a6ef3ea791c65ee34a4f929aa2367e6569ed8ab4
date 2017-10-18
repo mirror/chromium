@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "e3ba825a_6bc7d53c",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks_unittest.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-18T10:35:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9967db75_5cbb3df1",
+      "revId": "a6ef3ea791c65ee34a4f929aa2367e6569ed8ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11ef69e9_6065ee27",
         "filename": "ui/file_manager/file_manager/foreground/js/file_tasks_unittest.js",
         "patchSetId": 11
