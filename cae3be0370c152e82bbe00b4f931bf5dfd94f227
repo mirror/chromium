@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a237b49d_9397999e",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T04:01:09Z",
+      "side": 1,
+      "message": "I realize this may be easily misconstrued. The implementation details I was complaining about are the example behaviors with network/wifi changes.",
+      "parentUuid": "05060060_644c5c0d",
+      "revId": "cae3be0370c152e82bbe00b4f931bf5dfd94f227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96659b1e_f226e43b",
         "filename": "services/device/public/interfaces/BUILD.gn",
         "patchSetId": 4
