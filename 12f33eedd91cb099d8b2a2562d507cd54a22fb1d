@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c553d617_8e0cd800",
+        "filename": "content/browser/dedicated_worker/dedicated_worker_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T08:16:04Z",
+      "side": 1,
+      "message": "Hm, I see.",
+      "revId": "12f33eedd91cb099d8b2a2562d507cd54a22fb1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9fce58_b4cf5e0d",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2988,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T08:16:04Z",
+      "side": 1,
+      "message": "Should this use base::Unretained(this) ? (registry_\u0027s owned by this)",
+      "revId": "12f33eedd91cb099d8b2a2562d507cd54a22fb1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
