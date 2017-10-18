@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.support.annotation.IntDef;
-import android.support.annotation.VisibleForTesting;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -114,7 +113,7 @@ public class VrShellDelegate
     private static final String VR_CORE_MARKET_URI =
             "market://details?id=" + VrCoreVersionChecker.VR_CORE_PACKAGE_ID;
 
-    private static VrShellDelegate sInstance;
+    protected static VrShellDelegate sInstance;
     private static VrBroadcastReceiver sVrBroadcastReceiver;
     private static boolean sRegisteredDaydreamHook;
     private static boolean sAddedBlackOverlayView;
@@ -135,16 +134,16 @@ public class VrShellDelegate
     private VrCoreVersionChecker mVrCoreVersionChecker;
     private TabModelSelector mTabModelSelector;
 
+    protected boolean mProbablyInDon;
     private boolean mInVr;
     private final Handler mExpectPauseOrDonSucceeded;
-    private boolean mProbablyInDon;
     private boolean mNeedsAnimationCancel;
     private boolean mCancellingEntryAnimation;
 
     // Whether or not the VR Device ON flow succeeded. If this is true it means the user has a VR
     // headset on, but we haven't switched into VR mode yet.
     // See further documentation here: https://developers.google.com/vr/daydream/guides/vr-entry
-    private boolean mDonSucceeded;
+    protected boolean mDonSucceeded;
     // Best effort whether or not the system was in VR when Chrome launched.
     private Boolean mInVrAtChromeLaunch;
     private boolean mShowingDaydreamDoff;
@@ -275,13 +274,7 @@ public class VrShellDelegate
         if (sInstance != null) sInstance.cancelStartupAnimationIfNeeded();
     }
 
-    @VisibleForTesting
-    public static VrShellDelegate getInstanceForTesting() {
-        return getInstance();
-    }
-
-    @VisibleForTesting
-    public static boolean isDisplayingUrlForTesting() {
+    protected static boolean isDisplayingUrl() {
         if (sInstance == null) return false;
         return sInstance.mVrShell.isDisplayingUrlForTesting();
     }
@@ -442,7 +435,7 @@ public class VrShellDelegate
     }
 
     @CalledByNative
-    private static VrShellDelegate getInstance() {
+    protected static VrShellDelegate getInstance() {
         Activity activity = ApplicationStatus.getLastTrackedFocusedActivity();
         if (!(activity instanceof ChromeActivity)) return null;
         return getInstance((ChromeActivity) activity);
@@ -485,7 +478,7 @@ public class VrShellDelegate
      * @return A helper class for creating VR-specific classes that may not be available at compile
      * time.
      */
-    private static VrClassesWrapper getVrClassesWrapper() {
+    protected static VrClassesWrapper getVrClassesWrapper() {
         if (sInstance != null) return sInstance.mVrClassesWrapper;
         return createVrClassesWrapper();
     }
@@ -606,7 +599,7 @@ public class VrShellDelegate
         sVrBroadcastReceiver = null;
     }
 
-    private VrShellDelegate(ChromeActivity activity, VrClassesWrapper wrapper) {
+    protected VrShellDelegate(ChromeActivity activity, VrClassesWrapper wrapper) {
         mActivity = activity;
         mVrClassesWrapper = wrapper;
         // If an activity isn't resumed at the point, it must have been paused.
@@ -1067,7 +1060,7 @@ public class VrShellDelegate
         return true;
     }
 
-    private void onResume() {
+    protected void onResume() {
         if (cancelStartupAnimationIfNeeded()) return;
 
         mPaused = false;
@@ -1098,6 +1091,7 @@ public class VrShellDelegate
         } else if (mProbablyInDon) {
             // This means the user backed out of the DON flow, and we won't be entering VR.
             maybeSetPresentResult(false, mDonSucceeded);
+
             shutdownVr(true, false);
             mWaitingForVrTimeout = true;
             new Handler().postDelayed(new Runnable() {
@@ -1149,7 +1143,7 @@ public class VrShellDelegate
         shutdownVr(true /* disableVrMode */, false /* stayingInChrome */);
     }
 
-    private void onPause() {
+    protected void onPause() {
         mPaused = true;
         if (mCancellingEntryAnimation) return;
         mExpectPauseOrDonSucceeded.removeCallbacksAndMessages(null);
@@ -1272,8 +1266,7 @@ public class VrShellDelegate
     /**
      * Exits VR Shell, performing all necessary cleanup.
      */
-    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-    public void shutdownVr(boolean disableVrMode, boolean stayingInChrome) {
+    protected void shutdownVr(boolean disableVrMode, boolean stayingInChrome) {
         cancelPendingVrEntry();
         // Ensure shutdownVr runs if we're stopping.
         if (handleFinishAutopresentation() && !mStopped) return;
@@ -1560,24 +1553,21 @@ public class VrShellDelegate
     /**
      * @param api The VrDaydreamApi object this delegate will use instead of the default one
      */
-    @VisibleForTesting
-    public void overrideDaydreamApiForTesting(VrDaydreamApi api) {
+    protected void overrideDaydreamApi(VrDaydreamApi api) {
         mVrDaydreamApi = api;
     }
 
     /**
      * @return The VrShell for the VrShellDelegate instance
      */
-    @VisibleForTesting
-    public static VrShell getVrShellForTesting() {
+    protected static VrShell getVrShell() {
         return sInstance == null ? null : sInstance.mVrShell;
     }
 
     /**
      * @param versionChecker The VrCoreVersionChecker object this delegate will use
      */
-    @VisibleForTesting
-    public void overrideVrCoreVersionCheckerForTesting(VrCoreVersionChecker versionChecker) {
+    protected void overrideVrCoreVersionChecker(VrCoreVersionChecker versionChecker) {
         mVrCoreVersionChecker = versionChecker;
         updateVrSupportLevel(null);
     }
@@ -1585,24 +1575,20 @@ public class VrShellDelegate
     /**
      * @param frequency Sets how often to show the feedback prompt.
      */
-    @VisibleForTesting
-    public void setFeedbackFrequencyForTesting(int frequency) {
+    protected void setFeedbackFrequency(int frequency) {
         mFeedbackFrequency = frequency;
     }
 
-    @VisibleForTesting
-    public boolean isListeningForWebVrActivate() {
+    protected boolean isListeningForWebVrActivate() {
         return mListeningForWebVrActivate;
     }
 
-    @VisibleForTesting
-    public boolean isClearActivatePending() {
+    protected boolean isClearActivatePending() {
         assert mNativeVrShellDelegate != 0;
         return nativeIsClearActivatePending(mNativeVrShellDelegate);
     }
 
-    @VisibleForTesting
-    public boolean isVrEntryComplete() {
+    protected boolean isVrEntryComplete() {
         return mInVr && !mProbablyInDon;
     }
 
