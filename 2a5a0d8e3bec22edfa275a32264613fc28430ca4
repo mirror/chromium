@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b023dbf_32894d1e",
+        "filename": "net/socket/udp_socket_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-18T19:52:21Z",
+      "side": 0,
+      "message": "Actually, there\u0027s an open bug about this which MS says will be fixed in a future Windows 10 release. Can you keep this one and assign it to me?",
+      "range": {
+        "startLine": 313,
+        "startChar": 59,
+        "endLine": 313,
+        "endChar": 0
+      },
+      "revId": "2a5a0d8e3bec22edfa275a32264613fc28430ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
