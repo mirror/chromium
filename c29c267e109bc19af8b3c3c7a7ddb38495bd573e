@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe66fd71_b648c4de",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-18T23:42:06Z",
+      "side": 1,
+      "message": "copied from https://cs.chromium.org/chromium/src/testing/buildbot/chromium.linux.json?rcl\u003ddc603004d4141272f96898375dceb3690c8d6cce\u0026l\u003d13",
+      "revId": "c29c267e109bc19af8b3c3c7a7ddb38495bd573e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79c3b48_256ecab3",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 2262,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-18T23:42:06Z",
+      "side": 1,
+      "message": "copied from https://cs.chromium.org/chromium/src/testing/buildbot/chromium.linux.json?rcl\u003dd36ebac42d7bb1c0dd070e768b6c821215adb58a\u0026l\u003d2",
+      "revId": "c29c267e109bc19af8b3c3c7a7ddb38495bd573e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86acb250_98d87d28",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 2265,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-18T23:42:06Z",
+      "side": 1,
+      "message": "copied from https://cs.chromium.org/chromium/src/testing/buildbot/chromium.linux.json?rcl\u003dd36ebac42d7bb1c0dd070e768b6c821215adb58a\u0026l\u003d3056",
+      "revId": "c29c267e109bc19af8b3c3c7a7ddb38495bd573e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9860d02_0784c9b4",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 2270,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-18T23:42:06Z",
+      "side": 1,
+      "message": "copied from https://cs.chromium.org/chromium/src/testing/buildbot/chromium.linux.json?rcl\u003dd36ebac42d7bb1c0dd070e768b6c821215adb58a\u0026l\u003d1538",
+      "revId": "c29c267e109bc19af8b3c3c7a7ddb38495bd573e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54089ade_f8e878e4",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 3789,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-18T23:42:06Z",
+      "side": 1,
+      "message": "copied from https://cs.chromium.org/chromium/src/testing/buildbot/chromium.linux.json?rcl\u003dd36ebac42d7bb1c0dd070e768b6c821215adb58a\u0026l\u003d8",
+      "revId": "c29c267e109bc19af8b3c3c7a7ddb38495bd573e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4054c73d_c0c7c59d",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 3793,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-18T23:42:06Z",
+      "side": 1,
+      "message": "copied from https://cs.chromium.org/chromium/src/testing/buildbot/chromium.linux.json?rcl\u003dd36ebac42d7bb1c0dd070e768b6c821215adb58a\u0026l\u003d18",
+      "revId": "c29c267e109bc19af8b3c3c7a7ddb38495bd573e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa070f4_3fd96c1b",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 11178,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-18T23:42:06Z",
+      "side": 1,
+      "message": "copied from \"Android N5X Swarm Builder\"",
+      "revId": "c29c267e109bc19af8b3c3c7a7ddb38495bd573e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b065043_036315a9",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-18T23:42:06Z",
+      "side": 1,
+      "message": "copied from https://cs.chromium.org/chromium/src/tools/mb/mb_config.pyl?rcl\u003ddc603004d4141272f96898375dceb3690c8d6cce\u0026l\u003d313",
+      "revId": "c29c267e109bc19af8b3c3c7a7ddb38495bd573e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdaf9d7a_875ad70b",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-18T23:42:06Z",
+      "side": 1,
+      "message": "copied from https://cs.chromium.org/chromium/src/tools/mb/mb_config.pyl?rcl\u003ddc603004d4141272f96898375dceb3690c8d6cce\u0026l\u003d316",
+      "revId": "c29c267e109bc19af8b3c3c7a7ddb38495bd573e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7560a63f_1c8425cb",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-18T23:42:06Z",
+      "side": 1,
+      "message": "copied from https://cs.chromium.org/chromium/src/tools/mb/mb_config.pyl?rcl\u003ddc603004d4141272f96898375dceb3690c8d6cce\u0026l\u003d312",
+      "revId": "c29c267e109bc19af8b3c3c7a7ddb38495bd573e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea51b29f_074020ae",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-18T23:42:06Z",
+      "side": 1,
+      "message": "copied from \"Android N5X Swarm Builder\"",
+      "revId": "c29c267e109bc19af8b3c3c7a7ddb38495bd573e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
