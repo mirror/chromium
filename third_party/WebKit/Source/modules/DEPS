@@ -12,6 +12,7 @@ include_rules = [
     "+platform",
     "+public/platform",
     "+public/web",
+    "+common/feature_policy/feature_policy_feature.h",
     "+services/service_manager/public/interfaces/interface_provider.mojom-blink.h",
     "-web",
 ]
