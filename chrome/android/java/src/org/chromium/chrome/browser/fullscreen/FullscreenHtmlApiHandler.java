@@ -258,6 +258,7 @@ public class FullscreenHtmlApiHandler {
     public void enterFullscreen(final Tab tab) {
         ContentViewCore contentViewCore = tab.getContentViewCore();
         if (contentViewCore == null) return;
+        contentViewCore.destroySelectActionMode();
         final View contentView = contentViewCore.getContainerView();
         int systemUiVisibility = contentView.getSystemUiVisibility();
         systemUiVisibility |= SYSTEM_UI_FLAG_LOW_PROFILE;
