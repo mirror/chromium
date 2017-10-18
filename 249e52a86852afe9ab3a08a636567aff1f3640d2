@@ -52,6 +52,24 @@
       "revId": "249e52a86852afe9ab3a08a636567aff1f3640d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8072e62a_3573d61f",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-18T15:50:53Z",
+      "side": 1,
+      "message": "Thanks, I didn\u0027t realize that. I\u0027ll change it then.",
+      "parentUuid": "30efcbe4_be4fd402",
+      "revId": "249e52a86852afe9ab3a08a636567aff1f3640d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
