@@ -135,6 +135,24 @@
       "revId": "4869e9818b5399b84c7473b643650a2a648e5a56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbc218d_2f8cb5e6",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 5242,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-18T16:44:00Z",
+      "side": 1,
+      "message": "This is exactly what I wanted to suggest. Note that this will not work for pre-rendered tabs used by ContextualSearch. But apart from that, I think this is the correct way to do it.",
+      "parentUuid": "e326e268_4b167a3e",
+      "revId": "4869e9818b5399b84c7473b643650a2a648e5a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
