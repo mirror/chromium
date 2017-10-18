@@ -3443,6 +3443,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kModuleScriptsDynamicImportDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kModuleScriptsDynamicImport)},
 
+    {"enable-module-scripts-import-meta-url",
+     flag_descriptions::kModuleScriptsImportMetaUrlName,
+     flag_descriptions::kModuleScriptsImportMetaUrlDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kModuleScriptsImportMetaUrl)},
+
     {"enable-v8-context-snapshot", flag_descriptions::kV8ContextSnapshotName,
      flag_descriptions::kV8ContextSnapshotDescription,
      kOsDesktop,  // TODO(peria): Add Android support.
