@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ed646bf6_7c5f1fb7",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-18T14:59:57Z",
+      "side": 1,
+      "message": "I think that we can simplify this if() statement to:\n\nif (!db_result.is_valid() || kKnownUnrelatedHostSuffixes.count(page_host) \u003d\u003d 0)\n\nWe don\u0027t care if a random site uses the facebook favicon.",
+      "revId": "89699e5909d456217ae365dc18caba7bc794f526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "114532ad_b42f8512",
         "filename": "components/favicon/core/large_icon_service.cc",
         "patchSetId": 1
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "I would like to avoid maintaining a map because it\u0027s very subject to change over time.\n\nWhen you mention false positives, you refer to bucket 0 (i.e. OK), right?\n\nThis is I think fine, because they\u0027re just suspicious, and we can\u0027t reliably tell if they\u0027re an issue or not. Nevertheless, observing a diff in this bucket during A/B testing would indicate there is an issue.",
       "parentUuid": "114532ad_b42f8512",
+      "revId": "89699e5909d456217ae365dc18caba7bc794f526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3fb831_837897ab",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-18T14:59:57Z",
+      "side": 1,
+      "message": "amazon.com has its touch icon at https://images-na.ssl-images-amazon.com/\ntwitter.com has its touch icon at https://abs-0.twimg.com\nyahoo.com has its touch icon at https://s.yimg.com/\nespn.com has its touch icon at http://a.espncdn.com/\n\nMy concern is that if facebook shows up with the twitter icon on the NTP we will not count this towards the \"1\" bucket.",
+      "parentUuid": "5839b3be_2e30448a",
       "revId": "89699e5909d456217ae365dc18caba7bc794f526",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
