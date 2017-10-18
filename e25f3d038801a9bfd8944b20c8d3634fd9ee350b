@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7906d1c1_ea198394",
+        "filename": "cc/trees/property_tree_builder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-18T16:35:08Z",
+      "side": 1,
+      "message": "this is not right. color temp doesn\u0027t affect transparency",
+      "range": {
+        "startLine": 833,
+        "startChar": 31,
+        "endLine": 833,
+        "endChar": 64
+      },
+      "revId": "e25f3d038801a9bfd8944b20c8d3634fd9ee350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e108c2f_ec7b0ef0",
+        "filename": "components/viz/common/quads/draw_quad.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-18T16:35:08Z",
+      "side": 1,
+      "message": "why does this affect blending? we\u0027re not changing alpha channel..",
+      "range": {
+        "startLine": 77,
+        "startChar": 11,
+        "endLine": 77,
+        "endChar": 54
+      },
+      "revId": "e25f3d038801a9bfd8944b20c8d3634fd9ee350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "572307b3_fb7be833",
+        "filename": "components/viz/service/display/shader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-18T16:35:08Z",
+      "side": 1,
+      "message": "we shouldn\u0027t have to add another color matrix for this but instead use the existing color matrix and make sure our color adjustment is merged properly with current usage of existing color matrix",
+      "revId": "e25f3d038801a9bfd8944b20c8d3634fd9ee350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2200b1ff_50fb1f82",
+        "filename": "components/viz/service/display/shader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-18T16:35:08Z",
+      "side": 1,
+      "message": "what is this alpha stuff all about?",
+      "revId": "e25f3d038801a9bfd8944b20c8d3634fd9ee350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
