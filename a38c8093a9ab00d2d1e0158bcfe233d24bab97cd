@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6d3b3627_20a59ee2",
+        "filename": "content/network/network_change_manager_impl.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-18T17:48:28Z",
+      "side": 1,
+      "message": "The thread restrictions I was thinking about were the thread-unsafe accesses to |clients_| for example.  Matt disuaded me from adding DCHECKs that we\u0027re on the right thread here: https://chromium-review.googlesource.com/c/chromium/src/+/644352/12/content/network/network_change_manager_impl.cc#40\nbut I\u0027d still like us to at least mention these thread restrictions.",
+      "parentUuid": "053ce13e_10e5be1a",
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45ab5d0c_be26cf15",
         "filename": "content/network/network_change_manager_impl_unittest.cc",
         "patchSetId": 28
@@ -178,6 +196,53 @@
     },
     {
       "key": {
+        "uuid": "6ab34645_46f7d4a2",
+        "filename": "content/network/network_service_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-18T17:48:28Z",
+      "side": 1,
+      "message": "I understand, but \"protected:\" is repeated on lines 89 and 109, I think we don\u0027t need to add it on line 109.",
+      "parentUuid": "38dcdef4_2e668176",
+      "range": {
+        "startLine": 109,
+        "startChar": 1,
+        "endLine": 109,
+        "endChar": 11
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4e885f_a3470ee2",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-18T17:48:28Z",
+      "side": 1,
+      "message": "I think we should be including base/callback.h",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10cf5e4c_0fc837c7",
         "filename": "content/public/common/network_connection_tracker.h",
         "patchSetId": 28
@@ -213,6 +278,30 @@
       "side": 1,
       "message": "I tried it at first, but compiler doesn\u0027t like putting a OnceCallback in a std::list.",
       "parentUuid": "10cf5e4c_0fc837c7",
+      "range": {
+        "startLine": 30,
+        "startChar": 16,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1944e7f_df4afafc",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-18T17:48:28Z",
+      "side": 1,
+      "message": "What kind of compiler errors does this produce?  I wonder if this could be related to the missing include file?",
+      "parentUuid": "9b3e7734_81db2b15",
       "range": {
         "startLine": 30,
         "startChar": 16,
