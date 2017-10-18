@@ -492,7 +492,8 @@ void BlobRegistryImpl::Register(mojom::BlobRequest blob,
 }
 
 void BlobRegistryImpl::GetBlobFromUUID(mojom::BlobRequest blob,
-                                       const std::string& uuid) {
+                                       const std::string& uuid,
+                                       GetBlobFromUUIDCallback callback) {
   if (uuid.empty()) {
     bindings_.ReportBadMessage(
         "Invalid UUID passed to BlobRegistry::GetBlobFromUUID");
@@ -500,9 +501,11 @@ void BlobRegistryImpl::GetBlobFromUUID(mojom::BlobRequest blob,
   }
   if (!context_->registry().HasEntry(uuid)) {
     // TODO(mek): Log histogram, old code logs Storage.Blob.InvalidReference
+    std::move(callback).Run();
     return;
   }
   BlobImpl::Create(context_->GetBlobDataFromUUID(uuid), std::move(blob));
+  std::move(callback).Run();
 }
 
 void BlobRegistryImpl::RegisterURL(mojom::BlobPtr blob,

@@ -42,7 +42,8 @@ class STORAGE_EXPORT BlobRegistryImpl : public mojom::BlobRegistry {
                 std::vector<mojom::DataElementPtr> elements,
                 RegisterCallback callback) override;
   void GetBlobFromUUID(mojom::BlobRequest blob,
-                       const std::string& uuid) override;
+                       const std::string& uuid,
+                       GetBlobFromUUIDCallback callback) override;
 
   void RegisterURL(mojom::BlobPtr blob,
                    const GURL& url,
