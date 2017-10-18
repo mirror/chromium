@@ -156,6 +156,7 @@ DOMException* BluetoothRemoteGATTDescriptor::CreateInvalidDescriptorError() {
 DEFINE_TRACE(BluetoothRemoteGATTDescriptor) {
   visitor->Trace(characteristic_);
   visitor->Trace(value_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

@@ -113,6 +113,7 @@ DEFINE_TRACE(DataTransferItem) {
   visitor->Trace(data_transfer_);
   visitor->Trace(item_);
   visitor->Trace(callbacks_);
+  ScriptWrappable::Trace(visitor);
 }
 
 DEFINE_TRACE_WRAPPERS(DataTransferItem) {

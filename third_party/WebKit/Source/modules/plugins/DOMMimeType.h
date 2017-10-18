@@ -32,9 +32,7 @@ namespace blink {
 class DOMPlugin;
 class LocalFrame;
 
-class DOMMimeType final : public GarbageCollected<DOMMimeType>,
-                          public ScriptWrappable,
-                          public ContextClient {
+class DOMMimeType final : public ScriptWrappable, public ContextClient {
   USING_GARBAGE_COLLECTED_MIXIN(DOMMimeType);
   DEFINE_WRAPPERTYPEINFO();
 
