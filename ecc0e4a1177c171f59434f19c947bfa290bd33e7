@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d50a086b_a44e5603",
+        "filename": "android_webview/tools/apk_merger.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-18T16:17:04Z",
+      "side": 1,
+      "message": "Nice cleanup.",
+      "revId": "ecc0e4a1177c171f59434f19c947bfa290bd33e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd37a1ee_2ca7d6aa",
+        "filename": "android_webview/tools/apk_merger.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-18T16:17:04Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is better than simply letting the exception go uncaught -- we get the stack at that point in addition to the message and nonzero exit code.",
+      "revId": "ecc0e4a1177c171f59434f19c947bfa290bd33e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
