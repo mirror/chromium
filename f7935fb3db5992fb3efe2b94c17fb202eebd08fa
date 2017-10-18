@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7de6536_85c4eb29",
+        "filename": "chrome/browser/resources/chromeos/input_method/google_xkb_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1589,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-10-18T01:17:58Z",
+      "side": 1,
+      "message": "vkd_mr_phone",
+      "range": {
+        "startLine": 1589,
+        "startChar": 13,
+        "endLine": 1589,
+        "endChar": 28
+      },
+      "revId": "f7935fb3db5992fb3efe2b94c17fb202eebd08fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
