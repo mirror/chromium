@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d25aa5b_2b5ac29c",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFaceSource.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-18T05:40:56Z",
+      "side": 1,
+      "message": "can be \"\u003d default\" ?",
+      "range": {
+        "startLine": 67,
+        "startChar": 22,
+        "endLine": 67,
+        "endChar": 24
+      },
+      "revId": "21e03da0d535cf96c84a9b5a036fcb184bed3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba732d0_8d667c9f",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFaceSource.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-18T05:40:56Z",
+      "side": 1,
+      "message": "let\u0027s make these private. Only one user exists in RemoteFontFaceSource and it can be moved into this class. See my another comment in RemoteFontFaceSource.",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 33
+      },
+      "revId": "21e03da0d535cf96c84a9b5a036fcb184bed3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f327ad_fcc241e2",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-18T05:40:56Z",
+      "side": 1,
+      "message": "Can we also move this method to the parent CSSFontFaceSource class as a protected or public method?\nIt allows us to remove the last protected member, font_data_table_ from CSSFontFaceSource.\nProtected members make code base unnecessarily complicated often.",
+      "range": {
+        "startLine": 62,
+        "startChar": 27,
+        "endLine": 62,
+        "endChar": 37
+      },
+      "revId": "21e03da0d535cf96c84a9b5a036fcb184bed3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ca9727_3f2e89d4",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-18T05:40:56Z",
+      "side": 1,
+      "message": "having comments in a separate line above is better to be consistent with others?",
+      "range": {
+        "startLine": 127,
+        "startChar": 30,
+        "endLine": 127,
+        "endChar": 54
+      },
+      "revId": "21e03da0d535cf96c84a9b5a036fcb184bed3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
