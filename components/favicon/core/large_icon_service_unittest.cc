@@ -142,7 +142,7 @@ class LargeIconServiceTest : public testing::Test {
 TEST_F(LargeIconServiceTest, ShouldGetFromGoogleServer) {
   const GURL kExpectedServerUrl(
       "https://t0.gstatic.com/faviconV2?client=chrome&drop_404_icon=true"
-      "&check_seen=true&size=61&min_size=42&max_size=122"
+      "&check_seen=true&size=61&min_size=42&max_size=366"
       "&fallback_opts=TYPE,SIZE,URL&url=http://www.example.com/");
 
   EXPECT_CALL(mock_favicon_service_, UnableToDownloadFavicon(_)).Times(0);
@@ -209,7 +209,7 @@ TEST_F(LargeIconServiceTest, ShouldGetFromGoogleServerWithCustomUrl) {
 TEST_F(LargeIconServiceTest, ShouldGetFromGoogleServerWithOriginalUrl) {
   const GURL kExpectedServerUrl(
       "https://t0.gstatic.com/faviconV2?client=chrome&drop_404_icon=true"
-      "&check_seen=true&size=61&min_size=42&max_size=122"
+      "&check_seen=true&size=61&min_size=42&max_size=366"
       "&fallback_opts=TYPE,SIZE,URL&url=http://www.example.com/");
   const GURL kExpectedOriginalUrl("http://www.example.com/favicon.png");
 
@@ -242,7 +242,7 @@ TEST_F(LargeIconServiceTest, ShouldTrimQueryParametersForGoogleServer) {
   const GURL kDummyUrlWithQuery("http://www.example.com?foo=1");
   const GURL kExpectedServerUrl(
       "https://t0.gstatic.com/faviconV2?client=chrome&drop_404_icon=true"
-      "&check_seen=true&size=61&min_size=42&max_size=122"
+      "&check_seen=true&size=61&min_size=42&max_size=366"
       "&fallback_opts=TYPE,SIZE,URL&url=http://www.example.com/");
 
   EXPECT_CALL(*mock_image_fetcher_,
@@ -332,7 +332,7 @@ TEST_F(LargeIconServiceTest, ShouldReportUnavailableIfFetchFromServerFails) {
   const GURL kDummyUrlWithQuery("http://www.example.com?foo=1");
   const GURL kExpectedServerUrl(
       "https://t0.gstatic.com/faviconV2?client=chrome&drop_404_icon=true"
-      "&check_seen=true&size=61&min_size=42&max_size=122"
+      "&check_seen=true&size=61&min_size=42&max_size=366"
       "&fallback_opts=TYPE,SIZE,URL&url=http://www.example.com/");
 
   EXPECT_CALL(mock_favicon_service_, SetOnDemandFavicons(_, _, _, _, _))
@@ -364,7 +364,7 @@ TEST_F(LargeIconServiceTest, ShouldNotGetFromGoogleServerIfUnavailable) {
       mock_favicon_service_,
       WasUnableToDownloadFavicon(GURL(
           "https://t0.gstatic.com/faviconV2?client=chrome&drop_404_icon=true"
-          "&check_seen=true&size=61&min_size=42&max_size=122"
+          "&check_seen=true&size=61&min_size=42&max_size=366"
           "&fallback_opts=TYPE,SIZE,URL&url=http://www.example.com/")))
       .WillByDefault(Return(true));
 

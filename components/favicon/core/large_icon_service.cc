@@ -54,7 +54,7 @@ const int kGoogleServerV2EnforcedMinSizeInPixel = 16;
 const char kGoogleServerV2EnforcedMinSizeInPixelParam[] =
     "enforced_min_size_in_pixel";
 
-const double kGoogleServerV2DesiredToMaxSizeFactor = 2.0;
+const double kGoogleServerV2DesiredToMaxSizeFactor = 6.0;
 const char kGoogleServerV2DesiredToMaxSizeFactorParam[] =
     "desired_to_max_size_factor";
 
