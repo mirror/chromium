@@ -11,6 +11,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/strings/stringprintf.h"
 #include "components/content_settings/core/browser/cookie_settings.h"
+#include "components/prefs/pref_member.h"
 #include "components/signin/core/browser/chrome_connected_header_helper.h"
 #include "components/signin/core/browser/scoped_account_consistency.h"
 #include "components/signin/core/common/profile_management_switches.h"
@@ -33,12 +34,15 @@ class SigninHeaderHelperTest : public testing::Test {
   void SetUp() override {
     content_settings::CookieSettings::RegisterProfilePrefs(prefs_.registry());
     HostContentSettingsMap::RegisterProfilePrefs(prefs_.registry());
+    signin::RegisterAccountConsistencyProfilePrefs(prefs_.registry());
 
     settings_map_ = new HostContentSettingsMap(
         &prefs_, false /* incognito_profile */, false /* guest_profile */,
         false /* store_last_modified */);
     cookie_settings_ =
         new content_settings::CookieSettings(settings_map_.get(), &prefs_, "");
+    dice_enabled_pref_member_ =
+        signin::GetAccountConsistencyDicePrefMember(&prefs_);
   }
 
   void TearDown() override { settings_map_->ShutdownOnUIThread(); }
@@ -63,6 +67,7 @@ class SigninHeaderHelperTest : public testing::Test {
                                       PROFILE_MODE_DEFAULT);
     AppendOrRemoveDiceRequestHeader(url_request.get(), GURL(), account_id,
                                     sync_enabled_, sync_has_auth_error_,
+                                    dice_enabled_pref_member_.get(),
                                     cookie_settings_.get());
     return url_request;
   }
@@ -115,6 +120,7 @@ class SigninHeaderHelperTest : public testing::Test {
 
   scoped_refptr<HostContentSettingsMap> settings_map_;
   scoped_refptr<content_settings::CookieSettings> cookie_settings_;
+  std::unique_ptr<BooleanPrefMember> dice_enabled_pref_member_;
 };
 
 // Tests that no Mirror request is returned when the user is not signed in (no
