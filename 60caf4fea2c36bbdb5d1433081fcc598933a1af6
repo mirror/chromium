@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af7cb3d7_b347635a",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T15:45:54Z",
+      "side": 1,
+      "message": "I didn\u0027t change this, but it is horrifically unclear. The blob uuid is sent as part of |settled_fetches|, but the |blob_handles| must be bound to the callback to keep them alive until the waitUntil event is resolved. I added comments everywhere.",
+      "parentUuid": "6c2f5399_48497684",
+      "range": {
+        "startLine": 207,
+        "startChar": 4,
+        "endLine": 207,
+        "endChar": 64
+      },
+      "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e022670_b2ef874c",
         "filename": "content/browser/background_fetch/background_fetch_context.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a7a68b8_3e42cbba",
+        "filename": "content/browser/background_fetch/background_fetch_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T15:45:54Z",
+      "side": 1,
+      "message": "Moved this defensive copy to the caller as you suggested offline.",
+      "parentUuid": "4e022670_b2ef874c",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 98,
+        "endChar": 26
+      },
+      "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dc39dcd0_800b75e0",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T15:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58a98467_24fcc2b9",
+      "range": {
+        "startLine": 167,
+        "startChar": 43,
+        "endLine": 167,
+        "endChar": 47
+      },
+      "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45b4f5c4_f70208a0",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9604459_56431655",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T15:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45b4f5c4_f70208a0",
+      "range": {
+        "startLine": 419,
+        "startChar": 7,
+        "endLine": 419,
+        "endChar": 13
+      },
+      "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b7deb5fc_c3a20b47",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T15:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfd37cbb_3638e9d7",
+      "range": {
+        "startLine": 448,
+        "startChar": 36,
+        "endLine": 448,
+        "endChar": 54
+      },
+      "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56e97f4a_38f0b976",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b13e5d_5a5708c0",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T15:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56e97f4a_38f0b976",
+      "range": {
+        "startLine": 476,
+        "startChar": 52,
+        "endLine": 476,
+        "endChar": 59
+      },
+      "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "2fb081df_c767e92e",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T15:45:54Z",
+      "side": 1,
+      "message": "Done. In fact, it\u0027s not a NOTREACHED() and a TODO.",
+      "parentUuid": "016a9bee_f829432c",
+      "range": {
+        "startLine": 558,
+        "startChar": 37,
+        "endLine": 558,
+        "endChar": 80
+      },
+      "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37ab8ab0_fedfbd1d",
         "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
         "patchSetId": 2
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "8409148f_c2524163",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T15:45:54Z",
+      "side": 1,
+      "message": "Nope, I do mean completed/failed/aborted here.",
+      "parentUuid": "37ab8ab0_fedfbd1d",
+      "range": {
+        "startLine": 131,
+        "startChar": 54,
+        "endLine": 131,
+        "endChar": 79
+      },
+      "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "873749f5_261e2998",
         "filename": "content/browser/background_fetch/background_fetch_job_controller_unittest.cc",
         "patchSetId": 2
@@ -197,6 +389,30 @@
       "writtenOn": "2017-10-18T09:46:35Z",
       "side": 1,
       "message": "Perhaps add a comment to say this is a FinishedCallback (same for similar methods).\n\nThe reason I say this, is my first instinct was this is a non-virtual function that takes a parameter that it doesn\u0027t use. Removing it however would cause a compile failure, so let\u0027s not do that:)",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 37
+      },
+      "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6e2619_5b5e4d0e",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T15:45:54Z",
+      "side": 1,
+      "message": "It\u0027s reasonably clear from the \"Did\" name that it\u0027s a callback, and it\u0027s quite common for tests to have stub or partially stubbed implementations of things, so this doesn\u0027t bother me that much.",
+      "parentUuid": "873749f5_261e2998",
       "range": {
         "startLine": 157,
         "startChar": 2,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "fb52b2d1_91977d65",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T15:45:54Z",
+      "side": 1,
+      "message": "Done. I added \"Callback will never be run if the browser is shutdown before the last observer is removed.\" to the comment for BackgroundFetchRegistrationNotifier::AddGarbageCollectionCallback and also added comments to the callsite explaining the fallback mechanism.",
+      "parentUuid": "3ca68b8b_8fa773b4",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 74
+      },
+      "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93736640_6bc0ed72",
         "filename": "content/browser/background_fetch/background_fetch_registration_notifier.h",
         "patchSetId": 2
@@ -252,6 +492,30 @@
       "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb483bd_6171179d",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-18T15:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93736640_6bc0ed72",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "60caf4fea2c36bbdb5d1433081fcc598933a1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
