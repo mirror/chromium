@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08d878fd_8f9b8022",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:48:14Z",
+      "side": 1,
+      "message": "Split this up into two separate DCHECKs? That will make it clearer to see what is going wrong if that happens. You can then also use specialized DCHECK_GE and DCHECK_LT (which again give somewhat nicer failure messages).",
+      "range": {
+        "startLine": 1036,
+        "startChar": 24,
+        "endLine": 1036,
+        "endChar": 28
+      },
+      "revId": "a4e02415d67f6a0452b574eb59fbacf3cb6e768d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991ddbda_8e0cff5d",
+        "filename": "chrome/browser/android/preferences/prefs.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T10:48:14Z",
+      "side": 1,
+      "message": "Can you add a unit test that verifies that\n\n* sizeof(kPrefsExposedToJava) \u003d\u003d PREF_NUM_PREFS\n* PrefServiceBridge::GetPrefNameExposedToJava(ALLOW_DELETING_BROWSER_HISTORY) \u003d\u003d  prefs::kAllowDeletingBrowserHistory * PrefServiceBridge::GetPrefNameExposedToJava(INCOGNITO_MODE_AVAILABILITY) \u003d\u003d prefs::kIncognitoModeAvailability\n\n? Then if someone adds a new value, they will hopefully see and update the test, and the test can verify that the order is correct.",
+      "revId": "a4e02415d67f6a0452b574eb59fbacf3cb6e768d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
