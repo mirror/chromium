@@ -16,6 +16,24 @@
       "revId": "ba6f457ce12c94b6f7a1560b181a5c86ff2cba0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51624c98_f01bb040",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-18T22:33:08Z",
+      "side": 1,
+      "message": "Done.\n\nIdeally, I would like to reuse ToolbarItem.p.setEnabled() here, and rely it to add a class from toolbar.css.  However, making a change affecting all ToolbarItems in DT would require a thorough visual check, so I\u0027ve left a TODO here.",
+      "parentUuid": "bfc50eb8_d5bd8578",
+      "revId": "ba6f457ce12c94b6f7a1560b181a5c86ff2cba0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
