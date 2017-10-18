@@ -24,7 +24,7 @@ class TexturedElement : public UiElement {
   explicit TexturedElement(int maximum_width);
   ~TexturedElement() override;
 
-  void Initialize() final;
+  void Initialize(VrSurfaceProvider* provider) final;
 
   void Render(UiElementRenderer* renderer,
               const gfx::Transform& model_view_proj_matrix) const final;
@@ -47,6 +47,9 @@ class TexturedElement : public UiElement {
   GLuint texture_handle_;
   int maximum_width_;
   bool initialized_ = false;
+
+  sk_sp<SkSurface> surface_;
+  VrSurfaceProvider* provider_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(TexturedElement);
 };

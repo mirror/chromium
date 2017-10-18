@@ -8,6 +8,7 @@
 #include "cc/paint/skia_paint_canvas.h"
 #include "chrome/browser/vr/elements/ui_texture.h"
 #include "chrome/browser/vr/ui_element_renderer.h"
+#include "skia/ext/texture_handle.h"
 #include "third_party/skia/include/core/SkSurface.h"
 #include "ui/gfx/geometry/rect_f.h"
 
@@ -15,6 +16,7 @@ namespace vr {
 
 namespace {
 static bool g_initialized_for_testing_ = false;
+static constexpr bool kUseGanesh = true;
 }
 
 TexturedElement::TexturedElement(int maximum_width)
@@ -22,11 +24,16 @@ TexturedElement::TexturedElement(int maximum_width)
 
 TexturedElement::~TexturedElement() = default;
 
-void TexturedElement::Initialize() {
+void TexturedElement::Initialize(VrSurfaceProvider* provider) {
   TRACE_EVENT0("gpu", "TexturedElement::Initialize");
-  glGenTextures(1, &texture_handle_);
-  DCHECK(GetTexture() != nullptr);
   texture_size_ = GetTexture()->GetPreferredTextureSize(maximum_width_);
+  if (kUseGanesh) {
+    DCHECK_NE(nullptr, provider);
+    provider_ = provider;
+  } else {
+    glGenTextures(1, &texture_handle_);
+    DCHECK(GetTexture() != nullptr);
+  }
   GetTexture()->OnInitialized();
   initialized_ = true;
   UpdateTexture();
@@ -40,10 +47,18 @@ void TexturedElement::SetInitializedForTesting() {
 void TexturedElement::UpdateTexture() {
   if (!initialized_ || !GetTexture()->dirty() || !IsVisible())
     return;
-  sk_sp<SkSurface> surface = SkSurface::MakeRasterN32Premul(
-      texture_size_.width(), texture_size_.height());
-  GetTexture()->DrawAndLayout(surface->getCanvas(), texture_size_);
-  Flush(surface.get());
+
+  if (kUseGanesh) {
+    surface_ =
+        provider_->MakeSurface(texture_size_.width(), texture_size_.height());
+    DCHECK_NE(nullptr, surface_.get());
+  } else {
+    surface_ = SkSurface::MakeRasterN32Premul(texture_size_.width(),
+                                              texture_size_.height());
+  }
+
+  GetTexture()->DrawAndLayout(surface_->getCanvas(), texture_size_);
+  Flush(surface_.get());
   // Update the element size's aspect ratio to match the texture.
   UpdateElementSize();
 }
@@ -74,22 +89,33 @@ void TexturedElement::Render(
 }
 
 void TexturedElement::Flush(SkSurface* surface) {
-  cc::SkiaPaintCanvas paint_canvas(surface->getCanvas());
-  paint_canvas.flush();
-  SkPixmap pixmap;
-  CHECK(surface->peekPixels(&pixmap));
+  if (kUseGanesh) {
+    surface->getCanvas()->flush();
+    GrBackendObject backend_object =
+        surface->getTextureHandle(SkSurface::kFlushRead_BackendHandleAccess);
+    DCHECK_NE(backend_object, 0);
+    texture_handle_ =
+        skia::GrBackendObjectToGrGLTextureInfo(backend_object)->fID;
+    DCHECK_NE(texture_handle_, 0u);
+    LOG(INFO) << "TEXTURE 2 " << texture_handle_;
+  } else {
+    cc::SkiaPaintCanvas paint_canvas(surface->getCanvas());
+    paint_canvas.flush();
+    SkPixmap pixmap;
+    CHECK(surface->peekPixels(&pixmap));
 
-  SkColorType type = pixmap.colorType();
-  DCHECK(type == kRGBA_8888_SkColorType || type == kBGRA_8888_SkColorType);
-  GLint format = (type == kRGBA_8888_SkColorType ? GL_RGBA : GL_BGRA);
+    SkColorType type = pixmap.colorType();
+    DCHECK(type == kRGBA_8888_SkColorType || type == kBGRA_8888_SkColorType);
+    GLint format = (type == kRGBA_8888_SkColorType ? GL_RGBA : GL_BGRA);
 
-  glBindTexture(GL_TEXTURE_2D, texture_handle_);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glTexImage2D(GL_TEXTURE_2D, 0, format, pixmap.width(), pixmap.height(), 0,
-               format, GL_UNSIGNED_BYTE, pixmap.addr());
+    glBindTexture(GL_TEXTURE_2D, texture_handle_);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, format, pixmap.width(), pixmap.height(), 0,
+                 format, GL_UNSIGNED_BYTE, pixmap.addr());
+  }
 }
 
 void TexturedElement::OnSetMode() {

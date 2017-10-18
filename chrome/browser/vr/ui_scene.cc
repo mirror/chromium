@@ -15,6 +15,12 @@
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "ui/gfx/transform.h"
 
+#include "third_party/skia/include/core/SkSurface.h"
+#include "third_party/skia/include/gpu/GrContext.h"
+#include "third_party/skia/include/gpu/GrContextOptions.h"
+#include "third_party/skia/include/gpu/GrTypes.h"
+#include "third_party/skia/include/gpu/gl/GrGLInterface.h"
+
 namespace vr {
 
 namespace {
@@ -161,9 +167,25 @@ UiScene::~UiScene() = default;
 // TODO(vollick): we should bind to gl-initialized state. Elements will
 // initialize when the binding fires, automatically.
 void UiScene::OnGlInitialized() {
+  GrContextOptions gr_context_options;
+  gr_interface_ = sk_sp<const GrGLInterface>(GrGLCreateNativeInterface());
+  DCHECK_NE(nullptr, gr_interface_.get());
+  gr_context_ = sk_sp<GrContext>(
+      GrContext::Create(kOpenGL_GrBackend,
+                        reinterpret_cast<GrBackendContext>(gr_interface_.get()),
+                        gr_context_options));
+  DCHECK_NE(nullptr, gr_context_.get());
+
   gl_initialized_ = true;
+
   for (auto& element : *root_element_)
-    element.Initialize();
+    element.Initialize(this);
+}
+
+sk_sp<SkSurface> UiScene::MakeSurface(int width, int height) {
+  return SkSurface::MakeRenderTarget(gr_context_.get(), SkBudgeted::kNo,
+                                     SkImageInfo::MakeN32Premul(width, height),
+                                     0, kTopLeft_GrSurfaceOrigin, nullptr);
 }
 
 }  // namespace vr
