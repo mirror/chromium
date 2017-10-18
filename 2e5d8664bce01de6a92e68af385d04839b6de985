@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dadc2022_cece576d",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/CompoundTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-18T16:57:44Z",
+      "side": 1,
+      "message": "Agree with the sentiment that this ordering implementation should be reworked a bit. List\u003cClass\u003c? extends TestRule\u003e\u003e sounds like a reasonable enough replacement for this Map structure, but I\u0027m still a bit concerned that this ordering may be confusing to users. Someone could do something like\n\n  mCompoundRule.add(myFooRule);\n  mCompoundRule.add(myBarRule);\n\nand reasonably expect them to be executed in the order in which they were added. Either we should respect the order in which the user provides Rules to us, or we should should rename functions to make it clear that we order Rules based on our order map or list or whatever, regardless of the order in which the Rules were added.",
+      "parentUuid": "4caa6487_fee7f587",
+      "range": {
+        "startLine": 35,
+        "startChar": 32,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "719cf11f_ff715d97",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/CompoundTestRule.java",
         "patchSetId": 4
@@ -301,6 +325,23 @@
     },
     {
       "key": {
+        "uuid": "27879ac8_04265bdb",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/SkipRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-18T16:57:44Z",
+      "side": 1,
+      "message": "Does having an assumption in starting work correctly?\n\nIn looking at TestWatcher, it looks like it gets called outside of the try/catch for AssumptionViolatedException: https://github.com/junit-team/junit4/blob/r4.12/src/main/java/org/junit/rules/TestWatcher.java#L53",
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4a814b1_346918fd",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/util/SkipRule.java",
         "patchSetId": 4
@@ -312,6 +353,30 @@
       "writtenOn": "2017-10-18T10:33:41Z",
       "side": 1,
       "message": "Could we... maybe have the subclass provide an additional explanation for why the test was skipped? That would make it easier to e.g. extract that out to the test runner at a later point (instead of that information just being in a log statement somewhere).\n\nAnd/or, if the abstract method would return a Matcher\u003cDescription\u003e, it would do that, and maybe also allow neat composition or other things?",
+      "range": {
+        "startLine": 25,
+        "startChar": 27,
+        "endLine": 25,
+        "endChar": 51
+      },
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5461975d_a5d67b64",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/SkipRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-18T16:57:44Z",
+      "side": 1,
+      "message": "+1 to having a more detailed reason.",
+      "parentUuid": "e4a814b1_346918fd",
       "range": {
         "startLine": 25,
         "startChar": 27,
@@ -381,6 +446,23 @@
       "writtenOn": "2017-10-18T10:33:41Z",
       "side": 1,
       "message": "Add a private empty constructor so that the class can\u0027t be instantiated?",
+      "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed51f3da_67e2ad49",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeTestRules.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-18T16:57:44Z",
+      "side": 1,
+      "message": "nit: I would spell out CompoundTestRule here, partially because of the click-through rate confusion Bo mentioned above.",
       "revId": "2e5d8664bce01de6a92e68af385d04839b6de985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
