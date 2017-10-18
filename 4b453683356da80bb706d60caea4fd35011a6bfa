@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef1656ae_722564ea",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-18T18:55:38Z",
+      "side": 1,
+      "message": "We support and need to use this extension on Chrome OS devices. Please do:\n\ng_egl_android_native_fence_sync_supported \u003d g_driver_egl.ext.b_EGL_ANDROID_native_fence_sync;\n\non all platforms but limit the SDK version override to OS_ANDROID.",
+      "revId": "4b453683356da80bb706d60caea4fd35011a6bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
