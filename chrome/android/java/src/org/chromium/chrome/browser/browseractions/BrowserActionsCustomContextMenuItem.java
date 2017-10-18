@@ -25,12 +25,13 @@ public class BrowserActionsCustomContextMenuItem implements ContextMenuItem {
     /**
      * Constructor to build a custom context menu item from {@link BrowserActionItem}.
      * @param id The {@link IdRes} of the custom context menu item.
-     * @param item The {@link BrowserActionItem} specifies the title and action of the menu item.
+     * @param title The title of the custom context menu item.
+     * @param icon The icon of the custom context menu item.
      */
-    BrowserActionsCustomContextMenuItem(@IdRes int id, BrowserActionItem item) {
+    BrowserActionsCustomContextMenuItem(@IdRes int id, String title, Bitmap icon) {
         mMenuId = id;
-        mTitle = item.getTitle();
-        mIcon = item.getIcon();
+        mTitle = title;
+        mIcon = icon;
     }
 
     @Override
