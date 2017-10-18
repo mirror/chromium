@@ -22,6 +22,30 @@
       "revId": "a2fe79ee52d4f1e7bedb77a34b80eac1650a5083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0c4a5c_1ebc202a",
+        "filename": "ui/views/controls/native/native_view_host.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-18T23:09:40Z",
+      "side": 1,
+      "message": "Replied in wrong place, sorry for duplication.\n\nThe render size is supposed to be distinct from the local bounds.  The remote rendering size could be entirely different height and width (and overall resolution) than what is available locally.  I may be misunderstanding your question though...\n\nWe could maybe use a transform instead of the size here, but a straight scale factor doesn\u0027t sound like it would work to me.",
+      "parentUuid": "48fef5ee_246ec52c",
+      "range": {
+        "startLine": 126,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 28
+      },
+      "revId": "a2fe79ee52d4f1e7bedb77a34b80eac1650a5083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
