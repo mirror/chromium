@@ -155,6 +155,11 @@ class MEDIA_EXPORT VideoEncodeAccelerator {
   // |this| unconditionally, so make sure to drop all pointers to it!
   virtual void Destroy() = 0;
 
+  // Flushes the encoder: all pending inputs will be encoded and all bitstreams
+  // handed back to the client, and afterwards the |flush_done_callback| will
+  // be called.
+  virtual void Flush(base::OnceClosure flush_done_callback);
+
   // Encode tasks include these methods that are used frequently during the
   // session: Encode(), UseOutputBitstreamBuffer(),
   // RequestEncodingParametersChange(), Client::BitstreamBufferReady().
