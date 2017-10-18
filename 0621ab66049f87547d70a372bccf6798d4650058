@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0919914_0a3eae23",
+        "filename": "content/browser/devtools/devtools_frontend_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-18T20:28:24Z",
+      "side": 1,
+      "message": "do we need to keep frontend_ for the life time of DevToolsFrontendHost?",
+      "revId": "0621ab66049f87547d70a372bccf6798d4650058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a6415c7_84f1bccb",
+        "filename": "content/browser/devtools/devtools_frontend_host_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-18T20:28:24Z",
+      "side": 1,
+      "message": "drop this?",
+      "revId": "0621ab66049f87547d70a372bccf6798d4650058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a09ba4_4daa71ed",
+        "filename": "content/browser/devtools/devtools_frontend_host_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-18T20:28:24Z",
+      "side": 1,
+      "message": "Can we make sure the life time is properly managed here, i.e. RFH does not go away before the front-end host.",
+      "revId": "0621ab66049f87547d70a372bccf6798d4650058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
