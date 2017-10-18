@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "053ce13e_10e5be1a",
+        "filename": "content/network/network_change_manager_impl.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T17:36:42Z",
+      "side": 1,
+      "message": "I added a comment.\n\nI didn\u0027t find any thread restriction on instantiating NCN classes.\nThe NetworkChangeManagerImpl constructor is called on i/o thread and not the UI/main thread.\nLet me know if you think that\u0027ll be a problem. I read through NCN classes but didn\u0027t find any thread restrictions.",
+      "parentUuid": "92748734_acdd1d78",
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45ab5d0c_be26cf15",
         "filename": "content/network/network_change_manager_impl_unittest.cc",
         "patchSetId": 28
@@ -39,6 +57,30 @@
       "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff02931_53d9529c",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T17:36:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45ab5d0c_be26cf15",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 51
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "7b063750_247d7ae1",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T17:36:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93ed38e9_5b3826d9",
+      "range": {
+        "startLine": 87,
+        "startChar": 21,
+        "endLine": 87,
+        "endChar": 0
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb8e8a8a_74eba529",
         "filename": "content/network/network_service_unittest.cc",
         "patchSetId": 28
@@ -76,6 +142,30 @@
       "writtenOn": "2017-10-18T16:34:06Z",
       "side": 1,
       "message": "not sure we need to repeat \"protected:\" here",
+      "range": {
+        "startLine": 109,
+        "startChar": 1,
+        "endLine": 109,
+        "endChar": 11
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38dcdef4_2e668176",
+        "filename": "content/network/network_service_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T17:36:42Z",
+      "side": 1,
+      "message": "I added a subclass on line 391.",
+      "parentUuid": "fb8e8a8a_74eba529",
       "range": {
         "startLine": 109,
         "startChar": 1,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "9b3e7734_81db2b15",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T17:36:42Z",
+      "side": 1,
+      "message": "I tried it at first, but compiler doesn\u0027t like putting a OnceCallback in a std::list.",
+      "parentUuid": "10cf5e4c_0fc837c7",
+      "range": {
+        "startLine": 30,
+        "startChar": 16,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06de4493_2cb15661",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 28
@@ -131,6 +245,30 @@
       "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72139019_efdc901b",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-18T17:36:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06de4493_2cb15661",
+      "range": {
+        "startLine": 90,
+        "startChar": 5,
+        "endLine": 90,
+        "endChar": 8
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
