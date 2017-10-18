@@ -387,7 +387,7 @@ deps = {
     Var('chromium_git') + '/chromium/llvm-project/compiler-rt/lib/fuzzer.git' + '@' +  Var('libfuzzer_revision'),
 
   'src/third_party/libaddressinput/src':
-    Var('chromium_git') + '/external/libaddressinput.git' + '@' + '87f69db0b1ca732ba148489d2f75b3af2f236632',
+    Var('chromium_git') + '/external/libaddressinput.git' + '@' + 'ab7a614ab07db814811fb7a3c2e874303cc6247a',
 
   # Userspace interface to kernel DRM services.
   'src/third_party/libdrm/src': {
