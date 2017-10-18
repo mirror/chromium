@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "074004c9_34d7d724",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-18T00:29:30Z",
+      "side": 1,
+      "message": "Aren\u0027t you now using this variable before you\u0027ve set it below? AFAICT this will never be true here.",
+      "revId": "bc937535ce9fc8c4aca87b1ad917e53d08828c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
