@@ -22,6 +22,53 @@
       "revId": "47a7c9d6cef6d7ccb1e00e9882c9c7b34e7334fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46836bc6_ba5e5f02",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-10-18T23:14:48Z",
+      "side": 1,
+      "message": "Also, related, if we have to test for a non-null root view, there are other null checks that need to be added.",
+      "parentUuid": "f382d31a_2fee7bae",
+      "range": {
+        "startLine": 713,
+        "startChar": 9,
+        "endLine": 713,
+        "endChar": 35
+      },
+      "revId": "47a7c9d6cef6d7ccb1e00e9882c9c7b34e7334fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982f1c40_7867d750",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-10-18T23:14:48Z",
+      "side": 1,
+      "message": "why not just return failure if the root is null here instead of changing the if stmt?",
+      "range": {
+        "startLine": 1588,
+        "startChar": 19,
+        "endLine": 1588,
+        "endChar": 42
+      },
+      "revId": "47a7c9d6cef6d7ccb1e00e9882c9c7b34e7334fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
