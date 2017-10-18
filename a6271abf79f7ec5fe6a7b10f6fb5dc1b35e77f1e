@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "215b3b0a_f225902a",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-18T17:08:42Z",
+      "side": 1,
+      "message": "invert and early exit",
+      "revId": "a6271abf79f7ec5fe6a7b10f6fb5dc1b35e77f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc1720bd_b9b78825",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-18T17:08:42Z",
+      "side": 1,
+      "message": "Move this to where it is used",
+      "revId": "a6271abf79f7ec5fe6a7b10f6fb5dc1b35e77f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
