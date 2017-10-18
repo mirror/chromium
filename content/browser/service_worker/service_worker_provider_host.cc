@@ -39,6 +39,7 @@
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "net/base/url_util.h"
 #include "storage/browser/blob/blob_storage_context.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
@@ -489,12 +490,12 @@ ServiceWorkerProviderHost::CreateRequestHandler(
   return std::unique_ptr<ServiceWorkerRequestHandler>();
 }
 
-ServiceWorkerObjectInfo
+blink::mojom::ServiceWorkerObjectInfo
 ServiceWorkerProviderHost::GetOrCreateServiceWorkerHandle(
     ServiceWorkerVersion* version) {
   DCHECK(dispatcher_host_);
   if (!context_ || !version)
-    return ServiceWorkerObjectInfo();
+    return blink::mojom::ServiceWorkerObjectInfo();
   ServiceWorkerHandle* handle = dispatcher_host_->FindServiceWorkerHandle(
       provider_id(), version->version_id());
   if (handle) {
