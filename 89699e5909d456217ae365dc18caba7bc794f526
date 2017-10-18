@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a970ee80_e47ea2bc",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-18T15:15:50Z",
+      "side": 1,
+      "message": "Ok, so we\u0027re talking about false negatives.\n\nSince the issue is broader than I thought, I think an approach with a map makes sense, without making the assumption that amazon\u0027s icon must be hosted in ssl-images-amazon.com/.\n\nWhat do you think about the following proposal: have a hostname canonicalization map that will transform ssl-images-amazon.com/ into amazon.com. The rest of the logic could remain roughly the same. WDYT?",
+      "parentUuid": "1c3fb831_837897ab",
+      "revId": "89699e5909d456217ae365dc18caba7bc794f526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80e18adb_a5c6f15c",
         "filename": "components/favicon/core/large_icon_service_unittest.cc",
         "patchSetId": 1
