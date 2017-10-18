@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae6fb168_34564d3c",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-18T21:07:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you also return early if the document doesn\u0027t have \u0027lang\u0027 attribute?",
+      "range": {
+        "startLine": 933,
+        "startChar": 0,
+        "endLine": 935,
+        "endChar": 43
+      },
+      "revId": "72edc608c2a79fd938e4b8dc829a4e9273c7e961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
