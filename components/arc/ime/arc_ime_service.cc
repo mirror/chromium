@@ -20,6 +20,7 @@
 #include "ui/events/base_event_utils.h"
 #include "ui/events/event.h"
 #include "ui/events/keycodes/keyboard_codes.h"
+#include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/range/range.h"
 
 namespace arc {
@@ -392,6 +393,15 @@ bool ArcImeService::GetTextRange(gfx::Range* range) const {
     return false;
   *range = text_range_;
   return true;
+}
+
+bool ArcImeService::GetTextInputClientInfo(
+    base::OnceCallback<void(bool,
+                            const gfx::Range&,
+                            const base::string16&,
+                            const gfx::Range&,
+                            const gfx::Rect&)> callback) const {
+  return false;
 }
 
 bool ArcImeService::GetSelectionRange(gfx::Range* range) const {

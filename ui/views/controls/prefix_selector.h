@@ -14,6 +14,11 @@
 #include "ui/base/ime/text_input_client.h"
 #include "ui/views/views_export.h"
 
+namespace gfx {
+class Rect;
+class Range;
+}  // namespace gfx
+
 namespace views {
 
 class PrefixDelegate;
@@ -45,6 +50,12 @@ class VIEWS_EXPORT PrefixSelector : public ui::TextInputClient {
                                      gfx::Rect* rect) const override;
   bool HasCompositionText() const override;
   bool GetTextRange(gfx::Range* range) const override;
+  bool GetTextInputClientInfo(
+      base::OnceCallback<void(bool,
+                              const gfx::Range&,
+                              const base::string16&,
+                              const gfx::Range&,
+                              const gfx::Rect&)> callback) const override;
   bool GetCompositionTextRange(gfx::Range* range) const override;
   bool GetSelectionRange(gfx::Range* range) const override;
   bool SetSelectionRange(const gfx::Range& range) override;

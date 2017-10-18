@@ -34,6 +34,11 @@
 #include "ui/views/view.h"
 #include "ui/views/word_lookup_client.h"
 
+namespace gfx {
+class Rect;
+class Range;
+}  // namespace gfx
+
 namespace views {
 
 class MenuRunner;
@@ -308,6 +313,12 @@ class VIEWS_EXPORT Textfield : public View,
                                      gfx::Rect* rect) const override;
   bool HasCompositionText() const override;
   bool GetTextRange(gfx::Range* range) const override;
+  bool GetTextInputClientInfo(
+      base::OnceCallback<void(bool,
+                              const gfx::Range&,
+                              const base::string16&,
+                              const gfx::Range&,
+                              const gfx::Rect&)> callback) const override;
   bool GetCompositionTextRange(gfx::Range* range) const override;
   bool GetSelectionRange(gfx::Range* range) const override;
   bool SetSelectionRange(const gfx::Range& range) override;
