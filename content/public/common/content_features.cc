@@ -85,11 +85,6 @@ const base::Feature kCompositeOpaqueScrollers{"CompositeOpaqueScrollers",
 const base::Feature kCompositorImageAnimation{
     "CompositorImageAnimation", base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Enables handling touch events in compositor using impl side touch action
-// knowledge.
-const base::Feature kCompositorTouchAction{"CompositorTouchAction",
-                                           base::FEATURE_DISABLED_BY_DEFAULT};
-
 // Throttle tasks in Blink background timer queues based on CPU budgets
 // for the background tab. Bug: https://crbug.com/639852.
 const base::Feature kExpensiveBackgroundTimerThrottling{
