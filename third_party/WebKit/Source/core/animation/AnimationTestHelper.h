@@ -37,7 +37,7 @@ void EnsureInterpolatedValueCached(const ActiveInterpolations&,
 
 class SampleTestInterpolation : public LegacyStyleInterpolation {
  public:
-  static RefPtr<LegacyStyleInterpolation> Create(
+  static scoped_refptr<LegacyStyleInterpolation> Create(
       std::unique_ptr<InterpolableValue> start,
       std::unique_ptr<InterpolableValue> end) {
     return WTF::AdoptRef(
