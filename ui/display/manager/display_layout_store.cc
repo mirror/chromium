@@ -111,7 +111,10 @@ void DisplayLayoutStore::UpdateMultiDisplayState(const DisplayIdList& list,
   if (layouts_.find(list) == layouts_.end())
     CreateDefaultDisplayLayout(list);
 
-  layouts_[list]->mirrored = mirrored;
+  if (!forced_mirror_mode_) {
+    // Don't update the mirrored status if its forced.
+    layouts_[list]->mirrored = mirrored;
+  }
   layouts_[list]->default_unified = default_unified;
 }
 
