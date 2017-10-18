@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9b1f4278_c7dfd09c",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-18T07:21:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2df702ab_75d9b669",
+      "range": {
+        "startLine": 109,
+        "startChar": 6,
+        "endLine": 109,
+        "endChar": 27
+      },
+      "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff7ac99f_1a773013",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 5
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "302b8cd5_fa731801",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-18T07:21:27Z",
+      "side": 1,
+      "message": "\u003e Does it preserve the selected item?\nYes, the method will change a selection only if the selected index is not valid (https://cs.chromium.org/chromium/src/ui/views/controls/combobox/combobox.cc?rcl\u003dba66a67bb56dd140028d7683862bd4d5f0e983db\u0026l\u003d483). But it is not our case.",
+      "parentUuid": "1df6744f_509058c8",
+      "range": {
+        "startLine": 125,
+        "startChar": 15,
+        "endLine": 125,
+        "endChar": 37
+      },
+      "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ba0179f_0f600f47",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 5
@@ -115,6 +163,30 @@
       "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c8e3b8_c2aa654d",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-18T07:21:27Z",
+      "side": 1,
+      "message": "\u003e Why do you need this list at all instead of creating the values dynamically?\nOn the other hand, why to recreate them many times (for sure at least once)?...\nDoesn\u0027t make a big difference to me. Fixed.",
+      "parentUuid": "1ba0179f_0f600f47",
+      "range": {
+        "startLine": 143,
+        "startChar": 30,
+        "endLine": 143,
+        "endChar": 47
+      },
+      "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "354d5042_7b26ef04",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-18T07:21:27Z",
+      "side": 1,
+      "message": "\u003e Do you need it?\nYes, it OnComboboxModelChanged doesn\u0027t trigger re-painting (see crbug.com/ 775496). Added a comment. I will fix it in another CL that is not going to be merged.",
+      "parentUuid": "9b30a857_f0055b9a",
+      "range": {
+        "startLine": 597,
+        "startChar": 24,
+        "endLine": 597,
+        "endChar": 37
+      },
+      "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b47e818_38f4dea2",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 5
@@ -164,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5052eddf_1f7d6855",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-18T07:21:27Z",
+      "side": 1,
+      "message": "\u003e Definitely redundant.\nTrue. Removed.",
+      "parentUuid": "3b47e818_38f4dea2",
+      "range": {
+        "startLine": 600,
+        "startChar": 21,
+        "endLine": 600,
+        "endChar": 34
+      },
+      "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "474187c5_810e2644",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 5
@@ -184,6 +304,30 @@
       "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7923e87c_0818ad79",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-18T07:21:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "474187c5_810e2644",
+      "range": {
+        "startLine": 619,
+        "startChar": 6,
+        "endLine": 620,
+        "endChar": 76
+      },
+      "revId": "36f5b06e6baf3c31c5c692fe35e528905063ac67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
