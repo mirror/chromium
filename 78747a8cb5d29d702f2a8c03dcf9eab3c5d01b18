@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c607b162_6e9289b7",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-18T22:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0cd50ba_de94e597",
+      "revId": "78747a8cb5d29d702f2a8c03dcf9eab3c5d01b18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78ecd3db_df07d6fa",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-18T16:53:58Z",
       "side": 1,
       "message": "nit: I think in most of the code we don\u0027t use whitespace inside {}, so:\n\n@param {string|undefined} ...",
+      "revId": "78747a8cb5d29d702f2a8c03dcf9eab3c5d01b18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a861e572_496088bb",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-18T22:31:12Z",
+      "side": 1,
+      "message": "A lot of code in this file does have spaces, cleaned it up.",
+      "parentUuid": "78ecd3db_df07d6fa",
       "revId": "78747a8cb5d29d702f2a8c03dcf9eab3c5d01b18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aad46ab0_b1b16ff3",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-18T22:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0cebf43_3e6ed0f6",
+      "revId": "78747a8cb5d29d702f2a8c03dcf9eab3c5d01b18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10cfef00_7aa6c50e",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "78747a8cb5d29d702f2a8c03dcf9eab3c5d01b18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0579ba5_0c4f0162",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-18T22:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10cfef00_7aa6c50e",
+      "revId": "78747a8cb5d29d702f2a8c03dcf9eab3c5d01b18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1e9af3bb_4d1a4c2d",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-18T22:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1437e297_3dbdd3b3",
+      "revId": "78747a8cb5d29d702f2a8c03dcf9eab3c5d01b18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1db733a_8fe57ff9",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "1ebfb998_9f032e7e",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-18T22:31:12Z",
+      "side": 1,
+      "message": "I think that later on we are going to be setting a different type of \u0027focus ring\u0027 thing on the highlighted words than on the whole node, so I think it makes sense to keep these calls separated. We will probably do something like a setHighlight (unimplemented) to the word, and setFocusRing to the node.\n\nAdded a comment.",
+      "parentUuid": "b1db733a_8fe57ff9",
+      "revId": "78747a8cb5d29d702f2a8c03dcf9eab3c5d01b18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f21c82e0_1d9da883",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "78747a8cb5d29d702f2a8c03dcf9eab3c5d01b18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bdc909_e4d51ed1",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-18T22:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f21c82e0_1d9da883",
+      "revId": "78747a8cb5d29d702f2a8c03dcf9eab3c5d01b18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
