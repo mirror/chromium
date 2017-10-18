@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c870ca0a_ef1018ed",
+        "filename": "services/device/manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-18T06:33:49Z",
+      "side": 1,
+      "message": "Should I add the \"device::mojo::InputDeviceManager\" inside the \"device::hid\" instead of creating a new \"device:input_service\" item?\nWhen we move the //device/hid/ into //services/device/, the hid and input_service_linux should still in the same \"hid\" folder, no need to create a separate folder for input_service in //services/device, right?",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 72
+      },
+      "revId": "a1b0aad7146da72c1b9554994d7b7a14f2c34aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
