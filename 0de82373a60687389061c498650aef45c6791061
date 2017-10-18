@@ -22,6 +22,30 @@
       "revId": "0de82373a60687389061c498650aef45c6791061",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354427de_78fcf227",
+        "filename": "content/browser/download/download_file_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-18T21:41:12Z",
+      "side": 1,
+      "message": "Both should be fine. DownloadItemImpl should not allow the 2nd Pause() to happen. Changed this to a bool and removed WasPaused() method",
+      "parentUuid": "1e99d02e_1edea6b8",
+      "range": {
+        "startLine": 354,
+        "startChar": 2,
+        "endLine": 354,
+        "endChar": 5
+      },
+      "revId": "0de82373a60687389061c498650aef45c6791061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
