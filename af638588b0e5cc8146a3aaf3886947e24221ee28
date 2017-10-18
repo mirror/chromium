@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe1dc1d6_7e520015",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T17:22:33Z",
+      "side": 1,
+      "message": "Why switching to a view context? The Display needs one, but that lives in viz. The UI compositor doesn\u0027t need one. We use a view context in GPTF because we share it between UI compositor and Display, but that doesn\u0027t apply here.",
+      "revId": "af638588b0e5cc8146a3aaf3886947e24221ee28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81748b8a_04c59629",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T17:22:33Z",
+      "side": 1,
+      "message": "Don\u0027t we come back here after a context loss?",
+      "revId": "af638588b0e5cc8146a3aaf3886947e24221ee28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c616702_f5ea8431",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T17:22:33Z",
+      "side": 1,
+      "message": "We should probably add an enum for UI_COMPOSITOR_CONTEXT.",
+      "revId": "af638588b0e5cc8146a3aaf3886947e24221ee28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
