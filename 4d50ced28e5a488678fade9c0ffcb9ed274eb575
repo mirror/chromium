@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "d9714217_ff9e787c",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-18T16:08:41Z",
+      "side": 1,
+      "message": "By using DataObjectBuilder everywhere, this isn\u0027t required anymore at all :)",
+      "parentUuid": "20c45517_85ca222c",
+      "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b07b0030_702fe47d",
         "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
         "patchSetId": 3
@@ -80,6 +98,24 @@
       "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e26337f7_66bc4d91",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-18T16:08:41Z",
+      "side": 1,
+      "message": "Done - much nicer!",
+      "parentUuid": "b07b0030_702fe47d",
+      "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "a3e66f88_4f2f453e",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-18T16:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6efc2b71_8a109219",
+      "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66761a5c_b573db21",
         "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
         "patchSetId": 3
@@ -164,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "09a60d1f_63462531",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-18T16:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66761a5c_b573db21",
+      "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "710beb9f_453665a7",
         "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
         "patchSetId": 3
@@ -178,6 +250,24 @@
       "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3ec04d_786216fa",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-18T16:08:41Z",
+      "side": 1,
+      "message": "This and SearchBoxBindings are now RenderFrameObservers. That means I don\u0027t have to explicitly store render_frame_ anymore since I can get it from RenderFrameObserver::render_frame().",
+      "parentUuid": "710beb9f_453665a7",
+      "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +303,24 @@
       "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3877ade9_e9aaefb5",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-18T16:08:41Z",
+      "side": 1,
+      "message": "Indeed it does, thanks!",
+      "parentUuid": "a53bb0f7_40deff0a",
+      "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -263,6 +371,30 @@
     },
     {
       "key": {
+        "uuid": "d3fe932c_ef4b620d",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-18T16:08:41Z",
+      "side": 1,
+      "message": "Done. (I also had to convert from zoom level to zoom factor)",
+      "parentUuid": "27a797fa_701c2c19",
+      "range": {
+        "startLine": 630,
+        "startChar": 53,
+        "endLine": 630,
+        "endChar": 0
+      },
+      "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59f823ee_94bdd0ed",
         "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
         "patchSetId": 3
@@ -295,6 +427,24 @@
       "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd1b01e_f29cec1c",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-18T16:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fdc2ab5_0f5e7ec6",
+      "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
