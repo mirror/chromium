@@ -22,6 +22,30 @@
       "revId": "eeb96997c2a17de1d2cf8e07db97d24f9227bda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fddc3264_c28043d3",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3967,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-18T20:38:15Z",
+      "side": 1,
+      "message": "This looks okay to me, but I\u0027d have to defer to Charlie for an authoritative answer.",
+      "parentUuid": "4b69b152_96d2a49f",
+      "range": {
+        "startLine": 3967,
+        "startChar": 67,
+        "endLine": 3967,
+        "endChar": 0
+      },
+      "revId": "eeb96997c2a17de1d2cf8e07db97d24f9227bda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
