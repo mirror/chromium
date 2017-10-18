@@ -281,6 +281,10 @@ bool RunLoop::BeforeRun() {
     return false;
 
   auto& active_run_loops_ = delegate_->active_run_loops_;
+  // RunLoops that allow nestable tasks can only be run top-level or nested
+  // inside a RunLoop that also allows nestable tasks.
+  DCHECK(type_ != Type::kNestableTasksAllowed || active_run_loops_.empty() ||
+         active_run_loops_.top().type_ == Type::kNestableTasksAllowed);
   active_run_loops_.push(this);
 
   const bool is_nested = active_run_loops_.size() > 1;
