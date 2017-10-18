@@ -110,8 +110,8 @@ bool IsAccountConsistencyDiceEnabledForProfile(PrefService* user_prefs) {
 
 bool IsAccountConsistencyDiceEnabled(
     const BooleanPrefMember& dice_pref_member) {
-  DCHECK_EQ(kDiceEnabledPref, dice_pref_member.GetPrefName());
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  DCHECK_EQ(kDiceEnabledPref, dice_pref_member.GetPrefName());
   return IsDiceEnabledForProfile(dice_pref_member.GetValue());
 #else
   return false;
