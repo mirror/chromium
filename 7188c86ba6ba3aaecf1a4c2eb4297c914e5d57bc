@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9cfe91e_8f8455f1",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-18T15:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a98d96f2_8131ea0e",
+      "revId": "7188c86ba6ba3aaecf1a4c2eb4297c914e5d57bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e110abb_f366dc5a",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "7188c86ba6ba3aaecf1a4c2eb4297c914e5d57bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601a02b3_4c9509bc",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-18T15:41:41Z",
+      "side": 1,
+      "message": "Commented: \"Okay to use base::Unretained(this), as |client_| will be destroyed before |this|.\"",
+      "parentUuid": "4e110abb_f366dc5a",
+      "range": {
+        "startLine": 62,
+        "startChar": 19,
+        "endLine": 62,
+        "endChar": 41
+      },
+      "revId": "7188c86ba6ba3aaecf1a4c2eb4297c914e5d57bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
