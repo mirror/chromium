@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ae908e3e_534c63a0",
+        "filename": "chrome/browser/devtools/device/devtools_android_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-18T16:11:36Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be emplace_back(kChromeDiscoveryURL)?\n\nThat is, the parameters to emplace_back are the arguments to the constructor. Here, you\u0027re invoking either the copy or move constructor (which is fine, we have an explicit move constructor for base::Value), but just was syntactically surprising.\n\nAm I missing a reason for the base::Value wrapping?",
+      "revId": "c39ee1ee573777f6193a4f15c04b181021ace183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e334fb9e_9e753669",
         "filename": "components/prefs/pref_registry.cc",
         "patchSetId": 1
