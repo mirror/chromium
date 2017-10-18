@@ -3146,6 +3146,7 @@ TEST_P(GLES2DecoderTest, TextureUsageAngleExtNotEnabledByDefault) {
 
 TEST_P(GLES2DecoderTest, ProduceAndConsumeTextureCHROMIUM) {
   Mailbox mailbox = Mailbox::Generate();
+  GLuint new_texture_id = kNewClientId;
 
   DoBindTexture(GL_TEXTURE_2D, client_texture_id_, kServiceTextureId);
   DoTexImage2D(
@@ -3190,24 +3191,9 @@ TEST_P(GLES2DecoderTest, ProduceAndConsumeTextureCHROMIUM) {
   // Service ID has not changed.
   EXPECT_EQ(kServiceTextureId, texture->service_id());
 
-  // Create new texture for consume.
-  EXPECT_CALL(*gl_, GenTextures(_, _))
-      .WillOnce(SetArgPointee<1>(kNewServiceId))
-      .RetiresOnSaturation();
-  DoBindTexture(GL_TEXTURE_2D, kNewClientId, kNewServiceId);
-
-  // Assigns and binds original service size texture ID.
-  EXPECT_CALL(*gl_, BindTexture(GL_TEXTURE_2D, 0))
-      .Times(1)
-      .RetiresOnSaturation();
-  EXPECT_CALL(*gl_, DeleteTextures(1, _)).Times(1).RetiresOnSaturation();
-  EXPECT_CALL(*gl_, BindTexture(GL_TEXTURE_2D, kServiceTextureId))
-      .Times(1)
-      .RetiresOnSaturation();
-
-  ConsumeTextureCHROMIUMImmediate& consume_cmd =
-      *GetImmediateAs<ConsumeTextureCHROMIUMImmediate>();
-  consume_cmd.Init(GL_TEXTURE_2D, mailbox.name);
+  CreateAndConsumeTextureINTERNALImmediate& consume_cmd =
+      *GetImmediateAs<CreateAndConsumeTextureINTERNALImmediate>();
+  consume_cmd.Init(GL_TEXTURE_2D, new_texture_id, mailbox.name);
   EXPECT_EQ(error::kNoError,
             ExecuteImmediateCmd(consume_cmd, sizeof(mailbox.name)));
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
@@ -3235,6 +3221,7 @@ TEST_P(GLES2DecoderTest, ProduceAndConsumeTextureCHROMIUM) {
 
 TEST_P(GLES2DecoderTest, ConsumeAlreadyBoundTexture) {
   Mailbox mailbox = Mailbox::Generate();
+  GLuint new_texture_id = kNewClientId;
 
   DoBindTexture(GL_TEXTURE_2D, client_texture_id_, kServiceTextureId);
   DoTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 3, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0,
@@ -3252,9 +3239,9 @@ TEST_P(GLES2DecoderTest, ConsumeAlreadyBoundTexture) {
 
   // Consume texture that is already bound.  Operation should succeed, leaving
   // existing texture bound with no extra GL calls expected.
-  ConsumeTextureCHROMIUMImmediate& consume_cmd =
-      *GetImmediateAs<ConsumeTextureCHROMIUMImmediate>();
-  consume_cmd.Init(GL_TEXTURE_2D, mailbox.name);
+  CreateAndConsumeTextureINTERNALImmediate& consume_cmd =
+      *GetImmediateAs<CreateAndConsumeTextureINTERNALImmediate>();
+  consume_cmd.Init(GL_TEXTURE_2D, new_texture_id, mailbox.name);
   EXPECT_EQ(error::kNoError,
             ExecuteImmediateCmd(consume_cmd, sizeof(mailbox.name)));
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
