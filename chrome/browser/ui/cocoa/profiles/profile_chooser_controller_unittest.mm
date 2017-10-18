@@ -49,6 +49,9 @@ const std::string kEmail = "user@gmail.com";
 const std::string kSecondaryEmail = "user2@gmail.com";
 const std::string kSecondaryGaiaId = "gaiaid-user2@gmail.com";
 const std::string kLoginToken = "oauth2_login_token";
+// There are 3 buttons in the initial layout: "Guest", "Manage People" and
+// "Close all windows".
+const unsigned int kMenuButtonCount = 3U;
 
 class ProfileChooserControllerTest : public CocoaProfileTest {
  public:
@@ -134,14 +137,31 @@ class ProfileChooserControllerTest : public CocoaProfileTest {
   ProfileChooserController* controller() { return controller_; }
   AvatarMenu* menu() { return menu_; }
 
-  void ExpectGuestButton(NSButton* guest_button) {
+  NSButton* GetButton(NSArray* buttons, SEL selector) {
+    NSButton* button_found = nil;
+    for (id item in buttons) {
+      NSButton* button = base::mac::ObjCCast<NSButton>(item);
+      if ([button action] == selector) {
+        EXPECT_EQ(nil, button_found);
+        button_found = button;
+      }
+    }
+    EXPECT_NE(nil, button_found);
+    return button_found;
+  }
+
+  void ExpectGuestButton(NSArray* buttons) {
+    SEL selector = @selector(switchToGuest:);
+    NSButton* guest_button = GetButton(buttons, selector);
     ASSERT_TRUE(guest_button);
-    EXPECT_EQ(@selector(switchToGuest:), [guest_button action]);
+    EXPECT_EQ(selector, [guest_button action]);
     EXPECT_EQ(controller(), [guest_button target]);
     EXPECT_TRUE([guest_button isEnabled]);
   }
 
-  void ExpectManagePeopleButton(NSButton* manage_people_button) {
+  void ExpectManagePeopleButton(NSArray* buttons) {
+    SEL selector = @selector(showUserManager:);
+    NSButton* manage_people_button = GetButton(buttons, selector);
     ASSERT_TRUE(manage_people_button);
     EXPECT_EQ(@selector(showUserManager:), [manage_people_button action]);
     EXPECT_EQ(controller(), [manage_people_button target]);
@@ -174,15 +194,10 @@ TEST_F(ProfileChooserControllerTest, InitialLayoutWithNewMenu) {
 
   // There should be one button in the option buttons view.
   NSArray* buttonSubviews = [[subviews objectAtIndex:0] subviews];
-  NSButton* userSwitcherButton;
   // There are 2 buttons in the initial layout: "Manage People" and "Guest".
-  ASSERT_EQ(2U, [buttonSubviews count]);
+  ASSERT_EQ(kMenuButtonCount, [buttonSubviews count]);
   // There should be a user switcher button.
-  userSwitcherButton =
-      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:0]);
-
-  EXPECT_EQ(@selector(showUserManager:), [userSwitcherButton action]);
-  EXPECT_EQ(controller(), [userSwitcherButton target]);
+  ExpectManagePeopleButton(buttonSubviews);
 
   NSUInteger lastSubviewIndex = 4;
   NSArray* activeCardSubviews =
@@ -341,15 +356,10 @@ TEST_F(ProfileChooserControllerTest, AccountManagementLayout) {
   ASSERT_EQ(viewsCount, [subviews count]);
 
   NSArray* buttonSubviews = [[subviews objectAtIndex:0] subviews];
-  NSButton* userSwitcherButton;
   // There should be two buttons in the option buttons view.
-  ASSERT_EQ(2U, [buttonSubviews count]);
+  ASSERT_EQ(kMenuButtonCount, [buttonSubviews count]);
   // There should be a user switcher button.
-  userSwitcherButton =
-      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:0]);
-
-  EXPECT_EQ(@selector(showUserManager:), [userSwitcherButton action]);
-  EXPECT_EQ(controller(), [userSwitcherButton target]);
+  ExpectManagePeopleButton(buttonSubviews);
 
   NSUInteger accountsViewIndex = 4;
   // In the accounts view, there should be the account list container
@@ -408,7 +418,7 @@ TEST_F(ProfileChooserControllerTest, SignedInProfileLockDisabled) {
 
   NSArray* buttonSubviews = [[subviews objectAtIndex:0] subviews];
   // There will be two buttons in the option buttons view.
-  ASSERT_EQ(2U, [buttonSubviews count]);
+  ASSERT_EQ(kMenuButtonCount, [buttonSubviews count]);
 
   // The last button should not be the lock button.
   NSButton* lastButton =
@@ -435,7 +445,7 @@ TEST_F(ProfileChooserControllerTest, SignedInProfileLockEnabled) {
 
   NSArray* buttonSubviews = [[subviews objectAtIndex:0] subviews];
   // There will be two buttons and one separator in the option buttons view.
-  ASSERT_EQ(3U, [buttonSubviews count]);
+  ASSERT_EQ(kMenuButtonCount, [buttonSubviews count]);
 
   // There should be a lock button.
   NSButton* lockButton =
@@ -453,15 +463,11 @@ TEST_F(ProfileChooserControllerTest, RegularProfileWithManagePeopleAndGuest) {
   subviews = [[subviews objectAtIndex:0] subviews];
 
   NSArray* buttonSubviews = [[subviews objectAtIndex:0] subviews];
-  ASSERT_EQ(2U, [buttonSubviews count]);
+  ASSERT_EQ(kMenuButtonCount, [buttonSubviews count]);
 
-  NSButton* manage_people_button =
-      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:0]);
-  ExpectManagePeopleButton(manage_people_button);
+  ExpectManagePeopleButton(buttonSubviews);
 
-  NSButton* guest_button =
-      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:1]);
-  ExpectGuestButton(guest_button);
+  ExpectGuestButton(buttonSubviews);
 }
 
 TEST_F(ProfileChooserControllerTest, SupervisedProfileWithManagePeopleOnly) {
@@ -474,9 +480,8 @@ TEST_F(ProfileChooserControllerTest, SupervisedProfileWithManagePeopleOnly) {
   subviews = [[subviews objectAtIndex:0] subviews];
 
   NSArray* buttonSubviews = [[subviews objectAtIndex:0] subviews];
-  ASSERT_EQ(1U, [buttonSubviews count]);
+  // "Guest" button should not be available.
+  ASSERT_EQ(kMenuButtonCount - 1, [buttonSubviews count]);
 
-  NSButton* manage_people_button =
-      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:0]);
-  ExpectManagePeopleButton(manage_people_button);
+  ExpectManagePeopleButton(buttonSubviews);
 }
