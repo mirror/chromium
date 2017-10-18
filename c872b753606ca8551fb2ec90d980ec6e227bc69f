@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8485bf9_f2232ea2",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-18T15:09:38Z",
+      "side": 1,
+      "message": "I wonder if a unit test would have sufficed...",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957cbdf0_1618197e",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-18T15:09:38Z",
+      "side": 1,
+      "message": "This should probably be controller-\u003eFlushForTesting() to avoid flakes.\n(forces CLC to send mojo messages to Ash to update the ShelfModel there)",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14f24cff_399859fd",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-18T15:09:38Z",
+      "side": 1,
+      "message": "Bummer, I\u0027d support making ShelfButton\u0027s overrides match Button visibility. Or better yet, avoid using Button here and avoid changing override visibility and remove the base_event_utils.h and button.h includes by using EventGenerator instead of calling OnMouse* below.",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9eeaa7_a1d66cbe",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-18T15:09:38Z",
+      "side": 1,
+      "message": "nit: s/center/point/ or actually find the center \u003d button-\u003ebounds().CenterPoint();",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "914206e4_d001b6ca",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-18T15:09:38Z",
+      "side": 1,
+      "message": "This should probably also flush a binding to avoid flakes, I guess we need a new ash::ShelfItemDelegate::FlushForTesting, since its binding is used for item selection...",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b344c7b_98015e33",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-18T15:09:38Z",
+      "side": 1,
+      "message": "nit: Remove this, move the defaults to SelectShelfItem and inline calls to that function throughout this file. Or add a TODO...",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
