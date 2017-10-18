@@ -22,6 +22,30 @@
       "revId": "7b1cddf51b443ca4323a7668aa3ed2977b436366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23bb4416_e99380e3",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-18T11:31:08Z",
+      "side": 1,
+      "message": "\u003e password_dropdown_ implies that password_editable is true. The condition should be just if (password_dropdown_)\n\noh, good point. But fixed in another way. Please reveiw.",
+      "parentUuid": "9933b0c8_4b0cd3f6",
+      "range": {
+        "startLine": 616,
+        "startChar": 6,
+        "endLine": 616,
+        "endChar": 45
+      },
+      "revId": "7b1cddf51b443ca4323a7668aa3ed2977b436366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
