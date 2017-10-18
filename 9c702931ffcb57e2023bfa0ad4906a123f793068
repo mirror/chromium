@@ -16,6 +16,24 @@
       "revId": "9c702931ffcb57e2023bfa0ad4906a123f793068",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7c8de8_10cbde94",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T22:28:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0e2a73b_0147338d",
+      "revId": "9c702931ffcb57e2023bfa0ad4906a123f793068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
