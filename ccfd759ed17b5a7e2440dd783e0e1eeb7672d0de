@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9a7396a7_2613e954",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-18T14:54:02Z",
+      "side": 1,
+      "message": "Yeah, sure.",
+      "parentUuid": "361cb116_16cb8aa5",
+      "range": {
+        "startLine": 62,
+        "startChar": 22,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "ccfd759ed17b5a7e2440dd783e0e1eeb7672d0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea79eecc_de2fde59",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 15
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "39a0515e_fe733f38",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-18T14:54:02Z",
+      "side": 1,
+      "message": "So, I think you are saying this is unnecessary, at least if notification_type becomes const... ?",
+      "parentUuid": "151c8b02_9698b7a1",
+      "range": {
+        "startLine": 222,
+        "startChar": 30,
+        "endLine": 222,
+        "endChar": 47
+      },
+      "revId": "ccfd759ed17b5a7e2440dd783e0e1eeb7672d0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98c41aee_2182f71d",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 15
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "I think a combination of notification_id, profile_id, incognito can uniquely identify a toast, so checking origin is not required IMO.",
       "parentUuid": "98c41aee_2182f71d",
+      "range": {
+        "startLine": 351,
+        "startChar": 26,
+        "endLine": 351,
+        "endChar": 28
+      },
+      "revId": "ccfd759ed17b5a7e2440dd783e0e1eeb7672d0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a64571_c072dc86",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-18T14:54:02Z",
+      "side": 1,
+      "message": "profile_id and incognito are going to be fairly consistent for any given user and will not provide much in the way of differentiating, so it falls down to the notification_id to provide uniqueness. Similar concern was raised in the design for temp files for notifications and the decision there was to use the origin as well as a differentiatior. By doing that, you ensure that data from one origin is never accidentally used with another origin.",
+      "parentUuid": "1d5f016c_667f9307",
       "range": {
         "startLine": 351,
         "startChar": 26,
