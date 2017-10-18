@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19e0b64e_b4508e15",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 62522,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T22:14:05Z",
+      "side": 1,
+      "message": "Optional nit: Perhaps \"Ash\" or \"Ash.Accelerators\" for the group name, rather than \"Power\"?  This seems more related to accelerators and the system UI than it does to power... though OTOH \"Power.\" does have several metrics related to the power button.",
+      "range": {
+        "startLine": 62522,
+        "startChar": 17,
+        "endLine": 62522,
+        "endChar": 22
+      },
+      "revId": "103f1a6e0b917a65666d7433b37f320206fcd2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
