@@ -8,10 +8,9 @@
 #include "base/run_loop.h"
 #include "base/stl_util.h"
 #include "base/test/gtest_util.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/platform_util.h"
-#include "ui/base/material_design/material_design_controller.h"
-#include "ui/base/test/material_design_controller_test_api.h"
 #include "ui/base/test/user_interactive_test_case.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/views/test/widget_test.h"
@@ -97,13 +96,12 @@ TestBrowserDialog::TestBrowserDialog() {}
 void TestBrowserDialog::RunDialog() {
 #if defined(OS_MACOSX)
   // The rest of this method assumes the child dialog is toolkit-views. So, for
-  // Mac, it will only work if --secondary-ui-md is passed. Without this, a
-  // Cocoa dialog will be created, which TestBrowserDialog doesn't support.
-  // Force SecondaryUiMaterial() on Mac to get coverage on the bots. Leave it
-  // optional elsewhere so that the non-MD dialog can be invoked to compare.
-  ui::test::MaterialDesignControllerTestAPI md_test_api(
-      ui::MaterialDesignController::GetMode());
-  md_test_api.SetSecondaryUiMaterial(true);
+  // Mac, it will only work secondary UI is enabled. Without this, a Cocoa
+  // dialog will be created, which TestBrowserDialog doesn't support. Force
+  // kSecondaryUiMd on Mac to get coverage on the bots. Leave it optional
+  // elsewhere so that the non-MD dialog can be invoked to compare.
+  base::test::ScopedFeatureList enable_views_on_mac;
+  enable_views_on_mac.InitAndEnableFeature(features::kSecondaryUiMd);
 #endif
 
   views::Widget::Widgets widgets_before =

@@ -4,6 +4,7 @@
 
 #include "base/auto_reset.h"
 #include "base/macros.h"
+#include "base/test/scoped_feature_list.h"
 #include "chrome/browser/ui/extensions/extension_message_bubble_browsertest.h"
 #include "chrome/browser/ui/extensions/settings_api_bubble_helpers.h"
 #include "chrome/browser/ui/test/test_browser_dialog.h"
@@ -49,7 +50,7 @@ class ExtensionMessageBubbleViewBrowserTest
   ~ExtensionMessageBubbleViewBrowserTest() override {}
 
   // ExtensionMessageBubbleBrowserTest:
-  void SetUpCommandLine(base::CommandLine* command_line) override;
+  void SetUp() override;
 
   // TestBrowserDialog:
   void ShowDialog(const std::string& name) override;
@@ -68,16 +69,17 @@ class ExtensionMessageBubbleViewBrowserTest
   // CloseBubble().
   bool block_close_ = false;
 
+  base::test::ScopedFeatureList scoped_feature_list_;
+
   DISALLOW_COPY_AND_ASSIGN(ExtensionMessageBubbleViewBrowserTest);
 };
 
-void ExtensionMessageBubbleViewBrowserTest::SetUpCommandLine(
-    base::CommandLine* command_line) {
-  ExtensionMessageBubbleBrowserTest::SetUpCommandLine(command_line);
+void ExtensionMessageBubbleViewBrowserTest::SetUp() {
+  ExtensionMessageBubbleBrowserTest::SetUp();
   // MD is required on Mac to get a Views bubble. On other platforms, it should
   // not affect the behavior of the bubble (just the appearance), so enable for
   // all platforms.
-  command_line->AppendSwitch(switches::kExtendMdToSecondaryUi);
+  scoped_feature_list_.InitAndEnableFeature(features::kSecondaryUiMd);
 }
 
 void ExtensionMessageBubbleViewBrowserTest::ShowDialog(
