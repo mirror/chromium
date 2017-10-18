@@ -234,8 +234,9 @@ class TabHistoryContext : public history::Context {
 // Saves the current title to the history database.
 - (void)saveTitleToHistoryDB;
 
-// Adds the current session entry to this history database.
-- (void)addCurrentEntryToHistoryDB;
+// Adds the current session entry, which has a navigation |context|, to this
+// history database.
+- (void)addCurrentEntryToHistoryDBWithContext:(web::NavigationContext*)context;
 
 // Adds any cached entries from |_addPageVector| to the history DB.
 - (void)commitCachedEntriesToHistoryDB;
@@ -542,7 +543,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   }
 }
 
-- (void)addCurrentEntryToHistoryDB {
+- (void)addCurrentEntryToHistoryDBWithContext:(web::NavigationContext*)context {
   DCHECK([self navigationManager]->GetVisibleItem());
   // If incognito, don't update history.
   if (_browserState->IsOffTheRecord())
@@ -593,10 +594,17 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
   DCHECK(item->GetTimestamp().ToInternalValue() > 0);
 
+  bool is404Page = false;
+  if (context && context->GetResponseHeaders()) {
+    is404Page = context->GetResponseHeaders()->response_code() == 404;
+  }
+
   // Clicks on content suggestions on the NTP should not contribute to the
   // Most Visited tiles in the NTP.
+  // 404 should not be taken into account neither.
   const bool considerForNTPMostVisited =
-      referrer.url != GURL(tab_constants::kDoNotConsiderForMostVisited);
+      referrer.url != GURL(tab_constants::kDoNotConsiderForMostVisited) &&
+      !is404Page;
   history::HistoryAddPageArgs args(
       url, item->GetTimestamp(), &_tabHistoryContext, item->GetUniqueID(),
       referrer.url, redirects, item->GetTransitionType(),
@@ -792,7 +800,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 - (void)webState:(web::WebState*)webState
     didFinishNavigation:(web::NavigationContext*)navigation {
   if (!navigation->GetError()) {
-    [self addCurrentEntryToHistoryDB];
+    [self addCurrentEntryToHistoryDBWithContext:navigation];
     [self countMainFrameLoad];
   }
 
