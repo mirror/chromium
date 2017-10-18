@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd42db21_d540c8cd",
+        "filename": "base/process/process_metrics_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-18T00:38:34Z",
+      "side": 1,
+      "message": "I have such deja-vu right now...",
+      "revId": "76d447efac192f76bdf193371ee1130d796f57c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
