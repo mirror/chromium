@@ -618,6 +618,7 @@ const char kLoggingLevel[]                  = "log-level";
 // affect which events are logged). Currently supported only in app_shell.
 // TODO(crbug.com/760431): Make this work in chrome and content_shell too.
 const char kLogFile[] = "log-file";
+const char kLogFileAoeu[] = "log-file";
 
 // Enables saving net log events to a file and sets the file name to use.
 const char kLogNetLog[]                     = "log-net-log";
