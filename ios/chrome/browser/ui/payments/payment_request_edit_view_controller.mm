@@ -17,6 +17,7 @@
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
 #import "ios/chrome/browser/ui/payments/cells/payments_selector_edit_item.h"
 #import "ios/chrome/browser/ui/payments/cells/payments_text_item.h"
+#import "ios/chrome/browser/ui/payments/payment_request_edit_consumer.h"
 #import "ios/chrome/browser/ui/payments/payment_request_edit_view_controller_actions.h"
 #import "ios/chrome/browser/ui/payments/payment_request_editor_field.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
@@ -116,7 +117,7 @@ PaymentsTextItem* ErrorMessageItemForError(NSString* errorMessage) {
 // The map of autofill types to UIPickerView options which are arrays of columns
 // which themselves are arrays of string rows used for display in UIPickerView.
 @property(nonatomic, strong)
-    NSMutableDictionary<NSNumber*, NSArray<NSArray<NSString*>*>*>* options;
+    NSMutableDictionary<NSNumber*, NSArray<NSArray*>*>* options;
 
 // The map of autofill types to UIPickerView views.
 @property(nonatomic, strong)
@@ -170,8 +171,7 @@ PaymentsTextItem* ErrorMessageItemForError(NSString* errorMessage) {
 - (NSIndexPath*)indexPathForCurrentTextField;
 
 // Returns the associated options for the given UIPickerView.
-- (NSArray<NSArray<NSString*>*>*)pickerViewOptionsForPickerView:
-    (UIPickerView*)pickerView;
+- (NSArray<NSArray*>*)pickerViewOptionsForPickerView:(UIPickerView*)pickerView;
 
 @end
 
@@ -388,7 +388,7 @@ PaymentsTextItem* ErrorMessageItemForError(NSString* errorMessage) {
   self.fields = fields;
 }
 
-- (void)setOptions:(NSArray<NSArray<NSString*>*>*)options
+- (void)setOptions:(NSArray<NSArray*>*)options
     forEditorField:(EditorField*)field {
   DCHECK(field.fieldType == EditorFieldTypeTextField);
   AutofillEditItem* item =
@@ -414,10 +414,19 @@ PaymentsTextItem* ErrorMessageItemForError(NSString* errorMessage) {
     if (field.value) {
       NSArray<NSString*>* fieldComponents =
           [field.value componentsSeparatedByString:@" / "];
-      [options enumerateObjectsUsingBlock:^(NSArray<NSString*>* column,
+      [options enumerateObjectsUsingBlock:^(NSArray* column,
                                             NSUInteger component, BOOL* stop) {
         DCHECK(component < fieldComponents.count);
-        NSUInteger row = [column indexOfObject:fieldComponents[component]];
+        NSUInteger row = [column indexOfObjectPassingTest:^BOOL(
+                                     id object, NSUInteger index, BOOL* stop) {
+          if ([object conformsToProtocol:@protocol(EditorFieldOption)]) {
+            return [[id<EditorFieldOption>(object) title]
+                isEqualToString:fieldComponents[component]];
+          }
+          DCHECK([object isKindOfClass:[NSString class]]);
+          return [base::mac::ObjCCastStrict<NSString>(object)
+              isEqualToString:fieldComponents[component]];
+        }];
         if (row != NSNotFound) {
           [pickerView selectRow:row inComponent:component animated:NO];
         }
@@ -534,17 +543,15 @@ PaymentsTextItem* ErrorMessageItemForError(NSString* errorMessage) {
 #pragma mark - UIPickerViewDataSource methods
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView*)pickerView {
-  NSArray<NSArray<NSString*>*>* options =
-      [self pickerViewOptionsForPickerView:pickerView];
+  NSArray<NSArray*>* options = [self pickerViewOptionsForPickerView:pickerView];
   return options.count;
 }
 
 - (NSInteger)pickerView:(UIPickerView*)pickerView
     numberOfRowsInComponent:(NSInteger)component {
-  NSArray<NSArray<NSString*>*>* options =
-      [self pickerViewOptionsForPickerView:pickerView];
+  NSArray<NSArray*>* options = [self pickerViewOptionsForPickerView:pickerView];
   DCHECK(component < static_cast<NSInteger>(options.count));
-  NSArray<NSString*>* column = options[component];
+  NSArray* column = options[component];
   return column.count;
 }
 
@@ -553,18 +560,25 @@ PaymentsTextItem* ErrorMessageItemForError(NSString* errorMessage) {
 - (NSString*)pickerView:(UIPickerView*)pickerView
             titleForRow:(NSInteger)row
            forComponent:(NSInteger)component {
-  NSArray<NSArray<NSString*>*>* options =
-      [self pickerViewOptionsForPickerView:pickerView];
+  NSArray<NSArray*>* options = [self pickerViewOptionsForPickerView:pickerView];
   DCHECK(component < static_cast<NSInteger>(options.count));
-  NSArray<NSString*>* column = options[component];
+  NSArray* column = options[component];
   DCHECK(row < static_cast<NSInteger>(column.count));
-  return column[row];
+  if ([column[row] conformsToProtocol:@protocol(EditorFieldOption)])
+    return [id<EditorFieldOption>(column[row]) title];
+  DCHECK([column[row] isKindOfClass:[NSString class]]);
+  return base::mac::ObjCCastStrict<NSString>(column[row]);
 }
 
 - (void)pickerView:(UIPickerView*)pickerView
       didSelectRow:(NSInteger)row
        inComponent:(NSInteger)component {
   DCHECK(_currentEditingCell);
+
+  NSArray<NSArray*>* options = [self pickerViewOptionsForPickerView:pickerView];
+  DCHECK(component < static_cast<NSInteger>(options.count));
+  NSArray* column = options[component];
+  DCHECK(row < static_cast<NSInteger>(column.count));
 
   // Break the current text field value into its components, replace the
   // respective component with the value of the selected row, combine the
@@ -573,8 +587,13 @@ PaymentsTextItem* ErrorMessageItemForError(NSString* errorMessage) {
       [[_currentEditingCell.textField.text componentsSeparatedByString:@" / "]
           mutableCopy];
   DCHECK(component < static_cast<NSInteger>(fieldComponents.count));
-  fieldComponents[component] =
-      [self pickerView:pickerView titleForRow:row forComponent:component];
+  if ([column[row] conformsToProtocol:@protocol(EditorFieldOption)]) {
+    fieldComponents[component] = [id<EditorFieldOption>(column[row]) value];
+  } else {
+    DCHECK([column[row] isKindOfClass:[NSString class]]);
+    fieldComponents[component] =
+        base::mac::ObjCCastStrict<NSString>(column[row]);
+  }
   _currentEditingCell.textField.text =
       [fieldComponents componentsJoinedByString:@" / "];
 
@@ -852,8 +871,7 @@ PaymentsTextItem* ErrorMessageItemForError(NSString* errorMessage) {
   return indexPath;
 }
 
-- (NSArray<NSArray<NSString*>*>*)pickerViewOptionsForPickerView:
-    (UIPickerView*)pickerView {
+- (NSArray<NSArray*>*)pickerViewOptionsForPickerView:(UIPickerView*)pickerView {
   NSArray<NSNumber*>* keys = [self.pickerViews allKeysForObject:pickerView];
   DCHECK(keys.count == 1);
   return self.options[keys[0]];

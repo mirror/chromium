@@ -9,6 +9,18 @@
 
 @class EditorField;
 
+// Protocol to be implemented by objects that are to be used as options for
+// editor fields.
+@protocol EditorFieldOption
+
+// The string to display for the current option.
+- (NSString*)title;
+
+// The value to return for the current option.
+- (NSString*)value;
+
+@end
+
 // PaymentRequestEditConsumer sets the editor form fields.
 @protocol PaymentRequestEditConsumer
 
@@ -16,8 +28,10 @@
 - (void)setEditorFields:(NSArray<EditorField*>*)fields;
 
 // Sets the options to choose from for |field|. |options| is an array of columns
-// which themselves are arrays of string rows used for display in UIPickerView.
-- (void)setOptions:(NSArray<NSArray<NSString*>*>*)options
+// which themselves are arrays of strings or objects implementing the
+// EditorFieldOption protocol, representing rows used for display in
+// UIPickerView.
+- (void)setOptions:(NSArray<NSArray*>*)options
     forEditorField:(EditorField*)field;
 
 @end
