@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87b5f123_73ae0525",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-18T15:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a44c9f35_bd7f3497",
+      "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f8137f3_444fece2",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-17T21:19:12Z",
       "side": 1,
       "message": "Seems like we should check is_valid(). I\u0027m new to GURL, so I\u0027m not sure if spec is the right way to convert this to the java String that android needs.",
+      "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8850393_b33f64cb",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-18T15:54:20Z",
+      "side": 1,
+      "message": "We are getting this from TemplateURLService. So it should be valid.\nAs for spec, I think that\u0027s what we already do. See here: \nhttps://cs.chromium.org/chromium/src/chrome/browser/search_engines/template_url_service_android.cc?rcl\u003d9e7a747dc535a9f41122b9f3e7a44e45fd34a576\u0026l\u003d290",
+      "parentUuid": "5f8137f3_444fece2",
       "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b2dbfbd4_b96eb3d5",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-18T15:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "114fc312_3ecb4ff0",
+      "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef10ce01_7f3a0a92",
         "filename": "chrome/browser/vr/speech_recognizer.cc",
         "patchSetId": 14
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-17T21:19:12Z",
       "side": 1,
       "message": "I\u0027d be really nice to avoid new/delete. Chatted with you offline about a few possibilities.",
+      "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d1a2d4_df053810",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-18T15:54:20Z",
+      "side": 1,
+      "message": "The life time of SRIO is not controlled by SR on browser UI thread.",
+      "parentUuid": "ef10ce01_7f3a0a92",
       "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4afa47a8_0996ad6d",
+        "filename": "chrome/browser/vr/speech_recognizer_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-18T15:54:20Z",
+      "side": 1,
+      "message": "My understanding is that it makes sure that the function is not called. If I don\u0027t add the expectation here. The test would still pass if OnSpeechResult was called. The test also wants to make sure that canceling speech recognition would also cancel the result callback. So I added times(0) here.",
+      "parentUuid": "ebf2bfe2_1db64615",
+      "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b87abf1d_a071529f",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 14
@@ -101,6 +191,24 @@
       "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b86a1aa_3fd7f024",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-18T15:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b87abf1d_a071529f",
+      "revId": "41fea4069f1c41f5be9c172ea82531e2e0ea7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
