@@ -9,7 +9,16 @@
 #ifndef COMPONENTS_SIGNIN_CORE_COMMON_PROFILE_MANAGEMENT_SWITCHES_H_
 #define COMPONENTS_SIGNIN_CORE_COMMON_PROFILE_MANAGEMENT_SWITCHES_H_
 
+#include <memory>
+
 #include "base/feature_list.h"
+#include "components/prefs/pref_member.h"
+
+class PrefService;
+
+namespace user_prefs {
+class PrefRegistrySyncable;
+}
 
 namespace signin {
 
@@ -46,6 +55,9 @@ enum class AccountConsistencyMethod {
   kDice
 };
 
+void RegisterAccountConsistentyProfilePrefs(
+    user_prefs::PrefRegistrySyncable* registry);
+
 // Returns the account consistency method.
 AccountConsistencyMethod GetAccountConsistencyMethod();
 
@@ -53,11 +65,29 @@ AccountConsistencyMethod GetAccountConsistencyMethod();
 // management UI is available in the avatar bubble.
 bool IsAccountConsistencyMirrorEnabled();
 
-// Checks whether Dice account consistency is available. If true, then account
-// management UI is available on the Gaia webpages.
-// Returns true when the account consistency method is kDice or kDiceMigration.
+// Returns true if Dice account consistency is enabled or if the Dice migration
+// process is in progress (account consistency method is kDice or
+// kDiceMigration).
+// To check wether Dice is enabled (i.e. the migration is complete), use
+// IsAccountConsistencyEnabledForProfile().
 // WARNING: returns false when the method is kDiceFixAuthErrors.
 bool IsAccountConsistencyDiceAvailable();
+
+// If true, then account management is done through Gaia webpages.
+// Can only be used on the UI thread.
+bool IsAccountConsistencyDiceEnabledForProfile(PrefService* user_prefs);
+
+// If true, then account management is done through Gaia webpages.
+// Can be called on any thread, using a pref member obtained with
+// GetAccountConsistencyDicePrefMember().
+bool IsAccountConsistencyDiceEnabled(BooleanPrefMember* dice_pref_member);
+
+// Gets a pref member suitable to use with IsAccountConsistencyDiceEnabled().
+std::unique_ptr<BooleanPrefMember> GetAccountConsistencyDicePrefMember(
+    PrefService* user_prefs);
+
+// Called to migrate a profile to Dice. After this call, it is enabled forever.
+void MigrateProfileToDice(PrefService* user_prefs);
 
 // Returns true if the account consistency method is kDiceFixAuthErrors,
 // kDiceMigration or kDice.
