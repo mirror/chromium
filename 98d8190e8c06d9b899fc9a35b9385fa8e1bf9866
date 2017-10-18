@@ -187,6 +187,30 @@
       "revId": "98d8190e8c06d9b899fc9a35b9385fa8e1bf9866",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "154fe2e7_d8fad5d6",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1969,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-18T16:04:55Z",
+      "side": 1,
+      "message": "This does not seem to work well with HTMLElementCollections.",
+      "parentUuid": "c479b4cb_6b166003",
+      "range": {
+        "startLine": 1969,
+        "startChar": 7,
+        "endLine": 1969,
+        "endChar": 55
+      },
+      "revId": "98d8190e8c06d9b899fc9a35b9385fa8e1bf9866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
