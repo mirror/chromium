@@ -52,6 +52,24 @@
       "revId": "b3f0c1daa139584106b7c70d68409911aa1a8959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236f0a3d_f192f5be",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-18T15:44:10Z",
+      "side": 1,
+      "message": "Apologies, I wasn\u0027t familiar with this new class and confused it with allowedWait.\n\nPatchset 6 lgtm",
+      "parentUuid": "f302b278_32e2737d",
+      "revId": "b3f0c1daa139584106b7c70d68409911aa1a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
