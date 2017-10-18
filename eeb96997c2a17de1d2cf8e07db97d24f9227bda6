@@ -70,6 +70,30 @@
       "revId": "eeb96997c2a17de1d2cf8e07db97d24f9227bda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62742a51_737f5392",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3967,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-18T23:51:30Z",
+      "side": 1,
+      "message": "- One concern with using a fresh NE/FNE/PageState would be that it would probably hit the network again (instead of returning cached content).  To avoid this we might need to also preserve whatever data the network stack uses to identify the request (I am not sure exactly what data).\n\n- I think that the server in the bug linked by this CL depends on preserving the Referer request header.\n\n- We would also need to preserve Content-Type of the POST data.\n\n\nWDYT about the concerns above?  Maybe the current approach is fine?\n\n\nPS. I think all of the above should be caught by the new browser tests (including the response nonce I am adding to /echoall handled in the other CL).",
+      "parentUuid": "3164842d_5e3d4353",
+      "range": {
+        "startLine": 3967,
+        "startChar": 67,
+        "endLine": 3967,
+        "endChar": 0
+      },
+      "revId": "eeb96997c2a17de1d2cf8e07db97d24f9227bda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
