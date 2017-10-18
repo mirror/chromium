@@ -710,7 +710,9 @@ void DesktopWindowTreeHostWin::ResetWindowControls() {
 }
 
 gfx::NativeViewAccessible DesktopWindowTreeHostWin::GetNativeViewAccessible() {
-  return GetWidget()->GetRootView()->GetNativeViewAccessible();
+  return GetWidget()->GetRootView()
+             ? GetWidget()->GetRootView()->GetNativeViewAccessible()
+             : nullptr;
 }
 
 bool DesktopWindowTreeHostWin::ShouldHandleSystemCommands() const {
