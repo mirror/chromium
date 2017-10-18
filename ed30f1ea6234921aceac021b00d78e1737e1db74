@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5eed431b_ddeec25e",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T00:08:13Z",
+      "side": 1,
+      "message": "So NOTIMPLEMENTED() ?",
+      "revId": "ed30f1ea6234921aceac021b00d78e1737e1db74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdbae817_aa0d15d8",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T00:08:13Z",
+      "side": 1,
+      "message": "Is that a NOTIMPLEMENTED() ?",
+      "revId": "ed30f1ea6234921aceac021b00d78e1737e1db74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3365b0_18a8f44e",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T00:08:13Z",
+      "side": 1,
+      "message": "What happens when the LayerTreeFrameSink gets lost?",
+      "revId": "ed30f1ea6234921aceac021b00d78e1737e1db74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f12353_5166d2e7",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T00:08:13Z",
+      "side": 1,
+      "message": "Actually, because we are using offscreen contexts now, we should reuse the same context for all compositors. So maybe we can cache the context in the VizProcessTransportFactory when we create it, and reuse it for other compositors (after checking for lost state, in which case we do want to recreate it).",
+      "revId": "ed30f1ea6234921aceac021b00d78e1737e1db74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "058a2a7c_6d5deac8",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T00:08:13Z",
+      "side": 1,
+      "message": "What about the worker context? Note, it can/should be shared across compositors as well.",
+      "revId": "ed30f1ea6234921aceac021b00d78e1737e1db74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
