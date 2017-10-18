@@ -18,11 +18,14 @@
 #include "content/browser/service_worker/embedded_worker_test_helper.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_dispatcher_host.h"
+#include "content/browser/service_worker/service_worker_provider_host.h"
 #include "content/browser/service_worker/service_worker_registration_handle.h"
 #include "content/browser/service_worker/service_worker_test_utils.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/test/test_content_browser_client.h"
+#include "mojo/edk/embedder/embedder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 #include "url/gurl.h"
@@ -42,6 +45,25 @@ int CreateInflightRequest(ServiceWorkerVersion* version) {
       ServiceWorkerMetrics::EventType::PUSH,
       base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
 }
+
+static void SaveStatusCallback(bool* called,
+                               ServiceWorkerStatusCode* out,
+                               ServiceWorkerStatusCode status) {
+  *called = true;
+  *out = status;
+}
+
+class ServiceWorkerTestContentBrowserClient : public TestContentBrowserClient {
+ public:
+  ServiceWorkerTestContentBrowserClient() {}
+  bool AllowServiceWorker(
+      const GURL& scope,
+      const GURL& first_party,
+      content::ResourceContext* context,
+      const base::Callback<WebContents*(void)>& wc_getter) override {
+    return false;
+  }
+};
 
 }  // namespace
 
@@ -528,6 +550,163 @@ TEST_F(ServiceWorkerActivationTest, LameDuckTime_NoControllee) {
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(version_2.get(), reg->active_version());
   EXPECT_FALSE(IsLameDuckTimerRunning());
+}
+
+// Sets up a registration with a ServiceWorkerRegistrationHandle to hold it.
+class ServiceWorkerRegistrationHandleTest
+    : public ServiceWorkerRegistrationTest {
+ protected:
+  ServiceWorkerRegistrationHandleTest() : ServiceWorkerRegistrationTest() {}
+
+  void SetUp() override {
+    ServiceWorkerRegistrationTest::SetUp();
+    mojo::edk::SetDefaultProcessErrorCallback(
+        base::Bind(&ServiceWorkerRegistrationHandleTest::OnMojoError,
+                   base::Unretained(this)));
+
+    const GURL kScope("https://www.example.com/");
+    const GURL kScriptUrl = GURL("https://www.example.com/sw.js");
+
+    SetUpRegistration(kScope, kScriptUrl);
+    PrepareRegistrationConnection(kScope);
+  }
+
+  void TearDown() override {
+    BreakConnection();
+    mojo::edk::SetDefaultProcessErrorCallback(
+        mojo::edk::ProcessErrorCallback());
+    ServiceWorkerRegistrationTest::TearDown();
+  }
+
+  void BreakConnection() {
+    registration_host_ptr_.reset();
+    base::RunLoop().RunUntilIdle();
+  }
+
+  void Update(const base::Optional<blink::mojom::ServiceWorkerErrorType>&
+                  expected = base::nullopt) {
+    blink::mojom::ServiceWorkerErrorType error;
+    registration_host_ptr_->Update(base::BindOnce(
+        [](blink::mojom::ServiceWorkerErrorType* out_error,
+           blink::mojom::ServiceWorkerErrorType error,
+           const base::Optional<std::string>& error_msg) {
+          *out_error = error;
+        },
+        &error));
+    base::RunLoop().RunUntilIdle();
+    if (expected)
+      EXPECT_EQ(*expected, error);
+  }
+
+  ServiceWorkerDispatcherHost* dispatcher_host() {
+    return helper_->GetDispatcherHostForProcess(
+        helper_->mock_render_process_id());
+  }
+
+  void OnMojoError(const std::string& error) { bad_messages_.push_back(error); }
+
+  std::vector<std::string> bad_messages_;
+  int64_t registration_id_;
+  std::unique_ptr<ServiceWorkerProviderHost> host_;
+
+ private:
+  void SetUpRegistration(const GURL& scope, const GURL& script_url) {
+    // Prepare ServiceWorkerRegistration.
+    scoped_refptr<ServiceWorkerRegistration> registration =
+        new ServiceWorkerRegistration(
+            blink::mojom::ServiceWorkerRegistrationOptions(scope),
+            storage()->NewRegistrationId(), context()->AsWeakPtr());
+    registration_id_ = registration->id();
+    ASSERT_EQ(registration.get(),
+              context()->GetLiveRegistration(registration_id_));
+    // Prepare ServiceWorkerVersion.
+    scoped_refptr<ServiceWorkerVersion> version = new ServiceWorkerVersion(
+        registration.get(), script_url, storage()->NewVersionId(),
+        context()->AsWeakPtr());
+    std::vector<ServiceWorkerDatabase::ResourceRecord> records;
+    records.push_back(
+        ServiceWorkerDatabase::ResourceRecord(10, version->script_url(), 100));
+    version->script_cache_map()->SetResources(records);
+    version->SetMainScriptHttpResponseInfo(
+        EmbeddedWorkerTestHelper::CreateHttpResponseInfo());
+    version->set_fetch_handler_existence(
+        ServiceWorkerVersion::FetchHandlerExistence::EXISTS);
+    version->SetStatus(ServiceWorkerVersion::INSTALLING);
+
+    // Make the registration findable via storage functions.
+    storage()->LazyInitializeForTest(base::BindOnce(&base::DoNothing));
+    base::RunLoop().RunUntilIdle();
+    bool called = false;
+    ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
+    storage()->StoreRegistration(
+        registration.get(), version.get(),
+        base::Bind(&SaveStatusCallback, &called, &status));
+    base::RunLoop().RunUntilIdle();
+    EXPECT_TRUE(called);
+    EXPECT_EQ(SERVICE_WORKER_OK, status);
+  }
+
+  void PrepareRegistrationConnection(const GURL& url) {
+    // Prepare |remote_endpoint_|.
+    host_ = CreateProviderHostWithDispatcherHost(
+        helper_->mock_render_process_id(), 1 /* provider_id */,
+        context()->AsWeakPtr(), 1 /* route_id */, dispatcher_host(),
+        &remote_endpoint_);
+    host_->SetDocumentUrl(url);
+
+    // Prepare |registration_host_ptr_|.
+    blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration_info;
+    (*remote_endpoint_.host_ptr())
+        ->GetRegistration(
+            url, base::BindOnce(
+                     [](blink::mojom::ServiceWorkerRegistrationObjectInfoPtr*
+                            out_registration_info,
+                        blink::mojom::ServiceWorkerErrorType error,
+                        const base::Optional<std::string>& error_msg,
+                        blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
+                            registration,
+                        const base::Optional<ServiceWorkerVersionAttributes>&
+                            attributes) {
+                       ASSERT_EQ(blink::mojom::ServiceWorkerErrorType::kNone,
+                                 error);
+                       *out_registration_info = std::move(registration);
+                     },
+                     &registration_info));
+    base::RunLoop().RunUntilIdle();
+    ASSERT_TRUE(registration_info);
+    ASSERT_EQ(registration_id_, registration_info->registration_id);
+    registration_host_ptr_.Bind(std::move(registration_info->host_ptr_info));
+  }
+
+  ServiceWorkerRemoteProviderEndpoint remote_endpoint_;
+  blink::mojom::ServiceWorkerRegistrationObjectHostAssociatedPtr
+      registration_host_ptr_;
+};
+
+TEST_F(ServiceWorkerRegistrationHandleTest, BreakConnection_Destroy) {
+  EXPECT_NE(nullptr, context()->GetLiveRegistration(registration_id_));
+  BreakConnection();
+  EXPECT_EQ(nullptr, context()->GetLiveRegistration(registration_id_));
+}
+
+TEST_F(ServiceWorkerRegistrationHandleTest, Update_Success) {
+  Update(blink::mojom::ServiceWorkerErrorType::kNone);
+}
+
+TEST_F(ServiceWorkerRegistrationHandleTest, Update_MisMatchOriginShouldFail) {
+  ASSERT_TRUE(bad_messages_.empty());
+  host_->SetDocumentUrl(GURL("https://www.example.not/"));
+  Update();
+  EXPECT_EQ(1u, bad_messages_.size());
+}
+
+TEST_F(ServiceWorkerRegistrationHandleTest,
+       Update_ContentSettingsDisallowsServiceWorker) {
+  ServiceWorkerTestContentBrowserClient test_browser_client;
+  ContentBrowserClient* old_browser_client =
+      SetBrowserClientForTesting(&test_browser_client);
+  Update(blink::mojom::ServiceWorkerErrorType::kDisabled);
+  SetBrowserClientForTesting(old_browser_client);
 }
 
 }  // namespace content
