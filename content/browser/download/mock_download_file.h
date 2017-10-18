@@ -70,6 +70,8 @@ class MockDownloadFile : public DownloadFile {
   MOCK_CONST_METHOD0(Id, int());
   MOCK_METHOD0(GetDownloadManager, DownloadManager*());
   MOCK_CONST_METHOD0(DebugString, std::string());
+  MOCK_METHOD0(Detach, void());
+  MOCK_METHOD0(Detach, void());
 };
 
 }  // namespace content

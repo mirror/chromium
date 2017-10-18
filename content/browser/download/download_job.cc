@@ -5,10 +5,12 @@
 #include "content/browser/download/download_job.h"
 
 #include "base/bind_helpers.h"
+#include "base/feature_list.h"
 #include "content/browser/download/download_item_impl.h"
 #include "content/browser/download/download_task_runner.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/content_features.h"
 
 namespace content {
 
@@ -28,9 +30,20 @@ void DownloadJob::Cancel(bool user_cancel) {
 }
 
 void DownloadJob::Pause() {
+  is_paused_ = true;
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    DownloadFile* download_file = download_item_->download_file_.get();
+    if (!download_file)
+      return;
+    GetDownloadTaskRunner()->PostTask(
+        FROM_HERE,
+        base::BindOnce(&DownloadFile::Pause,
+                       // Safe because we control download file lifetime.
+                       base::Unretained(download_file)));
+    return;
+  }
   if (request_handle_)
     request_handle_->PauseRequest();
-  is_paused_ = true;
 }
 
 void DownloadJob::Resume(bool resume_request) {
@@ -38,6 +51,17 @@ void DownloadJob::Resume(bool resume_request) {
   if (!resume_request)
     return;
 
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    DownloadFile* download_file = download_item_->download_file_.get();
+    if (!download_file)
+      return;
+    GetDownloadTaskRunner()->PostTask(
+        FROM_HERE,
+        base::BindOnce(&DownloadFile::Resume,
+                       // Safe because we control download file lifetime.
+                       base::Unretained(download_file)));
+    return;
+  }
   if (request_handle_)
     request_handle_->ResumeRequest();
 }
