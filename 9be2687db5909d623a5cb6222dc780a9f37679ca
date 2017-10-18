@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8a9dc93_0c6d7b15",
+        "filename": "components/download/internal/logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-18T23:57:23Z",
+      "side": 1,
+      "message": "Could you add a TODO() to add text in download-internals to the effect of \"We modify urls to strip query params so that possibly private information is hidden from view\"?",
+      "revId": "9be2687db5909d623a5cb6222dc780a9f37679ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
