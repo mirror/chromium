@@ -24,6 +24,7 @@
 #include "content/browser/service_worker/service_worker_script_url_loader_factory.h"
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/browser/url_loader_factory_getter.h"
+#include "content/browser/worker_interface_filtering.h"
 #include "content/common/service_worker/service_worker_messages.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/common/service_worker/service_worker_utils.h"
@@ -726,8 +727,14 @@ ServiceWorkerProviderHost::CompleteStartWorkerPreparation(
   binding_.set_connection_error_handler(
       base::BindOnce(&RemoveProviderHost, context_, process_id, provider_id()));
 
-  interface_provider_binding_.Bind(
-      mojo::MakeRequest(&provider_info->interface_provider));
+  service_manager::mojom::InterfaceProviderPtr interface_provider;
+  interface_provider_binding_.Bind(mojo::MakeRequest(&interface_provider));
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&FilterInterfacesForWorker,
+                     mojom::kNavigation_ServiceWorkerSpec, process_id,
+                     mojo::MakeRequest(&provider_info->interface_provider),
+                     std::move(interface_provider)));
 
   // Set the document URL to the script url in order to allow
   // register/unregister/getRegistration on ServiceWorkerGlobalScope.

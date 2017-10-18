@@ -6,6 +6,7 @@
 #include <utility>
 
 #include "content/browser/dedicated_worker/dedicated_worker_host.h"
+#include "content/browser/worker_interface_filtering.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -54,12 +55,17 @@ class DedicatedWorkerFactoryImpl : public blink::mojom::DedicatedWorkerFactory {
   void CreateDedicatedWorker(
       const url::Origin& origin,
       service_manager::mojom::InterfaceProviderRequest request) override {
+    service_manager::mojom::InterfaceProviderPtr interface_provider_ptr;
+
     // TODO(crbug.com/729021): Once |parent_context_origin_| is no longer races
     // with the request for |DedicatedWorkerFactory|, enforce that the worker's
     // origin either matches the creating document's origin, or is unique.
     mojo::MakeStrongBinding(
         base::MakeUnique<DedicatedWorkerHost>(process_id_, origin),
-        std::move(request));
+        mojo::MakeRequest(&interface_provider_ptr));
+    FilterInterfacesForWorker(blink::mojom::kNavigation_DedicatedWorkerSpec,
+                              process_id_, std::move(request),
+                              std::move(interface_provider_ptr));
   }
 
  private:

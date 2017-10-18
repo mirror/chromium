@@ -11,6 +11,7 @@
 #include "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h"
 #include "content/browser/shared_worker/shared_worker_instance.h"
 #include "content/browser/shared_worker/shared_worker_service_impl.h"
+#include "content/browser/worker_interface_filtering.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_process_host.h"
@@ -83,8 +84,13 @@ void SharedWorkerHost::Start(mojom::SharedWorkerFactoryPtr factory,
   mojom::SharedWorkerHostPtr host;
   binding_.Bind(mojo::MakeRequest(&host));
 
+  service_manager::mojom::InterfaceProviderPtr interface_provider_ptr;
+  interface_provider_binding_.Bind(mojo::MakeRequest(&interface_provider_ptr));
   service_manager::mojom::InterfaceProviderPtr interface_provider;
-  interface_provider_binding_.Bind(mojo::MakeRequest(&interface_provider));
+  FilterInterfacesForWorker(mojom::kNavigation_SharedWorkerSpec, process_id_,
+                            mojo::MakeRequest(&interface_provider),
+                            std::move(interface_provider_ptr));
+
   mojom::SharedWorkerInfoPtr info(mojom::SharedWorkerInfo::New(
       instance_->url(), instance_->name(), instance_->content_security_policy(),
       instance_->content_security_policy_type(),
