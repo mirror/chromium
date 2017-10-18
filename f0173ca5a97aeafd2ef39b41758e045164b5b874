@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d528faef_216018b6",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-18T15:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bff15640_41794214",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 30
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dcc517f_07dcf4fb",
         "filename": "chrome/browser/ssl/ssl_error_assistant.h",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca867f1_2a54951c",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-18T15:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dcc517f_07dcf4fb",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 54
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "aa74a5cb_a1f3a18f",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-18T15:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "873baad4_ba8201d3",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "207cc051_d8654ef4",
         "filename": "chrome/browser/ssl/ssl_error_assistant.h",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-13T11:27:14Z",
       "side": 1,
       "message": "I thiiiink this struct could go in an anonymous namespace in the .cc file. Does it compile if you forward-declare it here and put the definition in the .cc?",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1960adac_45762483",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-18T15:27:09Z",
+      "side": 1,
+      "message": "Unfortunately, it does not.\nI can move this inside the class as a private struct, but it\u0027ll look kind of ugly. Let me know your thoughts!",
+      "parentUuid": "207cc051_d8654ef4",
       "range": {
         "startLine": 18,
         "startChar": 7,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1e682f41_21d823ec",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-18T15:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c3d069e_dbb09fb9",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95883697_cb819dbe",
         "filename": "chrome/browser/ssl/ssl_error_assistant.h",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54860f7_db0e8df5",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-18T15:27:09Z",
+      "side": 1,
+      "message": "Sounds good, added some new unit tests!",
+      "parentUuid": "95883697_cb819dbe",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "cbfd3543_09db5d1c",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-18T15:27:09Z",
+      "side": 1,
+      "message": "Sounds good! I renamed this earlier because I moved the feature and \"only error is name mismatch\" to this method. After looking a bit more into it, it looks like it\u0027s simpler to have the method just return if it\u0027s a known captive portal certificate instead",
+      "parentUuid": "3afc2c9d_fd825e7f",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1db2d8ff_31dc0f61",
         "filename": "chrome/browser/ssl/ssl_error_assistant.h",
         "patchSetId": 10
@@ -183,6 +351,30 @@
       "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462aa7b4_324f33e1",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-18T15:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1db2d8ff_31dc0f61",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "cc56aa43_bcb4776f",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-18T15:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa536226_02691636",
+      "range": {
+        "startLine": 49,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 48
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "053cbe2c_078fd8af",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 10
@@ -229,6 +445,30 @@
       "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c1b108_dbc95397",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-18T15:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "053cbe2c_078fd8af",
+      "range": {
+        "startLine": 205,
+        "startChar": 7,
+        "endLine": 205,
+        "endChar": 45
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
