@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "2b8a454b_b15a9d73",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 2345,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-18T15:10:32Z",
+      "side": 1,
+      "message": "I\u0027ll update the comment to be specific that this is trying to say that all recent Samba and Windows *servers* support NTLMv2. However if you are asking about the client side this is a system level setting (for both clients and servers) on Windows (not a browser/application/web server specific setting). https://technet.microsoft.com/en-us/library/jj852207(v\u003dws.11).aspx",
+      "parentUuid": "ada3cf20_864c36b4",
+      "range": {
+        "startLine": 2345,
+        "startChar": 43,
+        "endLine": 2345,
+        "endChar": 50
+      },
+      "revId": "9be6cb74f8f401456e081dc079b7c2b3ae9644e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31861709_3bf6fdc5",
         "filename": "net/http/http_auth_handler_ntlm_portable.cc",
         "patchSetId": 11
