@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c61cf812_36c4c528",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-18T00:27:52Z",
+      "side": 1,
+      "message": "There is actually a markdown style guide, see https://github.com/google/styleguide/blob/gh-pages/docguide/style.md . \n\nIn particular, please wrap lines over 80 chars.",
+      "revId": "29151e3f90c084c085bade5c6acb21377aff2609",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc10a4da_ec9ff0b8",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-18T00:27:52Z",
+      "side": 1,
+      "message": "s/failling/failing (typo was in the original, too).",
+      "range": {
+        "startLine": 123,
+        "startChar": 175,
+        "endLine": 123,
+        "endChar": 191
+      },
+      "revId": "29151e3f90c084c085bade5c6acb21377aff2609",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
