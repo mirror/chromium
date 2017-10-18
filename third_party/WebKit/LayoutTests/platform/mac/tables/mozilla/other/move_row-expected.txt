@@ -36,7 +36,7 @@ layer at (0,0) size 800x600
         LayoutTextControl {INPUT} at (21,0) size 17x19 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
         LayoutText {#text} at (38,0) size 4x18
           text run at (38,0) width 4: " "
-        LayoutButton {INPUT} at (42,1) size 29.20x18 [bgcolor=#C0C0C0]
+        LayoutButton {INPUT} at (42,1) size 29.20x18 [bgcolor=#FFFFFF]
           LayoutBlockFlow (anonymous) at (8,2) size 13.20x13
             LayoutText {#text} at (0,0) size 14x13
               text run at (0,0) width 14: "go"
