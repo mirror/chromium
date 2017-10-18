@@ -16,6 +16,24 @@
       "revId": "453e9f6c58ccffda874156f0d6560a8ddd7372e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f252fd2e_0497b9aa",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1534,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-18T18:32:24Z",
+      "side": 0,
+      "message": "This seems like cruft. We use host_ directly elsewhere. We don\u0027t use delegate() so no need to check it\u0027s not null.",
+      "parentUuid": "06ac2732_02f1cad0",
+      "revId": "453e9f6c58ccffda874156f0d6560a8ddd7372e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
