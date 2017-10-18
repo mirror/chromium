@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d3eda2a_7ee2198c",
+        "filename": "chrome/browser/ui/webui/chromeos/login/network_state_informer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-18T17:38:08Z",
+      "side": 0,
+      "message": "Note: type can not change without path changing.",
+      "revId": "def1f90a6cc0393760e1d2e99eed104776ecfe94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
