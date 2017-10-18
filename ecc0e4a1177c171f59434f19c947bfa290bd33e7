@@ -51,6 +51,24 @@
       "revId": "ecc0e4a1177c171f59434f19c947bfa290bd33e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4d7f5a7_ba613436",
+        "filename": "android_webview/tools/apk_merger.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-18T16:32:48Z",
+      "side": 1,
+      "message": "I suppose that makes sense; perhaps it\u0027s just personal preference to have the stack available for when things go wrong. That said, since ApkMergeFailure is only being raised from within this module, I guess I\u0027m ok with this as-is.",
+      "parentUuid": "6d50e5de_efdc2310",
+      "revId": "ecc0e4a1177c171f59434f19c947bfa290bd33e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
