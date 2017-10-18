@@ -22,6 +22,30 @@
       "revId": "ffb107abc664dbbe8dc0e160dac1a6516cd1101e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d719f68a_d55e20c5",
+        "filename": "tools/perf/contrib/cros_benchmarks/tab_switching_bench.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-10-18T07:34:19Z",
+      "side": 1,
+      "message": "The delay is introduced once. it\u0027s \"create n tabs\" -\u003e delay once -\u003e \"switching n tabs\". The original name is switch-delay, then I changed it to halftime but forgot to change the name here. switch-delay sounds like delay between each switch.",
+      "parentUuid": "dcb681a8_30087f4a",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 18
+      },
+      "revId": "ffb107abc664dbbe8dc0e160dac1a6516cd1101e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
