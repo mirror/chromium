@@ -16,6 +16,24 @@
       "revId": "ad819edcd7f123298eb9db6cbef6392f4983388f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f0d5ad1_88bce3c5",
+        "filename": "chrome/browser/vr/elements/vector_icon_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-18T14:37:42Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "867138ad_4b223102",
+      "revId": "ad819edcd7f123298eb9db6cbef6392f4983388f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
