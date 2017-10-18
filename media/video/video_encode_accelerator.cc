@@ -23,6 +23,11 @@ bool VideoEncodeAccelerator::TryToSetupEncodeOnSeparateThread(
   return false;
 }
 
+void VideoEncodeAccelerator::Flush(base::OnceClosure flush_done_callback) {
+  NOTIMPLEMENTED();
+  std::move(flush_done_callback).Run();
+}
+
 }  // namespace media
 
 namespace std {
