@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4f12ae5_29bdf5b5",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-18T19:53:11Z",
+      "side": 1,
+      "message": "Copied (almost) verbatim into patchset #4. Done.",
+      "parentUuid": "98f447b6_4ea62a60",
+      "revId": "dc763959b4bbadd30d70608c6dcd5a0e9175b3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4b62365_4deececa",
         "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "dc763959b4bbadd30d70608c6dcd5a0e9175b3f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e1dd61_6cd1f3f4",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-18T19:53:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4b62365_4deececa",
+      "revId": "dc763959b4bbadd30d70608c6dcd5a0e9175b3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9345d4d4_d6114fc5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51963,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-18T19:53:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d44f015f_58aa758f",
+      "range": {
+        "startLine": 51963,
+        "startChar": 18,
+        "endLine": 51963,
+        "endChar": 25
+      },
+      "revId": "dc763959b4bbadd30d70608c6dcd5a0e9175b3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97e5eed8_c12e95ec",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "dc763959b4bbadd30d70608c6dcd5a0e9175b3f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3c397b_0ffe90b6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51973,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-18T19:53:11Z",
+      "side": 1,
+      "message": "Those symbols represent the same unit but MiB is the current standard for it (https://en.wikipedia.org/wiki/Mebibyte). So keeping as is.",
+      "parentUuid": "97e5eed8_c12e95ec",
+      "revId": "dc763959b4bbadd30d70608c6dcd5a0e9175b3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
