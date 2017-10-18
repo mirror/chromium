@@ -5,6 +5,7 @@
 #include "remoting/host/ipc_video_frame_capturer.h"
 
 #include "base/logging.h"
+#include "base/time/time.h"
 #include "remoting/host/desktop_session_proxy.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_frame.h"
 
@@ -31,6 +32,7 @@ void IpcVideoFrameCapturer::Start(Callback* callback) {
 void IpcVideoFrameCapturer::CaptureFrame() {
   DCHECK(!capture_pending_);
   capture_pending_ = true;
+  capture_start_ = base::Time::Now();
   desktop_session_proxy_->CaptureFrame();
 }
 
@@ -39,6 +41,11 @@ void IpcVideoFrameCapturer::OnCaptureResult(
     std::unique_ptr<webrtc::DesktopFrame> frame) {
   DCHECK(capture_pending_);
   capture_pending_ = false;
+  const base::Time capture_finish = base::Time::Now();
+  if (capture_finish - capture_start_ >= base::TimeDelta::FromMilliseconds(500)) {
+    LOG(ERROR) << "Debugging: IpcVideoFrameCapturer takes longer than expected "
+               << capture_finish - capture_start_;
+  }
   callback_->OnCaptureResult(result, std::move(frame));
 }
 
