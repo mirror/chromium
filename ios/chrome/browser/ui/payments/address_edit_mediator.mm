@@ -149,8 +149,7 @@
 
 #pragma mark - RegionDataLoaderConsumer
 
-- (void)regionDataLoaderDidSucceedWithRegions:
-    (NSDictionary<NSString*, NSString*>*)regions {
+- (void)regionDataLoaderDidSucceedWithRegions:(NSArray<RegionData*>*)regions {
   // Enable the previously disabled field.
   self.regionField.enabled = YES;
 
@@ -164,25 +163,38 @@
     NSString* region =
         [self fieldValueFromProfile:self.address
                           fieldType:autofill::ADDRESS_HOME_STATE];
-    if ([regions objectForKey:region]) {
+    if ([regions indexOfObjectPassingTest:^BOOL(RegionData* testRegion,
+                                                NSUInteger index, BOOL* stop) {
+          return [testRegion.regionCode isEqualToString:region];
+        }] != NSNotFound) {
       self.regionField.value = region;
-    } else if ([[regions allKeysForObject:region] count]) {
-      DCHECK_EQ(1U, [[regions allKeysForObject:region] count]);
-      self.regionField.value = [regions allKeysForObject:region][0];
+    } else {
+      NSIndexSet* matchingRegions =
+          [regions indexesOfObjectsPassingTest:^BOOL(
+                       RegionData* testRegion, NSUInteger index, BOOL* stop) {
+            return [testRegion.regionName isEqualToString:region];
+          }];
+      if ([matchingRegions count]) {
+        DCHECK_EQ(1U, [matchingRegions count]);
+        self.regionField.value =
+            [regions objectAtIndex:[matchingRegions firstIndex]].regionCode;
+      }
     }
   }
 
   // Notify the view controller asynchronously to allow for the view to update.
   __weak AddressEditMediator* weakSelf = self;
   dispatch_async(dispatch_get_main_queue(), ^{
-    NSMutableArray<NSString*>* values =
-        [[NSMutableArray alloc] initWithArray:[regions allKeys]];
+    NSMutableArray<RegionData*>* values =
+        [[NSMutableArray alloc] initWithArray:regions];
     // If the field contains no value, insert an empty value at the beginning
     // of the list of options, as the first option is selected when the UI
     // opens. Otherwise, it would be impossible for the user to select the first
     // option without selecting another option first.
     if (!weakSelf.regionField.value)
-      [values insertObject:@"" atIndex:0];
+      [values insertObject:[[RegionData alloc] initWithRegionCode:@""
+                                                       regionName:@""]
+                   atIndex:0];
     [weakSelf.consumer setOptions:@[ values ]
                    forEditorField:weakSelf.regionField];
   });
