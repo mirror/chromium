@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a0c4804_19ef0fa9",
+        "filename": "chrome/renderer/resources/extensions/automation_custom_bindings.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-18T00:17:49Z",
+      "side": 1,
+      "message": "Do you want to also delete this code below, now?\nIt seems redundant",
+      "revId": "f9952d2222e71bc245d6288c227eb83883850edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
