@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba37816e_8a5b3b76",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 105821,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T22:32:42Z",
+      "side": 1,
+      "message": "nit: \"has finished rolling out\" (and ditto above)",
+      "range": {
+        "startLine": 105821,
+        "startChar": 44,
+        "endLine": 105821,
+        "endChar": 65
+      },
+      "revId": "e7864899f87cf7da5885e6f0f9d3ec7c64f877fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
