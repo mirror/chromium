@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1decdcf0_0bc2c00b",
+        "filename": "content/browser/indexed_db/leveldb/leveldb_iterator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-18T16:53:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ffa67476_de1ecba6",
+      "range": {
+        "startLine": 62,
+        "startChar": 34,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "0a09effb18f8c340f88ec103cfec9039cf95f6ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79085e25_10d5db58",
         "filename": "content/browser/indexed_db/leveldb/leveldb_iterator_impl.cc",
         "patchSetId": 1
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Not sure I understand. Are you talking about using AddOwnershipEdge?",
       "parentUuid": "79085e25_10d5db58",
+      "range": {
+        "startLine": 186,
+        "startChar": 22,
+        "endLine": 186,
+        "endChar": 23
+      },
+      "revId": "0a09effb18f8c340f88ec103cfec9039cf95f6ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "942de286_25ad396d",
+        "filename": "content/browser/indexed_db/leveldb/leveldb_iterator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-18T16:53:46Z",
+      "side": 1,
+      "message": "Yes, basically what CreateDumpMalloced() does in env_chromium.cc",
+      "parentUuid": "0a13d192_bf15fa16",
       "range": {
         "startLine": 186,
         "startChar": 22,
