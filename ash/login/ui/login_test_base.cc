@@ -92,12 +92,6 @@ void LoginTestBase::SetUserCount(size_t count) {
   data_dispatcher_.NotifyUsers(users_);
 }
 
-void LoginTestBase::SetUp() {
-  base::CommandLine::ForCurrentProcess()->AppendSwitch(switches::kShowMdLogin);
-
-  AshTestBase::SetUp();
-}
-
 void LoginTestBase::TearDown() {
   widget_.reset();
 
