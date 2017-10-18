@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d0bf57d_a86c7f50",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-18T15:41:54Z",
+      "side": 1,
+      "message": "Could you run \u0027git cl format components/cronet\u0027? \nI don\u0027t know whether it will work on .mm, but if it does, then it would be great.",
+      "range": {
+        "startLine": 26,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 27
+      },
+      "revId": "4d6ce2a419fafc7f7daecebbbd9e4c898453e82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86ca48e_5246a1ab",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-18T15:41:54Z",
+      "side": 1,
+      "message": "PerfResult and TestConfig should go into anonymous namespace {} above as they are not used outside of this module.",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "4d6ce2a419fafc7f7daecebbbd9e4c898453e82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf6e548_624168b8",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-18T15:41:54Z",
+      "side": 1,
+      "message": "const TestConfig kTestCombinations[]?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 10
+      },
+      "revId": "4d6ce2a419fafc7f7daecebbbd9e4c898453e82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2dc1322_aa2c01db",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-18T15:41:54Z",
+      "side": 1,
+      "message": "You can just inline it where it is used (see https://cs.chromium.org/chromium/src/net/cert/internal/ocsp_unittest.cc?rcl\u003d453e9f6c58ccffda874156f0d6560a8ddd7372e0\u0026l\u003d128 for example).",
+      "range": {
+        "startLine": 62,
+        "startChar": 17,
+        "endLine": 62,
+        "endChar": 36
+      },
+      "revId": "4d6ce2a419fafc7f7daecebbbd9e4c898453e82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d83e25f_81fd4255",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-18T15:41:54Z",
+      "side": 1,
+      "message": "Why |dates|?",
+      "range": {
+        "startLine": 77,
+        "startChar": 21,
+        "endLine": 77,
+        "endChar": 26
+      },
+      "revId": "4d6ce2a419fafc7f7daecebbbd9e4c898453e82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35a0709_6a962bf2",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-18T15:41:54Z",
+      "side": 1,
+      "message": "nit: maybe insert tabs or commas to make it easier to import into spreadsheet.",
+      "range": {
+        "startLine": 82,
+        "startChar": 27,
+        "endLine": 82,
+        "endChar": 28
+      },
+      "revId": "4d6ce2a419fafc7f7daecebbbd9e4c898453e82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a45fe9b1_9f9b70eb",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-18T15:41:54Z",
+      "side": 1,
+      "message": "nit: Could use description of parameters in the log like QUIC:1, HTTP2:1, AKD4:0, Cronet:1.",
+      "range": {
+        "startLine": 109,
+        "startChar": 22,
+        "endLine": 109,
+        "endChar": 32
+      },
+      "revId": "4d6ce2a419fafc7f7daecebbbd9e4c898453e82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09bbced7_76a0721d",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-18T15:41:54Z",
+      "side": 1,
+      "message": "multiline conditional blocks require {}",
+      "range": {
+        "startLine": 122,
+        "startChar": 19,
+        "endLine": 122,
+        "endChar": 23
+      },
+      "revId": "4d6ce2a419fafc7f7daecebbbd9e4c898453e82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3fd3f3_f9fd133c",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-18T15:41:54Z",
+      "side": 1,
+      "message": "Can we make deadline an argument that could be set on TestDelegate or passed into waitForDone?\nAlternatively, maybe add waitForDoneForever?",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 23
+      },
+      "revId": "4d6ce2a419fafc7f7daecebbbd9e4c898453e82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
