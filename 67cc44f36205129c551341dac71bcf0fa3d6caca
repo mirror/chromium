@@ -16,6 +16,24 @@
       "revId": "67cc44f36205129c551341dac71bcf0fa3d6caca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e5a819_4332a7d1",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-18T18:00:08Z",
+      "side": 1,
+      "message": "MediaFoundationVideoEncodeAccelerator (the |video_encode_accelerator_| we are using here) has done it for use.",
+      "parentUuid": "7002370e_256555f4",
+      "revId": "67cc44f36205129c551341dac71bcf0fa3d6caca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
