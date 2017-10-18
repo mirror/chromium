@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "387f7eb0_fca1e4a1",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-18T21:14:23Z",
+      "side": 1,
+      "message": "I am voting for keeping this log message. It will help us to debug if the test crashes somewhere in the middle. Also, the test outputs \"Elapsed Total: ****\" at the end of every run. It will be good to associate that message with a specific configuration.",
+      "parentUuid": "6e34ed85_58fbabc7",
+      "range": {
+        "startLine": 109,
+        "startChar": 22,
+        "endLine": 109,
+        "endChar": 32
+      },
+      "revId": "4d6ce2a419fafc7f7daecebbbd9e4c898453e82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09bbced7_76a0721d",
         "filename": "components/cronet/ios/test/cronet_performance_test.mm",
         "patchSetId": 10
