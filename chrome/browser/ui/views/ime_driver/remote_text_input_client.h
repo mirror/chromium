@@ -5,9 +5,16 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_IME_DRIVER_REMOTE_TEXT_INPUT_CLIENT_H_
 #define CHROME_BROWSER_UI_VIEWS_IME_DRIVER_REMOTE_TEXT_INPUT_CLIENT_H_
 
+#include "base/callback.h"
+#include "base/strings/string16.h"
 #include "services/ui/public/interfaces/ime/ime.mojom.h"
 #include "ui/base/ime/input_method_delegate.h"
 #include "ui/base/ime/text_input_client.h"
+
+namespace gfx {
+class Rect;
+class Range;
+}  // namespace gfx
 
 // This implementation of ui::TextInputClient sends all updates via mojo IPC to
 // a remote client. This is intended to be passed to the overrides of
@@ -43,6 +50,12 @@ class RemoteTextInputClient : public ui::TextInputClient,
                                      gfx::Rect* rect) const override;
   bool HasCompositionText() const override;
   bool GetTextRange(gfx::Range* range) const override;
+  bool GetTextInputClientInfo(
+      base::OnceCallback<void(bool,
+                              const gfx::Range&,
+                              const base::string16&,
+                              const gfx::Range&,
+                              const gfx::Rect&)> callback) const override;
   bool GetCompositionTextRange(gfx::Range* range) const override;
   bool GetSelectionRange(gfx::Range* range) const override;
   bool SetSelectionRange(const gfx::Range& range) override;
@@ -61,6 +74,21 @@ class RemoteTextInputClient : public ui::TextInputClient,
   ui::EventDispatchDetails DispatchKeyEventPostIME(
       ui::KeyEvent* event) override;
 
+  void GetTextInputClientInfoCallback(
+      base::OnceCallback<void(bool,
+                              const gfx::Range&,
+                              const base::string16&,
+                              const gfx::Range&,
+                              const gfx::Rect&)>,
+      bool success,
+      const gfx::Range& text_range,
+      const base::string16& text_from_range,
+      const gfx::Range& selection_range,
+      const gfx::Rect& composition_bounds);
+  bool ImeEditingAllowed() const;
+
+  bool has_composition_text_ = false;
+
   ui::mojom::TextInputClientPtr remote_client_;
   ui::TextInputType text_input_type_;
   ui::TextInputMode text_input_mode_;
@@ -69,6 +97,8 @@ class RemoteTextInputClient : public ui::TextInputClient,
   gfx::Rect caret_bounds_;
   std::deque<std::unique_ptr<base::OnceCallback<void(bool)>>>
       pending_callbacks_;
+  base::WeakPtr<RemoteTextInputClient> weak_ptr_;
+  base::WeakPtrFactory<RemoteTextInputClient> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoteTextInputClient);
 };

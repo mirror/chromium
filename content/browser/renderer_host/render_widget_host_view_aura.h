@@ -20,6 +20,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/strings/string16.h"
 #include "build/build_config.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
@@ -53,6 +54,7 @@ namespace gfx {
 class Display;
 class Point;
 class Rect;
+class Range;
 }
 
 namespace ui {
@@ -224,6 +226,12 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
                                      gfx::Rect* rect) const override;
   bool HasCompositionText() const override;
   bool GetTextRange(gfx::Range* range) const override;
+  bool GetTextInputClientInfo(
+      base::OnceCallback<void(bool,
+                              const gfx::Range&,
+                              const base::string16&,
+                              const gfx::Range&,
+                              const gfx::Rect&)> callback) const override;
   bool GetCompositionTextRange(gfx::Range* range) const override;
   bool GetSelectionRange(gfx::Range* range) const override;
   bool SetSelectionRange(const gfx::Range& range) override;

@@ -58,4 +58,42 @@ void TextInputClientImpl::DispatchKeyEventPostIME(
   }
 }
 
+void TextInputClientImpl::GetTextInputClientInfo(
+    GetTextInputClientInfoCallback callback) {
+  if (!callback || callback.is_null())
+    return;
+
+  const gfx::Rect caret_rect = text_input_client_->GetCaretBounds();
+
+  gfx::Rect composition_head;
+  if (text_input_client_->HasCompositionText())
+    text_input_client_->GetCompositionCharacterBounds(0, &composition_head);
+
+  // Pepper doesn't support composition bounds, so fall back to caret bounds to
+  // avoid a bad user experience (the IME window moved to upper left corner).
+  if (composition_head.IsEmpty())
+    composition_head = caret_rect;
+
+  gfx::Range text_range;
+  gfx::Range selection_range;
+  base::string16 surrounding_text;
+
+  if (!text_input_client_->GetTextRange(&text_range) ||
+      !text_input_client_->GetTextFromRange(text_range, &surrounding_text) ||
+      !text_input_client_->GetSelectionRange(&selection_range)) {
+    std::move(callback).Run(false, text_range, surrounding_text,
+                            selection_range, composition_head);
+  }
+  std::move(callback).Run(true, text_range, surrounding_text, selection_range,
+                          composition_head);
+}
+
+void TextInputClientImpl::OnInputMethodChanged() {
+  text_input_client_->OnInputMethodChanged();
+}
+
+void TextInputClientImpl::EnsureCaretNotInRect(const gfx::Rect& rect) {
+  text_input_client_->EnsureCaretNotInRect(rect);
+}
+
 }  // namespace aura

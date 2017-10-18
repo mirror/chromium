@@ -4,6 +4,7 @@
 
 module ui.mojom;
 
+import "mojo/common/string16.mojom";
 import "mojo/common/text_direction.mojom";
 import "ui/events/mojo/event.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
@@ -182,4 +183,17 @@ interface TextInputClient {
   // - Document content operations
   // - Miscellaneous functions
   // crbug.com/631527.
+
+  // Retrieve text_range, surrounding text between text_range, and
+  // selection_range.
+  GetTextInputClientInfo() => (bool success, gfx.mojom.Range text_range, mojo.common.mojom.String16 surrounding_text, gfx.mojom.Range selection_range, gfx.mojom.Rect composition_bounds);
+
+  // Called whenever current keyboard layout or input method is changed,
+  // especially the change of input locale and text direction.
+  OnInputMethodChanged();
+
+  // Ensure the caret is not in |rect|.  |rect| is in screen coordinates in
+  // DIP (Density Independent Pixel) and may extend beyond the bounds of this
+  // TextInputClient.
+  EnsureCaretNotInRect(gfx.mojom.Rect rect);
 };

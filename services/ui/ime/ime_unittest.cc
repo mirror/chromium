@@ -13,6 +13,8 @@
 #include "services/ui/public/interfaces/constants.mojom.h"
 #include "services/ui/public/interfaces/ime/ime.mojom.h"
 #include "ui/events/event.h"
+#include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/range/range.h"
 
 class TestTextInputClient : public ui::mojom::TextInputClient {
  public:
@@ -44,6 +46,13 @@ class TestTextInputClient : public ui::mojom::TextInputClient {
       DispatchKeyEventPostIMECallback callback) override {
     std::move(callback).Run(false);
   }
+  void GetTextInputClientInfo(
+      GetTextInputClientInfoCallback callback) override {
+    std::move(callback).Run(false, gfx::Range(), base::string16(), gfx::Range(),
+                            gfx::Rect());
+  }
+  void OnInputMethodChanged() override {}
+  void EnsureCaretNotInRect(const gfx::Rect& rect) override {}
 
   mojo::Binding<ui::mojom::TextInputClient> binding_;
   std::unique_ptr<base::RunLoop> run_loop_;

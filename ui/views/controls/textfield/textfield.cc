@@ -35,6 +35,8 @@
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/insets.h"
+#include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/range/range.h"
 #include "ui/gfx/selection_bound.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/strings/grit/ui_strings.h"
@@ -1439,6 +1441,15 @@ bool Textfield::GetTextRange(gfx::Range* range) const {
   return true;
 }
 
+bool Textfield::GetTextInputClientInfo(
+    base::OnceCallback<void(bool,
+                            const gfx::Range&,
+                            const base::string16&,
+                            const gfx::Range&,
+                            const gfx::Rect&)> callback) const {
+  return false;
+}
+
 bool Textfield::GetCompositionTextRange(gfx::Range* range) const {
   if (!ImeEditingAllowed())
     return false;
@@ -1945,7 +1956,7 @@ void Textfield::UpdateBackgroundColor() {
 }
 
 void Textfield::UpdateBorder() {
-  auto border = std::make_unique<views::FocusableBorder>();
+  auto border = base::MakeUnique<views::FocusableBorder>();
   const LayoutProvider* provider = LayoutProvider::Get();
   border->SetInsets(
       provider->GetDistanceMetric(DISTANCE_CONTROL_VERTICAL_TEXT_PADDING),
