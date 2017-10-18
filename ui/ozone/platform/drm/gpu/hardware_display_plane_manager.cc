@@ -97,16 +97,48 @@ bool HardwareDisplayPlaneManager::Initialize(DrmDevice* drm) {
       return false;
     }
 
-    uint32_t formats_size = drm_plane->count_formats;
+    ScopedDrmObjectPropertyPtr drm_plane_properties(drmModeObjectGetProperties(
+        drm->get_fd(), plane_resources->planes[i], DRM_MODE_OBJECT_PLANE));
+
+    std::vector<uint32_t> supported_formats;
+    std::vector<drm_format_modifier> supported_format_modifiers;
+
+    if (drm_plane_properties) {
+      for (uint32_t j = 0; j < drm_plane_properties->count_props; j++) {
+        ScopedDrmPropertyPtr property(
+            drmModeGetProperty(drm->get_fd(), drm_plane_properties->props[j]));
+        if (strcmp(property->name, "IN_FORMATS") == 0) {
+          ScopedDrmPropertyBlobPtr blob(drmModeGetPropertyBlob(
+              drm->get_fd(), drm_plane_properties->prop_values[j]));
+
+	  const char* data = static_cast<const char*>(blob->data);
+          struct drm_format_modifier_blob* header =
+	    static_cast<struct drm_format_modifier_blob*>(blob->data);
+          uint32_t* formats =
+	    static_cast<uint32_t*>(data + header->formats_offset);
+          struct drm_format_modifier* modifiers =
+	    static_cast<struct drm_format_modifier*>
+	    (data + header->modifiers_offset);
+
+          for (uint32_t k = 0; k < header->count_formats; k++)
+            supported_formats.push_back(formats[k]);
+          for (uint32_t k = 0; k < header->count_modifiers; k++) {
+            CHECK(modifiers[k].offset == 0);
+            supported_format_modifiers.push_back(modifiers[k]);
+          }
+        }
+      }
+    }
+
+    if (supported_formats.empty()) {
+      uint32_t formats_size = drm_plane->count_formats;
+      for (uint32_t j = 0; j < formats_size; j++)
+        supported_formats.push_back(drm_plane->formats[j]);
+    }
+
     plane_ids.insert(drm_plane->plane_id);
     std::unique_ptr<HardwareDisplayPlane> plane(
         CreatePlane(drm_plane->plane_id, drm_plane->possible_crtcs));
-
-    std::vector<uint32_t> supported_formats(formats_size);
-    for (uint32_t j = 0; j < formats_size; j++)
-      supported_formats[j] = drm_plane->formats[j];
-
-    std::vector<drm_format_modifier> supported_format_modifiers;
 
     if (plane->Initialize(drm, supported_formats, supported_format_modifiers,
                           false, false)) {
