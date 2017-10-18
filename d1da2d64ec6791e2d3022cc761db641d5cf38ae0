@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f6ae0c4_9222a0ea",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T17:45:40Z",
+      "side": 1,
+      "message": "I changed the comments to be more clear.",
+      "parentUuid": "7d14d9a2_aa3ad16b",
+      "range": {
+        "startLine": 73,
+        "startChar": 47,
+        "endLine": 73,
+        "endChar": 75
+      },
+      "revId": "d1da2d64ec6791e2d3022cc761db641d5cf38ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85245cf4_dff7e867",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
         "patchSetId": 10
@@ -39,6 +63,24 @@
       "revId": "d1da2d64ec6791e2d3022cc761db641d5cf38ae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ded47eb_97dc8a16",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T17:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85245cf4_dff7e867",
+      "revId": "d1da2d64ec6791e2d3022cc761db641d5cf38ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "2cb08950_5ca76376",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T17:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f693f84_b3d954d1",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "d1da2d64ec6791e2d3022cc761db641d5cf38ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "479be1e1_4207b5f6",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
         "patchSetId": 10
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "a4bf1687_da7c168e",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T17:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "479be1e1_4207b5f6",
+      "revId": "d1da2d64ec6791e2d3022cc761db641d5cf38ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f127f3b_d2a25295",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
         "patchSetId": 10
@@ -96,6 +180,24 @@
       "revId": "d1da2d64ec6791e2d3022cc761db641d5cf38ae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4cb41d_655f8841",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-18T17:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f127f3b_d2a25295",
+      "revId": "d1da2d64ec6791e2d3022cc761db641d5cf38ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
