@@ -47,6 +47,8 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/Modulator.h"
+#include "core/dom/ModuleScript.h"
+#include "core/dom/ScriptModuleResolver.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -410,6 +412,44 @@ static v8::MaybeLocal<v8::Promise> HostImportModuleDynamically(
   return v8::Local<v8::Promise>::Cast(promise.V8Value());
 }
 
+// HostGetImportMetaProperties(moduleRecord)
+static void HostResolveImportedModule(v8::Local<v8::Context> context,
+                                      v8::Local<v8::Module> module,
+                                      v8::Local<v8::Object> meta) {
+  CHECK(RuntimeEnabledFeatures::ModuleScriptsEnabled() &&
+        RuntimeEnabledFeatures::ModuleScriptsImportMetaUrlEnabled());
+  ScriptState* script_state = ScriptState::From(context);
+  v8::Isolate* isolate = context->GetIsolate();
+  v8::HandleScope handle_scope(isolate);
+
+  // 1. Let module script be moduleRecord.[[HostDefined]].
+  Modulator* modulator = Modulator::From(script_state);
+  if (!modulator)
+    return;
+
+  ScriptModuleResolver* resolver = modulator->GetScriptModuleResolver();
+  if (!resolver)
+    return;
+
+  ScriptModule record(isolate, module);
+  ModuleScript* module_script = resolver->GetHostDefined(record);
+  if (!module_script)
+    return;
+
+  // 2. Let url be module script's base URL, serialized.
+  String url = module_script->BaseURL().GetString();
+
+  // 3. Let script element be module script's script element.
+  //
+  // TODO(hiroshige): Not Implemented.
+
+  // 4. Return << Record { [[Key]]: "url", [[Value]]: url }, Record { [[Key]]:
+  // "scriptElement", [[Value]]: script element } >>.
+  v8::Local<v8::String> url_key = V8String(isolate, "url");
+  v8::Local<v8::String> url_value = V8String(isolate, url);
+  meta->CreateDataProperty(context, url_key, url_value).ToChecked();
+}
+
 static void InitializeV8Common(v8::Isolate* isolate) {
   isolate->AddGCPrologueCallback(V8GCController::GcPrologue);
   isolate->AddGCEpilogueCallback(V8GCController::GcEpilogue);
@@ -429,6 +469,11 @@ static void InitializeV8Common(v8::Isolate* isolate) {
       RuntimeEnabledFeatures::ModuleScriptsDynamicImportEnabled()) {
     isolate->SetHostImportModuleDynamicallyCallback(
         HostImportModuleDynamically);
+  }
+  if (RuntimeEnabledFeatures::ModuleScriptsEnabled() &&
+      RuntimeEnabledFeatures::ModuleScriptsImportMetaUrlEnabled()) {
+    isolate->SetHostInitializeImportMetaObjectCallback(
+        HostResolveImportedModule);
   }
 
   V8ContextSnapshot::EnsureInterfaceTemplates(isolate);
