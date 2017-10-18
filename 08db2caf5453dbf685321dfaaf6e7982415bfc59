@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd52155a_bd247fb5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-10-18T20:15:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "71732b0b_612960f6",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "08db2caf5453dbf685321dfaaf6e7982415bfc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78c0675b_110dadc2",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "08db2caf5453dbf685321dfaaf6e7982415bfc59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7322d56a_70df9d7c",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-10-18T20:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78c0675b_110dadc2",
+      "range": {
+        "startLine": 1279,
+        "startChar": 4,
+        "endLine": 1279,
+        "endChar": 60
+      },
+      "revId": "08db2caf5453dbf685321dfaaf6e7982415bfc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -92,6 +140,30 @@
       "revId": "08db2caf5453dbf685321dfaaf6e7982415bfc59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdde7bd3_789c18b0",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 42278,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-10-18T20:15:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cac8c612_16bba21e",
+      "range": {
+        "startLine": 42278,
+        "startChar": 12,
+        "endLine": 42278,
+        "endChar": 28
+      },
+      "revId": "08db2caf5453dbf685321dfaaf6e7982415bfc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

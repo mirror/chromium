@@ -22,6 +22,30 @@
       "revId": "2866a386d2a5fa11d0b949d38dff40d359a2212b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16148784_b910fcad",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-10-18T20:15:04Z",
+      "side": 1,
+      "message": "the document types are #defines in the PDFium code, since the PDFium API is C based. I have added in an enum as you described.",
+      "parentUuid": "b53adca7_b4d04bd5",
+      "range": {
+        "startLine": 1508,
+        "startChar": 23,
+        "endLine": 1508,
+        "endChar": 24
+      },
+      "revId": "2866a386d2a5fa11d0b949d38dff40d359a2212b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
