@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "43e6d6b1_afcecdf7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-18T16:36:33Z",
+      "side": 1,
+      "message": "ping?",
+      "parentUuid": "90753a6d_679ce666",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2202a9f9_90104212",
         "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc",
         "patchSetId": 1
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "6805989f_217eb8cf",
+        "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-18T16:36:33Z",
+      "side": 1,
+      "message": "According to the code review of the IsOobeOptInActive() code change,\nIsOobeOptInAcive() is true but at the same time, the preference can be true for managed user.\nIn such a case, ASM::RequestEnabled() needs to be called, IIUC?",
+      "parentUuid": "a7391cf4_63255480",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3f305c6_e5942f17",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 1
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "What\u0027s the benefit of that? This isn\u0027t error handling code, and the error-guard style makes the code path less explicit. I don\u0027t feel strongly about it though, and I can change it back if you prefer it.",
       "parentUuid": "e3f305c6_e5942f17",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc18d40_6767f200",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-18T16:36:33Z",
+      "side": 1,
+      "message": "Yes, we prefer.\n\nThis is a part of starting ARC flow. So, conceptually, this is;\nEnaleArc() {\n  if (!TosAccepted()) return false;\n  if (!AndroidManagementCheck()) return false;\n  asr_-\u003eRequestStart();\n}\n\nwith Chrome\u0027s async manner. \"accepted \u003d false\" is a case of \"not a good path\", IHMO, in the guide. WDYT?",
+      "parentUuid": "c2f7438e_debd8ded",
       "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -171,6 +225,24 @@
       "side": 1,
       "message": "From my understanding, it won\u0027t. It\u0027ll only call it when the ARC is a managed preference.",
       "parentUuid": "34da70cf_6ea56d10",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee11d1e9_4430b2ab",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-18T16:36:33Z",
+      "side": 1,
+      "message": "My understanding is opposite. If non-managed pref, it is called, while if managed pref, not.\nIn case of managed pref, we always expect \"accept \u003d true\" here (i.e. on UI, there\u0027s no way to skip by a user)?",
+      "parentUuid": "7f7a3cfa_7b35b3ae",
       "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
