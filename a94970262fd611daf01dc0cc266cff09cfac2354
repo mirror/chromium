@@ -16,6 +16,24 @@
       "revId": "a94970262fd611daf01dc0cc266cff09cfac2354",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bae6915_da89abd8",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-18T14:36:28Z",
+      "side": 1,
+      "message": "It would be nice to discover what was wrong. tracked apps should have app representation. Adding check here may hide another problem.",
+      "parentUuid": "a9a496f2_fac69b60",
+      "revId": "a94970262fd611daf01dc0cc266cff09cfac2354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
