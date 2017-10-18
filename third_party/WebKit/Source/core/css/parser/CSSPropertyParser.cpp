@@ -55,7 +55,8 @@ bool CSSPropertyParser::ParseValue(
   } else if (rule_type == StyleRule::kFontFace) {
     parse_success = parser.ParseFontFaceDescriptor(resolved_property);
   } else {
-    parse_success = parser.ParseValueStart(unresolved_property, important);
+    parse_success = parser.ParseValueStart(
+        resolved_property, isPropertyAlias(unresolved_property), important);
   }
 
   // This doesn't count UA style sheets
@@ -81,32 +82,32 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
   return value;
 }
 
-bool CSSPropertyParser::ParseValueStart(CSSPropertyID unresolved_property,
+bool CSSPropertyParser::ParseValueStart(CSSPropertyID resolved_property,
+                                        bool is_property_alias,
                                         bool important) {
-  if (ConsumeCSSWideKeyword(unresolved_property, important))
+  if (ConsumeCSSWideKeyword(resolved_property, important))
     return true;
 
   CSSParserTokenRange original_range = range_;
-  CSSPropertyID property_id = resolveCSSPropertyID(unresolved_property);
-  bool is_shorthand = isShorthandProperty(property_id);
+  bool is_shorthand = isShorthandProperty(resolved_property);
 
   DCHECK(context_);
   if (is_shorthand) {
     // Variable references will fail to parse here and will fall out to the
     // variable ref parser below.
-    if (CSSPropertyAPI::Get(property_id)
+    if (CSSPropertyAPI::Get(resolved_property)
             .ParseShorthand(
                 important, range_, *context_,
-                CSSParserLocalContext(isPropertyAlias(unresolved_property),
-                                      property_id),
+                CSSParserLocalContext(is_property_alias, resolved_property),
                 *parsed_properties_))
       return true;
   } else {
     if (const CSSValue* parsed_value = ParseLonghandViaAPI(
-            unresolved_property, CSSPropertyInvalid, *context_, range_)) {
+            resolved_property, CSSPropertyInvalid, *context_, range_)) {
       if (range_.AtEnd()) {
-        AddProperty(property_id, CSSPropertyInvalid, *parsed_value, important,
-                    IsImplicitProperty::kNotImplicit, *parsed_properties_);
+        AddProperty(resolved_property, CSSPropertyInvalid, *parsed_value,
+                    important, IsImplicitProperty::kNotImplicit,
+                    *parsed_properties_);
         return true;
       }
     }
@@ -120,11 +121,11 @@ bool CSSPropertyParser::ParseValueStart(CSSPropertyID unresolved_property,
 
     if (is_shorthand) {
       const CSSPendingSubstitutionValue& pending_value =
-          *CSSPendingSubstitutionValue::Create(property_id, variable);
-      AddExpandedPropertyForValue(property_id, pending_value, important,
+          *CSSPendingSubstitutionValue::Create(resolved_property, variable);
+      AddExpandedPropertyForValue(resolved_property, pending_value, important,
                                   *parsed_properties_);
     } else {
-      AddProperty(property_id, CSSPropertyInvalid, *variable, important,
+      AddProperty(resolved_property, CSSPropertyInvalid, *variable, important,
                   IsImplicitProperty::kNotImplicit, *parsed_properties_);
     }
     return true;
@@ -206,7 +207,7 @@ CSSValueID CssValueKeywordID(StringView string) {
                          : CssValueKeywordID(string.Characters16(), length);
 }
 
-bool CSSPropertyParser::ConsumeCSSWideKeyword(CSSPropertyID unresolved_property,
+bool CSSPropertyParser::ConsumeCSSWideKeyword(CSSPropertyID resolved_property,
                                               bool important) {
   CSSParserTokenRange range_copy = range_;
   CSSValueID id = range_copy.ConsumeIncludingWhitespace().Id();
@@ -223,15 +224,15 @@ bool CSSPropertyParser::ConsumeCSSWideKeyword(CSSPropertyID unresolved_property,
   else
     return false;
 
-  CSSPropertyID property = resolveCSSPropertyID(unresolved_property);
-  const StylePropertyShorthand& shorthand = shorthandForProperty(property);
+  const StylePropertyShorthand& shorthand =
+      shorthandForProperty(resolved_property);
   if (!shorthand.length()) {
-    if (!CSSPropertyAPI::Get(property).IsProperty())
+    if (!CSSPropertyAPI::Get(resolved_property).IsProperty())
       return false;
-    AddProperty(property, CSSPropertyInvalid, *value, important,
+    AddProperty(resolved_property, CSSPropertyInvalid, *value, important,
                 IsImplicitProperty::kNotImplicit, *parsed_properties_);
   } else {
-    AddExpandedPropertyForValue(property, *value, important,
+    AddExpandedPropertyForValue(resolved_property, *value, important,
                                 *parsed_properties_);
   }
   range_ = range_copy;
