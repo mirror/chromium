@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b0c133fe_e68127d6",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-18T11:07:38Z",
+      "side": 1,
+      "message": "We no longer need observing_ if we have connection_observer_handle_. We can replace \n\nif (observing_) { } with..\n\nif (connection_observer_handle_) { }",
+      "range": {
+        "startLine": 209,
+        "startChar": 3,
+        "endLine": 209,
+        "endChar": 22
+      },
+      "revId": "90ff64726623c8adb245adef39712ad009e3d869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb155dd1_8c61641a",
         "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
         "patchSetId": 2
@@ -13,6 +36,70 @@
       "writtenOn": "2017-10-18T11:00:57Z",
       "side": 1,
       "message": "I\u0027d prefer using a friend class than using inheritance.",
+      "revId": "90ff64726623c8adb245adef39712ad009e3d869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f5d5c9a_a1b37ddc",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-18T11:07:38Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "bb155dd1_8c61641a",
+      "revId": "90ff64726623c8adb245adef39712ad009e3d869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4310922c_f8c6d3e4",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-18T11:07:38Z",
+      "side": 1,
+      "message": "These should likely be base::Unretained since using with base::BindOnce",
+      "range": {
+        "startLine": 123,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 55
+      },
+      "revId": "90ff64726623c8adb245adef39712ad009e3d869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af41564c_63b5f1e0",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-18T11:07:38Z",
+      "side": 1,
+      "message": "nit: Can you convert these to \u003d nullptr throughout this file?",
+      "range": {
+        "startLine": 293,
+        "startChar": 9,
+        "endLine": 293,
+        "endChar": 18
+      },
       "revId": "90ff64726623c8adb245adef39712ad009e3d869",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
