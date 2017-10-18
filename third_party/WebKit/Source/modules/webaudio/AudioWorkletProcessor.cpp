@@ -51,6 +51,7 @@ bool AudioWorkletProcessor::Process(
 
 DEFINE_TRACE(AudioWorkletProcessor) {
   visitor->Trace(global_scope_);
+  ScriptWrappable::Trace(visitor);
 }
 
 DEFINE_TRACE_WRAPPERS(AudioWorkletProcessor) {

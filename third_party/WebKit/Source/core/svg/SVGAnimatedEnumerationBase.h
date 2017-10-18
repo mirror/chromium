@@ -33,24 +33,17 @@
 
 #include "core/svg/SVGEnumeration.h"
 #include "core/svg/properties/SVGAnimatedProperty.h"
-#include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
 
 class SVGAnimatedEnumerationBase
-    : public SVGAnimatedProperty<SVGEnumerationBase>,
-      public ScriptWrappable {
+    : public SVGAnimatedProperty<SVGEnumerationBase> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
   ~SVGAnimatedEnumerationBase() override;
 
   void setBaseVal(unsigned short, ExceptionState&);
-
-  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
-    SVGAnimatedProperty<SVGEnumerationBase>::TraceWrappers(visitor);
-    ScriptWrappable::TraceWrappers(visitor);
-  }
 
  protected:
   SVGAnimatedEnumerationBase(SVGElement* context_element,

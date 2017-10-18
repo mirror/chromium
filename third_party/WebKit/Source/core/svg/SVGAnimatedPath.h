@@ -37,6 +37,8 @@
 namespace blink {
 
 class SVGAnimatedPath : public SVGAnimatedProperty<SVGPath> {
+  DEFINE_WRAPPERTYPEINFO_UNREACHABLE();
+
  public:
   ~SVGAnimatedPath() override;
 

@@ -39,6 +39,7 @@ DEFINE_TRACE(VRPose) {
   visitor->Trace(linear_velocity_);
   visitor->Trace(angular_acceleration_);
   visitor->Trace(linear_acceleration_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink
