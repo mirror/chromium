@@ -427,6 +427,8 @@ source_set("browser") {
     "blob_storage/blob_dispatcher_host.h",
     "blob_storage/blob_internals_url_loader.cc",
     "blob_storage/blob_internals_url_loader.h",
+    "blob_storage/blob_protocol_handler_network_service.cc",
+    "blob_storage/blob_protocol_handler_network_service.h",
     "blob_storage/blob_registry_wrapper.cc",
     "blob_storage/blob_registry_wrapper.h",
     "blob_storage/blob_url_loader.cc",

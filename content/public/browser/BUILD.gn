@@ -178,6 +178,7 @@ source_set("browser_sources") {
     "network_quality_observer_factory.h",
     "network_service_instance.cc",
     "network_service_instance.h",
+    "non_network_protocol_handler.h",
     "notification_database_data.cc",
     "notification_database_data.h",
     "notification_details.h",
