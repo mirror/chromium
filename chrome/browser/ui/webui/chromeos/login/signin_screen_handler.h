@@ -508,6 +508,7 @@ class SigninScreenHandler
 
   NetworkStateInformer::State last_network_state_ =
       NetworkStateInformer::UNKNOWN;
+  std::unique_ptr<base::DictionaryValue> last_proxy_config_;
 
   base::CancelableClosure update_state_closure_;
   base::CancelableClosure connecting_closure_;
