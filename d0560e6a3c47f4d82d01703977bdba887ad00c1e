@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3c89052_a63c6ad2",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-18T13:50:39Z",
+      "side": 1,
+      "message": "This means that the passed in animations count is not actually the main thread animations count. Can you rename to something more clear? Perhaps total_animations_count. Then the method should probably be called SetAnimationCounts",
+      "range": {
+        "startLine": 593,
+        "startChar": 8,
+        "endLine": 593,
+        "endChar": 36
+      },
+      "revId": "d0560e6a3c47f4d82d01703977bdba887ad00c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734d734a_6e358f92",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-18T13:50:39Z",
+      "side": 1,
+      "message": "Since they\u0027re both set in the same function how about when it\u0027s set from the main thread?",
+      "revId": "d0560e6a3c47f4d82d01703977bdba887ad00c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03240e4_0cf719b8",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-18T13:50:39Z",
+      "side": 1,
+      "message": "I think this should be failure_code.can_composite \u0026\u0026 !failure_code.will_composite otherwise it could theoretically report any non-compositable animation right?",
+      "revId": "d0560e6a3c47f4d82d01703977bdba887ad00c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f4fff3_8ce52cf4",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimationsTest.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-18T13:50:39Z",
+      "side": 1,
+      "message": "Can you test the host main thread and composited animations count which should be 1 and 0 respectively?",
+      "range": {
+        "startLine": 1358,
+        "startChar": 63,
+        "endLine": 1358,
+        "endChar": 65
+      },
+      "revId": "d0560e6a3c47f4d82d01703977bdba887ad00c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
