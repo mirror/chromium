@@ -873,12 +873,16 @@ const std::string& UniqueNameForWebFrame(blink::WebFrame* frame) {
 
 RenderFrameImpl::UniqueNameFrameAdapter::UniqueNameFrameAdapter(
     RenderFrameImpl* render_frame)
-    : render_frame_(render_frame) {}
+    : render_frame_(render_frame), is_dynamic_frame_(false) {}
 
 RenderFrameImpl::UniqueNameFrameAdapter::~UniqueNameFrameAdapter() {}
 
 bool RenderFrameImpl::UniqueNameFrameAdapter::IsMainFrame() const {
   return render_frame_->IsMainFrame();
+}
+
+bool RenderFrameImpl::UniqueNameFrameAdapter::IsDynamicFrame() const {
+  return is_dynamic_frame_;
 }
 
 bool RenderFrameImpl::UniqueNameFrameAdapter::IsCandidateUnique(
@@ -3179,8 +3183,10 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
   // Note that Blink can't be changed to just pass |fallback_name| as |name| in
   // the case |name| is empty: |fallback_name| should never affect the actual
   // browsing context name, only unique name generation.
+  bool is_new_subframe_dynamic = frame_->HasFinishedParsing();
   params.frame_unique_name = unique_name_helper_.GenerateNameForNewChildFrame(
-      params.frame_name.empty() ? fallback_name.Utf8() : params.frame_name);
+      params.frame_name.empty() ? fallback_name.Utf8() : params.frame_name,
+      is_new_subframe_dynamic);
   params.frame_policy = {sandbox_flags,
                          FeaturePolicyHeaderFromWeb(container_policy)};
   params.frame_owner_properties =
@@ -3207,6 +3213,8 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
   // Create the RenderFrame and WebLocalFrame, linking the two.
   RenderFrameImpl* child_render_frame = RenderFrameImpl::Create(
       render_view_, child_routing_id, devtools_frame_token);
+  child_render_frame->unique_name_frame_adapter_.set_is_dynamic_frame(
+      is_new_subframe_dynamic);
   child_render_frame->unique_name_helper_.set_propagated_name(
       params.frame_unique_name);
   child_render_frame->InitializeBlameContext(this);

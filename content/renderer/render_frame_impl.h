@@ -170,10 +170,6 @@ struct ScreenInfo;
 struct StartNavigationParams;
 struct StreamOverrideParameters;
 
-namespace {
-class CreateFrameWidgetParams;
-}
-
 class CONTENT_EXPORT RenderFrameImpl
     : public RenderFrame,
       blink::mojom::EngagementClient,
@@ -1226,8 +1222,11 @@ class CONTENT_EXPORT RenderFrameImpl
     explicit UniqueNameFrameAdapter(RenderFrameImpl* render_frame);
     ~UniqueNameFrameAdapter() override;
 
+    void set_is_dynamic_frame(bool value) { is_dynamic_frame_ = value; }
+
     // FrameAdapter overrides:
     bool IsMainFrame() const override;
+    bool IsDynamicFrame() const override;
     bool IsCandidateUnique(base::StringPiece name) const override;
     int GetSiblingCount() const override;
     int GetChildCount() const override;
@@ -1240,6 +1239,7 @@ class CONTENT_EXPORT RenderFrameImpl
     blink::WebLocalFrame* GetWebFrame() const;
 
     RenderFrameImpl* render_frame_;
+    bool is_dynamic_frame_;
   };
   UniqueNameFrameAdapter unique_name_frame_adapter_;
   UniqueNameHelper unique_name_helper_;
