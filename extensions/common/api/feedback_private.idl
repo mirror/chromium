@@ -175,6 +175,7 @@ namespace feedbackPrivate {
   callback SendFeedbackCallback = void(Status status);
   callback GetStringsCallback = void(object result);
   callback ReadLogSourceCallback = void (ReadLogSourceResult result);
+  callback GetWebrtcLogsDirectoryCallback = void ([instanceOf=DirectoryEntry] object directory);
 
   interface Functions {
     // Returns the email of the currently active or logged in user.
@@ -223,6 +224,10 @@ namespace feedbackPrivate {
     // </ul>
     static void readLogSource(ReadLogSourceParams params,
                               ReadLogSourceCallback callback);
+
+    // Returns the directory entry for the "WebRTC Logs" directory. This call
+    // will fail with a runtime error if no such directory exists.
+    static void getWebrtcLogsDirectory(GetWebrtcLogsDirectoryCallback callback);
   };
 
   interface Events {
