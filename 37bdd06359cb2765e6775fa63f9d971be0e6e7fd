@@ -93,6 +93,30 @@
       "revId": "37bdd06359cb2765e6775fa63f9d971be0e6e7fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e85bdb_31323b98",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-18T02:39:49Z",
+      "side": 1,
+      "message": "We can revisit this another time. We probably can lose all contexts from non-front pages to ensure this one\u0027s success.",
+      "parentUuid": "4d186062_85937fd6",
+      "range": {
+        "startLine": 1538,
+        "startChar": 10,
+        "endLine": 1538,
+        "endChar": 23
+      },
+      "revId": "37bdd06359cb2765e6775fa63f9d971be0e6e7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
