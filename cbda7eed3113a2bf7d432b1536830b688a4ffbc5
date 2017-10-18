@@ -1,0 +1,231 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1801f640_556987b9",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T01:13:21Z",
+      "side": 1,
+      "message": "The pattern I\u0027ve seen for this is now\n\n auto layout \u003d std::make_unique...",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ab23e5_559ff365",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T01:13:21Z",
+      "side": 1,
+      "message": "and\n SetLayoutManager(layout.release());",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d02007_635ee678",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T01:13:21Z",
+      "side": 1,
+      "message": "View::SizeToPreferredSize() ?\n\nperhaps do this in InitContainer?",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a393aa23_99b8f0d6",
+        "filename": "ash/frame/default_header_painter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T01:13:21Z",
+      "side": 1,
+      "message": "reorder in .cc as well",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef547b7a_6f6c5a93",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T01:13:21Z",
+      "side": 1,
+      "message": "should this check |hit_test| like the thing below? Otherwise |hit_test| is unused for the early return and this check should come first in the method.",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83fd3457_22d9ed1b",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T01:13:21Z",
+      "side": 1,
+      "message": "comment? is this weak? (who owns it?) e.g. \n\n// Describe me .. . Owned by view hierarchy.",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df50f5d_d702c4d6",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T01:13:21Z",
+      "side": 1,
+      "message": "comment describing what the test is for. Also `Basic` seems very general",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb1f447_95cd2993",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T01:13:21Z",
+      "side": 1,
+      "message": "Do these urls matter? (does GURL() break the test?). Maybe\n\nconst GURL dummy_url(\"http://example.org/\");",
+      "range": {
+        "startLine": 456,
+        "startChar": 25,
+        "endLine": 456,
+        "endChar": 53
+      },
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606c4f23_5c25298b",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T01:13:21Z",
+      "side": 1,
+      "message": "seems this always needs to be called - can it be a constructor argument?",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abbb64eb_17129a21",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T01:13:21Z",
+      "side": 1,
+      "message": "how much of this will actually get used?\n\nWould it be better to make a dummy model that shows nothing rather than adding a coupling to AppMenuModel which could do some really bizarre/unwanted stuff.",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3db088_efead080",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T01:13:21Z",
+      "side": 1,
+      "message": "when is |menu_| released?\n\n(normally there\u0027s a callback I think)",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee5c78b_578a7217",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T01:13:21Z",
+      "side": 1,
+      "message": "does this need to be unique_ptr? (can it be a value member, initialized once in the constructor?)\n\nOtherwise it should be reset when the menu is closed too.",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f04c3f_c8c69997",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T01:13:21Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
