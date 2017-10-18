@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5650a8f7_d56ac093",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-10-18T13:14:25Z",
+      "side": 0,
+      "message": "As I see, sandbox type is now passed, but I fail to run some of the unittests on chromoes mash/mus build. For example, ResourceCoordinatorTest.ResourceCoordinatorInstantiate fails to spawn a process on my local system. But if I add sandbox type non to resource coordinator manifest, it goes ok. Looks like bots are passing fine. Am I missing some build targets or something? Thanks!",
+      "revId": "a9753d0f5e574c286bf70875742f56a5345da4b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
