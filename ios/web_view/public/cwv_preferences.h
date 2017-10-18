@@ -19,6 +19,8 @@ CWV_EXPORT
 @property(nonatomic, assign, getter=isTranslationEnabled)
     BOOL translationEnabled;
 
+@property(nonatomic, assign, getter=isAutofillEnabled) BOOL autofillEnabled;
+
 - (instancetype)init NS_UNAVAILABLE;
 
 // Resets all translation settings back to default. In particular, this will
