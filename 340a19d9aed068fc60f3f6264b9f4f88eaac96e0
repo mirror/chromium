@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5110a285_5f5240a5",
+        "filename": "pdf/pdf_engine.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T20:49:04Z",
+      "side": 1,
+      "message": "nit: Please document that these enum values are persisted to logs, and should therefore never be renumbered nor reused.",
+      "range": {
+        "startLine": 61,
+        "startChar": 23,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "340a19d9aed068fc60f3f6264b9f4f88eaac96e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
