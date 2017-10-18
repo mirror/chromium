@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68c0dae1_1e26d091",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T18:50:26Z",
+      "side": 1,
+      "message": "Huh.  I think you\u0027re right (both from trying it and reading the GetDomainAndRegister() implementation).  Thanks for the catch.  Done.",
+      "parentUuid": "e80bc840_3a13dba1",
+      "revId": "f75ed41c327bc1a517ca38ab1dcea0fe6d04988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb8a6c06_d866ba55",
         "filename": "content/network/cookie_manager_impl.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e1832c9d_7c2c06d6",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T18:50:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb8a6c06_d866ba55",
+      "revId": "f75ed41c327bc1a517ca38ab1dcea0fe6d04988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f93ad6c5_30852522",
         "filename": "content/network/cookie_manager_impl_unittest.cc",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-18T18:03:42Z",
       "side": 1,
       "message": "BrowsingDataFilterBuilderImplTest.RegistrableDomainMatchesCookiesWhitelist has both https and http urls. Any reason that you choose to do only http here?",
+      "revId": "f75ed41c327bc1a517ca38ab1dcea0fe6d04988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "239ac89d_9b569cc7",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T18:50:26Z",
+      "side": 1,
+      "message": "I\u0027m switching from CanonicalCookie::Create(..., url, ...) to building a canonical cookie directly with the constructor because it gives more control over the result; no parsing.  CC::Create() returns null in error conditions, one of which is trying to create a secure cookie if the scheme isn\u0027t https.  But the CC constructor doesn\u0027t take a URL and doesn\u0027t do that error check, and happily accepts |true| in the secure slot.  \n\nIn the original test, if CC::Create() returned null, that cookie simply wasn\u0027t used as part of the test without any notification.  So http vs. https only silently reduced the number of cookies that were added to the store to test for removal.  I didn\u0027t see the point of reducing the number of cookies the filter should remove for some cases, so I just added all valid cookies for each test case (both secure and !secure).",
+      "parentUuid": "f93ad6c5_30852522",
       "revId": "f75ed41c327bc1a517ca38ab1dcea0fe6d04988d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "84ebe701_9a868a09",
+        "filename": "services/network/public/interfaces/cookie_manager.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T18:50:26Z",
+      "side": 1,
+      "message": "Arggh.  Thank you.  Fixed.\n\n(I have an emacs hack to do that automatically for .h and .cc files, which is why I keep missing it for .mojom files.  There\u0027s some trickiness for doing it with .mojom files, but I should just fix that.)",
+      "parentUuid": "ef3927f2_1eb973fe",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 3
+      },
+      "revId": "f75ed41c327bc1a517ca38ab1dcea0fe6d04988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "726841eb_5c565584",
         "filename": "services/network/public/interfaces/cookie_manager.mojom",
         "patchSetId": 7
@@ -90,6 +168,24 @@
       "revId": "f75ed41c327bc1a517ca38ab1dcea0fe6d04988d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733462c2_b50aba86",
+        "filename": "services/network/public/interfaces/cookie_manager.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T18:50:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "726841eb_5c565584",
+      "revId": "f75ed41c327bc1a517ca38ab1dcea0fe6d04988d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
