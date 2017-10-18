@@ -50,6 +50,23 @@
       "revId": "4e3b4cf26e8892bc826155bcdb39ad5015736488",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce55fa04_c96f84fc",
+        "filename": "chrome/browser/ui/views/overlay/overlay_window_views.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-18T13:02:53Z",
+      "side": 1,
+      "message": "Hmm, do you need to declare this here? Could you have the class as part of the anonymous namespace of the overlay_window_views.cc?",
+      "revId": "4e3b4cf26e8892bc826155bcdb39ad5015736488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
