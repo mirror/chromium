@@ -869,9 +869,9 @@ TEST_P(RenderTextHarfBuzzTest, ObscuredText) {
     EXPECT_TRUE(selection.caret_pos() == 0U || selection.caret_pos() == 2U);
   }
 
-  // GetGlyphBounds() should yield the entire string bounds for text index 0.
+  // GetCursorSpan() should yield the entire string bounds for text index 0.
   EXPECT_EQ(render_text->GetStringSize().width(),
-            static_cast<int>(render_text->GetGlyphBounds(0U).length()));
+            static_cast<int>(render_text->GetCursorSpan({0, 1}).length()));
 
   // Cursoring is independent of underlying characters when text is obscured.
   const char* const texts[] = {
@@ -1867,7 +1867,7 @@ TEST_P(RenderTextHarfBuzzTest, FindCursorPosition) {
     SCOPED_TRACE(base::StringPrintf("Testing case[%" PRIuS "]", i));
     render_text->SetText(UTF8ToUTF16(kTestStrings[i]));
     for (size_t j = 0; j < render_text->text().length(); ++j) {
-      const Range range(render_text->GetGlyphBounds(j));
+      const Range range(render_text->GetCursorSpan({j, j + 1}));
       // Test a point just inside the leading edge of the glyph bounds.
       int x = range.is_reversed() ? range.GetMax() - 1 : range.GetMin() + 1;
       EXPECT_EQ(
@@ -3973,7 +3973,7 @@ TEST_P(RenderTextHarfBuzzTest, GlyphBounds) {
     test_api()->EnsureLayout();
 
     for (size_t j = 0; j < render_text->text().length(); ++j)
-      EXPECT_FALSE(render_text->GetGlyphBounds(j).is_empty());
+      EXPECT_FALSE(render_text->GetCursorSpan({j, j + 1}).is_empty());
   }
 }
 
@@ -4878,6 +4878,64 @@ TEST_P(RenderTextHarfBuzzTest, TeluguGraphemeBoundaries) {
   test_api()->EnsureLayout();
 
   // The selection should cover the entire width.
+  selection_bounds = GetSelectionBoundsUnion();
+  EXPECT_EQ(0, selection_bounds.x());
+  EXPECT_EQ(whole_width, selection_bounds.width());
+}
+
+// Test cursor bounds for Emoji flags (unicode regional indicators) when the
+// flag does not merge into a single glyph.
+TEST_P(RenderTextHarfBuzzTest, MissingFlagEmoji) {
+  RenderText* render_text = GetRenderText();
+  render_text->SetDisplayRect(Rect(1000, 1000));
+
+  // Usually these pair into country codes, but for this test we do not want
+  // them to combine into a flag. Instead, the placeholder glyphs should be used
+  // but cursor navigation should still behave as though they are joined. To get
+  // placeholder glyphs, make up a non-existent country. The codes used are
+  // based on ISO 3166-1 alpha-2. Codes starting with X are user-assigned.
+  base::string16 text(UTF8ToUTF16("🇽🇽🇽🇽"));
+  EXPECT_EQ(8u, text.length());  // Becomes 4 surrogate pair code points.
+
+  render_text->SetText(text);
+  test_api()->EnsureLayout();
+
+  const int whole_width = render_text->GetStringSize().width();
+  const int half_width = whole_width / 2;
+  EXPECT_LE(6, whole_width);  // Sanity check.
+
+  EXPECT_EQ("[0->7]", GetRunListStructureString());
+
+  // Move from the left to the right.
+  const Rect start_cursor = render_text->GetUpdatedCursorBounds();
+  EXPECT_EQ(0, start_cursor.x());
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_NONE);
+  EXPECT_EQ(Range(4, 4), render_text->selection());
+  const Rect middle_cursor = render_text->GetUpdatedCursorBounds();
+
+  // Cursor bounds round to the nearest integer, so account for that.
+  EXPECT_LE(half_width - 1, middle_cursor.x());  // Should move about half way.
+
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_NONE);
+  EXPECT_EQ(Range(8, 8), render_text->selection());
+  const Rect end_cursor = render_text->GetUpdatedCursorBounds();
+  EXPECT_LE(whole_width - 1, end_cursor.x());  // Should move most of the way.
+
+  // Move right to left.
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_LEFT, SELECTION_NONE);
+  EXPECT_EQ(Range(4, 4), render_text->selection());
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_LEFT, SELECTION_NONE);
+  EXPECT_EQ(Range(0, 0), render_text->selection());
+
+  // Select from the left to the right. The British flag should be selected.
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_RETAIN);
+  EXPECT_EQ(Range(0, 4), render_text->selection());
+  Rect selection_bounds = GetSelectionBoundsUnion();
+  EXPECT_EQ(0, selection_bounds.x());
+  EXPECT_GE(half_width, selection_bounds.width() - 1);  // Allow for rounding.
+
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_RETAIN);
+  EXPECT_EQ(Range(0, 8), render_text->selection());
   selection_bounds = GetSelectionBoundsUnion();
   EXPECT_EQ(0, selection_bounds.x());
   EXPECT_EQ(whole_width, selection_bounds.width());
