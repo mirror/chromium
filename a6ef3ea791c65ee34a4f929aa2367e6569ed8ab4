@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0c5bd08_da50b385",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks_unittest.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-18T07:27:13Z",
+      "side": 1,
+      "message": "I think we need to load file_tasks_unittest.js before file_tasks.js because otherwise chrome.commandLinePrivate.hasSwitch will not be initialized",
+      "parentUuid": "55f1d3dd_59af042f",
+      "revId": "a6ef3ea791c65ee34a4f929aa2367e6569ed8ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11ef69e9_6065ee27",
         "filename": "ui/file_manager/file_manager/foreground/js/file_tasks_unittest.js",
         "patchSetId": 11
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e4fb7712_78898ff8",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks_unittest.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-18T07:27:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11ef69e9_6065ee27",
+      "range": {
+        "startLine": 9,
+        "startChar": 15,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "a6ef3ea791c65ee34a4f929aa2367e6569ed8ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f83b806_7643b932",
         "filename": "ui/file_manager/file_manager/foreground/js/task_controller_unittest.html",
         "patchSetId": 11
@@ -62,6 +104,30 @@
       "revId": "a6ef3ea791c65ee34a4f929aa2367e6569ed8ab4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a24db7_51b4694b",
+        "filename": "ui/file_manager/file_manager/foreground/js/task_controller_unittest.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-18T07:27:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f83b806_7643b932",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 37
+      },
+      "revId": "a6ef3ea791c65ee34a4f929aa2367e6569ed8ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
