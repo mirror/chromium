@@ -160,6 +160,7 @@ static struct __PnaclWrapperInfo Pnacl_WrapperInfo_PPB_AudioInput_Dev_0_3;
 static struct __PnaclWrapperInfo Pnacl_WrapperInfo_PPB_AudioInput_Dev_0_4;
 static struct __PnaclWrapperInfo Pnacl_WrapperInfo_PPB_AudioOutput_Dev_0_1;
 static struct __PnaclWrapperInfo Pnacl_WrapperInfo_PPB_DeviceRef_Dev_0_1;
+static struct __PnaclWrapperInfo Pnacl_WrapperInfo_PPB_DeviceRef_Dev_0_2;
 static struct __PnaclWrapperInfo Pnacl_WrapperInfo_PPB_FileChooser_Dev_0_5;
 static struct __PnaclWrapperInfo Pnacl_WrapperInfo_PPB_FileChooser_Dev_0_6;
 static struct __PnaclWrapperInfo Pnacl_WrapperInfo_PPB_IMEInputEvent_Dev_0_1;
@@ -2872,6 +2873,30 @@ static void Pnacl_M18_PPB_DeviceRef_Dev_GetName(struct PP_Var* _struct_result, P
 
 /* End wrapper methods for PPB_DeviceRef_Dev_0_1 */
 
+/* Begin wrapper methods for PPB_DeviceRef_Dev_0_2 */
+
+static PP_Bool Pnacl_M64_PPB_DeviceRef_Dev_IsDeviceRef(PP_Resource resource) {
+  const struct PPB_DeviceRef_Dev_0_2 *iface = Pnacl_WrapperInfo_PPB_DeviceRef_Dev_0_2.real_iface;
+  return iface->IsDeviceRef(resource);
+}
+
+static PP_DeviceType_Dev Pnacl_M64_PPB_DeviceRef_Dev_GetType(PP_Resource device_ref) {
+  const struct PPB_DeviceRef_Dev_0_2 *iface = Pnacl_WrapperInfo_PPB_DeviceRef_Dev_0_2.real_iface;
+  return iface->GetType(device_ref);
+}
+
+static void Pnacl_M64_PPB_DeviceRef_Dev_GetName(struct PP_Var* _struct_result, PP_Resource device_ref) {
+  const struct PPB_DeviceRef_Dev_0_2 *iface = Pnacl_WrapperInfo_PPB_DeviceRef_Dev_0_2.real_iface;
+  *_struct_result = iface->GetName(device_ref);
+}
+
+static void Pnacl_M64_PPB_DeviceRef_Dev_GetId(struct PP_Var* _struct_result, PP_Resource device_ref) {
+  const struct PPB_DeviceRef_Dev_0_2 *iface = Pnacl_WrapperInfo_PPB_DeviceRef_Dev_0_2.real_iface;
+  *_struct_result = iface->GetId(device_ref);
+}
+
+/* End wrapper methods for PPB_DeviceRef_Dev_0_2 */
+
 /* Begin wrapper methods for PPB_FileChooser_Dev_0_5 */
 
 static PP_Resource Pnacl_M16_PPB_FileChooser_Dev_Create(PP_Instance instance, PP_FileChooserMode_Dev mode, struct PP_Var* accept_types) {
@@ -5556,6 +5581,13 @@ static const struct PPB_DeviceRef_Dev_0_1 Pnacl_Wrappers_PPB_DeviceRef_Dev_0_1 =
     .GetName = (struct PP_Var (*)(PP_Resource device_ref))&Pnacl_M18_PPB_DeviceRef_Dev_GetName
 };
 
+static const struct PPB_DeviceRef_Dev_0_2 Pnacl_Wrappers_PPB_DeviceRef_Dev_0_2 = {
+    .IsDeviceRef = (PP_Bool (*)(PP_Resource resource))&Pnacl_M64_PPB_DeviceRef_Dev_IsDeviceRef,
+    .GetType = (PP_DeviceType_Dev (*)(PP_Resource device_ref))&Pnacl_M64_PPB_DeviceRef_Dev_GetType,
+    .GetName = (struct PP_Var (*)(PP_Resource device_ref))&Pnacl_M64_PPB_DeviceRef_Dev_GetName,
+    .GetId = (struct PP_Var (*)(PP_Resource device_ref))&Pnacl_M64_PPB_DeviceRef_Dev_GetId
+};
+
 static const struct PPB_FileChooser_Dev_0_5 Pnacl_Wrappers_PPB_FileChooser_Dev_0_5 = {
     .Create = (PP_Resource (*)(PP_Instance instance, PP_FileChooserMode_Dev mode, struct PP_Var accept_types))&Pnacl_M16_PPB_FileChooser_Dev_Create,
     .IsFileChooser = (PP_Bool (*)(PP_Resource resource))&Pnacl_M16_PPB_FileChooser_Dev_IsFileChooser,
@@ -6479,6 +6511,12 @@ static struct __PnaclWrapperInfo Pnacl_WrapperInfo_PPB_DeviceRef_Dev_0_1 = {
   .real_iface = NULL
 };
 
+static struct __PnaclWrapperInfo Pnacl_WrapperInfo_PPB_DeviceRef_Dev_0_2 = {
+  .iface_macro = PPB_DEVICEREF_DEV_INTERFACE_0_2,
+  .wrapped_iface = (const void *) &Pnacl_Wrappers_PPB_DeviceRef_Dev_0_2,
+  .real_iface = NULL
+};
+
 static struct __PnaclWrapperInfo Pnacl_WrapperInfo_PPB_FileChooser_Dev_0_5 = {
   .iface_macro = PPB_FILECHOOSER_DEV_INTERFACE_0_5,
   .wrapped_iface = (const void *) &Pnacl_Wrappers_PPB_FileChooser_Dev_0_5,
@@ -6844,6 +6882,7 @@ static struct __PnaclWrapperInfo *s_ppb_wrappers[] = {
   &Pnacl_WrapperInfo_PPB_AudioInput_Dev_0_4,
   &Pnacl_WrapperInfo_PPB_AudioOutput_Dev_0_1,
   &Pnacl_WrapperInfo_PPB_DeviceRef_Dev_0_1,
+  &Pnacl_WrapperInfo_PPB_DeviceRef_Dev_0_2,
   &Pnacl_WrapperInfo_PPB_FileChooser_Dev_0_5,
   &Pnacl_WrapperInfo_PPB_FileChooser_Dev_0_6,
   &Pnacl_WrapperInfo_PPB_IMEInputEvent_Dev_0_1,

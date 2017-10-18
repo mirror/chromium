@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// From dev/ppb_device_ref_dev.idl modified Wed Jan 27 17:10:16 2016.
+// From dev/ppb_device_ref_dev.idl modified Mon Oct 16 08:50:24 2017.
 
 #include <stdint.h>
 
@@ -40,14 +40,30 @@ struct PP_Var GetName(PP_Resource device_ref) {
   return enter.object()->GetName();
 }
 
+struct PP_Var GetId(PP_Resource device_ref) {
+  VLOG(4) << "PPB_DeviceRef_Dev::GetId()";
+  EnterResource<PPB_DeviceRef_API> enter(device_ref, true);
+  if (enter.failed())
+    return PP_MakeUndefined();
+  return enter.object()->GetId();
+}
+
 const PPB_DeviceRef_Dev_0_1 g_ppb_deviceref_dev_thunk_0_1 = {
     &IsDeviceRef, &GetType, &GetName};
+
+const PPB_DeviceRef_Dev_0_2 g_ppb_deviceref_dev_thunk_0_2 = {
+    &IsDeviceRef, &GetType, &GetName, &GetId};
 
 }  // namespace
 
 PPAPI_THUNK_EXPORT const PPB_DeviceRef_Dev_0_1*
 GetPPB_DeviceRef_Dev_0_1_Thunk() {
   return &g_ppb_deviceref_dev_thunk_0_1;
+}
+
+PPAPI_THUNK_EXPORT const PPB_DeviceRef_Dev_0_2*
+GetPPB_DeviceRef_Dev_0_2_Thunk() {
+  return &g_ppb_deviceref_dev_thunk_0_2;
 }
 
 }  // namespace thunk

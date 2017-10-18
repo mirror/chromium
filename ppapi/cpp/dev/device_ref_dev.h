@@ -26,6 +26,8 @@ class DeviceRef_Dev : public Resource {
   PP_DeviceType_Dev GetType() const;
 
   Var GetName() const;
+
+  Var GetId() const;
 };
 
 }  // namespace pp

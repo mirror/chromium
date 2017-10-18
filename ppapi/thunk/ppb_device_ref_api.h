@@ -24,6 +24,7 @@ class PPAPI_THUNK_EXPORT PPB_DeviceRef_API {
 
   virtual PP_DeviceType_Dev GetType() = 0;
   virtual PP_Var GetName() = 0;
+  virtual PP_Var GetId() = 0;
 };
 
 }  // namespace thunk

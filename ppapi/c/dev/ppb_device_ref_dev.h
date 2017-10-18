@@ -3,7 +3,7 @@
  * found in the LICENSE file.
  */
 
-/* From dev/ppb_device_ref_dev.idl modified Mon Jan 09 12:04:09 2017. */
+/* From dev/ppb_device_ref_dev.idl modified Mon Oct 16 08:50:24 2017. */
 
 #ifndef PPAPI_C_DEV_PPB_DEVICE_REF_DEV_H_
 #define PPAPI_C_DEV_PPB_DEVICE_REF_DEV_H_
@@ -15,7 +15,8 @@
 #include "ppapi/c/pp_var.h"
 
 #define PPB_DEVICEREF_DEV_INTERFACE_0_1 "PPB_DeviceRef(Dev);0.1"
-#define PPB_DEVICEREF_DEV_INTERFACE PPB_DEVICEREF_DEV_INTERFACE_0_1
+#define PPB_DEVICEREF_DEV_INTERFACE_0_2 "PPB_DeviceRef(Dev);0.2"
+#define PPB_DEVICEREF_DEV_INTERFACE PPB_DEVICEREF_DEV_INTERFACE_0_2
 
 /**
  * @file
@@ -68,7 +69,7 @@ PP_COMPILE_ASSERT_SIZE_IN_BYTES(PP_DeviceType_Dev, 4);
  * @addtogroup Interfaces
  * @{
  */
-struct PPB_DeviceRef_Dev_0_1 {
+struct PPB_DeviceRef_Dev_0_2 {
   /**
    * Determines if the provided resource is a device reference.
    *
@@ -99,9 +100,26 @@ struct PPB_DeviceRef_Dev_0_1 {
    * type <code>PP_VARTYPE_UNDEFINED</code> if failed.
    */
   struct PP_Var (*GetName)(PP_Resource device_ref);
+  /**
+   * Gets the unique id.
+   *
+   * @param[in] device_ref A <code>PP_Resource</code> corresponding to a device
+   * reference.
+   *
+   * @return A <code>PP_Var</code> of type <code>PP_VARTYPE_STRING</code>
+   * containing the unique id of the device if successful; a <code>PP_Var</code>
+   * of type <code>PP_VARTYPE_UNDEFINED</code> if failed.
+   */
+  struct PP_Var (*GetId)(PP_Resource device_ref);
 };
 
-typedef struct PPB_DeviceRef_Dev_0_1 PPB_DeviceRef_Dev;
+typedef struct PPB_DeviceRef_Dev_0_2 PPB_DeviceRef_Dev;
+
+struct PPB_DeviceRef_Dev_0_1 {
+  PP_Bool (*IsDeviceRef)(PP_Resource resource);
+  PP_DeviceType_Dev (*GetType)(PP_Resource device_ref);
+  struct PP_Var (*GetName)(PP_Resource device_ref);
+};
 /**
  * @}
  */

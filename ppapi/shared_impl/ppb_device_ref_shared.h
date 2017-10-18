@@ -44,6 +44,7 @@ class PPAPI_SHARED_EXPORT PPB_DeviceRef_Shared
   const DeviceRefData& GetDeviceRefData() const override;
   PP_DeviceType_Dev GetType() override;
   PP_Var GetName() override;
+  PP_Var GetId() override;
 
  private:
   DeviceRefData data_;

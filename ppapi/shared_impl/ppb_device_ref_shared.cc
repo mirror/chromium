@@ -32,4 +32,8 @@ PP_Var PPB_DeviceRef_Shared::GetName() {
   return StringVar::StringToPPVar(data_.name);
 }
 
+PP_Var PPB_DeviceRef_Shared::GetId() {
+  return StringVar::StringToPPVar(data_.id);
+}
+
 }  // namespace ppapi

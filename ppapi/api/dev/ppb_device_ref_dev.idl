@@ -10,7 +10,8 @@
 [generate_thunk]
 
 label Chrome {
-  M18 = 0.1
+  M18 = 0.1,
+  M64 = 0.2
 };
 
 /**
@@ -75,4 +76,17 @@ interface PPB_DeviceRef_Dev {
    * type <code>PP_VARTYPE_UNDEFINED</code> if failed.
    */
   PP_Var GetName([in] PP_Resource device_ref);
+
+  /**
+   * Gets the unique id.
+   *
+   * @param[in] device_ref A <code>PP_Resource</code> corresponding to a device
+   * reference.
+   *
+   * @return A <code>PP_Var</code> of type <code>PP_VARTYPE_STRING</code>
+   * containing the unique id of the device if successful; a <code>PP_Var</code>
+   * of type <code>PP_VARTYPE_UNDEFINED</code> if failed.
+   */
+  [version=0.2]
+  PP_Var GetId([in] PP_Resource device_ref);
 };

@@ -50,6 +50,7 @@ bool CompareDeviceRef(PluginVarTracker* var_tracker,
     return false;
 
   PP_Var name_pp_var = enter.object()->GetName();
+  PP_Var id_pp_var = enter.object()->GetId();
   bool result = false;
   do {
     Var* name_var = var_tracker->GetVar(name_pp_var);
@@ -59,6 +60,15 @@ bool CompareDeviceRef(PluginVarTracker* var_tracker,
     if (!name_string_var)
       break;
     if (expected.name != name_string_var->value())
+      break;
+
+    Var* id_var = var_tracker->GetVar(id_pp_var);
+    if (!id_var)
+      break;
+    StringVar* id_string_var = id_var->AsStringVar();
+    if (!id_string_var)
+      break;
+    if (expected.id != id_string_var->value())
       break;
 
     result = true;
