@@ -82,11 +82,33 @@ test("blink_common_unittests") {
   ]
 }
 
-mojom("mojo_bindings") {
-  visibility = [ "//third_party/WebKit/*" ]
+mojom("mojo_platform_bindings") {
+  sources = [
+    "blob/blob.mojom",
+    "blob/blob_registry.mojom",
+  ]
 
+  public_deps = [
+    "//mojo/common:common_custom_types",
+    "//url/mojo:url_mojom_gurl",
+  ]
+
+  export_class_attribute = "BLINK_COMMON_EXPORT"
+  export_define = "BLINK_COMMON_IMPLEMENTATION=1"
+  export_header = "third_party/WebKit/common/common_export.h"
+
+  export_class_attribute_blink = "PLATFORM_EXPORT"
+  export_define_blink = "BLINK_PLATFORM_IMPLEMENTATION=1"
+  export_header_blink = "third_party/WebKit/Source/platform/PlatformExport.h"
+}
+
+mojom("mojo_bindings") {
   sources = [
     "message_port/message_port.mojom",
+  ]
+
+  public_deps = [
+    ":mojo_platform_bindings",
   ]
 
   export_class_attribute = "BLINK_COMMON_EXPORT"
