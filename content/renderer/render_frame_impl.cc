@@ -174,7 +174,6 @@
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
 #include "third_party/WebKit/public/platform/InterfaceProvider.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
-#include "third_party/WebKit/public/platform/WebCachePolicy.h"
 #include "third_party/WebKit/public/platform/WebData.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
@@ -244,7 +243,6 @@
 
 using base::Time;
 using base::TimeDelta;
-using blink::WebCachePolicy;
 using blink::WebContentDecryptionModule;
 using blink::WebContextMenuData;
 using blink::WebData;
@@ -418,7 +416,7 @@ WebURLRequest CreateURLRequestForNavigation(
   request.SetHTTPMethod(WebString::FromUTF8(navigation_method));
 
   if (is_view_source_mode_enabled)
-    request.SetCachePolicy(WebCachePolicy::kReturnCacheDataElseLoad);
+    request.SetCacheMode(blink::mojom::FetchCacheMode::FORCE_CACHE);
 
   WebString web_referrer;
   if (common_params.referrer.url.is_valid()) {
@@ -4381,7 +4379,7 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
   }
 
   if (internal_data->is_cache_policy_override_set())
-    request.SetCachePolicy(internal_data->cache_policy_override());
+    request.SetCacheMode(internal_data->cache_policy_override());
 
   // The request's extra data may indicate that we should set a custom user
   // agent. This needs to be done here, after WebKit is through with setting the
@@ -6097,7 +6095,7 @@ void RenderFrameImpl::NavigateInternal(
   bool is_reload =
       FrameMsg_Navigate_Type::IsReload(common_params.navigation_type);
   bool is_history_navigation = request_params.page_state.IsValid();
-  WebCachePolicy cache_policy = WebCachePolicy::kUseProtocolCachePolicy;
+  auto cache_mode = blink::mojom::FetchCacheMode::DEFAULT;
   RenderFrameImpl::PrepareRenderViewForNavigation(
       common_params.url, request_params);
 
@@ -6114,7 +6112,7 @@ void RenderFrameImpl::NavigateInternal(
     // We cannot reload if we do not have any history state.  This happens, for
     // example, when recovering from a crash.
     is_reload = false;
-    cache_policy = WebCachePolicy::kValidatingCacheData;
+    cache_mode = blink::mojom::FetchCacheMode::NO_CACHE;
   }
 
   // If the navigation is for "view source", the WebLocalFrame needs to be put
@@ -6274,7 +6272,7 @@ void RenderFrameImpl::NavigateInternal(
       // will be done based on the history item during the load.
       if (!browser_side_navigation && should_load_request) {
         request = frame_->RequestFromHistoryItem(item_for_history_navigation,
-                                                 cache_policy);
+                                                 cache_mode);
       }
     }
   } else {
@@ -6725,7 +6723,7 @@ void RenderFrameImpl::PopulateDocumentStateFromPending(
     // UseProtocolCachePolicy to mean both "normal load" and "determine cache
     // policy based on load type, etc".
     internal_data->set_cache_policy_override(
-        WebCachePolicy::kUseProtocolCachePolicy);
+        blink::mojom::FetchCacheMode::DEFAULT);
   }
 
   internal_data->set_is_overriding_user_agent(

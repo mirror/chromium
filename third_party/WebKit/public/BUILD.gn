@@ -142,7 +142,6 @@ source_set("blink_headers") {
     "platform/WebBlobRegistry.h",
     "platform/WebBrowserControlsState.h",
     "platform/WebCache.h",
-    "platform/WebCachePolicy.h",
     "platform/WebCallbacks.h",
     "platform/WebCanvas.h",
     "platform/WebCanvasCaptureHandler.h",
@@ -765,6 +764,7 @@ mojom("mojo_bindings") {
     "//content/common:mojo_bindings_blink",
     "//chrome/common:mojo_bindings_blink",
     "//third_party/WebKit/Source/platform",
+    "//third_party/WebKit/Source/platform/heap",
     "//third_party/WebKit/Source/platform/loader",
   ]
   sources = [
