@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a09425fc_2dce4fc2",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 1977,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-18T10:51:09Z",
+      "side": 1,
+      "message": "See my comment about this not being a coordinator. If that\u0027s the case, then it doesn\u0027t need to be created or owned by the BVC -- although then I\u0027m not sure what object should own it.",
+      "range": {
+        "startLine": 1977,
+        "startChar": 8,
+        "endLine": 1977,
+        "endChar": 33
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6682fe6c_0ac22c61",
+        "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-18T10:51:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t host a view controller, so I don\u0027t know if the coordinator pattern is actually needed (or useful) here. Should this just be a simple \u0027handler\u0027 class? All it does is catch the external search command and plug in the provider values before opening the URL. (Technically this seems like the Mediator pattern, since it encapsulates the interaction of the command, the provider output, and the UIApplication calls. But we\u0027ve created expectations around a specific usage of that pattern, so calling this a \u0027Mediator\u0027 might be confusing).",
+      "range": {
+        "startLine": 14,
+        "startChar": 39,
+        "endLine": 14,
+        "endChar": 56
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6587fcd8_c3128f61",
+        "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-18T10:51:09Z",
+      "side": 1,
+      "message": "Prefer for objects that don\u0027t own a CommandDispatcher to treat it only in terms of the API it needs to implement -- so id\u003cExternalSearchCommands\u003e.",
+      "range": {
+        "startLine": 22,
+        "startChar": 37,
+        "endLine": 22,
+        "endChar": 54
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36825b1c_4290e7ec",
+        "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-18T10:51:09Z",
+      "side": 1,
+      "message": "Setting the dispatcher to nil does this already, right?",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 42
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376f48d5_580171b7",
+        "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-18T10:51:09Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like this is needed?",
+      "range": {
+        "startLine": 21,
+        "startChar": 1,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d64534_a71f0edd",
+        "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-18T10:51:09Z",
+      "side": 1,
+      "message": "Will this still pass on an internal build where the external provider is vending a different URL?",
+      "range": {
+        "startLine": 29,
+        "startChar": 9,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba0ea76_258e27d1",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views_utils.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-18T10:51:09Z",
+      "side": 1,
+      "message": "Presumably we want the external search provider to indicate that no external search app is available, so there should be some code path where there\u0027s no button added, right?",
+      "range": {
+        "startLine": 65,
+        "startChar": 31,
+        "endLine": 65,
+        "endChar": 56
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ee12f5_32fba8aa",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views_utils.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-18T10:51:09Z",
+      "side": 1,
+      "message": "Drop the opaque \u0027ids\u0027 prefix.",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 29
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b108a78_5ec9c7a4",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views_utils.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-18T10:51:09Z",
+      "side": 1,
+      "message": "Maybe get the provider object once instead of repeating this call chain?",
+      "range": {
+        "startLine": 73,
+        "startChar": 38,
+        "endLine": 73,
+        "endChar": 63
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
