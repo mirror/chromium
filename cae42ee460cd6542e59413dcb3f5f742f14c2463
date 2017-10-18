@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22cda2db_32591cfb",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/MainActivityTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-18T20:36:17Z",
+      "side": 1,
+      "message": "Nit: \"as long as |LoggedIntentUrlParam| is set\" -\u003e \"if |LoggedIntentUrlParam| is set\"\nyou are only testing the case of |LoggedIntentUrlParam| being set",
+      "revId": "cae42ee460cd6542e59413dcb3f5f742f14c2463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
