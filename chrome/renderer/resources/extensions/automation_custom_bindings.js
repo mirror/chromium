@@ -285,11 +285,7 @@ automationInternal.onNodesRemoved.addListener(function(treeID, nodeIDs) {
 automationInternal.onAccessibilityEvent.addListener(function(eventParams) {
   var id = eventParams.treeID;
   var targetTree = AutomationRootNode.getOrCreate(id);
-
-  var isFocusEvent = false;
-  if (eventParams.eventType == 'focus') {
-    isFocusEvent = true;
-  } else if (eventParams.eventType == 'blur') {
+  if (eventParams.eventType == 'blur') {
     // Work around an issue where Chrome sends us 'blur' events on the
     // root node when nothing has focus, we need to treat those as focus
     // events but otherwise not handle blur events specially.
@@ -300,24 +296,29 @@ automationInternal.onAccessibilityEvent.addListener(function(eventParams) {
       eventParams.eventType == 'mediaStoppedPlaying') {
     // These events are global to the tree.
     eventParams.targetID = privates(targetTree).impl.id;
-  }
-
-  // When we get a focus event, ignore the actual event target, and instead
-  // check what node has focus globally. If that represents a focus change,
-  // fire a focus event on the correct target.
-  if (isFocusEvent) {
+  } else {
     var previousFocusedNode = automationUtil.focusedNode;
     automationUtil.updateFocusedNode();
+
+    // Fire focus events if necessary.
     if (automationUtil.focusedNode &&
-        automationUtil.focusedNode == previousFocusedNode) {
-      return;
+        automationUtil.focusedNode != previousFocusedNode) {
+      var originalType = eventParams.eventType;
+      eventParams.eventType = 'focus';
+      var originalTreeID = eventParams.treeID;
+      eventParams.treeID =
+          privates(automationUtil.focusedNode.root).impl.treeID;
+      var originalTargetID = eventParams.targetID;
+      eventParams.targetID = privates(automationUtil.focusedNode).impl.id;
+      privates(automationUtil.focusedNode.root)
+          .impl.onAccessibilityEvent(eventParams);
+      eventParams.eventType = originalType;
+      eventParams.treeID = originalTreeID;
+      eventParams.targetID = originalTargetID;
     }
 
-    if (automationUtil.focusedNode) {
-      targetTree = automationUtil.focusedNode.root;
-      eventParams.treeID = privates(targetTree).impl.treeID;
-      eventParams.targetID = privates(automationUtil.focusedNode).impl.id;
-    }
+    if (eventParams.eventType == 'focus')
+      return;
   }
 
   if (!privates(targetTree).impl.onAccessibilityEvent(eventParams))
