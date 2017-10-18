@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44be3994_0e372924",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webaudio/the-audio-api/chrome/resources/audit.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-18T20:18:35Z",
+      "side": 1,
+      "message": "We should remove this function out of Audit.",
+      "revId": "582fbe2ab47d61a864418fa339d262aa5af4f72c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b3a6006_e9697d93",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webaudio/the-audio-api/chrome/resources/audit.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-18T20:18:35Z",
+      "side": 1,
+      "message": "Let\u0027s remove this as well.",
+      "range": {
+        "startLine": 1365,
+        "startChar": 4,
+        "endLine": 1369,
+        "endChar": 36
+      },
+      "revId": "582fbe2ab47d61a864418fa339d262aa5af4f72c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53aaed1_1d86f099",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webaudio/the-audio-api/chrome/resources/start-stop-exceptions.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-18T20:18:35Z",
+      "side": 1,
+      "message": "This helper is only for constant source node. It shouldn\u0027t be in /resources. With this scheme, /resources will be crowded really quickly.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 8
+      },
+      "revId": "582fbe2ab47d61a864418fa339d262aa5af4f72c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
