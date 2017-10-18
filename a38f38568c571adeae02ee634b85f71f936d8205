@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77eb39ab_0fad8635",
+        "filename": "ui/chromeos/ui_chromeos_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-18T14:48:22Z",
+      "side": 1,
+      "message": "nit: sort by name",
+      "revId": "a38f38568c571adeae02ee634b85f71f936d8205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
