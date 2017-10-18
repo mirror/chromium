@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "57b2f337_d7b18a35",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b1d8816_40201992",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e482209_0bbd15a8",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-18T01:08:14Z",
       "side": 1,
       "message": "If SWRegistrationHandleTest is inheriting SWRegistrationTest only for ThreadBundle and EWTestHelper, it\u0027d be better to have it as an isolated test. How about moving this test to another file (service_worker_registration_handle_unittest.cc)?",
+      "range": {
+        "startLine": 547,
+        "startChar": 13,
+        "endLine": 547,
+        "endChar": 42
+      },
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b97b698_8f017d2f",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "I\u0027d like to put these tests into service_worker_registration_unittests.cc rather than create a new file service_worker_registration_handle_unittests.cc, later when we merge SWRegistrationHandle into SWRegistration we can just modify directly these tests inside this file.",
+      "parentUuid": "8e482209_0bbd15a8",
       "range": {
         "startLine": 547,
         "startChar": 13,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "9a9ec4c1_c0581f8f",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "122a8edf_03b4a8d1",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de0f05b6_53206f03",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f29030_bf482f93",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de0f05b6_53206f03",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "73abc3b9_e14747ce",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daac46e4_802b5e39",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "058f6b83_92770289",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 1
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "41d5068a_071d4fcc",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "058f6b83_92770289",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "823a80cd_dd46f26b",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 1
@@ -124,6 +238,24 @@
       "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e344c9_644cf9b4",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done. Removed because it\u0027s just for making my understanding clearly :)",
+      "parentUuid": "823a80cd_dd46f26b",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +299,48 @@
     },
     {
       "key": {
+        "uuid": "48401fce_6be2076e",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7945e385_b4f84d7f",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "806fafa0_813939c3",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3827f9c3_3bed3261",
+      "range": {
+        "startLine": 613,
+        "startChar": 50,
+        "endLine": 613,
+        "endChar": 54
+      },
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c86ba507_1a8e234a",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 1
@@ -207,6 +381,48 @@
     },
     {
       "key": {
+        "uuid": "81411229_69f93333",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2e30181_12a634d5",
+      "range": {
+        "startLine": 618,
+        "startChar": 8,
+        "endLine": 618,
+        "endChar": 45
+      },
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5b9a6e0_3575b139",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c86ba507_1a8e234a",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba34c132_84df3e11",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 1
@@ -230,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "a6bcea71_4325dece",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba34c132_84df3e11",
+      "range": {
+        "startLine": 627,
+        "startChar": 4,
+        "endLine": 628,
+        "endChar": 35
+      },
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1cc4788_96a4885c",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 1
@@ -247,6 +487,24 @@
     },
     {
       "key": {
+        "uuid": "cfe2acce_c54e79ca",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1cc4788_96a4885c",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "399bd9af_7e5f5dd8",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 1
@@ -261,6 +519,24 @@
       "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6fab84_dae8b767",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "399bd9af_7e5f5dd8",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -287,6 +563,30 @@
     },
     {
       "key": {
+        "uuid": "a87c1b10_5905469f",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done. Eliminated most members :)",
+      "parentUuid": "de8689a8_a9cacd88",
+      "range": {
+        "startLine": 639,
+        "startChar": 7,
+        "endLine": 639,
+        "endChar": 35
+      },
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfa222aa_022a5a80",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 1
@@ -298,6 +598,24 @@
       "writtenOn": "2017-10-18T01:08:14Z",
       "side": 1,
       "message": "Could you add more basic test like creating SWRegistrationHandle (by std::make_unique\u003c\u003e), calling CreateObjectInfo(), removing the RegistrationObjectInfo and checking existence of the registration?",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb08d49f_994645a6",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "The CreateObjectInfo() returns a bound associated interface ptr, which must be passed via a dedicated message pipe to actually establish the Mojo connection, so I chose to get the registration object host ptr via ServiceWorkerContainerHost.GetRegistration() rather than call CreateObjectInfo() directly. Also, as we\u0027ll merge SWRegistrationHandle into SWRegistration later, I\u0027m trying to avoid involving too much with SWRegistrationHandle class.",
+      "parentUuid": "dfa222aa_022a5a80",
       "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -318,6 +636,24 @@
       "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826a0440_a601f75f",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-18T08:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f82e16b_8acfd271",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
