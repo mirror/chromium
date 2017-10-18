@@ -1,0 +1,23 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module ash.mojom;
+
+import "ui/message_center/mojo/notification.mojom";
+
+// The message center controller funnels notification requests from the client
+// to the MessageCenter.
+interface AshMessageCenterController {
+  SetClient(associated AshMessageCenterClient client);
+
+  ShowClientNotification(message_center.mojom.Notification notification);
+};
+
+// The message center client interface mimics
+// message_center::NotificationDelegate.
+interface AshMessageCenterClient {
+  HandleNotificationClosed(string id, bool by_user);
+  HandleNotificationClicked(string id);
+  HandleNotificationButtonClicked(string id, int32 button_index);
+};
