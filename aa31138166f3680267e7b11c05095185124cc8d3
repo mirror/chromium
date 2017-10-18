@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "7a8289db_685d1dd0",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-18T11:22:47Z",
+      "side": 1,
+      "message": "Done, thanks.\n\nI don\u0027t think we can use UmaHistogramEnumeration() because that would require introducing a new enum for the result of GetUmaFaviconType(), which I don\u0027t think is worth.",
+      "parentUuid": "3abfd27c_b6d2b1d1",
+      "revId": "aa31138166f3680267e7b11c05095185124cc8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cabf0b97_4b59d455",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 17
