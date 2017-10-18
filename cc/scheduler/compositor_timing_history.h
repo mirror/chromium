@@ -57,6 +57,7 @@ class CC_EXPORT CompositorTimingHistory {
 
   // Events to be timed.
   void WillBeginImplFrame(bool new_active_tree_is_likely,
+                          bool is_draw_throttled,
                           base::TimeTicks frame_time,
                           viz::BeginFrameArgs::BeginFrameArgsType frame_type,
                           base::TimeTicks now);
@@ -81,6 +82,10 @@ class CC_EXPORT CompositorTimingHistory {
   void DidReceiveCompositorFrameAck();
   void WillInvalidateOnImplSide();
   void SetTreePriority(TreePriority priority);
+
+  base::TimeTicks begin_impl_frame_start_time() {
+                              return begin_impl_frame_start_time_;
+                            }
 
  protected:
   void DidBeginMainFrame(base::TimeTicks begin_main_frame_end_time);
@@ -114,6 +119,7 @@ class CC_EXPORT CompositorTimingHistory {
   RollingTimeDeltaHistory draw_duration_history_;
 
   bool begin_main_frame_on_critical_path_;
+  base::TimeTicks begin_impl_frame_start_time_;
   base::TimeTicks begin_main_frame_frame_time_;
   base::TimeTicks begin_main_frame_sent_time_;
   base::TimeTicks begin_main_frame_start_time_;

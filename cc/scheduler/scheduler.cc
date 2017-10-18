@@ -418,6 +418,13 @@ void Scheduler::BeginImplFrameWithDeadline(const viz::BeginFrameArgs& args) {
                                       can_activate_before_deadline)) {
     TRACE_EVENT_INSTANT0("cc", "SkipBeginImplFrameToReduceLatency",
                          TRACE_EVENT_SCOPE_THREAD);
+
+    TRACE_EVENT_ASYNC_BEGIN_WITH_TIMESTAMP0("benchmark", "Scheduler:Impl:SkipFrame",
+                                            this,
+                                            now);
+    TRACE_EVENT_ASYNC_END_WITH_TIMESTAMP0("benchmark", "Scheduler:Impl:SkipFrame",
+                                          this, now);
+
     skipped_last_frame_to_reduce_latency_ = true;
     SendBeginFrameAck(begin_main_frame_args_, kBeginFrameSkipped);
     return;
@@ -481,7 +488,8 @@ void Scheduler::BeginImplFrame(const viz::BeginFrameArgs& args,
   state_machine_.OnBeginImplFrame(args.source_id, args.sequence_number);
   devtools_instrumentation::DidBeginFrame(layer_tree_host_id_);
   compositor_timing_history_->WillBeginImplFrame(
-      state_machine_.NewActiveTreeLikely(), args.frame_time, args.type, now);
+      state_machine_.NewActiveTreeLikely(), state_machine_.IsDrawThrottled(),
+      args.frame_time, args.type, now);
   client_->WillBeginImplFrame(begin_impl_frame_tracker_.Current());
 
   ProcessScheduledActions();
@@ -556,6 +564,41 @@ void Scheduler::ScheduleBeginImplFrameDeadlineIfNeeded() {
 void Scheduler::OnBeginImplFrameDeadline() {
   TRACE_EVENT0("cc,benchmark", "Scheduler::OnBeginImplFrameDeadline");
   begin_impl_frame_deadline_task_.Cancel();
+
+  if (state_machine_.needs_redraw() && state_machine_.IsDrawThrottled()) {
+    TRACE_EVENT_ASYNC_BEGIN_WITH_TIMESTAMP0("benchmark", "Scheduler:Impl:Backpressure",
+                                            this,
+                                            compositor_timing_history_->begin_impl_frame_start_time());
+    TRACE_EVENT_ASYNC_END_WITH_TIMESTAMP0("benchmark", "Scheduler:Impl:Backpressure",
+                                          this, Now());
+  }
+  else if (deadline_ != base::TimeTicks() && (Now() - deadline_ > base::TimeDelta::FromMilliseconds(2))) {
+    TRACE_EVENT_ASYNC_BEGIN_WITH_TIMESTAMP0("benchmark", "Scheduler:Impl:DeadlineDelay",
+                                              this,
+                                              deadline_);
+    TRACE_EVENT_ASYNC_END_WITH_TIMESTAMP0("benchmark", "Scheduler:Impl:DeadlineDelay",
+                                            this, Now());
+  }
+  else if (SMOOTHNESS_TAKES_PRIORITY != state_machine_.tree_priority() &&
+      !state_machine_.active_tree_is_ready_to_draw()) {
+    if (state_machine_.has_pending_tree()) {
+      TRACE_EVENT_ASYNC_BEGIN_WITH_TIMESTAMP0("benchmark", "Scheduler:Impl:RasterJank",
+                                              this,
+                                              compositor_timing_history_->begin_impl_frame_start_time());
+      TRACE_EVENT_ASYNC_END_WITH_TIMESTAMP0("benchmark", "Scheduler:Impl:RasterJank",
+                                            this, Now());
+    }
+    else if (state_machine_.CommitPending()) {
+      TRACE_EVENT_ASYNC_BEGIN_WITH_TIMESTAMP0("benchmark", "Scheduler:Impl:CommitJank",
+                                              this,
+                                              compositor_timing_history_->begin_impl_frame_start_time());
+      TRACE_EVENT_ASYNC_END_WITH_TIMESTAMP0("benchmark", "Scheduler:Impl:CommitJank",
+                                            this, Now());
+    }
+  }
+
+
+
   // We split the deadline actions up into two phases so the state machine
   // has a chance to trigger actions that should occur durring and after
   // the deadline separately. For example:

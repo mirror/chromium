@@ -265,6 +265,7 @@ class CC_EXPORT SchedulerStateMachine {
 
   void SetNeedsImplSideInvalidation(bool needs_first_draw_on_activation);
 
+  TreePriority tree_priority() const { return tree_priority_; }
   bool has_pending_tree() const { return has_pending_tree_; }
   bool active_tree_needs_first_draw() const {
     return active_tree_needs_first_draw_;
@@ -292,6 +293,10 @@ class CC_EXPORT SchedulerStateMachine {
   }
   bool previous_pending_tree_was_impl_side() const {
     return previous_pending_tree_was_impl_side_;
+  }
+
+  bool active_tree_is_ready_to_draw() const {
+    return active_tree_is_ready_to_draw_;
   }
 
  protected:
