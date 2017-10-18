@@ -146,10 +146,11 @@ class AvSettings {
     // described above (Event) happens.
     virtual void OnMediaEvent(Event event) = 0;
 
-    // This should be invoked when a key is pressed.
+    // This should be invoked when a key is pressed or released.
     // |key_code| is a CEC code defined in User Control Codes table of the CEC
     // specification (CEC Table 30 in the HDMI 1.4a specification).
-    virtual void OnKeyPressed(int key_code) = 0;
+    // |pressed| indicates if the key was pressed, or otherwise released.
+    virtual void OnKeyEvent(int key_code, bool pressed) = 0;
 
    protected:
     ~Delegate() override {}
