@@ -16,6 +16,10 @@ extern const base::Feature kVsyncAlignedInputEvents;
 // converted to mouse move events due to a number of inconsistencies on
 // the native platforms. crbug.com/450631
 extern const base::Feature kSendMouseLeaveEvents;
+
+// Enabling this feature allows a touch event to be acked from the compositor
+// and thus no longer blocked on the main thread.
+extern const base::Feature kCompositorTouchAction;
 }
 
 #endif  // UI_EVENTS_BLINK_BLINK_FEATURES_H_

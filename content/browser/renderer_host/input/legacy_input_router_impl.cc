@@ -270,7 +270,11 @@ void LegacyInputRouterImpl::OnTouchEventAck(
   // in some cases we may filter out sending the touchstart - catch those here.
   if (WebTouchEventTraits::IsTouchSequenceStart(event.event) &&
       ack_result == INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS) {
-    touch_action_filter_.ResetTouchAction();
+    // Receiving a touch event ack after the whitelisted touch action is
+    // received may result in discarding scrolling that should be allowed. Only
+    // reset touch action if we have not already set whitelisted touch action.
+    if (!touch_action_filter_.white_listed_touch_action_set())
+      touch_action_filter_.ResetTouchAction();
     UpdateTouchAckTimeoutEnabled();
   }
   disposition_handler_->OnTouchEventAck(event, ack_result);
@@ -501,23 +505,20 @@ void LegacyInputRouterImpl::OnHasTouchEventHandlers(bool has_handlers) {
 }
 
 void LegacyInputRouterImpl::OnSetTouchAction(cc::TouchAction touch_action) {
-  // Synthetic touchstart events should get filtered out in RenderWidget.
-  DCHECK(touch_event_queue_->IsPendingAckTouchStart());
   TRACE_EVENT1("input", "LegacyInputRouterImpl::OnSetTouchAction", "action",
                touch_action);
 
   touch_action_filter_.OnSetTouchAction(touch_action);
-
-  // kTouchActionNone should disable the touch ack timeout.
-  UpdateTouchAckTimeoutEnabled();
+  if (touch_event_queue_->IsPendingAckTouchStart())
+    UpdateTouchAckTimeoutEnabled();
 }
 
 void LegacyInputRouterImpl::OnSetWhiteListedTouchAction(
     cc::TouchAction white_listed_touch_action,
     uint32_t unique_touch_event_id,
     InputEventAckState ack_result) {
-  // TODO(hayleyferr): Catch the cases that we have filtered out sending the
-  // touchstart.
+  if (touch_event_queue_->IsPendingAckTouchStart())
+    UpdateTouchAckTimeoutEnabled();
 
   touch_action_filter_.OnSetWhiteListedTouchAction(white_listed_touch_action);
   client_->OnSetWhiteListedTouchAction(white_listed_touch_action);
@@ -637,8 +638,12 @@ void LegacyInputRouterImpl::UpdateTouchAckTimeoutEnabled() {
   // kTouchActionNone will prevent scrolling, in which case the timeout serves
   // little purpose. It's also a strong signal that touch handling is critical
   // to page functionality, so the timeout could do more harm than good.
+  base::Optional<cc::TouchAction> allowed_touch_action =
+      touch_action_filter_.allowed_touch_action();
   const bool touch_ack_timeout_enabled =
-      touch_action_filter_.allowed_touch_action() != cc::kTouchActionNone;
+      !allowed_touch_action.has_value() ||
+      (allowed_touch_action.has_value() &&
+       allowed_touch_action.value() != cc::kTouchActionNone);
   touch_event_queue_->SetAckTimeoutEnabled(touch_ack_timeout_enabled);
 }
 
@@ -646,7 +651,7 @@ void LegacyInputRouterImpl::SetFrameTreeNodeId(int frameTreeNodeId) {
   frame_tree_node_id_ = frameTreeNodeId;
 }
 
-cc::TouchAction LegacyInputRouterImpl::AllowedTouchAction() {
+base::Optional<cc::TouchAction> LegacyInputRouterImpl::AllowedTouchAction() {
   return touch_action_filter_.allowed_touch_action();
 }
 
