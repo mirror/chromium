@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "890e4b1b_55bec24e",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-18T18:43:59Z",
+      "side": 1,
+      "message": "This is done in the GpuInit::InitializeAndStartSandbox() for regular mode.\nIt needs to be done here in the GpuInit::InitializeInProcess() also.",
+      "range": {
+        "startLine": 285,
+        "startChar": 3,
+        "endLine": 285,
+        "endChar": 0
+      },
+      "revId": "b9a62e8e61d47240abbc0d4437e0bec3e43f8005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
