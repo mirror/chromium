@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e742e8d_a82426f5",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-10-18T17:08:53Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem right to set this timestamp here (in particular, setting it if frame is null and resend_last_frame is false doesn\u0027t seem right. As I mentioned in the header, it seems like this timestamp semantically represents the same state as captured_first_frame_, except it provides more detail. I think it should be set in the same place that flag is set (or should replace it).",
+      "range": {
+        "startLine": 211,
+        "startChar": 27,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "5c17594877c01b86d5d7df54b556b87d9f1503e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cdb9ad3_9640f1f4",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-10-18T17:08:53Z",
+      "side": 1,
+      "message": "Is this still needed now that you track the time explicitly?",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 28
+      },
+      "revId": "5c17594877c01b86d5d7df54b556b87d9f1503e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0885e500_71c954d9",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-10-18T17:08:53Z",
+      "side": 1,
+      "message": "Optional: \"newest\" is a slightly odd term to use here; how about \"latest\" or \"most_recent\"?",
+      "range": {
+        "startLine": 83,
+        "startChar": 18,
+        "endLine": 83,
+        "endChar": 36
+      },
+      "revId": "5c17594877c01b86d5d7df54b556b87d9f1503e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
