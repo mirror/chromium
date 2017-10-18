@@ -57,14 +57,18 @@ const char kGoogleSignoutResponseHeader[] = "Google-Accounts-SignOut";
 // Key for DiceURLRequestUserData.
 const void* const kDiceURLRequestUserDataKey = &kDiceURLRequestUserDataKey;
 
-// Resource type for the request containing the account consistency response
-// headers.
-constexpr content::ResourceType kAccountConsistencyResponseType =
-    content::RESOURCE_TYPE_MAIN_FRAME;
+// Returns true if |resource_type| corresponds to a resource that can be used
+// to pass Mirror request or response headers.
+bool IsMirrorResourceType(content::ResourceType resource_type) {
+  return resource_type == content::RESOURCE_TYPE_MAIN_FRAME;
+}
 
-// TODO(droger): Remove this delay when the Dice implementation is finished on
-// the server side.
-int g_dice_account_reconcilor_blocked_delay_ms = 1000;
+// Returns true if |resource_type| corresponds to a resource that can be used
+// to pass DICE request or response headers.
+bool IsDiceResourceType(content::ResourceType resource_type) {
+  return resource_type == content::RESOURCE_TYPE_MAIN_FRAME ||
+         resource_type == content::RESOURCE_TYPE_XHR;
+}
 
 // Refcounted wrapper to allow creating and deleting a AccountReconcilor::Lock
 // from the IO thread.
@@ -117,12 +121,10 @@ class DiceURLRequestUserData : public base::SupportsUserData::Data {
 
     const content::ResourceRequestInfo* info =
         content::ResourceRequestInfo::ForRequest(request);
-    content::ResourceType resource_type = info->GetResourceType();
     // Requests from the Dice flow are either main resources or XHR from a Gaia
     // referer.
-    if ((resource_type == kAccountConsistencyResponseType) ||
-        ((resource_type == content::RESOURCE_TYPE_XHR) &&
-         gaia::IsGaiaSignonRealm(GURL(request->referrer()).GetOrigin()))) {
+    if (IsDiceResourceType(info->GetResourceType()) &&
+        gaia::IsGaiaSignonRealm(GURL(request->referrer()).GetOrigin())) {
       request->SetUserData(kDiceURLRequestUserDataKey,
                            base::MakeUnique<DiceURLRequestUserData>(
                                info->GetWebContentsGetterForRequest()));
@@ -141,24 +143,9 @@ class DiceURLRequestUserData : public base::SupportsUserData::Data {
                        account_reconcilor_lock_wrapper_, web_contents_getter));
   }
 
-  // The Gaia cookie is received in one request, and the Dice response in
-  // another request that is immediately following.
-  // Start locking the reconcilor on the first request, and keep it locked for a
-  // short time afterwards, to give the second request some time to start and
-  // lock the reconcilor from there.
-  ~DiceURLRequestUserData() override {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE,
-        base::BindOnce(&DiceURLRequestUserData::DoNothing,
-                       account_reconcilor_lock_wrapper_),
-        base::TimeDelta::FromMilliseconds(
-            g_dice_account_reconcilor_blocked_delay_ms));
-  }
+  ~DiceURLRequestUserData() override {}
 
  private:
-  // Dummy function used to extend the lifetime of the wrapper by keeping a
-  // reference on it.
-  static void DoNothing(scoped_refptr<AccountReconcilorLockWrapper> wrapper) {}
 
   scoped_refptr<AccountReconcilorLockWrapper> account_reconcilor_lock_wrapper_;
   DISALLOW_COPY_AND_ASSIGN(DiceURLRequestUserData);
@@ -259,7 +246,7 @@ void ProcessMirrorResponseHeaderIfExists(net::URLRequest* request,
 
   const content::ResourceRequestInfo* info =
       content::ResourceRequestInfo::ForRequest(request);
-  if (!info || (info->GetResourceType() != kAccountConsistencyResponseType))
+  if (!info || !IsMirrorResourceType(info->GetResourceType()))
     return;
 
   if (!gaia::IsGaiaSignonRealm(request->url().GetOrigin()))
@@ -309,7 +296,7 @@ void ProcessDiceResponseHeaderIfExists(net::URLRequest* request,
 
   const content::ResourceRequestInfo* info =
       content::ResourceRequestInfo::ForRequest(request);
-  if (!info || (info->GetResourceType() != kAccountConsistencyResponseType))
+  if (!info || !IsDiceResourceType(info->GetResourceType()))
     return;
 
   if (!gaia::IsGaiaSignonRealm(request->url().GetOrigin()))
@@ -349,10 +336,6 @@ void ProcessDiceResponseHeaderIfExists(net::URLRequest* request,
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 }  // namespace
-
-void SetDiceAccountReconcilorBlockDelayForTesting(int delay_ms) {
-  g_dice_account_reconcilor_blocked_delay_ms = delay_ms;
-}
 
 void FixAccountConsistencyRequestHeader(net::URLRequest* request,
                                         const GURL& redirect_url,
