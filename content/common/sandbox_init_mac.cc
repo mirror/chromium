@@ -19,22 +19,6 @@ namespace content {
 
 namespace {
 
-// NOTE: This function is the exact code for the entry point of mac sandbox
-// once it moves to service_manager/sandbox.
-bool InitializeSandboxInternal(service_manager::SandboxType sandbox_type,
-                               const base::FilePath& allowed_dir,
-                               base::OnceClosure hook) {
-  // Warm up APIs before turning on the sandbox.
-  service_manager::Sandbox::SandboxWarmup(sandbox_type);
-
-  // Execute the post warmup callback.
-  if (!hook.is_null())
-    std::move(hook).Run();
-
-  // Actually sandbox the process.
-  return service_manager::Sandbox::EnableSandbox(sandbox_type, allowed_dir);
-}
-
 // Helper method to make a closure from a closure.
 base::OnceClosure MaybeWrapWithGPUSandboxHook(
     service_manager::SandboxType sandbox_type,
