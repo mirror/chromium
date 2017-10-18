@@ -22,6 +22,30 @@
       "revId": "98b880a37f651b1e773c4457426eb058b9db3d0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db64458_23ffd18b",
+        "filename": "remoting/webapp/base/js/xmpp_login_handler.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-10-18T17:40:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39e256af_88e798d1",
+      "range": {
+        "startLine": 336,
+        "startChar": 18,
+        "endLine": 336,
+        "endChar": 22
+      },
+      "revId": "98b880a37f651b1e773c4457426eb058b9db3d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
