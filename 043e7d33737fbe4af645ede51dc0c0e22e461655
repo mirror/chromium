@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6aeefbcc_3a66dd54",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-18T17:06:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "57ec6076_8c47a4e8",
+      "range": {
+        "startLine": 849,
+        "startChar": 40,
+        "endLine": 849,
+        "endChar": 0
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a4df4cc_4b80aa6b",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 2
@@ -283,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "725f8025_64be5e59",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-18T17:06:22Z",
+      "side": 1,
+      "message": "Maybe use an std::optional?",
+      "parentUuid": "d5120343_90183182",
+      "range": {
+        "startLine": 138,
+        "startChar": 11,
+        "endLine": 138,
+        "endChar": 27
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fe45404_c228584b",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 2
@@ -330,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "8aa5a001_6f7ae0c1",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-18T17:06:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6f6060db_127884dd",
+      "range": {
+        "startLine": 163,
+        "startChar": 31,
+        "endLine": 163,
+        "endChar": 48
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddd5b84f_fd6eb4e6",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 2
@@ -365,6 +437,30 @@
       "side": 1,
       "message": "They can be false. Currently active intervals are only added to the vector of intervals if they are long enough. I could have two bits to tracks whether we actually added the currently active interval to the two interval vectors, but that state management felt more error prone.",
       "parentUuid": "ddd5b84f_fd6eb4e6",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 44
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1332dc60_ca36533d",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-18T17:06:22Z",
+      "side": 1,
+      "message": "Hmmm, I\u0027m more liking the idea of DCHECKING here, and keeping the extra bit of state.\n\nI don\u0027t have a strong preference though.",
+      "parentUuid": "260f9f5a_3d06c6d1",
       "range": {
         "startLine": 228,
         "startChar": 2,
@@ -553,6 +649,30 @@
       "side": 1,
       "message": "Saves us a call to MonotonicallyIncreasingTime unless we really have to. We call MonotonicallyIncreadingTime when we\u0027re closing or opening a network quiet window, which only happens when request count crosses the 2 request threshold. For resource end time, the finish time was already available on the resource so there was no extra call, but I can\u0027t find a resource load begin time anywhere.",
       "parentUuid": "1be20612_2778da0d",
+      "range": {
+        "startLine": 52,
+        "startChar": 26,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c24393_2c55be5b",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-18T17:06:22Z",
+      "side": 1,
+      "message": "Maybe add a comment here describing why the API is asymmetric.",
+      "parentUuid": "76b56690_a2b10325",
       "range": {
         "startLine": 52,
         "startChar": 26,
