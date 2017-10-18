@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6b95b3a_5d3290ff",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-18T01:31:17Z",
+      "side": 1,
+      "message": "You should drop the check `queueCount \u003e 0`. The Vulkan spec guarantees that.\n\n(You probably copied that from vk_glow.c. And that code is a shadow of ancient code from the pre-Vulkan-1.0 era, where the spec was in its infancy).",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76fc7d25_2d55bba0",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-18T01:31:17Z",
+      "side": 1,
+      "message": "It is incorrect to check for VK_SUCCESS here. Given your usage of vkEnumeratePhysicalDevices(), the function may return VK_INCOMPLETE, which would be success as far as this code is concerned.\n\nThe spec says: \"If pPhysicalDeviceCount is smaller than the number of physical devices available, VK_INCOMPLETE will be returned instead of VK_SUCCESS, to indicate that not all the available physical devices were returned.\"\n\nIn Vulkan, all error codes are negative, and VK_INCOMPLETE is not an error code. Therefore, I suggest you perform this check\n\n    // implicitly accepts VK_INCOMPLETE\n    if (result \u003e\u003d 0)\n\nor this check\n\n    // explicit\n    if (result !\u003d VK_SUCCESS \u0026\u0026 result !\u003d VK_INCOMPLETE)",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32b1c74_87d3074b",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-18T01:31:17Z",
+      "side": 1,
+      "message": "On failure here, you must cleanup the VkInstance.",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75015f8_95f62eff",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-18T01:31:17Z",
+      "side": 1,
+      "message": "Again, need to cleanup the VkInstance.",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d8fe449_dfa64900",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-18T01:31:17Z",
+      "side": 1,
+      "message": "This failure path must cleanup the VkInstance and VkDevice.",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8cdf803_913a14f1",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-18T01:31:17Z",
+      "side": 1,
+      "message": "You need to check that gbm_bo_get_plane_fd() succeeded (that is, it returned fd !\u003d -1) before passing the fd to vkCreateDmaBufImageINTEL(). In general, passing invalid arguments to Vulkan results in undefined behavior.",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81422dc2_656295cc",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-18T01:31:17Z",
+      "side": 1,
+      "message": "When vkCreateFoo(..., \u0026foo) fails, the spec requires that vkCreateFoo not modify foo. As a consequence, When vkCreateImageView fails here, vk_image_view remains unitialized memory, and ScopedVkImageView below gets initialized with garbage bits.\n\nSolution: Check the vkCreateImageView result before creating the ScopedVkImageView.",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e39c56e_e5c6dc95",
+        "filename": "components/exo/wayland/clients/client_base.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-18T01:31:17Z",
+      "side": 1,
+      "message": "Do any other configuration options for Chromium define USE_VULKAN? In particular, if someone enables Vulkan for Skia, will that incidentally define USE_VULKAN here? If yes, then #include \u003cvulkan/vulkan_intel.h\u003e will obviously break the build for many users.",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826b2215_f2ed8c83",
+        "filename": "components/exo/wayland/clients/client_base.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-18T01:31:17Z",
+      "side": 1,
+      "message": "This struct contains EGL and Vulkan resources. In general, EGL allows the user to call eglDestroyFoo(foo) even if the foo is still being used. According to the EGL spec, eglDestroyFoo(foo) does two things: it invalidates the handle foo, so it is illegal to ever reference it again; and it *schedules* foo to be destroyed when it is no longer in use.\n\nSorta kinda, you can view foo as having two independent refcounts. eglDestroyFoo(foo) drops foo\u0027s external, user-facing refcount to 0. The driver will eventually delete foo when its internal, driver-private refcount reaches 0.\n\nAs a consequence, when Buffer::~Buffer() runs, the order in which it calls eglDestroyImage() and eglDestroySync() doesn\u0027t matter. The EGL spec doesn\u0027t care.\n\nVulkan does not behave that way.\n\nVulkan has two destruction requirements that are relevant to Buffer::~Buffer():\n\n    1. If a Vulkan resource has any children resources, then the user must not delete the parent resource before its children. For example, if you do vkCreateImage(device, ..., \u0026image), then you must vkDestroyImage(device, image, ...) before you vkDestroyDevice(..., device, ...). [There may be exceptions to this rule that I\u0027m not aware of].\n\n    2. The user must not destroy any Vulkan resource that is currently in use by a VkQueue.\n\n       For example, if you submit to a queue some command buffer that accesses an image, then you must prove that the command buffer has completed execution before destroying the image. The easiest way to prove that is vkQueueWaitIdle; second easiest is provide an out fence to vkQueueSubmit and wait on the fence.\n\nWhy did I write this mini essay? Because I see no guarantee that Buffer::~Buffer() satisfies requirements #1 and #2. Does any code elsewhere guarantee that the Buffer\u0027s Vulkan resources are destroyed safely?",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f66b0c3_ccc82d5c",
+        "filename": "components/exo/wayland/clients/client_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-18T01:31:17Z",
+      "side": 1,
+      "message": "Does C++11 (or C++14) allow these simple static methods to be defined inline in the header? If so, I think it would be cleaner. Feel free to ignore this suggestion.",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9dcf38_439eae28",
+        "filename": "components/exo/wayland/clients/vulkan.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-18T01:31:17Z",
+      "side": 1,
+      "message": "I think C++ leaves command_buffer_ uninitialized. Please initialize it to VK_NULL_HANDLE for safety\u0027s sake.",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249ae81c_608732eb",
+        "filename": "components/exo/wayland/clients/vulkan.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-18T01:31:17Z",
+      "side": 1,
+      "message": "Does CHECK_EQ kill the process on failure? If not, then what it does it do?\n\nI don\u0027t understand the role this file plays in Chromium\u0027s testing. It may make sense, in follow-up patches, to teach this code how to recover from queue failure.",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9002e010_d00b18be",
+        "filename": "components/exo/wayland/clients/vulkan.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-18T01:31:17Z",
+      "side": 1,
+      "message": "Why do you call vkQueueWaitIdle() here? If at all possible, that should be replaced with a VkSemaphore; or, if a VkSemaphore is insufficient, then fallback to a VkFence.\n\nFor this initial commit, vkQueueWaitIdle() is good enough. But please have a plan for replacing it in follow-up CLs.",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
