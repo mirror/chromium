@@ -81,6 +81,12 @@ enum FetchCacheMode {
   NO_CACHE,
   FORCE_CACHE,
   ONLY_IF_CACHED,
+
+  // Unspecified ones
+  // Similar to ONLY_IF_CACHED, but checks freshness strictly.
+  UNSPECIFIED_ONLY_IF_CACHED_STRICT,
+  // Used by devtools to trigger a request which ends up in CACHE_MISS.
+  UNSPECIFIED_FORCE_CACHE_MISS,
 };
 
 // The redirect mode indicating how redirects should be handled.

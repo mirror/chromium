@@ -32,10 +32,10 @@
 #define WebURLRequest_h
 
 #include <memory>
-#include "WebCachePolicy.h"
 #include "WebCommon.h"
 #include "WebHTTPBody.h"
 #include "WebReferrerPolicy.h"
+#include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 
 namespace blink {
 
@@ -219,8 +219,8 @@ class WebURLRequest {
   BLINK_PLATFORM_EXPORT bool AllowStoredCredentials() const;
   BLINK_PLATFORM_EXPORT void SetAllowStoredCredentials(bool);
 
-  BLINK_PLATFORM_EXPORT WebCachePolicy GetCachePolicy() const;
-  BLINK_PLATFORM_EXPORT void SetCachePolicy(WebCachePolicy);
+  BLINK_PLATFORM_EXPORT mojom::FetchCacheMode GetCacheMode() const;
+  BLINK_PLATFORM_EXPORT void SetCacheMode(mojom::FetchCacheMode);
 
   BLINK_PLATFORM_EXPORT WebString HttpMethod() const;
   BLINK_PLATFORM_EXPORT void SetHTTPMethod(const WebString&);

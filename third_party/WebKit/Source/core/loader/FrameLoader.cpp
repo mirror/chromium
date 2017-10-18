@@ -98,8 +98,8 @@
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebURLRequest.h"
+#include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "public/web/WebFrameLoadType.h"
 #include "public/web/WebHistoryItem.h"
@@ -212,14 +212,13 @@ ResourceRequest FrameLoader::ResourceRequestForReload(
     const KURL& override_url,
     ClientRedirectPolicy client_redirect_policy) {
   DCHECK(IsReloadLoadType(frame_load_type));
-  WebCachePolicy cache_policy =
-      frame_load_type == kFrameLoadTypeReloadBypassingCache
-          ? WebCachePolicy::kBypassingCache
-          : WebCachePolicy::kValidatingCacheData;
+  const auto cache_mode = frame_load_type == kFrameLoadTypeReloadBypassingCache
+                              ? mojom::FetchCacheMode::RELOAD
+                              : mojom::FetchCacheMode::NO_CACHE;
   if (!document_loader_ || !document_loader_->GetHistoryItem())
     return ResourceRequest();
   ResourceRequest request =
-      document_loader_->GetHistoryItem()->GenerateResourceRequest(cache_policy);
+      document_loader_->GetHistoryItem()->GenerateResourceRequest(cache_mode);
 
   // ClientRedirectPolicy is an indication that this load was triggered by some
   // direct interaction with the page. If this reload is not a client redirect,
@@ -637,11 +636,11 @@ FrameLoadType FrameLoader::DetermineFrameLoadType(
       return kFrameLoadTypeReplaceCurrentItem;
     return kFrameLoadTypeStandard;
   }
-  if (request.GetResourceRequest().GetCachePolicy() ==
-      WebCachePolicy::kValidatingCacheData)
+  if (request.GetResourceRequest().GetCacheMode() ==
+      mojom::FetchCacheMode::NO_CACHE)
     return kFrameLoadTypeReload;
-  if (request.GetResourceRequest().GetCachePolicy() ==
-      WebCachePolicy::kBypassingCache)
+  if (request.GetResourceRequest().GetCacheMode() ==
+      mojom::FetchCacheMode::RELOAD)
     return kFrameLoadTypeReloadBypassingCache;
   // From the HTML5 spec for location.assign():
   // "If the browsing context's session history contains only one Document,
