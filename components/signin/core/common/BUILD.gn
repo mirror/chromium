@@ -27,7 +27,12 @@ static_library("common") {
     "//base",
   ]
 
+  if (enable_dice_support) {
+    deps += [ "//components/pref_registry" ]
+  }
+
   public_deps = [
     ":signin_features",
+    "//components/prefs",
   ]
 }
