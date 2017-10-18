@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5653f20_951c349d",
+        "filename": "testing/libfuzzer/fuzzers/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-18T16:26:56Z",
+      "side": 1,
+      "message": "The trailing \"1\" looks like a typo.",
+      "revId": "a05757049a52c0677c30a70248e8bef944b33d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
