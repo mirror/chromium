@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34a50fb0_f5839e01",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35d18624_c3ad7733",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21f624c1_8399c6c6",
         "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-06T20:22:54Z",
       "side": 1,
       "message": "API design notes:\n\nI have to wonder if people won\u0027t accidentally make this mistake anyway. \n\n-----------\nI saw you have Java 8 support, so maybe the linter could catch this?\n\n   registerNativeReference(ptr, obj, Foo::bar) // warn unless Foo#bar is static.\n\n-----------\n\nAlternatively, if you used reflection to invoke the \"static native nativeDestroy(long)\" , it would absolve this problem?\n\n  void registerNativeReference(long ptr, Object object, Class\u003cT\u003e destroyer) {\n    Method destroyNative \u003d destroyer.getMethod(\"nativeDestroy\", long.TYPE);\n    if (destroyNative !\u003d static) throw;\n\n    .....\n    // instead of calling Destroyer.onDestroy, call destroyNative.invoke(long)\n  }\n  \n  void registerNativeReference(long ptr, Object object) {\n    registerNativeReference(ptr, object, object.getClass());\n  }\n\n(as a variation, if you use JNI to do this you can avoid boxing the Long pointer if thats a concern).\n\n---------",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f9f5a2_a8c4cfa9",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "I\u0027m not sure it necessarily has to be static though, or that it helps being static. Also, I\u0027m not sure how that would work when we use method references? Would they be static?\nI think I\u0027d be more inclined to keep the documentation for the important part here, which is to say that it should have no reference back to the referent (the object that should be garbage collected).",
+      "parentUuid": "21f624c1_8399c6c6",
       "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "80b491c4_246493f7",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f362ca5_012b8c70",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22eb270e_4ac53854",
         "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0890148_998eb600",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "What I\u0027ve done here is typically what we\u0027ve done in other places in our code base.\nI\u0027ve changed it to use reflection now, but I\u0027m not sure how I feel about it.",
+      "parentUuid": "22eb270e_4ac53854",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "40f01ebf_19eb9483",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "Yes ;-)",
+      "parentUuid": "e0f74e3e_8cab33f9",
+      "range": {
+        "startLine": 131,
+        "startChar": 7,
+        "endLine": 131,
+        "endChar": 17
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09fdcfbe_5f4c2b8d",
         "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
         "patchSetId": 3
@@ -113,6 +209,30 @@
       "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9942f24c_ee0194ff",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "It was just for an abundance of caution not wanting to get an ClassCastException. But then again, I guess at that point it\u0027s better to crash, since something is horribly wrong. Also, removed |final| keyword.",
+      "parentUuid": "09fdcfbe_5f4c2b8d",
+      "range": {
+        "startLine": 158,
+        "startChar": 28,
+        "endLine": 158,
+        "endChar": 38
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "23a401ef_91e949bf",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "Changed to Log.e(...), would that be enough you think?",
+      "parentUuid": "73ea1fb7_4ac19fc1",
+      "range": {
+        "startLine": 162,
+        "startChar": 20,
+        "endLine": 162,
+        "endChar": 25
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b51e5631_43c41110",
         "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
         "patchSetId": 3
@@ -153,6 +297,24 @@
       "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68719ec1_cd4adcdc",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "It\u0027s private, so it\u0027s not used by anyone directly, but the only caller, NativeRefAssassin#stopForTest() I\u0027ve now marked @VisibleForTesting.",
+      "parentUuid": "b51e5631_43c41110",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "18e1769c_200d5225",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "Kept as is then for clarity.",
+      "parentUuid": "234bca9a_435cdfd7",
+      "range": {
+        "startLine": 175,
+        "startChar": 15,
+        "endLine": 175,
+        "endChar": 79
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e48ed71_520fa90b",
         "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
         "patchSetId": 3
@@ -214,6 +400,30 @@
       "writtenOn": "2017-10-12T21:13:54Z",
       "side": 1,
       "message": "if our strong references set is empty, should/could we be stopping the thread at this point?",
+      "range": {
+        "startLine": 179,
+        "startChar": 16,
+        "endLine": 179,
+        "endChar": 33
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15694414_2dee54d6",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "We could, but then we would have to autostart it again. I thought a bit about it before I sent this out, and fell on the side of not adding the extra complexity of autostop and autostart.\n\nAs it stands now, the .remove() call on the queue blocks on a .wait() call, which means that the thread is effectively stopped until something is put it in, IIUC.",
+      "parentUuid": "4e48ed71_520fa90b",
       "range": {
         "startLine": 179,
         "startChar": 16,
@@ -315,6 +525,24 @@
     },
     {
       "key": {
+        "uuid": "30ddc9f4_48d89596",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "There are a few suggestions and questions here:\n1) I\u0027ve changed destroying in destroy() to in fact post to the correct handler.\n2) The long is AtomicLong, since destroy() may be invoked from any thread.\n\nRegarding the thread safety, I do kind of like the AutoCloseable requirement and giving out NativePointer instead of the raw pointer (and guarding the get()-call with linter). I will consider that in a follow-up CL.\n\nI agree that no class should ever give out their NativeRefPointer, nor their raw pointer contained within it, so it would be similar rules here as what we have currently when handling raw native pointers. Which means this is no worse than before.\nAnd in fact, since the destroy is now always posted to the given handler (I guess typically the main handler), if the pointer is only accessed on that handler, it will not be destroyed within the current stack frame at least.\n\nI\u0027ve moved the destroy handler argument from the constructor of the NativeRefAssassin to the caller of NativeRefAssassin#registerReference(...), which means each class can choose which handler to be destructed on. I\u0027ve also added a helper method for when the caller wants to use the main handler.\n\nI\u0027ve also added some documentation to this method regarding this to ensure developers read about what they need to think about.\n\nMore importantly though, I think going forward we would want to hide all usage of the raw native pointer behind an interface, which would mean that no-one would have to deal with accessing the pointer in weird ways themselves.",
+      "parentUuid": "ad41ef73_725747a2",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e96a62fd_e1ba68be",
         "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
         "patchSetId": 3
@@ -335,6 +563,30 @@
       "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce7e564_5ee357fd",
+        "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e96a62fd_e1ba68be",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 40
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -361,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "3dee8ede_0a33caf3",
+        "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "Yep. Made into a constant and added comment :-p",
+      "parentUuid": "33d32cb6_38727899",
+      "range": {
+        "startLine": 61,
+        "startChar": 33,
+        "endLine": 61,
+        "endChar": 35
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fae6c3d_3a8d70f0",
         "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
         "patchSetId": 3
@@ -381,6 +657,30 @@
       "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a06662_cf0e3d5b",
+        "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fae6c3d_3a8d70f0",
+      "range": {
+        "startLine": 63,
+        "startChar": 23,
+        "endLine": 63,
+        "endChar": 21
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -407,6 +707,30 @@
     },
     {
       "key": {
+        "uuid": "f0f2c7ee_71405e28",
+        "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "Wow... OK... So turns out SystemClock.elapsedRealtime() doesn\u0027t work like I thought it worked in Robolectric. I\u0027ve changed it now to use System.currentTimeMillis() instead, because that one does in fact advance. Also, changed the code so it\u0027s easier to reason about with nice variable names, and fixed the bug.",
+      "parentUuid": "6de22876_ce72c53e",
+      "range": {
+        "startLine": 127,
+        "startChar": 57,
+        "endLine": 127,
+        "endChar": 58
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ee6fdbf_11ef4ae6",
         "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
         "patchSetId": 3
@@ -427,6 +751,30 @@
       "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a1aad4_ea36333f",
+        "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ee6fdbf_11ef4ae6",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 16
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -453,6 +801,30 @@
     },
     {
       "key": {
+        "uuid": "6e1633fe_27468f34",
+        "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "It\u0027s stupid. Basically, we can\u0027t run to the end of the looper for the destroyer while we\u0027re blocking on the tryAcquire(...) call.\nAnd the automagic that Robolectric usually uses doesn\u0027t work when we have the test thread, the thread for the cleaner, and the thread for destroying sadly. Basically, no tasks are automatically run :-/",
+      "parentUuid": "7109fd39_6ce113e1",
+      "range": {
+        "startLine": 158,
+        "startChar": 48,
+        "endLine": 158,
+        "endChar": 58
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4006b19_6ae9994c",
         "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
         "patchSetId": 3
@@ -473,6 +845,30 @@
       "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef106604_44186531",
+        "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-18T19:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4006b19_6ae9994c",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 44
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
