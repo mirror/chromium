@@ -22,6 +22,30 @@
       "revId": "3dc291dcde37059aecd532be996e8317ecadb0f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72670ad4_57bc55b8",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-18T17:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0efc55f_6f6b8291",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 13
+      },
+      "revId": "3dc291dcde37059aecd532be996e8317ecadb0f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
