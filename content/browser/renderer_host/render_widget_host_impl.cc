@@ -767,9 +767,10 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
       old_resize_params_->new_size != resize_params->new_size ||
       (old_resize_params_->physical_backing_size.IsEmpty() &&
        !resize_params->physical_backing_size.IsEmpty());
-  bool dirty =
+  bool supported_surface_synchronization_params_dirty =
       size_changed ||
-      old_resize_params_->screen_info != resize_params->screen_info ||
+      old_resize_params_->screen_info.device_scale_factor !=
+          resize_params->screen_info.device_scale_factor ||
       old_resize_params_->physical_backing_size !=
           resize_params->physical_backing_size ||
       old_resize_params_->is_fullscreen_granted !=
@@ -785,6 +786,17 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
           resize_params->visible_viewport_size ||
       (enable_surface_synchronization_ &&
        old_resize_params_->local_surface_id != resize_params->local_surface_id);
+
+  bool dirty = supported_surface_synchronization_params_dirty ||
+               old_resize_params_->screen_info != resize_params->screen_info;
+
+  // If surface synchronization is enabled, then dirty ResizeParams must imply
+  // that the viz::LocalSurfaceId has changed.
+  DCHECK(!enable_surface_synchronization_ ||
+         !supported_surface_synchronization_params_dirty ||
+         !resize_params->local_surface_id || !old_resize_params_ ||
+         resize_params->local_surface_id !=
+             old_resize_params_->local_surface_id);
 
   // We don't expect to receive an ACK when the requested size or the physical
   // backing size is empty, or when the main viewport size didn't change.
