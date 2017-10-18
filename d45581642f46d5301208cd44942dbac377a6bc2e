@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9bd9ce6_cbef764b",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-18T12:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bef9e029_47a924c3",
+      "range": {
+        "startLine": 171,
+        "startChar": 37,
+        "endLine": 171,
+        "endChar": 42
+      },
+      "revId": "d45581642f46d5301208cd44942dbac377a6bc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8508c1c8_597fbf0b",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0bded2ef_fc701570",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-18T12:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8508c1c8_597fbf0b",
+      "range": {
+        "startLine": 215,
+        "startChar": 37,
+        "endLine": 215,
+        "endChar": 42
+      },
+      "revId": "d45581642f46d5301208cd44942dbac377a6bc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "316c26ba_9ffd2ea4",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "d45581642f46d5301208cd44942dbac377a6bc2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "531cc7ae_271018a4",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-18T12:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "316c26ba_9ffd2ea4",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 292,
+        "endChar": 66
+      },
+      "revId": "d45581642f46d5301208cd44942dbac377a6bc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +186,54 @@
       "revId": "d45581642f46d5301208cd44942dbac377a6bc2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b00395_046550e0",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-18T12:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6442da09_8ae26f15",
+      "range": {
+        "startLine": 110,
+        "startChar": 29,
+        "endLine": 110,
+        "endChar": 51
+      },
+      "revId": "d45581642f46d5301208cd44942dbac377a6bc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "539c155e_adc58282",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-18T12:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6221b28f_6d383a5a",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 15
+      },
+      "revId": "d45581642f46d5301208cd44942dbac377a6bc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
