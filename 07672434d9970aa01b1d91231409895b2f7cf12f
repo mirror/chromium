@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eebbbad9_6f0dd816",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T09:47:51Z",
+      "side": 1,
+      "message": "nit: space before \u0027(\u0027",
+      "revId": "07672434d9970aa01b1d91231409895b2f7cf12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f47ff5_11c23fbe",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T09:47:51Z",
+      "side": 1,
+      "message": "set valid value -\u003e set to the valid value",
+      "revId": "07672434d9970aa01b1d91231409895b2f7cf12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11191dc5_afbbb0f1",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T09:47:51Z",
+      "side": 1,
+      "message": "I think host_for_{global_scope_,client_} are the ones that hold connections to the RegHandle after this instance is created... am I reading it wrongly?",
+      "revId": "07672434d9970aa01b1d91231409895b2f7cf12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd33638_a31aa9fd",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T09:47:51Z",
+      "side": 1,
+      "message": "nit: interfaces -\u003e interface\n\non the renderer process -\u003e in the ...",
+      "revId": "07672434d9970aa01b1d91231409895b2f7cf12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
