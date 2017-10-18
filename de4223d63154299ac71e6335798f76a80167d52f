@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03318080_fe6c887c",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-18T20:48:48Z",
+      "side": 1,
+      "message": "Something in this code is causing a check to fail for me:\n\n[15184:28163:1018/133932.577090:378230052070365:FATAL:paint_op_buffer.cc(190)] Check failed: op-\u003eIsValid(). \n0  base::debug::StackTrace::StackTrace(unsigned long) + 174\n1  base::debug::StackTrace::StackTrace(unsigned long) + 29\n2  base::debug::StackTrace::StackTrace() + 28\n3  logging::LogMessage::~LogMessage() + 479\n4  logging::LogMessage::~LogMessage() + 21\n5  cc::Rasterizer\u003ccc::DrawRectOp, true\u003e::Raster(cc::DrawRectOp const*, SkCanvas*, cc::PlaybackParams const\u0026) + 203\n6  _ZNK2cc4$_14clEPKNS_7PaintOpEP8SkCanvasRKNS_14PlaybackParamsE + 44\n7  _ZN2cc4$_148__invokeEPKNS_7PaintOpEP8SkCanvasRKNS_14PlaybackParamsE + 40\n\nCommenting out EnforceDotsAtEndpoints fixes the bug but I didn\u0027t look further.",
+      "revId": "de4223d63154299ac71e6335798f76a80167d52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1b4279_ded5bb92",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-18T20:48:48Z",
+      "side": 1,
+      "message": "I wanted to check this in a local build but wasn\u0027t able to, so asking instead: can you add logging and confirm that each of these codepaths hit in the new testcase?",
+      "revId": "de4223d63154299ac71e6335798f76a80167d52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7cc46e1_05ae2844",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-18T20:48:48Z",
+      "side": 1,
+      "message": "These used to be else-ifs but are now ifs (except the last one). Can the conditionals be written to only set p1 or p2 once?",
+      "revId": "de4223d63154299ac71e6335798f76a80167d52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
