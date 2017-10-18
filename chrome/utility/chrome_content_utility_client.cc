@@ -16,7 +16,6 @@
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "chrome/common/features.h"
-#include "chrome/common/file_patcher.mojom.h"
 #include "chrome/common/profiling/constants.mojom.h"
 #include "chrome/profiling/profiling_service.h"
 #include "chrome/utility/printing/pdf_to_pwg_raster_converter_impl.h"
@@ -26,8 +25,6 @@
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/simple_connection_filter.h"
 #include "content/public/utility/utility_thread.h"
-#include "courgette/courgette.h"
-#include "courgette/third_party/bsdiff/bsdiff.h"
 #include "extensions/features/features.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "printing/features/features.h"
@@ -88,47 +85,6 @@
 #endif
 
 namespace {
-
-class FilePatcherImpl : public chrome::mojom::FilePatcher {
- public:
-  FilePatcherImpl() = default;
-  ~FilePatcherImpl() override = default;
-
-  static void Create(chrome::mojom::FilePatcherRequest request) {
-    mojo::MakeStrongBinding(base::MakeUnique<FilePatcherImpl>(),
-                            std::move(request));
-  }
-
- private:
-  // chrome::mojom::FilePatcher:
-  void PatchFileBsdiff(base::File input_file,
-                       base::File patch_file,
-                       base::File output_file,
-                       const PatchFileBsdiffCallback& callback) override {
-    DCHECK(input_file.IsValid());
-    DCHECK(patch_file.IsValid());
-    DCHECK(output_file.IsValid());
-
-    const int patch_result_status = bsdiff::ApplyBinaryPatch(
-        std::move(input_file), std::move(patch_file), std::move(output_file));
-    callback.Run(patch_result_status);
-  }
-
-  void PatchFileCourgette(base::File input_file,
-                          base::File patch_file,
-                          base::File output_file,
-                          const PatchFileCourgetteCallback& callback) override {
-    DCHECK(input_file.IsValid());
-    DCHECK(patch_file.IsValid());
-    DCHECK(output_file.IsValid());
-
-    const int patch_result_status = courgette::ApplyEnsemblePatch(
-        std::move(input_file), std::move(patch_file), std::move(output_file));
-    callback.Run(patch_result_status);
-  }
-
-  DISALLOW_COPY_AND_ASSIGN(FilePatcherImpl);
-};
 
 #if defined(FULL_SAFE_BROWSING)
 class SafeArchiveAnalyzerImpl : public chrome::mojom::SafeArchiveAnalyzer {
@@ -246,8 +202,6 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
   // If our process runs with elevated privileges, only add elevated Mojo
   // interfaces to the interface registry.
   if (!utility_process_running_elevated_) {
-    registry->AddInterface(base::Bind(&FilePatcherImpl::Create),
-                           base::ThreadTaskRunnerHandle::Get());
 #if !defined(OS_ANDROID)
     registry->AddInterface(base::Bind(CreateResourceUsageReporter),
                            base::ThreadTaskRunnerHandle::Get());

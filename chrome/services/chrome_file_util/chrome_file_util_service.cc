@@ -7,12 +7,21 @@
 #include <memory>
 
 #include "build/build_config.h"
+#include "chrome/services/chrome_file_util/file_patcher_impl.h"
 #include "chrome/services/chrome_file_util/zip_file_creator_impl.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
 namespace chrome {
 
 namespace {
+
+void OnFilePatcherRequest(
+    service_manager::ServiceContextRefFactory* ref_factory,
+    chrome::mojom::FilePatcherRequest request) {
+  mojo::MakeStrongBinding(
+      std::make_unique<FilePatcherImpl>(ref_factory->CreateRef()),
+      std::move(request));
+}
 
 void OnZipFileCreatorRequest(
     service_manager::ServiceContextRefFactory* ref_factory,
@@ -37,6 +46,7 @@ void ChromeFileUtilService::OnStart() {
   ref_factory_.reset(new service_manager::ServiceContextRefFactory(
       base::Bind(&service_manager::ServiceContext::RequestQuit,
                  base::Unretained(context()))));
+  registry_.AddInterface(base::Bind(&OnFilePatcherRequest, ref_factory_.get()));
   registry_.AddInterface(
       base::Bind(&OnZipFileCreatorRequest, ref_factory_.get()));
 }

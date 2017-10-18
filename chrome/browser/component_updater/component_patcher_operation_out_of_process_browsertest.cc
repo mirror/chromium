@@ -19,8 +19,10 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/update_client/component_patcher_operation.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/service_manager_connection.h"
 #include "courgette/courgette.h"
 #include "courgette/third_party/bsdiff/bsdiff.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace {
 
@@ -91,24 +93,31 @@ class OutOfProcessPatchTest : public InProcessBrowserTest {
     quit_closure_ = run_loop.QuitClosure();
     done_called_ = false;
 
+    std::unique_ptr<service_manager::Connector> connector =
+        content::ServiceManagerConnection::GetForProcess()
+            ->GetConnector()
+            ->Clone();
     base::CreateSequencedTaskRunnerWithTraits(kTaskTraits)
         ->PostTask(FROM_HERE,
                    base::BindOnce(
                        &OutOfProcessPatchTest::PatchAsyncSequencedTaskRunner,
-                       base::Unretained(this), operation, input, patch, output,
-                       expected_result));
+                       base::Unretained(this), base::Passed(&connector),
+                       operation, input, patch, output, expected_result));
     run_loop.Run();
     EXPECT_TRUE(done_called_);
   }
 
  private:
-  void PatchAsyncSequencedTaskRunner(const std::string& operation,
-                                     const base::FilePath& input,
-                                     const base::FilePath& patch,
-                                     const base::FilePath& output,
-                                     int expected_result) {
+  void PatchAsyncSequencedTaskRunner(
+      std::unique_ptr<service_manager::Connector> connector,
+      const std::string& operation,
+      const base::FilePath& input,
+      const base::FilePath& patch,
+      const base::FilePath& output,
+      int expected_result) {
     scoped_refptr<update_client::OutOfProcessPatcher> patcher =
-        base::MakeRefCounted<component_updater::ChromeOutOfProcessPatcher>();
+        base::MakeRefCounted<component_updater::ChromeOutOfProcessPatcher>(
+            std::move(connector));
 
     patcher->Patch(operation, input, patch, output,
                    base::Bind(&OutOfProcessPatchTest::PatchDone,

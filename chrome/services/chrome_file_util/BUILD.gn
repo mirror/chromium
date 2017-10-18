@@ -9,6 +9,8 @@ source_set("lib") {
   sources = [
     "chrome_file_util_service.cc",
     "chrome_file_util_service.h",
+    "file_patcher_impl.cc",
+    "file_patcher_impl.h",
     "zip_file_creator_impl.cc",
     "zip_file_creator_impl.h",
   ]

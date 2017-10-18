@@ -5,6 +5,7 @@
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {
+        "patch_file": [ "chrome::mojom::FilePatcher" ],
         "zip_file": [ "chrome::mojom::ZipFileCreator" ]
        },
        "requires": {

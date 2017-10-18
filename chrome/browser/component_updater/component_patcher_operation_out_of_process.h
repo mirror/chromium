@@ -11,20 +11,24 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "chrome/common/file_patcher.mojom.h"
+#include "chrome/services/chrome_file_util/public/interfaces/file_patcher.mojom.h"
 #include "components/update_client/out_of_process_patcher.h"
-#include "content/public/browser/utility_process_mojo_client.h"
 
 namespace base {
 class FilePath;
 class SequencedTaskRunner;
 }  // namespace base
 
+namespace service_manager {
+class Connector;
+}
+
 namespace component_updater {
 
 class ChromeOutOfProcessPatcher : public update_client::OutOfProcessPatcher {
  public:
-  ChromeOutOfProcessPatcher();
+  explicit ChromeOutOfProcessPatcher(
+      std::unique_ptr<service_manager::Connector> connector);
 
   // update_client::OutOfProcessPatcher:
   void Patch(const std::string& operation,
@@ -43,9 +47,10 @@ class ChromeOutOfProcessPatcher : public update_client::OutOfProcessPatcher {
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
   base::Callback<void(int result)> callback_;
 
-  // Utility process used to perform out-of-process file patching.
-  std::unique_ptr<content::UtilityProcessMojoClient<chrome::mojom::FilePatcher>>
-      utility_process_mojo_client_;
+  std::unique_ptr<service_manager::Connector> connector_;
+
+  // Interface ptr to the patcher running in the Chrome file util service.
+  chrome::mojom::FilePatcherPtr file_patcher_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeOutOfProcessPatcher);
 };

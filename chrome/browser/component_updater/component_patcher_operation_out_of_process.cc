@@ -14,12 +14,17 @@
 #include "base/strings/string16.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/services/chrome_file_util/public/interfaces/constants.mojom.h"
 #include "components/update_client/component_patcher_operation.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace component_updater {
 
-ChromeOutOfProcessPatcher::ChromeOutOfProcessPatcher() = default;
+// Clone the connector so the new one can be used from the background thread.
+ChromeOutOfProcessPatcher::ChromeOutOfProcessPatcher(
+    std::unique_ptr<service_manager::Connector> connector)
+    : connector_(std::move(connector)) {}
 
 ChromeOutOfProcessPatcher::~ChromeOutOfProcessPatcher() = default;
 
@@ -48,22 +53,19 @@ void ChromeOutOfProcessPatcher::Patch(
     return;
   }
 
-  DCHECK(!utility_process_mojo_client_);
+  DCHECK(!file_patcher_);
 
-  utility_process_mojo_client_ = base::MakeUnique<
-      content::UtilityProcessMojoClient<chrome::mojom::FilePatcher>>(
-      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_COMPONENT_PATCHER_NAME));
-  utility_process_mojo_client_->set_error_callback(
+  connector_->BindInterface(chrome::mojom::kChromeFileUtilServiceName,
+                            mojo::MakeRequest(&file_patcher_));
+  file_patcher_.set_connection_error_handler(
       base::Bind(&ChromeOutOfProcessPatcher::PatchDone, this, -1));
 
-  utility_process_mojo_client_->Start();  // Start the utility process.
-
   if (operation == update_client::kBsdiff) {
-    utility_process_mojo_client_->service()->PatchFileBsdiff(
+    file_patcher_->PatchFileBsdiff(
         std::move(input_file), std::move(patch_file), std::move(output_file),
         base::Bind(&ChromeOutOfProcessPatcher::PatchDone, this));
   } else if (operation == update_client::kCourgette) {
-    utility_process_mojo_client_->service()->PatchFileCourgette(
+    file_patcher_->PatchFileCourgette(
         std::move(input_file), std::move(patch_file), std::move(output_file),
         base::Bind(&ChromeOutOfProcessPatcher::PatchDone, this));
   } else {
@@ -72,7 +74,7 @@ void ChromeOutOfProcessPatcher::Patch(
 }
 
 void ChromeOutOfProcessPatcher::PatchDone(int result) {
-  utility_process_mojo_client_.reset();  // Terminate the utility process.
+  file_patcher_.reset();  // Give a chance to the service to stop.
   base::SequencedTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::BindOnce(callback_, result));
 }
