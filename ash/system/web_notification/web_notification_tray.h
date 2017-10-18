@@ -68,7 +68,7 @@ class ASH_EXPORT WebNotificationTray
   bool ShouldBlockShelfAutoHide() const;
 
   // Returns true if the message center bubble is visible.
-  bool IsMessageCenterBubbleVisible() const;
+  bool IsMessageCenterVisible() const;
 
   // Called when the login status is changed.
   void UpdateAfterLoginStatusChange(LoginStatus login_status);

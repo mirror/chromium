@@ -118,6 +118,7 @@ void NotificationControlButtonsView::SetBackgroundColor(
 }
 
 void NotificationControlButtonsView::SetVisible(bool visible) {
+  // views::View::SetVisible(visible);
   DCHECK(layer());
   // Manipulate the opacity instead of changing the visibility to keep the tab
   // order even when the view is invisible.
