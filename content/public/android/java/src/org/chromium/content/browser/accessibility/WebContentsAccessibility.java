@@ -139,9 +139,6 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
 
     @Override
     public AccessibilityNodeInfo createAccessibilityNodeInfo(int virtualViewId) {
-        if (!mAccessibilityManager.isEnabled()) {
-            return null;
-        }
         int rootId = nativeGetRootId(mNativeObj);
 
         if (virtualViewId == View.NO_ID) {
