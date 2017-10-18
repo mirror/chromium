@@ -57,6 +57,7 @@ String EntryBase::toURL() const {
 
 DEFINE_TRACE(EntryBase) {
   visitor->Trace(file_system_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

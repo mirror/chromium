@@ -1786,6 +1786,7 @@ DEFINE_TRACE(Range) {
   visitor->Trace(owner_document_);
   visitor->Trace(start_);
   visitor->Trace(end_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

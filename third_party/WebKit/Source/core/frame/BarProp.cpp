@@ -38,6 +38,7 @@ BarProp::BarProp(LocalFrame* frame, Type type)
     : DOMWindowClient(frame), type_(type) {}
 
 DEFINE_TRACE(BarProp) {
+  ScriptWrappable::Trace(visitor);
   DOMWindowClient::Trace(visitor);
 }
 

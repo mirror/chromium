@@ -33,14 +33,12 @@
 
 #include "core/svg/SVGLengthListTearOff.h"
 #include "core/svg/properties/SVGAnimatedProperty.h"
-#include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
 
 // SVG Spec:
 // http://www.w3.org/TR/SVG11/types.html#InterfaceSVGAnimatedLengthList
-class SVGAnimatedLengthList final : public SVGAnimatedProperty<SVGLengthList>,
-                                    public ScriptWrappable {
+class SVGAnimatedLengthList final : public SVGAnimatedProperty<SVGLengthList> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -49,11 +47,6 @@ class SVGAnimatedLengthList final : public SVGAnimatedProperty<SVGLengthList>,
                                        SVGLengthList* initial_value) {
     return new SVGAnimatedLengthList(context_element, attribute_name,
                                      initial_value);
-  }
-
-  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
-    SVGAnimatedProperty<SVGLengthList>::TraceWrappers(visitor);
-    ScriptWrappable::TraceWrappers(visitor);
   }
 
  protected:

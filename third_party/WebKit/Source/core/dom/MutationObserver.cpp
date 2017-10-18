@@ -369,6 +369,7 @@ DEFINE_TRACE(MutationObserver) {
   visitor->Trace(delegate_);
   visitor->Trace(records_);
   visitor->Trace(registrations_);
+  ScriptWrappable::Trace(visitor);
   ContextClient::Trace(visitor);
 }
 
