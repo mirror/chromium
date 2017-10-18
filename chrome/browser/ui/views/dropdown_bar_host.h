@@ -9,6 +9,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "build/build_config.h"
 #include "content/public/browser/native_web_keyboard_event.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/geometry/rect.h"
@@ -147,6 +148,14 @@ class DropdownBarHost : public ui::AcceleratorTarget,
   // determines the z-order of |host_| relative to views with layers and
   // views with associated NativeViews.
   void SetHostViewNative(views::View* host_view);
+
+#if defined(OS_MACOSX)
+  // On macOS, the window shadow is based on the alpha channel of the
+  // contents, so we need to invalidate it during and after the
+  // show/hide animation to ensure the shadow appears in the right
+  // place (or at all, see crbug.com/646734
+  void UpdateWindowShadow();
+#endif
 
   // The BrowserView that created us.
   BrowserView* browser_view_;
