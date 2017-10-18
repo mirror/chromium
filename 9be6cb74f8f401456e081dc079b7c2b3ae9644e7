@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "ada3cf20_864c36b4",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 2345,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-10-18T14:38:25Z",
+      "side": 1,
+      "message": "Just to be clear - there\u0027s no support for explicitly setting this to False on Windows?",
+      "range": {
+        "startLine": 2345,
+        "startChar": 43,
+        "endLine": 2345,
+        "endChar": 50
+      },
+      "revId": "9be6cb74f8f401456e081dc079b7c2b3ae9644e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31861709_3bf6fdc5",
         "filename": "net/http/http_auth_handler_ntlm_portable.cc",
         "patchSetId": 11
