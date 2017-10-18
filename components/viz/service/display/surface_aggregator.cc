@@ -255,7 +255,7 @@ void SurfaceAggregator::EmitSurfaceContent(
     Surface* surface,
     float parent_device_scale_factor,
     const SharedQuadState* source_sqs,
-    const gfx::Rect& rect,
+    const gfx::Rect& source_rect,
     const gfx::Rect& source_visible_rect,
     const gfx::Transform& source_quad_to_target_transform,
     const gfx::Transform& target_transform,
@@ -271,6 +271,7 @@ void SurfaceAggregator::EmitSurfaceContent(
   if (referenced_surfaces_.count(surface_id))
     return;
 
+  gfx::Rect scaled_rect(source_rect);
   gfx::Rect scaled_visible_rect(source_visible_rect);
   gfx::Transform scaled_quad_to_target_transform(
       source_quad_to_target_transform);
@@ -282,17 +283,19 @@ void SurfaceAggregator::EmitSurfaceContent(
     // regardless of scale or aspect ratio differences.
     layer_to_content_scale_x =
         static_cast<float>(surface->GetActiveFrame().size_in_pixels().width()) /
-        rect.width();
+        source_rect.width();
     layer_to_content_scale_y =
         static_cast<float>(
             surface->GetActiveFrame().size_in_pixels().height()) /
-        rect.height();
+        source_rect.height();
   } else {
     layer_to_content_scale_x = layer_to_content_scale_y =
         surface->GetActiveFrame().device_scale_factor() /
         parent_device_scale_factor;
   }
 
+  scaled_rect = gfx::ScaleToEnclosingRect(
+      source_rect, layer_to_content_scale_x, layer_to_content_scale_y);
   scaled_visible_rect = gfx::ScaleToEnclosingRect(
       source_visible_rect, layer_to_content_scale_x, layer_to_content_scale_y);
   // scaled_visible_rect = gfx::IntersectRects(rect, scaled_visible_rect);
@@ -433,6 +436,7 @@ void SurfaceAggregator::EmitSurfaceContent(
                     parent_device_scale_factor, child_to_parent_map,
                     surface_transform, quads_clip, dest_pass, surface_id);
   } else {
+    fprintf(stderr, ">>>NOT MERGING\n");
     RenderPassId remapped_pass_id = RemapPassId(last_pass.id, surface_id);
 
     // TODO(fsamuel): It seems like we can reduce the clip rect here as well
@@ -453,9 +457,9 @@ void SurfaceAggregator::EmitSurfaceContent(
         source_sqs->blend_mode, source_sqs->sorting_context_id);
 
     auto* quad = dest_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
-    quad->SetNew(shared_quad_state, rect, scaled_visible_rect, remapped_pass_id,
+    quad->SetNew(shared_quad_state, scaled_rect, scaled_visible_rect, remapped_pass_id,
                  0, gfx::RectF(), gfx::Size(), gfx::Vector2dF(), gfx::PointF(),
-                 gfx::RectF(rect),
+                 gfx::RectF(scaled_rect),
                  /*force_anti_aliasing_off=*/false);
   }
 
