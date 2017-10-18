@@ -31,9 +31,9 @@ Element* GetOrCreateElement(ContainerNode* parent,
 
 }  // namespace
 
-EditingTestBase::EditingTestBase() {}
+EditingTestBase::EditingTestBase() = default;
 
-EditingTestBase::~EditingTestBase() {}
+EditingTestBase::~EditingTestBase() = default;
 
 void EditingTestBase::InsertStyleElement(const std::string& style_rules) {
   Element* const head = GetOrCreateElement(&GetDocument(), HTMLNames::headTag);
@@ -85,9 +85,7 @@ ShadowRoot* EditingTestBase::CreateShadowRootForElementWithIDAndSetInnerHTML(
 }
 
 void EditingTestBase::SetBodyContent(const std::string& body_content) {
-  GetDocument().body()->SetInnerHTMLFromString(
-      String::FromUTF8(body_content.c_str()), ASSERT_NO_EXCEPTION);
-  UpdateAllLifecyclePhases();
+  SetBodyInnerHTML(String::FromUTF8(body_content.c_str()));
 }
 
 ShadowRoot* EditingTestBase::SetShadowContent(const char* shadow_content,

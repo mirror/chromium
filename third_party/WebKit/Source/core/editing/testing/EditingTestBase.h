@@ -9,14 +9,14 @@
 #include <memory>
 #include <string>
 #include "core/editing/Forward.h"
-#include "core/testing/PageTestBase.h"
+#include "core/layout/LayoutTestHelper.h"
 #include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class FrameSelection;
 
-class EditingTestBase : public PageTestBase {
+class EditingTestBase : public RenderingTest {
   USING_FAST_MALLOC(EditingTestBase);
 
  public:
@@ -31,6 +31,7 @@ class EditingTestBase : public PageTestBase {
 
   // Insert STYLE element with |style_rules|, no need to have "<style>", into
   // HEAD.
+  // TODO(crbug.com/771800): This function should be moved to RenderingTest.
   void InsertStyleElement(const std::string& style_rules);
 
   // Returns |Position| for specified |caret_text|, which is HTML markup with
@@ -55,9 +56,14 @@ class EditingTestBase : public PageTestBase {
   // |SelectionInDOMTree|.
   std::string GetSelectionTextFromBody(const SelectionInDOMTree&) const;
 
+  // TODO(crbug.com/771800): This function should be removed. Callers should
+  // call RenderingTest::SetBodyInnerHTML directly.
   void SetBodyContent(const std::string&);
+
   ShadowRoot* SetShadowContent(const char* shadow_content,
                                const char* shadow_host_id);
+
+  // TODO(crbug.com/771800): This function should be moved to RenderingTest.
   void UpdateAllLifecyclePhases();
 
 };
