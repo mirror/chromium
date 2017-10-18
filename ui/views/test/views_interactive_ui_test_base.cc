@@ -33,6 +33,8 @@ void ViewsInteractiveUITestBase::InteractiveSetUp() {
 void ViewsInteractiveUITestBase::SetUp() {
   InteractiveSetUp();
   ViewsTestBase::SetUp();
+
+  base::DiscardableMemoryAllocator::SetInstance(&discardable_memory_allocator_);
 }
 
 }  // namespace views
