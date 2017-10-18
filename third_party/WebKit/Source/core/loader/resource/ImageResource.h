@@ -100,6 +100,7 @@ class CORE_EXPORT ImageResource final
 
   bool ShouldShowPlaceholder() const;
 
+  // Called by ImageResource::ImageResourceInfoImpl::SetDecodedSize.
   void SetDecodedSize(size_t);
 
   DECLARE_VIRTUAL_TRACE();
