@@ -31,6 +31,7 @@ content::WebUIDataSource* CreatePasswordManagerInternalsHTMLSource() {
   content::WebUIDataSource* source = content::WebUIDataSource::Create(
       chrome::kChromeUIPasswordManagerInternalsHost);
 
+  LOG(ERROR) << "***** 1";
   source->AddResourcePath(
       "password_manager_internals.js",
       IDR_PASSWORD_MANAGER_INTERNALS_PASSWORD_MANAGER_INTERNALS_JS);
@@ -40,6 +41,7 @@ content::WebUIDataSource* CreatePasswordManagerInternalsHTMLSource() {
   source->SetDefaultResource(
       IDR_PASSWORD_MANAGER_INTERNALS_PASSWORD_MANAGER_INTERNALS_HTML);
   source->UseGzip();
+  LOG(ERROR) << "***** 2";
   return source;
 }
 
