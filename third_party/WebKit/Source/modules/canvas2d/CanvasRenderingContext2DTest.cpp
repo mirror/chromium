@@ -1084,7 +1084,7 @@ constexpr float kWideGamutColorCorrectionTolerance = 0.01;
 
 TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
   // enable color canvas extensions for this test
-  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
+  ScopedExperimentalCanvasFeaturesForTest experimental_canvas_features(true);
 
   Persistent<HTMLCanvasElement> canvas =
       Persistent<HTMLCanvasElement>(CanvasElement());
@@ -1114,10 +1114,6 @@ TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
           : SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat;
   SkColorSpaceXform::ColorFormat color_format = color_format32;
   sk_sp<SkColorSpace> src_rgb_color_space = SkColorSpace::MakeSRGB();
-
-  // Set the runtime flags
-  ScopedExperimentalCanvasFeaturesForTest experimental_canvas_features(true);
-  ScopedColorCanvasExtensionsForTest color_canvas_extensions(true);
 
   for (uint8_t i =
            static_cast<uint8_t>(ColorSpaceConversion::DEFAULT_COLOR_CORRECTED);
@@ -1283,7 +1279,7 @@ void TestPutImageDataOnCanvasWithColorSpaceSettings(
     HTMLCanvasElement& canvas_element,
     CanvasColorSpaceSettings canvas_colorspace_setting) {
   // enable color canvas extensions for this test
-  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
+  ScopedEnableExperimentalCanvasFeatures experimental_canvas_features_enabler;
 
   unsigned num_image_data_color_spaces = 3;
   CanvasColorSpace image_data_color_spaces[] = {

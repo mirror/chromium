@@ -9,26 +9,20 @@
 
 namespace blink {
 
-class ScopedEnableColorCanvasExtensions {
+class ScopedEnableExperimentalCanvasFeatures {
  public:
-  ScopedEnableColorCanvasExtensions()
+  ScopedEnableExperimentalCanvasFeatures()
       : experimental_canvas_features_(
-            RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled()),
-        color_canvas_extensions_(
-            RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled()) {
+            RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled()) {
     RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-    RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
   }
-  ~ScopedEnableColorCanvasExtensions() {
+  ~ScopedEnableExperimentalCanvasFeatures() {
     RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
         experimental_canvas_features_);
-    RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
-        color_canvas_extensions_);
   }
 
  private:
   bool experimental_canvas_features_;
-  bool color_canvas_extensions_;
 };
 
 class ColorCorrectionTestUtils {
