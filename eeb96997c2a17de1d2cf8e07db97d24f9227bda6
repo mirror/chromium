@@ -46,6 +46,30 @@
       "revId": "eeb96997c2a17de1d2cf8e07db97d24f9227bda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3164842d_5e3d4353",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3967,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T23:19:19Z",
+      "side": 1,
+      "message": "This makes me kind of nervous, mostly about having too much unnecessary data from the previous subframe (similar to dcheng\u0027s concerns about cloning the PageState).  It also feels a little awkward reaching inside the (semi-private) NavigationEntryImpl::TreeNode struct here.\n\nWhich parts are actually needed for view-source?  Maybe we can create a fresh NavigationEntry (no clone at all) and just fill in the bits we need?\n\nI suspect that would include:\n - URL\n - PageState with just the URL and POST data\n - Method\n - post_id\n\nI suspect we wouldn\u0027t want to copy:\n - frame_unique_name_ (which is empty for the main frame)\n - ISN/DSN (don\u0027t make sense in the new process)\n - SiteInstance\n - Source SiteInstance (should be empty after commit anyway)\n - Referrer\n - Redirect chain\n - Rest of PageState\n\nMaybe we can start with handling the PageState as we do now to land this and fix the bug, and then try having a PageState with just the URL and POST data in a followup CL?",
+      "parentUuid": "fddc3264_c28043d3",
+      "range": {
+        "startLine": 3967,
+        "startChar": 67,
+        "endLine": 3967,
+        "endChar": 0
+      },
+      "revId": "eeb96997c2a17de1d2cf8e07db97d24f9227bda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
