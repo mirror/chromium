@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "422fc258_d18aa822",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-18T15:02:40Z",
+      "side": 1,
+      "message": "And by \u0027this\u0027 being unnecessary I mean the if part of this (where you set the notification_type)?",
+      "parentUuid": "39a0515e_fe733f38",
+      "range": {
+        "startLine": 222,
+        "startChar": 30,
+        "endLine": 222,
+        "endChar": 47
+      },
+      "revId": "ccfd759ed17b5a7e2440dd783e0e1eeb7672d0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98c41aee_2182f71d",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 15
