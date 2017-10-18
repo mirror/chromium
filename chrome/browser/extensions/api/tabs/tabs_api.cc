@@ -883,8 +883,8 @@ ExtensionFunction::ResponseAction TabsQueryFunction::Run() {
     TabStripModel* tab_strip = browser->tab_strip_model();
     for (int i = 0; i < tab_strip->count(); ++i) {
       WebContents* web_contents = tab_strip->GetWebContentsAt(i);
-      resource_coordinator::TabManager* tab_manager =
-          g_browser_process->GetTabManager();
+      /*   resource_coordinator::TabManager* tab_manager =
+             g_browser_process->GetTabManager();*/
 
       if (index > -1 && i != index)
         continue;
@@ -912,7 +912,7 @@ ExtensionFunction::ResponseAction TabsQueryFunction::Run() {
                        web_contents->WasRecentlyAudible())) {
         continue;
       }
-
+      /*
       if (!MatchesBool(params->query_info.discarded.get(),
                        tab_manager->IsTabDiscarded(web_contents))) {
         continue;
@@ -922,6 +922,7 @@ ExtensionFunction::ResponseAction TabsQueryFunction::Run() {
                        tab_manager->IsTabAutoDiscardable(web_contents))) {
         continue;
       }
+      */
 
       if (!MatchesBool(params->query_info.muted.get(),
                        web_contents->IsAudioMuted())) {
@@ -1259,9 +1260,9 @@ bool TabsUpdateFunction::RunAsync() {
   }
 
   if (params->update_properties.auto_discardable.get()) {
-    bool state = *params->update_properties.auto_discardable;
-    g_browser_process->GetTabManager()->SetTabAutoDiscardableState(contents,
-                                                                   state);
+    /* bool state = *params->update_properties.auto_discardable;
+     g_browser_process->GetTabManager()->SetTabAutoDiscardableState(contents,
+                                                                    state);*/
   }
 
   if (!is_async) {

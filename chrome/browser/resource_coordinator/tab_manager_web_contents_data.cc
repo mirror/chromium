@@ -37,7 +37,7 @@ TabManager::WebContentsData::~WebContentsData() {}
 void TabManager::WebContentsData::DidStartLoading() {
   // Marks the tab as no longer discarded if it has been reloaded from another
   // source (ie: context menu).
-  SetDiscardState(false);
+  // SetDiscardState(false);
 }
 
 void TabManager::WebContentsData::DidStopLoading() {
@@ -115,10 +115,6 @@ void TabManager::WebContentsData::WebContentsDestroyed() {
   g_browser_process->GetTabManager()->OnWebContentsDestroyed(web_contents());
 }
 
-bool TabManager::WebContentsData::IsDiscarded() {
-  return tab_data_.is_discarded;
-}
-
 void TabManager::WebContentsData::SetDiscardState(bool state) {
   if (tab_data_.is_discarded == state)
     return;
@@ -168,10 +164,6 @@ void TabManager::WebContentsData::SetDiscardState(bool state) {
   tab_data_.is_discarded = state;
   g_browser_process->GetTabManager()->OnDiscardedStateChange(web_contents(),
                                                              state);
-}
-
-int TabManager::WebContentsData::DiscardCount() {
-  return tab_data_.discard_count;
 }
 
 void TabManager::WebContentsData::IncrementDiscardCount() {

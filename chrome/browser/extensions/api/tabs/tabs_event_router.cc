@@ -135,13 +135,13 @@ void TabsEventRouter::TabEntry::WebContentsDestroyed() {
 TabsEventRouter::TabsEventRouter(Profile* profile)
     : profile_(profile),
       favicon_scoped_observer_(this),
-      browser_tab_strip_tracker_(this, this, this),
-      tab_manager_scoped_observer_(this) {
+      browser_tab_strip_tracker_(this, this, this)
+/* tab_manager_scoped_observer_(this)*/ {
   DCHECK(!profile->IsOffTheRecord());
 
   browser_tab_strip_tracker_.Init();
 
-  tab_manager_scoped_observer_.Add(g_browser_process->GetTabManager());
+  // tab_manager_scoped_observer_.Add(g_browser_process->GetTabManager());
 }
 
 TabsEventRouter::~TabsEventRouter() {

@@ -206,8 +206,8 @@ class TabsEventRouter : public TabStripModelObserver,
 
   BrowserTabStripTracker browser_tab_strip_tracker_;
 
-  ScopedObserver<resource_coordinator::TabManager, TabsEventRouter>
-      tab_manager_scoped_observer_;
+  /* ScopedObserver<resource_coordinator::TabManager, TabsEventRouter>
+      tab_manager_scoped_observer_; */
 
   DISALLOW_COPY_AND_ASSIGN(TabsEventRouter);
 };

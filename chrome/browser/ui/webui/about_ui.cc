@@ -423,7 +423,8 @@ std::string ChromeURLs() {
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
 
 const char kAboutDiscardsRunCommand[] = "run";
-const char kAboutDiscardsSkipUnloadHandlersCommand[] = "skip_unload_handlers";
+// const char kAboutDiscardsSkipUnloadHandlersCommand[] =
+// "skip_unload_handlers";
 
 // Html output helper functions
 
@@ -455,7 +456,7 @@ void AddContentSecurityPolicy(std::string* output) {
 }
 
 // TODO(stevenjb): L10N AboutDiscards.
-
+/*
 std::string BuildAboutDiscardsRunPage() {
   std::string output;
   AppendHeader(&output, 0, "About discards");
@@ -466,59 +467,60 @@ std::string BuildAboutDiscardsRunPage() {
   AppendFooter(&output);
   return output;
 }
+*/
 
 std::vector<std::string> GetHtmlTabDescriptorsForDiscardPage() {
-  resource_coordinator::TabManager* tab_manager =
-      g_browser_process->GetTabManager();
-  resource_coordinator::TabStatsList stats = tab_manager->GetTabStats();
+  /* resource_coordinator::TabManager* tab_manager =
+       g_browser_process->GetTabManager();*/
+  resource_coordinator::TabStatsList stats; /* = tab_manager->GetTabStats(); */
   std::vector<std::string> titles;
-  titles.reserve(stats.size());
-  for (resource_coordinator::TabStatsList::iterator it = stats.begin();
-       it != stats.end(); ++it) {
-    std::string str;
-    str.reserve(4096);
-    str += "<b>";
-    str += it->is_app ? "[App] " : "";
-    str += it->is_internal_page ? "[Internal] " : "";
-    str += it->is_media ? "[Media] " : "";
-    str += it->is_pinned ? "[Pinned] " : "";
-    str += it->is_discarded ? "[Discarded] " : "";
-    str += "</b>";
-    str += net::EscapeForHTML(base::UTF16ToUTF8(it->title));
-#if defined(OS_CHROMEOS)
-    str += base::StringPrintf(" (%d) ", it->oom_score);
-#endif
-    str += base::StringPrintf("&nbsp;&nbsp;(%d discards this session)",
-                              it->discard_count);
+  titles.reserve(stats.size()); /*
+   for (resource_coordinator::TabStatsList::iterator it = stats.begin();
+        it != stats.end(); ++it) {
+     std::string str;
+     str.reserve(4096);
+     str += "<b>";
+     str += it->is_app ? "[App] " : "";
+     str += it->is_internal_page ? "[Internal] " : "";
+     str += it->is_media ? "[Media] " : "";
+     str += it->is_pinned ? "[Pinned] " : "";
+     str += it->is_discarded ? "[Discarded] " : "";
+     str += "</b>";
+     str += net::EscapeForHTML(base::UTF16ToUTF8(it->title));
+ #if defined(OS_CHROMEOS)
+     str += base::StringPrintf(" (%d) ", it->oom_score);
+ #endif
+     str += base::StringPrintf("&nbsp;&nbsp;(%d discards this session)",
+                               it->discard_count);
 
-    if (!it->is_discarded) {
-      str += "<ul>";
-      str += base::StringPrintf("<li><a href='%s%s/%" PRId64
-                                "'>Discard (safely)</a></li>",
-                                chrome::kChromeUIDiscardsURL,
-                                kAboutDiscardsRunCommand, it->tab_contents_id);
-      str += base::StringPrintf(
-          "<li><a href='%s%s/%" PRId64
-          "?%s'>Discard (allow unsafe process shutdown)</a></li>",
-          chrome::kChromeUIDiscardsURL, kAboutDiscardsRunCommand,
-          it->tab_contents_id, kAboutDiscardsSkipUnloadHandlersCommand);
-      str += "</ul>";
-    }
-    titles.push_back(str);
-  }
+     if (!it->is_discarded) {
+       str += "<ul>";
+       str += base::StringPrintf("<li><a href='%s%s/%" PRId64
+                                 "'>Discard (safely)</a></li>",
+                                 chrome::kChromeUIDiscardsURL,
+                                 kAboutDiscardsRunCommand, it->tab_contents_id);
+       str += base::StringPrintf(
+           "<li><a href='%s%s/%" PRId64
+           "?%s'>Discard (allow unsafe process shutdown)</a></li>",
+           chrome::kChromeUIDiscardsURL, kAboutDiscardsRunCommand,
+           it->tab_contents_id, kAboutDiscardsSkipUnloadHandlersCommand);
+       str += "</ul>";
+     }
+     titles.push_back(str);
+   }*/
   return titles;
 }
 
 std::string AboutDiscards(const std::string& path) {
   std::string output;
-  int64_t web_content_id;
+  // int64_t web_content_id;
   resource_coordinator::TabManager* tab_manager =
       g_browser_process->GetTabManager();
 
   std::vector<std::string> url_split =
       base::SplitString(path, "?", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
   if (!url_split.empty()) {
-    resource_coordinator::TabManager::DiscardTabCondition discard_condition;
+    /*resource_coordinator::TabManager::DiscardTabCondition discard_condition;
     if ((url_split.size() > 1 &&
          url_split[1] == kAboutDiscardsSkipUnloadHandlersCommand)) {
       discard_condition = resource_coordinator::TabManager::kUrgentShutdown;
@@ -536,7 +538,7 @@ std::string AboutDiscards(const std::string& path) {
                path_split[0] == kAboutDiscardsRunCommand) {
       tab_manager->DiscardTab(discard_condition);
       return BuildAboutDiscardsRunPage();
-    }
+    }*/
   }
 
   AppendHeader(&output, 0, "About discards");

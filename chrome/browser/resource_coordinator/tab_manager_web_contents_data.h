@@ -66,14 +66,8 @@ class TabManager::WebContentsData
   // Tab signal received from GRC.
   void DoneLoading() {}
 
-  // Returns true if the tab has been discarded to save memory.
-  bool IsDiscarded();
-
   // Sets/clears the discard state of the tab.
   void SetDiscardState(bool state);
-
-  // Returns the number of times the tab has been discarded.
-  int DiscardCount();
 
   // Increments the number of times the tab has been discarded.
   void IncrementDiscardCount();

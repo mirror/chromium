@@ -21,6 +21,7 @@ ChromeMemoryCoordinatorDelegate::ChromeMemoryCoordinatorDelegate() {}
 ChromeMemoryCoordinatorDelegate::~ChromeMemoryCoordinatorDelegate() {}
 
 void ChromeMemoryCoordinatorDelegate::DiscardTab(bool skip_unload_handlers) {
+  /*
 #if !defined(OS_ANDROID)
   if (g_browser_process->GetTabManager()) {
     g_browser_process->GetTabManager()->DiscardTab(
@@ -29,6 +30,7 @@ void ChromeMemoryCoordinatorDelegate::DiscardTab(bool skip_unload_handlers) {
             : resource_coordinator::TabManager::kProactiveShutdown);
   }
 #endif
+  */
 }
 
 }  // namespace memory
