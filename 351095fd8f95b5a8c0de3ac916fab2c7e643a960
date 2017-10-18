@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0418af1_982a32cf",
+        "filename": "chrome/browser/ui/chrome_pages.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T12:07:34Z",
+      "side": 1,
+      "message": "nit:  // BUILDFLAG(ENABLE_DICE_SUPPORT)",
+      "revId": "351095fd8f95b5a8c0de3ac916fab2c7e643a960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6716d9cb_169d03ca",
+        "filename": "chrome/browser/ui/chrome_pages.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T12:07:34Z",
+      "side": 1,
+      "message": "and automatically and -\u003e and automatically",
+      "revId": "351095fd8f95b5a8c0de3ac916fab2c7e643a960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
