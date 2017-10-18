@@ -46,6 +46,30 @@
       "revId": "7822acf93b05a4c307c58cd90150f8cf858178f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce8eb54_d77a9e85",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1745,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-18T13:29:21Z",
+      "side": 1,
+      "message": "I find it unsettling to see the equivalent of:\n  if (foo) {\n    return bar;\n  }\n  return bar;\n\nIt appears that this is actually returning an empty string as the default in all cases, why not just do that:\n  return \u0027\u0027;\nand update the comment to say:\n  @return {string} The label of element or empty string if none is found.\n?",
+      "parentUuid": "fdc5a0b3_353ea23d",
+      "range": {
+        "startLine": 1745,
+        "startChar": 6,
+        "endLine": 1745,
+        "endChar": 30
+      },
+      "revId": "7822acf93b05a4c307c58cd90150f8cf858178f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
