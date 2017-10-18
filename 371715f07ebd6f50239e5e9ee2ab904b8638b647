@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "305b4542_167cbc63",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-18T20:14:30Z",
+      "side": 1,
+      "message": "We should never get null events. But if the callback exists we must call it. Otherwise it will dcheck on the destructor.",
+      "parentUuid": "3154de63_49a71541",
+      "revId": "371715f07ebd6f50239e5e9ee2ab904b8638b647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0fbaecf_9bc792c6",
         "filename": "content/renderer/input/widget_input_handler_manager.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-18T20:11:04Z",
       "side": 1,
       "message": "I guess this is not related to this bug, right?  If so, shouldn\u0027t we have more bugs around mismatched ack?",
+      "revId": "371715f07ebd6f50239e5e9ee2ab904b8638b647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2eb9508_7f99223c",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-18T20:14:30Z",
+      "side": 1,
+      "message": "Ya it is just a correction of the code. HandledInputEvent is always called on the main thread.",
+      "parentUuid": "f0fbaecf_9bc792c6",
       "revId": "371715f07ebd6f50239e5e9ee2ab904b8638b647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
