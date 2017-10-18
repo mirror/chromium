@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73cd48b1_b2f9023f",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-18T17:17:16Z",
+      "side": 1,
+      "message": "that was my initial attempt, but found that it would be hard to achieve desired result without test to be too synthetic.",
+      "parentUuid": "e8485bf9_f2232ea2",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "957cbdf0_1618197e",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-18T15:09:38Z",
       "side": 1,
       "message": "This should probably be controller-\u003eFlushForTesting() to avoid flakes.\n(forces CLC to send mojo messages to Ash to update the ShelfModel there)",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf3f6166_eefc062f",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-18T17:17:16Z",
+      "side": 1,
+      "message": "Good to know. Thanks!",
+      "parentUuid": "957cbdf0_1618197e",
       "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dd68be90_8a777fd3",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-18T17:17:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14f24cff_399859fd",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea9eeaa7_a1d66cbe",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c1b192d3_ee7393de",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-18T17:17:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea9eeaa7_a1d66cbe",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "914206e4_d001b6ca",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285afc57_ef633b85",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-18T17:17:16Z",
+      "side": 1,
+      "message": "I did like this but following just hangs:\n\n  controller-\u003eshelf_model()-\u003eGetShelfItemDelegate(ash::ShelfID(app_id))-\u003eFlushForTesting();\n\nvoid ShelfItemDelegate::FlushForTesting() {\n  binding_.FlushForTesting();\n}",
+      "parentUuid": "914206e4_d001b6ca",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
