@@ -300,6 +300,9 @@ void TestWindowTree::StackAbove(uint32_t change_id, uint32_t above_id,
 
 void TestWindowTree::StackAtTop(uint32_t change_id, uint32_t window_id) {}
 
+void TestWindowTree::PerformWindowManagementAction(uint32_t window_id,
+                                                   const std::string& action) {}
+
 void TestWindowTree::GetWindowManagerClient(
     mojo::AssociatedInterfaceRequest<ui::mojom::WindowManagerClient> internal) {
 }
