@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e80fa964_4e278685",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-18T14:43:58Z",
+      "side": 1,
+      "message": "this seems to be a change in logic. nothing wrong with that. just checking if it\u0027s intentional?",
+      "revId": "a86e5ab9a4081e7c3ec2fa444d3f96d2fc0b10da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608cd213_7e92bafd",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-18T14:43:58Z",
+      "side": 1,
+      "message": "would it be better for this and below functions to return a copy instead? to avoid the chance that the caller uses the pointer when no longer valid..",
+      "revId": "a86e5ab9a4081e7c3ec2fa444d3f96d2fc0b10da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
