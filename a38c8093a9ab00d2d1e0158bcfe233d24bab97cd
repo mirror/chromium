@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92748734_acdd1d78",
+        "filename": "content/network/network_change_manager_impl.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-18T16:34:06Z",
+      "side": 1,
+      "message": "This class should have a comment as per https://google.github.io/styleguide/cppguide.html#Class_Comments\nI\u0027d like it if it mentioned that this class is only callable on the main thread.",
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ab5d0c_be26cf15",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-18T16:34:06Z",
+      "side": 1,
+      "message": "this doesn\u0027t actually wait for this type of notification, can we fix that?",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 51
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ed38e9_5b3826d9",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-18T16:34:06Z",
+      "side": 1,
+      "message": "can we add a comment explaining what\u0027s different about ChromeOS and broadly what needs to be done to fix it, or why it can\u0027t be fixed",
+      "range": {
+        "startLine": 87,
+        "startChar": 21,
+        "endLine": 87,
+        "endChar": 0
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8e8a8a_74eba529",
+        "filename": "content/network/network_service_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-18T16:34:06Z",
+      "side": 1,
+      "message": "not sure we need to repeat \"protected:\" here",
+      "range": {
+        "startLine": 109,
+        "startChar": 1,
+        "endLine": 109,
+        "endChar": 11
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10cf5e4c_0fc837c7",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-18T16:34:06Z",
+      "side": 1,
+      "message": "should this be OnceCallback?  sounds like OnceCallback is preferred: https://chromium.googlesource.com/chromium/src/+/master/docs/callback.md",
+      "range": {
+        "startLine": 30,
+        "startChar": 16,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06de4493_2cb15661",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-18T16:34:06Z",
+      "side": 1,
+      "message": "Get-\u003eGets",
+      "range": {
+        "startLine": 90,
+        "startChar": 5,
+        "endLine": 90,
+        "endChar": 8
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
