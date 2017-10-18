@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+#include "base/containers/flat_set.h"
 #include "base/memory/weak_ptr.h"
 #include "components/download/public/download_params.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -107,6 +108,7 @@ class BackgroundFetchDelegateImpl
     const url::Origin origin;
     int completed_parts;
     const int total_parts;
+    base::flat_set<std::string> current_download_guids;
 
     offline_items_collection::OfflineItem offline_item;
 
