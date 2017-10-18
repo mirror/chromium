@@ -161,7 +161,7 @@ class ContentSandboxHelper : public gpu::GpuSandboxHelper {
 #elif defined(OS_WIN)
     return StartSandboxWindows(sandbox_info_);
 #elif defined(OS_MACOSX)
-    return service_manager::Sandbox::SandboxIsCurrentlyActive();
+    return service_manager::SandboxMac::IsCurrentlyActive();
 #else
     return false;
 #endif
