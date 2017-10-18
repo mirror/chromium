@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a0d603f_876dfab3",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-18T22:31:31Z",
+      "side": 1,
+      "message": "Drive-by: Return value never used.",
+      "revId": "64dc33c7ba51b8d78d265db91e6fbca08dd8d4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d74540_7f15b847",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-18T22:31:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be\nif (paint_layer_.PaintsWithTransform(painting_info.GetGlobalPaintFlags()) || \n    paint_layer_.PaintsComposited(painting_info.GetGlobalPaintFlags()))\n\nWith PaintsWithTransform, offset was adjusted by PaintLayer::PaintFragmentByApplyingTransform().\nWith PaintsComposited, offset was adjusted by CLM::DoPaintTask().\n\nThe logic could be simplified to\nif (paint_layer_.Transform() || \n    paint_layer_.PaintsComposited(painting_info.GetGlobalPaintFlags()))\nbut I prefer not, because it hides the above reasoning. WDYT?",
+      "revId": "64dc33c7ba51b8d78d265db91e6fbca08dd8d4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f92e3f9_352ceb21",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-18T22:31:31Z",
+      "side": 1,
+      "message": "This counter adjustment won\u0027t be needed if the above change was made?",
+      "revId": "64dc33c7ba51b8d78d265db91e6fbca08dd8d4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
