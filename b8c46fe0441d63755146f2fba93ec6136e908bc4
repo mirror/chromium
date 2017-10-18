@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "657221ec_ef1a8ad2",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-18T16:15:40Z",
+      "side": 1,
+      "message": "This DCHECK is redundant. It is already part of the cast on the next line.",
+      "revId": "b8c46fe0441d63755146f2fba93ec6136e908bc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
