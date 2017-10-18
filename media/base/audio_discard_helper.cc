@@ -13,6 +13,9 @@ namespace media {
 
 static void WarnOnNonMonotonicTimestamps(base::TimeDelta last_timestamp,
                                          base::TimeDelta current_timestamp) {
+  if (last_timestamp.is_zero() && current_timestamp.is_zero())
+    return;  // no timestamps, no reason to pollute the logs
+
   if (last_timestamp == kNoTimestamp || last_timestamp < current_timestamp)
     return;
 
