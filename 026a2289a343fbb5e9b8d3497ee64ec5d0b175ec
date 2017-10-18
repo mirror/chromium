@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79379612_d978f9a7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-18T17:22:32Z",
+      "side": 1,
+      "message": "Can we have this logic outside, in a separate function? We only need it for one chart anyway.",
+      "revId": "026a2289a343fbb5e9b8d3497ee64ec5d0b175ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
