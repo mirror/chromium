@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f3c7cf5_2b89c74f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/extensions-test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-18T17:46:37Z",
+      "side": 1,
+      "message": "You can perhaps just move this to the call site, i.e. wherever we now call eval(\"extensionfunctions()\")",
+      "revId": "9edc36b88f57ec32c76e0c1e512288e8cf9b7124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
