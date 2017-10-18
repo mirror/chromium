@@ -9,7 +9,6 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/Referrer.h"
 #include "platform/wtf/text/AtomicString.h"
-#include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebURLRequest.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -18,7 +17,7 @@ namespace blink {
 TEST(ResourceRequestTest, CrossThreadResourceRequestData) {
   ResourceRequest original;
   original.SetURL(KURL(kParsedURLString, "http://www.example.com/test.htm"));
-  original.SetCachePolicy(WebCachePolicy::kUseProtocolCachePolicy);
+  original.SetCacheMode(mojom::FetchCacheMode::DEFAULT);
   original.SetTimeoutInterval(10);
   original.SetSiteForCookies(
       KURL(kParsedURLString, "http://www.example.com/first_party.htm"));
@@ -49,7 +48,7 @@ TEST(ResourceRequestTest, CrossThreadResourceRequestData) {
 
   EXPECT_STREQ("http://www.example.com/test.htm",
                original.Url().GetString().Utf8().data());
-  EXPECT_EQ(WebCachePolicy::kUseProtocolCachePolicy, original.GetCachePolicy());
+  EXPECT_EQ(mojom::FetchCacheMode::DEFAULT, original.GetCacheMode());
   EXPECT_EQ(10, original.TimeoutInterval());
   EXPECT_STREQ("http://www.example.com/first_party.htm",
                original.SiteForCookies().GetString().Utf8().data());
@@ -85,7 +84,7 @@ TEST(ResourceRequestTest, CrossThreadResourceRequestData) {
 
   EXPECT_STREQ("http://www.example.com/test.htm",
                copy1.Url().GetString().Utf8().data());
-  EXPECT_EQ(WebCachePolicy::kUseProtocolCachePolicy, copy1.GetCachePolicy());
+  EXPECT_EQ(mojom::FetchCacheMode::DEFAULT, copy1.GetCacheMode());
   EXPECT_EQ(10, copy1.TimeoutInterval());
   EXPECT_STREQ("http://www.example.com/first_party.htm",
                copy1.SiteForCookies().GetString().Utf8().data());
