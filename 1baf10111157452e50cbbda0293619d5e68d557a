@@ -94,6 +94,30 @@
       "revId": "1baf10111157452e50cbbda0293619d5e68d557a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11d06827_62eceecc",
+        "filename": "ui/gl/generate_bindings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1943,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-18T19:14:21Z",
+      "side": 1,
+      "message": "For the record, I\u0027ve changed the approach to use unconditional binding via GL_CHROMIUM_egl_android_native_fence_sync_hack combined with a runtime heuristic exposed via GLSurfaceEGL::IsAndroidNativeFenceSyncSupported(). This could be extended to actually create a test fence if needed, though I think this may be overkill unless the assumption about generally broad support turns out to be mistaken.",
+      "parentUuid": "369f5903_c16b86b2",
+      "range": {
+        "startLine": 1940,
+        "startChar": 2,
+        "endLine": 1943,
+        "endChar": 71
+      },
+      "revId": "1baf10111157452e50cbbda0293619d5e68d557a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

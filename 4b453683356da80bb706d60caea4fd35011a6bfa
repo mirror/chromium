@@ -16,6 +16,24 @@
       "revId": "4b453683356da80bb706d60caea4fd35011a6bfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e20927_42a0bd27",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-18T19:14:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef1656ae_722564ea",
+      "revId": "4b453683356da80bb706d60caea4fd35011a6bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
