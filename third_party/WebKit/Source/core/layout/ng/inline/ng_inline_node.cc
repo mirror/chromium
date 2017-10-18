@@ -33,6 +33,7 @@
 #include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_length_utils.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
+#include "core/layout/ng/ng_positioned_float.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/fonts/shaping/HarfBuzzShaper.h"
 #include "platform/fonts/shaping/ShapeResultSpacing.h"
@@ -61,12 +62,20 @@ void CreateBidiRuns(BidiRunList<BidiRun>* bidi_runs,
                     const Vector<RefPtr<NGPhysicalFragment>>& children,
                     const NGConstraintSpace& constraint_space,
                     NGLogicalOffset parent_offset,
+                    NGPhysicalSize parent_size,
                     const Vector<NGInlineItem>& items,
                     const Vector<unsigned, 32>& text_offsets,
                     Vector<FragmentPosition, 32>* positions_for_bidi_runs_out,
                     HashMap<LineLayoutItem, FragmentPosition>* positions_out) {
   for (unsigned child_index = 0; child_index < children.size(); child_index++) {
     const auto& child = children[child_index];
+
+    NGFragment fragment(constraint_space.WritingMode(), *child);
+
+    NGLogicalOffset fragment_offset = child->Offset().ConvertToLogical(
+        constraint_space.WritingMode(), TextDirection::kLtr, parent_size,
+        child->Size());
+
     if (child->Type() == NGPhysicalFragment::kFragmentText) {
       const auto& physical_fragment = ToNGPhysicalTextFragment(*child);
       unsigned item_index = physical_fragment.ItemIndexDeprecated();
@@ -103,23 +112,22 @@ void CreateBidiRuns(BidiRunList<BidiRun>* bidi_runs,
         continue;
       }
       bidi_runs->AddRun(run);
-      NGFragment fragment(constraint_space.WritingMode(), physical_fragment);
       // Store text fragments in a vector in the same order as BidiRunList.
       // One LayoutText may produce multiple text fragments that they can't
       // be set to a map.
-      positions_for_bidi_runs_out->push_back(FragmentPosition{
-          &physical_fragment, fragment.Offset() + parent_offset,
-          fragment.InlineSize()});
+      positions_for_bidi_runs_out->push_back(
+          FragmentPosition{&physical_fragment, fragment_offset + parent_offset,
+                           fragment.InlineSize()});
     } else {
       DCHECK_EQ(child->Type(), NGPhysicalFragment::kFragmentBox);
       const auto& physical_fragment = ToNGPhysicalBoxFragment(*child);
 
-      NGFragment fragment(constraint_space.WritingMode(), physical_fragment);
-      NGLogicalOffset child_offset = fragment.Offset() + parent_offset;
+      NGLogicalOffset child_offset = fragment_offset + parent_offset;
       if (physical_fragment.Children().size()) {
         CreateBidiRuns(bidi_runs, physical_fragment.Children(),
-                       constraint_space, child_offset, items, text_offsets,
-                       positions_for_bidi_runs_out, positions_out);
+                       constraint_space, child_offset, physical_fragment.Size(),
+                       items, text_offsets, positions_for_bidi_runs_out,
+                       positions_out);
       } else {
         // An empty inline needs a BidiRun for itself.
         LayoutObject* layout_object = physical_fragment.GetLayoutObject();
@@ -354,8 +362,6 @@ LayoutBox* CollectInlinesInternal(
 NGInlineNode::NGInlineNode(LayoutNGBlockFlow* block)
     : NGLayoutInputNode(block, kInline) {
   DCHECK(block);
-  if (!block->HasNGInlineNodeData())
-    block->ResetNGInlineNodeData();
 }
 
 const Vector<NGInlineItem>& NGInlineNode::Items(bool is_first_line) const {
@@ -535,20 +541,14 @@ RefPtr<NGLayoutResult> NGInlineNode::Layout(
     const NGConstraintSpace& constraint_space,
     NGBreakToken* break_token) {
   // TODO(kojii): Invalidate PrepareLayout() more efficiently.
-  InvalidatePrepareLayout();
-  PrepareLayout();
+  if (!break_token) {
+    InvalidatePrepareLayout();
+    PrepareLayout();
+  }
 
   NGInlineLayoutAlgorithm algorithm(*this, constraint_space,
                                     ToNGInlineBreakToken(break_token));
-  RefPtr<NGLayoutResult> result = algorithm.Layout();
-
-  if (result->Status() == NGLayoutResult::kSuccess &&
-      result->UnpositionedFloats().IsEmpty() &&
-      !RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
-    CopyFragmentDataToLayoutBox(constraint_space, result.get());
-  }
-
-  return result;
+  return algorithm.Layout();
 }
 
 static LayoutUnit ComputeContentSize(NGInlineNode node,
@@ -564,8 +564,8 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
           .SetAvailableSize({available_inline_size, NGSizeIndefinite})
           .ToConstraintSpace(writing_mode);
 
-  NGFragmentBuilder container_builder(node, &node.Style(), space->WritingMode(),
-                                      TextDirection::kLtr);
+  NGLineBoxFragmentBuilder container_builder(
+      node, &node.Style(), space->WritingMode(), TextDirection::kLtr);
   container_builder.SetBfcOffset(NGBfcOffset{LayoutUnit(), LayoutUnit()});
 
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats;
@@ -581,7 +581,7 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
                                &line_info))
       break;
 
-    break_token = line_breaker.CreateBreakToken();
+    break_token = line_breaker.CreateBreakToken(nullptr);
     LayoutUnit inline_size = line_info.TextIndent();
     for (const NGInlineItemResult item_result : line_info.Results())
       inline_size += item_result.inline_size;
@@ -623,12 +623,13 @@ NGLayoutInputNode NGInlineNode::NextSibling() {
   // TODO(kojii): Invalidate PrepareLayout() more efficiently.
   InvalidatePrepareLayout();
   PrepareLayout();
+
   return NGBlockNode(Data().next_sibling_);
 }
 
 void NGInlineNode::CopyFragmentDataToLayoutBox(
     const NGConstraintSpace& constraint_space,
-    NGLayoutResult* layout_result) {
+    const NGLayoutResult& layout_result) {
   LayoutBlockFlow* block_flow = GetLayoutBlockFlow();
 
   // If we have a flow thread, that's where to put the line boxes.
@@ -641,9 +642,6 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
   Vector<unsigned, 32> text_offsets(items.size());
   GetLayoutTextOffsets(&text_offsets);
 
-  NGBoxStrut border_padding = ComputeBorders(constraint_space, Style()) +
-                              ComputePadding(constraint_space, Style());
-
   FontBaseline baseline_type =
       IsHorizontalWritingMode(constraint_space.WritingMode())
           ? FontBaseline::kAlphabeticBaseline
@@ -654,7 +652,7 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
   BidiRunList<BidiRun> bidi_runs;
   LineInfo line_info;
   NGPhysicalBoxFragment* box_fragment =
-      ToNGPhysicalBoxFragment(layout_result->PhysicalFragment().get());
+      ToNGPhysicalBoxFragment(layout_result.PhysicalFragment().get());
   for (const auto& container_child : box_fragment->Children()) {
     // Skip any float children we might have, these are handled by the wrapping
     // parent NGBlockNode.
@@ -665,26 +663,21 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
         ToNGPhysicalLineBoxFragment(*container_child);
     NGFragment line_box(constraint_space.WritingMode(), physical_line_box);
 
+    NGLogicalOffset line_box_offset =
+        physical_line_box.Offset().ConvertToLogical(
+            constraint_space.WritingMode(), TextDirection::kLtr,
+            box_fragment->Size(), physical_line_box.Size());
+
     // Create a BidiRunList for this line.
     CreateBidiRuns(&bidi_runs, physical_line_box.Children(), constraint_space,
-                   line_box.Offset(), items, text_offsets,
-                   &positions_for_bidi_runs, &positions);
+                   line_box_offset, physical_line_box.Size(), items,
+                   text_offsets, &positions_for_bidi_runs, &positions);
     // TODO(kojii): When a line contains a list marker but nothing else, there
     // are fragments but there is no BidiRun. How to handle this is TBD.
     if (!bidi_runs.FirstRun())
       continue;
     // TODO(kojii): bidi needs to find the logical last run.
     bidi_runs.SetLogicallyLastRun(bidi_runs.LastRun());
-
-    // Add border and padding to all positions.
-    // Line box fragments are relative to this anonymous wrapper box fragment,
-    // and the parent NGBlockLayoutAlgorithm offsets this wrapper by border and
-    // padding, but inline boxes should be placed relative to the
-    // LayoutBlockFlow.
-    for (auto& position : positions_for_bidi_runs)
-      position += border_padding;
-    for (auto& position : positions.Values())
-      position += border_padding;
 
     // Create a RootInlineBox from BidiRunList. InlineBoxes created for the
     // RootInlineBox are set to Bidirun::m_box.
@@ -697,17 +690,16 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
     PlaceInlineBoxChildren(root_line_box, positions_for_bidi_runs, positions);
 
     // Copy to RootInlineBox.
-    root_line_box->SetLogicalLeft(line_box.InlineOffset() +
-                                  border_padding.inline_start);
+    root_line_box->SetLogicalLeft(line_box_offset.inline_offset);
     root_line_box->SetLogicalWidth(line_box.InlineSize());
-    LayoutUnit line_top = line_box.BlockOffset() + border_padding.block_start;
     NGLineHeightMetrics line_metrics(Style(), baseline_type);
     const NGLineHeightMetrics& max_with_leading = physical_line_box.Metrics();
-    LayoutUnit baseline = line_top + max_with_leading.ascent;
+    LayoutUnit baseline =
+        line_box_offset.block_offset + max_with_leading.ascent;
     root_line_box->SetLogicalTop(baseline - line_metrics.ascent);
     root_line_box->SetLineTopBottomPositions(
         baseline - line_metrics.ascent, baseline + line_metrics.descent,
-        line_top, baseline + max_with_leading.descent);
+        line_box_offset.block_offset, baseline + max_with_leading.descent);
 
     line_info.SetFirstLine(false);
     bidi_runs.DeleteRuns();
@@ -751,6 +743,14 @@ void NGInlineNode::GetLayoutTextOffsets(
     current_text->SetTextInternal(
         Text(current_offset, Data().text_content_.length()).ToString().Impl());
   }
+}
+
+bool NGInlineNode::IsEmptyInline() {
+  // TODO(kojii): Invalidate PrepareLayout() more efficiently.
+  InvalidatePrepareLayout();
+  PrepareLayout();
+
+  return Data().is_empty_inline_;
 }
 
 void NGInlineNode::CheckConsistency() const {
