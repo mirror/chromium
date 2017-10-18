@@ -22,6 +22,30 @@
       "revId": "9a701b2b7410f43fa841a8d3f30e21f7495ee952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437f1820_2a29ccba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-18T20:27:08Z",
+      "side": 1,
+      "message": "I thought about doing that. I originally decided not to since it makes the test implementation just a little bit different from the real one, but I also don\u0027t see any issues popping up with that part of the code, so I\u0027ve gone ahead and changed it.",
+      "parentUuid": "1d7a604d_a357f9f5",
+      "range": {
+        "startLine": 444,
+        "startChar": 4,
+        "endLine": 444,
+        "endChar": 13
+      },
+      "revId": "9a701b2b7410f43fa841a8d3f30e21f7495ee952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
