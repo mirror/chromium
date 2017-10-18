@@ -783,14 +783,15 @@ static void AppendQuadsToFillScreen(
 
   gfx::Rect root_target_rect = root_render_surface->content_rect();
   float opacity = 1.f;
+  const float temperature = 1.f;
   int sorting_context_id = 0;
   bool are_contents_opaque = SkColorGetA(screen_background_color) == 0xFF;
   viz::SharedQuadState* shared_quad_state =
       target_render_pass->CreateAndAppendSharedQuadState();
   shared_quad_state->SetAll(gfx::Transform(), root_target_rect,
                             root_target_rect, root_target_rect, false,
-                            are_contents_opaque, opacity, SkBlendMode::kSrcOver,
-                            sorting_context_id);
+                            are_contents_opaque, opacity, temperature,
+                            SkBlendMode::kSrcOver, sorting_context_id);
 
   for (Region::Iterator fill_rects(fill_region); fill_rects.has_rect();
        fill_rects.next()) {
@@ -2192,10 +2193,13 @@ void LayerTreeHostImpl::PushScrollbarOpacitiesFromActiveToPending() {
                         scrollbar->element_id())) {
           DCHECK(target_effect_node);
           float source_opacity = source_effect_node->opacity;
+          float src_temp = source_effect_node->color_temperature;
           float target_opacity = target_effect_node->opacity;
-          if (source_opacity == target_opacity)
+          float trgt_temp = target_effect_node->color_temperature;
+          if (source_opacity == target_opacity && src_temp == trgt_temp)
             continue;
           target_effect_node->opacity = source_opacity;
+          target_effect_node->color_temperature = src_temp;
           pending_tree()->property_trees()->effect_tree.set_needs_update(true);
         }
       }

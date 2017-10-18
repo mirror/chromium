@@ -272,6 +272,9 @@ class VIZ_SERVICE_EXPORT FragmentShader {
   int color_matrix_location_ = -1;
   int color_offset_location_ = -1;
 
+  // TODO(afakhry): Make this conditional maybe?
+  int color_temperature_matrix_location_ = -1;
+
   bool has_uniform_alpha_ = false;
   int alpha_location_ = -1;
 
