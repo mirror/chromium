@@ -33,6 +33,25 @@
       "revId": "c3438c54ccf5d3f26a8bcb1ec996a330f6b85b0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c7ccd6_e23be126",
+        "filename": "content/public/browser/non_network_protocol_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T16:04:48Z",
+      "side": 1,
+      "message": "That makes sense. Presumably a long-term goal then would be to get rid of things like ProfileIOData, yes?",
+      "parentUuid": "011c2bc7_ddd403ac",
+      "tag": "mailMessageId\u003d\u003cCA+apAgFj9Rzy4v5uhLsYh+bBx+QnV9qZDhAthYwXkVcFRQuJWA@mail.gmail.com\u003e",
+      "revId": "c3438c54ccf5d3f26a8bcb1ec996a330f6b85b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
