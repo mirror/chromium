@@ -78,6 +78,7 @@ class CONTENT_EXPORT WebMediaPlayerMSCompositor
   bool HasCurrentFrame() override;
   scoped_refptr<media::VideoFrame> GetCurrentFrame() override;
   void PutCurrentFrame() override;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner() override;
 
   // Return the current frame being rendered.
   // Difference between GetCurrentFrame(): GetCurrentFrame() is designed for
