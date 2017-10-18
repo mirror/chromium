@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "68866648_89bdc681",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-18T22:44:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e9770f85_51179958",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "568b4a37_e25d641d",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 10
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "It seems that is_mdns_enabled_ exists so that EnableMdnsDiscovery() is called at most once per MRPM instance, but this restriction doesn\u0027t seem necessary judging by looking at provider_manager.js, so I\u0027m thinking that we can remove this variable. What do you think?\n\nI agree that L67 should call EnsureMdnsDiscoveryEnabled() instead.\n\nI think L208 is already correct. We want to remember that we enabled it, so that we know to enable again when we reconnect to the MRPM. Commenting as such.",
       "parentUuid": "9ccbc7e1_d31efd7f",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bef7979_a95dfe17",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-18T22:44:30Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "7f7ae615_b63af6e3",
       "revId": "c413a4890c10df6521854016b8ea869242033519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -241,6 +277,24 @@
       "side": 1,
       "message": "I checked that the error handler for the first pointer doesn\u0027t run, so it just gets overwritten. We\u0027re not expecting that to happen though, at least with our current MRPs. The case of the extension MRP is handled by MRDesktop::RegisterMRP().",
       "parentUuid": "03d79850_42a6600e",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b5b5e1e_33f4c8dd",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-18T22:44:30Z",
+      "side": 1,
+      "message": "Ok, would it be appropriate to add a DCHECK here asserting that?",
+      "parentUuid": "00740e57_20525506",
       "revId": "c413a4890c10df6521854016b8ea869242033519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -440,6 +494,24 @@
       "side": 1,
       "message": "Yes, the pseudo-sink is mapped correctly to the extension MRP.",
       "parentUuid": "7e5e4eb0_3675471d",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9f55a33_8c9d3c2a",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-18T22:44:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3a0b083d_242f2587",
       "revId": "c413a4890c10df6521854016b8ea869242033519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -692,6 +764,24 @@
     },
     {
       "key": {
+        "uuid": "de728a53_59569c27",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-18T22:44:30Z",
+      "side": 1,
+      "message": "Yes, it appears to be so. It\u0027s fine to consider simplifying this with |internal_routes_observer_| in a separate patch.",
+      "parentUuid": "6475e243_152a26f8",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4a4008a_409515ef",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
         "patchSetId": 10
@@ -736,6 +826,30 @@
       "revId": "c413a4890c10df6521854016b8ea869242033519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab5de5c_6f469702",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-18T22:44:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3fc5a0fa_d926e1ec",
+      "range": {
+        "startLine": 126,
+        "startChar": 57,
+        "endLine": 126,
+        "endChar": 66
+      },
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -929,6 +1043,24 @@
       "revId": "c413a4890c10df6521854016b8ea869242033519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d1c5b2_9d4151fc",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-18T22:44:30Z",
+      "side": 1,
+      "message": "Yeah I would rather keep the provider details in MediaRouter and not be exposed to MediaSinksObservers.\n\nRe: origin list from just one provider. This is ok for now since only DIAL provides the origin list and other MRPs do not support DIAL MediaSources.",
+      "parentUuid": "3c93ef6d_a347817f",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1312,6 +1444,24 @@
       "side": 1,
       "message": "The reason I didn\u0027t use a BindingSet is that BindingSet doesn\u0027t seem to tell you which of the bindings got invalidated when an error handler is called, so you can\u0027t remove just the invalidated binding.",
       "parentUuid": "e5d578b7_d35fe1ef",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f51a7b3_66f53343",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-18T22:44:30Z",
+      "side": 1,
+      "message": "Hmm... from the implementation it seems the binding is automatically removed from the BindingSet when a connection error occurs?\n\nhttps://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/binding_set.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d298",
+      "parentUuid": "7f8555ea_05651dcb",
       "revId": "c413a4890c10df6521854016b8ea869242033519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

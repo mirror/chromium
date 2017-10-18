@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "59ea22e2_eff7e164",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-18T22:44:30Z",
+      "side": 1,
+      "message": "StartDiscovery() is only called from here. It is safe to call multiple times since it is idempotent. It is intended for the MediaSinkServices to start when the MR extension calls RegisterMediaRouteProvider(). So while this is correct, it would be more clear if the StartDiscovery() call is moved to RegisterExtensionMediaRouteProvider().",
+      "parentUuid": "a13b5134_d5ed3ead",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3ccccce_73e69659",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 15
