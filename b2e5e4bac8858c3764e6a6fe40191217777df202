@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "87c7164d_c8a6d960",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-18T01:07:59Z",
+      "side": 1,
+      "message": "Going to keep as-is.  Constructing client_binding_ on construction seems way too non-POD-ish.  Constructing it later requires a std::unique_ptr\u003cmojo::Binding\u003cmojom::URLLoaderClient\u003e\u003e, which also seems a bit much.",
+      "parentUuid": "20f270c4_b6f1f571",
+      "range": {
+        "startLine": 674,
+        "startChar": 22,
+        "endLine": 674,
+        "endChar": 33
+      },
+      "revId": "b2e5e4bac8858c3764e6a6fe40191217777df202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "722c40f3_fbee4c69",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 12
