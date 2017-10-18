@@ -1052,10 +1052,6 @@
       name: "V8IdleTasks",
     },
     {
-      name: "ValidationBubbleInRenderer",
-      status: "stable",
-    },
-    {
       name: "VibrateRequiresUserGesture",
       status: "stable",
     },
