@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "885abd62_830ddb55",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-18T15:46:05Z",
+      "side": 1,
+      "message": "You need a Bug: line for any change more complicated than fixing a typo in a comment.\n\nA change like this is part of a wider reworking on downloads. Please link it to the ongoing bug that all the download CLs are linked to.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 9
+      },
+      "revId": "a9158fe806d6bc7a60ad6aa1c2ba231b0d660d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
