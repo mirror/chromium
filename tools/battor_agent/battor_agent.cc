@@ -239,6 +239,8 @@ void BattOrAgent::OnBytesSent(bool success) {
 void BattOrAgent::OnMessageRead(bool success,
                                 BattOrMessageType type,
                                 std::unique_ptr<vector<char>> bytes) {
+  timeout_callback_.Cancel();
+
   if (!success) {
     switch (last_action_) {
       case Action::READ_GIT_HASH:
@@ -260,9 +262,6 @@ void BattOrAgent::OnMessageRead(bool success,
         return;
     }
   }
-
-  // Successfully read a message, cancel any timeouts.
-  timeout_callback_.Cancel();
 
   switch (last_action_) {
     case Action::READ_INIT_ACK:
