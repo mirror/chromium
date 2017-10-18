@@ -57,6 +57,8 @@ class PLATFORM_EXPORT WebViewSchedulerImpl
   void SetVirtualTimePolicy(VirtualTimePolicy virtual_time_policy) override;
   void GrantVirtualTimeBudget(base::TimeDelta budget,
                               WTF::Closure budget_exhausted_callback) override;
+  void SetMaxVirtualTimeTaskStarvationCount(
+      int max_task_starvation_count) override;
   void AudioStateChanged(bool is_audio_playing) override;
   bool HasActiveConnectionForTest() const override;
   void RequestBeginMainFrameNotExpected(bool new_state) override;
@@ -132,6 +134,19 @@ class PLATFORM_EXPORT WebViewSchedulerImpl
   RefPtr<WebTaskRunnerImpl> virtual_time_control_task_queue_;
   TaskHandle virtual_time_budget_expired_task_handle_;
   int background_parser_count_;
+
+  // The number of tasks that have been run in a policy other than
+  // VirtualTimePolicy::PAUSED while virtual time was not allowed
+  // to advance. Used to detect excessive starvation of delayed tasks.
+  int task_starvation_count_;
+
+  // The maximum number of immediate tasks that are allowed to execute while
+  // virtual time is paused causing delayed tasks to be starved while in
+  // VirtualTimePolicy::DETERMINISTIC_LOADING. NB a value of 0 allows infinite
+  // starvation. A reasonable value for this in practice is around 1000 tasks,
+  // which should only affect rendering of the heaviest pages.
+  int max_task_starvation_count_;
+
   bool page_visible_;
   bool disable_background_timer_throttling_;
   bool allow_virtual_time_to_advance_;
