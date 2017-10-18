@@ -300,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "260284de_1c2abeb2",
+        "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T10:44:57Z",
+      "side": 1,
+      "message": "Sorry, to clarify on this a bit: I don\u0027t think we need special behavior, just unconditionally set, even if the object is empty. Since we only enter this path if the plugin wrapper was not already set, unconditionally set it to be empty is fine, and will have the same net result.\n\nAlso, we shouldn\u0027t need to fall back to fetching the v8::Object from the PluginView below after entering this path.",
+      "parentUuid": "01dc514d_67bf8005",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec0a692f_8d32f44f",
         "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
         "patchSetId": 18
@@ -347,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "a43c22f4_e1e3fca6",
+        "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T10:44:57Z",
+      "side": 1,
+      "message": "\u003e Are you asking about the MimeHandlerView* objects or tearing down the blink side? MimeHandlerViewManagerHost (browser) observers WebContents and will organically clean its state, MimeHandlerViewManager (renderer) cleans the state in line 717 (it understands that a controller was already assigned to this owner element).\n\nI\u0027m focused on the Blink-side cleanup. I\u0027m wondering how the existing code (before this patch) handles this switch.\n\n\u003e By \"GetFrame()\" are you referring to GetDocument().GetFrame() on line 717? Would removing a child frame some how remove the parent frame? (Isn\u0027t GetDocument().GetFrame() parent frame to ContentFrame()).\n\nYes, this can happen if the child\u0027s unload handler removes the parent frame.\n\n\u003e IIUC removing the frame would be the cleanest option in many ways; specifically going from frame to plugin should remove the content frame. Also it makes transitions between different PDF sources much easier and pose less restrictions on tracking navigation to PDF extension on the browser side.\n\nRight, I don\u0027t object to detaching the frame--that\u0027s definitely necessary. What I would like is to not have multiple paths that detach the frame, because detaching frames is tricky \u003d)\n\n\u003e That being said, do you have a better suggestion for this purpose (specifically to address frame to plugin transition)?\n\nThat\u0027s why I\u0027m asking about how this works (for any plugin, not just PDF), prior to this CL.",
+      "parentUuid": "050a56d5_2ce8c8f1",
+      "range": {
+        "startLine": 714,
+        "startChar": 0,
+        "endLine": 718,
+        "endChar": 60
+      },
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af39059a_efe24b5b",
         "filename": "third_party/WebKit/Source/core/html/PluginDocument.cpp",
         "patchSetId": 18
@@ -376,6 +418,24 @@
       "side": 1,
       "message": "\u003e Hmm... is this because when the mime type is PDF, we currently always create a plugin document? Should we actually be doing that?\n\nPluginDocument is exclusively created for navigation to PDF resource. Specifically, the \u003ciframe\u003e/main frame requests the PDF file -\u003e browser sends a message which includes some GUID (for the intercepted stream) -\u003e From the mime-type blink decides to create a PluginDocument.\n\nIIUC all PluginDocument does is to attach an \u003cembed\u003e and forward the GUID to PluginView.\n\nSo if eventually we do not use Plugin for loading PDF extension this class can be renamed to something else.\n\n\u003e It\u0027s not really a \u0027plugin\u0027 anymore, so maybe we can just use a more standard loading path rather than having to forward the bytes here?\n\nYes (although technically we are still loading a plugin in a separate process inside this page).\nI think if we can load a static HTML in the",
       "parentUuid": "af39059a_efe24b5b",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb52da0_25f92d56",
+        "filename": "third_party/WebKit/Source/core/html/PluginDocument.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-18T10:44:57Z",
+      "side": 1,
+      "message": "Presumably this is still used for Flash?\n\nWhat I\u0027m saying is we don\u0027t really have a plugin in the traditional sense here, when the owning frame is a plugin frame. So rather than having to plumb this intercepted stream from the browser down to the renderer and then back up, it would be better not to have to write this code at all. So if it would be possible to make a plugin frame just load, say, about:blank to start and figure out all the resource stuff at another level, that seems like it\u0027d be better.",
+      "parentUuid": "6af510a7_3d3a98e6",
       "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
