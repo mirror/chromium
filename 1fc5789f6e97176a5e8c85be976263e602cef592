@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db914361_2b2ed122",
+        "filename": "tools/accessibility/inspect/ax_tree_server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-18T19:34:32Z",
+      "side": 0,
+      "message": "Use {} to initialize vector. No need for push_back any more.",
+      "revId": "1fc5789f6e97176a5e8c85be976263e602cef592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
