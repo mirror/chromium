@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "31d158b0_9b8fa4af",
+        "filename": "media/gpu/vaapi_video_encode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-10-18T09:01:26Z",
+      "side": 1,
+      "message": "I\u0027d still recommend move it, make sure the job is not in \"incomplete state\" even in error case.\n(It\u0027s okay to move in this CL or a separate CL)",
+      "parentUuid": "958dad07_313a302b",
+      "revId": "9c66b9c358327af7c3aaecc6bd4bc1c849cf3542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "388c4259_85915df9",
         "filename": "media/gpu/vaapi_video_encode_accelerator.cc",
         "patchSetId": 2
