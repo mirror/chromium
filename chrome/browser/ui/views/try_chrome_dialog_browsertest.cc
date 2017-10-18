@@ -4,6 +4,7 @@
 
 #include "base/callback.h"
 #include "base/command_line.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/ui/test/test_browser_dialog.h"
@@ -282,15 +283,16 @@ class TryChromeDialogTest
   TryChromeDialogTest()
       : SupportsTestDialog<TryChromeDialogBrowserTestBase>(GetParam()) {}
 
-  // DialogBrowserTest:
+  // SupportsTestDialog:
+  void SetUp() override {
+    scoped_feature_list_.InitAndEnableFeature(features::kSecondaryUiMd);
+    SupportsTestDialog::SetUp();
+  }
   void ShowDialog(const std::string& name) override { ShowDialogSync(); }
 
-  // content::BrowserTestBase:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitch(switches::kExtendMdToSecondaryUi);
-  }
-
  private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+
   DISALLOW_COPY_AND_ASSIGN(TryChromeDialogTest);
 };
 
