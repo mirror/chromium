@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea85f35b_dab951b7",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-18T02:02:16Z",
+      "side": 1,
+      "message": "In general, adding to the enum has other problems - it pollutes all switch statements. I had a comment at the definition of the enum explicitly indicating that this UMA histogram needs to be updated if new enumerations are added. \n\nAnyways, I don\u0027t feel like arguing this point. I\u0027ve made the change you\u0027ve suggested.",
+      "parentUuid": "ee3c6009_4eb39f0f",
+      "range": {
+        "startLine": 536,
+        "startChar": 28,
+        "endLine": 536,
+        "endChar": 60
+      },
+      "revId": "6ec69ad9c5ee70ab2af985e6e8a14d9e2e8b66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcee9c1d_42410ec2",
         "filename": "chrome/profiling/memlog_connection_manager.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8756c0bc_379c72a3",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-18T02:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcee9c1d_42410ec2",
+      "range": {
+        "startLine": 178,
+        "startChar": 68,
+        "endLine": 178,
+        "endChar": 0
+      },
+      "revId": "6ec69ad9c5ee70ab2af985e6e8a14d9e2e8b66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8833f684_b46b76a3",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "6ec69ad9c5ee70ab2af985e6e8a14d9e2e8b66b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b1de2e_08aa3ad7",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29518,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-18T02:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8833f684_b46b76a3",
+      "revId": "6ec69ad9c5ee70ab2af985e6e8a14d9e2e8b66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "6ec69ad9c5ee70ab2af985e6e8a14d9e2e8b66b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287a7335_ec271176",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 53943,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-18T02:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0439002_1ba6ea47",
+      "range": {
+        "startLine": 53942,
+        "startChar": 0,
+        "endLine": 53943,
+        "endChar": 13
+      },
+      "revId": "6ec69ad9c5ee70ab2af985e6e8a14d9e2e8b66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
