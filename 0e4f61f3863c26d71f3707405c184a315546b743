@@ -34,6 +34,24 @@
       "revId": "0e4f61f3863c26d71f3707405c184a315546b743",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e5f334_0275634f",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-18T01:24:15Z",
+      "side": 1,
+      "message": "As far as I can tell, if the frame is detached, the worker script fetch is cancelled and this should never be hit so the null checking isn\u0027t necessary so I\u0027ve removed it.",
+      "parentUuid": "0dc2c05f_9bdb4e5d",
+      "revId": "0e4f61f3863c26d71f3707405c184a315546b743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

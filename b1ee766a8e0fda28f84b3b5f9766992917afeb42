@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b35627da_f05118d8",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2961,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-18T01:24:15Z",
+      "side": 1,
+      "message": "In the interest of not blocking this on deciding whether to expose associated interfaces to blink (or InterfaceProvider replacement on navigation), I\u0027ve changed this to just use the renderer-provided origin until the frame InterfaceProvider is replaced on navigation. It\u0027s no worse than the current behaviour and it\u0027ll be easy enough to change once either option for better enforcement is ready.",
+      "parentUuid": "679f3f84_550343c5",
+      "revId": "b1ee766a8e0fda28f84b3b5f9766992917afeb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90437214_5203d645",
         "filename": "content/public/app/mojo/content_browser_manifest.json",
         "patchSetId": 5
