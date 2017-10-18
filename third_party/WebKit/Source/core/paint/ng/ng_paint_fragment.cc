@@ -13,24 +13,26 @@ namespace blink {
 NGPaintFragment::NGPaintFragment(RefPtr<const NGPhysicalFragment> fragment)
     : physical_fragment_(std::move(fragment)) {
   DCHECK(physical_fragment_);
-  PopulateDescendants();
 }
 
 // Populate descendant NGPaintFragment from NGPhysicalFragment tree.
-void NGPaintFragment::PopulateDescendants() {
-  if (PhysicalFragment().IsContainer()) {
-    const NGPhysicalContainerFragment& fragment =
-        ToNGPhysicalContainerFragment(PhysicalFragment());
-    children_.ReserveCapacity(fragment.Children().size());
-    for (const auto& child_fragment : fragment.Children()) {
+void NGPaintFragment::PopulateDescendants(bool stop_at_block_layout_root) {
+  const NGPhysicalFragment& fragment = PhysicalFragment();
+  if (fragment.IsContainer() &&
+      !(stop_at_block_layout_root && fragment.IsBlockLayoutRoot())) {
+    const NGPhysicalContainerFragment& container =
+        ToNGPhysicalContainerFragment(fragment);
+    children_.ReserveCapacity(container.Children().size());
+    for (const auto& child_fragment : container.Children()) {
       auto child = WTF::MakeUnique<NGPaintFragment>(child_fragment);
+      child->PopulateDescendants(true);
       children_.push_back(std::move(child));
     }
   }
   // TODO(kojii): Do some stuff to accumulate visual rects and convert to paint
   // coordinates.
   // TODO(kojii): This is still quite worng, revisit in following patch.
-  SetVisualRect({{}, PhysicalFragment().Size().ToLayoutSize()});
+  SetVisualRect({{}, fragment.Size().ToLayoutSize()});
 }
 
 }  // namespace blink
