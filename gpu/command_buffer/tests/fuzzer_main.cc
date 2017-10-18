@@ -113,8 +113,12 @@ class CommandBufferSetup {
     ALLOW_UNUSED_LOCAL(command_line);
 
 #if defined(GPU_FUZZER_USE_PASSTHROUGH_CMD_DECODER)
-    command_line->AppendSwitch(switches::kUsePassthroughCmdDecoder);
+    command_line->AppendSwitchASCII(switches::kUseCmdDecoder,
+                                    kCmdDecoderPassthroughName);
     recreate_context_ = true;
+#else
+    command_line->AppendSwitchASCII(switches::kUseCmdDecoder,
+                                    kCmdDecoderValidatingName);
 #endif
 
 #if defined(GPU_FUZZER_USE_ANGLE)
