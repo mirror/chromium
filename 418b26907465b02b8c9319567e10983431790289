@@ -16,6 +16,24 @@
       "revId": "418b26907465b02b8c9319567e10983431790289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29e7576_4bff045f",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-18T19:08:23Z",
+      "side": 1,
+      "message": "Even better! Thanks!",
+      "parentUuid": "a1838377_2a91e868",
+      "revId": "418b26907465b02b8c9319567e10983431790289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
