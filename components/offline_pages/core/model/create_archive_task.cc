@@ -87,7 +87,10 @@ void CreateArchiveTask::CreateArchive() {
 }
 
 void CreateArchiveTask::InformCreateArchiveFailed(ArchiverResult result) {
-  callback_.Run(OfflinePageItem(), archiver_, result, GURL(), base::FilePath(),
+  OfflinePageItem page;
+  // Setting the client id for metric collection purposes.
+  page.client_id = save_page_params_.client_id;
+  callback_.Run(page, archiver_, result, GURL(), base::FilePath(),
                 base::string16(), 0);
   TaskComplete();
 }

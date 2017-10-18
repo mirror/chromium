@@ -86,14 +86,13 @@ std::unique_ptr<OfflinePageItem>
 OfflinePageMetadataStoreTestUtil::GetPageByOfflineId(int64_t offline_id) {
   OfflinePageItem* page = nullptr;
   auto task = GetPagesTask::CreateTaskMatchingOfflineId(
-      store(),
+      store(), offline_id,
       base::Bind(
           [](OfflinePageItem** out_page, const OfflinePageItem* cb_page) {
             if (cb_page)
               *out_page = new OfflinePageItem(*cb_page);
           },
-          &page),
-      offline_id);
+          &page));
   task->Run();
   task_runner_->RunUntilIdle();
   return base::WrapUnique<OfflinePageItem>(page);
