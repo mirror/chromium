@@ -1501,6 +1501,9 @@ void OutOfProcessInstance::DocumentLoadComplete(
                        document_features.has_attachments ? 1 : 0, 2);
   HistogramEnumeration("PDF.IsLinearized",
                        document_features.is_linearized ? 1 : 0, 2);
+  HistogramEnumeration("PDF.FormType",
+                       static_cast<int32_t>(document_features.form_type),
+                       static_cast<int32_t>(PDFEngine::FormType::kCount));
 }
 
 void OutOfProcessInstance::RotateClockwise() {

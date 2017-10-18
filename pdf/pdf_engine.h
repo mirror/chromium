@@ -58,6 +58,17 @@ class PDFEngine {
     PERMISSION_PRINT_HIGH_QUALITY,
   };
 
+  // Values other then kCount are persisted to logs as part of metric
+  // collection, so should not be changed.
+  enum class FormType {
+    kOther = 0,
+    kNone = 1,
+    kAcroForm = 2,
+    kXFAFull = 3,
+    kXFAForeground = 4,
+    kCount = 5
+  };
+
   struct DocumentFeatures {
     // Number of pages in document.
     size_t page_count = 0;
@@ -67,6 +78,8 @@ class PDFEngine {
     // Whether the document is linearized (see Appendix F "Linearized PDF" of
     // PDF Reference 1.7).
     bool is_linearized = false;
+    // What type of form the document contains.
+    FormType form_type = FormType::kOther;
   };
 
   // The interface that's provided to the rendering engine.
