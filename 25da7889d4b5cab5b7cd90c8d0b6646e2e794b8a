@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "427dee9c_9954a0fb",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_invalidhandle.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-18T15:18:53Z",
+      "side": 1,
+      "message": "nit: you can simplify this by getting rid of this block, and just never setting canFinish to false.",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 5
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8232849_4e960daa",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_unregister.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-18T15:18:53Z",
+      "side": 1,
+      "message": "session.requestFrame",
+      "range": {
+        "startLine": 24,
+        "startChar": 56,
+        "endLine": 24,
+        "endChar": 67
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3acda3d6_894545e4",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_unregister.html",
         "patchSetId": 1
@@ -110,6 +156,190 @@
         "startChar": 12,
         "endLine": 50,
         "endChar": 13
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d612eea_da81d159",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevicePose.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-18T15:18:53Z",
+      "side": 1,
+      "message": "This looks unnecessary?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851bac97_96a9138c",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-18T15:18:53Z",
+      "side": 1,
+      "message": "nit: TODO(bajones) throughout.",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 11
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db7b32d_3266f389",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-18T15:18:53Z",
+      "side": 1,
+      "message": "Can you add a test for this behaviour? Make sure we save and later fire non-exclusive requests during exclusive sessions.",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 44
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86069894_73c8bdd7",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-18T15:18:53Z",
+      "side": 1,
+      "message": "This part of the comment at least isn\u0027t really accurate here. But the comment will probably still be useful when you finish the exclusive implementation... so...\n\niunno, leave a TODO to update the comment, but leave it as-is?",
+      "range": {
+        "startLine": 214,
+        "startChar": 61,
+        "endLine": 217,
+        "endChar": 35
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bddf590_488dce31",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-18T15:18:53Z",
+      "side": 1,
+      "message": "Not sure... if requestFrame was a promise you could reject it. Running the callback is probably not necessary as authors can use the sessionend event to switch how they render, etc. right?",
+      "range": {
+        "startLine": 270,
+        "startChar": 20,
+        "endLine": 270,
+        "endChar": 64
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7bb645_1648edbb",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameRequestCallbackCollection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-18T15:18:53Z",
+      "side": 1,
+      "message": "This is pretty subtle, we should probably have a test.",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 3
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4b0638_05e065d8",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRPresentationFrame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-18T15:18:53Z",
+      "side": 1,
+      "message": "Is there a good way to mark which functions are exposed to the page without looking at the IDL?",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 61
+      },
+      "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a5999d_67651348",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-18T15:18:53Z",
+      "side": 1,
+      "message": "I think this would be cleaner if ForceEnd() called device_-\u003eframeProvider()-\u003eEndExclusiveSession(); instead of the other way around.\n\nIf we want to trigger ending the exclusive session from the FrameProvider, it would call exclusive_session()-\u003eForceEnd() and have ForceEnd call EndExclusiveSession.\n\nWe can also rename FrameProvider::EndExclusiveSession() FrameProvider::OnExclusiveSessionEnded()",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 52
       },
       "revId": "25da7889d4b5cab5b7cd90c8d0b6646e2e794b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
