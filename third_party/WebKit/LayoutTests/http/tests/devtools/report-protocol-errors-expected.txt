@@ -24,7 +24,7 @@ Tests that InspectorBackendDispatcher is catching incorrect messages.
 {
     error : {
         code : -32600
-        message : "Message must have string 'method' porperty"
+        message : "Message must have string 'method' property"
     }
     id : 1
 }
