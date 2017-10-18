@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b23cdea_9aaede64",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:49:53Z",
+      "side": 0,
+      "message": "What\u0027s the behavior of the infrastructure if the test fails by keeping reading?  Is it a hang, or a direct failure?  If it\u0027s a hang, I\u0027d like to dig deeper and see if we can find a way to turn it into a direct failure.\n\nETA: Below it looks like there\u0027s case where you expect things to hang, which makes me think the answer around the test infrastructure is \"it hangs\".  Suggestion: Would it make sense to hoist the EXPECT_TRUE() at the end of RunTests() up into appropriate callers, and leave these additions that aren\u0027t expected to be read in the test code to reduce that possibility?  (Up to you.)\n\n(Note I\u0027m not quarreling with expected hang below--that\u0027s handled fine.)",
+      "range": {
+        "startLine": 1553,
+        "startChar": 47,
+        "endLine": 1553,
+        "endChar": 64
+      },
+      "revId": "890d533922cdf54d08002d2a85e9991a8c8b2404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1e00e19_001f02fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:49:53Z",
+      "side": 1,
+      "message": "nit: Duplicate \"the disconnected\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "abb8f2b01509f0895c760639f0502db9e0dbcc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024abb5b_b1353994",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:49:53Z",
+      "side": 1,
+      "message": "nit: Do you mean URLLoaderFactory?",
+      "range": {
+        "startLine": 530,
+        "startChar": 36,
+        "endLine": 530,
+        "endChar": 40
+      },
+      "revId": "abb8f2b01509f0895c760639f0502db9e0dbcc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd24346_bbae7dd3",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:49:53Z",
+      "side": 1,
+      "message": "IIUC, this is equivalencing the behavior of a pipe that was never connected to a pipe where the remote has dropped.  That makes me a little uncomfortable, though if those two things are different, that\u0027s probably a bug in Mojo.  So I\u0027ll call out that difference in case you either see a bigger problem or a simple way to more directly emulate a connected and then broken pipe; if not, don\u0027t worry about it.",
+      "range": {
+        "startLine": 1035,
+        "startChar": 14,
+        "endLine": 1035,
+        "endChar": 18
+      },
+      "revId": "abb8f2b01509f0895c760639f0502db9e0dbcc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25caea41_164fbbf6",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T15:49:53Z",
+      "side": 1,
+      "message": "nit: waiting",
+      "range": {
+        "startLine": 1713,
+        "startChar": 30,
+        "endLine": 1713,
+        "endChar": 34
+      },
+      "revId": "abb8f2b01509f0895c760639f0502db9e0dbcc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
