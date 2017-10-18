@@ -1,0 +1,71 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "ui/gfx/geometry/mojo/geometry.mojom";
+
+// Used to send large messages in chunks from session to a host.
+struct DevToolsMessageChunk {
+  // Whether this is a first chunk in a message.
+  bool is_first;
+
+  // Whether this chunk is last.
+  bool is_last;
+
+  // The total size of the message being sent in chunks, only present for
+  // the first chunk.
+  uint32 message_size;
+
+  // Chunk data itself.
+  string data;
+
+  // Call id as defined in DevTools protocol, only comes for responses.
+  int32 call_id;
+
+  // State for future reattach, only comes for responses in a last chunk.
+  string post_state;
+};
+
+// Implemented by the frame (e.g. renderer processes).
+// Instances of this interface must be associated with (i.e., FIFO with) the
+// legacy IPC channel.
+interface DevToolsAgent {
+  // Used to attach a session to a frame.
+  AttachDevToolsSession(associated DevToolsSessionHost host,
+                        associated DevToolsSession& session);
+
+  // Used to reattach a session to a frame after cross-process navigation.
+  ReattachDevToolsSession(string state,
+                          associated DevToolsSessionHost host,
+                          associated DevToolsSession& session);
+
+  // Sets up the frame as a devtools frontend.
+  SetupDevToolsFrontend(string api_script, DevToolsFrontendHost host);
+};
+
+// Represents an attached session which implements DevTools protocol.
+interface DevToolsSession {
+  // Dispatches protocol message.
+  DispatchProtocolMessage(int32 call_id, string method, string message);
+
+  // Requests an element at specific position to be inspected.
+  InspectElement(gfx.mojom.Point point);
+};
+
+// Represents a session host which talks DevTools protocol to the session.
+interface DevToolsSessionHost {
+  // Dispatches protocol message.
+  DispatchProtocolMessage(DevToolsMessageChunk);
+
+  // Requests a new DevTools window for a frame with given routing id.
+  // TODO(dgozman): get rid of routing id.
+  RequestNewWindow(int32 frame_routing_id) => (bool success);
+};
+
+// Provides host functionality to frame serving as DevTools frontend.
+interface DevToolsFrontendHost {
+  // Sends a message to DevTools frontend embedder.
+  DispatchEmbedderMessage(string message);
+};
