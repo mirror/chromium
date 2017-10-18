@@ -11,6 +11,7 @@ html {
       + 1px);
   --tile-margin: 16px;
   --tile-width: 154px;
+  height: 100%;
 }
 
 /* width >= (3 cols * (16px + 154px) - 16px + 200px) */
@@ -34,11 +35,15 @@ body {
   cursor: default;
   font-family: arial, sans-serif;
   font-size: small;
+  height: 100%;
   margin: 0;
   overflow-x: hidden;
 }
 
 #ntp-contents {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   margin: 0 auto;
   text-align: -webkit-center;
   width: var(--content-width);
@@ -329,7 +334,9 @@ body.fakebox-focused #fakebox-cursor {
 }
 
 #most-visited {
+  height: 100%;
   margin-top: 64px;
+  overflow: hidden;
   text-align: -webkit-center;
   user-select: none;
 }
@@ -345,6 +352,7 @@ body.fakebox-focused #fakebox-cursor {
    * change the corresponding values in most_visited_single.css. */
   height: calc(2*128px + 16px + 4px + 8px);
   margin: 0;
+  max-height: 100%;
   position: relative;
   text-align: -webkit-auto;
 }
