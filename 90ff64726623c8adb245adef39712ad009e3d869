@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "09d26430_5605c31c",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-18T11:13:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb155dd1_8c61641a",
+      "revId": "90ff64726623c8adb245adef39712ad009e3d869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4310922c_f8c6d3e4",
         "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
         "patchSetId": 2
