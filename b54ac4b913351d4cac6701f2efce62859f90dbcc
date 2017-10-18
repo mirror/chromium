@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b635559_4fb8567e",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T22:25:40Z",
+      "side": 0,
+      "message": "nit: remove the field if we don\u0027t use it any more.",
+      "revId": "b54ac4b913351d4cac6701f2efce62859f90dbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
