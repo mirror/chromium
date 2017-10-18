@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55caddc3_14f7fab5",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T22:19:39Z",
+      "side": 1,
+      "message": "Please use base::UmaHistogramEnumeration() rather than calling the raw FactoryGet() method.",
+      "range": {
+        "startLine": 66,
+        "startChar": 36,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "530def6838695c2d8813dac4c2b5c9d0e0c0f208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a74c9537_166d76fb",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T22:19:39Z",
+      "side": 1,
+      "message": "nit: Once you switch to using base::UmaHistogramEnumeration(), I don\u0027t think you\u0027ll need the static_casts.",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 23
+      },
+      "revId": "530def6838695c2d8813dac4c2b5c9d0e0c0f208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682d0cd5_62867fa8",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T22:19:39Z",
+      "side": 1,
+      "message": "Optional nit: Mebbe name this \"Arc.OptInSilentAuthCode.Reauthorization\", so that it\u0027s sorted to be right next to its related histogram?  OTOH, if it\u0027s more useful to sort the \"Reauthorization\" histograms together, then the current name is fine.",
+      "range": {
+        "startLine": 106,
+        "startChar": 31,
+        "endLine": 106,
+        "endChar": 70
+      },
+      "revId": "530def6838695c2d8813dac4c2b5c9d0e0c0f208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b0b6f0_246951b6",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T22:19:39Z",
+      "side": 1,
+      "message": "Please document that these enum values are persisted to logs, and their values should therefore never be renumbered nor reused.",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 55
+      },
+      "revId": "530def6838695c2d8813dac4c2b5c9d0e0c0f208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
