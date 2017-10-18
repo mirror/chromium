@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91e49da9_d52223af",
+        "filename": "content/common/histogram_fetcher.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-18T00:00:29Z",
+      "side": 1,
+      "message": "driveby: for these two existing methods, and for the new one below, why not put them in child.mojom and child_host.mojom (or whatever you want to call the reverse one)? there are plenty of other child IPCs that we\u0027ll have to convert, so it seems natural that they\u0027d belong on one interface instead of having a lot of one-offs?",
+      "revId": "b9faec17154d42a8fdafd467e6849c685c20e924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
