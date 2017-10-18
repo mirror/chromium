@@ -553,55 +553,48 @@ TEST_P(LargeIconServiceGetterTest, FallbackSinceTooPicky) {
 TEST_P(LargeIconServiceGetterTest, ShouldRecordUrlMismtaches) {
   const std::string kUmaMetricName =
       "Favicons.LargeIconService.BlacklistedURLMismatch";
-  const GURL kNonBlacklistedPageUrl1("http://www.foo.com/path");
-  const GURL kNonBlacklistedPageUrl2("http://www.bar.com/path");
-  const GURL kBlacklistedPageUrl1("http://www.google.com/path");
-  const GURL kBlacklistedPageUrl2("http://www.youtube.com/path");
-  const GURL kNonBlacklistedIconUrl1("http://www.foo.com/favicon.ico");
-  const GURL kNonBlacklistedIconUrl2("http://www.bar.com/favicon.ico");
-  const GURL kBlacklistedIconUrl1("http://www.google.com/favicon.ico");
-  const GURL kBlacklistedIconUrl2("http://www.youtube.com/favicon.ico");
+  const GURL kPageUrl1("http://www.foo.com/path");
+  const GURL kPageUrl2("http://www.bar.com/path");
+  const GURL kPageUrl3("http://www.google.com/path");
+  const GURL kPageUrl4("http://www.youtube.com/path");
+  const GURL kIconUrl1("http://www.foo.com/favicon.ico");
+  const GURL kIconUrl2("http://www.bar.com/favicon.ico");
+  const GURL kIconUrl3("http://www.google.com/favicon.ico");
+  const GURL kIconUrl4("http://www.youtube.com/favicon.ico");
 
-  // |kNonBlacklistedPageUrl1| and |kNonBlacklistedPageUrl1| are not in the
-  // blacklist, so don't contribute to the histogram.
-  InjectMockResult(kNonBlacklistedPageUrl1,
-                   CreateTestBitmapResultWithIconUrl(kNonBlacklistedIconUrl1));
-  InjectMockResult(kNonBlacklistedPageUrl2,
-                   CreateTestBitmapResultWithIconUrl(kNonBlacklistedIconUrl2));
-  GetLargeIconOrFallbackStyleAndWaitForCallback(kNonBlacklistedPageUrl1, 0, 0);
-  GetLargeIconOrFallbackStyleAndWaitForCallback(kNonBlacklistedPageUrl2, 0, 0);
+  // |kPageUrl1| and |kPageUrl1| are not in the blacklist, so don't contribute
+  // to the histogram.
+  InjectMockResult(kPageUrl1, CreateTestBitmapResultWithIconUrl(kIconUrl1));
+  InjectMockResult(kPageUrl2, CreateTestBitmapResultWithIconUrl(kIconUrl2));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kPageUrl1, 0, 0);
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kPageUrl2, 0, 0);
   EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName), IsEmpty());
 
   // Even if there is a mismatch, it's irrelevant if none of the URLs match the
   // blacklist.
-  InjectMockResult(kNonBlacklistedPageUrl1,
-                   CreateTestBitmapResultWithIconUrl(kNonBlacklistedIconUrl2));
-  InjectMockResult(kNonBlacklistedPageUrl2,
-                   CreateTestBitmapResultWithIconUrl(kNonBlacklistedIconUrl1));
-  GetLargeIconOrFallbackStyleAndWaitForCallback(kNonBlacklistedPageUrl1, 0, 0);
-  GetLargeIconOrFallbackStyleAndWaitForCallback(kNonBlacklistedPageUrl2, 0, 0);
+  InjectMockResult(kPageUrl1, CreateTestBitmapResultWithIconUrl(kIconUrl2));
+  InjectMockResult(kPageUrl2, CreateTestBitmapResultWithIconUrl(kIconUrl1));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kPageUrl1, 0, 0);
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kPageUrl2, 0, 0);
   EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName), IsEmpty());
 
   // Mismatch between a blacklisted site and a non-blacklisted site should
   // contribute to bucket 0.
-  InjectMockResult(kNonBlacklistedPageUrl1,
-                   CreateTestBitmapResultWithIconUrl(kBlacklistedIconUrl1));
-  GetLargeIconOrFallbackStyleAndWaitForCallback(kNonBlacklistedPageUrl1, 0, 0);
+  InjectMockResult(kPageUrl1, CreateTestBitmapResultWithIconUrl(kIconUrl3));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kPageUrl1, 0, 0);
   EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName),
               ElementsAre(base::Bucket(/*min=*/0, /*count=*/1)));
 
   // Matching pairs within the blacklist should contribute to bucket 0.
-  InjectMockResult(kBlacklistedPageUrl1,
-                   CreateTestBitmapResultWithIconUrl(kBlacklistedIconUrl1));
-  GetLargeIconOrFallbackStyleAndWaitForCallback(kBlacklistedPageUrl1, 0, 0);
+  InjectMockResult(kPageUrl3, CreateTestBitmapResultWithIconUrl(kIconUrl3));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kPageUrl3, 0, 0);
   EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName),
               ElementsAre(base::Bucket(/*min=*/0, /*count=*/2)));
 
   // Mismatch between a blacklisted site and another blacklisted site should
   // contribute to bucket 1.
-  InjectMockResult(kBlacklistedPageUrl1,
-                   CreateTestBitmapResultWithIconUrl(kBlacklistedIconUrl2));
-  GetLargeIconOrFallbackStyleAndWaitForCallback(kBlacklistedPageUrl1, 0, 0);
+  InjectMockResult(kPageUrl3, CreateTestBitmapResultWithIconUrl(kIconUrl4));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kPageUrl3, 0, 0);
   EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName),
               ElementsAre(base::Bucket(/*min=*/0, /*count=*/2),
                           base::Bucket(/*min=*/1, /*count=*/1)));
