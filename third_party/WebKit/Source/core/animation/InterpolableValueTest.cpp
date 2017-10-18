@@ -18,7 +18,7 @@ class AnimationInterpolableValueTest : public ::testing::Test {
   }
 
   double InterpolateNumbers(double a, double b, double progress) {
-    RefPtr<LegacyStyleInterpolation> i = SampleTestInterpolation::Create(
+    scoped_refptr<LegacyStyleInterpolation> i = SampleTestInterpolation::Create(
         InterpolableNumber::Create(a), InterpolableNumber::Create(b));
     i->Interpolate(0, progress);
     return ToInterpolableNumber(InterpolationValue(*i.get()))->Value();
@@ -30,11 +30,11 @@ class AnimationInterpolableValueTest : public ::testing::Test {
     base.ScaleAndAdd(scale, add);
   }
 
-  RefPtr<LegacyStyleInterpolation> InterpolateLists(
+  scoped_refptr<LegacyStyleInterpolation> InterpolateLists(
       std::unique_ptr<InterpolableList> list_a,
       std::unique_ptr<InterpolableList> list_b,
       double progress) {
-    RefPtr<LegacyStyleInterpolation> i =
+    scoped_refptr<LegacyStyleInterpolation> i =
         SampleTestInterpolation::Create(std::move(list_a), std::move(list_b));
     i->Interpolate(0, progress);
     return i;
@@ -61,7 +61,7 @@ TEST_F(AnimationInterpolableValueTest, SimpleList) {
   list_b->Set(1, InterpolableNumber::Create(-200));
   list_b->Set(2, InterpolableNumber::Create(300));
 
-  RefPtr<LegacyStyleInterpolation> i =
+  scoped_refptr<LegacyStyleInterpolation> i =
       InterpolateLists(std::move(list_a), std::move(list_b), 0.3);
   InterpolableList* out_list = ToInterpolableList(InterpolationValue(*i.get()));
   EXPECT_FLOAT_EQ(30, ToInterpolableNumber(out_list->Get(0))->Value());
@@ -84,7 +84,7 @@ TEST_F(AnimationInterpolableValueTest, NestedList) {
   list_b->Set(1, std::move(sub_list_b));
   list_b->Set(2, InterpolableNumber::Create(1));
 
-  RefPtr<LegacyStyleInterpolation> i =
+  scoped_refptr<LegacyStyleInterpolation> i =
       InterpolateLists(std::move(list_a), std::move(list_b), 0.5);
   InterpolableList* out_list = ToInterpolableList(InterpolationValue(*i.get()));
   EXPECT_FLOAT_EQ(50, ToInterpolableNumber(out_list->Get(0))->Value());

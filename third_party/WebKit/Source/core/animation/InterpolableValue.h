@@ -134,7 +134,7 @@ class CORE_EXPORT InterpolableList : public InterpolableValue {
 class InterpolableAnimatableValue : public InterpolableValue {
  public:
   static std::unique_ptr<InterpolableAnimatableValue> Create(
-      RefPtr<AnimatableValue> value) {
+      scoped_refptr<AnimatableValue> value) {
     return WTF::WrapUnique(new InterpolableAnimatableValue(std::move(value)));
   }
 
@@ -160,9 +160,9 @@ class InterpolableAnimatableValue : public InterpolableValue {
   void Interpolate(const InterpolableValue& to,
                    const double progress,
                    InterpolableValue& result) const final;
-  RefPtr<AnimatableValue> value_;
+  scoped_refptr<AnimatableValue> value_;
 
-  InterpolableAnimatableValue(RefPtr<AnimatableValue> value)
+  InterpolableAnimatableValue(scoped_refptr<AnimatableValue> value)
       : value_(std::move(value)) {}
 };
 
