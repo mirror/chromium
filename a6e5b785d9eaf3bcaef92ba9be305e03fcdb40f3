@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28404b4b_559b8016",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-18T19:16:54Z",
+      "side": 1,
+      "message": "Is it possible for \"** merge strings\" to be absent for general ELF?",
+      "range": {
+        "startLine": 578,
+        "startChar": 6,
+        "endLine": 578,
+        "endChar": 30
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885203f7_f61df93d",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-18T19:16:54Z",
+      "side": 1,
+      "message": "Sounds odd?",
+      "range": {
+        "startLine": 358,
+        "startChar": 25,
+        "endLine": 358,
+        "endChar": 61
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30036ded_6b29c1b0",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-18T19:16:54Z",
+      "side": 1,
+      "message": "# Include trailing \u0027\\0\u0027.",
+      "range": {
+        "startLine": 378,
+        "startChar": 43,
+        "endLine": 378,
+        "endChar": 44
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb024204_c71c9ba5",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-18T19:16:54Z",
+      "side": 1,
+      "message": "Perhaps:\n\n  if offset \u003d\u003d 0 or data[offset - 1] \u003d\u003d \u0027\\0\u0027:\n\nOtherwise this relies on the fact that data[-1] \u003d\u003d \u0027\\0\u0027.  Or if intended, a brief comment?",
+      "range": {
+        "startLine": 422,
+        "startChar": 10,
+        "endLine": 422,
+        "endChar": 38
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae17b95_24852050",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-18T19:16:54Z",
+      "side": 1,
+      "message": "# Exact match not found, so take suffix match if it exists.",
+      "range": {
+        "startLine": 428,
+        "startChar": 15,
+        "endLine": 428,
+        "endChar": 0
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685a9240_40eeaf13",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-18T19:16:54Z",
+      "side": 1,
+      "message": "NIT: marshalling",
+      "range": {
+        "startLine": 434,
+        "startChar": 46,
+        "endLine": 434,
+        "endChar": 56
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f308c5c_e68b5a5d",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-18T19:16:54Z",
+      "side": 1,
+      "message": "Would it be advantageous to hex here (and line 71)?",
+      "range": {
+        "startLine": 436,
+        "startChar": 12,
+        "endLine": 436,
+        "endChar": 48
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aceba564_3d7fb923",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-18T19:16:54Z",
+      "side": 1,
+      "message": "path is duplicated in these dictionaries. If this is a bottleneck then maybe a different encoding can be used.  Add TODO?",
+      "range": {
+        "startLine": 483,
+        "startChar": 0,
+        "endLine": 484,
+        "endChar": 65
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c289b91d_74ca38a1",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-18T19:16:54Z",
+      "side": 1,
+      "message": "What if encoded_strs be empty?",
+      "range": {
+        "startLine": 520,
+        "startChar": 9,
+        "endLine": 520,
+        "endChar": 24
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "280d265d_4d58b6f8",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-18T19:16:54Z",
+      "side": 1,
+      "message": "# Read string_data from elf_path, to be shared (read-only) across forked calls to _ResolveStringPieces",
+      "range": {
+        "startLine": 525,
+        "startChar": 61,
+        "endLine": 525,
+        "endChar": 0
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ee103c_5939fd4b",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-18T19:16:54Z",
+      "side": 1,
+      "message": "# Owing to BulForkAndCall(), element ordering in results and final_results might not be consistent across runs. However, this gets sorted out later.",
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

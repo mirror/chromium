@@ -639,6 +639,30 @@
     },
     {
       "key": {
+        "uuid": "aa4cb323_ded3fccc",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-18T19:16:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "74bd5508_59b630a1",
+      "range": {
+        "startLine": 347,
+        "startChar": 0,
+        "endLine": 348,
+        "endChar": 51
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a134df9e_602445ec",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 6
@@ -718,6 +742,30 @@
       "revId": "772f8f641004a5b620495804b1768e11c9693113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555aa652_4d202e32",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-18T19:16:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0da11a55_5c085fb6",
+      "range": {
+        "startLine": 395,
+        "startChar": 8,
+        "endLine": 395,
+        "endChar": 28
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -813,6 +861,30 @@
       "revId": "772f8f641004a5b620495804b1768e11c9693113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca002e99_19dec7a9",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-18T19:16:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "557cd6ca_86d56884",
+      "range": {
+        "startLine": 613,
+        "startChar": 0,
+        "endLine": 614,
+        "endChar": 51
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
