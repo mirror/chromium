@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9208e0a_fc313e40",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T18:14:22Z",
+      "side": 1,
+      "message": "We should also be able to remove OCSPScopedAllowBaseSyncPrimitives with the introduction of MultiThreadedCertVerifierScopedAllowBaseSyncPrimitives.\n\nI can follow-up and test once this change lands.\n\nOh my goodness those are long hard to type-names!",
+      "revId": "22a6e6fc6b094b03a8b1ad895ef5eb44389d3d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87f99e7_95286100",
+        "filename": "net/cert/multi_threaded_cert_verifier.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T18:14:22Z",
+      "side": 1,
+      "message": "If you want to add more detail can say:\n\nDoVerifyOnWorkerThread may wait on network operations done on a separate sequence. For instance when using the NSS-based implementation of certificate verification, the library requires a blocking callback for fetching OCSP and AIA responses.",
+      "range": {
+        "startLine": 42,
+        "startChar": 26,
+        "endLine": 42,
+        "endChar": 31
+      },
+      "revId": "22a6e6fc6b094b03a8b1ad895ef5eb44389d3d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
