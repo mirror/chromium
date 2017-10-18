@@ -24,6 +24,7 @@
 #include "cc/test/test_context_provider.h"
 #include "media/base/media_log.h"
 #include "media/base/media_switches.h"
+#include "media/base/mock_media_log.h"
 #include "media/base/test_helpers.h"
 #include "media/blink/webmediaplayer_delegate.h"
 #include "media/blink/webmediaplayer_params.h"
@@ -45,6 +46,7 @@
 
 using ::testing::AnyNumber;
 using ::testing::InSequence;
+using ::testing::NiceMock;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ::testing::StrictMock;
@@ -60,6 +62,16 @@ const base::TimeDelta kMaxKeyframeDistanceToDisableBackgroundVideoMSE =
 
 int64_t OnAdjustAllocatedMemory(int64_t delta) {
   return 0;
+}
+
+MATCHER(WmpiDestroyed, "") {
+  return CONTAINS_STRING(arg, "WEBMEDIAPLAYER_DESTROYED {}");
+}
+
+MATCHER_P2(PlaybackRateChanged, old_rate_string, new_rate_string, "") {
+  return CONTAINS_STRING(arg, "Effective playback rate changed from " +
+                                  std::string(old_rate_string) + " to " +
+                                  std::string(new_rate_string));
 }
 
 mojom::VideoDecodeStatsRecorderPtr CreateCapabilitiesRecorder() {
@@ -247,7 +259,13 @@ class WebMediaPlayerImplTest : public testing::Test {
   }
 
   void InitializeWebMediaPlayerImpl() {
-    std::unique_ptr<MediaLog> media_log(new MediaLog());
+    auto media_log = std::make_unique<NiceMock<MockMediaLog>>();
+
+    // Retain a raw pointer to |media_log| for use by tests. Meanwhile, give its
+    // ownership to |wmpi_|. Reject attempts to reinitialize to prevent orphaned
+    // expectations on previous |media_log_|.
+    ASSERT_FALSE(media_log_) << "Reinitialization of media_log_ is disallowed";
+    media_log_ = media_log.get();
 
     auto factory_selector = base::MakeUnique<RendererFactorySelector>();
     factory_selector->AddFactory(
@@ -466,11 +484,15 @@ class WebMediaPlayerImplTest : public testing::Test {
   // may want a mock or intelligent fake.
   DummyWebMediaPlayerClient client_;
 
-  testing::NiceMock<MockWebMediaPlayerDelegate> delegate_;
+  NiceMock<MockWebMediaPlayerDelegate> delegate_;
 
   mojom::WatchTimeRecorderProviderPtr provider_;
 
   StrictMock<MockSurfaceLayerBridge>* surface_layer_bridge_ = nullptr;
+
+  // Only valid once set by InitializeWebMediaPlayerImpl(), this is for
+  // verifying a subset of potential media logs.
+  NiceMock<MockMediaLog>* media_log_ = nullptr;
 
   // The WebMediaPlayerImpl instance under test.
   std::unique_ptr<WebMediaPlayerImpl> wmpi_;
@@ -978,6 +1000,36 @@ TEST_F(WebMediaPlayerImplTest, OnWebLayerReplacedGetsWebLayerFromBridge) {
   EXPECT_CALL(*surface_layer_bridge_, GetWebLayer())
       .WillRepeatedly(Return(web_layer.get()));
   wmpi_->OnWebLayerReplaced();
+}
+
+TEST_F(WebMediaPlayerImplTest, PlaybackRateChangeMediaLogs) {
+  InitializeWebMediaPlayerImpl();
+
+  {
+    InSequence s;
+    wmpi_->SetRate(0.0);  // No change from initial state, so no log.
+
+    // Verify the first 10 actual changes are logged, and subsequent ones
+    // aren't logged.
+    std::string old_rate_string = "0";
+    for (int i = 1; i <= 11; ++i) {
+      if (i <= 10) {
+        std::string new_rate_string = base::IntToString(i / 10);
+        if (i % 10) {
+          new_rate_string += "." + base::IntToString(i % 10);
+        }
+        EXPECT_MEDIA_LOG_ON(
+            *media_log_, PlaybackRateChanged(old_rate_string, new_rate_string));
+        old_rate_string = new_rate_string;
+      }
+      wmpi_->SetRate(0.1 * i);
+
+      // Set the same rate twice to verify redundant changes aren't logged.
+      wmpi_->SetRate(0.1 * i);
+    }
+
+    EXPECT_MEDIA_LOG_ON(*media_log_, WmpiDestroyed());
+  }
 }
 
 class WebMediaPlayerImplBackgroundBehaviorTest
