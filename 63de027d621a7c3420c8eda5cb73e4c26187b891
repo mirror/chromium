@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8f9de08_81468e82",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-18T22:58:08Z",
+      "side": 1,
+      "message": "is this file meant to be here? I didn\u0027t see it before, and haven\u0027t reviewed it.\n\nI see it diffing Base -\u003e Patchset 5, but it\u0027s hidden diffing Base -\u003e Patchset 2 or Base Patchset 4.\n\n\nBut - weirdly - I also *don\u0027t* see it diffing Patchset 4 -\u003e Patchset 5. (is this a gerrit bug? - maybe gerrit needs a fresh branch on disk).",
+      "revId": "63de027d621a7c3420c8eda5cb73e4c26187b891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
