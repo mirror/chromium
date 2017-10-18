@@ -118,7 +118,7 @@ class CORE_EXPORT NGPhysicalFragment
 
   bool IsPlaced() const { return is_placed_; }
 
-  RefPtr<NGPhysicalFragment> CloneWithoutOffset() const;
+  scoped_refptr<NGPhysicalFragment> CloneWithoutOffset() const;
 
   String ToString() const;
 
@@ -145,13 +145,13 @@ class CORE_EXPORT NGPhysicalFragment
                      const ComputedStyle& style,
                      NGPhysicalSize size,
                      NGFragmentType type,
-                     RefPtr<NGBreakToken> break_token = nullptr);
+                     scoped_refptr<NGBreakToken> break_token = nullptr);
 
   LayoutObject* layout_object_;
-  RefPtr<const ComputedStyle> style_;
+  scoped_refptr<const ComputedStyle> style_;
   NGPhysicalSize size_;
   NGPhysicalOffset offset_;
-  RefPtr<NGBreakToken> break_token_;
+  scoped_refptr<NGBreakToken> break_token_;
 
   unsigned type_ : 2;  // NGFragmentType
   unsigned is_placed_ : 1;
