@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3be68273_eca7e5be",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-18T18:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fd86309_4ff535cc",
+      "revId": "9be6cb74f8f401456e081dc079b7c2b3ae9644e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ada3cf20_864c36b4",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 11
@@ -80,6 +98,24 @@
       "revId": "9be6cb74f8f401456e081dc079b7c2b3ae9644e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbba8a9_b8e124be",
+        "filename": "net/http/http_auth_handler_ntlm_portable.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-18T18:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31861709_3bf6fdc5",
+      "revId": "9be6cb74f8f401456e081dc079b7c2b3ae9644e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
