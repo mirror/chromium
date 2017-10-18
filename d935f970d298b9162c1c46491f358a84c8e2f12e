@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6fdf85e_2d2d130f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/inline-script-with-source-map.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-18T22:29:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "506b967f_139c39d9",
+      "revId": "d935f970d298b9162c1c46491f358a84c8e2f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38524de8_f3dbe60b",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/Script.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d935f970d298b9162c1c46491f358a84c8e2f12e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fcca9c3_67851c5e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/Script.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-18T22:29:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38524de8_f3dbe60b",
+      "revId": "d935f970d298b9162c1c46491f358a84c8e2f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
