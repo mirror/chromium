@@ -687,10 +687,6 @@ mojom("mojo_bindings") {
     ]
   }
 
-  if (is_chromeos) {
-    sources += [ "zip_file_creator.mojom" ]
-  }
-
   if (safe_browsing_mode == 1) {
     sources += [
       "safe_browsing/phishing_detector.mojom",
