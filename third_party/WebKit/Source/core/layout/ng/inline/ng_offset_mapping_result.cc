@@ -6,6 +6,7 @@
 
 #include "core/dom/Node.h"
 #include "core/dom/Text.h"
+#include "core/editing/Position.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 
 namespace blink {
@@ -168,6 +169,21 @@ bool NGOffsetMappingResult::IsNonCollapsedCharacter(const Node& node,
   const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(node, offset);
   return unit && offset < unit->DOMEnd() &&
          unit->GetType() != NGOffsetMappingUnitType::kCollapsed;
+}
+
+Position NGOffsetMappingResult::MapToPosition(unsigned offset) const {
+  // TODO(layout-dev): We should use binary search if |units_| is ordered
+  // by text content offset.
+  for (const NGOffsetMappingUnit& unit : units_) {
+    if (offset < unit.TextContentStart() || offset >= unit.TextContentEnd())
+      continue;
+    if (!unit.GetOwner().IsTextNode())
+      return Position::BeforeNode(unit.GetOwner());
+    return Position(unit.GetOwner(),
+                    offset - unit.TextContentStart() + unit.DOMStart());
+  }
+  NOTREACHED() << offset;
+  return {};
 }
 
 }  // namespace blink

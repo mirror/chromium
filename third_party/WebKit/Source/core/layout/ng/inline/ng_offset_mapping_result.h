@@ -6,6 +6,7 @@
 #define NGOffsetMappingResult_h
 
 #include "core/CoreExport.h"
+#include "core/editing/Forward.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
@@ -96,6 +97,8 @@ class CORE_EXPORT NGOffsetMappingResult {
   const UnitVector& GetUnits() const { return units_; }
   const RangeMap& GetRanges() const { return ranges_; }
 
+  // Mapping from DOM position to |NGOffsetMappingUnit|.
+
   // Returns the NGOffsetMappingUnit that contains the given offset in the DOM
   // node. If there are multiple qualifying units, returns the last one.
   const NGOffsetMappingUnit* GetMappingUnitForDOMOffset(const Node&,
@@ -124,7 +127,11 @@ class CORE_EXPORT NGOffsetMappingResult {
   // offset is at the end of the node, returns false.
   bool IsNonCollapsedCharacter(const Node&, unsigned offset) const;
 
-  // TODO(xiaochengh): Add APIs for reverse mapping.
+  // Mapping from text content offset to DOM position.
+
+  // Converts text content |offset| in text content into |Text| node and offset
+  // in DOM as |Position| or a position before node, e.g. BR.
+  Position MapToPosition(unsigned offset) const;
 
  private:
   UnitVector units_;

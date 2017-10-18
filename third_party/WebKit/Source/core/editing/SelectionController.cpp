@@ -50,8 +50,11 @@
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/ng/inline/ng_inline_node.h"
+#include "core/layout/ng/inline/ng_offset_mapping_result.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
+#include "platform/text/TextBoundaries.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/AutoReset.h"
 #include "public/platform/WebMenuSourceType.h"
@@ -551,6 +554,65 @@ bool SelectionController::UpdateSelectionForMouseDownDispatchingSelectStart(
   return true;
 }
 
+// TODO(editing-dev): Because of we have text content in Layout NG, it is easy
+// to scan training whitespace. Should we append trailing whitespaces in this
+// function instead of in caller?
+EphemeralRangeInFlatTree ComputeWordAroundPosition(
+    const PositionInFlatTree& position) {
+  DCHECK(position.IsNotNull());
+  LayoutObject* const layout_object =
+      position.ComputeContainerNode()->GetLayoutObject();
+  if (!layout_object)
+    return {};
+  LayoutNGBlockFlow* const block = layout_object->EnclosingNGBlockFlow();
+  if (!block) {
+    const VisibleSelectionInFlatTree& visible_selection =
+        CreateVisibleSelectionWithGranularity(
+            SelectionInFlatTree::Builder().Collapse(position).Build(),
+            TextGranularity::kWord);
+    if (visible_selection.IsNone())
+      return {};
+    return EphemeralRangeInFlatTree(visible_selection.Start(),
+                                    visible_selection.End());
+  }
+  NGInlineNode inline_node(block);
+  const NGOffsetMappingResult& mapping =
+      inline_node.ComputeOffsetMappingIfNeeded();
+  // TODO(editing-dev): Should we make |position| as |Text| node offset?
+  const NGOffsetMappingUnit* const mapping_unit =
+      mapping.GetMappingUnitForDOMOffset(
+          *position.ComputeContainerNode(),
+          position.ComputeOffsetInContainerNode());
+  // TODO(editing-dev): How do we handle |!mapping_unit|?
+  DCHECK(mapping_unit) << position;
+  // TODO(editing-dev): Exclude visibility:hidden from text content.
+  // TODO(editing-dev): Adjust text content for editing boundary or adjust
+  // result for editing boundary.
+  // TODO(editing-dev): |text_in_visual_order| should be in visual order instead
+  // of logical order.
+  const String& text_in_visual_order = inline_node.Text();
+  const String& text_in_visual_order16 =
+      text_in_visual_order.Is8Bit()
+          ? String::Make16BitFrom8BitSource(text_in_visual_order.Characters8(),
+                                            text_in_visual_order.length())
+          : text_in_visual_order;
+  int start_offset, end_offset;
+  FindWordBoundary(
+      text_in_visual_order16.Characters16(), text_in_visual_order16.length(),
+      mapping_unit->TextContentStart(), &start_offset, &end_offset);
+  DCHECK_GE(start_offset, 0);
+  DCHECK_GE(end_offset, 0);
+  DCHECK_LT(start_offset, end_offset);
+  const PositionInFlatTree start =
+      ToPositionInFlatTree(mapping.MapToPosition(start_offset));
+  const PositionInFlatTree end =
+      ToPositionInFlatTree(mapping.MapToPosition(end_offset));
+  // TODO(editing-dev): Check |FindWordBoundary()| returns whitespace run.
+  // TODO(editing-dev): Returns range of end tag at end of block.
+  DCHECK_LT(start, end);
+  return EphemeralRangeInFlatTree(start, end);
+}
+
 bool SelectionController::SelectClosestWordFromHitTestResult(
     const HitTestResult& result,
     AppendTrailingWhitespace append_trailing_whitespace,
@@ -573,12 +635,14 @@ bool SelectionController::SelectClosestWordFromHitTestResult(
 
   const VisiblePositionInFlatTree& pos =
       VisiblePositionOfHitTestResult(adjusted_hit_test_result);
+  // TODO(editing-dev): We should use EphemeralRangeInFlatTree instead of
+  // VisiblePositionInFlatTree for |new_selection|.
   const VisibleSelectionInFlatTree& new_selection =
-      pos.IsNotNull() ? CreateVisibleSelectionWithGranularity(
+      pos.IsNotNull() ? CreateVisibleSelection(
                             SelectionInFlatTree::Builder()
-                                .Collapse(pos.ToPositionWithAffinity())
-                                .Build(),
-                            TextGranularity::kWord)
+                                .SetBaseAndExtent(ComputeWordAroundPosition(
+                                    pos.DeepEquivalent()))
+                                .Build())
                       : VisibleSelectionInFlatTree();
 
   // TODO(editing-dev): Fix CreateVisibleSelectionWithGranularity() to not
