@@ -12,7 +12,7 @@ Polymer({
   behaviors: [
     settings.RouteObserverBehavior, I18nBehavior, WebUIListenerBehavior,
     // <if expr="chromeos">
-    LockStateBehavior,
+    CrPngBehavior, LockStateBehavior,
     // </if>
   ],
 
@@ -193,7 +193,16 @@ Polymer({
    */
   handleProfileInfo_: function(info) {
     this.profileName_ = info.name;
-    this.profileIconUrl_ = info.iconUrl;
+    /**
+     * Extract first frame from image by creating a single frame PNG using
+     * url as input if base64 encoded and potentially animated.
+     */
+    if (info.iconUrl.startsWith('data:image/png;base64')) {
+      this.profileIconUrl_ =
+          CrPngBehavior.convertImageSequenceToPng([info.iconUrl]);
+    } else {
+      this.profileIconUrl_ = info.iconUrl;
+    }
   },
 
   /**
