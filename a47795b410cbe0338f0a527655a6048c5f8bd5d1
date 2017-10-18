@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "43fa7dda_f9a3ddce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-18T11:51:37Z",
+      "side": 1,
+      "message": "Actually, it will affect everything downstream from the grit output, which is:\nadm/adml/admx (including google/chromeos variants)\nandroid_policy\nreg\ndoc\njson\nplist\nplist_strings\n\nI think this should be fine, becuase we\u0027re fixing one encoding mismatch in the chain, while leaving the rest as it is.\n\nThe chain is:\npolicy_templates.json(1)  (2)\u003e-grit-\u003e(3)  translated policy_templates.json(4)  (5)\u003e-template_fromatter.py-\u003e(6)  various outputs \n\nThe numbers are supposed to mean encoding.\nIt\u0027s important that ((1) \u003d\u003d (2)) and ((3) \u003d\u003d (4) \u003d\u003d (5)). (6) varies for the various outputs.\n\n(1) was utf-8 in the repo but (2) was cp1252 by default. We\u0027re making (2)\u003dutf-8 to fix this.\n(3) and thus (4) is utf-16, it\u0027s set in the else clause of the encoding handling in grit\u0027s build.py: https://cs.chromium.org/chromium/src/tools/grit/grit/tool/build.py?rcl\u003d739fd18dea26b116c03b484145a4163903448b8c\u0026l\u003d381\n(5) is utf-16 which matches (4) so this is fine. See https://cs.chromium.org/chromium/src/components/policy/tools/template_writers/template_formatter.py?rcl\u003dc86130404ec109d1bd06422e3db5cde09e1820ad\u0026l\u003d171\n(6) is per output writer, see https://cs.chromium.org/chromium/src/components/policy/tools/template_writers/template_formatter.py?rcl\u003dc86130404ec109d1bd06422e3db5cde09e1820ad\u0026l\u003d48\n\nMade this clear in the commit description.",
+      "parentUuid": "364331d8_a500baaa",
+      "revId": "a47795b410cbe0338f0a527655a6048c5f8bd5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e56908f7_07363f03",
         "filename": "components/policy/resources/policy_templates.grd",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-10T12:05:51Z",
       "side": 1,
       "message": "(capturing our offline discussion) Maybe take a look at how other places that use Grit deal with this encoding?\n\n(added later) But I\u0027ve just done a quick grepping over the code base, and the same \"encoding\u003dutf-8\" is used in a couple of other places.",
+      "range": {
+        "startLine": 123,
+        "startChar": 108,
+        "endLine": 123,
+        "endChar": 124
+      },
+      "revId": "a47795b410cbe0338f0a527655a6048c5f8bd5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d73fa8_0c787fa1",
+        "filename": "components/policy/resources/policy_templates.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-18T11:51:37Z",
+      "side": 1,
+      "message": "It\u0027s used in a few places (not many, see [1]) but it\u0027s also referenced in examples the grit user guide[2].\n\n[1] https://cs.chromium.org/search/?q\u003dstructure.*encoding%3D%5C%22utf-8%5C%22++file:grd\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n[2] https://www.chromium.org/developers/tools-we-use-in-chromium/grit/grit-users-guide",
+      "parentUuid": "e56908f7_07363f03",
       "range": {
         "startLine": 123,
         "startChar": 108,
