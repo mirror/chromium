@@ -2145,8 +2145,13 @@ void HTMLMediaElement::setPlaybackRate(double rate,
                                        ExceptionState& exception_state) {
   BLINK_MEDIA_LOG << "setPlaybackRate(" << (void*)this << ", " << rate << ")";
 
-  // Limit rates to reasonable values by clamping.
   if (rate != 0.0 && (rate < kMinRate || rate > kMaxRate)) {
+    UseCounter::Count(GetDocument(),
+                      WebFeature::kHTMLMediaElementMediaPlaybackRateOutOfRange);
+
+    // Experimental: crbug/747082.
+    // When the proposed playbackRate is unsupported, throw a NotSupportedError
+    // DOMException and don't update the value.
     if (RuntimeEnabledFeatures::PreloadDefaultIsMetadataEnabled()) {
       exception_state.ThrowDOMException(
           kNotSupportedError, "The provided playback rate (" +
@@ -2157,8 +2162,11 @@ void HTMLMediaElement::setPlaybackRate(double rate,
       return;
     }
 
-    UseCounter::Count(GetDocument(),
-                      WebFeature::kHTMLMediaElementMediaPlaybackRateOutOfRange);
+    // Limit rates to reasonable values by clamping.
+    if (rate < kMinRate)
+      rate = kMinRate;
+    else if (rate > kMaxRate)
+      rate = kMaxRate;
   }
 
   if (playback_rate_ != rate) {
