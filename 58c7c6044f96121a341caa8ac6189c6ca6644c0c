@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3dd6ff2_3c7217d1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 58179,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T20:47:24Z",
+      "side": 1,
+      "message": "nit: BooleanIsTagged (and add this to enums.xml if it\u0027s not already present)",
+      "range": {
+        "startLine": 58179,
+        "startChar": 37,
+        "endLine": 58179,
+        "endChar": 44
+      },
+      "revId": "58c7c6044f96121a341caa8ac6189c6ca6644c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
