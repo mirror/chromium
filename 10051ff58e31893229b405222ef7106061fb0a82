@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f4b5ca1_64435adf",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-10-18T19:49:05Z",
+      "side": 1,
+      "message": "These interfaces are a thousand times nicer.",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 14
+      },
+      "revId": "10051ff58e31893229b405222ef7106061fb0a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
