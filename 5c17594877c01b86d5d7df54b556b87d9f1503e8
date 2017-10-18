@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "45611b11_9bb1c3bf",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-18T17:50:37Z",
+      "side": 1,
+      "message": "Allowing an empty |frame| to reach this line does not make sense. It expects the WebrtcVideoEncoder to return last encoded frame if empty |frame| is received. This is not always true, VP8/VP9 can handle them correctly, but H264 cannot. I.e. Even returning true from this function, WebrtcVideoStream may still not able to encode and send an empty |frame| or even trigger DCHECK() failure.\n\nAn empty |frame| is returned by capturer only when some kind of errors happened. For temporary error, it should recover automatically soon or later. For permanent error, we should stop the stream (see the TODO in WebrtcVideoStream). Handling capturer error here or continually sending last frame is not right.\n\nI would suggest:\n1. At the beginning of this function,\nif (!frame) {\n  frame_pending_ \u003d false;\n  ScheduleNextFrame(now);\n  return false;\n}\n\n2. Removing any if (frame) checks afterward.\n\n3. captured_first_frame_ is misleading. It should be removed.\n\n4. Force resend an unchanged |frame| (updated_region().is_empty()) when |top_off_is_active_| or |key_frame_request_| or (now - newest_frame_time_) \u003e kKeepAliveInterval.\n\n5. When a frame should be sent, setting |key_frame_request_| to false and |newest_frame_time_| to |now|.\n\nI would expect the logic could be clearer.",
+      "parentUuid": "9e742e8d_a82426f5",
+      "range": {
+        "startLine": 211,
+        "startChar": 27,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "5c17594877c01b86d5d7df54b556b87d9f1503e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cdb9ad3_9640f1f4",
         "filename": "remoting/protocol/webrtc_frame_scheduler_simple.h",
         "patchSetId": 1
