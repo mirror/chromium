@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a032f28_9b9a2541",
+        "filename": "third_party/WebKit/Source/platform/blob/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T07:18:27Z",
+      "side": 1,
+      "message": "Depending on generator targets is quite an unfortunate hack. It seems unsustainable and prone to future flakiness as new transitive dependencies appear. Is there a path toward fixing these dependencies?",
+      "revId": "8a25c6d7b8f983cceaad1b98b0591bd8729c54b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
