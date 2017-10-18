@@ -33,6 +33,24 @@
       "revId": "72dc9fe9c7dddfbc8585339b94a0aa9a61d5e31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202b43ad_19a37b59",
+        "filename": "ui/views/accessibility/ax_window_obj_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-18T18:00:50Z",
+      "side": 1,
+      "message": "In new launcher, search box is in a separate widget. So hitting search+right key cannot move ChromeVox focus across search box to other views. So it would be helpful to use this flag.",
+      "parentUuid": "491071f1_51ec1a5d",
+      "revId": "72dc9fe9c7dddfbc8585339b94a0aa9a61d5e31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
