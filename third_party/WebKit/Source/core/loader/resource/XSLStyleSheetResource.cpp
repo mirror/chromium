@@ -57,7 +57,7 @@ XSLStyleSheetResource* XSLStyleSheetResource::FetchSynchronously(
   XSLStyleSheetResource* resource = ToXSLStyleSheetResource(
       fetcher->RequestResource(params, XSLStyleSheetResourceFactory()));
   if (resource && resource->Data())
-    resource->sheet_ = resource->DecodedText();
+    resource->sheet_ = resource->CurrentDecodedText();
   return resource;
 }
 
@@ -89,7 +89,7 @@ void XSLStyleSheetResource::DidAddClient(ResourceClient* c) {
 
 void XSLStyleSheetResource::NotifyFinished() {
   if (Data())
-    sheet_ = DecodedText();
+    sheet_ = CurrentDecodedText();
 
   ResourceClientWalker<StyleSheetResourceClient> w(Clients());
   while (StyleSheetResourceClient* c = w.Next()) {

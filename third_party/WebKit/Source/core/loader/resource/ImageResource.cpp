@@ -117,6 +117,7 @@ class ImageResource::ImageResourceInfoImpl final
   const ResourceError& GetResourceError() const override {
     return resource_->GetResourceError();
   }
+
   void SetDecodedSize(size_t size) override { resource_->SetDecodedSize(size); }
   void WillAddClientOrObserver() override {
     resource_->WillAddClientOrObserver();

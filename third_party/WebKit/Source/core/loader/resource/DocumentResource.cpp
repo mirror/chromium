@@ -62,7 +62,7 @@ void DocumentResource::NotifyFinished() {
     // We don't need to create a new frame because the new document belongs to
     // the parent UseElement.
     document_ = CreateDocument(GetResponse().Url());
-    document_->SetContent(DecodedText());
+    document_->SetContent(CurrentDecodedText());
   }
   Resource::NotifyFinished();
 }
