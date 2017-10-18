@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "120b2785_49efa961",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks_unittest.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-18T08:56:42Z",
+      "side": 1,
+      "message": "It should not depend on the order of loading scripts.\nFrom where chrome.commandLinePrivate.hasSwitch is accessed before initialized?",
+      "parentUuid": "b0c5bd08_da50b385",
+      "revId": "a6ef3ea791c65ee34a4f929aa2367e6569ed8ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11ef69e9_6065ee27",
         "filename": "ui/file_manager/file_manager/foreground/js/file_tasks_unittest.js",
         "patchSetId": 11
