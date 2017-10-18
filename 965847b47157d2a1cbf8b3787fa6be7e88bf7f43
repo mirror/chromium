@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca973b48_cfd3f71e",
+        "filename": "docs/layout_tests_linux.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-18T17:26:17Z",
+      "side": 1,
+      "message": "Yes, though the Lohit and Mukti issues seem to be most pressing on the bug I am referring to. I thought I could do at least fonts-ipafont, but I\u0027d prefer to do that in a separate CL.",
+      "parentUuid": "56790ce9_e1192414",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33b063c7_9d4a04d6",
         "filename": "third_party/content_shell_fonts/README.chromium",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-18T16:28:01Z",
       "side": 1,
       "message": "This should be \"no\", since we\u0027re not shipping these.",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5704172e_c31a6aca",
+        "filename": "third_party/content_shell_fonts/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-18T17:26:17Z",
+      "side": 1,
+      "message": "Alright, thanks.",
+      "parentUuid": "33b063c7_9d4a04d6",
       "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
