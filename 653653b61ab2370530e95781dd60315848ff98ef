@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e9286aa_06b30430",
+        "filename": "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-10-18T23:52:03Z",
+      "side": 1,
+      "message": "Is this ever used?",
+      "revId": "653653b61ab2370530e95781dd60315848ff98ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
