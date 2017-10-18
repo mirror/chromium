@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "8e482209_0bbd15a8",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T01:08:14Z",
+      "side": 1,
+      "message": "If SWRegistrationHandleTest is inheriting SWRegistrationTest only for ThreadBundle and EWTestHelper, it\u0027d be better to have it as an isolated test. How about moving this test to another file (service_worker_registration_handle_unittest.cc)?",
+      "range": {
+        "startLine": 547,
+        "startChar": 13,
+        "endLine": 547,
+        "endChar": 42
+      },
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "122a8edf_03b4a8d1",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 1
@@ -121,6 +144,29 @@
     },
     {
       "key": {
+        "uuid": "3827f9c3_3bed3261",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T01:08:14Z",
+      "side": 1,
+      "message": "base::MakeRefCounted\u003c\u003e",
+      "range": {
+        "startLine": 613,
+        "startChar": 50,
+        "endLine": 613,
+        "endChar": 54
+      },
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c86ba507_1a8e234a",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 1
@@ -132,6 +178,52 @@
       "writtenOn": "2017-10-18T00:59:50Z",
       "side": 1,
       "message": "emplace_back",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e30181_12a634d5",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T01:08:14Z",
+      "side": 1,
+      "message": "Could you use WriteToDiskCacheSync? A valid disk cache entry is needed for starting the worker second time or later when we add a test which stops SWVersion and starts again.",
+      "range": {
+        "startLine": 618,
+        "startChar": 8,
+        "endLine": 618,
+        "endChar": 45
+      },
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba34c132_84df3e11",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T01:08:14Z",
+      "side": 1,
+      "message": "Could you move this to the beginning of SetUpRegistration?",
+      "range": {
+        "startLine": 627,
+        "startChar": 4,
+        "endLine": 628,
+        "endChar": 35
+      },
       "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -166,6 +258,46 @@
       "writtenOn": "2017-10-18T00:59:50Z",
       "side": 1,
       "message": "We don\u0027t need to bother with |called| since the next line would fail anyway.",
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8689a8_a9cacd88",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T01:08:14Z",
+      "side": 1,
+      "message": "How about renaming it to GetRegistration() and returning registration_host_ptr?\nI feel calling methods which update the members could be easily hard to understand what\u0027s exercised. In unit testing code, generally I prefer less members, especially if they are manipulated in the testing code.\n\nFor example, would the following code look a bit easier to read?\n\nTEST_F(...) {\n  const GURL kScriptUrl(\"something\");\n  const GURL kScope(\"something\");\n  auto registration \u003d PrepareRegistration(kScope, kScriptUrl);\n  auto remote_registration_ptr \u003d GetRegistrationFromRemote(kScope);\n  EXPECT_FALSE(registration-\u003eHasOneRef());\n  remote_registration_ptr.reset();\n  base::RunLoop().RunUntilIdle();\n  EXPECT_TRUE(registration-\u003eHasOneRef());\n}",
+      "range": {
+        "startLine": 639,
+        "startChar": 7,
+        "endLine": 639,
+        "endChar": 35
+      },
+      "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa222aa_022a5a80",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T01:08:14Z",
+      "side": 1,
+      "message": "Could you add more basic test like creating SWRegistrationHandle (by std::make_unique\u003c\u003e), calling CreateObjectInfo(), removing the RegistrationObjectInfo and checking existence of the registration?",
       "revId": "c19f6f346f85f5fcdb4772731c98fddbdd7c4822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
