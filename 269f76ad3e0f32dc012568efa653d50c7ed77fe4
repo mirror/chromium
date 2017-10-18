@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34e7c9d9_e2a0f7a7",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-18T17:03:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5350ab36_e7b6430b",
+      "range": {
+        "startLine": 526,
+        "startChar": 28,
+        "endLine": 526,
+        "endChar": 44
+      },
+      "revId": "269f76ad3e0f32dc012568efa653d50c7ed77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3af317c_3ddf72b4",
         "filename": "chrome/common/profiling/profiling_service.mojom",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "269f76ad3e0f32dc012568efa653d50c7ed77fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f919fbf2_039af1ca",
+        "filename": "chrome/common/profiling/profiling_service.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-18T17:03:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3af317c_3ddf72b4",
+      "revId": "269f76ad3e0f32dc012568efa653d50c7ed77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "bfead2f8_04cf8749",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-18T17:03:14Z",
+      "side": 1,
+      "message": "the former is necessary to compile. The latter is necessary because of comments from dcheng.",
+      "parentUuid": "8ddbb7e8_85909af8",
+      "range": {
+        "startLine": 178,
+        "startChar": 8,
+        "endLine": 178,
+        "endChar": 24
+      },
+      "revId": "269f76ad3e0f32dc012568efa653d50c7ed77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c96b310e_c698e280",
         "filename": "ui/views/controls/scroll_view.cc",
         "patchSetId": 2
@@ -76,6 +142,24 @@
       "writtenOn": "2017-10-18T06:22:57Z",
       "side": 1,
       "message": "Is this a mis-rebase? Trying to figure out what this has to do with the rest of the CL.",
+      "revId": "269f76ad3e0f32dc012568efa653d50c7ed77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d975a349_361218b9",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-18T17:03:14Z",
+      "side": 1,
+      "message": "bllaaaargh",
+      "parentUuid": "c96b310e_c698e280",
       "revId": "269f76ad3e0f32dc012568efa653d50c7ed77fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
