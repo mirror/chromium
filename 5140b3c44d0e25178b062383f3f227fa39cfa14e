@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5a63ecf_6af7deed",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-18T21:19:04Z",
+      "side": 1,
+      "message": "Thanks for pointing out. I thought any \u003e 1s data might be useless. But I should not have this bias.\n\nWe can remove this cap.",
+      "parentUuid": "8437246e_d47a779d",
+      "revId": "5140b3c44d0e25178b062383f3f227fa39cfa14e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78acff8b_214abb47",
         "filename": "ash/system/power/power_button_screenshot_controller.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "5140b3c44d0e25178b062383f3f227fa39cfa14e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "342cab2f_b750780a",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-18T21:19:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78acff8b_214abb47",
+      "revId": "5140b3c44d0e25178b062383f3f227fa39cfa14e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "ffd02dcc_13bd8251",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-18T21:19:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0da834ac_787fbed9",
+      "range": {
+        "startLine": 734,
+        "startChar": 33,
+        "endLine": 734,
+        "endChar": 0
+      },
+      "revId": "5140b3c44d0e25178b062383f3f227fa39cfa14e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb5f1e50_04126c39",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "c1232ee2_d4170281",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 62678,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-18T21:19:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb5f1e50_04126c39",
+      "range": {
+        "startLine": 62678,
+        "startChar": 17,
+        "endLine": 62678,
+        "endChar": 38
+      },
+      "revId": "5140b3c44d0e25178b062383f3f227fa39cfa14e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c365e72d_e4a57a19",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -93,6 +177,24 @@
       "writtenOn": "2017-10-18T20:46:27Z",
       "side": 1,
       "message": "This could use a better comment also, explaining why the 1 second matters (and you\u0027re not just using the fact that the histogram automatically caps at 10 sec).",
+      "revId": "5140b3c44d0e25178b062383f3f227fa39cfa14e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9ccbb3_4a8adb48",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 62681,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-18T21:19:04Z",
+      "side": 1,
+      "message": "1 second cap is removed. Think it twice, I think we don\u0027t need it.",
+      "parentUuid": "c365e72d_e4a57a19",
       "revId": "5140b3c44d0e25178b062383f3f227fa39cfa14e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
