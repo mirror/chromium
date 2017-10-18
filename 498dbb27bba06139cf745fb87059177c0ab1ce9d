@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52ab9f3c_e67aeab5",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-18T21:39:42Z",
+      "side": 1,
+      "message": "return false;",
+      "range": {
+        "startLine": 231,
+        "startChar": 12,
+        "endLine": 231,
+        "endChar": 13
+      },
+      "revId": "498dbb27bba06139cf745fb87059177c0ab1ce9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737b0bed_7ca048fd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-18T21:39:42Z",
+      "side": 1,
+      "message": "Mixing signed and unsigned like this is a bit dicey. If you can\u0027t change the function signature to take an unsigned then please clamp it to zero or add a check before converting to unsigned.",
+      "revId": "498dbb27bba06139cf745fb87059177c0ab1ce9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad4060e_21221cb7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragmentTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-18T21:39:42Z",
+      "side": 1,
+      "message": "Please also test out-of-range values (e.x. -1, length + 1 etc)",
+      "revId": "498dbb27bba06139cf745fb87059177c0ab1ce9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47cd4b81_14e358e3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-18T21:39:42Z",
+      "side": 1,
+      "message": "|| text_content_offset \u003c 1\n\nis easier to parse as it matches the use below.",
+      "range": {
+        "startLine": 191,
+        "startChar": 42,
+        "endLine": 191,
+        "endChar": 61
+      },
+      "revId": "498dbb27bba06139cf745fb87059177c0ab1ce9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c11e41_cbc3e6ea",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-18T21:39:42Z",
+      "side": 1,
+      "message": "Is this needed? I can\u0027t see any references to it.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 23
+      },
+      "revId": "498dbb27bba06139cf745fb87059177c0ab1ce9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
