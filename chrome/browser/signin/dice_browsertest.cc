@@ -58,8 +58,6 @@ using signin::AccountConsistencyMethod;
 
 namespace {
 
-constexpr int kAccountReconcilorDelayMs = 10;
-
 enum SignoutType {
   kSignoutTypeFirst = 0,
 
@@ -251,8 +249,6 @@ class DiceBrowserTestBase : public InProcessBrowserTest,
         base::Bind(&FakeGaia::HandleServiceLoginURL,
                    base::Bind(&DiceBrowserTestBase::OnServiceLoginRequest,
                               base::Unretained(this))));
-    signin::SetDiceAccountReconcilorBlockDelayForTesting(
-        kAccountReconcilorDelayMs);
   }
 
   // Navigates to the given path on the test server.
