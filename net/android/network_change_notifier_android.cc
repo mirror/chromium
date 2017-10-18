@@ -10,52 +10,48 @@
 // - The notifier can be constructed on any thread.
 // - GetCurrentConnectionType() can be called on any thread.
 //
-// The fact that this implementation of NetworkChangeNotifier is backed by a
-// Java side singleton class (see NetworkChangeNotifier.java) adds another
-// threading constraint:
-// - The calls to the Java side (stateful) object must be performed from a
-//   single thread. This object happens to be a singleton which is used on the
-//   application side on the main thread. Therefore all the method calls from
-//   the native NetworkChangeNotifierAndroid class to its Java counterpart are
-//   performed on the main thread.
+// There are two native classes:
+// 1) NetworkChangeNotifierDelegateAndroid ('delegate')
+// 2) NetworkChangeNotifierAndroid ('notifier')
 //
-// This leads to a design involving the following native classes:
-// 1) NetworkChangeNotifierFactoryAndroid ('factory')
-// 2) NetworkChangeNotifierDelegateAndroid ('delegate')
-// 3) NetworkChangeNotifierAndroid ('notifier')
+// There are two Java classes:
+// 1) NetworkChangeNotifierAutoDetect.java ('AutoDetect')
+// 2) NetworkChangeNotifier.java (a Java side singleton class which owns an
+//    AutoDetect).
 //
-// The factory constructs and owns the delegate. The factory is constructed and
-// destroyed on the main thread which makes it construct and destroy the
-// delegate on the main thread too. This guarantees that the calls to the Java
-// side are performed on the main thread.
-// Note that after the factory's construction, the factory's creation method can
-// be called from any thread since the delegate's construction (performing the
-// JNI calls) already happened on the main thread (when the factory was
-// constructed).
+// The Android implementation of NetworkChangeNotifier is backed by the
+// Java side singleton class (i.e. NetworkChangeNotifier.java).
+//
+// AutoDetect and delegate must live on the same thread. All calls to
+// the Java side (stateful) must also happen on that same thread. AutoDetect
+// listens for platform broadcasts on the UI thread and posts those to the
+// thread that delegate/notifier lives on.
+//
+// The factory constructs and owns the delegate. The delegate calls into the
+// Java side. As long as the factory and delegate are always accessed from the
+// same thread, it's guaranteed that the calls to the Java side are performed on
+// the same thread thread.
 //
 ////////////////////////////////////////////////////////////////////////////////
 // Propagation of network change notifications:
 //
-// When the factory is requested to create a new instance of the notifier, the
-// factory passes the delegate to the notifier (without transferring ownership).
-// Note that there is a one-to-one mapping between the factory and the
-// delegate as explained above. But the factory naturally creates multiple
-// instances of the notifier. That means that there is a one-to-many mapping
-// between delegate and notifier (i.e. a single delegate can be shared by
-// multiple notifiers).
-// At construction the notifier (which is also an observer) subscribes to
+// When a notifier is created, a delegate is created and owned by the notifier.
+// At construction the notifier (which is a delegate observer) subscribes to
 // notifications fired by the delegate. These notifications, received by the
 // delegate (and forwarded to the notifier(s)), are sent by the Java side
 // notifier (see NetworkChangeNotifier.java) and are initiated by the Android
 // platform.
 // Notifications from the Java side always arrive on the main thread. The
-// delegate then forwards these notifications to the threads of each observer
-// (network change notifier). The network change notifier than processes the
-// state change, and notifies each of its observers on their threads.
+// AutoDetect then forwards these notifications to the delegate on
+// delegate's thread. The delegate then forwards these notifications to each
+// delegate's observer (the notifiers) on their threads. The notifiers then
+// processes the state change, and notifies each of its observers on their
+// threads.
 //
 // This can also be seen as:
-// Android platform -> NetworkChangeNotifier (Java) ->
-// NetworkChangeNotifierDelegateAndroid -> NetworkChangeNotifierAndroid.
+// Android platform -> NetworkChangeNotfierAutoDetect (Java) ->
+// NetworkChangeNotifier (Java) -> NetworkChangeNotifierDelegateAndroid ->
+// NetworkChangeNotifierAndroid.
 
 #include "net/android/network_change_notifier_android.h"
 
@@ -152,25 +148,42 @@ class NetworkChangeNotifierAndroid::DnsConfigServiceThread
   DISALLOW_COPY_AND_ASSIGN(DnsConfigServiceThread);
 };
 
+NetworkChangeNotifierAndroid::NetworkChangeNotifierAndroid(
+    const DnsConfig* dns_config_for_testing)
+    : NetworkChangeNotifier(NetworkChangeCalculatorParamsAndroid()),
+      dns_config_service_thread_(
+          new DnsConfigServiceThread(dns_config_for_testing)),
+      force_network_handles_supported_for_testing_(false) {
+  CHECK_EQ(NetId::INVALID, NetworkChangeNotifier::kInvalidNetworkHandle)
+      << "kInvalidNetworkHandle doesn't match NetId::INVALID";
+  delegate_.AddObserver(this);
+  dns_config_service_thread_->StartWithOptions(
+      base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
+  // Wait until Init is called on the DNS config thread before
+  // calling InitAfterStart.
+  dns_config_service_thread_->WaitUntilThreadStarted();
+  dns_config_service_thread_->InitAfterStart();
+}
+
 NetworkChangeNotifierAndroid::~NetworkChangeNotifierAndroid() {
-  delegate_->RemoveObserver(this);
+  delegate_.RemoveObserver(this);
 }
 
 NetworkChangeNotifier::ConnectionType
 NetworkChangeNotifierAndroid::GetCurrentConnectionType() const {
-  return delegate_->GetCurrentConnectionType();
+  return delegate_.GetCurrentConnectionType();
 }
 
 NetworkChangeNotifier::ConnectionSubtype
 NetworkChangeNotifierAndroid::GetCurrentConnectionSubtype() const {
-  return delegate_->GetCurrentConnectionSubtype();
+  return delegate_.GetCurrentConnectionSubtype();
 }
 
 void NetworkChangeNotifierAndroid::GetCurrentMaxBandwidthAndConnectionType(
     double* max_bandwidth_mbps,
     ConnectionType* connection_type) const {
-  delegate_->GetCurrentMaxBandwidthAndConnectionType(max_bandwidth_mbps,
-                                                     connection_type);
+  delegate_.GetCurrentMaxBandwidthAndConnectionType(max_bandwidth_mbps,
+                                                    connection_type);
 }
 
 void NetworkChangeNotifierAndroid::ForceNetworkHandlesSupportedForTesting() {
@@ -187,18 +200,18 @@ bool NetworkChangeNotifierAndroid::AreNetworkHandlesCurrentlySupported() const {
 
 void NetworkChangeNotifierAndroid::GetCurrentConnectedNetworks(
     NetworkChangeNotifier::NetworkList* networks) const {
-  delegate_->GetCurrentlyConnectedNetworks(networks);
+  delegate_.GetCurrentlyConnectedNetworks(networks);
 }
 
 NetworkChangeNotifier::ConnectionType
 NetworkChangeNotifierAndroid::GetCurrentNetworkConnectionType(
     NetworkHandle network) const {
-  return delegate_->GetNetworkConnectionType(network);
+  return delegate_.GetNetworkConnectionType(network);
 }
 
 NetworkChangeNotifier::NetworkHandle
 NetworkChangeNotifierAndroid::GetCurrentDefaultNetwork() const {
-  return delegate_->GetCurrentDefaultNetwork();
+  return delegate_.GetCurrentDefaultNetwork();
 }
 
 void NetworkChangeNotifierAndroid::OnConnectionTypeChanged() {
@@ -234,25 +247,6 @@ void NetworkChangeNotifierAndroid::OnNetworkMadeDefault(NetworkHandle network) {
       NetworkChangeType::MADE_DEFAULT, network);
 }
 
-NetworkChangeNotifierAndroid::NetworkChangeNotifierAndroid(
-    NetworkChangeNotifierDelegateAndroid* delegate,
-    const DnsConfig* dns_config_for_testing)
-    : NetworkChangeNotifier(NetworkChangeCalculatorParamsAndroid()),
-      delegate_(delegate),
-      dns_config_service_thread_(
-          new DnsConfigServiceThread(dns_config_for_testing)),
-      force_network_handles_supported_for_testing_(false) {
-  CHECK_EQ(NetId::INVALID, NetworkChangeNotifier::kInvalidNetworkHandle)
-      << "kInvalidNetworkHandle doesn't match NetId::INVALID";
-  delegate_->AddObserver(this);
-  dns_config_service_thread_->StartWithOptions(
-      base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
-  // Wait until Init is called on the DNS config thread before
-  // calling InitAfterStart.
-  dns_config_service_thread_->WaitUntilThreadStarted();
-  dns_config_service_thread_->InitAfterStart();
-}
-
 // static
 NetworkChangeNotifier::NetworkChangeCalculatorParams
 NetworkChangeNotifierAndroid::NetworkChangeCalculatorParamsAndroid() {
@@ -277,7 +271,7 @@ void NetworkChangeNotifierAndroid::OnFinalizingMetricsLogRecord() {
   NetworkChangeNotifier::LogOperatorCodeHistogram(type);
   if (NetworkChangeNotifier::IsConnectionCellular(type)) {
     UMA_HISTOGRAM_ENUMERATION("NCN.CellularConnectionSubtype",
-                              delegate_->GetCurrentConnectionSubtype(),
+                              delegate_.GetCurrentConnectionSubtype(),
                               SUBTYPE_LAST + 1);
   }
 }

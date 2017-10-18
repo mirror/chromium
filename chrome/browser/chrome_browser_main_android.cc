@@ -26,7 +26,6 @@
 #include "content/public/browser/android/compositor.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/main_function_params.h"
-#include "net/android/network_change_notifier_factory_android.h"
 #include "net/base/network_change_notifier.h"
 #include "ui/base/resource/resource_bundle_android.h"
 #include "ui/base/ui_base_paths.h"
@@ -103,9 +102,6 @@ void ChromeBrowserMainPartsAndroid::PostProfileInit() {
 void ChromeBrowserMainPartsAndroid::PreEarlyInitialization() {
   TRACE_EVENT0("startup",
     "ChromeBrowserMainPartsAndroid::PreEarlyInitialization")
-  net::NetworkChangeNotifier::SetFactory(
-      new net::NetworkChangeNotifierFactoryAndroid());
-
   content::Compositor::Initialize();
 
   // Chrome on Android does not use default MessageLoop. It has its own
