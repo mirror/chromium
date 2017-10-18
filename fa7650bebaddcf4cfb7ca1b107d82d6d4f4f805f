@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "906210a0_f361bb18",
+        "filename": "content/renderer/render_widget_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-18T17:58:59Z",
+      "side": 1,
+      "message": "missing newline",
+      "range": {
+        "startLine": 36,
+        "startChar": 14,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "fa7650bebaddcf4cfb7ca1b107d82d6d4f4f805f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "128a480c_04762cdc",
+        "filename": "content/renderer/render_widget_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-18T17:58:59Z",
+      "side": 1,
+      "message": "Can this be stack allocated?",
+      "range": {
+        "startLine": 213,
+        "startChar": 18,
+        "endLine": 213,
+        "endChar": 44
+      },
+      "revId": "fa7650bebaddcf4cfb7ca1b107d82d6d4f4f805f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ccfed64_1c8aa701",
+        "filename": "content/renderer/render_widget_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-18T17:58:59Z",
+      "side": 1,
+      "message": "I like how these read.",
+      "range": {
+        "startLine": 298,
+        "startChar": 2,
+        "endLine": 300,
+        "endChar": 16
+      },
+      "revId": "fa7650bebaddcf4cfb7ca1b107d82d6d4f4f805f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
