@@ -357,6 +357,30 @@
     },
     {
       "key": {
+        "uuid": "79c201cc_bb93cae6",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-18T11:23:52Z",
+      "side": 1,
+      "message": "Here is a relevant discussion: https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/LU6NWiaSSRc",
+      "parentUuid": "f8de3734_da6db356",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb781a56_261271b1",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 34
