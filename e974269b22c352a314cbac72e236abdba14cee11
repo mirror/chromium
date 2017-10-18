@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0285f58b_7573cbd2",
+        "filename": "chrome/browser/client_hints/client_hints.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-18T14:28:59Z",
+      "side": 1,
+      "message": "I still don\u0027t understand why we\u0027re explicitly ignoring 3rd party cookie blocking. It just complicates the mental model around when client hints are allowed or blocked, and I don\u0027t see any advantage for that.\n\nAll that should be needed here is:\nIsCookieAccessAllowed(request-\u003eurl(), request-\u003esite_for_cookies())",
+      "range": {
+        "startLine": 107,
+        "startChar": 1,
+        "endLine": 107,
+        "endChar": 71
+      },
+      "revId": "e974269b22c352a314cbac72e236abdba14cee11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
