@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e5dea7e_f59908e5",
+        "filename": "cc/layers/video_frame_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-18T20:44:19Z",
+      "side": 1,
+      "message": "Gonna put it in a third CL because I did something funky to my repo, and the separation makes sense for the most part.\n\nAlso added comment. This class will need to be updated once we figure out whether we are using the media thread or some other thread, since right now the comments specify the compositor thread.",
+      "parentUuid": "65644b3c_bd46af61",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3aa8c2bd_a0e065ff",
         "filename": "cc/test/fake_video_frame_provider.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2c157f76_8a4c1a49",
+        "filename": "cc/test/fake_video_frame_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-18T20:44:19Z",
+      "side": 1,
+      "message": "Done, moved to other CL, https://chromium-review.googlesource.com/c/chromium/src/+/723862",
+      "parentUuid": "3aa8c2bd_a0e065ff",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ef0af4a_65ed5879",
         "filename": "content/renderer/media/media_factory.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-13T14:56:42Z",
       "side": 1,
       "message": "might be better in params.",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56f999b_8f9c34dd",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-18T20:44:19Z",
+      "side": 1,
+      "message": "What is the reason why some parameters are kept out of params?",
+      "parentUuid": "8ef0af4a_65ed5879",
       "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7c3bf4e7_470f6f49",
+        "filename": "media/blink/webmediaplayer_params.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-18T20:44:19Z",
+      "side": 1,
+      "message": "expanded the name.",
+      "parentUuid": "decb023c_898cfb30",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0218588_ee72c185",
         "filename": "media/blink/webmediaplayer_params.h",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee668d60_e9cce6bd",
+        "filename": "media/blink/webmediaplayer_params.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-18T20:44:19Z",
+      "side": 1,
+      "message": "Oh yeahhh now that we made the MockVideoFrameCompositor, we don\u0027t need this for test anyway.",
+      "parentUuid": "b0218588_ee72c185",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "2e5a9a54_5e5bb25d",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-18T20:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1923d339_ee6fef56",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53e8d523_c476a0a8",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 4
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "df86b2f0_08341eb1",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-18T20:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53e8d523_c476a0a8",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40ffb39f_d4a2d46d",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 4
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-13T14:56:42Z",
       "side": 1,
       "message": "this used to be ordered after SubmitFrame, now it\u0027s before.  i don\u0027t know if that matters.",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c256d006_506fd93c",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-18T20:44:19Z",
+      "side": 1,
+      "message": "It\u0027s still after?",
+      "parentUuid": "40ffb39f_d4a2d46d",
       "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "6af6a04a_04c88c66",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-18T20:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2d4ad38_1d28b577",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16bb3a1f_e5d6548e",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 4
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "46c6a40c_b6c6a9c1",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-18T20:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16bb3a1f_e5d6548e",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adf409af_a8c7086a",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 4
@@ -183,6 +363,24 @@
       "writtenOn": "2017-10-13T14:56:42Z",
       "side": 1,
       "message": "since this is only called once, you might just inline it.\n\nthe original idea for a helper was to encapsulate (46, 66..71), which could be re-used in StopRendering and DidReceiveFrame.  given the small amount of code, i don\u0027t know if it\u0027s more readable inlined or moved into a helper.",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c5a925_5de9bfb6",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-18T20:44:19Z",
+      "side": 1,
+      "message": "What do you mean by inlining it? Sorry still learning vocab.",
+      "parentUuid": "adf409af_a8c7086a",
       "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "3f4cfbe2_7ce32976",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-18T20:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04b21b5f_4cb51ad0",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13814144_93ac436d",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
         "patchSetId": 4
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "3b66b246_69a35a60",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-18T20:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13814144_93ac436d",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7e78521_1927e385",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitterTest.cpp",
         "patchSetId": 4
@@ -234,6 +468,24 @@
       "writtenOn": "2017-10-13T14:56:42Z",
       "side": 1,
       "message": "do these constants matter?  is there a way to see that they\u0027re sent properly into the quads?",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93823f5c_62b9914e",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitterTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-18T20:44:19Z",
+      "side": 1,
+      "message": "No, I was just using what I found as an example from another test. I will update this all in the AppendQuads CL.",
+      "parentUuid": "f7e78521_1927e385",
       "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
