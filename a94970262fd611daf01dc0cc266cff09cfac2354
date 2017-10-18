@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9a496f2_fac69b60",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-18T10:18:27Z",
+      "side": 1,
+      "message": "Perhaps, it\u0027s better to just return if app_old_info is null?\nWDYT?",
+      "revId": "a94970262fd611daf01dc0cc266cff09cfac2354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
