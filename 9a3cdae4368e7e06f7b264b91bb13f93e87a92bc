@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c476259_820367d5",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-18T18:53:02Z",
+      "side": 1,
+      "message": "Hrm...This isn\u0027t good.  This class sounds like it must currently be created on the main application thread on Android.  Since we\u0027ll be creating the class in-process on Android (Though not on the main thread).  This sounds like a problem.  Add a TODO?  Or just lump it with the IOS/CHROMEOS cases?",
+      "range": {
+        "startLine": 83,
+        "startChar": 30,
+        "endLine": 83,
+        "endChar": 65
+      },
+      "revId": "9a3cdae4368e7e06f7b264b91bb13f93e87a92bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abccbc4f_58571fb8",
+        "filename": "content/public/common/network_connection_tracker.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-18T18:53:02Z",
+      "side": 1,
+      "message": "Hrm...This could actually be done before the lock, I believe, but thinking about it makes my brain hurt, so perhaps best left as-is.",
+      "range": {
+        "startLine": 125,
+        "startChar": 32,
+        "endLine": 125,
+        "endChar": 43
+      },
+      "revId": "9a3cdae4368e7e06f7b264b91bb13f93e87a92bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d802b8_06acfed3",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-18T18:53:02Z",
+      "side": 1,
+      "message": "nit:  I\u0027d suggest a blank line here.",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "9a3cdae4368e7e06f7b264b91bb13f93e87a92bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
