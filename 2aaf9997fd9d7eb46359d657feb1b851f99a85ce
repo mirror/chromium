@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cdb44d2_74415a71",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-18T20:23:52Z",
+      "side": 1,
+      "message": "Do you think create this object on UI thread is safe? We only destroy this SROnIO on IO thread and all tasks that needs it should be posted to IO thread before the deletion task. I think it is safe to do so but want to get your opinion.\nIf we create the object on UI thread. It would greatly simplify our logic.",
+      "revId": "2aaf9997fd9d7eb46359d657feb1b851f99a85ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
