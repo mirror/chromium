@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ad0f016_24a5ea4b",
+        "filename": "content/test/data/gpu/pixel_webgl_large_canvas.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-18T02:36:21Z",
+      "side": 1,
+      "message": "It\u0027s not an error according to the spec, but the intent of this test is to ensure we can actually allocate this fairly huge canvas and resize it on a majority of our test machines. This will help prevent regressions in this area in the future. I expect the 8000x8000 canvas will be successfully allocated on all of our desktop test bots; will adjust the test if not.",
+      "parentUuid": "3c30b650_73f44a00",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 16
+      },
+      "revId": "37bdd06359cb2765e6775fa63f9d971be0e6e7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2db7c18_69fc4896",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-18T02:01:47Z",
       "side": 1,
       "message": "Should we also try to lose contexts newer than us?",
+      "range": {
+        "startLine": 1538,
+        "startChar": 10,
+        "endLine": 1538,
+        "endChar": 23
+      },
+      "revId": "37bdd06359cb2765e6775fa63f9d971be0e6e7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d186062_85937fd6",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-18T02:36:21Z",
+      "side": 1,
+      "message": "This is basically the only primitive we have for enumerating and forcibly losing the oldest active context. I figure we probably shouldn\u0027t lose contexts that have been rendered to more recently than this one when resizing this one fails.",
+      "parentUuid": "b2db7c18_69fc4896",
       "range": {
         "startLine": 1538,
         "startChar": 10,
