@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "b67bb635_647a8453",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-18T00:00:24Z",
+      "side": 1,
+      "message": "Done. Note: I have left line 139 as-is, which is effectively a behaviour change due to the change to ResetBindings.  I think, however, that the same arguments apply there as apply here -- we shouldn\u0027t be invalidating weak pointers in either case.",
+      "parentUuid": "5c663974_cd7223f8",
+      "range": {
+        "startLine": 186,
+        "startChar": 4,
+        "endLine": 186,
+        "endChar": 17
+      },
+      "revId": "761f3bd0672cf7aedb813979a2ee44c75e642c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc98a99c_bf1e8f03",
         "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
         "patchSetId": 2
