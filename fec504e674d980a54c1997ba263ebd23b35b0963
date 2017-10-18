@@ -99,6 +99,24 @@
       "revId": "fec504e674d980a54c1997ba263ebd23b35b0963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08f55c1_a370e9cb",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4630,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-18T00:12:09Z",
+      "side": 1,
+      "message": "Sorry, can you clarify?  If WebUI pages were already granted these test bindings before this CL, that\u0027s bad but perhaps not getting worse with this CL, and we can proceed with landing this and fixing the problem.\n\nIf that\u0027s the case, can you point to the part of the code where the test bindings were being granted to WebUI before?  And can you file a bug about removing that, to list as a TODO here?\n\nThanks, and sorry for not following earlier.",
+      "parentUuid": "a6c8cd2b_410746ed",
+      "revId": "fec504e674d980a54c1997ba263ebd23b35b0963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
