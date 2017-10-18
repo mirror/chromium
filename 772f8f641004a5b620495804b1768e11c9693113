@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "8b02cacd_cbe261cc",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T01:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "939c8e9b_fecbe549",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "277c05f2_cf34d59c",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T01:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b854554c_b2c7f964",
+      "range": {
+        "startLine": 14,
+        "startChar": 39,
+        "endLine": 14,
+        "endChar": 67
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "081044ee_06b47136",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 6
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "26b7e5ff_1a54ac14",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T01:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "081044ee_06b47136",
+      "range": {
+        "startLine": 28,
+        "startChar": 66,
+        "endLine": 28,
+        "endChar": 71
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3948c877_90f50d7c",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "772f8f641004a5b620495804b1768e11c9693113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68696170_a56f1dbe",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T01:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3948c877_90f50d7c",
+      "range": {
+        "startLine": 29,
+        "startChar": 39,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +260,54 @@
     },
     {
       "key": {
+        "uuid": "a018022d_61d60cec",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T01:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cb713df_2e69727e",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 77
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed7f46e4_a4ec297e",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T01:13:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "729aadb3_eddfa9b4",
+      "range": {
+        "startLine": 175,
+        "startChar": 73,
+        "endLine": 175,
+        "endChar": 74
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03025cd5_9bbfd58d",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 6
@@ -211,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "a4df022b_ed50b15a",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T01:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "575f54b8_ca3829b9",
+      "range": {
+        "startLine": 181,
+        "startChar": 11,
+        "endLine": 181,
+        "endChar": 20
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82b41ede_95ecfad1",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 6
@@ -222,6 +390,30 @@
       "writtenOn": "2017-10-17T19:55:54Z",
       "side": 1,
       "message": "Don\u0027t know what\u0027s meant by this. Unicode strings?",
+      "range": {
+        "startLine": 196,
+        "startChar": 22,
+        "endLine": 196,
+        "endChar": 37
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2548617a_c706d5bb",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T01:13:42Z",
+      "side": 1,
+      "message": "Right. https://msdn.microsoft.com/en-us/library/69ze775t.aspx.\n\nAdded in mention of wchar_t.",
+      "parentUuid": "82b41ede_95ecfad1",
       "range": {
         "startLine": 196,
         "startChar": 22,
@@ -257,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "a70e1877_9c60afed",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T01:13:42Z",
+      "side": 1,
+      "message": "Looks like I sometimes do :). Removed them though since 80 char line limit is tough.",
+      "parentUuid": "e4b68572_d57a65ed",
+      "range": {
+        "startLine": 209,
+        "startChar": 47,
+        "endLine": 209,
+        "endChar": 49
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a134df9e_602445ec",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 6
@@ -271,6 +487,24 @@
       "revId": "772f8f641004a5b620495804b1768e11c9693113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0acee1_96097fee",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T01:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a134df9e_602445ec",
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -297,6 +531,30 @@
     },
     {
       "key": {
+        "uuid": "4dba332f_02f3fcf5",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T01:13:42Z",
+      "side": 1,
+      "message": "Correct. I think this is desired though.",
+      "parentUuid": "514f76df_da937308",
+      "range": {
+        "startLine": 613,
+        "startChar": 0,
+        "endLine": 614,
+        "endChar": 51
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5b9176a_48c17e66",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 6
@@ -308,6 +566,30 @@
       "writtenOn": "2017-10-17T19:55:54Z",
       "side": 1,
       "message": "Should this be an assert instead?",
+      "range": {
+        "startLine": 645,
+        "startChar": 12,
+        "endLine": 645,
+        "endChar": 43
+      },
+      "revId": "772f8f641004a5b620495804b1768e11c9693113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7859f9_c0427558",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-18T01:13:42Z",
+      "side": 1,
+      "message": "No. Renamed it to be more obvious though.",
+      "parentUuid": "c5b9176a_48c17e66",
       "range": {
         "startLine": 645,
         "startChar": 12,
