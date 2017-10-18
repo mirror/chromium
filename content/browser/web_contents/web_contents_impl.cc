@@ -3960,15 +3960,18 @@ void WebContentsImpl::ViewSource(RenderFrameHostImpl* frame) {
   last_cloned_entry->SetVirtualURL(view_source_url);
   last_cloned_entry->SetURL(url);
 
-  // Do not restore scroller position.
-  PageState page_state = frame_entry->page_state().RemoveScrollOffset();
-
-  // Trim |last_cloned_entry| to the subtree of |frame|.
-  last_cloned_entry->SetPageState(page_state);
-
   // Open in a new process (for consistency with the behavior of allocating a
   // new process for handling new tab opened by middle-clicking a link).
   last_cloned_entry->set_site_instance(nullptr);
+
+  scoped_refptr<FrameNavigationEntry> cloned_frame_entry = frame_entry->Clone();
+
+  // Do not restore scroller position.
+  cloned_frame_entry->SetPageState(
+      cloned_frame_entry->page_state().RemoveScrollOffset());
+
+  last_cloned_entry->root_node()->frame_entry = cloned_frame_entry;
+  last_cloned_entry->root_node()->children.clear();
 
   // Do not restore title, derive it from the url.
   view_source_contents->UpdateTitleForEntry(last_cloned_entry,

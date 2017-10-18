@@ -382,11 +382,6 @@ IN_PROC_BROWSER_TEST_F(ViewSourceTest, HttpPostInSubframe) {
       view_source_contents_observer.GetWebContents();
   EXPECT_TRUE(WaitForLoadStop(view_source_contents));
 
-  // TODO(lukasza): https://crbug.com/774691: With PlzNavigate the POST data,
-  // Referer, etc. are lost, so all the test assertions below will fail :-(.
-  if (content::IsBrowserSideNavigationEnabled())
-    return;
-
   // Verify contents of the view-source tab.  In particular:
   // 1) the sources should contain the POST data
   // 2) the sources should contain the original response-nonce
