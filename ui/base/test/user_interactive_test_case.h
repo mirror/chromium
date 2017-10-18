@@ -7,11 +7,8 @@
 
 namespace test {
 
-// Foregrounds the test process and spins a run loop to run a test case as
-// interactive UI. Call this at the end of test fixtures that are used to
-// invoke UI (designed for manual testing of hard-to-summon dialogs). This
-// function does not return.
-void RunTestInteractively();
+// Platform dependant fixture for TestBrowserDialog.
+void TestBrowserDialogFixture();
 
 }  // namespace test
 
