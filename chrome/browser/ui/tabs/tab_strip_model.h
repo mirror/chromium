@@ -263,6 +263,8 @@ class TabStripModel {
   // there is no opener on record.
   content::WebContents* GetOpenerOfWebContentsAt(int index);
 
+  content::WebContents* GetGroupAt(int index);
+
   // Changes the |opener| of the WebContents at |index|.
   // Note: |opener| must be in this tab strip.
   void SetOpenerOfWebContentsAt(int index, content::WebContents* opener);
