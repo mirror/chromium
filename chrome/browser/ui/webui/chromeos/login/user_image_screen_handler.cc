@@ -133,8 +133,10 @@ void UserImageScreenHandler::HandleScreenReady() {
 
 void UserImageScreenHandler::HandlePhotoTaken(const std::string& image_url) {
   std::string mime_type, charset, raw_data;
-  if (!net::DataURL::Parse(GURL(image_url), &mime_type, &charset, &raw_data))
+  if (!net::DataURL::ParseCanonicalized(image_url, &mime_type, &charset,
+                                        &raw_data)) {
     NOTREACHED();
+  }
   DCHECK_EQ("image/png", mime_type);
   AccessibilityManager::Get()->PlayEarcon(
       SOUND_CAMERA_SNAP, PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);

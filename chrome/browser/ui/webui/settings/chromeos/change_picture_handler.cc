@@ -177,8 +177,10 @@ void ChangePictureHandler::HandlePhotoTaken(const base::ListValue* args) {
   DCHECK(!image_url.empty());
 
   std::string mime_type, charset, raw_data;
-  if (!net::DataURL::Parse(GURL(image_url), &mime_type, &charset, &raw_data))
+  if (!net::DataURL::ParseCanonicalized(image_url, &mime_type, &charset,
+                                        &raw_data)) {
     NOTREACHED();
+  }
   DCHECK_EQ("image/png", mime_type);
 
   // Use |raw_data| as image but first verify that it can be decoded.
