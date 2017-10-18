@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77be5108_51442ed7",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-iframe-into-view-twice.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-18T13:45:57Z",
+      "side": 1,
+      "message": "This looks like this file has tabs in it.. Please use 4 spaces instead of tabs",
+      "revId": "693fc6ad7b3b12f77016bf1366d9c3108af31917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20493e77_2e9c0a96",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-iframe-into-view-twice.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-18T13:45:57Z",
+      "side": 1,
+      "message": "This assert should in a then condition. Not inside the function actually itself otherwise when it fails it will timeout not calling resolve.\n\nSo this should be something like:\n\nnew Promise(function(resolve) {\n...addEventListener(..... {\n   resolve();\n}).then(()\u003d\u003e { assert_greater_than(...); });",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 23
+      },
+      "revId": "693fc6ad7b3b12f77016bf1366d9c3108af31917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
