@@ -53,6 +53,10 @@ void OfflinePageStorageManager::SetClockForTesting(
   clock_ = std::move(clock);
 }
 
+void OfflinePageStorageManager::ResetUsageReportingFlagForTesting() {
+  reported_usage_this_launch_ = false;
+}
+
 void OfflinePageStorageManager::OnGetStorageStatsDoneForClearingPages(
     const ClearStorageCallback& callback,
     const ArchiveManager::StorageStats& stats) {
@@ -189,38 +193,40 @@ OfflinePageStorageManager::ShouldClearPages(
 
 void OfflinePageStorageManager::ReportStorageUsageUMA(
     const MultipleOfflinePageItemResult& pages) {
-  std::map<std::string, int64_t> page_sizes;
-
   // Only run once per app launch to make the data less noisy.
   // TODO(petewil): Once per day might be better, but would need a new field in
   // the database, and a new async task to get it.
   if (reported_usage_this_launch_)
     return;
-
   reported_usage_this_launch_ = true;
 
   // Iterate through all the pages, getting their size, and adding to the proper
-  // namespace accumulator
+  // namespace accumulator.
+  std::map<std::string, int64_t> page_sizes;
   for (const OfflinePageItem& item : pages) {
     const std::string& name_space = item.client_id.name_space;
-
-    std::map<std::string, int64_t>::iterator found =
-        page_sizes.find(name_space);
-
-    if (found != page_sizes.end())
-      found->second += item.file_size;
-    else if (item.file_size > 0)
-      // Check that file_size is greater than zero so we don't report for
-      // namespaces with no storage usage.
-      page_sizes[name_space] = item.file_size;
+    // Note: if |name_space| is not yet a key in the map a new entry will be
+    // properly initialized with the value 0 because |int| is
+    // default-constructible (int() == 0).
+    page_sizes[name_space] += item.file_size;
   }
 
   // Report the numbers for each namespace.
   std::string base_histogram_name = "OfflinePages.ClearStoragePreRunUsage.";
-  for (auto namespace_summary : page_sizes) {
-    base::UmaHistogramMemoryLargeMB(
-        base_histogram_name + namespace_summary.first,
-        namespace_summary.second);
+  static const int64_t kOneMiB = 1024 * 1024;
+  for (const std::string names_pace : policy_controller_->GetAllNamespaces()) {
+    // We want to isolate the actually 0 data usage case into the "0" bucket
+    // and so we will lump into the "1" bucket all cases of 0 < used data < 1
+    // MiB.
+    int64_t size = page_sizes[names_pace];
+    int64_t reported_value = size / kOneMiB;
+    if (size > 0) {
+      // Reported value should be greater than zero if actual value is greater
+      // than zero.
+      reported_value = std::max(1L, reported_value);
+    }
+    base::UmaHistogramMemoryLargeMB(base_histogram_name + names_pace,
+                                    reported_value);
   }
 }
 
