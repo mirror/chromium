@@ -44,4 +44,9 @@ bool GetSystemMemoryInfo(SystemMemoryInfoKB* meminfo) {
   return false;
 }
 
+bool ProcessMetrics::GetWorkingSetKBytes(WorkingSetKBytes* ws_usage) const {
+  NOTIMPLEMENTED();  // TODO(fuchsia): https://crbug.com/706592.
+  return true;
+}
+
 }  // namespace base
