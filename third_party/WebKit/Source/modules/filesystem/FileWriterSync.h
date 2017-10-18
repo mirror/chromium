@@ -42,9 +42,8 @@ namespace blink {
 class Blob;
 class ExceptionState;
 
-class FileWriterSync final : public GarbageCollectedFinalized<FileWriterSync>,
+class FileWriterSync final : public ScriptWrappable,
                              public FileWriterBase,
-                             public ScriptWrappable,
                              public WebFileWriterClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(FileWriterSync);

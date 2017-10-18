@@ -58,6 +58,7 @@ XPathExpression* XPathExpression::CreateExpression(
 
 DEFINE_TRACE(XPathExpression) {
   visitor->Trace(top_expression_);
+  ScriptWrappable::Trace(visitor);
 }
 
 XPathResult* XPathExpression::evaluate(Node* context_node,

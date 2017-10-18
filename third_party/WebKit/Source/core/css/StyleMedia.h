@@ -36,9 +36,7 @@ namespace blink {
 
 class LocalFrame;
 
-class StyleMedia final : public GarbageCollected<StyleMedia>,
-                         public ContextClient,
-                         public ScriptWrappable {
+class StyleMedia final : public ScriptWrappable, public ContextClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(StyleMedia);
 

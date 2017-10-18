@@ -63,6 +63,7 @@ DEFINE_TRACE(XPathResult) {
   visitor->Trace(value_);
   visitor->Trace(node_set_);
   visitor->Trace(document_);
+  ScriptWrappable::Trace(visitor);
 }
 
 void XPathResult::ConvertTo(unsigned short type,
