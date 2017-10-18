@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "304e4012_9961f94f",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1411,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-18T15:39:29Z",
+      "side": 1,
+      "message": "Switched to V2 after offline discussion.",
+      "parentUuid": "d6ac84b3_bb344d9e",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d979b92b_4bcc131d",
         "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924255ed_99c972e5",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-18T15:39:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d979b92b_4bcc131d",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b5443423_901cf14f",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-18T15:39:29Z",
+      "side": 1,
+      "message": "Looks like I mixed up upwards activation update in the frame-tree with frame-client updates. \n Done.",
+      "parentUuid": "16be73b9_f38e5441",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04f78ffc_bd47551f",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-18T13:22:02Z",
       "side": 1,
       "message": "Why do you need to static_cast? Is the compiler confused with the downcast?",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53578fd_7a14c7b7",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1172,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-18T15:39:29Z",
+      "side": 1,
+      "message": "I thought static_cast is preferred even for this case, no?\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md",
+      "parentUuid": "04f78ffc_bd47551f",
       "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6c271ba7_8e4e4d7c",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-18T15:39:29Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "e7aa9248_1e4d07ce",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "428f15a7_649dddfe",
         "filename": "third_party/WebKit/Source/core/frame/UserActivationState.cpp",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49119e6_0e7b850b",
+        "filename": "third_party/WebKit/Source/core/frame/UserActivationState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-18T15:39:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "428f15a7_649dddfe",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "44fdca32_40624f7d",
+        "filename": "third_party/WebKit/Source/core/frame/UserActivationState.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-18T15:39:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78ff9c92_70781cb4",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8ead795_070346c6",
         "filename": "third_party/WebKit/Source/core/frame/UserActivationState.h",
         "patchSetId": 9
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "26c33eb0_f0307907",
+        "filename": "third_party/WebKit/Source/core/frame/UserActivationState.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-18T15:39:29Z",
+      "side": 1,
+      "message": "Done, thanks for the note.",
+      "parentUuid": "d8ead795_070346c6",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e5acbc8_47ffce01",
         "filename": "third_party/WebKit/Source/core/frame/UserActivationState.h",
         "patchSetId": 9
@@ -152,6 +296,24 @@
       "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1e844e_9b796e87",
+        "filename": "third_party/WebKit/Source/core/frame/UserActivationState.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-18T15:39:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e5acbc8_47ffce01",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
