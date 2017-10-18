@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d520d5f0_f96ddfdb",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountIdProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-18T12:41:30Z",
+      "side": 1,
+      "message": "Can you add a reference to https://crbug.com/577190 like in ExternalAuthUtils?",
+      "revId": "1401455fdb584b749ba44c9607f682dbb1aa8a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
