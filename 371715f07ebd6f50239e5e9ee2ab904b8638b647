@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3154de63_49a71541",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-18T20:11:04Z",
+      "side": 1,
+      "message": "Not clear why we need to call the callback even for null events.  Could you please clarify?",
+      "revId": "371715f07ebd6f50239e5e9ee2ab904b8638b647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0fbaecf_9bc792c6",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-18T20:11:04Z",
+      "side": 1,
+      "message": "I guess this is not related to this bug, right?  If so, shouldn\u0027t we have more bugs around mismatched ack?",
+      "revId": "371715f07ebd6f50239e5e9ee2ab904b8638b647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
