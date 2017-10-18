@@ -294,7 +294,7 @@ void UMALogDeserializationStatus(bool success) {
 NativeBackendKWallet::NativeBackendKWallet(
     LocalProfileId id,
     base::nix::DesktopEnvironment desktop_env)
-    : background_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
+    : background_task_runner_(base::CreateSingleThreadTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::USER_VISIBLE})),
       profile_id_(id),
       kwallet_dbus_(desktop_env),
