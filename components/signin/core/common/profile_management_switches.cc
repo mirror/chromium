@@ -46,6 +46,34 @@ bool IsDiceEnabledForProfile(bool dice_pref_value) {
 
 }  // namespace
 
+namespace {
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+const char kDiceEnabledPref[] = "signin.DiceEnabled";
+#endif
+
+// Returns wether Dice is enabled for the user, based on the account consistency
+// mode and the dice pref value.
+bool IsDiceEnabledForProfile(bool dice_pref_value) {
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  switch (GetAccountConsistencyMethod()) {
+    case AccountConsistencyMethod::kDisabled:
+    case AccountConsistencyMethod::kMirror:
+    case AccountConsistencyMethod::kDiceFixAuthErrors:
+      return false;
+    case AccountConsistencyMethod::kDice:
+      return true;
+    case AccountConsistencyMethod::kDiceMigration:
+      return dice_pref_value;
+  }
+  NOTREACHED();
+#endif
+
+  return false;
+}
+
+}  // namespace
+
 // base::Feature definitions.
 const base::Feature kAccountConsistencyFeature{
     "AccountConsistency", base::FEATURE_DISABLED_BY_DEFAULT};

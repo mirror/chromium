@@ -116,7 +116,9 @@ OneClickSigninSyncStarter::OneClickSigninSyncStarter(
   BrowserList::AddObserver(this);
   Initialize(profile, browser);
 
-  DCHECK(!refresh_token.empty() || signin::IsAccountConsistencyDiceAvailable());
+  DCHECK(
+      !refresh_token.empty() ||
+      signin::IsAccountConsistencyDiceEnabledForProfile(profile_->GetPrefs()));
   SigninManagerFactory::GetForProfile(profile_)->StartSignInWithRefreshToken(
       refresh_token, gaia_id, email, password,
       base::Bind(&OneClickSigninSyncStarter::ConfirmSignin,
@@ -144,7 +146,8 @@ OneClickSigninSyncStarter::OneClickSigninSyncStarter(
           GURL() /* current_url */,
           GURL() /* continue_url */,
           callback) {
-  DCHECK(signin::IsAccountConsistencyDiceAvailable());
+  DCHECK(
+      signin::IsAccountConsistencyDiceEnabledForProfile(profile->GetPrefs()));
 }
 
 void OneClickSigninSyncStarter::OnBrowserRemoved(Browser* browser) {
@@ -201,7 +204,8 @@ void OneClickSigninSyncStarter::ConfirmSignin(ProfileMode profile_mode,
       policy::UserPolicySigninService* policy_service =
           policy::UserPolicySigninServiceFactory::GetForProfile(profile_);
       if (oauth_token.empty()) {
-        DCHECK(signin::IsAccountConsistencyDiceAvailable());
+        DCHECK(signin::IsAccountConsistencyDiceEnabledForProfile(
+            profile_->GetPrefs()));
         policy_service->RegisterForPolicyWithAccountId(
             signin->GetUsernameForAuthInProgress(),
             signin->GetAccountIdForAuthInProgress(),

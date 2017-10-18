@@ -20,6 +20,12 @@ namespace user_prefs {
 class PrefRegistrySyncable;
 }
 
+class PrefService;
+
+namespace user_prefs {
+class PrefRegistrySyncable;
+}
+
 namespace signin {
 
 // Account consistency feature. Only used on platforms where Mirror is not
