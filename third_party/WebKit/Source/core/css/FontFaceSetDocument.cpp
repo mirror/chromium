@@ -26,7 +26,6 @@
 #include "core/css/FontFaceSetDocument.h"
 
 #include "bindings/core/v8/Dictionary.h"
-#include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/css/CSSFontSelector.h"
 #include "core/css/CSSSegmentedFontFace.h"
 #include "core/css/FontFaceCache.h"
@@ -46,71 +45,6 @@ namespace blink {
 
 static const int kDefaultFontSize = 10;
 static const char kDefaultFontFamily[] = "sans-serif";
-
-class LoadFontPromiseResolver final
-    : public GarbageCollectedFinalized<LoadFontPromiseResolver>,
-      public FontFace::LoadFontCallback {
-  USING_GARBAGE_COLLECTED_MIXIN(LoadFontPromiseResolver);
-
- public:
-  static LoadFontPromiseResolver* Create(FontFaceArray faces,
-                                         ScriptState* script_state) {
-    return new LoadFontPromiseResolver(faces, script_state);
-  }
-
-  void LoadFonts();
-  ScriptPromise Promise() { return resolver_->Promise(); }
-
-  void NotifyLoaded(FontFace*) override;
-  void NotifyError(FontFace*) override;
-
-  DECLARE_VIRTUAL_TRACE();
-
- private:
-  LoadFontPromiseResolver(FontFaceArray faces, ScriptState* script_state)
-      : num_loading_(faces.size()),
-        error_occured_(false),
-        resolver_(ScriptPromiseResolver::Create(script_state)) {
-    font_faces_.swap(faces);
-  }
-
-  HeapVector<Member<FontFace>> font_faces_;
-  int num_loading_;
-  bool error_occured_;
-  Member<ScriptPromiseResolver> resolver_;
-};
-
-void LoadFontPromiseResolver::LoadFonts() {
-  if (!num_loading_) {
-    resolver_->Resolve(font_faces_);
-    return;
-  }
-
-  for (size_t i = 0; i < font_faces_.size(); i++)
-    font_faces_[i]->LoadWithCallback(this);
-}
-
-void LoadFontPromiseResolver::NotifyLoaded(FontFace* font_face) {
-  num_loading_--;
-  if (num_loading_ || error_occured_)
-    return;
-
-  resolver_->Resolve(font_faces_);
-}
-
-void LoadFontPromiseResolver::NotifyError(FontFace* font_face) {
-  num_loading_--;
-  if (!error_occured_) {
-    error_occured_ = true;
-    resolver_->Reject(font_face->GetError());
-  }
-}
-
-DEFINE_TRACE(LoadFontPromiseResolver) {
-  visitor->Trace(font_faces_);
-  visitor->Trace(resolver_);
-  LoadFontCallback::Trace(visitor);
-}
 
 FontFaceSetDocument::FontFaceSetDocument(Document& document)
     : Supplement<Document>(document),
@@ -235,8 +169,9 @@ void FontFaceSetDocument::AddToLoadingFonts(FontFace* font_face) {
 
 void FontFaceSetDocument::RemoveFromLoadingFonts(FontFace* font_face) {
   loading_fonts_.erase(font_face);
-  if (loading_fonts_.IsEmpty())
+  if (loading_fonts_.IsEmpty()) {
     HandlePendingEventsAndPromisesSoon();
+  }
 }
 
 ScriptPromise FontFaceSetDocument::ready(ScriptState* script_state) {
@@ -265,6 +200,7 @@ FontFaceSet* FontFaceSetDocument::addForBinding(ScriptState*,
       GetDocument()->GetStyleEngine().GetFontSelector();
   non_css_connected_faces_.insert(font_face);
   font_selector->GetFontFaceCache()->AddFontFace(font_face, false);
+  font_face->MaybeLoad();
   if (font_face->LoadStatus() == FontFace::kLoading)
     AddToLoadingFonts(font_face);
   font_selector->FontFaceInvalidated();
@@ -552,16 +488,6 @@ FontFaceSetIterable::IterationSource* FontFaceSetDocument::StartIteration(
       font_faces.push_back(font_face);
   }
   return new IterationSource(font_faces);
-}
-
-bool FontFaceSetDocument::IterationSource::Next(ScriptState*,
-                                                Member<FontFace>& key,
-                                                Member<FontFace>& value,
-                                                ExceptionState&) {
-  if (font_faces_.size() <= index_)
-    return false;
-  key = value = font_faces_[index_++];
-  return true;
 }
 
 DEFINE_TRACE(FontFaceSetDocument) {

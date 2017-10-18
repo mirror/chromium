@@ -32,11 +32,9 @@
 
 enum FontFaceSetLoadStatus { "loading", "loaded" };
 
-// TODO(foolip): This interface should be [Exposed=Window,Worker] and should
-// have a constructor, and thus not have [NoInterfaceObject].
 [
     DependentLifetime,
-    NoInterfaceObject
+    Exposed=(Window,Worker)
 ] interface FontFaceSet : EventTarget {
     setlike<FontFace>;
 
