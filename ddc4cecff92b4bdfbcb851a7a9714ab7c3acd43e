@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa87bd76_455ae15f",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3106,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T21:59:10Z",
+      "side": 1,
+      "message": "nit: maybe it makes sense to add a new string here for the more generic \"Chrome File Utilities\" or something",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c709106_e3b6bba3",
+        "filename": "chrome/services/chrome_file_util/public/cpp/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T21:59:10Z",
+      "side": 1,
+      "message": "nit: unused",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ca8c16_50418909",
+        "filename": "chrome/services/chrome_file_util/public/cpp/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T21:59:10Z",
+      "side": 1,
+      "message": "Should this be //chrome/services/chrome_file_util/public/interfaces? :)",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0fe5f4_d1b35d0f",
+        "filename": "chrome/services/chrome_file_util/public/cpp/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T21:59:10Z",
+      "side": 1,
+      "message": "nit: should be unnecessary",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279de502_940cca50",
+        "filename": "chrome/services/chrome_file_util/public/cpp/zip_file_creator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T21:59:10Z",
+      "side": 1,
+      "message": "There\u0027s no need to use PostTaskAndReply. Recall that you\u0027re free to start using the other end of a pipe whenever you like. So you can just write:\n\n  filesystem::mojom::DirectoryPtr directory_ptr;\n  directory_task_runner_-\u003ePostTask(\n      FROM_HERE, base::BindOnce(\u0026ZipFileCreator::BindDirectory, this,\n                                mojo::MakeRequest(\u0026directory_ptr)));\n  /*move OnDirectoryBoundLogic here */",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d86216f_7d46f50f",
+        "filename": "chrome/services/chrome_file_util/public/cpp/zip_file_creator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T21:59:10Z",
+      "side": 1,
+      "message": "nit: nullptr for these args? though i guess the explicit names are more meaningful *shrug*",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8fff087_59d412f6",
+        "filename": "chrome/services/chrome_file_util/zip_file_creator_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T21:59:10Z",
+      "side": 1,
+      "message": "nit: talks",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52aeb9a_7adc3345",
+        "filename": "chrome/services/chrome_file_util/zip_file_creator_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T21:59:10Z",
+      "side": 1,
+      "message": "style nit: move to end of class definition, below methods",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35dedbd3_f1147c1c",
+        "filename": "chrome/services/chrome_file_util/zip_file_creator_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T21:59:10Z",
+      "side": 1,
+      "message": "nit: probably more idiomatic to start with empty details, call details.reserve(paths.size()), and then just use push_back here",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774423ff_901d9de4",
+        "filename": "chrome/services/chrome_file_util/zip_file_creator_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T21:59:10Z",
+      "side": 1,
+      "message": "super optional nit: no need for braces",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556e53e4_2f93d225",
+        "filename": "chrome/services/chrome_file_util/zip_file_creator_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-18T21:59:10Z",
+      "side": 1,
+      "message": "nit: would be easier to read if you just made this a Directory*\n\nthen you can assign it from source_dir_mojo_.get() or dir_mojo.get() below, and use normal calling syntax like dir_mojo-\u003eRead()  (i might also then swap the names of dir_mojo and dir_mojo_ptr to reflect the types)",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
