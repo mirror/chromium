@@ -206,4 +206,11 @@ public class BrowserActionsTabModelSelector
         return mTabCreatorManager.getTabCreator(incognito).createNewTab(
                 loadUrlParams, type, parent);
     }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        mTabSaver.destroy();
+        sInstance = null;
+    }
 }
