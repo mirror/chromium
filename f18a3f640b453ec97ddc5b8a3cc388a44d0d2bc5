@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab8f7415_2d05da7d",
+        "filename": "ui/display/manager/managed_display_info.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-18T23:52:00Z",
+      "side": 1,
+      "message": "nit: i think we usually try to avoid defining these in headers (https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Stop-inlining-code-in-headers)",
+      "revId": "f18a3f640b453ec97ddc5b8a3cc388a44d0d2bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3538cbe4_e5769e8c",
+        "filename": "ui/display/test/display_manager_test_api.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-18T23:52:00Z",
+      "side": 1,
+      "message": "any reason why this is still returning a pointer instead of also taking an out-param and returning bool?",
+      "revId": "f18a3f640b453ec97ddc5b8a3cc388a44d0d2bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
