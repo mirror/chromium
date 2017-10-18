@@ -46,7 +46,8 @@ viz::mojom::HitTestRegionListPtr HitTestDataProviderAura::GetHitTestData()
     const {
   const ui::mojom::EventTargetingPolicy event_targeting_policy =
       window_->event_targeting_policy();
-  if (event_targeting_policy == ui::mojom::EventTargetingPolicy::NONE)
+  if (!window_->IsVisible() ||
+      event_targeting_policy == ui::mojom::EventTargetingPolicy::NONE)
     return nullptr;
 
   auto hit_test_region_list = viz::mojom::HitTestRegionList::New();
@@ -75,7 +76,8 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
   for (aura::Window* child : base::Reversed(window->children())) {
     const ui::mojom::EventTargetingPolicy event_targeting_policy =
         child->event_targeting_policy();
-    if (event_targeting_policy == ui::mojom::EventTargetingPolicy::NONE)
+    if (!child->IsVisible() ||
+        event_targeting_policy == ui::mojom::EventTargetingPolicy::NONE)
       continue;
     if (event_targeting_policy !=
         ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY) {
@@ -129,8 +131,11 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
         }
       }
     }
-    if (event_targeting_policy != ui::mojom::EventTargetingPolicy::TARGET_ONLY)
+    if (event_targeting_policy !=
+            ui::mojom::EventTargetingPolicy::TARGET_ONLY &&
+        !child->GetLocalSurfaceId().is_valid()) {
       GetHitTestDataRecursively(child, hit_test_region_list);
+    }
   }
 }
 
