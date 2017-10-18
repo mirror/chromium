@@ -76,6 +76,24 @@
     },
     {
       "key": {
+        "uuid": "50b9eaf3_d05f2252",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91ad6af6_300bf273",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4151f4a2_5a438525",
         "filename": "chromeos/dbus/power_manager_client.cc",
         "patchSetId": 1
@@ -93,6 +111,24 @@
     },
     {
       "key": {
+        "uuid": "e76773dd_5362fed7",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "I have this CL too. https://chromium-review.googlesource.com/#/c/chromium/src/+/714881/\n\nOnce that goes in I will rebase on it and the diff would be prettier.",
+      "parentUuid": "4151f4a2_5a438525",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "563bf13d_02dd1a37",
         "filename": "chromeos/dbus/power_manager_client.cc",
         "patchSetId": 1
@@ -104,6 +140,30 @@
       "writtenOn": "2017-10-13T16:11:54Z",
       "side": 1,
       "message": "overrides don\u0027t need comment blocks. case in point: they have already gotten out of sync with the .h version.",
+      "range": {
+        "startLine": 331,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 15
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08bc55dc_6e7b1ec6",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "563bf13d_02dd1a37",
       "range": {
         "startLine": 331,
         "startChar": 0,
@@ -139,6 +199,30 @@
     },
     {
       "key": {
+        "uuid": "ed0882e3_7263a4af",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "236ae46e_a4bcfca6",
+      "range": {
+        "startLine": 341,
+        "startChar": 37,
+        "endLine": 341,
+        "endChar": 41
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e176ad93_36345fd1",
         "filename": "chromeos/dbus/power_manager_client.cc",
         "patchSetId": 1
@@ -150,6 +234,24 @@
       "writtenOn": "2017-10-13T23:52:17Z",
       "side": 1,
       "message": "nullptr",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1475a3f1_50d6fa58",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e176ad93_36345fd1",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -179,6 +281,30 @@
     },
     {
       "key": {
+        "uuid": "277aa9ff_b4725fff",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e24b4d74_f79d3c4c",
+      "range": {
+        "startLine": 356,
+        "startChar": 44,
+        "endLine": 356,
+        "endChar": 73
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe6013f8_41cb3bd5",
         "filename": "chromeos/dbus/power_manager_client.cc",
         "patchSetId": 1
@@ -190,6 +316,24 @@
       "writtenOn": "2017-10-13T04:06:31Z",
       "side": 1,
       "message": "You can inline ARC_TIMER_RESULT_FAILURE here so you don\u0027t need cast.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d97759_17322dbd",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe6013f8_41cb3bd5",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -213,6 +357,24 @@
     },
     {
       "key": {
+        "uuid": "339cb76b_1c7f1be4",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "The initialization of |result| handles that. I think the contract is that PopInt32 doesn\u0027t modify it\u0027s value if there\u0027s an error.",
+      "parentUuid": "23eec1e6_648453f0",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b7b3c79_3d6bc2b3",
         "filename": "chromeos/dbus/power_manager_client.cc",
         "patchSetId": 1
@@ -224,6 +386,24 @@
       "writtenOn": "2017-10-13T04:06:31Z",
       "side": 1,
       "message": "Looks not end of namespace?",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b105aa7_b726ad33",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b7b3c79_3d6bc2b3",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -247,6 +427,24 @@
     },
     {
       "key": {
+        "uuid": "7eb8e77d_3e2a05eb",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "It compiles fine and the linter didn\u0027t complain when I uploaded the CL.",
+      "parentUuid": "28b9e5b0_e0f65fc5",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c72ef31_03908cf5",
         "filename": "chromeos/dbus/power_manager_client.h",
         "patchSetId": 1
@@ -258,6 +456,24 @@
       "writtenOn": "2017-10-13T04:06:31Z",
       "side": 1,
       "message": "We\u0027re migrating Callback to OnceCallback (crbug.com/739622).\nSo, could you use\n\nusing ArcTimerCallback \u003d\n  base::OnceCallback\u003cvoid(ArcTimerResult result)\u003e;\n\ninstead?\nI\u0027ll migrate others, so I don\u0027t think typedef/using diff is not big problem for transition period. Dan, WDYT?\n\n\nBTW, ArcTimerResult looks not defined yet...?",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "280f4f90_c8074d97",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "It\u0027s defined here\nhttps://chromium-review.googlesource.com/c/chromiumos/platform/system_api/+/711116/2/dbus/power_manager/dbus-constants.h",
+      "parentUuid": "8c72ef31_03908cf5",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -281,6 +497,24 @@
     },
     {
       "key": {
+        "uuid": "3416774c_94d6b080",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92889770_6a608bcc",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22329f6b_ecac1d71",
         "filename": "chromeos/dbus/power_manager_client.h",
         "patchSetId": 1
@@ -292,6 +526,24 @@
       "writtenOn": "2017-10-13T23:52:17Z",
       "side": 1,
       "message": "same",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea87a5d_bdeac889",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22329f6b_ecac1d71",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -367,6 +619,30 @@
     },
     {
       "key": {
+        "uuid": "cd225bed_49e9e33b",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "056dbaa4_26e4f212",
+      "range": {
+        "startLine": 265,
+        "startChar": 32,
+        "endLine": 265,
+        "endChar": 33
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6785648f_08a8f134",
         "filename": "chromeos/dbus/power_manager_client.h",
         "patchSetId": 1
@@ -378,6 +654,30 @@
       "writtenOn": "2017-10-13T16:11:54Z",
       "side": 1,
       "message": "Can this be an enum class?",
+      "range": {
+        "startLine": 267,
+        "startChar": 27,
+        "endLine": 267,
+        "endChar": 43
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b833b0d8_481d5d34",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Mentioned elsewhere too, since it mimics timerfd API an int32 should suffice. It just adds more boiler plate otherwise when we have constants backed by glibc.",
+      "parentUuid": "6785648f_08a8f134",
       "range": {
         "startLine": 267,
         "startChar": 27,
@@ -413,6 +713,30 @@
     },
     {
       "key": {
+        "uuid": "9865439f_43f1fcb3",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "This is an Arg after all :) Request is a verb whereas a noun is needed here.",
+      "parentUuid": "503dc26c_fd2571a3",
+      "range": {
+        "startLine": 15,
+        "startChar": 15,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ed1f6f3_e1846c7f",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 1
@@ -424,6 +748,30 @@
       "writtenOn": "2017-10-13T16:11:54Z",
       "side": 1,
       "message": "Please use an enum.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ce44f6_1c02837d",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "The comment mentions similar semantics to timerfd. I do error checks so I thought an enum would be more boiler plate.",
+      "parentUuid": "2ed1f6f3_e1846c7f",
       "range": {
         "startLine": 18,
         "startChar": 2,
@@ -482,6 +830,30 @@
     },
     {
       "key": {
+        "uuid": "8451138f_a06851c0",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6390b8d8_f7ad957c",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85e09d57_88cc2822",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 1
@@ -493,6 +865,30 @@
       "writtenOn": "2017-10-13T04:06:31Z",
       "side": 1,
       "message": "2",
+      "range": {
+        "startLine": 25,
+        "startChar": 19,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939ddadf_e9f7ed9c",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85e09d57_88cc2822",
       "range": {
         "startLine": 25,
         "startChar": 19,
@@ -528,6 +924,30 @@
     },
     {
       "key": {
+        "uuid": "be89ab42_52375fca",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de81e668_eacff40f",
+      "range": {
+        "startLine": 27,
+        "startChar": 54,
+        "endLine": 27,
+        "endChar": 57
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5fc8ae4_450a44db",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 1
@@ -539,6 +959,30 @@
       "writtenOn": "2017-10-13T16:11:54Z",
       "side": 1,
       "message": "Can you expand a bit on the semantics? If a previous request has already been \"set\", does it replace it or is it appended? If you intend to match the semantics of timerfd_settime(2), please explicitly mention that.",
+      "range": {
+        "startLine": 31,
+        "startChar": 5,
+        "endLine": 31,
+        "endChar": 74
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac7a391_f92a91e2",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5fc8ae4_450a44db",
       "range": {
         "startLine": 31,
         "startChar": 5,
@@ -597,6 +1041,30 @@
     },
     {
       "key": {
+        "uuid": "e82420c2_9bfd1d82",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fae51c1_e685e4e6",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 20
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b190775_b7c31414",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 1
@@ -608,6 +1076,30 @@
       "writtenOn": "2017-10-13T16:11:54Z",
       "side": 1,
       "message": "Can you expand a bit as to why this is important? Wouldn\u0027t the death of powerd just close all open handles, so the instance knows it needs to reconnect?",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 58
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fe2f6a_e58cbfe9",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Right, so when powerd crashes JNI in Android listens and closes the read fds. However, I don\u0027t want it constantly spamming Chrome/powerd with CreateTimers call again and again. Thus, it only attempts this after it gets notified of powerd coming up.",
+      "parentUuid": "4b190775_b7c31414",
       "range": {
         "startLine": 41,
         "startChar": 2,
@@ -637,6 +1129,24 @@
     },
     {
       "key": {
+        "uuid": "1120e2c4_cd430856",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7163a9b_f1e538ff",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "600a874b_925edd38",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 1
@@ -648,6 +1158,24 @@
       "writtenOn": "2017-10-13T23:52:17Z",
       "side": 1,
       "message": "\u003cutility\u003e is missing (for std::move)",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68dcd42a_9f4e4b3e",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "600a874b_925edd38",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -671,6 +1199,24 @@
     },
     {
       "key": {
+        "uuid": "db164c04_ccd8b887",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8d92050_a4465958",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24725b1e_0008a47c",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 1
@@ -682,6 +1228,24 @@
       "writtenOn": "2017-10-13T23:52:17Z",
       "side": 1,
       "message": "nit: newline between L18\u002619.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10a2d71_b98e1e0b",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24725b1e_0008a47c",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -728,6 +1292,30 @@
     },
     {
       "key": {
+        "uuid": "e325c40d_3b4e754b",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "less boiler plate than type maps ?. Renamed the function.",
+      "parentUuid": "01b56eaf_abe9e0ed",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 23
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ecf59f5_ed303318",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 1
@@ -745,6 +1333,24 @@
     },
     {
       "key": {
+        "uuid": "f88faca6_49f70f23",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ecf59f5_ed303318",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "427be229_9d70c4e9",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 1
@@ -756,6 +1362,30 @@
       "writtenOn": "2017-10-13T16:11:54Z",
       "side": 1,
       "message": "Can you implement a pretty-printer?\n\n std::ostream\u0026 operator\u003c\u003c(std::ostream\u0026, power_manager::ArcTimerResult);",
+      "range": {
+        "startLine": 82,
+        "startChar": 13,
+        "endLine": 82,
+        "endChar": 41
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a373d7_788cecde",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "That\u0027s more LOC than just a cast for this one off use.",
+      "parentUuid": "427be229_9d70c4e9",
       "range": {
         "startLine": 82,
         "startChar": 13,
@@ -791,6 +1421,30 @@
     },
     {
       "key": {
+        "uuid": "5c34be06_8b86497a",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1895706_f5444e3d",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 6
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fb23f4c_75800980",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 1
@@ -802,6 +1456,24 @@
       "writtenOn": "2017-10-13T04:06:31Z",
       "side": 1,
       "message": "Please use BindOnce here, too. Ditto for below.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f587740_c279f3d7",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fb23f4c_75800980",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -831,6 +1503,30 @@
     },
     {
       "key": {
+        "uuid": "6880d5c9_ea63e7f9",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2f068e7_36f1a701",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 19
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08211f1e_7f601dbc",
         "filename": "components/arc/timer/arc_timer_bridge.h",
         "patchSetId": 1
@@ -842,6 +1538,24 @@
       "writtenOn": "2017-10-13T23:52:17Z",
       "side": 1,
       "message": "base/memory/weak_ptr.h\n\nis missing",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba3bf11_8e8daaea",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08211f1e_7f601dbc",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -906,6 +1620,30 @@
       "side": 1,
       "message": "(but before weak_ptr_factory_)",
       "parentUuid": "db2059cf_25e7d95b",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 43
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f046755_a656da38",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54045ede_0335ada5",
       "range": {
         "startLine": 53,
         "startChar": 0,
@@ -1034,6 +1772,30 @@
     },
     {
       "key": {
+        "uuid": "4f585b31_68fb8c10",
+        "filename": "components/arc/timer/arc_timer_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92a33023_0cf09d20",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53e23725_324996b5",
         "filename": "components/arc/timer/arc_timer_traits.h",
         "patchSetId": 1
@@ -1069,6 +1831,24 @@
     },
     {
       "key": {
+        "uuid": "102277e6_f02d97e0",
+        "filename": "components/arc/timer/arc_timer_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32a67fc6_5a3e375d",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92ae7582_46a06478",
         "filename": "components/arc/timer/arc_timer_traits.h",
         "patchSetId": 1
@@ -1086,6 +1866,24 @@
     },
     {
       "key": {
+        "uuid": "bbdf7153_943181b6",
+        "filename": "components/arc/timer/arc_timer_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92ae7582_46a06478",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ad8a46f_11041d17",
         "filename": "components/arc/timer/arc_timer_traits.h",
         "patchSetId": 1
@@ -1097,6 +1895,30 @@
       "writtenOn": "2017-10-13T16:11:54Z",
       "side": 1,
       "message": "This should be inside the definition.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c381cb02_468d8c15",
+        "filename": "components/arc/timer/arc_timer_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ad8a46f_11041d17",
       "range": {
         "startLine": 20,
         "startChar": 0,
@@ -1143,6 +1965,24 @@
       "writtenOn": "2017-10-13T04:06:31Z",
       "side": 1,
       "message": "nit/style: An emptyline is needed just before this line.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a313a90_e135da82",
+        "filename": "components/arc/timer/arc_timer_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-18T00:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc80047b_e4f8398f",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
