@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "959847cf_c0f58f59",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-18T17:58:12Z",
+      "side": 1,
+      "message": "Thanks for adding the assert now. If we scheduled a decode, then there shouldn\u0027t have been a reason other than the decode finishing for the image to be come sync.",
+      "parentUuid": "8820b26a_2fd67894",
+      "range": {
+        "startLine": 265,
+        "startChar": 4,
+        "endLine": 265,
+        "endChar": 30
+      },
+      "revId": "d0136ee7dc3becca7911ff003a11bbf0186ed34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cfb4645_ce36644d",
         "filename": "cc/tiles/checker_image_tracker.cc",
         "patchSetId": 6
