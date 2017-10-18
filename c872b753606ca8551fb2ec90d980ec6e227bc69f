@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "0406b3e5_bfd42666",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-18T18:23:53Z",
+      "side": 1,
+      "message": "Yep, I forgot that we have diff models :) Anyway this way does not work. Binding is discarded after clicking the button (LaunchApp replaces the controller) and if I try to flash I get exception.\nBrowserTestBase received signal: Segmentation fault. Backtrace:\n#0 0x7fccfdd52ebd base::debug::StackTrace::StackTrace()\n#1 0x7fccfdd5143c base::debug::StackTrace::StackTrace()\n#2 0x0000062c7aaf content::(anonymous namespace)::DumpStackTraceSignalHandler()\n#3 0x7fcce2736cb0 \u003cunknown\u003e\n#4 0x7fccf9c045d3 mojo::internal::ControlMessageProxy::FlushForTesting()\n#5 0x7fccf9c0dd6c mojo::InterfaceEndpointClient::FlushForTesting()\n#6 0x7fccf9bf8811 mojo::internal::BindingStateBase::FlushForTesting()\n#7 0x7fcceddff675 mojo::Binding\u003c\u003e::FlushForTesting()\n#8 0x7fcceddfe605 ash::ShelfItemDelegate::FlushForTesting()\n\n\nYes, AppAnimatedWaiter is very optional for this test. Can remove.\n\nDone 100 tests.",
+      "parentUuid": "80f7c378_ecc47d43",
+      "revId": "c872b753606ca8551fb2ec90d980ec6e227bc69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b344c7b_98015e33",
         "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
         "patchSetId": 2
