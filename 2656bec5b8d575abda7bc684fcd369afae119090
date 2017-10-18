@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2da552c_e3762392",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-18T20:54:50Z",
+      "side": 1,
+      "message": "Not yet, since you don\u0027t include face_detection_provider_win.cc in this patch.",
+      "revId": "2656bec5b8d575abda7bc684fcd369afae119090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102c6c20_84aab5a4",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-18T20:54:50Z",
+      "side": 1,
+      "message": "Use auto to avoid repeating the type name.",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 39
+      },
+      "revId": "2656bec5b8d575abda7bc684fcd369afae119090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc2618d_b3d3bcf9",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-18T20:54:50Z",
+      "side": 1,
+      "message": "Make this a private static member of FaceDetectionImplWin and use FRIEND_TEST_ALL_PREFIXES to give the test access to it. I also suggest naming this something like GetFactory().",
+      "revId": "2656bec5b8d575abda7bc684fcd369afae119090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f05e23_28864ccb",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-18T20:54:50Z",
+      "side": 1,
+      "message": "Return a smart pointer and return nullptr if the face detector is unsupported?",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 61
+      },
+      "revId": "2656bec5b8d575abda7bc684fcd369afae119090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3faaa084_a282baa7",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-18T20:54:50Z",
+      "side": 1,
+      "message": "Use a smart pointer?",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 62
+      },
+      "revId": "2656bec5b8d575abda7bc684fcd369afae119090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c797753d_ad08f8fe",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-18T20:54:50Z",
+      "side": 1,
+      "message": "If this is all you use this method for perhaps add an IsSupportedForTesting() method to FaceDetectionImplWin which returns true if the constructor was able to connect to the COM service instead of complicating the process of constructing the object.\n\nWhen you build FaceDetectionProviderImplWin you may find this unnecessary because that will tell you whether it was successfully able to construct a FaceDetectionImplWin.",
+      "revId": "2656bec5b8d575abda7bc684fcd369afae119090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
