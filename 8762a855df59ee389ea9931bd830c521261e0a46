@@ -22,6 +22,30 @@
       "revId": "8762a855df59ee389ea9931bd830c521261e0a46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f854c4a_84dde549",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-18T20:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d44c405_e9b5d2ef",
+      "range": {
+        "startLine": 218,
+        "startChar": 2,
+        "endLine": 218,
+        "endChar": 27
+      },
+      "revId": "8762a855df59ee389ea9931bd830c521261e0a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
