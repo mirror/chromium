@@ -4,6 +4,9 @@
 
 #include "core/layout/ng/ng_physical_box_fragment.h"
 
+#include "core/layout/LayoutBox.h"
+#include "core/layout/LayoutObject.h"
+
 namespace blink {
 
 NGPhysicalBoxFragment::NGPhysicalBoxFragment(
@@ -37,7 +40,19 @@ const NGBaseline* NGPhysicalBoxFragment::Baseline(
 }
 
 const NGPhysicalOffsetRect NGPhysicalBoxFragment::LocalVisualRect() const {
-  // TODO(kojii): Add its own visual overflow (e.g., box-shadow)
+  const ComputedStyle& style = Style();
+  if (!style.HasVisualOverflowingEffect())
+    return {{}, Size()};
+
+  LayoutObject* layout_object = GetLayoutObject();
+  if (layout_object->IsBox()) {
+    LayoutRect visual_rect({}, Size().ToLayoutSize());
+    visual_rect.Expand(
+        ToLayoutBox(layout_object)->ComputeVisualEffectOverflowOutsets());
+    return NGPhysicalOffsetRect(visual_rect);
+  }
+
+  DCHECK(layout_object->IsLayoutInline());
   return {{}, Size()};
 }
 
