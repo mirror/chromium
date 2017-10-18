@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcb94f0b_b26e303e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-18T02:09:14Z",
+      "side": 1,
+      "message": "nit: { .. } instead of return",
+      "revId": "d2ec99a6f6e594f2cf4b23afd89816e2f6822974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c83535_5baba9b9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-18T02:09:14Z",
+      "side": 1,
+      "message": "if (Runtime.experiments.isEnabled(\u0027networkPersistence\u0027)) {\n // ..\n}",
+      "revId": "d2ec99a6f6e594f2cf4b23afd89816e2f6822974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f38610_1c901982",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-18T02:09:14Z",
+      "side": 1,
+      "message": "shouldn\u0027t item be something else?",
+      "revId": "d2ec99a6f6e594f2cf4b23afd89816e2f6822974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ce1aa5_b60287f0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-18T02:09:14Z",
+      "side": 1,
+      "message": "if (Runtime.experiments.isEnabled(\u0027networkPersistence\u0027)) {\n  // ...\n}",
+      "revId": "d2ec99a6f6e594f2cf4b23afd89816e2f6822974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8152008f_b7dcf44b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-18T02:09:14Z",
+      "side": 1,
+      "message": "nit: var settingData \u003d Array.from(this._domainPathForFileSystemMap.entries());",
+      "revId": "d2ec99a6f6e594f2cf4b23afd89816e2f6822974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe07a58_ba18bdfc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-18T02:09:14Z",
+      "side": 1,
+      "message": "move this for loop inside the _onProjectRemoved",
+      "revId": "d2ec99a6f6e594f2cf4b23afd89816e2f6822974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12cd9ed1_ddcb7e18",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-18T02:09:14Z",
+      "side": 1,
+      "message": "nit: ..entries..",
+      "revId": "d2ec99a6f6e594f2cf4b23afd89816e2f6822974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf0745b_b4f0b968",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-18T02:09:14Z",
+      "side": 1,
+      "message": "nit: not needed",
+      "revId": "d2ec99a6f6e594f2cf4b23afd89816e2f6822974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e740a9_c10bd221",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-18T02:09:14Z",
+      "side": 1,
+      "message": "if (networkUISourceCode[this._bindingSymbol] || fileSystemUISourceCode[this._bindingSymbol])\n  return;\n// otherwise, do a binding!..",
+      "revId": "d2ec99a6f6e594f2cf4b23afd89816e2f6822974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66be1fd_335beb80",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/UISourceCodeFrame.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-18T02:09:14Z",
+      "side": 1,
+      "message": "this is covered by #156",
+      "revId": "d2ec99a6f6e594f2cf4b23afd89816e2f6822974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9bc159e_f0268834",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-18T02:09:14Z",
+      "side": 1,
+      "message": "not needed any more",
+      "revId": "d2ec99a6f6e594f2cf4b23afd89816e2f6822974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

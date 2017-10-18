@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d48b682a_39818ab6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-18T02:09:14Z",
+      "side": 1,
+      "message": "why do you want this to be listening when it\u0027s disabled?",
+      "range": {
+        "startLine": 29,
+        "startChar": 35,
+        "endLine": 29,
+        "endChar": 47
+      },
+      "revId": "8f4ab166c5f75c9469931cc28bdc50a342683226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a8d2c2_1440c6d4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-18T02:09:14Z",
+      "side": 1,
+      "message": "let\u0027s not return an array here; there should be only one UISourceCode to be bound",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 23
+      },
+      "revId": "8f4ab166c5f75c9469931cc28bdc50a342683226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
