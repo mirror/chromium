@@ -33,14 +33,15 @@ def _Spawn(args):
   """Triggers a swarming job. The arguments passed are:
   - The index of the job;
   - The command line arguments object;
-  - The hash of the isolate job used to trigger.
+  - The hash of the isolate job used to trigger;
+  - --gtest_filter arg, or empty if none.
 
   The return value is passed to a collect-style map() and consists of:
   - The index of the job;
   - The json file created by triggering and used to collect results;
   - The command line arguments object.
   """
-  index, args, isolated_hash = args
+  index, args, isolated_hash, gtest_filter = args
   json_file = os.path.join(args.results, '%d.json' % index)
   trigger_args = [
       'tools/swarming_client/swarming.py', 'trigger',
@@ -53,10 +54,13 @@ def _Spawn(args):
       '--dump-json', json_file,
       '--',
       '--test-launcher-summary-output=${ISOLATED_OUTDIR}/output.json']
-  filter_file = \
-      'testing/buildbot/filters/fuchsia.' + args.test_name + '.filter'
-  if os.path.isfile(filter_file):
-    trigger_args.append('--test-launcher-filter-file=../../' + filter_file)
+  if gtest_filter:
+    trigger_args.append('--gtest_filter=' + gtest_filter)
+  else:
+    filter_file = \
+        'testing/buildbot/filters/fuchsia.' + args.test_name + '.filter'
+    if os.path.isfile(filter_file):
+      trigger_args.append('--test-launcher-filter-file=../../' + filter_file)
   with open(os.devnull, 'w') as nul:
     subprocess.check_call(trigger_args, stdout=nul)
   return (index, json_file, args)
@@ -92,6 +96,11 @@ def main():
                       help='Number of copies to spawn.')
   parser.add_argument('--results', '-r', default='results',
                       help='Directory in which to store results.')
+  parser.add_argument('--gtest_filter',
+                      help='Use the given gtest_filter (default is to use the '
+                           'filter file in testing/buildbot/filters if it '
+                           'exists')
+
   args = parser.parse_args()
 
   subprocess.check_call(
@@ -117,7 +126,8 @@ def main():
     pool = multiprocessing.Pool()
     spawn_args = zip(range(args.copies),
                      [args] * args.copies,
-                     [isolated_hash] * args.copies)
+                     [isolated_hash] * args.copies,
+                     [args.gtest_filter] * args.copies)
     spawn_results = pool.imap_unordered(_Spawn, spawn_args)
 
     exit_codes = []
