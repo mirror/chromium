@@ -15,7 +15,7 @@ function listElementProperties(type) {
     var tagProperties = {};
     var commonProperties = null; // Will be a map containing the intersection of properties across all elements as keys.
     tags.forEach(function(tag) {
-        var element = document.createElement(tag, namespace);
+        var element = document.createElementNS(namespace, tag);
         // We don't read out the property descriptors here to avoid the test timing out.
         var properties = getAllPropertyNames(element);
         tagProperties[tag] = properties;
