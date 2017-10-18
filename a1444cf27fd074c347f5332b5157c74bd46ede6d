@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "8be8d3ed_363dd83f",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-18T14:24:32Z",
+      "side": 1,
+      "message": "When I refer to simplicity, it\u0027s user-visible logic simplicity. Here what my proposal does in the context of the mobile NTP: opening an NTP tile leads to a page with a favicon (in terms of tab switcher favicon), it will also show up in the NTP.\n\nIf we rely on SetFavicons() being called, the situation is more complex because it relies on a few things:\n1) Favicon candidates being reported early enough (e.g. before the user navigates away or stops the load).\n2) The download being successful (*some* download), i.e. return a 200.\n3) In the case of web manifests, there are even more delays and error cases.\n\nIt seems obvious to me that not depending on additional steps is logically simpler. Thoughts?",
+      "parentUuid": "e60215d3_3130b0f6",
+      "revId": "a1444cf27fd074c347f5332b5157c74bd46ede6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb495b72_150a56ac",
         "filename": "components/history/core/browser/history_backend.cc",
         "patchSetId": 5
