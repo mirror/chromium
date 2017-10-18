@@ -22,6 +22,30 @@
       "revId": "103f1a6e0b917a65666d7433b37f320206fcd2b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff62400_46c2dbe6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 62522,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-18T23:29:38Z",
+      "side": 1,
+      "message": "It makes sense. I changed to Ash.PowerButtonScreenshot.DelayBetweenAccelKeyPressed. \"Ash.Accelerators\" might indicate ash/accelerators/ code location.",
+      "parentUuid": "19e0b64e_b4508e15",
+      "range": {
+        "startLine": 62522,
+        "startChar": 17,
+        "endLine": 62522,
+        "endChar": 22
+      },
+      "revId": "103f1a6e0b917a65666d7433b37f320206fcd2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
