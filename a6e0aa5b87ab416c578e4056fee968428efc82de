@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1a722d4_f6274a4e",
+        "filename": "components/autofill/core/browser/autofill_credit_card_policy_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-10-18T21:53:11Z",
+      "side": 1,
+      "message": "What about just having the DTC register for changes to kAutofillCreditCardEnabled? Sync will control the kSync* preferences automatically, no need to modify them directly.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 74
+      },
+      "revId": "a6e0aa5b87ab416c578e4056fee968428efc82de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6725080f_20057ed7",
+        "filename": "components/autofill/core/browser/autofill_policy_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-10-18T21:53:11Z",
+      "side": 1,
+      "message": "Should we also be disabling the autofill_profile and autofill (i.e. autocomplete) datatypes as well (autofill_profile_data_type_controller and autofill_data_type_controller)?",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 55
+      },
+      "revId": "a6e0aa5b87ab416c578e4056fee968428efc82de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
