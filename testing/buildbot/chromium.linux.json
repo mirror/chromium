@@ -3466,6 +3466,26 @@
   "Linux Builder (dbg)": {
     "additional_compile_targets": [
       "all"
+    ],
+    "isolated_scripts": [
+      {
+        "args": [
+          "memory.leak_detection",
+          "-v",
+          "--use-live-sites",
+          "--upload-results",
+          "--output-format=json-test-results",
+          "--browser=release"
+        ],
+        "isolate_name": "telemetry_perf_tests",
+        "name": "memory.leak_detection",
+        "override_compile_targets": [
+          "telemetry_perf_tests"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        }
+      }
     ]
   },
   "Linux Builder (dbg)(32)": {
