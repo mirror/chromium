@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc92f469_51f9eec0",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-18T15:31:07Z",
+      "side": 1,
+      "message": "constexpr here and below.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 5
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d82f58_863cc06a",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-18T15:31:07Z",
+      "side": 1,
+      "message": "A comment on this would help me.",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2226b78e_929acb06",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-18T15:31:07Z",
+      "side": 1,
+      "message": "You derive from a button but you don\u0027t want to process the events. Why so?\nConsider using ImageView instead.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 39
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2dd6e8b_1eee598f",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-18T15:31:07Z",
+      "side": 1,
+      "message": "What kind of padding do you want to set here? Wouldn\u0027t it be better to apply it in the parent view instead?",
+      "range": {
+        "startLine": 50,
+        "startChar": 27,
+        "endLine": 51,
+        "endChar": 71
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00c728d_e1b10fc0",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-18T15:31:07Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be \u0027-\u0027 ?",
+      "range": {
+        "startLine": 73,
+        "startChar": 40,
+        "endLine": 73,
+        "endChar": 42
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b938e2_45a5caed",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-18T15:31:07Z",
+      "side": 1,
+      "message": "Did you consider placing a separate ImageView inside instead of painting everything yourself?",
+      "range": {
+        "startLine": 105,
+        "startChar": 9,
+        "endLine": 105,
+        "endChar": 24
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3acce026_5d339017",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-18T15:31:07Z",
+      "side": 1,
+      "message": "Can those events happen given that you don\u0027t handle events?",
+      "range": {
+        "startLine": 117,
+        "startChar": 25,
+        "endLine": 117,
+        "endChar": 32
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3fcc05a_0f42d8b5",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-18T15:31:07Z",
+      "side": 1,
+      "message": "A comment?",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 24
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ea4d08_de49f6d6",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-18T15:31:07Z",
+      "side": 1,
+      "message": "{}",
+      "range": {
+        "startLine": 279,
+        "startChar": 4,
+        "endLine": 281,
+        "endChar": 73
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f037df1_c07c1daa",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-18T15:31:07Z",
+      "side": 1,
+      "message": "I\u0027m not sure what\u0027s going on here. How is |kMenuEdgeMargin| relevant?",
+      "range": {
+        "startLine": 958,
+        "startChar": 9,
+        "endLine": 958,
+        "endChar": 60
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
