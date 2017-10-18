@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d8fe8f8_925eee54",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-18T19:14:45Z",
+      "side": 1,
+      "message": "this can be removed if UpdatePresentationDelay() is not called",
+      "range": {
+        "startLine": 118,
+        "startChar": 6,
+        "endLine": 118,
+        "endChar": 33
+      },
+      "revId": "374559fbe1cdfa0463f40ddf14121d2745a337ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16e2c58_cf9a4eb5",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-18T19:14:45Z",
+      "side": 1,
+      "message": "base::Timer should handles negative delay as delay\u003d0, see https://codesearch.chromium.org/chromium/src/base/timer/timer.cc?type\u003dcs\u0026l\u003d167, so i don\u0027t think you need this change",
+      "range": {
+        "startLine": 164,
+        "startChar": 2,
+        "endLine": 164,
+        "endChar": 38
+      },
+      "revId": "374559fbe1cdfa0463f40ddf14121d2745a337ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
