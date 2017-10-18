@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dc25889_f469e8ab",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-18T18:24:34Z",
+      "side": 0,
+      "message": "Given the changes we\u0027ve discussed around mode, shouldn\u0027t this DCHECK still be valid?",
+      "range": {
+        "startLine": 405,
+        "startChar": 29,
+        "endLine": 405,
+        "endChar": 34
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
