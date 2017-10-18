@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4969e2a_c40bc001",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-10-18T18:57:31Z",
+      "side": 1,
+      "message": "#include \u003cvector\u003e too.",
+      "range": {
+        "startLine": 9,
+        "startChar": 24,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "f19b625160f71e7c0ce4a709f81e13ed126f3532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea25f0a6_63e8a5f1",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-10-18T18:57:31Z",
+      "side": 1,
+      "message": "Should return a copy of the string instead.",
+      "range": {
+        "startLine": 49,
+        "startChar": 19,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "f19b625160f71e7c0ce4a709f81e13ed126f3532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

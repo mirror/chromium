@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "fa1acce4_d811dd44",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-10-18T18:57:31Z",
+      "side": 1,
+      "message": "This function returns a local variable, so it should return a copy not a reference.",
+      "parentUuid": "462aa7b4_324f33e1",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa536226_02691636",
         "filename": "chrome/browser/ssl/ssl_error_assistant.h",
         "patchSetId": 10
