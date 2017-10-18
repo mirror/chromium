@@ -16,6 +16,24 @@
       "revId": "19e9c4874e411b94c19fdb10d8ef49df6695feb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8478eebf_e61a983e",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-18T14:29:17Z",
+      "side": 1,
+      "message": "When the GPU process crashes then HostFrameSinkManager (1) clears some internal state, (2) this function gets called again to establish HostFrameSinkmanager \u003c-\u003e FrameSinkManagerImpl communication and (3) HostFrameSinkManager reregisters state. In https://crrev.com/c/698584 it has the full patch where restart works.",
+      "parentUuid": "65ca7ab7_a823d1b1",
+      "revId": "19e9c4874e411b94c19fdb10d8ef49df6695feb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

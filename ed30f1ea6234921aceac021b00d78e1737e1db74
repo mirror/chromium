@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3bc9275_6d41bf2f",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-18T14:29:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5eed431b_ddeec25e",
+      "revId": "ed30f1ea6234921aceac021b00d78e1737e1db74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdbae817_aa0d15d8",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-18T00:08:13Z",
       "side": 1,
       "message": "Is that a NOTIMPLEMENTED() ?",
+      "revId": "ed30f1ea6234921aceac021b00d78e1737e1db74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe05cd4a_2d24150a",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-18T14:29:17Z",
+      "side": 1,
+      "message": "I think this should be NOTREACHED() but I\u0027m not 100% sure. Does GLHelper in the browser/host process make sense in the post viz world? I know it does CopyRequest related things and I thought that was moving to the GPU process with viz. I added a TODO, but let me know if this should definitely be a NOTIMPLEMENTED().",
+      "parentUuid": "bdbae817_aa0d15d8",
       "revId": "ed30f1ea6234921aceac021b00d78e1737e1db74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fa9b9265_4918d352",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-18T14:29:17Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0b3365b0_18a8f44e",
+      "revId": "ed30f1ea6234921aceac021b00d78e1737e1db74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75f12353_5166d2e7",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 17
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a7894a16_dd92e931",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-18T14:29:17Z",
+      "side": 1,
+      "message": "Reusing the same ContextProvider with multiple ClientLayerTreeFrameSinks hits some DCHECKs when things get set multiple times. I can try doing this in a separate CL with necessary changes to make that work, I\u0027ll add a TODO.",
+      "parentUuid": "75f12353_5166d2e7",
+      "revId": "ed30f1ea6234921aceac021b00d78e1737e1db74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "058a2a7c_6d5deac8",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 17
@@ -84,6 +156,24 @@
       "revId": "ed30f1ea6234921aceac021b00d78e1737e1db74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb6cf67e_9b26b470",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-18T14:29:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "058a2a7c_6d5deac8",
+      "revId": "ed30f1ea6234921aceac021b00d78e1737e1db74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
