@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60132fc9_ad623a97",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-18T21:20:24Z",
+      "side": 1,
+      "message": "This does worry me a bit, but I feel like we shouldn\u0027t be worrying too much since you are adding a new self-contained call and if this is what makes the UI flow best, we should be OK with it.\n\nI would still cleanup this comment a little bit as it sounds very temporary. Maybe separate the uncertainty parts as a TODO to investiate later?",
+      "range": {
+        "startLine": 1368,
+        "startChar": 27,
+        "endLine": 1368,
+        "endChar": 32
+      },
+      "revId": "50ec2b4175f4951457a5cb2099e1eaefb4b9fad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea7d94c_af358bc2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1463,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-18T21:20:24Z",
+      "side": 1,
+      "message": "I think this is fine and we dont need a TODO or comment.",
+      "range": {
+        "startLine": 1463,
+        "startChar": 42,
+        "endLine": 1463,
+        "endChar": 50
+      },
+      "revId": "50ec2b4175f4951457a5cb2099e1eaefb4b9fad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
