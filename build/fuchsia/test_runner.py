@@ -197,7 +197,7 @@ def main():
     if not bootfs:
       return 2
 
-    return RunFuchsia(bootfs, args.device, args.dry_run,
+    return RunFuchsia(bootfs, args.device, kernel=None, argsudry_run,
                       args.test_launcher_summary_output)
   finally:
     # Stop the spawner to make sure it doesn't leave testserver running, in
