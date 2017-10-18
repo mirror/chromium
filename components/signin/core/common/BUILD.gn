@@ -25,6 +25,8 @@ static_library("common") {
 
   deps = [
     "//base",
+    "//components/pref_registry",
+    "//components/prefs",
   ]
 
   public_deps = [
