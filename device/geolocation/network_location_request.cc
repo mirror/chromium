@@ -128,6 +128,9 @@ bool NetworkLocationRequest::MakeRequest(const WifiData& wifi_data,
   wifi_data_ = wifi_data;
   wifi_timestamp_ = wifi_timestamp;
 
+  // TODO(amoylan): Move this specific tag to NetworkLocationProvider and pass
+  // in the tag as an argument to this method. IP geolocation service should
+  // pass in a separate tag.
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("device_geolocation_request", R"(
         semantics {
