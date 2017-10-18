@@ -16,6 +16,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/sha1.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "base/values.h"
@@ -36,6 +37,12 @@
 namespace net {
 
 class NetLogCaptureMode;
+
+// Allows DoVerifyOnWorkerThread to wait on a base::WaitableEvent.
+// DoVerifyOnWorkerThread waits on network operations done on a separate
+// sequence.
+class MultiThreadedCertVerifierScopedAllowBaseSyncPrimitives
+    : public base::ScopedAllowBaseSyncPrimitives {};
 
 ////////////////////////////////////////////////////////////////////////////
 //
@@ -183,6 +190,8 @@ std::unique_ptr<ResultHelper> DoVerifyOnWorkerThread(
     const CertificateList& additional_trust_anchors) {
   TRACE_EVENT0(kNetTracingCategory, "DoVerifyOnWorkerThread");
   auto verify_result = std::make_unique<ResultHelper>();
+  MultiThreadedCertVerifierScopedAllowBaseSyncPrimitives
+      allow_base_sync_primitives;
   verify_result->error = verify_proc->Verify(
       cert.get(), hostname, ocsp_response, flags, crl_set.get(),
       additional_trust_anchors, &verify_result->result);
