@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94599f9f_332a1b66",
+        "filename": "third_party/WebKit/Source/core/style/StyleFetchedImageSet.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-18T20:10:43Z",
+      "side": 1,
+      "message": "It\u0027s a bit confusing to initialize \"scaled_image_size\" like this. Maybe have another temp \"natural_image_size\" or something like that. Or wrap this line into the next one.",
+      "revId": "540c725b05170a308f7f0923e2e2e8087e4d14fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
