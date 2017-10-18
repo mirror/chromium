@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d88f6d5_f917afcc",
+        "filename": "content/child/web_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T12:47:58Z",
+      "side": 1,
+      "message": "Having multiple delete lines makes me a bit nervous, would like to somehow centralize...",
+      "revId": "0717f0f5687302d48315dd06659a29e02b8e6a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40e5d06_9c39318c",
+        "filename": "content/child/web_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T12:47:58Z",
+      "side": 1,
+      "message": "Yeah... at least this could be outside the while loop",
+      "revId": "0717f0f5687302d48315dd06659a29e02b8e6a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f97d4f6_6a94ee91",
+        "filename": "content/child/web_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T12:47:58Z",
+      "side": 1,
+      "message": "When MojoBlob is enabled WebHTTPBody could optionally have a blob ptr internally, WebHTTPBody::Element can probably expose it.",
+      "revId": "0717f0f5687302d48315dd06659a29e02b8e6a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78421bac_6a0c25cc",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T12:47:58Z",
+      "side": 1,
+      "message": "if (init_callback_)\n  std::move(init_callback_).Run(net::OK);",
+      "revId": "0717f0f5687302d48315dd06659a29e02b8e6a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e15a33a7_c36bc139",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-18T12:47:58Z",
+      "side": 1,
+      "message": "nit: std::make_unique",
+      "revId": "0717f0f5687302d48315dd06659a29e02b8e6a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
