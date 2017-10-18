@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "289f65f0_197c0c71",
+        "filename": "content/renderer/input/input_handler_wrapper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-10-18T20:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5928960f_3500d0b1",
+      "revId": "5ca4a11ea8bc4d91c666fff3ccf6fa2dd2823198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f864cc76_299bb9f3",
         "filename": "third_party/WebKit/LayoutTests/fast/events/wheel/latched-scroll-node-removed.html",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "5ca4a11ea8bc4d91c666fff3ccf6fa2dd2823198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60970436_f25b3671",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/wheel/latched-scroll-node-removed.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-10-18T20:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f864cc76_299bb9f3",
+      "range": {
+        "startLine": 74,
+        "startChar": 54,
+        "endLine": 74,
+        "endChar": 55
+      },
+      "revId": "5ca4a11ea8bc4d91c666fff3ccf6fa2dd2823198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
