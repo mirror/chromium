@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "058a180b_f750473f",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-18T00:05:31Z",
+      "side": 1,
+      "message": "I actually think we should invalidate weak pointers here because it\u0027s an explicit intervention by the developer rather than what is typically going to happen in the course of browsing. It should behave like we freshly loaded the page in this case.",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 17
+      },
+      "revId": "f79526b94e1bdbc25513ebecd0fc1f820e8351af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
