@@ -1,9 +1,9 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+// Copyright 2015 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROMECAST_MEDIA_CMA_BACKEND_ANDROID_MEDIA_PIPELINE_BACKEND_ANDROID_H_
-#define CHROMECAST_MEDIA_CMA_BACKEND_ANDROID_MEDIA_PIPELINE_BACKEND_ANDROID_H_
+#ifndef CHROMECAST_MEDIA_CMA_BACKEND_MEDIA_PIPELINE_BACKEND_AUDIO_H_
+#define CHROMECAST_MEDIA_CMA_BACKEND_MEDIA_PIPELINE_BACKEND_AUDIO_H_
 
 #include <memory>
 #include <string>
@@ -21,18 +21,15 @@ class SingleThreadTaskRunner;
 
 namespace chromecast {
 namespace media {
-class AudioDecoderAndroid;
+
+class AudioDecoderForMixer;
 class VideoDecoderNull;
 
-// TODO(ckuiper): This class is very similar to MediaPipelineBackendAudio
-// (alsa/media_pipeline_backend_alsa.h) and should be consolidated into one
-// shared class/file.
-class MediaPipelineBackendAndroid : public MediaPipelineBackend {
+// CMA Backend implementation for audio devices.
+class MediaPipelineBackendAudio : public MediaPipelineBackend {
  public:
-  using RenderingDelay = AudioDecoder::RenderingDelay;
-
-  explicit MediaPipelineBackendAndroid(const MediaPipelineDeviceParams& params);
-  ~MediaPipelineBackendAndroid() override;
+  explicit MediaPipelineBackendAudio(const MediaPipelineDeviceParams& params);
+  ~MediaPipelineBackendAudio() override;
 
   // MediaPipelineBackend implementation:
   AudioDecoder* CreateAudioDecoder() override;
@@ -62,12 +59,12 @@ class MediaPipelineBackendAndroid : public MediaPipelineBackend {
 
   const MediaPipelineDeviceParams params_;
   std::unique_ptr<VideoDecoderNull> video_decoder_;
-  std::unique_ptr<AudioDecoderAndroid> audio_decoder_;
+  std::unique_ptr<AudioDecoderForMixer> audio_decoder_;
 
-  DISALLOW_COPY_AND_ASSIGN(MediaPipelineBackendAndroid);
+  DISALLOW_COPY_AND_ASSIGN(MediaPipelineBackendAudio);
 };
 
 }  // namespace media
 }  // namespace chromecast
 
-#endif  // CHROMECAST_MEDIA_CMA_BACKEND_ANDROID_MEDIA_PIPELINE_BACKEND_ANDROID_H_
+#endif  // CHROMECAST_MEDIA_CMA_BACKEND_MEDIA_PIPELINE_BACKEND_AUDIO_H_
