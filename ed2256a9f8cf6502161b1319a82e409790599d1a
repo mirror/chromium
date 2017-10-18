@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "adb522f2_97b9011d",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-18T15:31:18Z",
+      "side": 1,
+      "message": "I honestly did not think of \u0027data:\u0027 URLs and I see the issue. We might want to say \"a meaningful value is only guaranteed for HTTP URLs\".\n@Takeshi, is that what you meant with \"add some prefix\"?",
+      "parentUuid": "02055ac3_536fcf37",
+      "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec8dc80d_945e9380",
         "filename": "content/network/url_loader_impl.cc",
         "patchSetId": 1
@@ -161,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "af4088a0_1c7e64ac",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-18T15:31:18Z",
+      "side": 1,
+      "message": "Just the URL is not enough for me. I need to know the Sec-Origin-Manifest header existence and its value. That\u0027s why I went for ResourceResponseHead in the first place.\n\nIn line with what Takeshi said, I took the URLRequest::url() as the latest request URL and as where the last response came from which eventually made us to create the ResourceResponse data. As much as I understand this there is no ResourceResponse ever created other than when we really do have a response, that is not a redirect.\n\nin short, I am very confused about the fact that this does not hold.\n\nMaybe we should just give the concrete data we need when calling WillProcessResponse instead of trying to squeeze it into ResourceResponseInfo somehow just that it is in there. Something like WillProcessResponse(GURL url, ResponseHeaders headers, bool* defer)",
+      "parentUuid": "85329884_3c213878",
+      "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "976791f2_e1bf0de6",
         "filename": "content/public/common/resource_response_info.h",
         "patchSetId": 1
@@ -172,6 +208,24 @@
       "writtenOn": "2017-10-16T07:43:58Z",
       "side": 1,
       "message": "response_url ?\n\nThis *could* be identical to request URL, right?",
+      "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cdee305_0fa8b39c",
+        "filename": "content/public/common/resource_response_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-18T15:31:18Z",
+      "side": 1,
+      "message": "indeed. maybe your naming is better then. I made the comment just to point out that redirects might change that, or upgrade-insecure-requests or whatever.",
+      "parentUuid": "976791f2_e1bf0de6",
       "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
