@@ -99,6 +99,24 @@
       "revId": "6a4da4e3c74aff5356057f75a2430dcf6476339c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57561ef_c36df99c",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-18T13:56:44Z",
+      "side": 1,
+      "message": "Servicification slides said that one of the goals is to decouple chrome and chromeos release cycles.",
+      "parentUuid": "d11c37e7_bc9f3380",
+      "revId": "6a4da4e3c74aff5356057f75a2430dcf6476339c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
