@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58c16de7_19017f36",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-18T19:15:05Z",
+      "side": 1,
+      "message": "Nit: Why does this one get newlines before/after, but not the others?",
+      "revId": "fcb5da3e7dc109d577bd60f3a32b080047839e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
