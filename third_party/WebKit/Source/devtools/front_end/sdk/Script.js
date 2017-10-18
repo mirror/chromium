@@ -232,7 +232,7 @@ SDK.Script = class {
    * @return {boolean}
    */
   isInlineScriptWithSourceURL() {
-    return !!this.hasSourceURL && this.isInlineScript();
+    return (!!this.hasSourceURL || !!this.sourceMapURL) && this.isInlineScript();
   }
 
   /**
