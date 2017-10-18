@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "9967db75_5cbb3df1",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks_unittest.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-18T09:09:06Z",
+      "side": 1,
+      "message": "I see.\nJust loading a script should not execute something which depends on external scripts, so how about modifying it like this:\n\nFileTasks.zipArchiverUnpackerEnabledPromise_ \u003d null.\n\n(Inside FileTasks.create)\nIf (!FileTasks.zipArchiverUnpackerEnabledPromise_) {\n  FileTasks.zipArchiverUnpackerEnabledPromise_ \u003d new Promise(....\n}",
+      "parentUuid": "b0d66d63_ee2b426b",
+      "revId": "a6ef3ea791c65ee34a4f929aa2367e6569ed8ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11ef69e9_6065ee27",
         "filename": "ui/file_manager/file_manager/foreground/js/file_tasks_unittest.js",
         "patchSetId": 11
