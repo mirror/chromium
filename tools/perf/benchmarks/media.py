@@ -150,7 +150,7 @@ class MediaDesktop(_MediaBenchmark):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass
+        self.DisableBenchmark([story.expectations.ALL_WIN], 'crbug.com/776096')
     return StoryExpectations()
 
 
