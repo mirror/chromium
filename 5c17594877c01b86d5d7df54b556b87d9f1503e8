@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a16f4dc_c8b69273",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-18T17:23:20Z",
+      "side": 1,
+      "message": "If I don\u0027t set it here, and the capturer keeps on spitting out empty/null frames, the rate-limiting won\u0027t take effect and we\u0027ll send out empty frames at max rate.",
+      "parentUuid": "9e742e8d_a82426f5",
+      "range": {
+        "startLine": 211,
+        "startChar": 27,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "5c17594877c01b86d5d7df54b556b87d9f1503e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cdb9ad3_9640f1f4",
         "filename": "remoting/protocol/webrtc_frame_scheduler_simple.h",
         "patchSetId": 1
