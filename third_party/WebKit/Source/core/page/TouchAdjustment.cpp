@@ -367,6 +367,8 @@ void CompileZoomableSubtargets(
 float ZoomableIntersectionQuotient(const IntPoint& touch_hotspot,
                                    const IntRect& touch_area,
                                    const SubtargetGeometry& subtarget) {
+  // scale down all IntRect by DSF here?
+
   IntRect rect = subtarget.GetNode()->GetDocument().View()->ContentsToRootFrame(
       subtarget.BoundingBox());
 
@@ -391,6 +393,8 @@ float ZoomableIntersectionQuotient(const IntPoint& touch_hotspot,
 float HybridDistanceFunction(const IntPoint& touch_hotspot,
                              const IntRect& touch_rect,
                              const SubtargetGeometry& subtarget) {
+  // scale down all IntRect by DSF here?
+
   IntRect rect = subtarget.GetNode()->GetDocument().View()->ContentsToRootFrame(
       subtarget.BoundingBox());
 
