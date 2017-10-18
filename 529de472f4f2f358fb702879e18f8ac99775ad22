@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "86cf6fb4_566ebdfc",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-18T00:36:19Z",
+      "side": 1,
+      "message": "So we will only retry once after 10 ms? It might be possible to try multiple times, say 5, at the beginning and collect how many times it usually takes for the buffer to become available again. Then we can probably adjust the timer there and retry fewer times? WDYT?\n\nCurrently, we have no idea whether 10ms is too long or too short?",
+      "revId": "529de472f4f2f358fb702879e18f8ac99775ad22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98ffb04e_84c6d5a0",
         "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
         "patchSetId": 1
