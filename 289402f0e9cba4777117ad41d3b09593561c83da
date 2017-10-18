@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc7e7a74_4b0af9c1",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-18T01:51:27Z",
+      "side": 1,
+      "message": "is this needed?",
+      "revId": "289402f0e9cba4777117ad41d3b09593561c83da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a44dd62_c2e4ffd8",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-18T01:51:27Z",
+      "side": 1,
+      "message": "nit: LevelDBMemEnv?",
+      "range": {
+        "startLine": 132,
+        "startChar": 19,
+        "endLine": 132,
+        "endChar": 25
+      },
+      "revId": "289402f0e9cba4777117ad41d3b09593561c83da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650919a8_b36a97eb",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-18T01:51:27Z",
+      "side": 1,
+      "message": "nit: std::string::size already returns the size in bytes?",
+      "range": {
+        "startLine": 193,
+        "startChar": 47,
+        "endLine": 193,
+        "endChar": 61
+      },
+      "revId": "289402f0e9cba4777117ad41d3b09593561c83da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e9a46f_f0edba4c",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-18T01:51:27Z",
+      "side": 1,
+      "message": "nit: sizeof(leveldb::FileState)? and comment is not needed",
+      "range": {
+        "startLine": 193,
+        "startChar": 65,
+        "endLine": 194,
+        "endChar": 69
+      },
+      "revId": "289402f0e9cba4777117ad41d3b09593561c83da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3596fab2_fd9bc7c3",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-18T01:51:27Z",
+      "side": 1,
+      "message": "If the usual number of envs in the process is ~10 then you can just enable it on background mode. provider name in kDumpProviderWhitelist and \"leveldatabase/memenv_0x?\" in kAllocatorDumpNameWhitelist. It\u0027s fine as long as we have the number of envs in a session in order of 10s. If we are adding 100s of dumps then we need a better plan.",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 5
+      },
+      "revId": "289402f0e9cba4777117ad41d3b09593561c83da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b10c85_41a021ad",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-18T01:51:27Z",
+      "side": 1,
+      "message": "does it make sense to have it as \"leveldatabase/memenv_0x...\" ?",
+      "range": {
+        "startLine": 212,
+        "startChar": 9,
+        "endLine": 212,
+        "endChar": 15
+      },
+      "revId": "289402f0e9cba4777117ad41d3b09593561c83da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e418c04_1666c17f",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-18T01:51:27Z",
+      "side": 1,
+      "message": "nit: create dump takes std::string",
+      "range": {
+        "startLine": 214,
+        "startChar": 60,
+        "endLine": 214,
+        "endChar": 65
+      },
+      "revId": "289402f0e9cba4777117ad41d3b09593561c83da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
