@@ -112,6 +112,57 @@ InterventionsInternalPageImpl.prototype = {
 
     logsTable.appendChild(tableRow);
   },
+
+  /**
+   * Update new blacklisted host to the web page.
+   * TODO(thanhdle): Implement this method.
+   *
+   * @override
+   * @param {!string} host The blacklisted host.
+   * @param {number} time The time of the event in milliseconds since Unix
+   * epoch.
+   */
+  updateBlacklistedHost: function(host, time) {},
+
+  /**
+   * Update to the page that the user is blacklisted at given time.
+   *
+   * @override
+   * @param {number} time The time of the event in milliseconds since Unix
+   * epoch.
+   */
+  updateUserBlacklisted: function(time) {
+    let userBlacklistedStatus = $('user-blacklisted-status');
+    let date = new Date(time);
+    userBlacklistedStatus.textContent =
+        'User blacklisted status: Blacklisted ' +
+        '(Last update: ' + date.toISOString() + ')';
+  },
+
+  /**
+   * Update to the page that the user is not blacklisted at given time.
+   *
+   * @override
+   * @param {number} time The time of the event in milliseconds since Unix
+   * epoch.
+   */
+  updateUserNotBlacklisted: function(time) {
+    let userBlacklistedStatus = $('user-blacklisted-status');
+    let date = new Date(time);
+    userBlacklistedStatus.textContent =
+        'User blacklisted status: Not blacklisted ' +
+        '(Last update: ' + date.toISOString() + ')';
+  },
+
+  /**
+   * Update the blacklist cleared status on the page.
+   * TODO(thanhdle): Implement this method.
+   *
+   * @override
+   * @param {number} time The time of the event in milliseconds since Unix
+   * epoch.
+   */
+  updateBlacklistCleared: function(time) {},
 };
 
 cr.define('interventions_internals', () => {
