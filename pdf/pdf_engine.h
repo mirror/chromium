@@ -61,6 +61,8 @@ class PDFEngine {
   struct DocumentFeatures {
     // Number of pages in document.
     size_t page_count = 0;
+    // Whether the PDF is Tagged (see 10.7 "Tagged PDF" in PDF Reference 1.7).
+    bool is_tagged = false;
   };
 
   // The interface that's provided to the rendering engine.
