@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b0b0511_cf556c3b",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-18T00:04:58Z",
+      "side": 1,
+      "message": "move between line 10/11 and newline before \u003cvector\u003e include (you do this in the .cc, so best to be consistent).",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 23
+      },
+      "revId": "28200c1611ecebd029de9a0caf2a7fda3a7d5c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
