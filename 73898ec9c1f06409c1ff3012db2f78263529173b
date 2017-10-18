@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32f80b43_24bb8e9a",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectedFrames.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-18T01:53:35Z",
+      "side": 1,
+      "message": "Let\u0027s perhaps pass the token separately? Otherwise we end up with InspectedFrames instances that either have null root frame or empty token, or with a worker agent knowing about InspectedFrames.",
+      "revId": "73898ec9c1f06409c1ff3012db2f78263529173b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bff4c05_4f8a4726",
+        "filename": "third_party/WebKit/Source/core/inspector/WorkerInspectorController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-18T01:53:35Z",
+      "side": 1,
+      "message": "nasty!",
+      "revId": "73898ec9c1f06409c1ff3012db2f78263529173b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
