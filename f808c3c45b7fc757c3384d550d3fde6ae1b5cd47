@@ -16,6 +16,24 @@
       "revId": "f808c3c45b7fc757c3384d550d3fde6ae1b5cd47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4045d064_6e50802b",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-18T05:37:19Z",
+      "side": 1,
+      "message": "I replied on the github issue. I believe 1 is defined here:\nhttps://drafts.csswg.org/css-fonts-4/#font-weight-numeric-values in the \u003cnumber\u003e section.\n\nIn my opinion, making the values that are resulting from the animation go out of range does not make much sense, hence the clamping.",
+      "parentUuid": "81869530_c6dc54fe",
+      "revId": "f808c3c45b7fc757c3384d550d3fde6ae1b5cd47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
