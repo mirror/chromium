@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7d8c790_a7ff803e",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-textMetrics-all.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T17:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "642c4690_47827a1d",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 25
+      },
+      "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b21819c_04ab8875",
         "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435041f2_42614b3d",
+        "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T17:33:10Z",
+      "side": 1,
+      "message": "I don\u0027t understand this logic, but I\u0027ve added a TODO to revisit this (it was copied from CanvasRenderingContext2D).",
+      "parentUuid": "9b21819c_04ab8875",
+      "range": {
+        "startLine": 17,
+        "startChar": 30,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8b55f10e_8119fda3",
+        "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T17:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08953325_5198db33",
+      "range": {
+        "startLine": 27,
+        "startChar": 71,
+        "endLine": 27,
+        "endChar": 72
+      },
+      "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0644268_030b02dd",
         "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac8e8c9_b8d296ee",
+        "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T17:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0644268_030b02dd",
+      "range": {
+        "startLine": 28,
+        "startChar": 41,
+        "endLine": 28,
+        "endChar": 53
+      },
+      "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1c106b5c_da20c93c",
+        "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T17:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b465e0bd_bb203f50",
+      "range": {
+        "startLine": 36,
+        "startChar": 53,
+        "endLine": 36,
+        "endChar": 54
+      },
+      "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c4ec548_fef21d35",
         "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e2c688_a5bf1606",
+        "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T17:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c4ec548_fef21d35",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 13
+      },
+      "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c0d21f5a_1599fb6d",
+        "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T17:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b33e48c2_45eccf3d",
+      "range": {
+        "startLine": 61,
+        "startChar": 72,
+        "endLine": 61,
+        "endChar": 73
+      },
+      "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "063e054e_ccac3978",
         "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
         "patchSetId": 6
@@ -183,6 +351,30 @@
       "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a8ff035_c8b0decb",
+        "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T17:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "063e054e_ccac3978",
+      "range": {
+        "startLine": 68,
+        "startChar": 14,
+        "endLine": 68,
+        "endChar": 15
+      },
+      "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "6d03ca05_1e10cc0f",
+        "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T17:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7611d298_3a8eb0ac",
+      "range": {
+        "startLine": 70,
+        "startChar": 20,
+        "endLine": 70,
+        "endChar": 21
+      },
+      "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48b3b3a6_a9b99619",
         "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
         "patchSetId": 6
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "888645ea_a01a041a",
+        "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T17:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48b3b3a6_a9b99619",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 10
+      },
+      "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05bd3f22_87a4b1cd",
         "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
         "patchSetId": 6
@@ -252,6 +492,30 @@
       "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55adb8f_d1561b54",
+        "filename": "third_party/WebKit/Source/core/html/TextMetrics.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-18T17:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05bd3f22_87a4b1cd",
+      "range": {
+        "startLine": 95,
+        "startChar": 22,
+        "endLine": 95,
+        "endChar": 26
+      },
+      "revId": "34d99b8aeee49aefa17faabcaec7f4028e9a4dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
