@@ -18,3 +18,21 @@ enum FetchResponseType {
   // Add a new type here, then update kLast and enums.xml.
   kLast = kOpaqueRedirect
 };
+
+// The mode associated with a request.
+// https://fetch.spec.whatwg.org/#concept-request-mode
+enum FetchRequestMode {
+  SAME_ORIGIN,
+  NO_CORS,
+  CORS,
+  CORS_WITH_FORCED_PREFLIGHT,
+  NAVIGATE,
+};
+
+// The redirect mode indicating how redirects should be handled.
+// https://fetch.spec.whatwg.org/#concept-request-redirect-mode
+enum FetchRedirectMode {
+  FOLLOW,
+  ERROR_MODE,
+  MANUAL,
+};

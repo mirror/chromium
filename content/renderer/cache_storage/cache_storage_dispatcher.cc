@@ -270,7 +270,7 @@ void CacheStorageDispatcher::OnCacheStorageHasSuccess(int thread_id,
                                                       int request_id) {
   DCHECK_EQ(thread_id, CurrentWorkerId());
   UMA_HISTOGRAM_TIMES("ServiceWorkerCache.CacheStorage.Has",
-                      TimeTicks::Now() - has_times_[request_id]);
+                      base::TimeTicks::Now() - has_times_[request_id]);
   WebServiceWorkerCacheStorage::CacheStorageCallbacks* callbacks =
       has_callbacks_.Lookup(request_id);
   callbacks->OnSuccess();
@@ -286,7 +286,7 @@ void CacheStorageDispatcher::OnCacheStorageOpenSuccess(int thread_id,
       new WebCache(weak_factory_.GetWeakPtr(), cache_id));
   web_caches_.AddWithID(web_cache.get(), cache_id);
   UMA_HISTOGRAM_TIMES("ServiceWorkerCache.CacheStorage.Open",
-                      TimeTicks::Now() - open_times_[request_id]);
+                      base::TimeTicks::Now() - open_times_[request_id]);
   WebServiceWorkerCacheStorage::CacheStorageWithCacheCallbacks* callbacks =
       open_callbacks_.Lookup(request_id);
   callbacks->OnSuccess(std::move(web_cache));
@@ -298,7 +298,7 @@ void CacheStorageDispatcher::OnCacheStorageDeleteSuccess(int thread_id,
                                                          int request_id) {
   DCHECK_EQ(thread_id, CurrentWorkerId());
   UMA_HISTOGRAM_TIMES("ServiceWorkerCache.CacheStorage.Delete",
-                      TimeTicks::Now() - delete_times_[request_id]);
+                      base::TimeTicks::Now() - delete_times_[request_id]);
   WebServiceWorkerCacheStorage::CacheStorageCallbacks* callbacks =
       delete_callbacks_.Lookup(request_id);
   callbacks->OnSuccess();
@@ -316,7 +316,7 @@ void CacheStorageDispatcher::OnCacheStorageKeysSuccess(
       keys.begin(), keys.end(), web_keys.begin(),
       [](const base::string16& s) { return WebString::FromUTF16(s); });
   UMA_HISTOGRAM_TIMES("ServiceWorkerCache.CacheStorage.Keys",
-                      TimeTicks::Now() - keys_times_[request_id]);
+                      base::TimeTicks::Now() - keys_times_[request_id]);
   WebServiceWorkerCacheStorage::CacheStorageKeysCallbacks* callbacks =
       keys_callbacks_.Lookup(request_id);
   callbacks->OnSuccess(web_keys);
@@ -333,7 +333,7 @@ void CacheStorageDispatcher::OnCacheStorageMatchSuccess(
   PopulateWebResponseFromResponse(response, &web_response);
 
   UMA_HISTOGRAM_TIMES("ServiceWorkerCache.CacheStorage.Match",
-                      TimeTicks::Now() - match_times_[request_id]);
+                      base::TimeTicks::Now() - match_times_[request_id]);
   WebServiceWorkerCacheStorage::CacheStorageMatchCallbacks* callbacks =
       match_callbacks_.Lookup(request_id);
   callbacks->OnSuccess(web_response);
@@ -398,7 +398,7 @@ void CacheStorageDispatcher::OnCacheMatchSuccess(
   PopulateWebResponseFromResponse(response, &web_response);
 
   UMA_HISTOGRAM_TIMES("ServiceWorkerCache.Cache.Match",
-                      TimeTicks::Now() - cache_match_times_[request_id]);
+                      base::TimeTicks::Now() - cache_match_times_[request_id]);
   blink::WebServiceWorkerCache::CacheMatchCallbacks* callbacks =
       cache_match_callbacks_.Lookup(request_id);
   callbacks->OnSuccess(web_response);
@@ -413,7 +413,7 @@ void CacheStorageDispatcher::OnCacheMatchAllSuccess(
   DCHECK_EQ(thread_id, CurrentWorkerId());
 
   UMA_HISTOGRAM_TIMES("ServiceWorkerCache.Cache.MatchAll",
-                      TimeTicks::Now() - cache_match_all_times_[request_id]);
+                      base::TimeTicks::Now() - cache_match_all_times_[request_id]);
   blink::WebServiceWorkerCache::CacheWithResponsesCallbacks* callbacks =
       cache_match_all_callbacks_.Lookup(request_id);
   callbacks->OnSuccess(WebResponsesFromResponses(responses));
@@ -428,7 +428,7 @@ void CacheStorageDispatcher::OnCacheKeysSuccess(
   DCHECK_EQ(thread_id, CurrentWorkerId());
 
   UMA_HISTOGRAM_TIMES("ServiceWorkerCache.Cache.Keys",
-                      TimeTicks::Now() - cache_keys_times_[request_id]);
+                      base::TimeTicks::Now() - cache_keys_times_[request_id]);
   blink::WebServiceWorkerCache::CacheWithRequestsCallbacks* callbacks =
       cache_keys_callbacks_.Lookup(request_id);
   callbacks->OnSuccess(WebRequestsFromRequests(requests));
@@ -442,7 +442,7 @@ void CacheStorageDispatcher::OnCacheBatchSuccess(
   DCHECK_EQ(thread_id, CurrentWorkerId());
 
   UMA_HISTOGRAM_TIMES("ServiceWorkerCache.Cache.Batch",
-                      TimeTicks::Now() - cache_batch_times_[request_id]);
+                      base::TimeTicks::Now() - cache_batch_times_[request_id]);
   blink::WebServiceWorkerCache::CacheBatchCallbacks* callbacks =
       cache_batch_callbacks_.Lookup(request_id);
   callbacks->OnSuccess();

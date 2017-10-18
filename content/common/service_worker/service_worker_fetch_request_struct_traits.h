@@ -8,6 +8,7 @@
 #include "base/numerics/safe_conversions.h"
 #include "content/public/common/referrer.h"
 #include "storage/common/blob_storage/blob_handle.h"
+#include "third_party/WebKit/Source/platform/mojo/FetchAPIRequestEnumTraits.h"
 #include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom.h"
 
 namespace mojo {
@@ -23,20 +24,20 @@ struct EnumTraits<blink::mojom::FetchCredentialsMode,
 };
 
 template <>
-struct EnumTraits<blink::mojom::FetchRedirectMode, content::FetchRedirectMode> {
-  static blink::mojom::FetchRedirectMode ToMojom(
+struct EnumTraits<network::mojom::FetchRedirectMode, content::FetchRedirectMode> {
+  static network::mojom::FetchRedirectMode ToMojom(
       content::FetchRedirectMode input);
 
-  static bool FromMojom(blink::mojom::FetchRedirectMode input,
+  static bool FromMojom(network::mojom::FetchRedirectMode input,
                         content::FetchRedirectMode* out);
 };
 
 template <>
-struct EnumTraits<blink::mojom::FetchRequestMode, content::FetchRequestMode> {
-  static blink::mojom::FetchRequestMode ToMojom(
+struct EnumTraits<network::mojom::FetchRequestMode, content::FetchRequestMode> {
+  static network::mojom::FetchRequestMode ToMojom(
       content::FetchRequestMode input);
 
-  static bool FromMojom(blink::mojom::FetchRequestMode input,
+  static bool FromMojom(network::mojom::FetchRequestMode input,
                         content::FetchRequestMode* out);
 };
 
@@ -157,6 +158,63 @@ struct StructTraits<blink::mojom::FetchAPIRequestDataView,
 
   static bool Read(blink::mojom::FetchAPIRequestDataView data,
                    content::ServiceWorkerFetchRequest* out);
+};
+
+template <>
+struct StructTraits<blink::mojom::FetchAPIResponseDataView,
+                    content::ServiceWorkerResponse> {
+  static const std::vector<GURL>& url_list(
+      const content::ServiceWorkerResponse& response) {
+    return response.url_list;
+  }
+
+  static int status_code(const content::ServiceWorkerResponse& response) {
+    return response.status_code;
+  }
+
+  static const std::string& status_text(
+      const content::ServiceWorkerResponse& response) {
+    return response.status_text;
+  }
+
+  static network::mojom::FetchResponseType response_type(
+      const content::ServiceWorkerResponse& response) {
+    return response.response_type;
+  }
+
+  static std::map<std::string, std::string> headers(
+      const content::ServiceWorkerResponse& response);
+
+  static std::string blob_uuid(const content::ServiceWorkerResponse& response) {
+    return response.blob_uuid;
+  }
+
+  static uint64_t blob_size(const content::ServiceWorkerResponse& response) {
+    return response.blob_size;
+  }
+
+  static blink::WebServiceWorkerResponseError error(
+      const content::ServiceWorkerResponse& response) {
+    return response.error;
+  }
+
+  static const base::Time& response_time(
+      const content::ServiceWorkerResponse& response) {
+    return response.response_time;
+  }
+
+  static const std::string& cache_storage_cache_name(
+      const content::ServiceWorkerResponse& response) {
+    return response.cache_storage_cache_name;
+  }
+
+  static const std::vector<std::string>& cors_exposed_header_names(
+      const content::ServiceWorkerResponse& response) {
+    return response.cors_exposed_header_names;
+  }
+
+  static bool Read(blink::mojom::FetchAPIResponseDataView,
+                   content::ServiceWorkerResponse* output);
 };
 
 }  // namespace mojo
