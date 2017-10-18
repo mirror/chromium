@@ -286,6 +286,8 @@ void ThrottlingURLLoader::StartNow(
     url_loader_->SetPriority(priority_info->priority,
                              priority_info->intra_priority_value);
   }
+
+  response_url_ = url_request.url;
 }
 
 bool ThrottlingURLLoader::HandleThrottleResult(URLLoaderThrottle* throttle,
@@ -323,7 +325,8 @@ void ThrottlingURLLoader::OnReceiveResponse(
     for (auto& entry : throttles_) {
       auto* throttle = entry.throttle.get();
       bool throttle_deferred = false;
-      throttle->WillProcessResponse(response_head, &throttle_deferred);
+      throttle->WillProcessResponse(response_url_, response_head,
+                                    &throttle_deferred);
       if (!HandleThrottleResult(throttle, throttle_deferred, &deferred))
         return;
     }
@@ -367,6 +370,7 @@ void ThrottlingURLLoader::OnReceiveRedirect(
     }
   }
 
+  response_url_ = redirect_info.new_url;
   forwarding_client_->OnReceiveRedirect(redirect_info, response_head);
 }
 
@@ -463,6 +467,7 @@ void ThrottlingURLLoader::Resume() {
       client_binding_.ResumeIncomingMethodCallProcessing();
       forwarding_client_->OnReceiveRedirect(redirect_info_->redirect_info,
                                             redirect_info_->response_head);
+      response_url_ = redirect_info_->redirect_info.new_url;
       break;
     }
     case DEFERRED_RESPONSE: {
