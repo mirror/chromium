@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b757958_1739b0cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-18T02:46:13Z",
+      "side": 1,
+      "message": "nainar@, there was a discussion on one of the previous CLs: https://chromium-review.googlesource.com/c/chromium/src/+/706450#message-eecf2ab42f1c020fbbce3cb064d03718f9fa6eeb\n\nnit: I think FuzzedDataProvider consumes integers and other values from the end of the |data| buffer, so technically it is not \"the first 4 bytes\", if I\u0027m not mistaken. But not a big deal anyway",
+      "parentUuid": "83b8a054_e8284dba",
+      "revId": "a20a61ed495c02ffeceac53ad9079d137d798258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6b5fc21_ca1f8066",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
         "patchSetId": 1
