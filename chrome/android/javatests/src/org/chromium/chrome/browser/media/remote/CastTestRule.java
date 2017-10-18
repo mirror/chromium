@@ -534,9 +534,9 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
 
     private void tapButton(Tab tab, Rect rect) {
         ContentViewCore core = tab.getContentViewCore();
-        int clickX = (int) core.getRenderCoordinates().fromLocalCssToPix(
+        int clickX = (int) core.getWebContents().fromLocalCssToPix(
                 ((float) (rect.left + rect.right)) / 2);
-        int clickY = (int) core.getRenderCoordinates().fromLocalCssToPix(
+        int clickY = (int) core.getWebContents().fromLocalCssToPix(
                              ((float) (rect.top + rect.bottom)) / 2)
                 + core.getTopControlsHeightPix();
         // Click using a virtual mouse, since a touch may result in a disambiguation pop-up.

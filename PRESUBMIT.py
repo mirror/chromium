@@ -883,6 +883,16 @@ def _CheckUnwantedDependencies(input_api, output_api):
       warning_descriptions.append(description_with_path)
       warning_subjects.add("imports")
 
+  for path, rule_type, rule_description in deps_checker.CheckAddedJavaImports(
+      added_imports):
+    description_with_path = '%s\n    %s' % (path, rule_description)
+    if rule_type == Rule.DISALLOW:
+      error_descriptions.append(description_with_path)
+      error_subjects.add("imports")
+    else:
+      warning_descriptions.append(description_with_path)
+      warning_subjects.add("imports")
+
   results = []
   if error_descriptions:
     results.append(output_api.PresubmitError(
