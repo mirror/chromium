@@ -95,14 +95,16 @@ public final class MainActivityTest {
     }
 
     /**
-     * Test that the intent URL is not rewritten if it is inside the scope specified in the Android
-     * Manifest.
+     * Test that the intent URL is rewritten as long as |LoggedIntentUrlParam| is set, even though
+     * the itnent URL is inside the scope specified in the Android Manifest.
      */
     @Test
-    public void testNotRewriteStartUrlInsideScope() {
+    public void testRewriteStartUrlInsideScope() {
         final String intentStartUrl = "https://www.google.com/maps/address?A=a";
         final String manifestStartUrl = "https://www.google.com/maps/startUrl";
         final String manifestScope = "https://www.google.com/maps";
+        final String expectedStartUrl =
+                "https://www.google.com/maps/startUrl?originalUrl=https%3A%2F%2Fwww.google.com%2Fmaps%2Faddress%3FA%3Da";
         final String browserPackageName = "com.android.chrome";
 
         Bundle bundle = new Bundle();
@@ -120,7 +122,7 @@ public final class MainActivityTest {
         Intent startActivityIntent = ShadowApplication.getInstance().getNextStartedActivity();
         Assert.assertEquals(MainActivity.ACTION_START_WEBAPK, startActivityIntent.getAction());
         Assert.assertEquals(
-                intentStartUrl, startActivityIntent.getStringExtra(WebApkConstants.EXTRA_URL));
+                expectedStartUrl, startActivityIntent.getStringExtra(WebApkConstants.EXTRA_URL));
     }
 
     /**
