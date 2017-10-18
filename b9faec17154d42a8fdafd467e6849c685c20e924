@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5e8dcf43_0e2c6aa7",
+        "filename": "content/common/histogram_fetcher.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-18T15:41:39Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem there\u0027s a reason to have a separate class to dispatch the IPC though? Since as Sam pointed out it\u0027s only used by the renderer, it can go into renderer_host.mojom and can be implemented by RenderProcessHostImpl. The method that it calls, base::StatisticsRecorder::FindHistogram, is threadsafe per its comment.\n\nThere are binary size and (slight) performance reasons to not have more interfaces than necessary.",
+      "parentUuid": "bf97c942_4770d706",
+      "revId": "b9faec17154d42a8fdafd467e6849c685c20e924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c081f0d_6656ad68",
         "filename": "content/renderer/stats_collection_controller.cc",
         "patchSetId": 7
