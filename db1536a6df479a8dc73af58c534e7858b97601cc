@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "22c820c1_26c3cf68",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T21:19:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fbd37204_c32da7c0",
+      "revId": "db1536a6df479a8dc73af58c534e7858b97601cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "015b000b_f5ddbeb4",
         "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
         "patchSetId": 3
@@ -83,6 +101,24 @@
       "writtenOn": "2017-10-18T20:56:57Z",
       "side": 1,
       "message": "Second was here.\nLooks like in Layout test, |start| and |end| positions can be reversed, so DCHECK in EphemeralRange was triggered.\nNow I tried to avoid that by constructing a EphemeralRange from the Range object(possibly collapsed). Is that acceptable?\n\nThis Range object should be created at that point, but can we avoid that somehow?\nCan we make a function like |EphemeralRange MakeLikeRange(const Position\u0026 start, const Position\u0026 end)| to mimic the Range behavior and do not create an Oilpan object?",
+      "revId": "db1536a6df479a8dc73af58c534e7858b97601cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce344d3_1bd77374",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-18T21:19:16Z",
+      "side": 1,
+      "message": "\u003e Second was here.\n\u003e Looks like in Layout test, |start| and |end| positions can be reversed, so DCHECK in EphemeralRange was triggered.\n\u003e Now I tried to avoid that by constructing a EphemeralRange from the Range object(possibly collapsed). Is that acceptable?\n\nAcceptable as a workaround. It is unexpected (i.e., a bug) that |start| and |end| can be reversed here, which must be triaged and eventually fixed (hopefully).\n\n\u003e \n\u003e This Range object should be created at that point, but can we avoid that somehow?\n\nIn order not to create a Range here, we can manually check if |start| and |end| are reversed here, and if so, mimic the Range behavior. It is still a workaround of the bug, though, which must be marked and triaged with a comment.\n\nOr we may simply ABORT_EDITING_COMMAND_IF(start \u003e end) here if it doesn\u0027t make any (already broken) feature more broken.\n\n\u003e Can we make a function like |EphemeralRange MakeLikeRange(const Position\u0026 start, const Position\u0026 end)| to mimic the Range behavior and do not create an Oilpan object?\n\nUnless we need to unblock a very high-priority change and the bug pattern is very common, we shouldn\u0027t do that. Even if we do, it should be named \"MakeLikeRangeDeprecated\" and commented with the situation. An example is SelectionTemplate::Builder::SetBaseAndExtendDeprecated(), which was introduced due to the high priority of decoupling selection and canonicalization.",
+      "parentUuid": "015b000b_f5ddbeb4",
       "revId": "db1536a6df479a8dc73af58c534e7858b97601cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
