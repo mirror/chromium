@@ -92,7 +92,6 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private final Context mContext;
     private final WindowAndroid mWindowAndroid;
     private final WebContents mWebContents;
-    private final RenderCoordinates mRenderCoordinates;
     private ActionMode.Callback mCallback;
 
     private SelectionClient.ResultCallback mResultCallback;
@@ -150,11 +149,10 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      * @param window WindowAndroid instance.
      * @param webContents WebContents instance.
      * @param view Container view.
-     * @param renderCoordinates Coordinates info used to position elements.
      */
-    public SelectionPopupController(Context context, WindowAndroid window, WebContents webContents,
-            View view, RenderCoordinates renderCoordinates) {
-        this(context, window, webContents, view, renderCoordinates, /* initialNative = */ true);
+    public SelectionPopupController(
+            Context context, WindowAndroid window, WebContents webContents, View view) {
+        this(context, window, webContents, view, /* initialNative = */ true);
     }
 
     /**
@@ -164,21 +162,19 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      * @param window WindowAndroid instance.
      * @param webContents WebContents instance.
      * @param view Container view.
-     * @param renderCoordinates Coordinates info used to position elements.
      */
-    public static SelectionPopupController createForTesting(Context context, WindowAndroid window,
-            WebContents webContents, View view, RenderCoordinates renderCoordinates) {
+    public static SelectionPopupController createForTesting(
+            Context context, WindowAndroid window, WebContents webContents, View view) {
         return new SelectionPopupController(
-                context, window, webContents, view, renderCoordinates, /* initialNative = */ false);
+                context, window, webContents, view, /* initialNative = */ false);
     }
 
     private SelectionPopupController(Context context, WindowAndroid window, WebContents webContents,
-            View view, RenderCoordinates renderCoordinates, boolean initializeNative) {
+            View view, boolean initializeNative) {
         mContext = context;
         mWindowAndroid = window;
         mWebContents = webContents;
         mView = view;
-        mRenderCoordinates = renderCoordinates;
 
         // The menu items are allowed by default.
         mAllowedMenuItems = MENU_ITEM_SHARE | MENU_ITEM_WEB_SEARCH | MENU_ITEM_PROCESS_TEXT;
@@ -754,7 +750,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     }
 
     private Rect getSelectionRectRelativeToContainingView() {
-        float deviceScale = mRenderCoordinates.getDeviceScaleFactor();
+        float deviceScale = mWebContents.getDeviceScaleFactor();
         Rect viewSelectionRect = new Rect((int) (mSelectionRect.left * deviceScale),
                 (int) (mSelectionRect.top * deviceScale),
                 (int) (mSelectionRect.right * deviceScale),
@@ -762,7 +758,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
         // The selection coordinates are relative to the content viewport, but we need
         // coordinates relative to the containing View.
-        viewSelectionRect.offset(0, (int) mRenderCoordinates.getContentOffsetYPix());
+        viewSelectionRect.offset(0, (int) mWebContents.getContentOffsetYPix());
         return viewSelectionRect;
     }
 
@@ -1070,7 +1066,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         }
 
         if (mSelectionClient != null) {
-            final float deviceScale = mRenderCoordinates.getDeviceScaleFactor();
+            final float deviceScale = mWebContents.getDeviceScaleFactor();
             int xAnchorPix = (int) (mSelectionRect.left * deviceScale);
             int yAnchorPix = (int) (mSelectionRect.bottom * deviceScale);
             mSelectionClient.onSelectionEvent(eventType, xAnchorPix, yAnchorPix);

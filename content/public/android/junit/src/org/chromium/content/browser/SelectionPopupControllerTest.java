@@ -45,7 +45,6 @@ public class SelectionPopupControllerTest {
     private WindowAndroid mWindowAndroid;
     private WebContents mWebContents;
     private View mView;
-    private RenderCoordinates mRenderCoordinates;
     private ActionMode mActionMode;
     private PackageManager mPackageManager;
 
@@ -104,14 +103,13 @@ public class SelectionPopupControllerTest {
         mWindowAndroid = Mockito.mock(WindowAndroid.class);
         mWebContents = Mockito.mock(WebContents.class);
         mView = Mockito.mock(View.class);
-        mRenderCoordinates = Mockito.mock(RenderCoordinates.class);
         mActionMode = Mockito.mock(ActionMode.class);
         mPackageManager = Mockito.mock(PackageManager.class);
 
         when(mContext.getPackageManager()).thenReturn(mPackageManager);
 
         mController = SelectionPopupController.createForTesting(
-                mContext, mWindowAndroid, mWebContents, mView, mRenderCoordinates);
+                mContext, mWindowAndroid, mWebContents, mView);
     }
 
     @Test

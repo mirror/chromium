@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import org.chromium.base.VisibleForTesting;
-import org.chromium.content.browser.RenderCoordinates;
+import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.ViewAndroidDelegate;
 import org.chromium.ui.display.DisplayAndroid;
 
@@ -30,6 +30,11 @@ public class AwViewAndroidDelegate extends ViewAndroidDelegate {
      */
     private ViewGroup mContainerView;
 
+    /** Container view with which this delegate was created. The scroll offset
+     * of the container is referenced when positioning anchor views later.
+     */
+    private final ViewGroup mContainerViewAtCreation;
+
     /**
      * List of anchor views stored in the order in which they were acquired mapped
      * to their position.
@@ -37,7 +42,7 @@ public class AwViewAndroidDelegate extends ViewAndroidDelegate {
     private final Map<View, Position> mAnchorViews = new LinkedHashMap<>();
 
     private final AwContentsClient mContentsClient;
-    private final RenderCoordinates mRenderCoordinates;
+    private final WebContents mWebContents;
 
     /**
      * Represents the position of an anchor view.
@@ -63,11 +68,12 @@ public class AwViewAndroidDelegate extends ViewAndroidDelegate {
     }
 
     @VisibleForTesting
-    public AwViewAndroidDelegate(ViewGroup containerView, AwContentsClient contentsClient,
-            RenderCoordinates renderCoordinates) {
+    public AwViewAndroidDelegate(
+            ViewGroup containerView, AwContentsClient contentsClient, WebContents webContents) {
         mContainerView = containerView;
+        mContainerViewAtCreation = containerView;
         mContentsClient = contentsClient;
-        mRenderCoordinates = renderCoordinates;
+        mWebContents = webContents;
     }
 
     @Override
@@ -128,11 +134,8 @@ public class AwViewAndroidDelegate extends ViewAndroidDelegate {
         }
         // This fixes the offset due to a difference in
         // scrolling model of WebView vs. Chrome.
-        // TODO(sgurun) fix this to use mContainerViewAtCreation.getScroll[X/Y]()
-        // as it naturally accounts for scroll differences between
-        // these models.
-        leftMargin += mRenderCoordinates.getScrollXPixInt();
-        topMargin += mRenderCoordinates.getScrollYPixInt();
+        leftMargin += mContainerViewAtCreation.getScrollX();
+        topMargin += mContainerViewAtCreation.getScrollY();
 
         int scaledWidth = Math.round(width * scale);
         int scaledHeight = Math.round(height * scale);
