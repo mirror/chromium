@@ -333,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "f8de3734_da6db356",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-18T11:19:30Z",
+      "side": 1,
+      "message": "Style guide: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md\n\nUse DCHECK() or NOTREACHED() as assertions, e.g. to document pre- and post-conditions. A DCHECK() means “this condition must always be true”, not “this condition is normally true, but perhaps not in exceptional cases.” Things like disk corruption or strange network errors are examples of exceptional circumstances that nevertheless should not result in DCHECK() failure.\n\nA consequence of this is that you should not handle DCHECK() failures, even if failure would result in a crash. Attempting to handle a DCHECK() failure is a statement that the DCHECK() can fail, which contradicts the point of writing the DCHECK(). In particular, do not write code like the following:\n\n  DCHECK(foo);\n  if (!foo) ...  // Can\u0027t succeed!\n\n  if (!bar) {\n    NOTREACHED();\n    return;  // Replace this whole conditional with \"DCHECK(bar);\" and keep going instead.\n  }",
+      "parentUuid": "e3ea3466_31b6fcda",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb781a56_261271b1",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 34
