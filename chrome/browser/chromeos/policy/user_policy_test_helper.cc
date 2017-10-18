@@ -115,6 +115,13 @@ void UserPolicyTestHelper::WaitForInitialPolicy(Profile* profile) {
   run_loop.Run();
 }
 
+namespace {
+void DoneWithRefresh(const base::Closure& closure) {
+  DLOG(ERROR) << "FINISHED REFRESH";
+  closure.Run();
+}
+}
+
 void UserPolicyTestHelper::UpdatePolicy(
     const base::DictionaryValue& mandatory_policy,
     const base::DictionaryValue& recommended_policy,
@@ -127,7 +134,7 @@ void UserPolicyTestHelper::UpdatePolicy(
       profile_connector->policy_service();
 
   base::RunLoop run_loop;
-  policy_service->RefreshPolicies(run_loop.QuitClosure());
+  policy_service->RefreshPolicies(base::Bind(&DoneWithRefresh, run_loop.QuitClosure()));
   run_loop.Run();
 }
 

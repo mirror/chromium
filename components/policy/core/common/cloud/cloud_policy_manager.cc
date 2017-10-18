@@ -77,6 +77,7 @@ void CloudPolicyManager::RefreshPolicies() {
         base::Bind(&CloudPolicyManager::OnRefreshComplete,
                    base::Unretained(this)));
   } else {
+    DLOG(ERROR) << "No service() - just exiting";
     OnRefreshComplete(false);
   }
 }
@@ -162,6 +163,7 @@ void CloudPolicyManager::ClearAndDestroyComponentCloudPolicyService() {
 }
 
 void CloudPolicyManager::OnRefreshComplete(bool success) {
+  DLOG(ERROR) << "REFRESH COMPLETED: " << success;
   waiting_for_policy_refresh_ = false;
   CheckAndPublishPolicy();
 }

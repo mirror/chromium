@@ -67,6 +67,7 @@ void AsyncPolicyProvider::Shutdown() {
 }
 
 void AsyncPolicyProvider::RefreshPolicies() {
+  DLOG(ERROR) << "Async Refres Policiees: " << loader_.get();
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   // Subtle: RefreshPolicies() has a contract that requires the next policy
@@ -91,6 +92,7 @@ void AsyncPolicyProvider::RefreshPolicies() {
 }
 
 void AsyncPolicyProvider::ReloadAfterRefreshSync() {
+  DLOG(ERROR) << "ReloadAfterRefreshSync";
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // This task can only enter if it was posted from RefreshPolicies(), and it
   // hasn't been cancelled meanwhile by another call to RefreshPolicies().

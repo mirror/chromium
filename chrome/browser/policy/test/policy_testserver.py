@@ -1053,6 +1053,9 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       error = 401
     else:
       token_info = self.server.LookupToken(dmtoken)
+      print "DMToken: %s" % dmtoken;
+      print "token_info: %s" % token_info;
+      print "request_device_id: %s" % request_device_id;
       if (not token_info or
           not request_device_id or
           token_info['device_id'] != request_device_id):
@@ -1088,6 +1091,7 @@ class PolicyTestServer(testserver_base.BrokenPipeHandlerMixIn,
     """
     testserver_base.StoppableHTTPServer.__init__(self, server_address,
                                                  PolicyRequestHandler)
+    print "INITIALIZING SERVER"
     self._registered_tokens = {}
     self.data_dir = data_dir
     self.policy_path = policy_path
@@ -1150,11 +1154,14 @@ class PolicyTestServer(testserver_base.BrokenPipeHandlerMixIn,
       entry['public_key'] = pubkey
 
     # Load client state.
+    print "TRYING TO read TOKENS from %s" % self.client_state_file
     if self.client_state_file is not None:
       try:
         file_contents = open(self.client_state_file).read()
+        print "READ TOKENS: %s" % file_contents
         self._registered_tokens = json.loads(file_contents, strict=False)
       except IOError:
+        print "ERROR LOADING TOKENS"
         pass
 
   def GetPolicies(self):
@@ -1273,6 +1280,7 @@ class PolicyTestServer(testserver_base.BrokenPipeHandlerMixIn,
       enrollment_mode = dm.DeviceRegisterResponse.RETAIL
     else:
       enrollment_mode = dm.DeviceRegisterResponse.ENTERPRISE
+    print "REGISTERING DEVICE: %s" % dmtoken
     self._registered_tokens[dmtoken] = {
       'device_id': device_id,
       'device_token': dmtoken,

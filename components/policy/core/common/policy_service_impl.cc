@@ -138,6 +138,7 @@ void PolicyServiceImpl::RefreshPolicies(const base::Closure& callback) {
     refresh_callbacks_.push_back(callback);
 
   if (providers_.empty()) {
+    DLOG(ERROR) << "NO PROVIDERS?!";
     // Refresh is immediately complete if there are no providers. See the note
     // on OnUpdatePolicy() about why this is a posted task.
     update_task_ptr_factory_.InvalidateWeakPtrs();
@@ -145,6 +146,7 @@ void PolicyServiceImpl::RefreshPolicies(const base::Closure& callback) {
         FROM_HERE, base::Bind(&PolicyServiceImpl::MergeAndTriggerUpdates,
                               update_task_ptr_factory_.GetWeakPtr()));
   } else {
+    DLOG(ERROR) << "Refreshing policies from " << providers_.size() << " providers";
     // Some providers might invoke OnUpdatePolicy synchronously while handling
     // RefreshPolicies. Mark all as pending before refreshing.
     for (auto* provider : providers_)
