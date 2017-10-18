@@ -227,6 +227,7 @@ DownloadFileImpl::DownloadFileImpl(
       record_stream_bandwidth_(false),
       bytes_seen_with_parallel_streams_(0),
       bytes_seen_without_parallel_streams_(0),
+      pause_count_(0),
       observer_(observer),
       weak_factory_(this) {
   download_item_net_log.AddEvent(
@@ -508,11 +509,34 @@ void DownloadFileImpl::WasPaused() {
   record_stream_bandwidth_ = false;
 }
 
-// TODO(qinmin): This only works with byte stream now, need to handle callback
-// from data pipe.
+void DownloadFileImpl::Pause() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  pause_count_++;
+}
+
+void DownloadFileImpl::Resume() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_GT(pause_count_, 0);
+  pause_count_--;
+
+  if (pause_count_ > 0)
+    return;
+
+  for (auto& stream : source_streams_) {
+    SourceStream* source_stream = stream.second.get();
+    if (!source_stream->is_finished()) {
+      StreamActive(source_stream, MOJO_RESULT_OK);
+    }
+  }
+}
+
 void DownloadFileImpl::StreamActive(SourceStream* source_stream,
                                     MojoResult result) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  if (pause_count_ > 0)
+    return;
+
   base::TimeTicks start(base::TimeTicks::Now());
   base::TimeTicks now;
   scoped_refptr<net::IOBuffer> incoming_data;
