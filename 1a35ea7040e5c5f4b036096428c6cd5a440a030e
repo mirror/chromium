@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "944f5f62_b2629782",
+        "filename": "third_party/WebKit/Source/core/animation/CSSLengthInterpolationType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-18T20:05:00Z",
+      "side": 1,
+      "message": "nit, empty line after system headers.",
+      "revId": "1a35ea7040e5c5f4b036096428c6cd5a440a030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae72354_1dfb0253",
+        "filename": "third_party/WebKit/Source/core/animation/UnderlyingValueOwner.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-18T20:05:00Z",
+      "side": 1,
+      "message": "Is this new export necessary? As far as I can tell nothing new links directly to UnderlyingValueOwner.",
+      "revId": "1a35ea7040e5c5f4b036096428c6cd5a440a030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
