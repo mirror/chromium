@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23bc6ae5_11fa9ba1",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3894,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-10-18T15:04:05Z",
+      "side": 1,
+      "message": "Position of the scroll event should get set by guest_scroll_location.",
+      "range": {
+        "startLine": 3894,
+        "startChar": 11,
+        "endLine": 3894,
+        "endChar": 31
+      },
+      "revId": "21b71d01c4b0e119df8770b042b53ea3d6a1f3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12514d0c_ecfb26a6",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3910,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-10-18T15:04:05Z",
+      "side": 1,
+      "message": "same here, or scroll_update(scroll_begin) to avoid setting some of the variables twice.",
+      "range": {
+        "startLine": 3910,
+        "startChar": 11,
+        "endLine": 3910,
+        "endChar": 31
+      },
+      "revId": "21b71d01c4b0e119df8770b042b53ea3d6a1f3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
