@@ -98,7 +98,8 @@ WebThread* AudioWorkletThread::GetSharedBackingThread() {
 void AudioWorkletThread::CreateSharedBackingThreadForTest() {
   if (!s_backing_thread_)
     s_backing_thread_ = Platform::Current()->CreateWebAudioThread().release();
-  WorkletThreadHolder<AudioWorkletThread>::CreateForTest(s_backing_thread_);
+  if (WorkletThreadHolder<AudioWorkletThread>::GetInstance())
+    WorkletThreadHolder<AudioWorkletThread>::CreateForTest(s_backing_thread_);
 }
 
 WorkerOrWorkletGlobalScope* AudioWorkletThread::CreateWorkerGlobalScope(
