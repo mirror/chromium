@@ -41,8 +41,12 @@ class SurfaceObserver {
   virtual void OnSurfaceDamageExpected(const SurfaceId& surface_id,
                                        const BeginFrameArgs& args) = 0;
 
-  // Called when a surface has been added to the aggregated CompositorFrame.
-  virtual void OnSurfaceWillDraw(const SurfaceId& surface_id) = 0;
+  // Called when |surface_id| or a surface that it embeds is damaged. This
+  // method is called during aggregation time, so damage is not reported
+  // immediately.
+  // TODO(crbug.com/776098): This is only used in tests. We can probably remove
+  // this.
+  virtual void OnSurfaceSubtreeDamaged(const SurfaceId& surface_id) = 0;
 };
 
 }  // namespace viz
