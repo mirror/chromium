@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "2964d594_35767cff",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-18T14:02:09Z",
+      "side": 1,
+      "message": "kinuko@: It sounds like you\u0027re suggesting that we stash a `GURL` on `ThrottlingURLLoader`, and update it in `ThrottlingURLLoader::Start()`/`ThrottlingURLLoader::StartNow()`, at the bottom of `ThrottlingURLLoader::OnReceiveRedirect()` (e.g. when we\u0027re not deferring),  and `ThrottlingURLLoader::Resume()`? That seems reasonable, I suppose. It\u0027s basically what Daniel was doing in his patch, but pulled up a layer into the throttling loader as opposed to each individual throttle. If you\u0027re happier with that approach than with adding a URL to `ResourceResponseInfo`, I can live with it as well.",
+      "parentUuid": "81cac95d_9ae3a6d5",
+      "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "976791f2_e1bf0de6",
         "filename": "content/public/common/resource_response_info.h",
         "patchSetId": 1
