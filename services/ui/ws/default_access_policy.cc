@@ -184,6 +184,12 @@ bool DefaultAccessPolicy::CanStackAtTop(const ServerWindow* window) const {
          delegate_->IsWindowCreatedByWindowManager(window);
 }
 
+bool DefaultAccessPolicy::CanPerformWindowManagementAction(
+    const ServerWindow* window) const {
+  return WasCreatedByThisClient(window) ||
+         delegate_->HasRootForAccessPolicy(window);
+}
+
 bool DefaultAccessPolicy::CanSetCursorProperties(
     const ServerWindow* window) const {
   return WasCreatedByThisClient(window) ||
