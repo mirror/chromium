@@ -84,6 +84,9 @@ NSColor* DimTextColor(BOOL is_dark_theme) {
              ? skia::SkColorToSRGBNSColor(SkColorSetA(SK_ColorWHITE, 0x7F))
              : skia::SkColorToSRGBNSColor(SkColorSetRGB(0x64, 0x64, 0x64));
 }
+NSColor* InvisibleTextColor() {
+  return skia::SkColorToSRGBNSColor(SK_ColorTRANSPARENT);
+}
 NSColor* PositiveTextColor() {
   return skia::SkColorToSRGBNSColor(SkColorSetRGB(0x3d, 0x94, 0x00));
 }
@@ -350,6 +353,10 @@ NSAttributedString* CreateClassifiedAttributedString(
       [attributedString addAttribute:NSForegroundColorAttributeName
                                value:DimTextColor(is_dark_theme)
                                range:range];
+    } else if (0 != (i->style & ACMatchClassification::INVISIBLE)) {
+      [attributedString addAttribute:NSForegroundColorAttributeName
+                               value:InvisibleTextColor()
+                               range:range];
     }
   }
 
@@ -375,6 +382,7 @@ NSAttributedString* CreateClassifiedAttributedString(
 @implementation OmniboxPopupCellData
 
 @synthesize contents = contents_;
+@synthesize selected_contents = selected_contents_;
 @synthesize description = description_;
 @synthesize prefix = prefix_;
 @synthesize image = image_;
@@ -417,7 +425,11 @@ NSAttributedString* CreateClassifiedAttributedString(
     } else {
       contents_ = [CreateClassifiedAttributedString(
           match.contents, ContentTextColor(isDarkTheme), match.contents_class,
-          isDarkTheme) retain];
+          isDarkTheme, false) retain];
+      // Also create a selected version, which will make invisible text visible.
+      selected_contents_ = [CreateClassifiedAttributedString(
+          match.contents, ContentTextColor(isDarkTheme), match.contents_class,
+          isDarkTheme, true) retain];
       if (!match.description.empty()) {
         // Swap the contents and description of non-search suggestions in
         // vertical layouts.
@@ -431,10 +443,13 @@ NSAttributedString* CreateClassifiedAttributedString(
             match.description,
             swapMatchText ? ContentTextColor(isDarkTheme)
                           : DimTextColor(isDarkTheme),
-            match.description_class, isDarkTheme) retain];
+            match.description_class, isDarkTheme, false) retain];
 
-        if (swapMatchText)
+        if (swapMatchText) {
           std::swap(contents_, description_);
+          // These are pointers; does something need to be freed? Copied?
+          selected_contents_ = contents_;
+        }
       }
     }
     propertyReleaser_OmniboxPopupCellData_.Init(self,
@@ -518,6 +533,13 @@ NSAttributedString* CreateClassifiedAttributedString(
   if (isVerticalLayout && descriptionMaxWidth == 0)
     origin.y += halfLineHeight;
 
+  // if selected, provide selected contents
+  NSAttributedString* contents;
+  if ([self state] == NSOnState)
+    contents = [cellData selected_contents];
+  else
+    contents = [cellData contents];
+  origin.x += [self drawMatchPart:contents
   origin.x += [self drawMatchPart:[cellData contents]
                         withFrame:cellFrame
                            origin:origin
