@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d5c4848_f527530b",
+        "filename": "ios/chrome/browser/history/history_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-18T20:52:22Z",
+      "side": 0,
+      "message": "This object didn\u0027t override any WebStateObserver methods so didn\u0027t need to inherit from it.",
+      "range": {
+        "startLine": 24,
+        "startChar": 32,
+        "endLine": 24,
+        "endChar": 53
+      },
+      "revId": "3a3efda772bd2a07fa66ebb9ff41ef4796739ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
