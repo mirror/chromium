@@ -126,8 +126,11 @@ std::vector<uint64_t> HardwareDisplayPlane::ModifiersForFormat(
   DCHECK_LT(format_index, supported_formats_.size());
 
   for (const auto& modifier : supported_format_modifiers_) {
-    if (modifier.formats & (1 << format_index))
+    // This works even if modifier.offset is bigger than format_index.
+    if (format_index - modifier.offset < 64 &&
+        (modifier.formats & (1 << (format_index - modifier.offset)))) {
       modifiers.push_back(modifier.modifier);
+    }
   }
 
   return modifiers;
