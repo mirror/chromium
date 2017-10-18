@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a0ff2d9_3fda7f9d",
+        "filename": "base/process/process_metrics_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-18T00:38:10Z",
+      "side": 1,
+      "message": "Should we really return \"true\", given that the function does nothing?",
+      "revId": "a0654aa50c2cfac04970b5d0695d4b6dad435428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
