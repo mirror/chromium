@@ -74,6 +74,10 @@ class RecentTabSuggestionsProvider : public ContentSuggestionsProvider,
 
   // Manually requests all Recent Tabs UI items and updates the suggestions.
   void FetchRecentTabs();
+  void OnFetchRecentTabsDone(const std::vector<OfflineItem>& offline_items);
+
+  void OnGetDismissedSuggestionsForDebuggingDone(
+      const std::vector<OfflineItem>& offline_items);
 
   // Converts an OfflineItem to a ContentSuggestion for the
   // |provided_category_|.
@@ -100,6 +104,9 @@ class RecentTabSuggestionsProvider : public ContentSuggestionsProvider,
   CategoryStatus category_status_;
   const Category provided_category_;
   offline_pages::DownloadUIAdapter* recent_tabs_ui_adapter_;
+
+  // Used to cache the callbacks for GetDismissedSuggestionsForDebugging.
+  std::vector<DismissedSuggestionsCallback> dismiss_suggestion_callbacks_;
 
   PrefService* pref_service_;
 

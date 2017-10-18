@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.ObserverList;
@@ -734,15 +735,18 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
 
     @Override
     public void onItemsAvailable() {
-        List<OfflineItem> offlineItems = getOfflineContentProvider().getAllItems();
-        for (OfflineItem item : offlineItems) {
-            if (item.isTransient) continue;
-            DownloadHistoryItemWrapper wrapper = createDownloadHistoryItemWrapper(item);
-            addDownloadHistoryItemWrapper(wrapper);
-        }
-
-        recordOfflineItemCountHistograms();
-        onItemsRetrieved(LoadingStateDelegate.OFFLINE_ITEMS);
+        getOfflineContentProvider().getAllItems(new Callback<ArrayList<OfflineItem>>() {
+            @Override
+            public void onResult(ArrayList<OfflineItem> offlineItems) {
+                for (OfflineItem item : offlineItems) {
+                    if (item.isTransient) continue;
+                    DownloadHistoryItemWrapper wrapper = createDownloadHistoryItemWrapper(item);
+                    addDownloadHistoryItemWrapper(wrapper);
+                    recordOfflineItemCountHistograms();
+                    onItemsRetrieved(LoadingStateDelegate.OFFLINE_ITEMS);
+                }
+            }
+        });
     }
 
     private void recordOfflineItemCountHistograms() {

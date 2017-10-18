@@ -17,6 +17,10 @@ bool MockOfflineContentProvider::HasObserver(Observer* observer) {
   return observers_.HasObserver(observer);
 }
 
+void MockOfflineContentProvider::SetItems(const OfflineItemList& items) {
+  items_ = items;
+}
+
 void MockOfflineContentProvider::NotifyOnItemsAvailable() {
   items_available_ = true;
   for (auto& observer : observers_)
@@ -41,6 +45,25 @@ void MockOfflineContentProvider::NotifyOnItemUpdated(const OfflineItem& item) {
 
 bool MockOfflineContentProvider::AreItemsAvailable() {
   return items_available_;
+}
+
+void MockOfflineContentProvider::GetAllItems(
+    const MultipleItemCallback& callback) {
+  callback.Run(items_);
+}
+
+void MockOfflineContentProvider::GetItemById(
+    const ContentId& id,
+    const SingleItemCallback& callback) {
+  OfflineItem* result = nullptr;
+  for (auto item : items_) {
+    if (item.id == id) {
+      result = &item;
+      break;
+    }
+  }
+
+  callback.Run(result);
 }
 
 void MockOfflineContentProvider::AddObserver(Observer* observer) {
