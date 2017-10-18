@@ -78,6 +78,11 @@
     margin: 0;
 }
 
+.toolbar-item.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 .toolbar-has-dropdown {
     justify-content: space-between;
     padding: 0 3px 0 5px;
