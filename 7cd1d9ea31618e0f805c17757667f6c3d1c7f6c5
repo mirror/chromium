@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9453f49f_129f75be",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "I slightly prefer not aggregating it since it basically just copies |new_state| to |state_| and I\u0027d like to avoid to pull the small portion out of the main code (though I agree that it\u0027s easier to understand the state transition if it\u0027s aggregated.).",
+      "parentUuid": "1b77ef94_6cf0cfe0",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921193d2_87d22451",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 14
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "59a25685_2fe52f6c",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "921193d2_87d22451",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c3d5094_83f331e1",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 14
@@ -50,6 +86,24 @@
       "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c109ec_921ba57d",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c3d5094_83f331e1",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493b6ea7_05f1c7ad",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2c6da66a_c43795c2",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 20
+      },
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -146,6 +224,24 @@
     },
     {
       "key": {
+        "uuid": "0fa3943c_b7802889",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "Thanks. Updated it to nhioki\u0027s one :)",
+      "parentUuid": "3e9fc6d5_8ec2df99",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84ae3f03_3cf2500f",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
         "patchSetId": 14
@@ -160,6 +256,24 @@
       "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b28523_456ee625",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84ae3f03_3cf2500f",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "352d9170_9834fb2b",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "Thanks...! Updated.",
+      "parentUuid": "95cd201e_8761a37b",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbbb137d_100c4091",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
         "patchSetId": 14
@@ -194,6 +326,24 @@
       "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee35f729_54343b90",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbbb137d_100c4091",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +364,24 @@
     },
     {
       "key": {
+        "uuid": "78bfd3a7_82122e75",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aef57707_11cd8062",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7b43eed_7b37e54d",
         "filename": "content/renderer/service_worker/thread_safe_script_container.cc",
         "patchSetId": 14
@@ -228,6 +396,24 @@
       "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68faf2ec_8453cb8a",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "GetStatusOnWorkerThread cannot be used here because it tries to take another lock. Instaed, added DCHECK by directly checking |script_data_|.",
+      "parentUuid": "f7b43eed_7b37e54d",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -248,6 +434,24 @@
     },
     {
       "key": {
+        "uuid": "b4d5e8e4_5ff361b9",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "Thanks! That looks good, updated.",
+      "parentUuid": "21925e42_3fb80cab",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40fab934_b933f66f",
         "filename": "content/renderer/service_worker/thread_safe_script_container.h",
         "patchSetId": 14
@@ -262,6 +466,24 @@
       "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5134853a_a46a9063",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40fab934_b933f66f",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -285,6 +507,30 @@
       "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a8e098_e750dada",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "Yes, but I\u0027ve put it because of consistency with other methods.",
+      "parentUuid": "61717a04_0005941d",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 32
+      },
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -322,6 +568,24 @@
     },
     {
       "key": {
+        "uuid": "096d4631_6e19bfab",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dccf380_dce67d48",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ecae8a6_a5e5b818",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 14
@@ -336,6 +600,24 @@
       "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb61f88_2af02027",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-18T05:00:19Z",
+      "side": 1,
+      "message": "That\u0027s right, thanks. Removed it.",
+      "parentUuid": "6ecae8a6_a5e5b818",
+      "revId": "7cd1d9ea31618e0f805c17757667f6c3d1c7f6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
