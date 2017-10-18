@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02eec34d_db48fe2f",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-18T21:30:30Z",
+      "side": 1,
+      "message": "Is this being restored from an earlier patch?",
+      "range": {
+        "startLine": 175,
+        "startChar": 38,
+        "endLine": 175,
+        "endChar": 48
+      },
+      "revId": "99357d95e51d9c23ac696d1bfe3158162af5a8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13be0424_b8b9d222",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-18T21:30:30Z",
+      "side": 1,
+      "message": "The plugin message is redundant with the title, since I intended it to only be used by the icon tooltip. So can you remove this for that dialog? I\u0027m not familiar with the others, but it looks like you audited most of them to make sure they weren\u0027t redundant.",
+      "revId": "99357d95e51d9c23ac696d1bfe3158162af5a8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
