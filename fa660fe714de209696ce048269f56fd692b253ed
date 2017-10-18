@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a44318d_306658d3",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-18T13:12:44Z",
+      "side": 1,
+      "message": "I don\u0027t know, if you go to a 404 page (http://httpbin.org/status/404), it gets added to your history (you can see it if you go to menu\u003ehistory).\nSo it seems that desktop/Android are adding them to history, but not to MostVisited.",
+      "parentUuid": "5cfb0d98_c3060008",
+      "revId": "fa660fe714de209696ce048269f56fd692b253ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6f61bd8_a0d48b43",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 1
