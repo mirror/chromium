@@ -140,8 +140,12 @@ RefPtr<NGLayoutResult> NGBlockNode::Layout(
   layout_result =
       LayoutWithAlgorithm(Style(), *this, box_, constraint_space, break_token);
   if (box_->IsLayoutNGBlockFlow()) {
-    ToLayoutNGBlockFlow(box_)->SetCachedLayoutResult(
-        constraint_space, break_token, layout_result);
+    LayoutNGBlockFlow* layout_ng_block_flow = ToLayoutNGBlockFlow(box_);
+    layout_ng_block_flow->SetCachedLayoutResult(constraint_space, break_token,
+                                                layout_result);
+    if (FirstChild().IsInline()) {
+      layout_ng_block_flow->SetPaintFragment(layout_result->PhysicalFragment());
+    }
   }
 
   if (layout_result->Status() == NGLayoutResult::kSuccess &&
