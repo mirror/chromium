@@ -14,8 +14,7 @@
 namespace blink {
 
 class USBIsochronousOutTransferResult final
-    : public GarbageCollectedFinalized<USBIsochronousOutTransferResult>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -34,7 +33,10 @@ class USBIsochronousOutTransferResult final
     return packets_;
   }
 
-  DEFINE_INLINE_TRACE() { visitor->Trace(packets_); }
+  DEFINE_INLINE_TRACE() {
+    visitor->Trace(packets_);
+    ScriptWrappable::Trace(visitor);
+  }
 
  private:
   const HeapVector<Member<USBIsochronousOutTransferPacket>> packets_;

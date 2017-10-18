@@ -87,6 +87,7 @@ void BluetoothRemoteGATTServer::Dispose() {
 DEFINE_TRACE(BluetoothRemoteGATTServer) {
   visitor->Trace(active_algorithms_);
   visitor->Trace(device_);
+  ScriptWrappable::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);
 }
 

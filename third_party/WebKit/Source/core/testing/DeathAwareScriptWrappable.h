@@ -14,8 +14,7 @@
 namespace blink {
 
 class DeathAwareScriptWrappable
-    : public GarbageCollectedFinalized<DeathAwareScriptWrappable>,
-      public ScriptWrappable {
+    : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
   static DeathAwareScriptWrappable* instance_;
   static bool has_died_;
@@ -43,6 +42,7 @@ class DeathAwareScriptWrappable
     visitor->Trace(wrapped_dependency_);
     visitor->Trace(wrapped_vector_dependency_);
     visitor->Trace(wrapped_hash_map_dependency_);
+    ScriptWrappable::Trace(visitor);
   }
 
   DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
