@@ -48,9 +48,8 @@ TEST_F(WorkletAnimationPlayerTest, LocalTimeIsUsedWithAnimations) {
   host_->PushPropertiesTo(host_impl_);
   host_impl_->ActivateAnimations();
 
-  // TODO(majidvp): At the moment the player does not use the local time when
-  // it is starting. This is because Animation::ConvertToActiveTime always
-  // returns the time_offset when starting. We need to change this.
+  // TODO(majidvp): At the moment the player should be started before we can
+  // set local time on it.
   base::TimeTicks time;
   time += base::TimeDelta::FromSecondsD(0.1);
   TickAnimationsTransferEvents(time, 1u);

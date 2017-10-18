@@ -23,11 +23,9 @@ namespace {
 // Once this goes our of scope it clears any animators that has not been
 // animated.
 class ScopedAnimatorsSweeper {
-  STACK_ALLOCATED();
-
  public:
   using AnimatorMap = HeapHashMap<int, TraceWrapperMember<Animator>>;
-  explicit ScopedAnimatorsSweeper(AnimatorMap& animators) : animators_(animators) {
+  ScopedAnimatorsSweeper(AnimatorMap& animators) : animators_(animators) {
     for (const auto& entry : animators_) {
       Animator* animator = entry.value;
       animator->clear_did_animate();
@@ -147,7 +145,6 @@ AnimationWorkletGlobalScope::Mutate(
     Animator* animator = GetAnimatorFor(id, name);
     // TODO(majidvp): This means there is an animatorName for which
     // definition was not registered. We should handle this case gracefully.
-    // http://crbug.com/776017
     if (!animator)
       continue;
 

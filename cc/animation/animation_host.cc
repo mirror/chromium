@@ -330,7 +330,6 @@ void AnimationHost::TickScrollAnimations(base::TimeTicks monotonic_time) {
 
 std::unique_ptr<MutatorInputState> AnimationHost::CollectAnimatorsState(
     base::TimeTicks timeline_time) {
-  TRACE_EVENT0("cc", "AnimationHost::CollectAnimatorsState");
   std::unique_ptr<MutatorInputState> result =
       base::MakeUnique<MutatorInputState>();
 
@@ -601,7 +600,6 @@ void AnimationHost::SetMutationUpdate(
   if (!output_state)
     return;
 
-  TRACE_EVENT0("cc", "AnimationHost::SetMutationUpdate");
   for (auto& animation_state : output_state->animations) {
     int id = animation_state.animation_player_id;
 

@@ -64,7 +64,7 @@ bool Animator::Animate(ScriptState* script_state,
   v8::Local<v8::Value> argv[] = {v8_current_time, v8_effect};
 
   V8ScriptRunner::CallFunction(animate, ExecutionContext::From(script_state),
-                               instance, WTF_ARRAY_LENGTH(argv), argv, isolate);
+                               instance, 2, argv, isolate);
 
   // The animate function may have produced an error!
   // TODO(majidvp): We should probably just throw here.
