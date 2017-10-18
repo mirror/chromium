@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d44c405_e9b5d2ef",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-18T12:01:43Z",
+      "side": 1,
+      "message": "should we only install this if the feature flag is turned on as well?  I assume it is lightweight and probably strictly not needed, but seem other places do this as well.",
+      "range": {
+        "startLine": 218,
+        "startChar": 2,
+        "endLine": 218,
+        "endChar": 27
+      },
+      "revId": "8762a855df59ee389ea9931bd830c521261e0a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
