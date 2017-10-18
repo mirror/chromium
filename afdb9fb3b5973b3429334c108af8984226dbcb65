@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6cc0da1_63ccd5c7",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T18:58:56Z",
+      "side": 1,
+      "message": "Just a q: why did \"devtools_worker_token\" become \"instrumentation_token\"? devtools makes more sense than instrumentation to me, but maybe i\u0027m not familiar with the naming convention.",
+      "revId": "afdb9fb3b5973b3429334c108af8984226dbcb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aff03b8_b3ebff61",
+        "filename": "third_party/WebKit/Source/core/exported/WorkerShadowPage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T18:58:56Z",
+      "side": 1,
+      "message": "I think we don\u0027t want to add stuff to WorkerShadowPage, but I guess it\u0027s unavoidable? Is this because DevTools needs to use this instead of the Worker classes themselves?",
+      "revId": "afdb9fb3b5973b3429334c108af8984226dbcb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d480c07_d40bef67",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T18:58:56Z",
+      "side": 1,
+      "message": "Can you add a comment for this?",
+      "revId": "afdb9fb3b5973b3429334c108af8984226dbcb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e98ea4_e383ba85",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorkerStartData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-18T18:58:56Z",
+      "side": 1,
+      "message": "Does it make sense to add a comment for what this is for?",
+      "revId": "afdb9fb3b5973b3429334c108af8984226dbcb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
