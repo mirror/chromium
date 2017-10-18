@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6689346d_cfd2a4e4",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-18T22:24:36Z",
+      "side": 1,
+      "message": "\u003e \u003e I wonder if it makes sense now to also enforce that the renderer doesn\u0027t lie about its sandbox flags.  Presumably, what it sends to us here should be a subset of the parent sandbox flags combined with frame policy sandbox flags (subset due to flags set from CSP).  Right?  And if that\u0027s not the case, we can kill the renderer.  (This is fine to leave to a separate followup CL, or at least file a bug for me to follow up, since this isn\u0027t a new problem and this CL isn\u0027t making it worse.)\n\u003e \n\u003e That\u0027s a good idea, it should be simple enough to test and enforce that. I\u0027ll make a folllow-up CL for that under the same bug.\n\nGreat, thanks!\n\n\u003e \n\u003e It should be a subset of the parent\u0027s flags (which we enforce here with the boolean-or, but dont\u0027 kill the renderer if there\u0027s a mismatch), but it should also be a subset of the effective frame policy flags, since that\u0027s the combination of parent+iframe flags that we care about, right?\n\nRight.",
+      "parentUuid": "a7b53194_d3a043ea",
+      "revId": "95e9ee4dab85c33c7812321d255ab0c6e54aa196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51dfad0c_bba700d2",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "\u003e I wonder if storing the active these on FrameTreeNode might subject us to a race with pending delete RFHs.  Suppose we have A-embed-B, B defines CSP sandbox flags, and A navigates the subframe to C.  Could the following happen?\n\u003e - DidCommit for B\n\u003e - DidCommit for C, B becomes a pending-delete RFH executing unload()\n\u003e - DidSetFramePolicyHeaders for B arrives, setting the (stale) sandbox flags on the FTN in which C is now active.\n\nI think you\u0027re probably right, that race is possible.\n\n\u003e \n\u003e A few thoughts:\n\u003e - maybe we should be sending these as part of DidCommitProvisionalLoad?\n\u003e - or, checking is_active() here, to avoid overwriting FTN\u0027s flags from a frame that\u0027s no longer current?\n\nDo we need to do both of these together? I\u0027m trying to figure out if a race in the other direction is possible if we don\u0027t -- if we only check IsCurrent(), then is is possible that the DidSetFramePolicyHeaders IPC for C arrives before it commits, and so C isn\u0027t active yet, and the flags for B remain active even after the navigation commits?\n\n\u003e - would we ever need to query sandbox flags on a pending delete RFH?  There wouldn\u0027t be a way to do that unless we store active_sandbox_flags on RFHI.\n\nI\u0027m not sure what potentially-sandboxed operations can be executed on a pending delete RFH... if it\u0027s in that state while running onUnload, then potentially; we might need to stop the page from attempting navigation or form submission, if the page being navigated to has those permissions.\n\nI\u0027ll look at storing this (or at least a copy) on RFHI. It really did seem like incorporating it into the FrameReplicationState was the right thing to do, though :(",
       "parentUuid": "51dfad0c_bba700d2",
+      "revId": "95e9ee4dab85c33c7812321d255ab0c6e54aa196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9284919_8b538517",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2188,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-18T22:24:36Z",
+      "side": 1,
+      "message": "\u003e \u003e I wonder if storing the active these on FrameTreeNode might subject us to a race with pending delete RFHs.  Suppose we have A-embed-B, B defines CSP sandbox flags, and A navigates the subframe to C.  Could the following happen?\n\u003e \u003e - DidCommit for B\n\u003e \u003e - DidCommit for C, B becomes a pending-delete RFH executing unload()\n\u003e \u003e - DidSetFramePolicyHeaders for B arrives, setting the (stale) sandbox flags on the FTN in which C is now active.\n\u003e \n\u003e I think you\u0027re probably right, that race is possible.\n\u003e \n\u003e \u003e \n\u003e \u003e A few thoughts:\n\u003e \u003e - maybe we should be sending these as part of DidCommitProvisionalLoad?\n\u003e \u003e - or, checking is_active() here, to avoid overwriting FTN\u0027s flags from a frame that\u0027s no longer current?\n\u003e \n\u003e Do we need to do both of these together? I\u0027m trying to figure out if a race in the other direction is possible if we don\u0027t -- if we only check IsCurrent(), then is is possible that the DidSetFramePolicyHeaders IPC for C arrives before it commits, and so C isn\u0027t active yet, and the flags for B remain active even after the navigation commits?\n\nDon\u0027t we always send DidSetFramePolicyHeaders right after DidCommit?  At least the main dispatch from DocumentLoader::InstallNewDocument happens after DidCommitNavigation dispatches the DidCommit.  Are you thinking of another case that makes this possible?  Perhaps from Document::InitSecurityContext with non-default policy, related to my question there?\n\nI\u0027d have expected we can away just by doing the is_active() check in DidSetFramePolicyHeaders.  That\u0027s similar to what we already do in similar places in RFHI, and it should prevent a RFH that\u0027s just become pending-delete from overwriting the current frame\u0027s frags.  If we also needed to prevent the race above, we could instead check against the RFHI against current_frame_host(), which should also prevent a pending RFH from overwriting the FTN flags before committing.  But it seems it\u0027d be nicer to instead find a way to just always send DidSetFramePolicyHeaders after (or as part of) commit.\n\n\u003e \n\u003e \u003e - would we ever need to query sandbox flags on a pending delete RFH?  There wouldn\u0027t be a way to do that unless we store active_sandbox_flags on RFHI.\n\u003e \n\u003e I\u0027m not sure what potentially-sandboxed operations can be executed on a pending delete RFH... if it\u0027s in that state while running onUnload, then potentially; we might need to stop the page from attempting navigation or form submission, if the page being navigated to has those permissions.\n\u003e \n\u003e I\u0027ll look at storing this (or at least a copy) on RFHI. It really did seem like incorporating it into the FrameReplicationState was the right thing to do, though :(\n\nI think we do want to send it as part of FRS, so I guess the question is whether we need to also save a copy in RFHI.  Navigations or form submissions should already be blocked in unload handlers on the renderer side, and I think we\u0027ll uniformly ignore them on the browser side as well (see is_active check in RFHI::OnBeginNavigation).  Maybe we can postpone copying the active flags into RFHI until there\u0027s a need for it.  I can\u0027t think of one right now - the two places that check the flags in the browser process seem to be for a navigation and a window.open, which shouldn\u0027t happen from an unload handler.",
+      "parentUuid": "f5c688f2_1f559483",
       "revId": "95e9ee4dab85c33c7812321d255ab0c6e54aa196",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
