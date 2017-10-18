@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5abe2c1_eb71eb5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-18T03:57:26Z",
+      "side": 1,
+      "message": "memory_instrumentation::RequestGlobalMemoryDump api should not contain guid argument.",
+      "revId": "2ee11cff645268de3327994424ade76a74b568db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b8b624_184d8fb6",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-18T03:57:26Z",
+      "side": 1,
+      "message": "remove todo",
+      "revId": "2ee11cff645268de3327994424ade76a74b568db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42588f41_ca9a75d9",
+        "filename": "base/trace_event/memory_dump_request_args.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-18T03:57:26Z",
+      "side": 1,
+      "message": "Do we still need both these structs to have struct traits?",
+      "range": {
+        "startLine": 64,
+        "startChar": 1,
+        "endLine": 65,
+        "endChar": 46
+      },
+      "revId": "2ee11cff645268de3327994424ade76a74b568db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f0bb5e_34b2a7af",
+        "filename": "base/trace_event/memory_dump_request_args.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-18T03:57:26Z",
+      "side": 1,
+      "message": "please file a bug with the comment above DoGlobalDumpWithoutCallback.\nhere:\nTODO: move this to memory_instrumentation, crbug.com/\u003cnew bug\u003e",
+      "revId": "2ee11cff645268de3327994424ade76a74b568db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83d7e65_46edb16a",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-18T03:57:26Z",
+      "side": 1,
+      "message": "uncomment?",
+      "revId": "2ee11cff645268de3327994424ade76a74b568db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e50fade_c13ee4dc",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-18T03:57:26Z",
+      "side": 1,
+      "message": "nit can you please sort? easier to notice if it\u0027s added twice in future.",
+      "revId": "2ee11cff645268de3327994424ade76a74b568db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "046d2220_a6ba4046",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_integration_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-18T03:57:26Z",
+      "side": 1,
+      "message": "added twice",
+      "revId": "2ee11cff645268de3327994424ade76a74b568db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
