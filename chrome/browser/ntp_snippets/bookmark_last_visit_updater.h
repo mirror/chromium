@@ -78,9 +78,12 @@ class BookmarkLastVisitUpdater
       content::NavigationHandle* navigation_handle) override;
 
   void NewURLVisited(content::NavigationHandle* navigation_handle);
+  void UpdateBookmarkOnURLVisitedInMainFrame(const GURL& url);
 
   bookmarks::BookmarkModel* bookmark_model_;
   content::WebContents* web_contents_;
+
+  base::WeakPtrFactory<BookmarkLastVisitUpdater> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(BookmarkLastVisitUpdater);
 };

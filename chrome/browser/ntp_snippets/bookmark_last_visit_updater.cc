@@ -5,6 +5,8 @@
 #include "chrome/browser/ntp_snippets/bookmark_last_visit_updater.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/bookmark_node.h"
 #include "components/ntp_snippets/bookmarks/bookmark_last_visit_utils.h"
@@ -49,7 +51,8 @@ BookmarkLastVisitUpdater::BookmarkLastVisitUpdater(
     bookmarks::BookmarkModel* bookmark_model)
     : content::WebContentsObserver(web_contents),
       bookmark_model_(bookmark_model),
-      web_contents_(web_contents) {
+      web_contents_(web_contents),
+      weak_ptr_factory_(this) {
   DCHECK(bookmark_model_);
   bookmark_model_->AddObserver(this);
 }
@@ -73,8 +76,18 @@ void BookmarkLastVisitUpdater::NewURLVisited(
     return;
   }
 
-  ntp_snippets::UpdateBookmarkOnURLVisitedInMainFrame(
-      bookmark_model_, navigation_handle->GetURL(), IsMobilePlatform());
+  // Do the work off the UI thread (can take a bit for huge bookmarks DBs).
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::TaskPriority::BACKGROUND},
+      base::Bind(
+          &BookmarkLastVisitUpdater::UpdateBookmarkOnURLVisitedInMainFrame,
+          weak_ptr_factory_.GetWeakPtr(), navigation_handle->GetURL()));
+}
+
+void BookmarkLastVisitUpdater::UpdateBookmarkOnURLVisitedInMainFrame(
+    const GURL& url) {
+  ntp_snippets::UpdateBookmarkOnURLVisitedInMainFrame(bookmark_model_, url,
+                                                      IsMobilePlatform());
 }
 
 void BookmarkLastVisitUpdater::BookmarkNodeAdded(
@@ -86,7 +99,12 @@ void BookmarkLastVisitUpdater::BookmarkNodeAdded(
   if (new_bookmark_url == web_contents_->GetLastCommittedURL()) {
     // Consider in this TabHelper only bookmarks created from this tab (and not
     // the ones created from other tabs or created through bookmark sync).
-    ntp_snippets::UpdateBookmarkOnURLVisitedInMainFrame(
-        bookmark_model_, new_bookmark_url, IsMobilePlatform());
+
+    // Do the work off the UI thread (can take a bit for huge bookmarks DBs).
+    base::PostTaskWithTraits(
+        FROM_HERE, {base::TaskPriority::BACKGROUND},
+        base::Bind(
+            &BookmarkLastVisitUpdater::UpdateBookmarkOnURLVisitedInMainFrame,
+            weak_ptr_factory_.GetWeakPtr(), new_bookmark_url));
   }
 }
