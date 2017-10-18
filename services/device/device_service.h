@@ -7,12 +7,16 @@
 
 #include "base/memory/ref_counted.h"
 #include "build/build_config.h"
+#include "device/geolocation/geolocation_provider.h"
+#include "device/geolocation/public/interfaces/geolocation.mojom.h"
 #include "device/screen_orientation/public/interfaces/screen_orientation.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "services/device/geolocation/public_ip_address_geolocation_provider.h"
 #include "services/device/public/interfaces/battery_monitor.mojom.h"
 #include "services/device/public/interfaces/fingerprint.mojom.h"
 #include "services/device/public/interfaces/nfc_provider.mojom.h"
 #include "services/device/public/interfaces/power_monitor.mojom.h"
+#include "services/device/public/interfaces/public_ip_address_geolocator.mojom.h"
 #include "services/device/public/interfaces/sensor_provider.mojom.h"
 #include "services/device/public/interfaces/serial.mojom.h"
 #include "services/device/public/interfaces/time_zone_monitor.mojom.h"
@@ -40,21 +44,28 @@ class HidManagerImpl;
 #endif
 
 class PowerMonitorMessageBroadcaster;
+class PublicIpAddressLocationNotifier;
 class TimeZoneMonitor;
 
 #if defined(OS_ANDROID)
-// NOTE: See the comments on the definitions of |WakeLockContextCallback|
-// and NFCDelegate.java to understand the semantics and usage of these
-// parameters.
+// NOTE: See the comments on the definitions of PublicIpAddressLocationNotifier,
+// |WakeLockContextCallback| and NFCDelegate.java to understand the semantics
+// and usage of these parameters.
 std::unique_ptr<service_manager::Service> CreateDeviceService(
     scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+    GeolocationProvider::RequestContextProducer
+        geolocation_request_context_producer,
+    const std::string& geolocation_api_key,
     const WakeLockContextCallback& wake_lock_context_callback,
     const base::android::JavaRef<jobject>& java_nfc_delegate);
 #else
 std::unique_ptr<service_manager::Service> CreateDeviceService(
     scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
-    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+    GeolocationProvider::RequestContextProducer
+        geolocation_request_context_producer,
+    const std::string& geolocation_api_key);
 #endif
 
 class DeviceService : public service_manager::Service {
@@ -62,11 +73,17 @@ class DeviceService : public service_manager::Service {
 #if defined(OS_ANDROID)
   DeviceService(scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
                 scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+                GeolocationProvider::RequestContextProducer
+                    geolocation_request_context_producer,
+                const std::string& geolocation_api_key,
                 const WakeLockContextCallback& wake_lock_context_callback,
                 const base::android::JavaRef<jobject>& java_nfc_delegate);
 #else
   DeviceService(scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
-                scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
+                scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+                GeolocationProvider::RequestContextProducer
+                    geolocation_request_context_producer,
+                const std::string& geolocation_api_key);
 #endif
   ~DeviceService() override;
 
@@ -88,6 +105,9 @@ class DeviceService : public service_manager::Service {
 
   void BindPowerMonitorRequest(mojom::PowerMonitorRequest request);
 
+  void BindPublicIpAddressGeolocationProviderRequest(
+      mojom::PublicIpAddressGeolocationProviderRequest request);
+
   void BindScreenOrientationListenerRequest(
       mojom::ScreenOrientationListenerRequest request);
 
@@ -104,10 +124,15 @@ class DeviceService : public service_manager::Service {
 
   std::unique_ptr<PowerMonitorMessageBroadcaster>
       power_monitor_message_broadcaster_;
+  std::unique_ptr<PublicIpAddressGeolocationProvider>
+      public_ip_address_geolocation_provider_;
   std::unique_ptr<TimeZoneMonitor> time_zone_monitor_;
   scoped_refptr<base::SingleThreadTaskRunner> file_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
+  GeolocationProvider::RequestContextProducer
+      geolocation_request_context_producer_;
+  const std::string geolocation_api_key_;
   WakeLockContextCallback wake_lock_context_callback_;
 
 #if defined(OS_ANDROID)
