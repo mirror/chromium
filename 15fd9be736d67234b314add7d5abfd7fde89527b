@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f1797ae_a3e415ee",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-18T15:58:19Z",
+      "side": 1,
+      "message": "if (!offset)\n\nor, if you want to make it super clear (given the subtraction below):\nif (offset \u003c 1u)",
+      "range": {
+        "startLine": 176,
+        "startChar": 13,
+        "endLine": 176,
+        "endChar": 14
+      },
+      "revId": "15fd9be736d67234b314add7d5abfd7fde89527b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
