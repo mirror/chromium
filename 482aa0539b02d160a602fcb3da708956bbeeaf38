@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d2edd31_851925e3",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-18T22:43:20Z",
+      "side": 1,
+      "message": "ah.\n\nnit: do this as\n\n  if tries \u003e 0 and ...",
+      "revId": "482aa0539b02d160a602fcb3da708956bbeeaf38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
