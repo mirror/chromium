@@ -324,11 +324,18 @@ bool Animation::PreCommit(
   if (should_start) {
     compositor_group_ = compositor_group;
     if (start_on_compositor) {
-      if (CheckCanStartAnimationOnCompositor(composited_element_ids).Ok()) {
+      CompositorAnimations::FailureCode failure_code =
+          CheckCanStartAnimationOnCompositor(composited_element_ids);
+      if (failure_code.Ok()) {
         CreateCompositorPlayer();
         StartAnimationOnCompositor(composited_element_ids);
         compositor_state_ = WTF::WrapUnique(new CompositorState(*this));
       } else {
+        // The |will_composite| is set at
+        // CompositorAnimations::CheckCanStartElementOnCompositor. Please refer
+        // to that function for more details.
+        if (!failure_code.will_composite)
+          is_non_composited_compositable_ = true;
         CancelIncompatibleAnimationsOnCompositor();
       }
     }
