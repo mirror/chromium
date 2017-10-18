@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "44b2e813_6e7acd60",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-18T18:21:15Z",
+      "side": 1,
+      "message": "There are other cases of context loss (e.g. the driver reports context loss at the GL level) which don\u0027t imply a GPU crash.",
+      "parentUuid": "ccef2c72_8f33811f",
+      "revId": "af638588b0e5cc8146a3aaf3886947e24221ee28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c616702_f5ea8431",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 20
