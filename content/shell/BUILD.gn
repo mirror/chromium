@@ -271,6 +271,7 @@ static_library("content_shell_lib") {
     "//third_party/WebKit/public:image_resources",
     "//third_party/WebKit/public:resources",
     "//third_party/WebKit/public:test_support",
+    "//third_party/content_shell_fonts",
     "//third_party/icu",
     "//ui/base",
     "//ui/base/ime",
