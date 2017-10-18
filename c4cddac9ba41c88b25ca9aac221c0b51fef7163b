@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9540e629_95a941a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-18T03:07:53Z",
+      "side": 1,
+      "message": "add [Chromecast]",
+      "revId": "c4cddac9ba41c88b25ca9aac221c0b51fef7163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725d3a52_1a0985fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-18T03:07:53Z",
+      "side": 1,
+      "message": "nit, b/ syntax will create link in UI",
+      "range": {
+        "startLine": 12,
+        "startChar": 14,
+        "endLine": 12,
+        "endChar": 22
+      },
+      "revId": "c4cddac9ba41c88b25ca9aac221c0b51fef7163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
