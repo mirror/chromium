@@ -50,6 +50,25 @@ const std::string kSecondaryEmail = "user2@gmail.com";
 const std::string kSecondaryGaiaId = "gaiaid-user2@gmail.com";
 const std::string kLoginToken = "oauth2_login_token";
 
+// There are 3 buttons for a regular profile: "Guest", "Manage People" and
+// "Close all your windows".
+const unsigned int kRegularProfileMenuButtonCount = 3U;
+// There are 3 buttons for a lockable profile: "Guest", "Manage People" and
+// "Close all your windows".
+const unsigned int kLockableProfileMenuButtonCount = 3U;
+// There are 2 buttons for a regular profile: "Manage People" and
+// "Close all your windows".
+const unsigned int kChildProfileMenuButtonCount = 2U;
+
+// Guest button action.
+const SEL kGuestButtonSelector = @selector(switchToGuest:);
+// Manage People button action.
+const SEL kManagePeopleButtonSelector = @selector(showUserManager:);
+// Lock button action.
+const SEL kLockProfileButtonSelector = @selector(lockProfile:);
+// Close all your windows button action.
+const SEL kCloseAllWindowsButtonSelector = @selector(closeAllWindows:);
+
 class ProfileChooserControllerTest : public CocoaProfileTest {
  public:
   ProfileChooserControllerTest() {
@@ -134,18 +153,38 @@ class ProfileChooserControllerTest : public CocoaProfileTest {
   ProfileChooserController* controller() { return controller_; }
   AvatarMenu* menu() { return menu_; }
 
+  NSButton* GetButton(NSArray* buttons, SEL selector) {
+    NSButton* button_found = nil;
+    for (id item in buttons) {
+      NSButton* button = base::mac::ObjCCast<NSButton>(item);
+      if ([button action] == selector) {
+        EXPECT_EQ(nil, button_found);
+        button_found = button;
+      }
+    }
+    return button_found;
+  }
+
   void ExpectGuestButton(NSButton* guest_button) {
     ASSERT_TRUE(guest_button);
-    EXPECT_EQ(@selector(switchToGuest:), [guest_button action]);
+    EXPECT_EQ(kGuestButtonSelector, [guest_button action]);
     EXPECT_EQ(controller(), [guest_button target]);
     EXPECT_TRUE([guest_button isEnabled]);
   }
 
   void ExpectManagePeopleButton(NSButton* manage_people_button) {
     ASSERT_TRUE(manage_people_button);
-    EXPECT_EQ(@selector(showUserManager:), [manage_people_button action]);
+    EXPECT_EQ(kManagePeopleButtonSelector, [manage_people_button action]);
     EXPECT_EQ(controller(), [manage_people_button target]);
     EXPECT_TRUE([manage_people_button isEnabled]);
+  }
+
+  void ExpectCloseAllWindowsButton(NSButton* close_all_windows_button) {
+    ASSERT_TRUE(close_all_windows_button);
+    EXPECT_EQ(kCloseAllWindowsButtonSelector,
+              [close_all_windows_button action]);
+    EXPECT_EQ(controller(), [close_all_windows_button target]);
+    EXPECT_TRUE([close_all_windows_button isEnabled]);
   }
 
  private:
@@ -174,15 +213,20 @@ TEST_F(ProfileChooserControllerTest, InitialLayoutWithNewMenu) {
 
   // There should be one button in the option buttons view.
   NSArray* buttonSubviews = [[subviews objectAtIndex:0] subviews];
-  NSButton* userSwitcherButton;
-  // There are 2 buttons in the initial layout: "Manage People" and "Guest".
-  ASSERT_EQ(2U, [buttonSubviews count]);
-  // There should be a user switcher button.
-  userSwitcherButton =
-      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:0]);
+  ASSERT_EQ(kRegularProfileMenuButtonCount, [buttonSubviews count]);
 
-  EXPECT_EQ(@selector(showUserManager:), [userSwitcherButton action]);
-  EXPECT_EQ(controller(), [userSwitcherButton target]);
+  // There should be a "Close all your windows" button.
+  NSButton* close_all_windows_button =
+      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:0]);
+  ExpectCloseAllWindowsButton(close_all_windows_button);
+  // There should be a "Manage People" button.
+  NSButton* manage_people_button =
+      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:1]);
+  ExpectManagePeopleButton(manage_people_button);
+  // There should be a "Guest" button.
+  NSButton* guest_button =
+      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:2]);
+  ExpectGuestButton(guest_button);
 
   NSUInteger lastSubviewIndex = 4;
   NSArray* activeCardSubviews =
@@ -341,15 +385,16 @@ TEST_F(ProfileChooserControllerTest, AccountManagementLayout) {
   ASSERT_EQ(viewsCount, [subviews count]);
 
   NSArray* buttonSubviews = [[subviews objectAtIndex:0] subviews];
-  NSButton* userSwitcherButton;
-  // There should be two buttons in the option buttons view.
-  ASSERT_EQ(2U, [buttonSubviews count]);
-  // There should be a user switcher button.
-  userSwitcherButton =
-      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:0]);
+  ASSERT_EQ(kRegularProfileMenuButtonCount, [buttonSubviews count]);
 
-  EXPECT_EQ(@selector(showUserManager:), [userSwitcherButton action]);
-  EXPECT_EQ(controller(), [userSwitcherButton target]);
+  // There should be a "Close all your windows" button.
+  NSButton* close_all_windows_button =
+      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:0]);
+  ExpectCloseAllWindowsButton(close_all_windows_button);
+  // There should be a "Manage People" button.
+  NSButton* manage_people_button =
+      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:1]);
+  ExpectManagePeopleButton(manage_people_button);
 
   NSUInteger accountsViewIndex = 4;
   // In the accounts view, there should be the account list container
@@ -407,14 +452,13 @@ TEST_F(ProfileChooserControllerTest, SignedInProfileLockDisabled) {
   subviews = [[subviews objectAtIndex:0] subviews];
 
   NSArray* buttonSubviews = [[subviews objectAtIndex:0] subviews];
-  // There will be two buttons in the option buttons view.
-  ASSERT_EQ(2U, [buttonSubviews count]);
+  ASSERT_EQ(kRegularProfileMenuButtonCount, [buttonSubviews count]);
 
   // The last button should not be the lock button.
   NSButton* lastButton =
       base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:0]);
   ASSERT_TRUE(lastButton);
-  EXPECT_NE(@selector(lockProfile:), [lastButton action]);
+  EXPECT_NE(kLockProfileButtonSelector, [lastButton action]);
 }
 
 TEST_F(ProfileChooserControllerTest, SignedInProfileLockEnabled) {
@@ -434,14 +478,13 @@ TEST_F(ProfileChooserControllerTest, SignedInProfileLockEnabled) {
   subviews = [[subviews objectAtIndex:0] subviews];
 
   NSArray* buttonSubviews = [[subviews objectAtIndex:0] subviews];
-  // There will be two buttons and one separator in the option buttons view.
-  ASSERT_EQ(3U, [buttonSubviews count]);
+  ASSERT_EQ(kLockableProfileMenuButtonCount, [buttonSubviews count]);
 
   // There should be a lock button.
   NSButton* lockButton =
       base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:0]);
   ASSERT_TRUE(lockButton);
-  EXPECT_EQ(@selector(lockProfile:), [lockButton action]);
+  EXPECT_EQ(kLockProfileButtonSelector, [lockButton action]);
   EXPECT_EQ(controller(), [lockButton target]);
   EXPECT_TRUE([lockButton isEnabled]);
 }
@@ -453,14 +496,19 @@ TEST_F(ProfileChooserControllerTest, RegularProfileWithManagePeopleAndGuest) {
   subviews = [[subviews objectAtIndex:0] subviews];
 
   NSArray* buttonSubviews = [[subviews objectAtIndex:0] subviews];
-  ASSERT_EQ(2U, [buttonSubviews count]);
+  ASSERT_EQ(kRegularProfileMenuButtonCount, [buttonSubviews count]);
 
-  NSButton* manage_people_button =
+  // There should be a "Close all your windows" button.
+  NSButton* close_all_windows_button =
       base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:0]);
-  ExpectManagePeopleButton(manage_people_button);
-
-  NSButton* guest_button =
+  ExpectCloseAllWindowsButton(close_all_windows_button);
+  // There should be a "Manage People" button.
+  NSButton* manage_people_button =
       base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:1]);
+  ExpectManagePeopleButton(manage_people_button);
+  // There should be a "Guest" button.
+  NSButton* guest_button =
+      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:2]);
   ExpectGuestButton(guest_button);
 }
 
@@ -474,9 +522,15 @@ TEST_F(ProfileChooserControllerTest, SupervisedProfileWithManagePeopleOnly) {
   subviews = [[subviews objectAtIndex:0] subviews];
 
   NSArray* buttonSubviews = [[subviews objectAtIndex:0] subviews];
-  ASSERT_EQ(1U, [buttonSubviews count]);
+  ASSERT_EQ(kChildProfileMenuButtonCount, [buttonSubviews count]);
 
-  NSButton* manage_people_button =
+  // There should be a "Close all your windows" button.
+  NSButton* close_all_windows_button =
       base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:0]);
+  ExpectCloseAllWindowsButton(close_all_windows_button);
+  // There should be a "Manage People" button.
+  NSButton* manage_people_button =
+      base::mac::ObjCCast<NSButton>([buttonSubviews objectAtIndex:1]);
   ExpectManagePeopleButton(manage_people_button);
+  EXPECT_FALSE(GetButton(buttonSubviews, kGuestButtonSelector));
 }
