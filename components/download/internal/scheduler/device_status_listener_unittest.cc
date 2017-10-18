@@ -128,6 +128,11 @@ TEST_F(DeviceStatusListenerTest, NotifyObserverNetworkChange) {
 
   // Network switch between mobile networks, the observer should be notified
   // only once.
+  status.network_status = NetworkStatus::METERED;
+  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(status))
+      .Times(1)
+      .RetiresOnSaturation();
+
   ChangeNetworkType(ConnectionType::CONNECTION_4G);
   ChangeNetworkType(ConnectionType::CONNECTION_3G);
   ChangeNetworkType(ConnectionType::CONNECTION_2G);
@@ -145,6 +150,11 @@ TEST_F(DeviceStatusListenerTest, NotifyObserverNetworkChange) {
 
   // Network is switched between wifi and ethernet, the observer should be
   // notified only once.
+  status.network_status = NetworkStatus::UNMETERED;
+  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(status))
+      .Times(1)
+      .RetiresOnSaturation();
+
   ChangeNetworkType(ConnectionType::CONNECTION_WIFI);
   ChangeNetworkType(ConnectionType::CONNECTION_ETHERNET);
 

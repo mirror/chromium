@@ -106,7 +106,10 @@ ControllerImpl::ControllerImpl(
   DCHECK(log_sink_);
 }
 
-ControllerImpl::~ControllerImpl() = default;
+ControllerImpl::~ControllerImpl() {
+  DCHECK(navigation_monitor_);
+  navigation_monitor_->SetObserver(nullptr);
+}
 
 void ControllerImpl::Initialize(const base::Closure& callback) {
   DCHECK_EQ(controller_state_, State::CREATED);
@@ -128,6 +131,7 @@ Controller::State ControllerImpl::GetState() {
 }
 
 void ControllerImpl::StartDownload(const DownloadParams& params) {
+  LOG(ERROR) << "@@@ " << __func__;
   DCHECK(controller_state_ == State::READY ||
          controller_state_ == State::UNAVAILABLE);
 
@@ -486,6 +490,7 @@ void ControllerImpl::OnModelHardRecoverComplete(bool success) {
 void ControllerImpl::OnItemAdded(bool success,
                                  DownloadClient client,
                                  const std::string& guid) {
+  LOG(ERROR) << "@@@ " << __func__;
   // If the StartCallback doesn't exist, we already notified the Client about
   // this item.  That means something went wrong, so stop here.
   if (start_callbacks_.find(guid) == start_callbacks_.end())
