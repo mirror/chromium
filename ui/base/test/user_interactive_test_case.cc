@@ -4,12 +4,10 @@
 
 #include "ui/base/test/user_interactive_test_case.h"
 
-#include "base/run_loop.h"
-
 namespace test {
 
-void RunTestInteractively() {
-  base::RunLoop().Run();
+void RunTestInteractively(base::RunLoop* loop) {
+  loop->Run();
 }
 
 }  // namespace test

@@ -6,14 +6,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "base/run_loop.h"
-
 namespace test {
 
-void RunTestInteractively() {
+void RunTestInteractively(base::RunLoop* loop) {
   [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
   [NSApp activateIgnoringOtherApps:YES];
-  base::RunLoop().Run();
+  loop->Run();
 }
 
 }  // namespace test

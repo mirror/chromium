@@ -36,8 +36,13 @@ enum class DialogAction {
 // Helper to break out of the nested run loop that runs a test dialog.
 class WidgetCloser : public views::WidgetObserver {
  public:
-  WidgetCloser(views::Widget* widget, DialogAction action)
-      : action_(action), widget_(widget), weak_ptr_factory_(this) {
+  WidgetCloser(views::Widget* widget,
+               DialogAction action,
+               const base::Closure& quit_closure)
+      : action_(action),
+        widget_(widget),
+        quit_closure_(quit_closure),
+        weak_ptr_factory_(this) {
     widget->AddObserver(this);
     if (action == DialogAction::INTERACTIVE)
       return;
@@ -51,7 +56,7 @@ class WidgetCloser : public views::WidgetObserver {
   void OnWidgetDestroyed(views::Widget* widget) override {
     widget_->RemoveObserver(this);
     widget_ = nullptr;
-    base::RunLoop::QuitCurrentDeprecated();
+    quit_closure_.Run();
   }
 
  private:
@@ -74,6 +79,7 @@ class WidgetCloser : public views::WidgetObserver {
 
   const DialogAction action_;
   views::Widget* widget_;
+  base::Closure quit_closure_;
 
   base::WeakPtrFactory<WidgetCloser> weak_ptr_factory_;
 
@@ -148,8 +154,9 @@ void TestBrowserDialog::RunDialog() {
     action = DialogAction::CLOSE;
   }
 
-  WidgetCloser closer(added[0], action);
-  ::test::RunTestInteractively();
+  base::RunLoop loop;
+  WidgetCloser closer(added[0], action, loop.QuitClosure());
+  ::test::RunTestInteractively(&loop);
 }
 
 bool TestBrowserDialog::AlwaysCloseAsynchronously() {
