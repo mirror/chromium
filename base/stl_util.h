@@ -307,6 +307,35 @@ void EraseIf(std::unordered_multiset<Key, Hash, KeyEqual, Allocator>& container,
   internal::IterateAndEraseIf(container, pred);
 }
 
+// A helper class to be used as the predicate with |EraseIf| to implement
+// in-place set intersection. Helps implement the algorithm of going through
+// each container an element at a time, erasing elements from the first
+// container if they aren't in the second container. Requires each container be
+// sorted. Note that the logic below appears inverted since it is returning
+// whether an element should be erased.
+template <class Collection>
+class IsNotIn {
+ public:
+  explicit IsNotIn(const Collection& collection)
+      : i(collection.begin()), end_(collection.end()) {}
+
+  bool operator()(const typename Collection::value_type& x) {
+    while (i != end_ && *i < x)
+      ++i;
+    if (i == end_)
+      return true;
+    if (*i == x) {
+      ++i;
+      return false;
+    }
+    return true;
+  }
+
+ private:
+  typename Collection::const_iterator i;
+  const typename Collection::const_iterator end_;
+};
+
 }  // namespace base
 
 #endif  // BASE_STL_UTIL_H_
