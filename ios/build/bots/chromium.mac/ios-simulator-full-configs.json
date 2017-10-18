@@ -19,6 +19,29 @@
   "configuration": "Debug",
   "sdk": "iphonesimulator11.0",
   "tests": [
-
+    {
+      "include": "screen_size_dependent_tests.json",
+      "device type": "iPhone 6s",
+      "os": "11.0",
+      "xcode version": "9.0"
+    },
+    {
+      "include": "screen_size_dependent_tests.json",
+      "device type": "iPad Air 2",
+      "os": "10.0",
+      "xcode version": "9.0"
+    },
+    {
+      "include": "screen_size_dependent_tests.json",
+      "device type": "iPad Air 2",
+      "os": "9.0",
+      "xcode version": "9.0"
+    },
+    {
+      "include": "common_tests.json",
+      "device type": "iPhone 6s",
+      "os": "10.0",
+      "xcode version": "9.0"
+    }
   ]
 }
