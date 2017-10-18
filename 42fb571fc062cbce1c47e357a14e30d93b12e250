@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09c99866_216db62b",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-18T07:28:08Z",
+      "side": 1,
+      "message": "The non-MacViews crash occurs in performLayout, but since MacViews doesn\u0027t reanchor on layout invalidation, and instead on a parent window size change / toggling full screen, I didn\u0027t do anything extra here. LMK if you think that\u0027s OK.",
+      "revId": "42fb571fc062cbce1c47e357a14e30d93b12e250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

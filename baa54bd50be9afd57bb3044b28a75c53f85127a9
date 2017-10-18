@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad7dd5aa_2f5388bc",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-18T07:28:08Z",
+      "side": 1,
+      "message": "Thanks Trent! I picked the second one.",
+      "parentUuid": "41ee9691_b4642eb3",
+      "revId": "baa54bd50be9afd57bb3044b28a75c53f85127a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0287afb_dbd904c7",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "baa54bd50be9afd57bb3044b28a75c53f85127a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11770028_76c1b017",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-18T07:28:08Z",
+      "side": 1,
+      "message": "See new comment on the latest patchset.",
+      "parentUuid": "c0287afb_dbd904c7",
+      "revId": "baa54bd50be9afd57bb3044b28a75c53f85127a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
