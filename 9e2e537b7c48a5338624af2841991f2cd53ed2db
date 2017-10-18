@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c8bf4af_851aff48",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-18T06:14:02Z",
+      "side": 1,
+      "message": "How about move this up to between ENCODE_OK and INVALID_ARGUMENT?",
+      "revId": "9e2e537b7c48a5338624af2841991f2cd53ed2db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f175135_aa9ea6a0",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-18T06:14:02Z",
+      "side": 1,
+      "message": "video_frame_id.unique_id()",
+      "range": {
+        "startLine": 51,
+        "startChar": 33,
+        "endLine": 51,
+        "endChar": 43
+      },
+      "revId": "9e2e537b7c48a5338624af2841991f2cd53ed2db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
