@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a098a736_a6f750c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-18T21:01:52Z",
+      "side": 1,
+      "message": "private",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 177,
+        "endChar": 13
+      },
+      "revId": "172a24694152829091257493734ac4fc9d59f499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f317c9d_9623eac6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarControlLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-18T21:01:52Z",
+      "side": 1,
+      "message": "Why does this need to be in the InfoBarControlLayout?\n\nAlso maybe rename to createSingleLineUrlView or add an optional click listener param?",
+      "range": {
+        "startLine": 419,
+        "startChar": 16,
+        "endLine": 419,
+        "endChar": 32
+      },
+      "revId": "172a24694152829091257493734ac4fc9d59f499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
