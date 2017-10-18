@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22eb7ca1_97eb2b60",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1366,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-18T17:58:52Z",
+      "side": 1,
+      "message": "nit -- it\u0027s against the style guide to pass these by non-const reference:\n\nhttps://google.github.io/styleguide/cppguide.html#Reference_Arguments\n\nIs there any reason you can\u0027t just:\n\nif (TryRemovingAutoScrollbars(n_h_s, n_v_s) {\n  n_h_s \u003d n_v_s \u003d false;\n  allow_second_overflow_relayout_ \u003d true;\n}",
+      "revId": "97a619dd9a13e6633a3cd3d87578904b9fb4db1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
