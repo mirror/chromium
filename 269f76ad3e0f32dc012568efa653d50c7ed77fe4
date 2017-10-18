@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5350ab36_e7b6430b",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T04:38:57Z",
+      "side": 1,
+      "message": "nit: No need for the static_cast",
+      "range": {
+        "startLine": 526,
+        "startChar": 28,
+        "endLine": 526,
+        "endChar": 44
+      },
+      "revId": "269f76ad3e0f32dc012568efa653d50c7ed77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ddbb7e8_85909af8",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-18T04:38:57Z",
+      "side": 1,
+      "message": "nit: No need for the static_cast nor the +1",
+      "range": {
+        "startLine": 178,
+        "startChar": 8,
+        "endLine": 178,
+        "endChar": 24
+      },
+      "revId": "269f76ad3e0f32dc012568efa653d50c7ed77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
