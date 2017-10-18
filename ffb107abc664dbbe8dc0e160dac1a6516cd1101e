@@ -46,6 +46,30 @@
       "revId": "ffb107abc664dbbe8dc0e160dac1a6516cd1101e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1f5dc7_f92752d6",
+        "filename": "tools/perf/contrib/cros_benchmarks/tab_switching_bench.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-10-18T07:57:04Z",
+      "side": 1,
+      "message": "to be more verbose, maybe delay-before-switch ?",
+      "parentUuid": "d719f68a_d55e20c5",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 18
+      },
+      "revId": "ffb107abc664dbbe8dc0e160dac1a6516cd1101e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
