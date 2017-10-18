@@ -107,6 +107,9 @@ class NetworkInformation final
 
   // Whether ContextLifecycleObserver::contextDestroyed has been called.
   bool context_stopped_;
+
+  std::unique_ptr<NetworkStateNotifier::NetworkStateObserverHandle>
+      connection_observer_handle_;
 };
 
 }  // namespace blink
