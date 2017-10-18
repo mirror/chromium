@@ -21,3 +21,12 @@ imageset("keyboard_accessory_qr_scanner") {
     "keyboard_accessory_qr_scanner.imageset/keyboard_accessory_qr_scanner@3x.png",
   ]
 }
+
+imageset("keyboard_accessory_external_search") {
+  sources = [
+    "keyboard_accessory_external_search.imageset/Contents.json",
+    "keyboard_accessory_external_search.imageset/keyboard_accessory_external_search.png",
+    "keyboard_accessory_external_search.imageset/keyboard_accessory_external_search@2x.png",
+    "keyboard_accessory_external_search.imageset/keyboard_accessory_external_search@3x.png",
+  ]
+}
