@@ -4,11 +4,12 @@
 
 #include "content/browser/download/resource_downloader.h"
 
-#include "content/browser/blob_storage/blob_url_loader_factory.h"
+#include "content/browser/blob_storage/blob_url_loader.h"
 #include "content/browser/download/download_utils.h"
 #include "content/common/throttling_url_loader.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/url_utils.h"
 #include "storage/browser/fileapi/file_system_context.h"
 
 namespace content {
@@ -53,8 +54,8 @@ std::unique_ptr<ResourceDownloader> ResourceDownloader::BeginDownload(
     uint32_t download_id,
     bool is_parallel_request) {
   mojom::URLLoaderFactoryPtr* factory =
-      params->url().SchemeIs(url::kBlobScheme)
-          ? url_loader_factory_getter->GetBlobFactory()
+      !ShouldUseNetworkURLLoaderFactory(params->url())
+          ? url_loader_factory_getter->GetNonNetworkFactory()
           : url_loader_factory_getter->GetNetworkFactory();
   auto downloader = base::MakeUnique<ResourceDownloader>(
       delegate, std::move(request),
@@ -118,10 +119,10 @@ void ResourceDownloader::Start(
     mojom::URLLoaderRequest url_loader_request;
     mojom::URLLoaderClientPtr client;
     blob_client_binding_.Bind(mojo::MakeRequest(&client));
-    BlobURLLoaderFactory::CreateLoaderAndStart(
-        std::move(url_loader_request), *(resource_request_.get()),
-        std::move(client), download_url_parameters->GetBlobDataHandle(),
-        file_system_context.get());
+    BlobURLLoader::CreateAndStart(std::move(url_loader_request),
+                                  *(resource_request_.get()), std::move(client),
+                                  download_url_parameters->GetBlobDataHandle(),
+                                  file_system_context.get());
   } else {
     url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
         factory->get(), std::vector<std::unique_ptr<URLLoaderThrottle>>(),
