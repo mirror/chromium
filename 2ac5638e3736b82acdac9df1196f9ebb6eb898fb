@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2cef92a_d8b866e3",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-18T12:28:36Z",
+      "side": 1,
+      "message": "This could be a function similar to ConfigureAsAbusive.",
+      "revId": "2ac5638e3736b82acdac9df1196f9ebb6eb898fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
