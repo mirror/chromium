@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e647a1e3_f77eec27",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-18T13:38:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0126a7e0_3341a67a",
+      "range": {
+        "startLine": 456,
+        "startChar": 7,
+        "endLine": 456,
+        "endChar": 73
+      },
+      "revId": "778f9e04a4b97da8f5cd7bc02b4c78ae41701385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11975552_54ebeb54",
         "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
         "patchSetId": 2
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "c06449c5_8346dd81",
+        "filename": "components/password_manager/core/browser/password_manager_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-18T13:38:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c8ba467f_50c7337d",
+      "range": {
+        "startLine": 138,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 57
+      },
+      "revId": "778f9e04a4b97da8f5cd7bc02b4c78ae41701385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fb4a786_c787b5e0",
         "filename": "components/password_manager/core/browser/password_manager_util.cc",
         "patchSetId": 2
@@ -187,6 +235,30 @@
       "revId": "778f9e04a4b97da8f5cd7bc02b4c78ae41701385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2aec240_d9415aa3",
+        "filename": "components/password_manager/core/browser/password_manager_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-18T13:38:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "201fdec2_c22995d6",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 57
+      },
+      "revId": "778f9e04a4b97da8f5cd7bc02b4c78ae41701385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
