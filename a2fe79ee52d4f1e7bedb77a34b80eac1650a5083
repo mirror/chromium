@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48fef5ee_246ec52c",
+        "filename": "ui/views/controls/native/native_view_host.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-18T18:02:47Z",
+      "side": 1,
+      "message": "This seeems easy to get out of sync with the bounds of this view. Can a scale factor be specified instead?",
+      "range": {
+        "startLine": 126,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 28
+      },
+      "revId": "a2fe79ee52d4f1e7bedb77a34b80eac1650a5083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
