@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0989de1f_8faaebd6",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95cbe16b_0f1c55f6",
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a83ef87_3e329f95",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-18T00:49:17Z",
       "side": 1,
       "message": "It\u0027s not clear why these affect networking_allowed instead of check_revocation\n\n(Or as noted on the email thread, VERIFY_REV_CHECKING_ENABLED_EV_ONLY isn\u0027t really doing anything useful, we could just remove it and make VERIFY_EV_CERT always imply revocation checking.)",
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0452f0f_709150d8",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "Yeah, it does seem redundant, but I don\u0027t intend to try and simplify that in this CL.\n\nThe flags as they stand right now are weird state, where CERT_IO_ENABLED is only actually used by NSS, and the meaning of REV_CHECKING_ENABLED* is different on platforms. On windows for instance I believe REV_CHECKING_ENABLED* specifically means online checks, as the checks using cached data are done regardless of flags (which FWIW is a good thing, since it prevents blindly skipping revocation failure in EV and presenting a happy DV version of the path even though we know a cert is revoked in it).\n\nJust checking VERIFY_CERT_IO_ENABLED wouldn\u0027t be right either, since that controls both AIA and OCSP (so if it is set but the revocation checking flags aren\u0027t we shouldn\u0027t be doing OCSP, and should only be doing AIA).",
+      "parentUuid": "8a83ef87_3e329f95",
       "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "957f96cb_1368bfb6",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5b06c30_13cd4b11",
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cd9cbd8_7ee5cb16",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e651a52f_d6ee0963",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cd9cbd8_7ee5cb16",
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "a65fb0f7_3293eee8",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "979d84bb_d398afd7",
+      "range": {
+        "startLine": 420,
+        "startChar": 40,
+        "endLine": 420,
+        "endChar": 57
+      },
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed2a691d_4f8a5348",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 1
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "908f479f_ed7f3e62",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed2a691d_4f8a5348",
+      "range": {
+        "startLine": 562,
+        "startChar": 40,
+        "endLine": 562,
+        "endChar": 49
+      },
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81f6d759_96212333",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 1
@@ -127,6 +247,30 @@
       "writtenOn": "2017-10-18T00:49:17Z",
       "side": 1,
       "message": "should it use the same time for both attempts?",
+      "range": {
+        "startLine": 587,
+        "startChar": 17,
+        "endLine": 587,
+        "endChar": 35
+      },
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d18732c_888f4370",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "Not sure.\n\nShouldn\u0027t matter in practice, but could vary by a bit based on how quick AIA/OCSP fetching was (not that we do AIA currently).\n\nOn one hand it would be nice to use the same timestamp if CertVerifyProc every gained the ability to set the verification time.\n\nOn the other hand it seems reasonable to encapsulate each path building attempt with their own time.\n\nWDYT?",
+      "parentUuid": "81f6d759_96212333",
       "range": {
         "startLine": 587,
         "startChar": 17,
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "288bbb21_801f3e53",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "Exactly (this is why the checks from cache should be done irrespective of flags enabling revocation checks).\n\nNote that this isn\u0027t the case with all the other cert verify procs. For instance my understanding is that CertVerifyProcNSS will happily return the revoked path if after doing revocation checks for EV it fails :(",
+      "parentUuid": "85a30770_7c43fefd",
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e7c0b40_9e4dc12f",
         "filename": "net/cert/internal/revocation_checker.cc",
         "patchSetId": 1
@@ -170,6 +332,24 @@
       "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2046f5ce_f29a65e0",
+        "filename": "net/cert/internal/revocation_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e7c0b40_9e4dc12f",
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "add98db3_d6f27918",
+        "filename": "net/cert/internal/revocation_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "Right now failure to provide a |net_fetcher| may result in paths failing with UNABLE_TO_CHECK_REVOCATION. So the failure mode is similar to that regression (EV will likely just stop working).\n\nPerhaps I should add a DCHECK() and a LOG(ERROR) ?\n\nI actually hit this issue when running the browser tests (i was setting the global net fetcher for url_request_unittest, but not for browser tests), so I can see value in that.",
+      "parentUuid": "74943fcd_717cbeb9",
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bb63e75_005dafe2",
         "filename": "net/cert/internal/revocation_checker.cc",
         "patchSetId": 1
@@ -201,6 +399,24 @@
       "writtenOn": "2017-10-18T00:49:17Z",
       "side": 1,
       "message": "should we add warnings to cert_errors in the soft-fail cases?",
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6135851_450ac4e5",
+        "filename": "net/cert/internal/revocation_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "Do you mean this line in particular (I don\u0027t think this line needs a warning), or do you mean the case where soft-fail hit a network error and we skipped it?\n\nI agree that the soft-fail being skipped due to a network error is worthy of a warning (I will probably just TODO that for now).",
+      "parentUuid": "6bb63e75_005dafe2",
       "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -241,6 +457,24 @@
     },
     {
       "key": {
+        "uuid": "6ec0b2ca_aab8fbfc",
+        "filename": "net/cert/internal/revocation_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "Yeah not needed, was just a defense.\nRemoved.",
+      "parentUuid": "c17b0eea_313cf26c",
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5723a30f_d95c6118",
         "filename": "net/cert/internal/revocation_checker.cc",
         "patchSetId": 1
@@ -255,6 +489,24 @@
       "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c01345_90b2bef5",
+        "filename": "net/cert/internal/revocation_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5723a30f_d95c6118",
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -281,6 +533,30 @@
     },
     {
       "key": {
+        "uuid": "aa837ef7_0546453a",
+        "filename": "net/cert/internal/revocation_checker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "I like having booleans (note that specified them as width 1 bit) because it reads simpler for consuming code.\n\ni.e.:\n\npolicy.check_revocation\n\nas opposed to something like.\n\npolicy \u0026 CHECK_REVOCATION\n\nBut you are right that the constructor is somewhat unreadable.\nI was alternately trying to initialize with something like:\nRevocationPolicy policy;\npolicy.check_revocation \u003d ...;\npolicy.networking_allowed \u003d ...;\n\nBut that pattern is dangerous in forgetting to assign values.\n\nI could create a builder to handle that case, but seems like overkill.\nSuggestions?",
+      "parentUuid": "8ffff756_b7a1672d",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37036161_daa711e1",
         "filename": "net/cert/internal/revocation_checker.h",
         "patchSetId": 1
@@ -295,6 +571,24 @@
       "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba39e77_ebf3a25f",
+        "filename": "net/cert/internal/revocation_checker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-18T20:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37036161_daa711e1",
+      "revId": "f19e851f427f3bba3604751d174bd79bb6a2fd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
