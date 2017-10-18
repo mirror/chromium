@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6d4875f7_d7f2c5a0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-18T21:53:19Z",
+      "side": 1,
+      "message": "Double check if \"/resources\" url will be handled properly",
+      "revId": "10bc39dfa3fe2daf1fd5848dd7ca4bca94c39ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ede700e8_9b0132bc",
         "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
         "patchSetId": 1
@@ -22,6 +39,30 @@
       "revId": "10bc39dfa3fe2daf1fd5848dd7ca4bca94c39ed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08e5a7e_3b09a9e2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-18T21:53:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ede700e8_9b0132bc",
+      "range": {
+        "startLine": 1165,
+        "startChar": 60,
+        "endLine": 1165,
+        "endChar": 105
+      },
+      "revId": "10bc39dfa3fe2daf1fd5848dd7ca4bca94c39ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
