@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "149e1331_d5e3d93f",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-18T14:00:40Z",
+      "side": 1,
+      "message": "Type name in JS is {boolean}.",
+      "range": {
+        "startLine": 1319,
+        "startChar": 12,
+        "endLine": 1319,
+        "endChar": 16
+      },
+      "revId": "8906865adbe63cce76c9c094a5f9453258f1fe89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6c892a_99d8784e",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-18T14:00:40Z",
+      "side": 1,
+      "message": "You do need \"\u003e\u003d 0\" in this test.",
+      "range": {
+        "startLine": 1322,
+        "startChar": 9,
+        "endLine": 1322,
+        "endChar": 40
+      },
+      "revId": "8906865adbe63cce76c9c094a5f9453258f1fe89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
