@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "283b801e_cfc30c19",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-19T21:12:14Z",
+      "side": 1,
+      "message": "Add a comment here to explain trilinear filter is applied at other place (PrepareForOverview and RestoreWindow).\n\nAnd change the new parameter in wm::WindowMirrorView to trilinear_filtering_on_init and add a comment to explain the new paramenter is only to indicate weather to apply trilinear_filtering during InitLayerOwner().",
+      "parentUuid": "76db5f92_85b24ade",
+      "range": {
+        "startLine": 537,
+        "startChar": 64,
+        "endLine": 537,
+        "endChar": 69
+      },
+      "revId": "d01fa16c979a45c96ad4446b186f9c6635d1ae64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "655897f3_97d0baa1",
         "filename": "ash/wm/window_mirror_view.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-19T19:53:08Z",
       "side": 1,
       "message": "Should we cache GetMirrorLayer() above line 87?",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 20
+      },
+      "revId": "d01fa16c979a45c96ad4446b186f9c6635d1ae64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa836ec_eee44336",
+        "filename": "ash/wm/window_mirror_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-19T21:12:14Z",
+      "side": 1,
+      "message": "Moved to above line 87.\n\nBut the sequence when to add caching and filtering requests in this case should not matter. It is different than in the scoped layer animation, we need to request and add observer before setting any layer property (e.g. opacity).",
+      "parentUuid": "655897f3_97d0baa1",
       "range": {
         "startLine": 98,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7cca3c4e_018489bb",
+        "filename": "ash/wm/window_mirror_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-19T21:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79159c70_74b1b275",
+      "range": {
+        "startLine": 110,
+        "startChar": 6,
+        "endLine": 110,
+        "endChar": 12
+      },
+      "revId": "d01fa16c979a45c96ad4446b186f9c6635d1ae64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89b6eebc_58ae4940",
         "filename": "ash/wm/window_mirror_view.h",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-19T19:53:08Z",
       "side": 1,
       "message": "nit: Either \u0027?\u0027 at the end of the sentence or \"True if trilinear filtering should be performed on the layer\". Slight preference to the latter for not using \"we\".",
+      "range": {
+        "startLine": 56,
+        "startChar": 56,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "d01fa16c979a45c96ad4446b186f9c6635d1ae64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2606e2d7_f18e108b",
+        "filename": "ash/wm/window_mirror_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-19T21:12:14Z",
+      "side": 1,
+      "message": "Used latter one.",
+      "parentUuid": "89b6eebc_58ae4940",
       "range": {
         "startLine": 56,
         "startChar": 56,
