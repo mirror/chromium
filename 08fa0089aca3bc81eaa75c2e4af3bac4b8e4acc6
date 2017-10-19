@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85bdb334_58c54220",
+        "filename": "net/dns/host_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-10-19T09:27:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3269ac6b_5e3a96ce",
+      "revId": "08fa0089aca3bc81eaa75c2e4af3bac4b8e4acc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c2be5f8_399afcce",
         "filename": "net/dns/host_cache.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "08fa0089aca3bc81eaa75c2e4af3bac4b8e4acc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f5b23e_0a2ab6d7",
+        "filename": "net/dns/host_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-10-19T09:27:30Z",
+      "side": 1,
+      "message": "Thanks for the explanation - I\u0027ve removed all of this. It might be useful to have it in the host cache view in the future, but I\u0027ll leave that for another time.",
+      "parentUuid": "6c2be5f8_399afcce",
+      "revId": "08fa0089aca3bc81eaa75c2e4af3bac4b8e4acc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "520fef2a_9d742a6e",
+        "filename": "net/dns/host_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-10-19T09:27:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d056e11_4d1ba5d6",
+      "revId": "08fa0089aca3bc81eaa75c2e4af3bac4b8e4acc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1fe24d9_c947d9e0",
         "filename": "net/dns/host_resolver_impl_unittest.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-13T16:32:40Z",
       "side": 1,
       "message": "Can you also add a check for SOURCE_HOSTS in ServeFromHosts?",
+      "revId": "08fa0089aca3bc81eaa75c2e4af3bac4b8e4acc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa5e239_09e012b6",
+        "filename": "net/dns/host_resolver_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1838,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-10-19T09:27:30Z",
+      "side": 1,
+      "message": "It looks like the only code path that caches addresses looked up from the HOSTS file isn\u0027t currently being tested (https://cs.chromium.org/chromium/src/net/dns/host_resolver_impl.cc?l\u003d1370\u0026rcl\u003df77777a51abc9ca0d374b71bd0d2e89160da969a). I\u0027ll look at adding a test for that, and can check that source \u003d\u003d SOURCE_HOSTS as part of it.",
+      "parentUuid": "a1fe24d9_c947d9e0",
       "revId": "08fa0089aca3bc81eaa75c2e4af3bac4b8e4acc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
