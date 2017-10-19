@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "136f27a6_fbc9899b",
+        "filename": "net/http/http_network_session.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-19T03:24:56Z",
+      "side": 1,
+      "message": "nit:     // If true, alt-svc headers advertising QUIC in IETF format will be supported.",
+      "revId": "4a04a862111f76811498b8399cddf5ada0caca41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54ed05b_ca11404b",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-19T03:24:56Z",
+      "side": 1,
+      "message": "nit: If you pass in bool support_ietf_format_quic_altsvc, then you can implement this logic here instead of in the two callers of this method which would be slightly simpler.",
+      "range": {
+        "startLine": 42,
+        "startChar": 59,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "4a04a862111f76811498b8399cddf5ada0caca41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62eec7d8_921cc450",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-19T03:24:56Z",
+      "side": 1,
+      "message": "here and elsewhere can you simply use \u003d\u003d \"hq\" instead of of compare to improve readability?",
+      "range": {
+        "startLine": 44,
+        "startChar": 52,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "4a04a862111f76811498b8399cddf5ada0caca41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
