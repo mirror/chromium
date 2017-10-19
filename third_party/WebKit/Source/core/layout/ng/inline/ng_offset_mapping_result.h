@@ -6,6 +6,7 @@
 #define NGOffsetMappingResult_h
 
 #include "core/CoreExport.h"
+#include "core/editing/Forward.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
@@ -98,6 +99,15 @@ class CORE_EXPORT NGOffsetMappingResult {
   const RangeMap& GetRanges() const { return ranges_; }
   const String& GetText() const { return text_; }
 
+  // Mapping from DOM position to |NGOffsetMappingUnit|.
+
+  // TODO(layout-dev): We should take |Position| instead of |Node| and offset,
+  // to support IMG, and BR.
+  // |Position| should be:
+  //  - OffsetInAnchor for Text + offset
+  //  - BeforeNode/AfterNode for BR and IMG
+  //  Other |Position| objects are not accepted.
+
   // Returns the NGOffsetMappingUnit that contains the given offset in the DOM
   // node. If there are multiple qualifying units, returns the last one.
   const NGOffsetMappingUnit* GetMappingUnitForDOMOffset(const Node&,
@@ -131,7 +141,11 @@ class CORE_EXPORT NGOffsetMappingResult {
   // offset is at the beginning of the node, returns false.
   bool IsAfterNonCollapsedCharacter(const Node&, unsigned offset) const;
 
-  // TODO(xiaochengh): Add APIs for reverse mapping.
+  // Mapping from text content offset to DOM position.
+
+  // Converts text content |offset| in text content into |Text| node and offset
+  // in DOM as |Position| or a position before node, e.g. BR.
+  Position MapToPosition(unsigned offset) const;
 
  private:
   UnitVector units_;
