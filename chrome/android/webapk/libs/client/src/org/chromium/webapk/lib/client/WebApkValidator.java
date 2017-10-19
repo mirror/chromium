@@ -5,6 +5,7 @@
 package org.chromium.webapk.lib.client;
 
 import static org.chromium.webapk.lib.common.WebApkConstants.WEBAPK_PACKAGE_PREFIX;
+import static org.chromium.webapk.lib.common.WebApkMetaDataKeys.SCOPE;
 import static org.chromium.webapk.lib.common.WebApkMetaDataKeys.START_URL;
 
 import android.content.Context;
@@ -40,12 +41,17 @@ public class WebApkValidator {
     private static final String TAG = "WebApkValidator";
     private static final String KEY_FACTORY = "EC"; // aka "ECDSA"
     private static final String MAPSLITE_PACKAGE_NAME = "com.google.android.apps.mapslite";
-    private static final String MAPSLITE_STARTURL_PREFIX = "https://www.google.com/maps";
+    private static final String MAPSLITE_URL_PREFIX =
+            "https://www.google.com/maps"; // Matches scope.
 
     private static byte[] sExpectedSignature;
     private static byte[] sCommentSignedPublicKeyBytes;
+    private static IGoogleSignedPackage sGoogleSignedCallback;
     private static PublicKey sCommentSignedPublicKey;
     private static boolean sOverrideValidationForTesting;
+
+    /** Interface to support callback to verify if a goole package name is Google signed. */
+    public interface IGoogleSignedPackage { public boolean isGoogleSigned(String packageName); }
 
     /**
      * Queries the PackageManager to determine whether a WebAPK can handle the URL. Ignores whether
@@ -224,10 +230,24 @@ public class WebApkValidator {
             return false;
         }
         String startUrl = packageInfo.applicationInfo.metaData.getString(START_URL);
-        if (startUrl != null && startUrl.startsWith(MAPSLITE_STARTURL_PREFIX)) {
-            return true;
+        if (startUrl == null || !startUrl.startsWith(MAPSLITE_URL_PREFIX)) {
+            Log.d(TAG, "mapslite invalid startUrl prefix");
+            return false;
         }
-        return false;
+        String scope = packageInfo.applicationInfo.metaData.getString(SCOPE);
+        if (scope == null || !scope.equals(MAPSLITE_URL_PREFIX)) {
+            Log.d(TAG, "mapslite invalid scope prefix");
+            return false;
+        }
+        if (sGoogleSignedCallback == null) {
+            Log.d(TAG, "sGoogleSignedCallback not set");
+            return false;
+        }
+        if (!sGoogleSignedCallback.isGoogleSigned(webappPackageName)) {
+            Log.d(TAG, "mapslite not Google signed");
+            return false;
+        }
+        return true;
     }
 
     /** Verify that the comment signed webapk matches the public key. */
@@ -299,12 +319,16 @@ public class WebApkValidator {
      * @param v2PublicKeyBytes New comment signed public key bytes as x509 encoded public key.
      */
     @SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
-    public static void init(byte[] expectedSignature, byte[] v2PublicKeyBytes) {
+    public static void init(byte[] expectedSignature, byte[] v2PublicKeyBytes,
+            IGoogleSignedPackage googleSignedCallback) {
         if (sExpectedSignature == null) {
             sExpectedSignature = expectedSignature;
         }
         if (sCommentSignedPublicKeyBytes == null) {
             sCommentSignedPublicKeyBytes = v2PublicKeyBytes;
+        }
+        if (sGoogleSignedCallback == null) {
+            sGoogleSignedCallback = googleSignedCallback;
         }
     }
 

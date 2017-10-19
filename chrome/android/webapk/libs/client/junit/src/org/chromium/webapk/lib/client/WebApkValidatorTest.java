@@ -9,6 +9,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import static org.chromium.webapk.lib.common.WebApkMetaDataKeys.SCOPE;
 import static org.chromium.webapk.lib.common.WebApkMetaDataKeys.START_URL;
 
 import android.content.Intent;
@@ -44,8 +45,7 @@ public class WebApkValidatorTest {
     private static final String TEST_DATA_DIR = "webapks/";
     private static final String TEST_STARTURL = "https://non-empty.com/starturl";
     private static final String MAPSLITE_PACKAGE_NAME = "com.google.android.apps.mapslite";
-    private static final String MAPSLITE_EXAMPLE_STARTURL =
-            "https://www.google.com/maps?force=qVTs2FOxxTmHHo79-pwa&source=mlapk";
+    private static final String MAPSLITE_EXAMPLE_STARTURL = "https://www.google.com/maps";
 
     private static final byte[] EXPECTED_SIGNATURE = new byte[] {48, -126, 3, -121, 48, -126, 2,
             111, -96, 3, 2, 1, 2, 2, 4, 20, -104, -66, -126, 48, 13, 6, 9, 42, -122, 72, -122, -9,
@@ -72,11 +72,20 @@ public class WebApkValidatorTest {
 
     private RobolectricPackageManager mPackageManager;
 
+    private class FakeIsGoogleValidator implements WebApkValidator.IGoogleSignedPackage {
+        public boolean isGoogleSigned(String packageName) {
+            if (packageName.equals(MAPSLITE_PACKAGE_NAME)) {
+                return true;
+            }
+            return false;
+        }
+    }
+
     @Before
     public void setUp() {
         mPackageManager =
                 (RobolectricPackageManager) RuntimeEnvironment.application.getPackageManager();
-        WebApkValidator.init(EXPECTED_SIGNATURE, PUBLIC_KEY);
+        WebApkValidator.init(EXPECTED_SIGNATURE, PUBLIC_KEY, new FakeIsGoogleValidator());
     }
 
     /**
@@ -261,6 +270,7 @@ public class WebApkValidatorTest {
     public void testIsValidWebApkForMapsLite() {
         mPackageManager.addPackage(newPackageInfoWithBrowserSignature(MAPSLITE_PACKAGE_NAME,
                 new Signature(EXPECTED_SIGNATURE), MAPSLITE_EXAMPLE_STARTURL));
+
         assertTrue(WebApkValidator.isValidWebApk(
                 RuntimeEnvironment.application, MAPSLITE_PACKAGE_NAME));
         assertFalse(WebApkValidator.isValidWebApk(
@@ -375,7 +385,8 @@ public class WebApkValidatorTest {
         packageInfo.signatures = signatures;
         packageInfo.applicationInfo = new ApplicationInfo();
         packageInfo.applicationInfo.metaData = new Bundle();
-        packageInfo.applicationInfo.metaData.putString(START_URL, startUrl);
+        packageInfo.applicationInfo.metaData.putString(START_URL, startUrl + "?morestuff");
+        packageInfo.applicationInfo.metaData.putString(SCOPE, startUrl);
         packageInfo.applicationInfo.sourceDir = sourceDir;
         return packageInfo;
     }
