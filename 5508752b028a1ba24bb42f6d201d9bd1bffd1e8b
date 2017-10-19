@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "595dc638_c19bc2ed",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-19T21:58:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aee99ac_4a09760b",
+      "revId": "5508752b028a1ba24bb42f6d201d9bd1bffd1e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c84f74c6_bc4c6885",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "5508752b028a1ba24bb42f6d201d9bd1bffd1e8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e601b5e8_fa89d1dd",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-19T21:58:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c84f74c6_bc4c6885",
+      "revId": "5508752b028a1ba24bb42f6d201d9bd1bffd1e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ff74f02c_7e2675cb",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-19T21:58:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da986504_3aedc4fc",
+      "revId": "5508752b028a1ba24bb42f6d201d9bd1bffd1e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7859a2a0_3858cf66",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-19T19:38:05Z",
       "side": 1,
       "message": "as discussed offline, let\u0027s consolidate the *Close_ functions.",
+      "revId": "5508752b028a1ba24bb42f6d201d9bd1bffd1e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f263d29d_27c6b885",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-19T21:58:35Z",
+      "side": 1,
+      "message": "After further discussion we decided to leave these as they are.",
+      "parentUuid": "7859a2a0_3858cf66",
       "revId": "5508752b028a1ba24bb42f6d201d9bd1bffd1e8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
