@@ -2833,3 +2833,21 @@ fuzzer_test("base_json_correctness_fuzzer") {
     ":base",
   ]
 }
+
+fuzzer_test("base64_decode_fuzzer") {
+  sources = [
+    "base64_decode_fuzzer.cc",
+  ]
+  deps = [
+    "//base",
+  ]
+}
+
+fuzzer_test("base64_encode_fuzzer") {
+  sources = [
+    "base64_encode_fuzzer.cc",
+  ]
+  deps = [
+    "//base",
+  ]
+}
