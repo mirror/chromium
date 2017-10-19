@@ -45,6 +45,30 @@
       "revId": "a6e0aa5b87ab416c578e4056fee968428efc82de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a9d4537_1267c6fd",
+        "filename": "components/autofill/core/browser/autofill_policy_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-19T17:58:08Z",
+      "side": 1,
+      "message": "that seems reasonable to me. if autofill is completely disabled there\u0027s no need to sync any of the suggestion data. this should probably affect the sync prefs UI as well, to disable the prefs that control syncing of autofill data, if not already done.",
+      "parentUuid": "6725080f_20057ed7",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 55
+      },
+      "revId": "a6e0aa5b87ab416c578e4056fee968428efc82de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
