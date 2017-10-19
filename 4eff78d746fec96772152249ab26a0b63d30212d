@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "224b966a_f62b5abc",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-19T15:58:21Z",
+      "side": 1,
+      "message": "nit: i\u0027d get rid of this comment, i\u0027m hesitant that every place which uses it would then want to comment on its behavior.",
+      "revId": "4eff78d746fec96772152249ab26a0b63d30212d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
