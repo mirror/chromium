@@ -1555,6 +1555,49 @@ TEST_F(SpdyStreamTest, ReceivedBytes) {
   EXPECT_THAT(delegate.WaitForClose(), IsError(ERR_CONNECTION_CLOSED));
 }
 
+TEST(MovableType, UniquePtr) {
+  auto a = std::make_unique<int>(1);
+  auto b = std::make_unique<int>(2);
+  std::list<std::unique_ptr<int>> l;
+
+  //l.push_back(a);  // Does not compile.
+  l.push_back(std::move(a));
+  l.push_back(std::move(b));
+  // |a| and |b| are now undefined.
+
+  a.swap(l.back());
+  // l.back() is now undefined, but |a| is defined.
+  EXPECT_EQ(2, *a);
+  l.pop_back();
+
+  //std::unique_ptr<int> c = l.back();  // Does not compile.
+  std::unique_ptr<int> c = std::move(l.back());
+  EXPECT_EQ(1, *c);
+}
+
+TEST(MovableType, OnceCallback) {
+  int counter = 0;
+  auto increment = [] (int* c) {(*c)++;};
+
+  increment(&counter);
+  EXPECT_EQ(1, counter);
+
+  base::OnceCallback<void()> a = base::Bind(increment, &counter);
+  //a.Run();  // Does not compile.
+  std::move(a).Run();
+  EXPECT_EQ(2, counter);
+
+  base::OnceCallback<void()> b = base::Bind(increment, &counter);
+  std::list<base::OnceCallback<void()>> l;
+  //l.push_back(b);  // Does not compile.
+  l.push_back(std::move(b));
+  //l.back().Run();  // Does not compile.
+  std::move(l.back()).Run();  // Does not compile.
+  // l.back() is now undefined.
+  EXPECT_EQ(3, counter);
+  l.pop_back();
+}
+
 }  // namespace test
 
 }  // namespace net
