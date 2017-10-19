@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "be4b057f_34073a45",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-19T20:56:01Z",
+      "side": 1,
+      "message": "This seems to trigger a crash on Linux. My guess is std::move(options) happened before std::move(options.pre_sandbox_hook).\n\nI\u0027ll just pass options directly to the pre_sandbox_hook. It\u0027s only a few bytes, so no big deal to make an extra copy.",
+      "range": {
+        "startLine": 218,
+        "startChar": 19,
+        "endLine": 218,
+        "endChar": 25
+      },
+      "revId": "ece3b5854c21fbb5a9a944bc26e3b9671984b703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65e0035d_f03dedeb",
         "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.h",
         "patchSetId": 2
