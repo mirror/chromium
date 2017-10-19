@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0e1f0ef_9b6ee2af",
+        "filename": "components/download/internal/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-19T08:04:32Z",
+      "side": 1,
+      "message": "content::ResourceRequestBody cannot be used directly inside components/download/internal. If we decide to use it, may be it has to be wrapped inside another class something like download::UploadRequestBody?",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 1
+      },
+      "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f6e95f_e2e430f6",
+        "filename": "content/browser/download/download_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-19T08:04:32Z",
+      "side": 1,
+      "message": "Not sure where to keep these functions. Originally trimmed from the code in content/browser/loader/upload_data_stream_builder.cc",
+      "range": {
+        "startLine": 217,
+        "startChar": 1,
+        "endLine": 217,
+        "endChar": 2
+      },
+      "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
