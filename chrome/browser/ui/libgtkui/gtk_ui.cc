@@ -38,6 +38,7 @@
 #include "chrome/browser/ui/libgtkui/skia_utils_gtk.h"
 #include "chrome/browser/ui/libgtkui/unity_service.h"
 #include "chrome/browser/ui/libgtkui/x11_input_method_context_impl_gtk.h"
+#include "chrome/browser/ui/views/nav_button_provider.h"
 #include "printing/features/features.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/skia/include/core/SkCanvas.h"
@@ -62,7 +63,6 @@
 #include "ui/views/linux_ui/device_scale_factor_observer.h"
 #include "ui/views/linux_ui/window_button_order_observer.h"
 #include "ui/views/resources/grit/views_resources.h"
-#include "ui/views/window/nav_button_provider.h"
 
 #if GTK_MAJOR_VERSION == 2
 #include "chrome/browser/ui/libgtkui/native_theme_gtk2.h"  // nogncheck

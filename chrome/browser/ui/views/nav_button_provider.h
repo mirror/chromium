@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_VIEWS_NAV_BUTTON_PROVIDER_H_
-#define UI_VIEWS_NAV_BUTTON_PROVIDER_H_
+#ifndef CHROME_BROWSER_UI_VIEWS_NAV_BUTTON_PROVIDER_H_
+#define CHROME_BROWSER_UI_VIEWS_NAV_BUTTON_PROVIDER_H_
 
 #include "ui/views/controls/button/button.h"
 
@@ -17,6 +17,8 @@ class Insets;
 }  // namespace gfx
 
 namespace views {
+
+class ButtonBackgroundPainterDelegate;
 
 class NavButtonProvider {
  public:
@@ -47,8 +49,19 @@ class NavButtonProvider {
 
   // Gets the spacing to be used to separate buttons.
   virtual int GetInterNavButtonSpacing() const = 0;
+
+  // Creates a background for the profile chooser button.
+  virtual std::unique_ptr<Background> CreateAvatarButtonBackground(
+      std::unique_ptr<ButtonBackgroundPainterDelegate> delegate) const = 0;
+
+  // Calculates the profile chooser button's size and spacing.
+  virtual void CalculateCaptionButtonLayout(
+      const gfx::Size& content_size,
+      int top_area_height,
+      gfx::Size* caption_button_size,
+      gfx::Insets* caption_button_spacing) const = 0;
 };
 
 }  // namespace views
 
-#endif  // UI_VIEWS_NAV_BUTTON_PROVIDER_H_
+#endif  // CHROME_BROWSER_UI_VIEWS_NAV_BUTTON_PROVIDER_H_

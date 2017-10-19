@@ -9,13 +9,13 @@
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profiles_state.h"
 #include "chrome/browser/ui/layout_constants.h"
+#include "chrome/browser/ui/views/nav_button_provider.h"
 #include "chrome/browser/ui/views/profiles/profile_indicator_icon.h"
 #include "chrome/common/chrome_switches.h"
 #include "components/signin/core/common/profile_management_switches.h"
 #include "ui/gfx/font.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/label.h"
-#include "ui/views/window/nav_button_provider.h"
 
 namespace {
 
@@ -404,25 +404,49 @@ void OpaqueBrowserFrameViewLayout::LayoutNewStyleAvatar(views::View* host) {
   if (!new_avatar_button_)
     return;
 
-  int button_width = new_avatar_button_->GetPreferredSize().width();
-  int button_width_with_offset = button_width + kCaptionSpacing;
+  if (delegate_->ShouldRenderNativeNavButtons() &&
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableNativeAvatarButton)) {
+    auto* button_provider = delegate_->GetNavButtonProvider();
+    gfx::Size button_size;
+    gfx::Insets button_spacing;
+    button_provider->CalculateCaptionButtonLayout(
+        new_avatar_button_->GetPreferredSize(), delegate_->GetTopAreaHeight(),
+        &button_size, &button_spacing);
+    int inter_button_spacing = button_provider->GetInterNavButtonSpacing();
 
-  int button_x =
-      host->width() - trailing_button_start_ - button_width_with_offset;
-  int button_y = DefaultCaptionButtonY(!IsTitleBarCondensed());
+    int total_width =
+        button_size.width() + button_spacing.right() + inter_button_spacing;
 
-  minimum_size_for_buttons_ += button_width_with_offset;
-  trailing_button_start_ += button_width_with_offset;
+    int button_x = host->width() - trailing_button_start_ - total_width;
+    int button_y = button_spacing.top();
 
-  // In non-tablet mode, allow the new tab button to completely slide under
-  // the avatar button.
-  if (!IsTitleBarCondensed()) {
-    trailing_button_start_ -=
-        GetLayoutSize(NEW_TAB_BUTTON).width() + kCaptionSpacing;
+    minimum_size_for_buttons_ += total_width;
+    trailing_button_start_ += total_width;
+
+    new_avatar_button_->SetBounds(button_x, button_y, button_size.width(),
+                                  button_size.height());
+  } else {
+    int button_width = new_avatar_button_->GetPreferredSize().width();
+    int button_width_with_offset = button_width + kCaptionSpacing;
+
+    int button_x =
+        host->width() - trailing_button_start_ - button_width_with_offset;
+    int button_y = DefaultCaptionButtonY(!IsTitleBarCondensed());
+
+    minimum_size_for_buttons_ += button_width_with_offset;
+    trailing_button_start_ += button_width_with_offset;
+
+    // In non-tablet mode, allow the new tab button to completely slide under
+    // the avatar button.
+    if (!IsTitleBarCondensed()) {
+      trailing_button_start_ -=
+          GetLayoutSize(NEW_TAB_BUTTON).width() + kCaptionSpacing;
+    }
+
+    new_avatar_button_->SetBounds(button_x, button_y, button_width,
+                                  kCaptionButtonHeight);
   }
-
-  new_avatar_button_->SetBounds(button_x, button_y, button_width,
-                                kCaptionButtonHeight);
 }
 
 void OpaqueBrowserFrameViewLayout::LayoutIncognitoIcon(views::View* host) {
