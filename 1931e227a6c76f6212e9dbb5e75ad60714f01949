@@ -19,6 +19,57 @@
     },
     {
       "key": {
+        "uuid": "540f175a_ed3d15d7",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T10:41:22Z",
+      "side": 1,
+      "message": "Should we mark it again as allowed when the site stops to make sound?",
+      "revId": "1931e227a6c76f6212e9dbb5e75ad60714f01949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49f2767_ee37aec1",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T10:41:22Z",
+      "side": 1,
+      "message": "Could this be `DidUpdateAudioState(web_contents()-\u003eIsCurrentlyAudible());`? or maybe have a third function that implements the internal logic?",
+      "revId": "1931e227a6c76f6212e9dbb5e75ad60714f01949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c90732c_82a9bc4e",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T10:41:22Z",
+      "side": 1,
+      "message": "Could this be `const`?",
+      "revId": "1931e227a6c76f6212e9dbb5e75ad60714f01949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "311cd90c_5d16a944",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings_unittest.cc",
         "patchSetId": 2
