@@ -63,12 +63,17 @@ class CONTENT_EXPORT ServiceWorkerRegistrationHandle
 
   // Implements blink::mojom::ServiceWorkerRegistrationObjectHost.
   void Update(UpdateCallback callback) override;
+  void Unregister(UnregisterCallback callback) override;
 
   // Called back from ServiceWorkerContextCore when an update is complete.
   void UpdateComplete(UpdateCallback callback,
                       ServiceWorkerStatusCode status,
                       const std::string& status_message,
                       int64_t registration_id);
+  // Called back from ServiceWorkerContextCore when the unregistration is
+  // complete.
+  void UnregistrationComplete(UnregisterCallback callback,
+                              ServiceWorkerStatusCode status);
 
   // Sets the corresponding version field to the given version or if the given
   // version is nullptr, clears the field.
