@@ -207,7 +207,7 @@ v8::Local<v8::Value> MessageChannel::GetNamedProperty(
     v8::Isolate* isolate,
     const std::string& identifier) {
   if (!instance_)
-    return v8::Local<v8::Value>();
+    return {};
 
   PepperTryCatchV8 try_catch(instance_, &var_converter_, isolate);
   if (identifier == kPostMessage) {

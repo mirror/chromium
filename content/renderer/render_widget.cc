@@ -2407,7 +2407,7 @@ gfx::Point RenderWidget::ConvertWindowPointToViewport(
     const gfx::Point& point) {
   blink::WebFloatRect point_in_viewport(point.x(), point.y(), 0, 0);
   ConvertWindowToViewport(&point_in_viewport);
-  return gfx::Point(point_in_viewport.x, point_in_viewport.y);
+  return {point_in_viewport.x, point_in_viewport.y};
 }
 
 bool RenderWidget::RequestPointerLock() {

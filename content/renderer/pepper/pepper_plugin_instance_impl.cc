@@ -624,7 +624,7 @@ void PepperPluginInstanceImpl::MessageChannelDestroyed() {
 
 v8::Local<v8::Context> PepperPluginInstanceImpl::GetMainWorldContext() {
   if (!container_)
-    return v8::Local<v8::Context>();
+    return {};
 
   WebLocalFrame* frame = container_->GetDocument().GetFrame();
 

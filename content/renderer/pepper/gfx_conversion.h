@@ -19,7 +19,7 @@
 namespace content {
 
 inline gfx::Point PP_ToGfxPoint(const PP_Point& p) {
-  return gfx::Point(p.x, p.y);
+  return {p.x, p.y};
 }
 
 inline PP_Point PP_FromGfxPoint(const gfx::Point& p) {
@@ -27,11 +27,11 @@ inline PP_Point PP_FromGfxPoint(const gfx::Point& p) {
 }
 
 inline gfx::Rect PP_ToGfxRect(const PP_Rect& r) {
-  return gfx::Rect(r.point.x, r.point.y, r.size.width, r.size.height);
+  return {r.point.x, r.point.y, r.size.width, r.size.height};
 }
 
 inline gfx::RectF PP_ToGfxRectF(const PP_FloatRect& r) {
-  return gfx::RectF(r.point.x, r.point.y, r.size.width, r.size.height);
+  return {r.point.x, r.point.y, r.size.width, r.size.height};
 }
 
 inline PP_Rect PP_FromGfxRect(const gfx::Rect& r) {
@@ -39,7 +39,7 @@ inline PP_Rect PP_FromGfxRect(const gfx::Rect& r) {
 }
 
 inline gfx::Size PP_ToGfxSize(const PP_Size& s) {
-  return gfx::Size(s.width, s.height);
+  return {s.width, s.height};
 }
 
 inline PP_Size PP_FromGfxSize(const gfx::Size& s) {

@@ -38,7 +38,7 @@ PP_VarType V8ObjectVar::GetType() const {
 v8::Local<v8::Object> V8ObjectVar::GetHandle() const {
   if (instance_)
     return v8::Local<v8::Object>::New(instance_->GetIsolate(), v8_object_);
-  return v8::Local<v8::Object>();
+  return {};
 }
 
 void V8ObjectVar::InstanceDeleted() {

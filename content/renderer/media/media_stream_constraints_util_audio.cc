@@ -374,7 +374,7 @@ base::Optional<bool> SelectOptionalBool(
 
   // Return no value if unconstrained.
   if (set.is_universal()) {
-    return base::Optional<bool>();
+    return {};
   }
   DCHECK_EQ(set.elements().size(), 1U);
   return set.FirstElement();

@@ -161,7 +161,7 @@ v8::Local<v8::Object> PepperWebPluginImpl::V8ScriptableObject(
   // Re-entrancy may cause JS to try to execute script on the plugin before it
   // is fully initialized. See e.g. crbug.com/503401.
   if (!instance_)
-    return v8::Local<v8::Object>();
+    return {};
   // Call through the plugin to get its instance object. The plugin should pass
   // us a reference which we release in destroy().
   if (instance_object_.type == PP_VARTYPE_UNDEFINED)

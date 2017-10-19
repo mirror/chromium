@@ -164,7 +164,7 @@ int RoundToInt(double d) {
 }
 
 gfx::Size ToGfxSize(const Point& point) {
-  return gfx::Size(RoundToInt(point.width()), RoundToInt(point.height()));
+  return {RoundToInt(point.width()), RoundToInt(point.height())};
 }
 
 double SelectFrameRateFromCandidates(

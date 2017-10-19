@@ -80,8 +80,8 @@ media::VideoPixelFormat FromPpapiFormat(PP_VideoFrame_Format format) {
 // Compute size base on the size of frame received from MediaStreamVideoSink
 // and size specified by plugin.
 gfx::Size GetTargetSize(const gfx::Size& source, const gfx::Size& plugin) {
-  return gfx::Size(plugin.width() ? plugin.width() : source.width(),
-                   plugin.height() ? plugin.height() : source.height());
+  return {plugin.width() ? plugin.width() : source.width(),
+          plugin.height() ? plugin.height() : source.height()};
 }
 
 // Compute format base on the format of frame received from MediaStreamVideoSink

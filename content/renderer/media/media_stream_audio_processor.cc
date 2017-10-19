@@ -118,7 +118,7 @@ base::Optional<int> GetStartupMinVolumeForAgc() {
   int startup_min_volume;
   if (min_volume_str.empty() ||
       !base::StringToInt(min_volume_str, &startup_min_volume)) {
-    return base::Optional<int>();
+    return {};
   }
   return base::Optional<int>(startup_min_volume);
 }
@@ -131,7 +131,7 @@ bool UseAecRefinedAdaptiveFilter() {
 }
 
 webrtc::Point WebrtcPointFromMediaPoint(const media::Point& point) {
-  return webrtc::Point(point.x(), point.y(), point.z());
+  return {point.x(), point.y(), point.z()};
 }
 
 std::vector<webrtc::Point> WebrtcPointsFromMediaPoints(

@@ -214,10 +214,10 @@ gfx::Point RendererPpapiHostImpl::PluginPointToRenderFrame(
     // dedicated window.  So, do not offset the point.
     return pt;
   }
-  return gfx::Point((pt.x() + plugin_instance->view_data().rect.point.x) /
-                        viewport_to_dip_scale_,
-                    (pt.y() + plugin_instance->view_data().rect.point.y) /
-                        viewport_to_dip_scale_);
+  return {(pt.x() + plugin_instance->view_data().rect.point.x) /
+              viewport_to_dip_scale_,
+          (pt.y() + plugin_instance->view_data().rect.point.y) /
+              viewport_to_dip_scale_};
 }
 
 IPC::PlatformFileForTransit RendererPpapiHostImpl::ShareHandleWithRemote(

@@ -132,7 +132,7 @@ bool GpuVideoAcceleratorFactoriesImpl::IsGpuVideoAcceleratorEnabled() {
 base::UnguessableToken GpuVideoAcceleratorFactoriesImpl::GetChannelToken() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   if (CheckContextLost())
-    return base::UnguessableToken();
+    return {};
 
   if (channel_token_.is_empty()) {
     context_provider_->GetCommandBufferProxy()->channel()->Send(

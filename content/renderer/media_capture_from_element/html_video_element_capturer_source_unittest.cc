@@ -50,8 +50,8 @@ class MockWebMediaPlayer : public blink::WebMediaPlayer,
                  blink::WebSetSinkIdCallbacks*) override {}
   bool HasVideo() const override { return true; }
   bool HasAudio() const override { return false; }
-  blink::WebSize NaturalSize() const override { return blink::WebSize(16, 10); }
-  blink::WebSize VisibleRect() const override { return blink::WebSize(16, 10); }
+  blink::WebSize NaturalSize() const override { return {16, 10}; }
+  blink::WebSize VisibleRect() const override { return {16, 10}; }
   bool Paused() const override { return false; }
   bool Seeking() const override { return false; }
   double Duration() const override { return 0.0; }

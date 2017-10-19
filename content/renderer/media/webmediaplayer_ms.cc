@@ -540,7 +540,7 @@ bool WebMediaPlayerMS::HasAudio() const {
 blink::WebSize WebMediaPlayerMS::NaturalSize() const {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (!video_frame_provider_)
-    return blink::WebSize();
+    return {};
 
   if (video_rotation_ == media::VIDEO_ROTATION_90 ||
       video_rotation_ == media::VideoRotation::VIDEO_ROTATION_270) {
@@ -555,7 +555,7 @@ blink::WebSize WebMediaPlayerMS::VisibleRect() const {
   scoped_refptr<media::VideoFrame> video_frame =
       compositor_->GetCurrentFrameWithoutUpdatingStatistics();
   if (!video_frame)
-    return blink::WebSize();
+    return {};
 
   const gfx::Rect& visible_rect = video_frame->visible_rect();
   if (video_rotation_ == media::VIDEO_ROTATION_90 ||

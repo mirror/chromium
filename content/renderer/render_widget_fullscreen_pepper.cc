@@ -70,7 +70,7 @@ WebMouseEvent WebMouseEventFromGestureEvent(const WebGestureEvent& gesture) {
   // Only convert touch screen gesture events, do not convert
   // touchpad/mouse wheel gesture events. (crbug.com/620974)
   if (gesture.source_device != blink::kWebGestureDeviceTouchscreen)
-    return WebMouseEvent();
+    return {};
 
   WebInputEvent::Type type = WebInputEvent::kUndefined;
   switch (gesture.GetType()) {

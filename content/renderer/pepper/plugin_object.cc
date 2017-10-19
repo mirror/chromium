@@ -99,7 +99,7 @@ v8::Local<v8::Value> PluginObject::GetNamedProperty(
     std::string error = "Property " + identifier + " does not exist.";
     isolate->ThrowException(
         v8::Exception::ReferenceError(gin::StringToV8(isolate, error)));
-    return v8::Local<v8::Value>();
+    return {};
   }
   ScopedPPVar identifier_var(ScopedPPVar::PassRef(),
                              StringVar::StringToPPVar(identifier));
@@ -207,7 +207,7 @@ gin::ObjectTemplateBuilder PluginObject::GetObjectTemplateBuilder(
 v8::Local<v8::Value> PluginObject::GetPropertyOrMethod(v8::Isolate* isolate,
                                                        PP_Var identifier_var) {
   if (!instance_)
-    return v8::Local<v8::Value>();
+    return {};
 
   V8VarConverter var_converter(instance_->pp_instance(),
                                V8VarConverter::kAllowObjectVars);

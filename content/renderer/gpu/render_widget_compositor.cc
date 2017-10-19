@@ -248,7 +248,7 @@ gfx::Size CalculateDefaultTileSize(float initial_device_scale_factor,
     default_tile_size = 512;
 #endif
 
-  return gfx::Size(default_tile_size, default_tile_size);
+  return {default_tile_size, default_tile_size};
 }
 
 // Check cc::BrowserControlsState, and blink::WebBrowserControlsState

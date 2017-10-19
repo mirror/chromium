@@ -29,7 +29,7 @@ PepperTryCatch::~PepperTryCatch() {}
 v8::Local<v8::Value> PepperTryCatch::ToV8(PP_Var var) {
   if (HasException()) {
     SetException(kConversionException);
-    return v8::Local<v8::Value>();
+    return {};
   }
 
   v8::Local<v8::Value> result;

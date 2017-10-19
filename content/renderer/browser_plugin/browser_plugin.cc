@@ -389,7 +389,7 @@ void BrowserPlugin::Destroy() {
 
 v8::Local<v8::Object> BrowserPlugin::V8ScriptableObject(v8::Isolate* isolate) {
   if (!delegate_)
-    return v8::Local<v8::Object>();
+    return {};
 
   return delegate_->V8ScriptableObject(isolate);
 }

@@ -73,7 +73,7 @@ int MockRendererPpapiHost::GetRoutingIDForWidget(PP_Instance instance) const {
 gfx::Point MockRendererPpapiHost::PluginPointToRenderFrame(
     PP_Instance instance,
     const gfx::Point& pt) const {
-  return gfx::Point();
+  return {};
 }
 
 IPC::PlatformFileForTransit MockRendererPpapiHost::ShareHandleWithRemote(
