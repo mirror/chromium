@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "db93c329_f78f5f39",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-19T00:20:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "725f8025_64be5e59",
+      "range": {
+        "startLine": 138,
+        "startChar": 11,
+        "endLine": 138,
+        "endChar": 27
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fe45404_c228584b",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 2
@@ -461,6 +485,30 @@
       "side": 1,
       "message": "Hmmm, I\u0027m more liking the idea of DCHECKING here, and keeping the extra bit of state.\n\nI don\u0027t have a strong preference though.",
       "parentUuid": "260f9f5a_3d06c6d1",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 44
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc92793_98a4ee6d",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-19T00:20:20Z",
+      "side": 1,
+      "message": "I like the current version. If we keep that state and DCHECK here, then instead of RemoveCurrentlyActiveQuietIntervals, the honest function name will be something like RemoveCurrentlyActiveQuietIntervalsOnlyIfTheyWereAddedBefore. In the current form, making the call just removes currently active interval without having to care about that extra context information, and I find it simpler to reason about.",
+      "parentUuid": "1332dc60_ca36533d",
       "range": {
         "startLine": 228,
         "startChar": 2,
@@ -682,6 +730,30 @@
       "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ba1f6b_28749134",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-19T00:20:20Z",
+      "side": 1,
+      "message": "Since I ended up changing where I call OnResourceLoadEnd, now we sometimes don\u0027t have current time available for OnResourceLoadEnd. I made both of these functions take in and Optional, so the API looks symmetric now..",
+      "parentUuid": "35c24393_2c55be5b",
+      "range": {
+        "startLine": 52,
+        "startChar": 26,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "043e7d33737fbe4af645ede51dc0c0e22e461655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
