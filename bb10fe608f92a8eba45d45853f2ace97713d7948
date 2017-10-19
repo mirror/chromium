@@ -139,6 +139,24 @@
       "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96cb03a1_e7b8b32b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-19T12:59:58Z",
+      "side": 1,
+      "message": "It\u0027s definitely better to do refactoring here about the step 5.  Please refactor the code from line 170 to line 182 (the end of this function).\n\nAlso note that, IIUC, the statement in the spec \"If E is a BeforeUnloadEvent object and E\u0027s type is beforeunload\" does NOT mean:\n    case a) E is a BeforeUnloadEvent object,\n    case b) E\u0027s type is beforeunload\n    and if either of case a) or b), ...\nI understand the statement as\n    condition a) E is a BeforeUnloadEvent object,\n    condition b) E\u0027s type is beforeunload\n    and if both of the conditions a) and b) are satisfied, ...\n\nIf both cases are okay, then the statement must be \"If case a) OR case b), ...\" instead of \"If condition a) AND condition b), ...\"",
+      "parentUuid": "e7de9d36_6d197916",
+      "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
