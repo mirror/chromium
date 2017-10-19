@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47044022_90eef49b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T02:01:32Z",
+      "side": 1,
+      "message": "Please update the CL description to reflect that we\u0027re simply adding a mapping for the existing SPEECH_INPUT_TOGGLE key - thanks!",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e9b700_de502cea",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T02:01:32Z",
+      "side": 1,
+      "message": "nit: As noted regarding the naming of START_VOICE_INTERACTION, we should rename this to express that it starts a \"text\" or \"voice\" interaction, ideally; the current naming is quite misleading!\n\nSince both text-entry and voice are forms of \"natural language\" input perhaps CanHandleNaturalLanguageInteraction() would work?",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f59387_4fa4c6b6",
+        "filename": "ash/accelerators/accelerator_table.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T02:01:32Z",
+      "side": 1,
+      "message": "If this starts a keyboard-based interaction then I think we need to rename it to START_TEXT_COMMAND, for example, and then the second entry can be START_VOICE_COMMAND.",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d974736_8c16edd1",
+        "filename": "ui/events/keycodes/dom/keycode_converter_data.inc",
+        "patchSetId": 9
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T02:01:32Z",
+      "side": 1,
+      "message": "Why is this called SPEECH_INPUT_TOGGLE? It looks like it should really be VOICE_COMMAND, based on the naming in the USB specification addendum?\n\nSince we\u0027re actually adding a DOMCode string name for this, we need to make sure that it is reflected in the W3C specification; the spec doesn\u0027t appear to contain either SpeechInputToggle, nor VoiceCommand, yet - since this is a standard USB Usage, it should be straightforward to add - let\u0027s ask garykac@ to help get the spec updated. :)",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a66b10f_c8c043c8",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T02:01:32Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary (nor will it compile, I don\u0027t think - both of these definitions are gone from the CL now!).",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "802a3776_97af4101",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T02:01:32Z",
+      "side": 1,
+      "message": "This definition applies to _all_ POSIX platforms, i.e. Android, Mac, Linux, ChromeOS and even Fuchsia - is that the intention?",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4bc2939_20c1bfba",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T02:01:32Z",
+      "side": 1,
+      "message": "This is weird... did git cl format mess up the alignment here?",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
