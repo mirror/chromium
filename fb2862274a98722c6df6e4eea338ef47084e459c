@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcc47358_204c0554",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-19T22:22:13Z",
+      "side": 1,
+      "message": "Do we bold this in the existing web UI? How does it handle the bolding?",
+      "revId": "fb2862274a98722c6df6e4eea338ef47084e459c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dcf51d8_63bc3d29",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-19T22:22:13Z",
+      "side": 1,
+      "message": "error_text -\u003e text?",
+      "revId": "fb2862274a98722c6df6e4eea338ef47084e459c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ff0921_017dc066",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-19T22:22:13Z",
+      "side": 1,
+      "message": "Can we set the default font color to SK_ColorWHITE so we don\u0027t need to specify the override color in both styles to the same value?",
+      "revId": "fb2862274a98722c6df6e4eea338ef47084e459c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08780aca_c358383b",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-19T22:22:13Z",
+      "side": 1,
+      "message": "if (!bold_start || bold_length \u003d\u003d 0) ...",
+      "revId": "fb2862274a98722c6df6e4eea338ef47084e459c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b992f6_76c08f00",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-19T22:22:13Z",
+      "side": 1,
+      "message": "I think this would be a bit clearer if it was sequential, ie,\n\n  add_style(regular_style, 0, *bold_start - 1);\n  add_style(bold_style, *bold_start, *bold_start + bold_length);\n  add_style(regular_style, *bold_start + bold_length + 1, text.length());\n\nConsider adding the add_style lambda, up to you.\n\n  add_style \u003d [\u0026](const views::StyledLabel::RangeStyleInfo\u0026 style,\n                  int start, int end) {\n    label-\u003eAddStyleRange(gfx::Range(start, end), style);\n  };",
+      "revId": "fb2862274a98722c6df6e4eea338ef47084e459c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9a22db_61e5ad75",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-19T22:22:13Z",
+      "side": 1,
+      "message": "Does *bold_start +\u003d shortcut_offset_in_string work?\n\nAlso, you can use *bold_start instead of bold_start.value()",
+      "revId": "fb2862274a98722c6df6e4eea338ef47084e459c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
