@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1636a6c1_313d1b44",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-19T17:27:31Z",
+      "side": 1,
+      "message": "Seems not used? If keeping it, added a \"_\" suffix for member variables.",
+      "revId": "7ea217d3e432a8ffabade44e0097cc3c3864f3df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0d0e84_14ee6c34",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-19T17:27:31Z",
+      "side": 1,
+      "message": "Change it to TEST_F would make the test case not run in the parameterized test. Think we want to keep this and other test cases relevant to dragging in TESt_P so that dragging in RTL is tested.",
+      "range": {
+        "startLine": 353,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 6
+      },
+      "revId": "7ea217d3e432a8ffabade44e0097cc3c3864f3df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
