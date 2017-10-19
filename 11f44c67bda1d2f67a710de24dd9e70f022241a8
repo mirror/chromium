@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16ec3f07_71df7074",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-19T20:18:37Z",
+      "side": 1,
+      "message": "For OOPIF (and \u003cwebview\u003e), if I read things correctly, the DSF (and by extension the physical_backing_size, top/bottom controls height) changes on the browser side at the same time for the embedder and guest (RWHI::GetScreenInfo-\u003eWebContentsImpl::GetScreenInfo-\u003eWebContentsViewChildFrame::GetScreenInfo-\u003eparent\u0027s WebContentsView::GetScreenInfo). However I don\u0027t think in that case we would have necessarily done a round-trip to the embedder to get a new LocalSurfaceId. Should the DSF flow through the embedder (and get back via CrossProcessFrameConnector::OnFrameRectChanged)?",
+      "revId": "11f44c67bda1d2f67a710de24dd9e70f022241a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213ad4a1_742b42a3",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-19T20:18:37Z",
+      "side": 1,
+      "message": "Should this require a new LocalSurfaceId?",
+      "revId": "11f44c67bda1d2f67a710de24dd9e70f022241a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14358dc_e448a062",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-19T20:18:37Z",
+      "side": 1,
+      "message": "Not sure about this one, but it also looks like it\u0027s global, and would change without having a chance to round-trip to the embedder, so child frames may not have a new LocalSurfaceId",
+      "revId": "11f44c67bda1d2f67a710de24dd9e70f022241a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70dec08b_351fc541",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-19T20:18:37Z",
+      "side": 1,
+      "message": "Ditto, for OOPIF child frames, this looks like it\u0027s the top level\u0027s visible viewport size, and I don\u0027t think we have a chance to do a round-trip to the embedder to get a new LocalSurfaceId",
+      "revId": "11f44c67bda1d2f67a710de24dd9e70f022241a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
