@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL offsetRotate responsive to inherited offsetRotate changes assert_equals: expected "auto 300deg" but got "auto 500deg"
+Harness: the test ran to completion.
+
