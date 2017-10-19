@@ -11,6 +11,18 @@
 
 typedef testing::Test LanguageDetectionUtilTest;
 
+namespace {
+void CheckServerWrongConfigurationLanguage(const char* const languages[],
+                                           const size_t count,
+                                           const bool expected) {
+  for (size_t i = 0; i < count; ++i) {
+    EXPECT_EQ(expected,
+              translate::IsServerWrongConfigurationLanguage(languages[i]));
+  }
+}
+
+}  // namespace
+
 // Tests that well-known language code typos are fixed.
 TEST_F(LanguageDetectionUtilTest, LanguageCodeTypoCorrection) {
   std::string language;
@@ -170,4 +182,25 @@ TEST_F(LanguageDetectionUtilTest, AdoptHtmlLang) {
   EXPECT_EQ("en", language);
   EXPECT_EQ("en", cld_language);
   EXPECT_TRUE(is_cld_reliable);
+}
+
+// Tests that languages that often have the wrong server configuration are
+// correctly identified. All incorrect language codes should be checked to
+// make sure the binary_search is correct.
+TEST_F(LanguageDetectionUtilTest, IsServerWrongConfigurationLanguage) {
+  // These languages should all be identified as having the wrong server
+  // configuration.
+  const char* const wrong_languages[] = {
+      "ar", "da", "de", "el", "es", "fa", "fr",    "hi",
+      "hu", "id", "it", "ja", "ms", "nl", "pl",    "pt",
+      "ro", "ru", "sv", "th", "tr", "vi", "zh-CN", "zh-TW"};
+  CheckServerWrongConfigurationLanguage(wrong_languages,
+                                        arraysize(wrong_languages), true);
+
+  // These languages should all be identified as having the right server
+  // configuration.
+  const char* const right_languages[] = {"en", "en-AU", "en-US",
+                                         "xx", "gg",    "rr"};
+  CheckServerWrongConfigurationLanguage(right_languages,
+                                        arraysize(right_languages), false);
 }
