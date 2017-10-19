@@ -289,7 +289,12 @@ void ProfilingProcessHost::AddClientToProfilingService(
   // Writes to the data_channel must be atomic to ensure that the profiling
   // process can demux the messages. We accomplish this by making writes
   // synchronous, and protecting the write() itself with a Lock.
-  mojo::edk::PlatformChannelPair data_channel(true /* client_is_blocking */);
+  // mojo::edk::PlatformChannelPair data_channel(false /* client_is_blocking */);
+  int fds[2];
+  pipe(fds);
+  PCHECK(fcntl(fds[0], F_SETFL, O_NONBLOCK) == 0);
+  PCHECK(fcntl(fds[0], F_SETNOSIGPIPE, 1) == 0);
+  PCHECK(fcntl(fds[1], F_SETNOSIGPIPE, 1) == 0);
 
   // Passes the client_for_profiling directly to the profiling process.
   // The client process can not start sending data until the pipe is ready,
@@ -300,8 +305,12 @@ void ProfilingProcessHost::AddClientToProfilingService(
   // messages we need to send.
   profiling_service_->AddProfilingClient(
       pid, std::move(client),
-      mojo::WrapPlatformFile(data_channel.PassClientHandle().release().handle),
-      mojo::WrapPlatformFile(data_channel.PassServerHandle().release().handle));
+      mojo::WrapPlatformFile(fds[1]),
+      mojo::WrapPlatformFile(fds[0]));
+//  profiling_service_->AddProfilingClient(
+//      pid, std::move(client),
+//      mojo::WrapPlatformFile(data_channel.PassClientHandle().release().handle),
+//      mojo::WrapPlatformFile(data_channel.PassServerHandle().release().handle));
 }
 
 // static
