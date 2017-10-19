@@ -20,6 +20,8 @@ class MediaControlOverlayPlayButtonElement final
   // MediaControlInputElement overrides.
   void UpdateDisplayType() override;
 
+  WebSize GetSizeOrDefault() const final;
+
  protected:
   const char* GetNameForHistograms() const override;
 
