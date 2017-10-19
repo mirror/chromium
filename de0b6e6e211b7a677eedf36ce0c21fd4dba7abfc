@@ -22,6 +22,30 @@
       "revId": "de0b6e6e211b7a677eedf36ce0c21fd4dba7abfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d6a758_fa9381cd",
+        "filename": "components/domain_reliability/google_configs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-19T19:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1b0a319_db18ea9f",
+      "range": {
+        "startLine": 537,
+        "startChar": 50,
+        "endLine": 537,
+        "endChar": 58
+      },
+      "revId": "de0b6e6e211b7a677eedf36ce0c21fd4dba7abfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
