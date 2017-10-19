@@ -397,6 +397,9 @@ const struct DomKeyToKeyboardCodeEntry {
     {DomKey::MEDIA_REWIND, VKEY_OEM_103},
 #endif
     {DomKey::ZOOM_TOGGLE, VKEY_ZOOM},
+#if defined(OS_POSIX)
+    {DomKey::SPEECH_INPUT_TOGGLE, VKEY_ASSISTANT_VOICE_COMMAND},
+#endif
 };
 
 // This table, used by DomCodeToUsLayoutKeyboardCode() and
