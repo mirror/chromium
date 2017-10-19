@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59789059_793b7657",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-animator-registration.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T02:46:02Z",
+      "side": 1,
+      "message": "nit: consistent indentation.",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6256b47e_8a0b4795",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-visual-update.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T02:46:02Z",
+      "side": 1,
+      "message": "Isn\u0027t this implied by animating it?",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ba1701_75bd5927",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-visual-update.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T02:46:02Z",
+      "side": 1,
+      "message": "Why 85? Is this from the old test which used a scroller to test setting scroll position too?",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151a4fa6_aa3b6643",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-visual-update.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T02:46:02Z",
+      "side": 1,
+      "message": "What\u0027s #console for?",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21fb9464_059d9ddf",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-visual-update.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T02:46:02Z",
+      "side": 1,
+      "message": "isn\u0027t this a ref test?",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65f6f95_42c9d2dd",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/WorkletAnimation.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T02:46:02Z",
+      "side": 1,
+      "message": "Move this comment to 152 where we start the first effect?",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7518cbb5_54d3ae91",
+        "filename": "third_party/WebKit/Source/platform/animation/CompositorAnimationPlayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T02:46:02Z",
+      "side": 1,
+      "message": "nit: return WTF::MakeUnique\u003cCompositorAnimationPlayer\u003e(constructor-args);",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ad7e42_66f96262",
+        "filename": "third_party/WebKit/Source/platform/animation/CompositorAnimationPlayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T02:46:02Z",
+      "side": 1,
+      "message": "This constructor isn\u0027t used is it?",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
