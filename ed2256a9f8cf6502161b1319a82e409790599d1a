@@ -197,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "59e1f72e_2813a9e8",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-19T08:03:21Z",
+      "side": 1,
+      "message": "Mike: let me clarify a bit, I don\u0027t particularly prefer ThrottlingURLLoader solution over the other, that\u0027s just the \u0027easiest\u0027 one that would be enough for us to go forward. Having the final URL in ResourceResponseHead itself makes sense to me, while doing so by default would need more changes. To expand this more... if we want to have the final URL in ResourceResponseHead (btw I think having it there itself sounds reasonable) we\u0027ll probably need to do the following:\n\n- Update it in url_loader_impl.cc (here), and have a test for that (network_service_unittest?)\n- Update it in MojoAsyncResourceHandler, and have a test for that\n- Update it in other URLLoader implementations where the new response could get created, i.e. in ServiceWorkerURLLoaderJob, ServiceWorkerSubresourceLoaderJob, AppCacheSubresourceLoader too maybe?. Having tests for them would be also appreciated.",
+      "parentUuid": "af4088a0_1c7e64ac",
+      "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "976791f2_e1bf0de6",
         "filename": "content/public/common/resource_response_info.h",
         "patchSetId": 1
