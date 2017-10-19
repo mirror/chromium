@@ -30,6 +30,7 @@
 #include "content/public/common/service_worker_modes.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace blink {
@@ -402,6 +403,8 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
       GetRegistrationForReadyCallback callback) override;
   void GetControllerServiceWorker(
       mojom::ControllerServiceWorkerRequest controller_request) override;
+  void CloneForWorker(mojom::ServiceWorkerContainerHostRequest
+                          containser_host_request) override;
 
   // Callback for ServiceWorkerContextCore::RegisterServiceWorker().
   void RegistrationComplete(RegisterCallback callback,
@@ -504,6 +507,9 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // destroyed before being passed to the renderer, this
   // content::ServiceWorkerProviderHost will be destroyed.
   mojo::AssociatedBinding<mojom::ServiceWorkerContainerHost> binding_;
+
+  // Mojo bindings for dedicated/shared workers.
+  mojo::BindingSet<mojom::ServiceWorkerContainerHost> bindings_for_worker_;
 
   std::vector<base::Closure> queued_events_;
 

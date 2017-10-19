@@ -27,6 +27,7 @@ class ServiceWorkerFetchContextImpl : public blink::WebWorkerFetchContext {
 
   // blink::WebWorkerFetchContext implementation:
   void InitializeOnWorkerThread(
+      const blink::WebURL& context_url,
       scoped_refptr<base::SingleThreadTaskRunner>) override;
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const blink::WebURLRequest& request,
