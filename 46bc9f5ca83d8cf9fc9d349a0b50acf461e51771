@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "92a7288e_b5c33711",
+        "filename": "components/offline_pages/compiled_resources2.gyp",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-10-19T00:56:00Z",
+      "side": 1,
+      "message": "for my information... does this enforce use of closure compiler buildbot on these too?",
+      "range": {
+        "startLine": 9,
+        "startChar": 7,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "46bc9f5ca83d8cf9fc9d349a0b50acf461e51771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4db2c34_b7750e7a",
+        "filename": "components/offline_pages/webui/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-10-19T00:56:00Z",
+      "side": 1,
+      "message": "should we move this to components/offline_pages/content/webui?",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "46bc9f5ca83d8cf9fc9d349a0b50acf461e51771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa9a1585_32782917",
         "filename": "components/offline_pages/webui/DEPS",
         "patchSetId": 9
@@ -31,6 +77,29 @@
       "side": 1,
       "message": "Related drive-by: What\u0027s the motivation for moving the webui into //components? Presumably it\u0027s to use this webui for something other than //chrome? If it\u0027s iOS, then having the //content dependency here defeats that purpose :).",
       "parentUuid": "aa9a1585_32782917",
+      "revId": "46bc9f5ca83d8cf9fc9d349a0b50acf461e51771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bff3592_8ea08b39",
+        "filename": "third_party/closure_compiler/compiled_resources2.gyp",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-10-19T00:56:00Z",
+      "side": 1,
+      "message": "I find that being the only compiled resource from components/ is weird",
+      "range": {
+        "startLine": 40,
+        "startChar": 17,
+        "endLine": 40,
+        "endChar": 59
+      },
       "revId": "46bc9f5ca83d8cf9fc9d349a0b50acf461e51771",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
