@@ -12,6 +12,10 @@
 class BrowserFrame;
 class BrowserView;
 
+namespace views {
+class NavButtonProvider;
+}
+
 // A specialization of the NonClientFrameView object that provides additional
 // Browser-specific methods.
 class BrowserNonClientFrameView : public views::NonClientFrameView,
@@ -65,6 +69,13 @@ class BrowserNonClientFrameView : public views::NonClientFrameView,
 
   // Provided for mus to update the minimum window size property.
   virtual void UpdateMinimumSize();
+
+  // Used on desktop Linux to determine if we should use GTK to draw
+  // native-looking window navigation buttons.
+  virtual bool ShouldRenderNativeNavButtons() const;
+
+  // Used on desktop Linux to get the NavButtonProvider.
+  virtual const views::NavButtonProvider* GetNavButtonProvider() const;
 
   // Overriden from views::View.
   void ChildPreferredSizeChanged(views::View* child) override;

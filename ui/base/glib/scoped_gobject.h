@@ -5,7 +5,6 @@
 #ifndef UI_BASE_GLIB_SCOPED_GOBJECT_H_
 #define UI_BASE_GLIB_SCOPED_GOBJECT_H_
 
-// Similar in spirit to a std::unique_ptr.
 template <typename T>
 class ScopedGObject {
  public:
@@ -13,7 +12,10 @@ class ScopedGObject {
 
   explicit ScopedGObject(T* obj) : obj_(obj) { Ref(); }
 
-  ScopedGObject(const ScopedGObject<T>& other) = delete;
+  ScopedGObject(const ScopedGObject<T>& other) {
+    obj_ = other.obj_;
+    g_object_ref_sink(obj_);
+  }
 
   ScopedGObject(ScopedGObject<T>&& other) : obj_(other.obj_) {
     other.obj_ = nullptr;
@@ -21,7 +23,10 @@ class ScopedGObject {
 
   ~ScopedGObject() { reset(); }
 
-  ScopedGObject<T>& operator=(const ScopedGObject<T>& other) = delete;
+  ScopedGObject<T>& operator=(const ScopedGObject<T>& other) {
+    obj_ = other.obj_;
+    g_object_ref_sink(obj_);
+  }
 
   ScopedGObject<T>& operator=(ScopedGObject<T>&& other) {
     reset();
