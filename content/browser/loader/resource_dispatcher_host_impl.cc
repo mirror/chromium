@@ -2583,8 +2583,16 @@ ResourceDispatcherHostImpl::HttpAuthRelationTypeOf(
 
   if (net::registry_controlled_domains::SameDomainOrHost(
           first_party, request_url,
-          net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES))
+          net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES)) {
+    // If the first party is HTTPS but the request is HTTP, this is
+    // mixed-content. Do not allow the image.
+    if (first_party.SchemeIsCryptographic() &&
+        !request_url.SchemeIsCryptographic() &&
+        !allow_cross_origin_auth_prompt()) {
+      return HTTP_AUTH_RELATION_BLOCKED_CROSS;
+    }
     return HTTP_AUTH_RELATION_SAME_DOMAIN;
+  }
 
   if (allow_cross_origin_auth_prompt())
     return HTTP_AUTH_RELATION_ALLOWED_CROSS;
