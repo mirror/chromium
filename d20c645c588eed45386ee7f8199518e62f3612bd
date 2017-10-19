@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4b7035e_fc722f03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SelectionClientManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-19T18:48:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b3048116_bd337071",
+      "range": {
+        "startLine": 55,
+        "startChar": 76,
+        "endLine": 55,
+        "endChar": 84
+      },
+      "revId": "d20c645c588eed45386ee7f8199518e62f3612bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "064fcfdc_cb8a61ec",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "d20c645c588eed45386ee7f8199518e62f3612bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dcf4e21_7be7575f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3170,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-19T18:48:12Z",
+      "side": 1,
+      "message": "Fixed.  Sorry about these failures, I was testing on my phone with Smart Selection enabled, causing different results.  Now we override whether Smart Selection is enabled by disabling in the test Setup and reenabling in selected tests, so they should all run the same on O with SS and pre-O.",
+      "parentUuid": "064fcfdc_cb8a61ec",
+      "range": {
+        "startLine": 3170,
+        "startChar": 8,
+        "endLine": 3170,
+        "endChar": 43
+      },
+      "revId": "d20c645c588eed45386ee7f8199518e62f3612bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d55b19fb_8af0d67b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3172,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-19T18:48:12Z",
+      "side": 1,
+      "message": "Right - split this into two tests for second-tap, one with SS and one without.",
+      "parentUuid": "3699adc8_4d1ccc39",
+      "range": {
+        "startLine": 3172,
+        "startChar": 8,
+        "endLine": 3172,
+        "endChar": 36
+      },
+      "revId": "d20c645c588eed45386ee7f8199518e62f3612bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ac26fe4_546e7eb5",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "d20c645c588eed45386ee7f8199518e62f3612bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00684b00_b4c30db4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3184,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-19T18:48:12Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "4ac26fe4_546e7eb5",
+      "range": {
+        "startLine": 3184,
+        "startChar": 8,
+        "endLine": 3184,
+        "endChar": 29
+      },
+      "revId": "d20c645c588eed45386ee7f8199518e62f3612bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
