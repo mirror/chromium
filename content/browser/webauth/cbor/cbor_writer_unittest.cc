@@ -185,4 +185,58 @@ TEST(CBORWriterTest, TestWriteNestedMap) {
                                               arraysize(kNestedMapTestCase)));
 }
 
+TEST(CBORWriterTest, TestWriterIsValidDepthSingleLayer) {
+  EXPECT_TRUE(CBORWriter::IsValidDepth(CBORValue(2)));
+  EXPECT_TRUE(CBORWriter::IsValidDepth(CBORValue()));
+  EXPECT_TRUE(CBORWriter::IsValidDepth(CBORValue("AA")));
+}
+
+TEST(CBORWriterTest, TestWriterIsValidDepthMultiLayer) {
+  CBORValue::MapValue cbor_map;
+  cbor_map["a"] = CBORValue(1);
+  CBORValue::MapValue nested_map;
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  cbor_map["b"] = CBORValue(nested_map);
+
+  EXPECT_TRUE(CBORWriter::IsValidDepth(CBORValue(cbor_map)));
+}
+
+TEST(CBORWriterTest, TestWriterIsValidDepthUnbalancedCBOR) {
+  CBORValue::ArrayValue cbor_array;
+  CBORValue::MapValue cbor_map;
+  CBORValue::MapValue nested_map;
+
+  cbor_map["a"] = CBORValue(1);
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  cbor_map["b"] = CBORValue(nested_map);
+  cbor_array.push_back(CBORValue(1));
+  cbor_array.push_back(CBORValue(2));
+  cbor_array.push_back(CBORValue(3));
+  cbor_array.push_back(CBORValue(cbor_map));
+
+  EXPECT_TRUE(CBORWriter::IsValidDepth(CBORValue(cbor_array)));
+}
+
+TEST(CBORWriterTest, TestWriterIsValidDepthOverlyNestedCBOR) {
+  CBORValue::MapValue map;
+  CBORValue::MapValue nested_map;
+  CBORValue::MapValue inner_nested_map;
+  CBORValue::ArrayValue array;
+
+  map["a"] = CBORValue(1);
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  inner_nested_map["e"] = CBORValue(4);
+  inner_nested_map["f"] = CBORValue(5);
+  array.push_back(CBORValue(6));
+  array.push_back(CBORValue(7));
+  inner_nested_map["g"] = CBORValue(array);
+  nested_map["g"] = CBORValue(inner_nested_map);
+  map["b"] = CBORValue(nested_map);
+
+  EXPECT_FALSE(CBORWriter::IsValidDepth(CBORValue(map)));
+}
+
 }  // namespace content
