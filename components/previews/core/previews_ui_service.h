@@ -13,6 +13,7 @@
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "components/previews/core/previews_black_list.h"
+#include "components/previews/core/previews_black_list_observer.h"
 #include "components/previews/core/previews_experiments.h"
 #include "components/previews/core/previews_io_data.h"
 #include "components/previews/core/previews_logger.h"
@@ -48,6 +49,22 @@ class PreviewsUIService {
 
   // Clears the history of the black list between |begin_time| and |end_time|.
   void ClearBlackList(base::Time begin_time, base::Time end_time);
+
+  // Notifies |logger_| that |host| has been blacklisted at |time|. Virtualized
+  // in testing.
+  virtual void OnNewBlacklistedHost(const std::string& host, base::Time time);
+
+  // Notifies |logger_| that the user is blacklisted at |time|. Virtualized in
+  // testing.
+  virtual void OnUserBlacklisted(base::Time time);
+
+  // Notifies |logger_| that the user is not blacklisted at |time|. Virtualized
+  // in testing.
+  virtual void OnUserNotBlacklisted(base::Time time);
+
+  // Notifies |logger_| that the blacklist is cleared at |time|. Virtualized in
+  // testing.
+  virtual void OnBlacklistCleared(base::Time time);
 
   // Log the navigation to PreviewsLogger. Virtualized in testing.
   virtual void LogPreviewNavigation(const GURL& url,
