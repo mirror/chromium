@@ -168,6 +168,7 @@ void FormStructureBrowserTest::SetUp() {
 }
 
 void FormStructureBrowserTest::TearDown() {
+  //WaitForBackgroundTasks();
   [autofillController_ detachFromWebState];
 
   ChromeWebTest::TearDown();
