@@ -88,6 +88,24 @@
       "revId": "b3f0c1daa139584106b7c70d68409911aa1a8959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72b6c47_29c7742d",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-19T15:57:36Z",
+      "side": 1,
+      "message": "Thanks for double checking.\n\nI meant the one that uses ScopedAllowBlocking, i.e. https://chromium-review.googlesource.com/c/chromium/src/+/705700/6",
+      "parentUuid": "5e5c7eaf_7b2c1f31",
+      "revId": "b3f0c1daa139584106b7c70d68409911aa1a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
