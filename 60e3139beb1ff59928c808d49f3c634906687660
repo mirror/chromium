@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55311f46_8d4f4fc6",
+        "filename": "extensions/browser/api/document_scan/document_scan_interface_chromeos.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-19T16:43:53Z",
+      "side": 1,
+      "message": "can you document that |lorggnette_manager_client| can be null, and that it\u0027s intended to be used in tests.",
+      "revId": "60e3139beb1ff59928c808d49f3c634906687660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7795c1b_30a7aa33",
+        "filename": "extensions/browser/api/document_scan/document_scan_interface_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-19T16:43:53Z",
+      "side": 1,
+      "message": "optional: inject this into DBusThreadManager instead of passing it to |scan_interface_|\n\nThat way you don\u0027t need DocumentScanInterfaceChromeos.lorgnette_manager_client_",
+      "revId": "60e3139beb1ff59928c808d49f3c634906687660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
