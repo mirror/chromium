@@ -33,6 +33,24 @@
       "revId": "67868e44a4ee10436a8ce4394a9c3f556ef642e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3e07e0f_c04f3a95",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-19T18:11:56Z",
+      "side": 1,
+      "message": "We assigned the button containing webview a generic container role [1], so I think that\u0027s why we could get into elements within webview.\n\n[1]: https://cs.chromium.org/chromium/src/ui/app_list/views/search_result_answer_card_view.cc?q\u003dsearch_result_answer_card_view\u0026dr\u003dC\u0026l\u003d117",
+      "parentUuid": "05e6a8e8_f3ba2c37",
+      "revId": "67868e44a4ee10436a8ce4394a9c3f556ef642e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
