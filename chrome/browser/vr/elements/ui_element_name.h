@@ -53,6 +53,13 @@ enum UiElementName {
   kBackgroundTop,
   kBackgroundBottom,
   kUnderDevelopmentNotice,
+  kWebVrTimeoutSpinner,
+  kWebVrTimeoutSpinnerBackground,
+  kWebVrTimeoutMessage,
+  kWebVrTimeoutMessageLayout,
+  kWebVrTimeoutMessageIcon,
+  kWebVrTimeoutMessageText,
+  kWebVrTimeoutMessageButton,
 };
 
 }  // namespace vr

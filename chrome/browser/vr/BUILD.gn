@@ -144,6 +144,7 @@ source_set("vr_common_source") {
     "//cc/animation",
     "//cc/paint",
     "//chrome/app:generated_resources",
+    "//chrome/app/vector_icons",
     "//chrome/browser/resources:vr_shell_resources",
     "//components/security_state/core",
     "//components/strings",
