@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b4ee8bde_6297f12f",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameRequestCallback.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-19T21:18:22Z",
+      "side": 1,
+      "message": "Drive by:\n\nI think you need to add a line into the generated_modules_callback_function_files section of third_party/WebKit/Source/bindings/modules/v8/generated.gni\n\nAlso drive by:\n\nSince callback types are not exposed to script - like dictionaries they\u0027re a spec convenience - you shouldn\u0027t need either SecureContext or RuntimeEnabled IDL attributes.",
+      "parentUuid": "3b960f8c_ad71e85c",
+      "revId": "5d564389a8e6ff797686f392297435bb41acfb6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36fe1227_c0899151",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameRequestCallbackCollection.cpp",
         "patchSetId": 2
