@@ -4,7 +4,10 @@
 
 # Test target for download internal tests to depend on.
 source_set("test_support") {
-  visibility = [ "//components/download/internal:unit_tests" ]
+  visibility = [
+    "//components/download/content/test:test_support",
+    "//components/download/internal:unit_tests",
+  ]
 
   testonly = true
 

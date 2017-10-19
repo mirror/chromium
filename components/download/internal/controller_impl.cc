@@ -106,7 +106,10 @@ ControllerImpl::ControllerImpl(
   DCHECK(log_sink_);
 }
 
-ControllerImpl::~ControllerImpl() = default;
+ControllerImpl::~ControllerImpl() {
+  DCHECK(navigation_monitor_);
+  navigation_monitor_->SetObserver(nullptr);
+}
 
 void ControllerImpl::Initialize(const base::Closure& callback) {
   DCHECK_EQ(controller_state_, State::CREATED);
@@ -128,6 +131,7 @@ Controller::State ControllerImpl::GetState() {
 }
 
 void ControllerImpl::StartDownload(const DownloadParams& params) {
+  LOG(ERROR) << "@@@ " << __func__;
   DCHECK(controller_state_ == State::READY ||
          controller_state_ == State::UNAVAILABLE);
 
@@ -486,12 +490,17 @@ void ControllerImpl::OnModelHardRecoverComplete(bool success) {
 void ControllerImpl::OnItemAdded(bool success,
                                  DownloadClient client,
                                  const std::string& guid) {
+  LOG(ERROR) << "@@@ " << __func__;
   // If the StartCallback doesn't exist, we already notified the Client about
   // this item.  That means something went wrong, so stop here.
-  if (start_callbacks_.find(guid) == start_callbacks_.end())
+  if (start_callbacks_.find(guid) == start_callbacks_.end()) {
+    LOG(ERROR) << "@@@ no start up callback ?";
     return;
+  }
 
   if (!success) {
+    LOG(ERROR) << "@@@ not success ?";
+
     HandleStartDownloadResponse(client, guid,
                                 DownloadParams::StartResult::INTERNAL_ERROR);
     return;
@@ -504,6 +513,7 @@ void ControllerImpl::OnItemAdded(bool success,
   DCHECK(entry);
   DCHECK_EQ(Entry::State::NEW, entry->state);
   TransitTo(entry, Entry::State::AVAILABLE, model_.get());
+  LOG(ERROR) << "@@@ onItemAdded, activate more download!";
 
   ActivateMoreDownloads();
 }
@@ -1100,12 +1110,19 @@ void ControllerImpl::ActivateMoreDownloads() {
   uint32_t paused_count = entries_states[Entry::State::PAUSED];
   uint32_t active_count = entries_states[Entry::State::ACTIVE];
 
+  const auto& status = device_status_listener_->CurrentDeviceStatus();
+  LOG(ERROR) << "@@@ net = " << (int)(status.network_status)
+             << " , b = " << (int)(status.battery_status);
+
   bool has_actionable_downloads = false;
   while (CanActivateMoreDownloads(config_, active_count, paused_count)) {
+    LOG(ERROR) << "@@@ CanActivateMoreDownloads OK!";
     Entry* next = scheduler_->Next(
         model_->PeekEntries(), device_status_listener_->CurrentDeviceStatus());
-    if (!next)
+    if (!next) {
+      LOG(ERROR) << "@@@ No next entry!";
       break;
+    }
 
     has_actionable_downloads = true;
     DCHECK_EQ(Entry::State::AVAILABLE, next->state);
