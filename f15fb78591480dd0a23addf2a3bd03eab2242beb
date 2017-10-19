@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7264dcfa_02b8ff05",
+        "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-10-19T12:36:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "92578c9f_48640a8f",
+      "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec0e4e7c_d58db75c",
         "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
         "patchSetId": 1
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "I would just make HeapProfilingMode a benchmark command line flag, i.e: \"--heap-profiling-mode\", to avoid adding so many benchmark classes around (this increases the output \"run_benchmark list\" command for everyone)",
       "parentUuid": "b70a409b_fa8b2962",
+      "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01bf28bb_ec6fba5c",
+        "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-10-19T12:36:35Z",
+      "side": 1,
+      "message": "should we omit contrib benchmarks from that list? (or have those only show if explicitly requested, e.g. maybe an --all switch)",
+      "parentUuid": "7eb9731d_3807cd2b",
       "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
