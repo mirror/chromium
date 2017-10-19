@@ -11,6 +11,7 @@
 
 #include "build/build_config.h"
 #include "components/content_settings/core/common/content_settings_types.h"
+#include "components/signin/core/common/signin_features.h"
 #include "url/gurl.h"
 
 #if !defined(OS_ANDROID)
@@ -114,6 +115,13 @@ void ShowBrowserSignin(Browser* browser,
 // otherwise initiates signin in a new browser tab.
 void ShowBrowserSigninOrSettings(Browser* browser,
                                  signin_metrics::AccessPoint access_point);
+#endif  // !defined(OS_ANDROID)
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+// Start a DICE-specific sign-in flow: opens a Gaia sign-in webpage in a new
+// tab and automatically starts syncing after the user signs in on the web
+// with a Google account.
+void ShowBrowserSigninForDice(Profile* profile);
 #endif
 
 }  // namespace chrome

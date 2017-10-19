@@ -55,6 +55,11 @@
 #if !defined(OS_ANDROID)
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "components/signin/core/browser/signin_manager.h"
+#include "components/signin/core/common/profile_management_switches.h"
+#endif
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#include "chrome/browser/signin/dice_tab_helper.h"
 #endif
 
 using base::UserMetricsAction;
@@ -413,6 +418,23 @@ void ShowBrowserSigninOrSettings(Browser* browser,
   else
     ShowBrowserSignin(browser, access_point);
 }
-#endif
+
+#endif  // !defined(OS_ANDROID)
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+void ShowBrowserSigninForDice(Profile* profile) {
+  DCHECK(signin::IsAccountConsistencyDiceEnabled());
+
+  profile = profile->GetOriginalProfile();
+  ScopedTabbedBrowserDisplayer displayer(profile);
+  chrome::ShowSingletonTab(displayer.browser(),
+                           GaiaUrls::GetInstance()->add_account_url());
+  content::WebContents* active_contents =
+      displayer.browser()->tab_strip_model()->GetActiveWebContents();
+  DCHECK_EQ(GaiaUrls::GetInstance()->add_account_url(),
+            active_contents->GetVisibleURL());
+  DiceTabHelper::CreateForWebContents(active_contents);
+}
+#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 }  // namespace chrome
