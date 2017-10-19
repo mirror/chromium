@@ -16,6 +16,29 @@
       "revId": "ece3b5854c21fbb5a9a944bc26e3b9671984b703",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e0035d_f03dedeb",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-19T20:51:41Z",
+      "side": 1,
+      "message": "nit: using PreSandboxHook \u003d base::OnceCallback\u003cbool(sandbox::bpf_dsl::Policy*, Options)\u003e;",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "ece3b5854c21fbb5a9a944bc26e3b9671984b703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
