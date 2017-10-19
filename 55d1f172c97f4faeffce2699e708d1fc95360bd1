@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34b446a4_27fcf25b",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_cell.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-19T15:49:01Z",
+      "side": 1,
+      "message": "Can you explain the goal here? If the user selects the suggestion with the arrow keys, I think we still want the prefix to be invisible. Does this drive the text that\u0027s shown in the omnibox text field (where we do want the full text to be visible)?",
+      "revId": "55d1f172c97f4faeffce2699e708d1fc95360bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
