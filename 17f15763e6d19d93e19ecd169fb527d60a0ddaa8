@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5a533c2_13fb9511",
+        "filename": "chrome/browser/notifications/message_center_settings_controller_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T00:46:55Z",
+      "side": 1,
+      "message": "nullptr",
+      "revId": "17f15763e6d19d93e19ecd169fb527d60a0ddaa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

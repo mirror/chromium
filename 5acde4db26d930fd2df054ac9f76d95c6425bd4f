@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cebc9a4_990bf3f6",
+        "filename": "chrome/browser/notifications/message_center_settings_controller_chromeos.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T00:46:55Z",
+      "side": 1,
+      "message": "nit: just \u0027message_center::NotifierSettingsProvider\u0027 here and below while you are in here.",
+      "revId": "5acde4db26d930fd2df054ac9f76d95c6425bd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f61af9c_7f04086c",
+        "filename": "ui/message_center/message_center.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T00:46:55Z",
+      "side": 1,
+      "message": "nit: s/NULL/null/",
+      "revId": "5acde4db26d930fd2df054ac9f76d95c6425bd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
