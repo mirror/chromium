@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "896b133f_7c901521",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 14612,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-19T21:22:23Z",
+      "side": 1,
+      "message": "I\u0027ve just saw the line above.  I wonder if we want to change this?  Most of the other occurrences use a value of 5 or more:\n\n$ cat testing/buildbot/chromium.fyi.json | grep shards.*: | sort | uniq -c\n      2           \"shards\": 1\n     29           \"shards\": 10\n      5           \"shards\": 12\n      2           \"shards\": 15\n      1           \"shards\": 18\n      6           \"shards\": 2\n      4           \"shards\": 20\n      2           \"shards\": 4\n     13           \"shards\": 5\n      3           \"shards\": 6",
+      "range": {
+        "startLine": 14612,
+        "startChar": 10,
+        "endLine": 14612,
+        "endChar": 21
+      },
+      "revId": "5dd80f9ee3f8122a53592315f2608c418a24743f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
