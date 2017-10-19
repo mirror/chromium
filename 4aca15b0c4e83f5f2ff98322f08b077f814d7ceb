@@ -16,6 +16,24 @@
       "revId": "4aca15b0c4e83f5f2ff98322f08b077f814d7ceb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8144a97b_7d1d33c4",
+        "filename": "build/android/binary_size/apk_downloader.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-10-19T20:32:51Z",
+      "side": 1,
+      "message": "//chrome/VERSION would work if we made the download step first run _UpdateReferenceApks if they were out of date but that would make resource_sizes.py fail if we try to run it on the bots in the future (unlikely).. I added a note in the README about updating the current milestone but I\u0027ll change it to parse the .sha1 files if you\u0027d prefer that.",
+      "parentUuid": "4e1e6034_d8383ae7",
+      "revId": "4aca15b0c4e83f5f2ff98322f08b077f814d7ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
