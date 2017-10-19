@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6ff9f35_0c642842",
+        "filename": "third_party/WebKit/common/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-19T05:21:38Z",
+      "side": 1,
+      "message": "+1 export definitions kinda tell, but it\u0027s probably helpful to have a bit of documentation about these.\n\nmojo_bindings could be maybe also mojo_core_bindings..? not sure.",
+      "parentUuid": "a0cd4023_d643b441",
+      "revId": "b94fcbb96442acf210e6f8038b1190eb30daa783",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b48bbb70_62de5ffc",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRequest.h",
         "patchSetId": 10
