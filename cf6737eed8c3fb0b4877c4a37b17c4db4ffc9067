@@ -95,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "a73d72db_77444c84",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-19T21:26:36Z",
+      "side": 1,
+      "message": "Looks like there is no \"set_int32_value\" generated, so I\u0027ll work on limiting to 32 bit before setting it in the proto.  Does that sound right to you?",
+      "parentUuid": "f26b2d7a_f6712710",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 43
+      },
+      "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4886df_dd6f5a6f",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-19T21:26:36Z",
+      "side": 1,
+      "message": "I like the two-line version better, thanks.",
+      "parentUuid": "1feb5dd8_301d3ac8",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 52
+      },
+      "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b198e9d_98597c05",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
         "patchSetId": 1
@@ -142,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "e0935a2b_95d22c40",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-19T21:26:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b10c5fc4_5bb66f21",
+      "range": {
+        "startLine": 73,
+        "startChar": 29,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c20c399d_11cfdf7c",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
         "patchSetId": 1
@@ -165,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "543d78b1_70326cd5",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-19T21:26:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c20c399d_11cfdf7c",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 58
+      },
+      "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51f43184_1723bf13",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.h",
         "patchSetId": 1
@@ -185,6 +281,30 @@
       "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5171125a_d55c2282",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-19T21:26:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51f43184_1723bf13",
+      "range": {
+        "startLine": 63,
+        "startChar": 62,
+        "endLine": 63,
+        "endChar": 73
+      },
+      "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
