@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c9fa662_704e25ea",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T04:03:00Z",
+      "side": 1,
+      "message": "D\u0027oh; I forgot that on success the |result| contains the number of underlying handles, not ZX_OK.\n\nI\u0027ll send you a fixed version to review. :)",
+      "revId": "c2a865c7451560887659cce5b27c8d5f363e0051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
