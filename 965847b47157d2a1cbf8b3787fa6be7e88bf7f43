@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "af946133_ffb77661",
+        "filename": "docs/layout_tests_linux.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-19T00:03:51Z",
+      "side": 1,
+      "message": "nit: match ordered list style from above, e.g. \"1.  \" instead of \"1) \"",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56790ce9_e1192414",
         "filename": "docs/layout_tests_linux.md",
         "patchSetId": 2
@@ -52,6 +69,23 @@
       "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70f9b54c_a7b17f9d",
+        "filename": "docs/layout_tests_linux.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-19T00:03:51Z",
+      "side": 1,
+      "message": "nit: same here",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -119,6 +153,74 @@
       "side": 1,
       "message": "Alright, thanks.",
       "parentUuid": "33b063c7_9d4a04d6",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6811dc73_69311848",
+        "filename": "ui/gfx/test/fontconfig_util_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-19T00:03:51Z",
+      "side": 1,
+      "message": "nit: one per line unless clang-format says otherwise?",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e8848d_f23847d2",
+        "filename": "ui/gfx/test/fontconfig_util_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-19T00:03:51Z",
+      "side": 1,
+      "message": "nit: add \"\u003c\u003c\"",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f92c96_cca7e2f7",
+        "filename": "ui/gfx/test/fontconfig_util_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-19T00:03:51Z",
+      "side": 1,
+      "message": "nit: here too",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8937039_c6af4ea9",
+        "filename": "ui/gfx/test/fontconfig_util_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-19T00:03:51Z",
+      "side": 1,
+      "message": "you\u0027re reassigning this on the next line; just do:\n\n  base::FilePath font_file_path \u003d\n      content_shell_test_fonts_path.Append(...);",
       "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
