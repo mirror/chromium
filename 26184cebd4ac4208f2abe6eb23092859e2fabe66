@@ -16,6 +16,24 @@
       "revId": "26184cebd4ac4208f2abe6eb23092859e2fabe66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9ab5c3_10a468bf",
+        "filename": "content/browser/webauth/authenticator_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T19:01:53Z",
+      "side": 1,
+      "message": "Unfortunately, there\u0027s no command line tool to build the blobs. It\u0027s a manual process, but I do use cbor.me for CBOR encoding. I\u0027m going to break this up a lot more now that I\u0027ve refactored authenticator_utils and will include the diagnostic notation for each blob as well.",
+      "parentUuid": "4d4e4ca3_0216bb5a",
+      "revId": "26184cebd4ac4208f2abe6eb23092859e2fabe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

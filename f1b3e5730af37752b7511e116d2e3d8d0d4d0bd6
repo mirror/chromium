@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b1f0ad3_4debe114",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T19:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eabbba78_a59c60f4",
+      "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c77d824e_9a738c90",
         "filename": "content/browser/webauth/attestation_data.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3a2a98_f102d105",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T19:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c77d824e_9a738c90",
+      "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "abedb327_c879cd03",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T19:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e2edfa8_e42845eb",
+      "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c26f7472_abed8bf1",
         "filename": "content/browser/webauth/attestation_data.h",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ec24882f_3ec640ea",
+        "filename": "content/browser/webauth/attestation_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T19:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c26f7472_abed8bf1",
+      "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3070288b_2514d12c",
         "filename": "content/browser/webauth/attestation_statement.h",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2334df9b_49afa380",
+        "filename": "content/browser/webauth/attestation_statement.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T19:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3070288b_2514d12c",
+      "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "68cba2bc_71f71684",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T19:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc7b7daa_6be95460",
+      "range": {
+        "startLine": 86,
+        "startChar": 45,
+        "endLine": 86,
+        "endChar": 70
+      },
+      "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ae63b14_ef59dae7",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 4
@@ -121,6 +235,30 @@
       "writtenOn": "2017-10-18T09:08:34Z",
       "side": 1,
       "message": "nit: application_parameter\n\noptional nit: alternatively, for concepts that are named with so generic words in the spec, I could imagine using a more descriptive word in the code and adding a comment at the declaration to tie it to the spec name. Up to you, using the spec name and describing what it actually means at declaration, like you do it now, is good too.",
+      "range": {
+        "startLine": 92,
+        "startChar": 23,
+        "endLine": 92,
+        "endChar": 32
+      },
+      "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd794269_d78e6cc8",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T19:01:53Z",
+      "side": 1,
+      "message": "Done. If it\u0027s all the same, I\u0027ll probably keep consistent with the spec for now - (mainly because it also maintains consistency with //device/u2f).",
+      "parentUuid": "3ae63b14_ef59dae7",
       "range": {
         "startLine": 92,
         "startChar": 23,
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "280080fe_27b981a8",
+        "filename": "content/browser/webauth/authenticator_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T19:01:53Z",
+      "side": 1,
+      "message": "Of course, I see it now. Thanks!",
+      "parentUuid": "9da53820_b94e0eaa",
+      "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53a2f4e6_5cef1de9",
         "filename": "content/browser/webauth/authenticator_utils.cc",
         "patchSetId": 4
@@ -164,6 +320,24 @@
       "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6df2ab2_e26a9373",
+        "filename": "content/browser/webauth/authenticator_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T19:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53a2f4e6_5cef1de9",
+      "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +364,30 @@
     },
     {
       "key": {
+        "uuid": "1d9048e2_199a0e84",
+        "filename": "content/browser/webauth/authenticator_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T19:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03f3a8f2_b5ae03a1",
+      "range": {
+        "startLine": 71,
+        "startChar": 46,
+        "endLine": 71,
+        "endChar": 57
+      },
+      "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c748eb29_2123de96",
         "filename": "content/browser/webauth/authenticator_utils.cc",
         "patchSetId": 4
@@ -204,6 +402,24 @@
       "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e322842_f28c5387",
+        "filename": "content/browser/webauth/authenticator_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T19:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c748eb29_2123de96",
+      "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +440,24 @@
     },
     {
       "key": {
+        "uuid": "367b9deb_6142953e",
+        "filename": "content/browser/webauth/authenticator_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T19:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea8925b_fe7b47b9",
+      "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1559d1d5_11321495",
         "filename": "content/browser/webauth/fido_attestation_statement.h",
         "patchSetId": 4
@@ -238,6 +472,24 @@
       "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b49215ab_5d97d591",
+        "filename": "content/browser/webauth/fido_attestation_statement.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T19:01:53Z",
+      "side": 1,
+      "message": "Yeah, good idea. Anyone needing more details can reference the CDDL in the spec anyways.",
+      "parentUuid": "1559d1d5_11321495",
+      "revId": "f1b3e5730af37752b7511e116d2e3d8d0d4d0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
