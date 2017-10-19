@@ -7,6 +7,7 @@
 #import "base/mac/scoped_nsobject.h"
 #import "base/path_service.h"
 #include "base/strings/sys_string_conversions.h"
+#include "base/test/histogram_tester.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -187,4 +188,52 @@ IN_PROC_BROWSER_TEST_F(ShareMenuControllerTest, SharingDelegate) {
              }]);
 
   PerformShare(service);
+}
+
+IN_PROC_BROWSER_TEST_F(ShareMenuControllerTest, Histograms) {
+  base::HistogramTester tester;
+  const std::string success_name = "NativeMacShare.Success";
+  const std::string failure_name = "NativeMacShare.Failure";
+
+  tester.ExpectTotalCount(success_name, 0);
+  tester.ExpectTotalCount(failure_name, 0);
+
+  NSSharingService* twitter =
+      [NSSharingService sharingServiceNamed:NSSharingServiceNamePostOnTwitter];
+  NSSharingService* facebook =
+      [NSSharingService sharingServiceNamed:NSSharingServiceNamePostOnFacebook];
+  NSSharingService* mock_service = MakeMockSharingService();
+
+  auto twitter_bucket = static_cast<base::HistogramBase::Sample>(
+      mac_share_menu::ShareServiceUMA::kTwitter);
+  auto facebook_bucket = static_cast<base::HistogramBase::Sample>(
+      mac_share_menu::ShareServiceUMA::kFacebook);
+  auto unknown_bucket = static_cast<base::HistogramBase::Sample>(
+      mac_share_menu::ShareServiceUMA::kUnknownCustom);
+
+  [controller_ sharingService:twitter didShareItems:@[]];
+  tester.ExpectUniqueSample(success_name, twitter_bucket, 1);
+  tester.ExpectTotalCount(failure_name, 0);
+
+  [controller_ sharingService:twitter didShareItems:@[]];
+  tester.ExpectBucketCount(success_name, twitter_bucket, 2);
+  tester.ExpectTotalCount(success_name, 2);
+  tester.ExpectTotalCount(failure_name, 0);
+
+  [controller_ sharingService:facebook didShareItems:@[]];
+  tester.ExpectBucketCount(success_name, facebook_bucket, 1);
+  tester.ExpectTotalCount(success_name, 3);
+  tester.ExpectTotalCount(failure_name, 0);
+
+  [controller_ sharingService:mock_service didShareItems:@[]];
+  tester.ExpectBucketCount(success_name, unknown_bucket, 1);
+  tester.ExpectTotalCount(success_name, 4);
+  tester.ExpectTotalCount(failure_name, 0);
+
+  [controller_
+           sharingService:twitter
+      didFailToShareItems:@[]
+                    error:[NSError errorWithDomain:@"" code:0 userInfo:nil]];
+  tester.ExpectTotalCount(success_name, 4);
+  tester.ExpectUniqueSample(failure_name, twitter_bucket, 1);
 }
