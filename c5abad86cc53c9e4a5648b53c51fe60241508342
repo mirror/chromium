@@ -22,6 +22,30 @@
       "revId": "c5abad86cc53c9e4a5648b53c51fe60241508342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ceb3a1_b2d9dfb2",
+        "filename": "content/browser/download/download_file_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-19T00:06:29Z",
+      "side": 1,
+      "message": "test_file_error_injector.cc doesn\u0027t take a offset, so it won\u0027t work for us unless we make a lot changes.\nInstead, created a ErrorInjectionDownloadFile class in download_browsertests to override DownloadFileImpl and allow error injection.",
+      "parentUuid": "fe1bad7b_8b15bd38",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 25
+      },
+      "revId": "c5abad86cc53c9e4a5648b53c51fe60241508342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
