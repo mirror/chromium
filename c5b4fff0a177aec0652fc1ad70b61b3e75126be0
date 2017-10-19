@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2ec5338_fe97955c",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/filters/effect-reference-repaint-primitive-attr-mutation.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-19T16:25:37Z",
+      "side": 1,
+      "message": "Would a test for attribute value change be also useful?",
+      "revId": "c5b4fff0a177aec0652fc1ad70b61b3e75126be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
