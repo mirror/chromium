@@ -4,6 +4,15 @@
 
 #include "chrome/browser/ui/views/dropdown_bar_host.h"
 
+#import <Cocoa/Cocoa.h>
+
+#include "ui/views/widget/widget.h"
+
 void DropdownBarHost::SetHostViewNative(views::View* host_view) {
   // Nothing to do.
+}
+
+void DropdownBarHost::UpdateWindowShadow() {
+  NSWindow* window = host_->GetNativeWindow();
+  [window invalidateShadow];
 }

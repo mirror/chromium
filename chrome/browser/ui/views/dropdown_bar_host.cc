@@ -6,6 +6,7 @@
 
 #include <algorithm>
 
+#include "build/build_config.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/dropdown_bar_host_delegate.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
@@ -192,6 +193,9 @@ void DropdownBarHost::AnimationProgressed(const gfx::Animation* animation) {
   // This call makes sure |view_| appears in the right location, the size and
   // shape is correct and that it slides in the right direction.
   view_->SetPosition(gfx::Point(0, view_offset));
+#if defined(OS_MACOSX)
+  UpdateWindowShadow();
+#endif
 }
 
 void DropdownBarHost::AnimationEnded(const gfx::Animation* animation) {
