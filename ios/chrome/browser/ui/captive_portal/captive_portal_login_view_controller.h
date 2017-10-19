@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 
 #import "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller_delegate.h"
+#import "ios/web/public/web_state/web_state.h"
 
 class GURL;
 
@@ -21,8 +22,9 @@ class GURL;
 
 // Initializes the login web view and navigates to |landingURL|. |landingURL|
 // is the web page which allows the user to complete their connection to the
-// network.
-- (instancetype)initWithLandingURL:(const GURL&)landingURL
+// network. The |webState| which triggered this Login UI must be nonnull.
+- (instancetype)initWithWebState:(web::WebState*)webState
+                      landingURL:(const GURL&)landingURL
     NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;
