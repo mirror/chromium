@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f3725fc_2067061d",
+        "filename": "mojo/common/time_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T09:02:07Z",
+      "side": 1,
+      "message": "I\u0027m going to see if this makes is able to compile down to the same code as if we just passed an int64 and called FromInternalValue() directly. Hopefully it\u0027s not a big difference... it should be able to tell that deserialization of a base::TimeDelta can never fail and hopefully inline everything...",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 16
+      },
+      "revId": "7823760f4fabe7192a66d23e17164ba9a004c5c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
