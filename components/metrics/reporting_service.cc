@@ -146,7 +146,8 @@ void ReportingService::SendStagedLog() {
 
   if (!log_uploader_) {
     log_uploader_ = client_->CreateUploader(
-        GetUploadUrl(), upload_mime_type(), service_type(),
+        GetUploadUrl(), GetInsecureUploadUrl(), upload_mime_type(),
+        service_type(),
         base::Bind(&ReportingService::OnLogUploadComplete,
                    self_ptr_factory_.GetWeakPtr()));
   }
