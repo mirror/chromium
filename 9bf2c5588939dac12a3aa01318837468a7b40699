@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ee7f0c5_e08e8733",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-19T22:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9813e7d1_e94b3e6b",
+      "revId": "9bf2c5588939dac12a3aa01318837468a7b40699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37e5bf7a_33b5f819",
         "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-19T19:19:02Z",
       "side": 1,
       "message": "How about something to test the gibberish case, maybe\n\ntestRedirect(\u0027chrome://extensions/invalidSubpath\u0027, true);\nexpectEquals(window.location.pathname, \u0027/\u0027);",
+      "revId": "9bf2c5588939dac12a3aa01318837468a7b40699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec044523_c732108e",
+        "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-19T22:50:40Z",
+      "side": 1,
+      "message": "fake-route above is the unsupported case. Good idea to check that it redirects to the right though. I modified the testRedirect helper function to do this.",
+      "parentUuid": "37e5bf7a_33b5f819",
       "revId": "9bf2c5588939dac12a3aa01318837468a7b40699",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
