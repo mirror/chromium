@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0eda3d70_43c32a1d",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/color-space/ImageData-fidelity.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-19T18:40:50Z",
+      "side": 1,
+      "message": "This comment should refer to a crbug, to make sure it is tracked.",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 16
+      },
+      "revId": "6ce59dd2caf90bada347bd8b1466e76c1171508d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc2a9ba_7fcea824",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-19T18:40:50Z",
+      "side": 1,
+      "message": "I think you could even remove this.  At this point, only the IDL entry-points are hidden by the flag AFAIK. So this flag should have no effect on unit tests.",
+      "range": {
+        "startLine": 773,
+        "startChar": 2,
+        "endLine": 773,
+        "endChar": 41
+      },
+      "revId": "6ce59dd2caf90bada347bd8b1466e76c1171508d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2113c928_2d3f9ed0",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-19T18:40:50Z",
+      "side": 1,
+      "message": "not necessary IMHO. Same comment for lines below.",
+      "range": {
+        "startLine": 326,
+        "startChar": 7,
+        "endLine": 326,
+        "endChar": 29
+      },
+      "revId": "6ce59dd2caf90bada347bd8b1466e76c1171508d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b9f5c8a_d9210356",
+        "filename": "third_party/WebKit/Source/core/html/ImageDataTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-19T18:40:50Z",
+      "side": 1,
+      "message": "Not needed IMHO (same for below)",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 40
+      },
+      "revId": "6ce59dd2caf90bada347bd8b1466e76c1171508d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95324958_c8d5682d",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasRenderingContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-19T18:40:50Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this check. The runtime enabling in the IDL should be sufficient.  I think that if you get rid of this check you should be able to remove all instances of enabling this flag in unit tests.",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 63
+      },
+      "revId": "6ce59dd2caf90bada347bd8b1466e76c1171508d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f2cc43_c8c21ecc",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-19T18:40:50Z",
+      "side": 1,
+      "message": "not needed?",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "6ce59dd2caf90bada347bd8b1466e76c1171508d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42261fb2_fce230b6",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-19T18:40:50Z",
+      "side": 1,
+      "message": "not needed?",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 41
+      },
+      "revId": "6ce59dd2caf90bada347bd8b1466e76c1171508d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d13570b_a33f1b66",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-19T18:40:50Z",
+      "side": 1,
+      "message": "not needed?",
+      "range": {
+        "startLine": 161,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 41
+      },
+      "revId": "6ce59dd2caf90bada347bd8b1466e76c1171508d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1e01f1_eb125be9",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2DTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-19T18:40:50Z",
+      "side": 1,
+      "message": "not needed?",
+      "range": {
+        "startLine": 1087,
+        "startChar": 2,
+        "endLine": 1087,
+        "endChar": 41
+      },
+      "revId": "6ce59dd2caf90bada347bd8b1466e76c1171508d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45de9aec_3fcc9c99",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParamsTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-19T18:40:50Z",
+      "side": 1,
+      "message": "not needed?",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "6ce59dd2caf90bada347bd8b1466e76c1171508d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0f862f_71bb73cb",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-19T18:40:50Z",
+      "side": 1,
+      "message": "Do any tests really need this?",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 44
+      },
+      "revId": "6ce59dd2caf90bada347bd8b1466e76c1171508d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
