@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5456ad46_c543239d",
+        "filename": "net/http/http_auth_handler_factory_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-19T20:24:40Z",
+      "side": 1,
+      "message": "I don\u0027t understand why we pick ERR_INVALID_SPDY_STREAM here. Is that unrelated to this test case? Changing it to ERR_PUSHED_STREAM_EXPIRED makes it seem more out of place. Can we pick a more general error code (that is not H2 related) for this particular test?",
+      "revId": "38c62a4cd7aa232e267bc1ff810f1996d216fab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ae6360_2b435491",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2555,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-19T20:24:40Z",
+      "side": 1,
+      "message": "Are we going to use |ERR_PUSHED_STREAM_EXPIRED| for purposes other than logging? \nIf yes, then I am fine with the rename. Otherwise, it doesn\u0027t seem to me that we need to create a net error code for this.",
+      "revId": "38c62a4cd7aa232e267bc1ff810f1996d216fab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
