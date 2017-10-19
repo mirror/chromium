@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "081fdcf1_916dcb33",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1801,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-19T17:11:23Z",
+      "side": 1,
+      "message": "Just FYI for future changes: We have decided to kill Mirror on Win,Linux,macOS (Jerome and Thomas are currently removing the UI) - so we can simplify this and have:\n* DICE and its variants on Win, Linux and MacOS\n* Mirror on ChromeOS (this is for backward compatibility and Unicorn - I have no idea if Mirror works well or not on ChromeOS)",
+      "range": {
+        "startLine": 1801,
+        "startChar": 14,
+        "endLine": 1801,
+        "endChar": 25
+      },
+      "revId": "b6b4645f88f05b7296676eeeeacfbb4c9904af69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
