@@ -134,6 +134,7 @@ constexpr int kChosenObjectTag = CONTENT_SETTINGS_NUM_TYPES;
 // bubble shown, and that the one that is shown is associated with the current
 // window. This matches the behaviour in Views: see PageInfoBubbleView.
 bool g_is_bubble_showing = false;
+PageInfoBubbleController* g_page_info_bubble = nullptr;
 
 // Takes in the parent window, which should be a BrowserWindow, and gets the
 // proper anchor point for the bubble. The returned point is in screen
@@ -227,6 +228,10 @@ NSPoint AnchorPointForWindow(NSWindow* parent) {
 @end
 
 @implementation PageInfoBubbleController
+
++ (PageInfoBubbleController*)getPageInfoBubble {
+  return g_page_info_bubble;
+}
 
 - (CGFloat)defaultWindowWidth {
   return kDefaultWindowWidth;
@@ -625,6 +630,12 @@ bool IsInternalURL(const GURL& url) {
 // Layout all of the controls in the window. This should be called whenever
 // the content has changed.
 - (void)performLayout {
+  // Skip layout if the bubble is closing.
+  InfoBubbleWindow* bubbleWindow =
+      base::mac::ObjCCastStrict<InfoBubbleWindow>([self window]);
+  if ([bubbleWindow isClosing])
+    return;
+
   // Make the content at least as wide as the permissions view.
   CGFloat contentWidth =
       std::max([self defaultWindowWidth], NSWidth([permissionsView_ frame]));
@@ -1434,11 +1445,13 @@ PageInfoUIBridge::PageInfoUIBridge(content::WebContents* web_contents)
 PageInfoUIBridge::~PageInfoUIBridge() {
   DCHECK(g_is_bubble_showing);
   g_is_bubble_showing = false;
+  g_page_info_bubble = nullptr;
 }
 
 void PageInfoUIBridge::set_bubble_controller(
     PageInfoBubbleController* controller) {
   bubble_controller_ = controller;
+  g_page_info_bubble = controller;
 }
 
 void PageInfoUIBridge::SetIdentityInfo(
