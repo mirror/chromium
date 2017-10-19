@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01a1e6cb_86468d4b",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-19T16:51:47Z",
+      "side": 1,
+      "message": "Clarity: We should check whether db_result.is_valid() before using |db_result| (on line 348)",
+      "revId": "1aefde2bd75179fb3a459efbc84caeb25fcefc94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919af163_6f146009",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-19T16:51:47Z",
+      "side": 1,
+      "message": "- Can we have a constant for INVALID_ORGANIZATION ?\n- Can this constant have value -1 ?",
+      "revId": "1aefde2bd75179fb3a459efbc84caeb25fcefc94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b423f0e_54deff32",
+        "filename": "components/favicon/core/large_icon_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-19T16:51:47Z",
+      "side": 1,
+      "message": "Is calling GetLargeIconOrFallbackStyleAndWaitForCallback() for |kUnknownPageUrl2| and |kUnknownPageUrl3| useful?",
+      "revId": "1aefde2bd75179fb3a459efbc84caeb25fcefc94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39d3f10_3f45f8ca",
+        "filename": "components/favicon/core/large_icon_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-19T16:51:47Z",
+      "side": 1,
+      "message": "Is the second GetLargeIconOrFallbackStyleAndWaitForCallback() (and InjectMockResult()) call useful?",
+      "revId": "1aefde2bd75179fb3a459efbc84caeb25fcefc94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987b4b86_194b157a",
+        "filename": "components/favicon/core/large_icon_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-19T16:51:47Z",
+      "side": 1,
+      "message": "Are the second and third GetLargeIconOrFallbackStyleAndWaitForCallback() calls useful?",
+      "revId": "1aefde2bd75179fb3a459efbc84caeb25fcefc94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
