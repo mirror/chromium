@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3a5777e_4639a384",
+        "filename": "third_party/WebKit/Source/core/input/TouchEventManagerTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-19T18:42:09Z",
+      "side": 1,
+      "message": "Ugh. Holding onto a boolean from a stack variable is kind of ugly. \n\nCan we just not make the CheckEventListenerCallback a variable we hold onto?",
+      "range": {
+        "startLine": 39,
+        "startChar": 29,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "bfebaace5144f4684f16f0e547a991314977d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
