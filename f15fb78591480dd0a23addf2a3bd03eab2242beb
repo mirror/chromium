@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "52c669eb_9531b0d4",
+        "filename": "tools/perf/contrib/heap_profiling/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-19T10:46:44Z",
+      "side": 1,
+      "message": "contrib file need at least 2 owners",
+      "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8eda5b92_5906999e",
         "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
         "patchSetId": 1
@@ -142,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7eb9731d_3807cd2b",
+        "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-19T10:46:44Z",
+      "side": 1,
+      "message": "I would just make HeapProfilingMode a benchmark command line flag, i.e: \"--heap-profiling-mode\", to avoid adding so many benchmark classes around (this increases the output \"run_benchmark list\" command for everyone)",
+      "parentUuid": "b70a409b_fa8b2962",
+      "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "875baf13_b35758ed",
         "filename": "tools/perf/page_sets/heap_profiling_page_set.py",
         "patchSetId": 1
@@ -153,6 +188,24 @@
       "writtenOn": "2017-10-19T09:15:01Z",
       "side": 1,
       "message": "At some point we\u0027ll wan\u0027t to move away from this data/top_10.json file (and it\u0027s page set).\n\nI would suggest borrowing, e.g. LoadYahooStory [1] from system health, and define a new story set in system_health_stories.py [2], similar to the existing SystemHealthBlankStorySet, just containing that story.\n\nUnless Ned has some other opinion or suggestion?\n\n[1]: https://cs.chromium.org/chromium/src/tools/perf/page_sets/system_health/loading_stories.py?rcl\u003d32b5eb6e2dee07a0f1da2335dd9a0533c46779b1\u0026l\u003d39\n[2]: https://cs.chromium.org/chromium/src/tools/perf/page_sets/system_health/system_health_stories.py?rcl\u003d32b5eb6e2dee07a0f1da2335dd9a0533c46779b1\u0026l\u003d36",
+      "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5915833f_2c3fdea5",
+        "filename": "tools/perf/page_sets/heap_profiling_page_set.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-19T10:46:44Z",
+      "side": 1,
+      "message": "+1 for just reuse system health stories.",
+      "parentUuid": "875baf13_b35758ed",
       "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
