@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "6d07a676_e0f9fe1e",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_helper.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-10-19T21:55:18Z",
+      "side": 1,
+      "message": "Thanks for the feedback!\n\nWill do and fix other issues. I am working on Demo with Arc VPN support for both system tray and Setting page for UI review next Tues. So there will be delay that I can update this.",
+      "parentUuid": "623877f0_f5fcca44",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2bc2bfd_17c5e7e5",
         "filename": "chromeos/network/network_state.cc",
         "patchSetId": 13
