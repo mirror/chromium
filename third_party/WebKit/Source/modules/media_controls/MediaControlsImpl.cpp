@@ -56,10 +56,13 @@
 #include "modules/media_controls/MediaControlsRotateToFullscreenDelegate.h"
 #include "modules/media_controls/MediaControlsWindowEventListener.h"
 #include "modules/media_controls/MediaDownloadInProductHelpManager.h"
+#include "modules/media_controls/elements/MediaControlButtonPanelElement.h"
 #include "modules/media_controls/elements/MediaControlCastButtonElement.h"
 #include "modules/media_controls/elements/MediaControlCurrentTimeDisplayElement.h"
 #include "modules/media_controls/elements/MediaControlDownloadButtonElement.h"
+#include "modules/media_controls/elements/MediaControlElementsHelper.h"
 #include "modules/media_controls/elements/MediaControlFullscreenButtonElement.h"
+#include "modules/media_controls/elements/MediaControlModernPlayButtonElement.h"
 #include "modules/media_controls/elements/MediaControlMuteButtonElement.h"
 #include "modules/media_controls/elements/MediaControlOverflowMenuButtonElement.h"
 #include "modules/media_controls/elements/MediaControlOverflowMenuListElement.h"
@@ -291,6 +294,7 @@ MediaControlsImpl::MediaControlsImpl(HTMLMediaElement& media_element)
       text_track_list_(nullptr),
       overflow_list_(nullptr),
       media_button_panel_(nullptr),
+      modern_play_button_(nullptr),
       cast_button_(nullptr),
       fullscreen_button_(nullptr),
       download_button_(nullptr),
@@ -377,14 +381,21 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
 //     |    (-webkit-media-controls-panel)
 //     |  {if ModernMediaControlsEnabled, otherwise
 //     |   contents are directly attached to parent.
-//     +-HTMLDivElement
+//     +-MediaControlModernPlayButtonElement
+//     |  (-internal-media-controls-play-button)
+//     |  {if ModernMediaControlsEnabled}
+//     +-MediaControlButtonPanelElement
 //     |  |  (-internal-media-controls-button-panel)
+//     |  |  <video> only, otherwise children are directly attached to parent
 //     |  +-MediaControlPlayButtonElement
 //     |  |   (-webkit-media-controls-play-button)
 //     |  +-MediaControlCurrentTimeDisplayElement
 //     |  |    (-webkit-media-controls-current-time-display)
 //     |  +-MediaControlRemainingTimeDisplayElement
 //     |  |    (-webkit-media-controls-time-remaining-display)
+//     |  +-HTMLDivElement
+//     |  |    (-internal-media-controls-button-spacer)
+//     |  |    {if ModernMediaControls is enabled and is video element}
 //     |  +-MediaControlMuteButtonElement
 //     |  |    (-webkit-media-controls-mute-button)
 //     |  +-MediaControlVolumeSliderElement
@@ -433,10 +444,11 @@ void MediaControlsImpl::InitializeControls() {
   // If using the modern media controls, the buttons should belong to a
   // seperate button panel. This is because they are displayed in two lines.
   Element* button_panel = panel_;
-  if (IsModern()) {
-    media_button_panel_ = HTMLDivElement::Create(GetDocument());
-    media_button_panel_->SetShadowPseudoId(
-        "-internal-media-controls-button-panel");
+  if (IsModern() && MediaElement().IsHTMLVideoElement()) {
+    modern_play_button_ = new MediaControlModernPlayButtonElement(*this);
+    panel_->AppendChild(modern_play_button_);
+
+    media_button_panel_ = new MediaControlButtonPanelElement(*this);
     panel_->AppendChild(media_button_panel_);
     button_panel = media_button_panel_;
   }
@@ -450,6 +462,11 @@ void MediaControlsImpl::InitializeControls() {
 
   duration_display_ = new MediaControlRemainingTimeDisplayElement(*this);
   button_panel->AppendChild(duration_display_);
+
+  if (IsModern() && MediaElement().IsHTMLVideoElement()) {
+    MediaControlElementsHelper::CreateDiv(
+        "-internal-media-controls-button-spacer", button_panel);
+  }
 
   timeline_ = new MediaControlTimelineElement(*this);
   panel_->AppendChild(timeline_);
@@ -1413,6 +1430,7 @@ void MediaControlsImpl::Trace(blink::Visitor* visitor) {
   visitor->Trace(rotate_to_fullscreen_delegate_);
   visitor->Trace(download_iph_manager_);
   visitor->Trace(media_button_panel_);
+  visitor->Trace(modern_play_button_);
   MediaControls::Trace(visitor);
   HTMLDivElement::Trace(visitor);
 }
