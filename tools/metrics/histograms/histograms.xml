@@ -48831,12 +48831,31 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="NewTabPage.ContentSuggestions.BreakingNews.MessageReceived"
     enum="ContentSuggestionsBreakingNewsMessageContainsNews">
+  <obsolete>
+    Deprecated in October 2017 (M64) and replaced by
+    NewTabPage.ContentSuggestions.BreakingNews.ReceivedMessageAction, when
+    adding support for push-to-refresh messages. As a result, each message
+    should contain an action but not necessrily a news. Therefore, building a
+    metric around the &quot;action&quot; makes more sense.
+  </obsolete>
   <owner>vitaliii@chromium.org</owner>
   <summary>
     Android: Number of received messages and whether they contain pushed news. A
     message contains pushed news if the payload key exists in the message. The
     payload content is not checked at all (e.g. it may be empty). Recorded when
     a message is received.
+  </summary>
+</histogram>
+
+<histogram
+    name="NewTabPage.ContentSuggestions.BreakingNews.ReceivedMessageAction"
+    enum="ContentSuggestionsBreakingNewsMessageAction">
+  <owner>mamir@chromium.org</owner>
+  <summary>
+    Android: Number of received messages and whether they contain an action. An
+    action can be either push-by-value or push-to-refresh. A message contains an
+    action if the action key exists in the message. Recorded when a message is
+    received.
   </summary>
 </histogram>
 
