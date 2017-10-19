@@ -154,7 +154,7 @@ class Internal : public mojom::ServiceWorkerInstalledScriptsManager {
         std::move(request));
   }
 
-  Internal(scoped_refptr<ThreadSafeScriptContainer> script_container)
+  explicit Internal(scoped_refptr<ThreadSafeScriptContainer> script_container)
       : script_container_(std::move(script_container)), weak_factory_(this) {}
 
   ~Internal() override {

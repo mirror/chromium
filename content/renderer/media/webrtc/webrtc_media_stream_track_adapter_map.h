@@ -70,7 +70,7 @@ class CONTENT_EXPORT WebRtcMediaStreamTrackAdapterMap
   };
 
   // Must be invoked on the main thread.
-  WebRtcMediaStreamTrackAdapterMap(
+  explicit WebRtcMediaStreamTrackAdapterMap(
       PeerConnectionDependencyFactory* const factory);
 
   // Gets a new reference to the local track adapter, or null if no such adapter

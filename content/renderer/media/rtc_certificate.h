@@ -21,7 +21,8 @@ namespace content {
 // not have direct access to WebRTC.
 class CONTENT_EXPORT RTCCertificate : public blink::WebRTCCertificate {
  public:
-  RTCCertificate(const rtc::scoped_refptr<rtc::RTCCertificate>& certificate);
+  explicit RTCCertificate(
+      const rtc::scoped_refptr<rtc::RTCCertificate>& certificate);
   ~RTCCertificate() override;
 
   // blink::WebRTCCertificate implementation.

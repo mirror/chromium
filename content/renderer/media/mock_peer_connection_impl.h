@@ -165,7 +165,8 @@ class MockPeerConnectionImpl : public webrtc::PeerConnectionInterface {
 
 class FakeRtpReceiver : public webrtc::RtpReceiverInterface {
  public:
-  FakeRtpReceiver(rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track);
+  explicit FakeRtpReceiver(
+      rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track);
   ~FakeRtpReceiver() override;
 
   rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track() const override;

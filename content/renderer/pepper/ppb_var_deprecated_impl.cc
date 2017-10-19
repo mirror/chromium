@@ -42,7 +42,7 @@ const char kUnableToCallMethodException[] = "Error: Unable to call method";
 
 class ObjectAccessor {
  public:
-  ObjectAccessor(PP_Var var)
+  explicit ObjectAccessor(PP_Var var)
       : object_var_(V8ObjectVar::FromPPVar(var).get()),
         instance_(object_var_ ? object_var_->instance() : NULL) {
     if (instance_) {

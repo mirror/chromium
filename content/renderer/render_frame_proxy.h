@@ -167,7 +167,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnDidStartLoading();
 
  private:
-  RenderFrameProxy(int routing_id);
+  explicit RenderFrameProxy(int routing_id);
 
   void Init(blink::WebRemoteFrame* frame,
             RenderViewImpl* render_view,

@@ -133,7 +133,7 @@ void ConvertImageData(PPB_ImageData_Impl* src_image,
 struct PepperGraphics2DHost::QueuedOperation {
   enum Type { PAINT, SCROLL, REPLACE, TRANSFORM };
 
-  QueuedOperation(Type t)
+  explicit QueuedOperation(Type t)
       : type(t), paint_x(0), paint_y(0), scroll_dx(0), scroll_dy(0) {}
 
   Type type;

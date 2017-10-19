@@ -41,7 +41,7 @@ namespace {
 // Queue specific to MESSAGE_DELIVERY_POLICY_WITH_VISUAL_STATE.
 class SendMessageScopeImpl : public FrameSwapMessageQueue::SendMessageScope {
  public:
-  SendMessageScopeImpl(base::Lock* lock) : auto_lock_(*lock) {}
+  explicit SendMessageScopeImpl(base::Lock* lock) : auto_lock_(*lock) {}
   ~SendMessageScopeImpl() override {}
 
  private:

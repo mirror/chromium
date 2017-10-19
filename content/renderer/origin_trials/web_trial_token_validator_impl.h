@@ -28,7 +28,7 @@ namespace content {
 class CONTENT_EXPORT WebTrialTokenValidatorImpl
     : public blink::WebTrialTokenValidator {
  public:
-  WebTrialTokenValidatorImpl(
+  explicit WebTrialTokenValidatorImpl(
       std::unique_ptr<blink::TrialTokenValidator> validator);
   ~WebTrialTokenValidatorImpl() override;
 

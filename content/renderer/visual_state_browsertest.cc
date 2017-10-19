@@ -22,7 +22,7 @@ namespace content {
 
 class CommitObserver : public RenderViewObserver {
  public:
-  CommitObserver(RenderView* render_view)
+  explicit CommitObserver(RenderView* render_view)
       : RenderViewObserver(render_view), quit_closures_(), commit_count_(0) {}
 
   void DidCommitCompositorFrame() override {

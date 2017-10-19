@@ -216,7 +216,7 @@ class IpcPacketSocket : public rtc::AsyncPacketSocket,
 // we destruct from the same thread on which is created.
 class AsyncAddressResolverImpl : public rtc::AsyncResolverInterface {
  public:
-  AsyncAddressResolverImpl(P2PSocketDispatcher* dispatcher);
+  explicit AsyncAddressResolverImpl(P2PSocketDispatcher* dispatcher);
   ~AsyncAddressResolverImpl() override;
 
   // rtc::AsyncResolverInterface interface.

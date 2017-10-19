@@ -28,7 +28,7 @@ class TestGinObject : public gin::Wrappable<TestGinObject> {
   }
 
  private:
-  TestGinObject(bool* alive) : alive_(alive) { *alive_ = true; }
+  explicit TestGinObject(bool* alive) : alive_(alive) { *alive_ = true; }
   ~TestGinObject() override { *alive_ = false; }
 
   bool* alive_;

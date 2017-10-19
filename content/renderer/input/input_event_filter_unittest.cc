@@ -54,7 +54,7 @@ class MainThreadEventQueueTest;
 
 class InputEventRecorder : public content::InputHandlerManager {
  public:
-  InputEventRecorder(InputEventFilter* filter)
+  explicit InputEventRecorder(InputEventFilter* filter)
       : InputHandlerManager(nullptr, filter, nullptr, nullptr),
         handle_events_(false),
         send_to_widget_(false),
@@ -108,7 +108,7 @@ class InputEventRecorder : public content::InputHandlerManager {
 
  private:
   struct Record {
-    Record(const WebInputEvent* event) {
+    explicit Record(const WebInputEvent* event) {
       const char* ptr = reinterpret_cast<const char*>(event);
       event_data.assign(ptr, ptr + event->size());
     }
@@ -143,7 +143,7 @@ class ReceivedItem {
 
 class ReceivedMessage : public ReceivedItem {
  public:
-  ReceivedMessage(const IPC::Message& message) : message_(message) {}
+  explicit ReceivedMessage(const IPC::Message& message) : message_(message) {}
 
   ~ReceivedMessage() override {}
 
@@ -157,7 +157,7 @@ class ReceivedMessage : public ReceivedItem {
 
 class ReceivedEvent : public ReceivedItem {
  public:
-  ReceivedEvent(const blink::WebCoalescedInputEvent& event)
+  explicit ReceivedEvent(const blink::WebCoalescedInputEvent& event)
       : event_(event.Event(), event.GetCoalescedEventsPointers()) {}
 
   ~ReceivedEvent() override {}

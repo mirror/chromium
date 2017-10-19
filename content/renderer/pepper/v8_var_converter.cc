@@ -41,14 +41,14 @@ namespace {
 
 template <class T>
 struct StackEntry {
-  StackEntry(T v) : val(v), sentinel(false) {}
+  explicit StackEntry(T v) : val(v), sentinel(false) {}
   T val;
   // Used to track parent nodes on the stack while traversing the graph.
   bool sentinel;
 };
 
 struct HashedHandle {
-  HashedHandle(v8::Local<v8::Object> h) : handle(h) {}
+  explicit HashedHandle(v8::Local<v8::Object> h) : handle(h) {}
   size_t hash() const { return handle->GetIdentityHash(); }
   bool operator==(const HashedHandle& h) const { return handle == h.handle; }
   v8::Local<v8::Object> handle;

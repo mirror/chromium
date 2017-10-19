@@ -27,11 +27,8 @@ namespace content {
 // It can be attached to a FrameReaderInterface to output the received frame.
 class PpFrameReceiver : public MediaStreamVideoSink {
  public:
-  PpFrameReceiver(blink::WebMediaStreamTrack track)
-    : track_(track),
-      reader_(NULL),
-      weak_factory_(this) {
-  }
+  explicit PpFrameReceiver(blink::WebMediaStreamTrack track)
+      : track_(track), reader_(NULL), weak_factory_(this) {}
 
   ~PpFrameReceiver() override {}
 

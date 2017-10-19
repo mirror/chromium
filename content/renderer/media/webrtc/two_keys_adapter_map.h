@@ -117,7 +117,7 @@ class TwoKeysAdapterMap {
 
  private:
   struct Entry {
-    Entry(Value value) : value(std::move(value)) {}
+    explicit Entry(Value value) : value(std::move(value)) {}
 
     Value value;
     typename std::map<PrimaryKey, std::unique_ptr<Entry>>::iterator primary_it;

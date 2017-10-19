@@ -605,7 +605,7 @@ class StatsResponse : public webrtc::StatsObserver {
       StatsReport::Values::const_iterator end_;
     };
 
-    Report(const StatsReport* report)
+    explicit Report(const StatsReport* report)
         : thread_checker_(),
           id_(report->id()->ToString()),
           type_(report->type()),
@@ -984,7 +984,7 @@ class RTCPeerConnectionHandler::Observer
     : public base::RefCountedThreadSafe<RTCPeerConnectionHandler::Observer>,
       public PeerConnectionObserver {
  public:
-  Observer(const base::WeakPtr<RTCPeerConnectionHandler>& handler)
+  explicit Observer(const base::WeakPtr<RTCPeerConnectionHandler>& handler)
       : handler_(handler),
         main_thread_(base::ThreadTaskRunnerHandle::Get()),
         stream_adapter_map_(handler_->stream_adapter_map_),

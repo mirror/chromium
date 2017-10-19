@@ -26,7 +26,8 @@ class IpcNetworkManager : public rtc::NetworkManagerBase,
                           public NetworkListObserver {
  public:
   // Constructor doesn't take ownership of the |network_list_manager|.
-  CONTENT_EXPORT IpcNetworkManager(NetworkListManager* network_list_manager);
+  CONTENT_EXPORT explicit IpcNetworkManager(
+      NetworkListManager* network_list_manager);
   ~IpcNetworkManager() override;
 
   // rtc:::NetworkManager:

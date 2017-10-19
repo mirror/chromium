@@ -215,7 +215,8 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
   // Record info about the first SessionDescription from the local and
   // remote side to record UMA stats once both are set.
   struct FirstSessionDescription {
-    FirstSessionDescription(const webrtc::SessionDescriptionInterface* desc);
+    explicit FirstSessionDescription(
+        const webrtc::SessionDescriptionInterface* desc);
 
     bool audio = false;
     bool video = false;
