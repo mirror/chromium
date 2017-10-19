@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e1b9985_3ceafb87",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 52
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-19T19:52:47Z",
+      "side": 1,
+      "message": "As this has landed, you probably don\u0027t need to mention that we depend on it.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 64
+      },
+      "revId": "dab243fa1d87e5769baeaf785dc8900778a2c776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d04189f_81282267",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-19T19:52:47Z",
+      "side": 1,
+      "message": "This is equivalent to:\n\n!allowed_touch_action.has_value() || allowed_touch_action.value() !\u003d cc::kTouchActionNone;\n\nI think this would read better as:\nconst bool touch_ack_timeout_disabled \u003d allowed_touch_action.has_value() \u0026\u0026 allowed_touch_action.value() \u003d\u003d cc::kTouchActionNone;\n\nAnd then you\u0027d need to invert the value when you call SetAckTimeoutEnabled.",
+      "range": {
+        "startLine": 579,
+        "startChar": 7,
+        "endLine": 579,
+        "endChar": 39
+      },
+      "revId": "dab243fa1d87e5769baeaf785dc8900778a2c776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
