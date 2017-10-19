@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf892c9c_880be4da",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-19T17:30:14Z",
+      "side": 1,
+      "message": "Use AccessibilityEventCallbackHelper or CriteriaHelper.pollUiThread\nrather than Thread.sleep.\n\nWhen you just sleep, you run the risk that you didn\u0027t sleep long enough.\nYou should always use code that just keeps looping until some condition\nis true, instead.",
+      "revId": "e078bada590fa216087ae7e52b590a063f9b05d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
