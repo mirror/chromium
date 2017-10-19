@@ -386,6 +386,9 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener {
   // Invoked when the WebContents is muted/unmuted.
   virtual void DidUpdateAudioMutingState(bool muted) {}
 
+  // Invoked when the WebContents starts/stops being audible.
+  virtual void DidUpdateAudioState(bool is_audible) {}
+
   // Invoked when a pepper plugin creates and shows or destroys a fullscreen
   // RenderWidget.
   virtual void DidShowFullscreenWidget() {}
