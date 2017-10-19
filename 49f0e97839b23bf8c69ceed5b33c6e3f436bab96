@@ -186,6 +186,29 @@
     },
     {
       "key": {
+        "uuid": "265d2d57_3a101c30",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-19T14:51:24Z",
+      "side": 1,
+      "message": "Should this actually move into @implementation instead? \nThe TestDelegate interface is not singleton, so we could have multiple instances if they didn\u0027t share static data.",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 21
+      },
+      "revId": "49f0e97839b23bf8c69ceed5b33c6e3f436bab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2877136b_97335dcc",
         "filename": "components/cronet/ios/test/cronet_test_base.mm",
         "patchSetId": 11
