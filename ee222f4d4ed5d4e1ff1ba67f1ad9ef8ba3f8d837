@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e43873be_1bda0a1d",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-19T21:25:12Z",
+      "side": 1,
+      "message": "Add a \"Blacklisted hosts\" outside the table and wrap the whole section in a div?",
+      "revId": "ee222f4d4ed5d4e1ff1ba67f1ad9ef8ba3f8d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45328cf9_b3d85090",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-19T21:25:12Z",
+      "side": 1,
+      "message": "s/Blacklisted host/Host/",
+      "range": {
+        "startLine": 60,
+        "startChar": 55,
+        "endLine": 60,
+        "endChar": 59
+      },
+      "revId": "ee222f4d4ed5d4e1ff1ba67f1ad9ef8ba3f8d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1232868_9dc46907",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-19T21:25:12Z",
+      "side": 1,
+      "message": "s/The time of the event/The time when the host was blacklisted/",
+      "revId": "ee222f4d4ed5d4e1ff1ba67f1ad9ef8ba3f8d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a67318_0334bacb",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-19T21:25:12Z",
+      "side": 1,
+      "message": "Can you combine this with onUserBlacklisted and pass a bool?",
+      "revId": "ee222f4d4ed5d4e1ff1ba67f1ad9ef8ba3f8d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df0465d_cdb3be4e",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-19T21:25:12Z",
+      "side": 1,
+      "message": "I think we should not use time for the Not blacklisted aspect of this. If they were never blacklisted, it doesn\u0027t make sense to have a time, and if they became un-blacklisted it\u0027s not entirely important what time it happened at. The clear event should capture that for the most part.",
+      "revId": "ee222f4d4ed5d4e1ff1ba67f1ad9ef8ba3f8d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb0d63a_65cf0086",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-19T21:25:12Z",
+      "side": 1,
+      "message": "This isn\u0027t necessarily true. If they only cleared an hour of history, then they would could still be blacklisted.",
+      "revId": "ee222f4d4ed5d4e1ff1ba67f1ad9ef8ba3f8d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
