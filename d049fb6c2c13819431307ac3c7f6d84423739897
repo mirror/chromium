@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc3438d3_99a8e8eb",
+        "filename": "chrome/browser/vr/elements/textured_element.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-19T22:10:50Z",
+      "side": 1,
+      "message": "Just a thought:  These static global switches can get a bit ugly.  Another approach is to make a small subclass in test code that exposes public SetDirtyForTesting(), which in turn just calls the protected set_dirty().  Then the production code isn\u0027t polluted with \"for test\" code.  See TextUrlBarTexture ::url_text() and friends as an example.  In this CL, there\u0027s already a global, so it\u0027s probably okay to have another.\n\nThis is a bit different than the previous \"testable constructor\" topic, where we were saying it\u0027s okay to have more flexible constructors (possibly used for testing).",
+      "revId": "d049fb6c2c13819431307ac3c7f6d84423739897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
