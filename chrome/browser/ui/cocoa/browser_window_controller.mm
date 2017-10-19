@@ -1197,6 +1197,32 @@ bool IsTabDetachingInFullscreenEnabled() {
   [touchBar_ setIsPageLoading:isLoading];
 }
 
+- (void)firstResponderUpdated:(NSResponder*)responder {
+  if (![self isInAppKitFullscreen] ||
+      [fullscreenToolbarController_ toolbarStyle] ==
+          FullscreenToolbarStyle::TOOLBAR_NONE) {
+    return;
+  }
+
+  if (!responder) {
+    [self releaseToolbarVisibilityForOwner:self withAnimation:YES];
+    return;
+  }
+
+  if (![responder isKindOfClass:[NSView class]])
+    return;
+
+  NSView* view = base::mac::ObjCCastStrict<NSView>(responder);
+  if (view == [self avatarView] ||
+      [view isDescendantOf:[toolbarController_ view]] ||
+      [view isDescendantOf:[bookmarkBarController_ view]] ||
+      [view isDescendantOf:[self tabStripView]]) {
+    [self lockToolbarVisibilityForOwner:self withAnimation:YES];
+  } else {
+    [self releaseToolbarVisibilityForOwner:self withAnimation:YES];
+  }
+}
+
 // Make the location bar the first responder, if possible.
 - (void)focusLocationBar:(BOOL)selectAll {
   [toolbarController_ focusLocationBar:selectAll];
