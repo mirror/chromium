@@ -549,7 +549,9 @@ class Document::NetworkStateObserver final
         this, TaskRunnerHelper::Get(TaskType::kNetworking, context));
   }
 
-  DEFINE_INLINE_VIRTUAL_TRACE() { ContextLifecycleObserver::Trace(visitor); }
+  virtual void Trace(blink::Visitor* visitor) {
+    ContextLifecycleObserver::Trace(visitor);
+  }
 };
 
 Document* Document::Create(const Document& document) {
@@ -7149,7 +7151,7 @@ service_manager::InterfaceProvider* Document::GetInterfaceProvider() {
   return &GetFrame()->GetInterfaceProvider();
 }
 
-DEFINE_TRACE(Document) {
+void Document::Trace(blink::Visitor* visitor) {
   visitor->Trace(imports_controller_);
   visitor->Trace(doc_type_);
   visitor->Trace(implementation_);
