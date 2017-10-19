@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58e59daf_5c89e876",
+        "filename": "content/app/strings/content_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T09:52:30Z",
+      "side": 1,
+      "message": "Maybe you should mention that the message in shown in the page where the video was playing to give more context to the translators.",
+      "revId": "d05681777ee171194146a073d0a70120a515dcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b4c7c6_660601db",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureElements.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T09:52:30Z",
+      "side": 1,
+      "message": "Maybe you could just create an HTMLDivElement and call SetShadowDOMPseudoId() from PictureInPictureInterstitial for now?",
+      "revId": "d05681777ee171194146a073d0a70120a515dcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bcb5496_a959c1b1",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureInterstitial.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T09:52:30Z",
+      "side": 1,
+      "message": "style: empty line above",
+      "revId": "d05681777ee171194146a073d0a70120a515dcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6dbd514_2dcafdf2",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureInterstitial.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T09:52:30Z",
+      "side": 1,
+      "message": "I think you can set the text in the ctor as you would hide/show the whole interstitial in Show()/Hide().",
+      "revId": "d05681777ee171194146a073d0a70120a515dcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7176d958_0350d245",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureInterstitial.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T09:52:30Z",
+      "side": 1,
+      "message": "What does the timer do?",
+      "revId": "d05681777ee171194146a073d0a70120a515dcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e87115_47cc1dc8",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureInterstitial.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T09:52:30Z",
+      "side": 1,
+      "message": "We could have an abstract MediaInterstitial class that will have methods such as Show(), Hide() and could register to some events such as being notified about poster changed. Maybe something to think of for a follow-up CL?\n\n(We could even make it so we have a base interstitial style with the background image as a poster and only vary the text and some other content.)",
+      "revId": "d05681777ee171194146a073d0a70120a515dcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
