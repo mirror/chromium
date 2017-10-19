@@ -437,6 +437,16 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   void GetInterface(const std::string& interface_name,
                     mojo::ScopedMessagePipeHandle interface_pipe) override;
 
+  // Run common checks that need to run for methods that come from a child
+  // process. |scope| is checked if it is allowed to run a service worker.
+  // If anything looks wrong |callback| will run with an error
+  // message prefixed by |error_prefix| and |args|, and false is returned.
+  template <typename CALLBACK, class... ARG>
+  bool RunCommonIPCCheck(CALLBACK* callback,
+                         const GURL& scope,
+                         const char* error_prefix,
+                         ARG... args);
+
   const std::string client_uuid_;
   const base::TimeTicks create_time_;
   int render_process_id_;

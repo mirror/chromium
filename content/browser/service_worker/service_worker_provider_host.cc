@@ -906,19 +906,9 @@ void ServiceWorkerProviderHost::Register(
     const GURL& script_url,
     blink::mojom::ServiceWorkerRegistrationOptionsPtr options,
     RegisterCallback callback) {
-  if (!dispatcher_host_ || !IsContextAlive()) {
-    std::move(callback).Run(blink::mojom::ServiceWorkerErrorType::kAbort,
-                            std::string(kServiceWorkerRegisterErrorPrefix) +
-                                std::string(kShutdownErrorMessage),
-                            nullptr, base::nullopt);
-    return;
-  }
-  // TODO(falken): This check can be removed once crbug.com/439697 is fixed.
-  if (document_url().is_empty()) {
-    std::move(callback).Run(blink::mojom::ServiceWorkerErrorType::kSecurity,
-                            std::string(kServiceWorkerRegisterErrorPrefix) +
-                                std::string(kNoDocumentURLErrorMessage),
-                            nullptr, base::nullopt);
+  if (!RunCommonIPCCheck(&callback, options->scope,
+                         kServiceWorkerRegisterErrorPrefix, nullptr,
+                         base::nullopt)) {
     return;
   }
 
@@ -929,17 +919,6 @@ void ServiceWorkerProviderHost::Register(
     // the callback is not run. Just run it with nonsense arguments.
     std::move(callback).Run(blink::mojom::ServiceWorkerErrorType::kUnknown,
                             std::string(), nullptr, base::nullopt);
-    return;
-  }
-
-  if (!GetContentClient()->browser()->AllowServiceWorker(
-          options->scope, topmost_frame_url(),
-          dispatcher_host_->resource_context(),
-          base::Bind(&GetWebContents, render_process_id_, frame_id()))) {
-    std::move(callback).Run(blink::mojom::ServiceWorkerErrorType::kDisabled,
-                            std::string(kServiceWorkerRegisterErrorPrefix) +
-                                std::string(kUserDeniedPermissionMessage),
-                            nullptr, base::nullopt);
     return;
   }
 
@@ -1000,21 +979,9 @@ void ServiceWorkerProviderHost::RegistrationComplete(
 void ServiceWorkerProviderHost::GetRegistration(
     const GURL& client_url,
     GetRegistrationCallback callback) {
-  if (!dispatcher_host_ || !IsContextAlive()) {
-    std::move(callback).Run(
-        blink::mojom::ServiceWorkerErrorType::kAbort,
-        std::string(kServiceWorkerGetRegistrationErrorPrefix) +
-            std::string(kShutdownErrorMessage),
-        nullptr, base::nullopt);
-    return;
-  }
-  // TODO(falken): This check can be removed once crbug.com/439697 is fixed.
-  if (document_url().is_empty()) {
-    std::move(callback).Run(
-        blink::mojom::ServiceWorkerErrorType::kSecurity,
-        std::string(kServiceWorkerGetRegistrationErrorPrefix) +
-            std::string(kNoDocumentURLErrorMessage),
-        nullptr, base::nullopt);
+  if (!RunCommonIPCCheck(&callback, document_url(),
+                         kServiceWorkerGetRegistrationErrorPrefix, nullptr,
+                         base::nullopt)) {
     return;
   }
 
@@ -1025,18 +992,6 @@ void ServiceWorkerProviderHost::GetRegistration(
     // the callback is not run. Just run it with nonsense arguments.
     std::move(callback).Run(blink::mojom::ServiceWorkerErrorType::kUnknown,
                             std::string(), nullptr, base::nullopt);
-    return;
-  }
-
-  if (!GetContentClient()->browser()->AllowServiceWorker(
-          document_url(), topmost_frame_url(),
-          dispatcher_host_->resource_context(),
-          base::Bind(&GetWebContents, render_process_id_, frame_id()))) {
-    std::move(callback).Run(
-        blink::mojom::ServiceWorkerErrorType::kDisabled,
-        std::string(kServiceWorkerGetRegistrationErrorPrefix) +
-            std::string(kUserDeniedPermissionMessage),
-        nullptr, base::nullopt);
     return;
   }
 
@@ -1052,21 +1007,9 @@ void ServiceWorkerProviderHost::GetRegistration(
 
 void ServiceWorkerProviderHost::GetRegistrations(
     GetRegistrationsCallback callback) {
-  if (!dispatcher_host_ || !IsContextAlive()) {
-    std::move(callback).Run(
-        blink::mojom::ServiceWorkerErrorType::kAbort,
-        std::string(kServiceWorkerGetRegistrationsErrorPrefix) +
-            std::string(kShutdownErrorMessage),
-        base::nullopt, base::nullopt);
-    return;
-  }
-  // TODO(falken): This check can be removed once crbug.com/439697 is fixed.
-  if (document_url().is_empty()) {
-    std::move(callback).Run(
-        blink::mojom::ServiceWorkerErrorType::kSecurity,
-        std::string(kServiceWorkerGetRegistrationsErrorPrefix) +
-            std::string(kNoDocumentURLErrorMessage),
-        base::nullopt, base::nullopt);
+  if (!RunCommonIPCCheck(&callback, document_url(),
+                         kServiceWorkerGetRegistrationsErrorPrefix,
+                         base::nullopt, base::nullopt)) {
     return;
   }
 
@@ -1077,18 +1020,6 @@ void ServiceWorkerProviderHost::GetRegistrations(
     // the callback is not run. Just run it with nonsense arguments.
     std::move(callback).Run(blink::mojom::ServiceWorkerErrorType::kUnknown,
                             std::string(), base::nullopt, base::nullopt);
-    return;
-  }
-
-  if (!GetContentClient()->browser()->AllowServiceWorker(
-          document_url(), topmost_frame_url(),
-          dispatcher_host_->resource_context(),
-          base::Bind(&GetWebContents, render_process_id_, frame_id()))) {
-    std::move(callback).Run(
-        blink::mojom::ServiceWorkerErrorType::kDisabled,
-        std::string(kServiceWorkerGetRegistrationsErrorPrefix) +
-            std::string(kUserDeniedPermissionMessage),
-        base::nullopt, base::nullopt);
     return;
   }
 
@@ -1316,6 +1247,41 @@ void ServiceWorkerProviderHost::GetInterface(
       base::BindOnce(
           &GetInterfaceImpl, interface_name, std::move(interface_pipe),
           running_hosted_version_->script_origin(), render_process_id_));
+}
+
+template <typename CALLBACK, class... ARG>
+bool ServiceWorkerProviderHost::RunCommonIPCCheck(CALLBACK* callback,
+                                                  const GURL& scope,
+                                                  const char* error_prefix,
+                                                  ARG... args) {
+  if (!dispatcher_host_ || !IsContextAlive()) {
+    std::move(*callback).Run(
+        blink::mojom::ServiceWorkerErrorType::kAbort,
+        std::string(error_prefix) + std::string(kShutdownErrorMessage),
+        args...);
+    return false;
+  }
+
+  // TODO(falken): This check can be removed once crbug.com/439697 is fixed.
+  if (document_url().is_empty()) {
+    std::move(*callback).Run(
+        blink::mojom::ServiceWorkerErrorType::kSecurity,
+        std::string(error_prefix) + std::string(kNoDocumentURLErrorMessage),
+        args...);
+    return false;
+  }
+
+  if (!GetContentClient()->browser()->AllowServiceWorker(
+          scope, topmost_frame_url(), dispatcher_host_->resource_context(),
+          base::Bind(&GetWebContents, render_process_id_, frame_id()))) {
+    std::move(*callback).Run(
+        blink::mojom::ServiceWorkerErrorType::kDisabled,
+        std::string(error_prefix) + std::string(kUserDeniedPermissionMessage),
+        args...);
+    return false;
+  }
+
+  return true;
 }
 
 }  // namespace content
