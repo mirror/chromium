@@ -73,6 +73,16 @@ class UI_BASE_IME_EXPORT IMEBridge {
   // window service, pass NULL for |handler|. Caller must release |handler|.
   virtual void SetCandidateWindowHandler(
       chromeos::IMECandidateWindowHandlerInterface* handler) = 0;
+
+  // Returns current VisibilityWindowHandler. This function returns NULL if
+  // current window is not ready to use.
+  virtual chromeos::IMECandidateWindowHandlerInterface*
+  GetCandidateWindowVisibilityHandler() const = 0;
+
+  // Updates current VisibilityWindowHandler. If there is no active window
+  // service, pass NULL for |handler|. Caller must release |handler|.
+  virtual void SetCandidateWindowVisibilityHandler(
+      chromeos::IMECandidateWindowHandlerInterface* handler) = 0;
 #endif
 
  protected:
