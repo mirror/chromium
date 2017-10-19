@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef630f7c_e48d77e7",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-19T08:18:35Z",
+      "side": 1,
+      "message": "As explained here, it\u0027s recommended to append at the end rather than the dictionally order.",
+      "range": {
+        "startLine": 1190,
+        "startChar": 0,
+        "endLine": 1190,
+        "endChar": 57
+      },
+      "revId": "44a6d3774caa7226265a360ed098a3c0af47e19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
