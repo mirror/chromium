@@ -111,7 +111,8 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
 
   // blink::WebRTCPeerConnectionHandler implementation
   bool Initialize(const blink::WebRTCConfiguration& server_configuration,
-                  const blink::WebMediaConstraints& options) override;
+                  const blink::WebMediaConstraints& options,
+                  bool) override;
 
   void CreateOffer(const blink::WebRTCSessionDescriptionRequest& request,
                    const blink::WebMediaConstraints& options) override;
@@ -179,8 +180,12 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
   // Start recording an event log.
   void StartEventLog(IPC::PlatformFileForTransit file,
                      int64_t max_file_size_bytes);
+  void StartEventLog();
   // Stop recording an event log.
   void StopEventLog();
+
+  // When an RTC event log is sent back from PeerConnection, it arrives here.
+  void OnRtcEventLogWrite(const std::string& output);
 
  protected:
   webrtc::PeerConnectionInterface* native_peer_connection() {
@@ -250,6 +255,10 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
 
   void RunSynchronousClosureOnSignalingThread(const base::Closure& closure,
                                               const char* trace_event_name);
+
+  // Initialize() is never expected to be called more than once, even if the
+  // first call fails.
+  bool initialize_called_;
 
   base::ThreadChecker thread_checker_;
 
