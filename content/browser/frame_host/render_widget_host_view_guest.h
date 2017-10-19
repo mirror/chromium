@@ -72,6 +72,11 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
   TouchSelectionControllerClientManager*
   GetTouchSelectionControllerClientManager() override;
   gfx::Point TransformPointToRootCoordSpace(const gfx::Point& point) override;
+  bool TransformPointToLocalCoordSpace(const gfx::Point& point,
+                                       const viz::SurfaceId& original_surface,
+                                       gfx::Point* transformed_point) override;
+  gfx::Point TransformRootPointToViewCoordSpace(
+      const gfx::Point& point) override;
 
   // RenderWidgetHostViewBase implementation.
   void InitAsPopup(RenderWidgetHostView* parent_host_view,

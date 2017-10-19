@@ -52,7 +52,9 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
+#include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/context_menu_params.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "extensions/browser/extension_registry.h"
@@ -63,6 +65,7 @@
 #include "ui/base/clipboard/clipboard.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/test/test_clipboard.h"
+#include "ui/gfx/geometry/point.h"
 #include "url/gurl.h"
 
 #if defined(TOOLKIT_VIEWS) && !defined(OS_MACOSX)
@@ -1346,3 +1349,50 @@ IN_PROC_BROWSER_TEST_F(PDFExtensionTest, SmartZoomDisabled) {
                                                smart_zoom_event));
 }
 #endif  // defined(OS_MACOSX)
+
+IN_PROC_BROWSER_TEST_F(PDFExtensionTest, ContextMenuCoordinates) {
+  std::string url =
+      embedded_test_server()->GetURL("/pdf/pdf_embed.html").spec();
+
+  // Load page with embedded PDF and make sure it succeeds.
+  ASSERT_TRUE(LoadPdf(GURL(url)));
+  WebContents* guest_contents = nullptr;
+  WebContents* embedder_contents = GetActiveWebContents();
+  content::BrowserPluginGuestManager* guest_manager =
+      embedder_contents->GetBrowserContext()->GetGuestManager();
+  ASSERT_NO_FATAL_FAILURE(guest_manager->ForEachGuest(
+      embedder_contents, base::Bind(&GetGuestCallback, &guest_contents)));
+  ASSERT_NE(nullptr, guest_contents);
+#if defined(USE_AURA)
+  // TODO(wjmaclean): In theory this should be used to make sure the hit testing
+  // for routing to the guest process works as intended. Not sure if not having
+  // this on Mac is an issue.
+  content::WaitForGuestSurfaceReady(guest_contents);
+#endif
+  content::RenderProcessHost* guest_process_host =
+      guest_contents->GetMainFrame()->GetProcess();
+
+  // Get coords for mouse event.
+  content::RenderWidgetHostView* guest_view =
+      guest_contents->GetRenderWidgetHostView();
+  gfx::Point local_context_menu_position(30, 80);
+  gfx::Point root_context_menu_position =
+      guest_view->TransformPointToRootCoordSpace(local_context_menu_position);
+
+  scoped_refptr<content::ContextMenuFilter> context_menu_filter(
+      new content::ContextMenuFilter());
+  guest_process_host->AddFilter(context_menu_filter.get());
+
+  // Send mouse right-click
+  content::SimulateRoutedMouseClickAt(embedder_contents, kDefaultKeyModifier,
+                                      blink::WebMouseEvent::Button::kRight,
+                                      root_context_menu_position);
+  context_menu_filter->Wait();
+  content::ContextMenuParams params = context_menu_filter->get_params();
+  EXPECT_EQ(local_context_menu_position.x(), params.x);
+  EXPECT_EQ(local_context_menu_position.y(), params.y);
+
+  // TODO(wjmaclean): If it ever becomes possible to filter outgoing IPCs
+  // from the RenderProcessHost, we should verify the ViewMsg_PluginActionAt
+  // message is sent with the same coordinates as in the ContextMenuParams.
+}
