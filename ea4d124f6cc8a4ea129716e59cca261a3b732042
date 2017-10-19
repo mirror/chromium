@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad74c181_80f24792",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2167,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T10:54:09Z",
+      "side": 1,
+      "message": "rate \u003d std::max(rate, kMinRate);",
+      "revId": "ea4d124f6cc8a4ea129716e59cca261a3b732042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f56a81_fbce1a58",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2169,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T10:54:09Z",
+      "side": 1,
+      "message": "rate \u003d std::min(rate, kMaxRate);\n\nYou could even go fancy with `rate \u003d std::min(std::max(rate, kMinRate), kMaxRate));` or simply include \"base/numerics/ranges.h\" and use `ClampToRange\u003cint\u003e(rate, kMinRate, kMaxRate)`.",
+      "revId": "ea4d124f6cc8a4ea129716e59cca261a3b732042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
