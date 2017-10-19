@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdbed97c_5ce47a36",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-19T00:25:41Z",
+      "side": 1,
+      "message": "I\u0027m assuming this will keep adding to the same example created in line 37.",
+      "range": {
+        "startLine": 68,
+        "startChar": 20,
+        "endLine": 68,
+        "endChar": 35
+      },
+      "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b198e9d_98597c05",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-19T00:25:41Z",
+      "side": 1,
+      "message": "At this point the features are in the proto.  After this is called the outcomes will be added to the proto too.",
+      "range": {
+        "startLine": 73,
+        "startChar": 29,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
