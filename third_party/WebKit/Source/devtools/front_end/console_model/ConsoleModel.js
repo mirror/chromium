@@ -553,6 +553,18 @@ ConsoleModel.ConsoleMessage = class {
   }
 
   /**
+   * @return {boolean}
+   */
+  isBrowserMessage() {
+    return this.source !== ConsoleModel.ConsoleMessage.MessageSource.ConsoleAPI &&
+        (this.type === ConsoleModel.ConsoleMessage.MessageType.Log ||
+         this.type === ConsoleModel.ConsoleMessage.MessageType.Debug ||
+         this.type === ConsoleModel.ConsoleMessage.MessageType.Info ||
+         this.type === ConsoleModel.ConsoleMessage.MessageType.Error ||
+         this.type === ConsoleModel.ConsoleMessage.MessageType.Warning || !this.type);
+  }
+
+  /**
    * @param {?ConsoleModel.ConsoleMessage} msg
    * @return {boolean}
    */
