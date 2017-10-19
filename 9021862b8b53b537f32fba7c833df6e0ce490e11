@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "347ce5e5_2c5df1bb",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-19T05:28:58Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "9021862b8b53b537f32fba7c833df6e0ce490e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0cf69a_67980a4a",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-19T05:28:58Z",
+      "side": 1,
+      "message": "Use Layer::GetTargetTransformRelativeTo() instead?",
+      "revId": "9021862b8b53b537f32fba7c833df6e0ce490e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7f32be_1f048f69",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-19T05:28:58Z",
+      "side": 1,
+      "message": "Perhaps add a comment that |skirect_bounds| will already be clipped by the call to intersect() above? Because it\u0027s not quite clear from reading the code.",
+      "revId": "9021862b8b53b537f32fba7c833df6e0ce490e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f760941f_d98804ec",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-19T05:28:58Z",
+      "side": 1,
+      "message": "DCHECK() that it\u0027s never negative.",
+      "revId": "9021862b8b53b537f32fba7c833df6e0ce490e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2cc3b3_82da7bfe",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-19T05:28:58Z",
+      "side": 1,
+      "message": "This is not going to reset |dirty| to true, right?",
+      "revId": "9021862b8b53b537f32fba7c833df6e0ce490e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d7c3eb_3f5bd286",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-19T05:28:58Z",
+      "side": 1,
+      "message": "Use for (auto* child : base::Reversed(children)) instead?",
+      "revId": "9021862b8b53b537f32fba7c833df6e0ce490e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4247e1fb_fec41866",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-19T05:28:58Z",
+      "side": 1,
+      "message": "I don\u0027t like how RootWindowIsNotDirty() returns a bool and a pointer to another bool. Can we instead use this pattern:\n\n  // Returns if root-window was clean, and was dirtied because of this call.\n  bool MarkRootWindowDirty(window) {\n    ...\n  }\n\n\nThen, in the callsites, you would do something like:\n\n  if (ShouldRecomputeOcclusionStatesWhenWindowChanges(window)) {\n    if (MarkRootWindowDirty(window))\n      MaybeRecomputeWindowOcclusionStates();\n  }\n\nWould that work? Would we be doing a lot of extra work, compared to how the code is structured right now?",
+      "revId": "9021862b8b53b537f32fba7c833df6e0ce490e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd96bb7c_6377c530",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-19T05:28:58Z",
+      "side": 1,
+      "message": "We should erase from animated_windows_ too, right?\n\nCan you use a WindowTracker for animated_windows_ instead?",
+      "revId": "9021862b8b53b537f32fba7c833df6e0ce490e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
