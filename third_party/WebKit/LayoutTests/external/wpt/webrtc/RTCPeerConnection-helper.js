@@ -445,3 +445,16 @@ class Resolver {
     this.reject = promiseReject;
   }
 }
+
+// Acts like |t.step_func()| but if the function is not invoked within |timeout|
+// milliseconds an assertion fails with |description|.
+function expectCalled(t, func, timeout = 1000, description = 'Expected func to be invoked, but timed out.') {
+  let was_called = false;
+  setTimeout(t.step_func(() => {
+    assert_true(was_called, description);
+  }), timeout);
+  return t.step_func(function() {
+    was_called = true;
+    return func.apply(null, arguments);
+  });
+}
