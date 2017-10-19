@@ -22,6 +22,30 @@
       "revId": "1ef6c1a0d2dcc0dd36fcf555b529a82268ba0be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b0cf29_091c3cbb",
+        "filename": "device/bluetooth/bluetooth_discovery_session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-10-19T20:23:07Z",
+      "side": 1,
+      "message": "That\u0027s right. Done.",
+      "parentUuid": "1c6a70ce_d59da225",
+      "range": {
+        "startLine": 50,
+        "startChar": 45,
+        "endLine": 50,
+        "endChar": 55
+      },
+      "revId": "1ef6c1a0d2dcc0dd36fcf555b529a82268ba0be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
