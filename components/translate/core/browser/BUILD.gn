@@ -47,6 +47,7 @@ static_library("browser") {
     "//base:i18n",
     "//components/data_use_measurement/core",
     "//components/keyed_service/core",
+    "//components/language/content/browser",
     "//components/language/core/browser",
     "//components/language_usage_metrics",
     "//components/machine_intelligence",
