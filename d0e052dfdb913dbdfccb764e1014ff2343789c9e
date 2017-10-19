@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65e8839f_c196bbbf",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T07:43:51Z",
+      "side": 1,
+      "message": "In such a case, IIUC, anyway OnSignInComplete() should be called, so it should be handled correctly?",
+      "revId": "d0e052dfdb913dbdfccb764e1014ff2343789c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200b0df2_5dad2384",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T07:43:51Z",
+      "side": 1,
+      "message": "OnProvisioned() sounds like \"provisioning runs, and completed\" because of our common naming in chrome, while this is called if \"the device was already provisioned in previous session etc, so it is not necessary to run provisioning here\", right?\n\nAt least could you rename to reflect it more explicitly?\n(An idea is; maybe OnWasAlreadyProvisioned(), hmm... but not really sweat...).\n\nAlso, do you think it is possible to add another status in Complete() function so that the flow could be slightly simpler, instead of this function? WDYT?\n\nPlease find my comment in ArcAuthService, too, which may affect here, too.",
+      "range": {
+        "startLine": 160,
+        "startChar": 18,
+        "endLine": 160,
+        "endChar": 31
+      },
+      "revId": "d0e052dfdb913dbdfccb764e1014ff2343789c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee4be589_ad88ee8b",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T07:43:51Z",
+      "side": 1,
+      "message": "Instead of adding may methods, how about;\n- Deprecating OnSignInComplete() and OnSignInFailed().\n- Introduce OnAuthorizationCompleted(ArcSignInStatus status, bool is_reauthorized);\n\nI think you can remove several if conditions and dupped code can be cleaned in both side.\nNote that now ArcSignInStatus can take SUCCESS, so you don\u0027t need to have two methods, I think.\n\nWDYT?",
+      "revId": "d0e052dfdb913dbdfccb764e1014ff2343789c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
