@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "fb16895f_0bd7e7c5",
+        "filename": "third_party/WebKit/LayoutTests/resources/global-interface-listing.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-10-19T15:57:47Z",
+      "side": 1,
+      "message": "Yep, I guess I just forgot that they shipped on desktop now.  Yay!",
+      "parentUuid": "a8469a29_6f9f1711",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 30
+      },
+      "revId": "867914386ee28cfbc144e000c41df154bbe50b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49038d94_fcbe0673",
         "filename": "third_party/WebKit/LayoutTests/resources/global-interface-listing.js",
         "patchSetId": 10
@@ -260,6 +284,30 @@
       "side": 1,
       "message": "I\u0027ve added a comment explaining why this test is not split into platform-specific vs. platform-neutral.",
       "parentUuid": "c56c9700_307abb70",
+      "range": {
+        "startLine": 32,
+        "startChar": 62,
+        "endLine": 32,
+        "endChar": 67
+      },
+      "revId": "867914386ee28cfbc144e000c41df154bbe50b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ad674bc_f03b12f9",
+        "filename": "third_party/WebKit/LayoutTests/webexposed/resources/global-interface-listing-worker.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-10-19T15:57:47Z",
+      "side": 1,
+      "message": "LGTM, thanks.  I agree this is the right cost/benefit trade off for now.",
+      "parentUuid": "739011ec_0b907812",
       "range": {
         "startLine": 32,
         "startChar": 62,
