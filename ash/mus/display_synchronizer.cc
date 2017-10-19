@@ -56,9 +56,12 @@ void DisplaySynchronizer::SendDisplayConfigurationToServer() {
     viewport_metrics->ui_scale_factor = display_info.configured_ui_scale();
     metrics.push_back(std::move(viewport_metrics));
   }
+  // TODO(msw): Only pass the internal display in the first arg in unified mode? Pass DisplayManager state in some other way? 
+  LOG(ERROR) << "MSW DisplaySynchronizer::SendDisplayConfigurationToServer " << display_manager->software_mirroring_display_list().size();
   window_manager_client_->SetDisplayConfiguration(
       displays, std::move(metrics),
-      WindowTreeHostManager::GetPrimaryDisplayId());
+      WindowTreeHostManager::GetPrimaryDisplayId(),
+      display_manager->software_mirroring_display_list());
 
   sent_initial_config_ = true;
 }
