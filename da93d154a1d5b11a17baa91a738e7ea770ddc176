@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "429461f8_0a99e43a",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-19T04:47:06Z",
+      "side": 1,
+      "message": "Replaced with an if checking whether we\u0027re in MacViews or not 😮",
+      "parentUuid": "2c01fe9e_f652ff72",
+      "revId": "da93d154a1d5b11a17baa91a738e7ea770ddc176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d85cdba9_21d4f5df",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "da93d154a1d5b11a17baa91a738e7ea770ddc176",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7811cab_b082faa8",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-19T04:47:06Z",
+      "side": 1,
+      "message": "Yeah I\u0027m not sure 😕 but currently the about:blank page doesn\u0027t show a internal page info bubble and I\u0027ve checked that\u0027s the case (at least for views) in line 55 below 😊",
+      "parentUuid": "d85cdba9_21d4f5df",
+      "range": {
+        "startLine": 42,
+        "startChar": 47,
+        "endLine": 42,
+        "endChar": 66
+      },
+      "revId": "da93d154a1d5b11a17baa91a738e7ea770ddc176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
