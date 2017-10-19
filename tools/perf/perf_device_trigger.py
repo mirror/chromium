@@ -75,8 +75,7 @@ def trigger_tasks(args, remaining):
     try:
       args_to_pass = modify_args(remaining[:], bot_id, json_temp)
 
-      ret = subprocess.call(
-          sys.executable, [get_swarming_py_path()] + args_to_pass)
+      ret = subprocess.call([get_swarming_py_path()] + args_to_pass)
       if ret:
         sys.stderr.write('Failed to trigger a task, aborting\n')
         return ret
