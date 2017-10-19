@@ -4,14 +4,9 @@
 
 package org.chromium.chrome.browser.infobar;
 
-import android.support.v4.text.BidiFormatter;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.TextView;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
@@ -28,15 +23,12 @@ import org.chromium.ui.text.NoUnderlineClickableSpan;
  * {@link FramebustBlockMessageDelegate} defines the messages shown in the infobar and
  * the target of the link.
  */
-public class FramebustBlockInfoBar extends InfoBar {
+public class FramebustBlockInfoBar extends ExpandableInfoBar {
     private final FramebustBlockMessageDelegate mDelegate;
-
-    /** Whether the infobar should be shown as a mini-infobar or a classic expanded one. */
-    private boolean mIsExpanded;
 
     @VisibleForTesting
     public FramebustBlockInfoBar(FramebustBlockMessageDelegate delegate) {
-        super(delegate.getIconResourceId(), null, null);
+        super(delegate.getIconResourceId());
         mDelegate = delegate;
     }
 
@@ -57,7 +49,7 @@ public class FramebustBlockInfoBar extends InfoBar {
         text.setSpan(new NoUnderlineClickableSpan() {
             @Override
             public void onClick(View view) {
-                onLinkClicked();
+                mDelegate.onLinkTapped();
             }
         }, 0, link.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         control.addDescription(text);
@@ -66,53 +58,8 @@ public class FramebustBlockInfoBar extends InfoBar {
     }
 
     @Override
-    protected void createCompactLayoutContent(InfoBarCompactLayout layout) {
-        final int messagePadding = getContext().getResources().getDimensionPixelOffset(
-                R.dimen.reader_mode_infobar_text_padding);
-
-        SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder.append(BidiFormatter.getInstance().unicodeWrap(mDelegate.getShortMessage()));
-        builder.append(" ");
-        builder.append(makeDetailsLink());
-
-        TextView prompt = new TextView(getContext(), null);
-        prompt.setText(builder);
-        prompt.setMovementMethod(LinkMovementMethod.getInstance());
-        prompt.setGravity(Gravity.CENTER_VERTICAL);
-        prompt.setPadding(0, messagePadding, 0, messagePadding);
-
-        layout.addContent(prompt, 1f);
-    }
-
-    @Override
-    protected boolean usesCompactLayout() {
-        return !mIsExpanded;
-    }
-
-    @Override
-    public void onLinkClicked() {
-        if (!mIsExpanded) {
-            mIsExpanded = true;
-            replaceView(createView());
-            return;
-        }
-
-        mDelegate.onLinkTapped();
-    }
-
-    /**
-     * Creates and sets up the "Details" link that allows going from the mini to the full infobar.
-     */
-    private SpannableString makeDetailsLink() {
-        String label = getContext().getResources().getString(R.string.details_link);
-        SpannableString link = new SpannableString(label);
-        link.setSpan(new NoUnderlineClickableSpan() {
-            @Override
-            public void onClick(View view) {
-                onLinkClicked();
-            }
-        }, 0, label.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        return link;
+    protected CharSequence getCompactMessage() {
+        return mDelegate.getShortMessage();
     }
 
     @CalledByNative

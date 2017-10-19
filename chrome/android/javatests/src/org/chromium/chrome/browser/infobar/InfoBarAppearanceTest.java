@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
@@ -65,7 +64,7 @@ public class InfoBarAppearanceTest {
         TestFramebustBlockMessageDelegate messageDelegate = new TestFramebustBlockMessageDelegate();
         FramebustBlockInfoBar infobar = new FramebustBlockInfoBar(messageDelegate);
 
-        captureMiniAndRegularInfobar(infobar, messageDelegate);
+        captureMiniAndRegularInfobar(infobar);
     }
 
     @Test
@@ -83,29 +82,30 @@ public class InfoBarAppearanceTest {
                 };
         FramebustBlockInfoBar infobar = new FramebustBlockInfoBar(messageDelegate);
 
-        captureMiniAndRegularInfobar(infobar, messageDelegate);
+        captureMiniAndRegularInfobar(infobar);
     }
 
-    private void captureMiniAndRegularInfobar(
-            InfoBar infobar, TestFramebustBlockMessageDelegate delegate)
+    @Test
+    @MediumTest
+    @Feature({"InfoBars", "Catalogue"})
+    public void testOomInfoBar() throws TimeoutException, InterruptedException {
+        captureMiniAndRegularInfobar(new NearOomInfoBar());
+    }
+
+    private void captureMiniAndRegularInfobar(ExpandableInfoBar infobar)
             throws TimeoutException, InterruptedException {
         ThreadUtils.runOnUiThreadBlocking(
                 () -> mTab.getInfoBarContainer().addInfoBarForTesting(infobar));
         mListener.addInfoBarAnimationFinished("InfoBar was not added.");
         mScreenShooter.shoot("compact");
 
-        ThreadUtils.runOnUiThreadBlocking(infobar::onLinkClicked);
+        ThreadUtils.runOnUiThreadBlocking(infobar::expand);
         mListener.swapInfoBarAnimationFinished("InfoBar did not expand.");
         mScreenShooter.shoot("expanded");
-
-        ThreadUtils.runOnUiThreadBlocking(infobar::onLinkClicked);
-        delegate.linkTappedHelper.waitForCallback("link was not tapped.", 0);
     }
 
     private static class TestFramebustBlockMessageDelegate
             implements FramebustBlockMessageDelegate {
-        public final CallbackHelper linkTappedHelper = new CallbackHelper();
-
         @Override
         public String getLongMessage() {
             return "This is the long description for a notify infobar. FYI stuff happened.";
@@ -127,8 +127,6 @@ public class InfoBarAppearanceTest {
         }
 
         @Override
-        public void onLinkTapped() {
-            linkTappedHelper.notifyCalled();
-        }
+        public void onLinkTapped() {}
     }
 }
