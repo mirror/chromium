@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0d39103_544bf8cb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-19T23:20:05Z",
+      "side": 1,
+      "message": "Created new commit message with above mentioned format. Please let me know if you would rather prefer amended commit!",
+      "parentUuid": "1bef9065_75fe2865",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9243d043_01d331b4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c93ede_ea472572",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-19T23:20:05Z",
+      "side": 1,
+      "message": "Please see the new commit message.",
+      "parentUuid": "9243d043_01d331b4",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "57d3ba1f_2b2d7056",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-19T23:20:05Z",
+      "side": 1,
+      "message": "Changed IsValidDepth() to GetContainerNestingMaxDepth() and moved it to cbor_writer.cc namespace to change it to utility function. \n\nIn order to test this feature without using DCHECK_FATAL macro that depends on net/test, I kept the IsValidDepth() function as a wrapper private static member function that uses GetContainerNestingMaxDepth().",
+      "parentUuid": "f5df0578_f932e9d6",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 32
+      },
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b04528_cf8ea360",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 4
@@ -106,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "3e90e1eb_f8bdd5d2",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-19T23:20:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b04528_cf8ea360",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7461d187_510e257d",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 4
@@ -120,6 +204,24 @@
       "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d2a19d_99433eb5",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-19T23:20:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7461d187_510e257d",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +265,48 @@
     },
     {
       "key": {
+        "uuid": "4b17caa0_84b5b811",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-19T23:20:05Z",
+      "side": 1,
+      "message": "Added comments and made sure that the comments are wrapped at 80 characters. My IDE shows that previous version of the comment section also wraps at 80 characters. Please let me know if there are specific sections of comments that needs to be changed or any other style guides that needs to be met!",
+      "parentUuid": "74b2eb36_2c4bbfb0",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b20ac7f5_df1a74b2",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-19T23:20:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69ebbf46_9af96e9e",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 79
+      },
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a15981d9_df34d254",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 4
@@ -177,6 +321,24 @@
       "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65b74ef_bbd9bf60",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-19T23:20:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a15981d9_df34d254",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +359,24 @@
     },
     {
       "key": {
+        "uuid": "f818da41_2f4a0c6f",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-19T23:20:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81cfb169_48d51864",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ea0504b_fc1cc41a",
         "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
         "patchSetId": 4
@@ -214,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "7dfae252_a1dae0d3",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-19T23:20:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ea0504b_fc1cc41a",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bd29dcf_4d7e8afa",
         "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
         "patchSetId": 4
@@ -228,6 +426,24 @@
       "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88aa4b8b_c847a0c7",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-19T23:20:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bd29dcf_4d7e8afa",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
