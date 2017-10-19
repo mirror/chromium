@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdbd5ed9_5d28c740",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-19T02:56:51Z",
+      "side": 1,
+      "message": "Why does the scroll events from touchpad arrive out of order? That seems like the bug we should fix?",
+      "range": {
+        "startLine": 11,
+        "startChar": 24,
+        "endLine": 11,
+        "endChar": 36
+      },
+      "revId": "d8fcd41bb5b324505b081a2b8080856383b5e8d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
