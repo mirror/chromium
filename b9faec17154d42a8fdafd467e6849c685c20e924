@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "59e14bb6_96c3b36b",
+        "filename": "content/common/histogram_fetcher.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-19T01:58:56Z",
+      "side": 1,
+      "message": "I think Gerrit is the source of confusion here. The current browser_histogram_fetcher_impl files are renames of histogram_message_filter, but Gerrit doesn\u0027t show that history, so it looks like that was my architectural decision. \n\nThe scope of this CL is to convert the existing IPC to mojo.",
+      "parentUuid": "5e8dcf43_0e2c6aa7",
+      "revId": "b9faec17154d42a8fdafd467e6849c685c20e924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c081f0d_6656ad68",
         "filename": "content/renderer/stats_collection_controller.cc",
         "patchSetId": 7
