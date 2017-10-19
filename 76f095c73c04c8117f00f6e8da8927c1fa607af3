@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbf9504a_efd9cc62",
+        "filename": "chrome/browser/bitmap_fetcher/bitmap_fetcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-19T18:53:50Z",
+      "side": 1,
+      "message": "Need an early return here, or the *response_body below will fail.",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "76f095c73c04c8117f00f6e8da8927c1fa607af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858479e7_0b00dc87",
+        "filename": "chrome/browser/bitmap_fetcher/bitmap_fetcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-19T18:53:50Z",
+      "side": 1,
+      "message": "Remove this.",
+      "range": {
+        "startLine": 91,
+        "startChar": 3,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "76f095c73c04c8117f00f6e8da8927c1fa607af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70930111_f2da651c",
+        "filename": "chrome/browser/ui/passwords/account_avatar_fetcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-19T18:53:50Z",
+      "side": 1,
+      "message": "This should be blink::kWebReferrerPolicyAlways (Always send referrer / never clear referrer - the naming is rather unfortunate)",
+      "range": {
+        "startLine": 57,
+        "startChar": 37,
+        "endLine": 57,
+        "endChar": 43
+      },
+      "revId": "76f095c73c04c8117f00f6e8da8927c1fa607af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db0be79_0bbc6218",
+        "filename": "chrome/browser/ui/passwords/account_avatar_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-19T18:53:50Z",
+      "side": 1,
+      "message": "Seems weird to leave off a // namespace mojom here, but include it everywhere else in this file.",
+      "range": {
+        "startLine": 16,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "76f095c73c04c8117f00f6e8da8927c1fa607af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
