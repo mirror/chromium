@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "564c9437_e2529a76",
+        "filename": "content/network/network_change_manager_impl.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-19T14:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26d6ad54_ae3c373d",
+      "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f37062c7_cff43d04",
         "filename": "content/network/network_service_impl.h",
         "patchSetId": 31
@@ -33,6 +51,24 @@
       "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88c7976_ab222adc",
+        "filename": "content/network/network_service_impl.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-19T14:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f37062c7_cff43d04",
+      "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "75f4b8f2_76f1a61c",
+        "filename": "content/public/common/network_change_manager.mojom",
+        "patchSetId": 31
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-19T14:03:50Z",
+      "side": 1,
+      "message": "Done. I am fine either way. The argument for not copying over the comments is that we will have two copies of comments and they will diverge in the future.",
+      "parentUuid": "cb99a2cb_7aa2b925",
+      "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31d877e1_c0fb547f",
         "filename": "content/public/common/network_connection_tracker.h",
         "patchSetId": 31
@@ -67,6 +121,24 @@
       "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a18f15_a4f5b9ae",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-19T14:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31d877e1_c0fb547f",
+      "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "2d850bed_7d4ad853",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-19T14:03:50Z",
+      "side": 1,
+      "message": "Ack Thanks for the info, Matt. I will leave it as is.",
+      "parentUuid": "90208a2f_2b408967",
+      "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0b45785_2d6a1db5",
         "filename": "content/public/common/network_connection_tracker.h",
         "patchSetId": 31
@@ -137,6 +227,24 @@
       "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2df860_4bfb0b57",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-19T14:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0b45785_2d6a1db5",
+      "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

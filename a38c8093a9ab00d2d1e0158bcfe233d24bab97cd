@@ -572,6 +572,30 @@
     },
     {
       "key": {
+        "uuid": "09c6fe5e_0adaf176",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-19T14:03:50Z",
+      "side": 1,
+      "message": "This CL is getting a bit long. Let me address this in a separate CL.",
+      "parentUuid": "e6a585f0_92056fe8",
+      "range": {
+        "startLine": 30,
+        "startChar": 16,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06de4493_2cb15661",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 28
