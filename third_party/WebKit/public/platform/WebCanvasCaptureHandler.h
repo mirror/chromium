@@ -7,15 +7,21 @@
 
 #include "WebCommon.h"
 
+#include "third_party/skia/include/core/SkRefCnt.h"
+
 class SkImage;
 
 namespace blink {
+
+class WebGraphicsContext3DProvider;
 
 // Platform interface of a CanvasCaptureHandler.
 class BLINK_PLATFORM_EXPORT WebCanvasCaptureHandler {
  public:
   virtual ~WebCanvasCaptureHandler() = default;
-  virtual void SendNewFrame(const SkImage*) {}
+  virtual void SendNewFrame(
+      sk_sp<SkImage>,
+      blink::WebGraphicsContext3DProvider* context_provider) {}
   virtual bool NeedsNewFrame() const { return false; }
 };
 
