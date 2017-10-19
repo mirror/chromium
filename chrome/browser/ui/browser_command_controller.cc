@@ -1030,7 +1030,7 @@ void BrowserCommandController::UpdateCommandsForFullscreenMode() {
 
   // Focus various bits of UI
   command_updater_.UpdateCommandEnabled(IDC_FOCUS_TOOLBAR, show_main_ui);
-  command_updater_.UpdateCommandEnabled(IDC_FOCUS_LOCATION, show_main_ui);
+  command_updater_.UpdateCommandEnabled(IDC_FOCUS_LOCATION, !is_fullscreen);
   command_updater_.UpdateCommandEnabled(IDC_FOCUS_SEARCH, show_main_ui);
   command_updater_.UpdateCommandEnabled(
       IDC_FOCUS_MENU_BAR, main_not_fullscreen);
