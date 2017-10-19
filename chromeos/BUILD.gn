@@ -629,6 +629,7 @@ test("chromeos_unittests") {
     ":test_support",
     "//base/test:run_all_unittests",
     "//base/test:test_support",
+    "//components/dbus_thread",
     "//components/onc",
     "//components/prefs:test_support",
     "//components/proxy_config",

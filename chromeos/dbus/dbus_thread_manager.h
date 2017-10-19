@@ -13,11 +13,6 @@
 #include "base/memory/ref_counted.h"
 #include "chromeos/chromeos_export.h"
 
-namespace base {
-class Thread;
-}  // namespace base
-
-namespace dbus {
 class Bus;
 }  // namespace dbus
 
@@ -166,7 +161,6 @@ class CHROMEOS_EXPORT DBusThreadManager {
   // performs additional setup.
   void InitializeClients();
 
-  std::unique_ptr<base::Thread> dbus_thread_;
   scoped_refptr<dbus::Bus> system_bus_;
 
   // Whether to use real or fake dbus clients.
