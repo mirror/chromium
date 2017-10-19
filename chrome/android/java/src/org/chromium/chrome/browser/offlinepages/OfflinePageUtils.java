@@ -13,10 +13,8 @@ import android.os.Environment;
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.Callback;
-import org.chromium.base.ContextUtils;
 import org.chromium.base.FileUtils;
 import org.chromium.base.Log;
-import org.chromium.base.StreamUtil;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
@@ -33,8 +31,8 @@ import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabModelObserver;
+import org.chromium.chrome.browser.util.ChromeFileProvider;
 import org.chromium.components.bookmarks.BookmarkId;
-import org.chromium.components.offlinepages.SavePageResult;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.net.ConnectionType;
@@ -42,10 +40,6 @@ import org.chromium.net.NetworkChangeNotifier;
 import org.chromium.ui.base.PageTransition;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -341,10 +335,10 @@ public class OfflinePageUtils {
 
     /**
      * Share an offline copy of the current page.
-     * @param builder The builder to construct {@link ShareParams} for holding share parameters.
+     * @param activity The activity used used for sharing and file provider interaction.
      * @param currentTab The current tab for which sharing is being done.
      */
-    public static void shareOfflinePage(ShareParams.Builder builder, final Tab currentTab) {
+    public static void shareOfflinePage(final Activity activity, final Tab currentTab) {
         final OfflinePageBridge offlinePageBridge =
                 OfflinePageBridge.getForProfile(currentTab.getProfile());
 
@@ -354,172 +348,20 @@ public class OfflinePageUtils {
         }
 
         OfflinePageItem offlinePage = offlinePageBridge.getOfflinePage(currentTab.getWebContents());
-        if (offlinePage != null) {
-            // If we're currently on offline page get the saved file directly.
-            prepareFileAndShare(builder, offlinePage.getFilePath());
-            return;
-        }
+        // Bail if there is not offline page that can be shared.
+        if (offlinePage == null) return;
 
-        // If this is an online page, share the offline copy of it.
-        Callback<OfflinePageItem> prepareForSharing = onGotOfflinePageItemToShare(builder);
-        offlinePageBridge.selectPageForOnlineUrl(currentTab.getUrl(), currentTab.getId(),
-                selectPageForOnlineUrlCallback(
-                        currentTab.getWebContents(), offlinePageBridge, prepareForSharing));
-    }
+        final File offlineFile = new File(offlinePage.getFilePath());
 
-    /**
-     * Callback for receiving the OfflinePageItem and use it to call prepareForSharing.
-     * @param builder The builder to construct {@link ShareParams} for holding share parameters.
-     */
-    private static Callback<OfflinePageItem> onGotOfflinePageItemToShare(
-            final ShareParams.Builder builder) {
-        return new Callback<OfflinePageItem>() {
-            @Override
-            public void onResult(OfflinePageItem item) {
-                String offlineFilePath = (item == null) ? null : item.getFilePath();
-                prepareFileAndShare(builder, offlineFilePath);
-            }
-        };
-    }
+        final Uri contentUri = ChromeFileProvider.getUriForFile(
+                activity, ChromeFileProvider.getAuthority(activity), offlineFile);
 
-    /**
-     * Takes the offline page item from selectPageForOnlineURL. If it exists, invokes
-     * |prepareForSharing| with it.  Otherwise, saves a page for the online URL and invokes
-     * |prepareForSharing| with the result when it's ready.
-     * @param webContents Contents of the page to save.
-     * @param offlinePageBridge A static copy of the offlinePageBridge.
-     * @param prepareForSharing Callback of a single OfflinePageItem that is used to call
-     *                          prepareForSharing
-     * @return a callback of OfflinePageItem
-     */
-    private static Callback<OfflinePageItem> selectPageForOnlineUrlCallback(
-            final WebContents webContents, final OfflinePageBridge offlinePageBridge,
-            final Callback<OfflinePageItem> prepareForSharing) {
-        return new Callback<OfflinePageItem>() {
-            @Override
-            public void onResult(OfflinePageItem item) {
-                if (item == null) {
-                    // If the page has no offline copy, save the page offline.
-                    ClientId clientId = ClientId.createGuidClientIdForNamespace(
-                            OfflinePageBridge.SHARE_NAMESPACE);
-                    offlinePageBridge.savePage(webContents, clientId,
-                            savePageCallback(prepareForSharing, offlinePageBridge));
-                    return;
-                }
-                // If the online page has offline copy associated with it, use the file directly.
-                prepareForSharing.onResult(item);
-            }
-        };
-    }
+        ShareParams.Builder builder =
+                new ShareParams.Builder(activity, currentTab.getTitle(), currentTab.getUrl())
+                        .setShareDirectly(false)
+                        .setOfflineUri(contentUri);
 
-    /**
-     * Saves the web page loaded into web contents. If page saved successfully, get the offline
-     * page item with the save page result and use it to invoke |prepareForSharing|. Otherwise,
-     * invokes |prepareForSharing| with null.
-     * @param prepareForSharing Callback of a single OfflinePageItem that is used to call
-     *                          prepareForSharing
-     * @param offlinePageBridge A static copy of the offlinePageBridge.
-     * @return a call back of a list of OfflinePageItem
-     */
-    private static OfflinePageBridge.SavePageCallback savePageCallback(
-            final Callback<OfflinePageItem> prepareForSharing,
-            final OfflinePageBridge offlinePageBridge) {
-        return new OfflinePageBridge.SavePageCallback() {
-            @Override
-            public void onSavePageDone(int savePageResult, String url, long offlineId) {
-                if (savePageResult != SavePageResult.SUCCESS) {
-                    Log.e(TAG, "Unable to save the page.");
-                    prepareForSharing.onResult(null);
-                    return;
-                }
-
-                offlinePageBridge.getPageByOfflineId(offlineId, prepareForSharing);
-            }
-        };
-    }
-
-    /**
-     * If file path of offline page is not null, do file operations needed for the page to be
-     * shared. Otherwise, only share the online url.
-     * @param builder The builder to construct {@link ShareParams} for holding share parameters.
-     * @param filePath File path of the offline page.
-     */
-    private static void prepareFileAndShare(
-            final ShareParams.Builder builder, final String filePath) {
-        new AsyncTask<Void, Void, File>() {
-            @Override
-            protected File doInBackground(Void... params) {
-                if (filePath == null) return null;
-
-                File offlinePageOriginal = new File(filePath);
-                File shareableDir =
-                        getDirectoryForOfflineSharing(ContextUtils.getApplicationContext());
-
-                if (shareableDir == null) {
-                    Log.e(TAG, "Unable to create subdirectory in shareable directory");
-                    return null;
-                }
-
-                String fileName = rewriteOfflineFileName(offlinePageOriginal.getName());
-                File offlinePageShareable = new File(shareableDir, fileName);
-
-                if (offlinePageShareable.exists()) {
-                    try {
-                        // Old shareable files are stored in an external directory, which may cause
-                        // problems when:
-                        // 1. Files been changed by external sources.
-                        // 2. Difference in file size that results in partial overwrite.
-                        // Thus the file is deleted before we make a new copy.
-                        offlinePageShareable.delete();
-                    } catch (SecurityException e) {
-                        Log.e(TAG, "Failed to delete: " + offlinePageOriginal.getName(), e);
-                        return null;
-                    }
-                }
-                if (copyToShareableLocation(offlinePageOriginal, offlinePageShareable)) {
-                    return offlinePageShareable;
-                }
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(File offlinePageShareable) {
-                Uri offlineUri = null;
-                if (offlinePageShareable != null) {
-                    offlineUri = Uri.fromFile(offlinePageShareable);
-                }
-                builder.setOfflineUri(offlineUri);
-                ShareHelper.share(builder.build());
-            }
-        }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-    }
-
-    /**
-     * Copies the file from internal storage to a sharable directory.
-     * @param src The original file to be copied.
-     * @param dst The destination file.
-     */
-    @VisibleForTesting
-    static boolean copyToShareableLocation(File src, File dst) {
-        FileInputStream inputStream = null;
-        FileOutputStream outputStream = null;
-
-        try {
-            inputStream = new FileInputStream(src);
-            outputStream = new FileOutputStream(dst);
-
-            FileChannel inChannel = inputStream.getChannel();
-            FileChannel outChannel = outputStream.getChannel();
-            inChannel.transferTo(0, inChannel.size(), outChannel);
-        } catch (IOException e) {
-            Log.e(TAG, "Failed to copy the file: " + src.getName(), e);
-            return false;
-        } finally {
-            StreamUtil.closeQuietly(inputStream);
-            StreamUtil.closeQuietly(outputStream);
-        }
-        return true;
+        ShareHelper.share(builder.build());
     }
 
     /**
