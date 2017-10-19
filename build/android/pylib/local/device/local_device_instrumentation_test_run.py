@@ -746,6 +746,9 @@ class LocalDeviceInstrumentationTestRun(
             failure_image_host_file.name)
       failure_link = failure_image_host_file.Link()
 
+      pair = (failure_filename, failure_link)
+      logging.info('Peter: uploading %s to %s' % pair)
+
       golden_image_device_file = posixpath.join(
           golden_images_device_dir, failure_filename)
       if device.PathExists(golden_image_device_file):
@@ -788,6 +791,7 @@ class LocalDeviceInstrumentationTestRun(
         html_results.flush()
       for result in results:
         result.SetLink(failure_filename, html_results.Link())
+        result.SetLink("Direct-" + failure_filename, failure_link)
 
   #override
   def _ShouldRetry(self, test, result):

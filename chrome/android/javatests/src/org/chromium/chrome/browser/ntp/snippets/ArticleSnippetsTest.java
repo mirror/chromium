@@ -201,7 +201,7 @@ public class ArticleSnippetsTest {
                 ContentSuggestionsAdditionalAction.NONE,
                 /* show_if_empty = */ true, "No suggestions");
 
-        SnippetArticle shortSnippet = new SnippetArticle(FULL_CATEGORY, "id1", "Snippet",
+        SnippetArticle shortSnippet = new SnippetArticle(FULL_CATEGORY, "id1", "Different Snippet",
                 "Publisher", "www.google.com",
                 mTimestamp, // Publish timestamp
                 10f, // Score
