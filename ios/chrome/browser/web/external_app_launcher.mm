@@ -14,6 +14,7 @@
 #import "ios/chrome/browser/open_url_util.h"
 #import "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h"
 #import "ios/chrome/browser/ui/ui_util.h"
+#import "ios/chrome/browser/web/external_app_launching_state.h"
 #include "ios/chrome/browser/web/features.h"
 #import "ios/chrome/browser/web/legacy_mailto_url_rewriter.h"
 #import "ios/chrome/browser/web/mailto_handler.h"
@@ -59,6 +60,13 @@ void RecordExternalApplicationOpened(bool opened) {
   UMA_HISTOGRAM_BOOLEAN("Tab.ExternalApplicationOpened", opened);
 }
 
+// Logs an entry for |IOS.RepeatedExternalAppBlocked|. If the user decided to
+// block the app from opening in response to the repeated external app prompt,
+// pass true. Otherwise, if the user allowed the application to run pass false.
+void RecordRepeatedExternalApplicationPrompt(bool blocked) {
+  UMA_HISTOGRAM_BOOLEAN("IOS.RepeatedExternalAppBlocked", blocked);
+}
+
 // Returns whether gURL has the scheme of a URL that initiates a call.
 bool UrlHasPhoneCallScheme(const GURL& gURL) {
   return gURL.SchemeIs("tel") || gURL.SchemeIs("facetime") ||
@@ -75,7 +83,6 @@ NSString* PromptActionString(NSString* scheme) {
   NOTREACHED();
   return @"";
 }
-
 // Launches the mail client app represented by |handler| and records metrics.
 void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
   NSString* launchURL = [handler rewriteMailtoURL:URL];
@@ -88,6 +95,16 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
 }  // namespace
 
 @interface ExternalAppLauncher ()
+
+// This is a dictionary that maps between external application redirection key
+// and External Application state.
+// the key is a space seperated combination of the absloute string for the
+// original source URL, and the scheme of the external Application URL.
+@property(nonatomic, strong)
+    NSMutableDictionary<NSString*, ExternalAppLaunchingState*>*
+        appLaunchingStates;
+@property(atomic, assign) BOOL isPromptActive;
+
 // Returns the Phone/FaceTime call argument from |URL|.
 + (NSString*)formatCallArgument:(NSURL*)URL;
 // Shows a prompt for the user to choose which mail client app to use to
@@ -104,9 +121,29 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
 - (void)openExternalAppWithURL:(NSURL*)URL
                         prompt:(NSString*)prompt
                      openLabel:(NSString*)openLabel;
+
+// Opens URL in an external application if possible (optionally after
+// confirming via dialog in case that user didn't interact using
+// |linkClicked| or if the external application is face time) or returns NO
+// if there is no such application available.
+- (BOOL)internalOpenURL:(const GURL&)toURL
+                fromURL:(const GURL&)srcURL
+            linkClicked:(BOOL)linkClicked;
+// Presents an alert controller on the root view controller with |prompt| as
+// body text, |accept label| and |reject label| as button labels, with
+// |acceptHandler| and |rejectHandlers| as handlers for the buttons.
+- (void)
+showExternalAppLauncherPrompt:(NSString*)prompt
+                  acceptLabel:(NSString*)acceptLabel
+                  rejectLabel:(NSString*)rejectLabel
+                acceptHandler:(void (^)(UIAlertAction* action))acceptHandler
+                rejectHandler:(void (^)(UIAlertAction* action))rejectHandler;
 @end
 
 @implementation ExternalAppLauncher
+
+@synthesize appLaunchingStates = _appLaunchingStates;
+@synthesize isPromptActive = _isPromptActive;
 
 + (NSString*)formatCallArgument:(NSURL*)URL {
   NSCharacterSet* charSet =
@@ -124,6 +161,15 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
   return prompt;
 }
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _appLaunchingStates = [[NSMutableDictionary alloc] init];
+    _isPromptActive = NO;
+  }
+  return self;
+}
+
 - (void)promptForMailClientWithURL:(const GURL&)URL
                        URLRewriter:(MailtoURLRewriter*)rewriter {
   // No user chosen default. Prompt user now.
@@ -139,7 +185,8 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
       [UIAlertController alertControllerWithTitle:title
                                           message:subtitle
                                    preferredStyle:style];
-  // There must be more than one available handlers to present a prompt to user.
+  // There must be more than one available handlers to present a prompt to
+  // user.
   DCHECK([[rewriter defaultHandlers] count] > 1U);
   GURL copiedURLToOpen = URL;
   for (MailtoHandler* handler in [rewriter defaultHandlers]) {
@@ -185,28 +232,26 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
                  completion:nil];
 }
 
-- (void)openExternalAppWithURL:(NSURL*)URL
-                        prompt:(NSString*)prompt
-                     openLabel:(NSString*)openLabel {
+- (void)
+showExternalAppLauncherPrompt:(NSString*)prompt
+                  acceptLabel:(NSString*)acceptLabel
+                  rejectLabel:(NSString*)rejectLabel
+                acceptHandler:(void (^)(UIAlertAction* action))acceptHandler
+                rejectHandler:(void (^)(UIAlertAction* action))rejectHandler {
   UIAlertController* alertController =
       [UIAlertController alertControllerWithTitle:nil
                                           message:prompt
                                    preferredStyle:UIAlertControllerStyleAlert];
-  UIAlertAction* openAction =
-      [UIAlertAction actionWithTitle:openLabel
+  UIAlertAction* acceptAction =
+      [UIAlertAction actionWithTitle:acceptLabel
                                style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction* action) {
-                               RecordExternalApplicationOpened(true);
-                               OpenUrlWithCompletionHandler(URL, nil);
-                             }];
-  UIAlertAction* cancelAction =
-      [UIAlertAction actionWithTitle:l10n_util::GetNSString(IDS_CANCEL)
+                             handler:acceptHandler];
+  UIAlertAction* rejectAction =
+      [UIAlertAction actionWithTitle:rejectLabel
                                style:UIAlertActionStyleCancel
-                             handler:^(UIAlertAction* action) {
-                               RecordExternalApplicationOpened(false);
-                             }];
-  [alertController addAction:cancelAction];
-  [alertController addAction:openAction];
+                             handler:rejectHandler];
+  [alertController addAction:rejectAction];
+  [alertController addAction:acceptAction];
 
   [[[[UIApplication sharedApplication] keyWindow] rootViewController]
       presentViewController:alertController
@@ -214,10 +259,83 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
                  completion:nil];
 }
 
-- (BOOL)openURL:(const GURL&)gURL linkClicked:(BOOL)linkClicked {
-  if (!gURL.is_valid() || !gURL.has_scheme())
+- (void)openExternalAppWithURL:(NSURL*)URL
+                        prompt:(NSString*)prompt
+                     openLabel:(NSString*)openLabel {
+  [self showExternalAppLauncherPrompt:prompt
+      acceptLabel:openLabel
+      rejectLabel:l10n_util::GetNSString(IDS_CANCEL)
+      acceptHandler:^(UIAlertAction* action) {
+        RecordExternalApplicationOpened(true);
+        OpenUrlWithCompletionHandler(URL, nil);
+      }
+      rejectHandler:^(UIAlertAction* action) {
+        RecordExternalApplicationOpened(false);
+      }];
+}
+
+- (BOOL)openURL:(const GURL&)toURL
+        fromURL:(const GURL&)srcURL
+    linkClicked:(BOOL)linkClicked {
+  if (!toURL.is_valid() || !toURL.has_scheme())
     return NO;
 
+  // Don't open external application if chrome is not active.
+  if ([[UIApplication sharedApplication] applicationState] !=
+      UIApplicationStateActive)
+    return NO;
+
+  // Don't try to open external application if a prompt is already active.
+  if (_isPromptActive)
+    return NO;
+
+  NSString* key =
+      base::SysUTF8ToNSString(srcURL.GetContent() + " " + toURL.scheme());
+  if (_appLaunchingStates[key] == nil)
+    _appLaunchingStates[key] = [[ExternalAppLaunchingState alloc] init];
+  __weak ExternalAppLaunchingState* state = _appLaunchingStates[key];
+  [state update];
+  LaunchAction action = [state launchAction];
+  switch (action) {
+    case Block: {
+      return NO;
+    }
+    case Prompt: {
+      __weak ExternalAppLauncher* weakSelf = self;
+      __block GURL appURL = toURL;
+      _isPromptActive = YES;
+
+      [self showExternalAppLauncherPrompt:
+                l10n_util::GetNSString(IDS_IOS_OPEN_IN_REPEATEDLY_ANOTHER_APP)
+          acceptLabel:l10n_util::GetNSString(
+                          IDS_IOS_OPEN_IN_REPEATEDLY_ANOTHER_APP_ALLOW)
+          rejectLabel:l10n_util::GetNSString(
+                          IDS_IOS_OPEN_IN_REPEATEDLY_ANOTHER_APP_BLOCK)
+          acceptHandler:^(UIAlertAction* action) {
+            if (weakSelf) {
+              // By confirming that user want to launch the application, there
+              // is no need to check for |linkClicked|.
+              [weakSelf openURL:appURL linkClicked:YES];
+              RecordRepeatedExternalApplicationPrompt(NO);
+              weakSelf.isPromptActive = NO;
+            }
+          }
+          rejectHandler:^(UIAlertAction* action) {
+            // TODO(crbug.com/674649): Once non modal dialogs are implemented,
+            // update this to always prompt instead of blocking the app.
+            [state block];
+            RecordRepeatedExternalApplicationPrompt(YES);
+            weakSelf.isPromptActive = NO;
+          }];
+      return YES;
+    }
+    case Allow: {
+      return [self internalOpenURL:toURL linkClicked:linkClicked];
+    }
+  }
+}
+
+- (BOOL)internalOpenURL:(const GURL&)gURL linkClicked:(BOOL)linkClicked {
   // Don't open external application if chrome is not active.
   if ([[UIApplication sharedApplication] applicationState] !=
       UIApplicationStateActive)
