@@ -35,12 +35,11 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
     if (features::IsAppListFocusEnabled())
       SetFocusBehavior(FocusBehavior::ALWAYS);
     // Center the card horizontally in the container.
-    views::BoxLayout* answer_container_layout =
-        new views::BoxLayout(views::BoxLayout::kHorizontal,
-                             gfx::Insets(kVerticalPadding, kHorizontalPadding));
-    answer_container_layout->set_main_axis_alignment(
+    answer_container_layout_ =
+        new views::BoxLayout(views::BoxLayout::kHorizontal);
+    answer_container_layout_->set_main_axis_alignment(
         views::BoxLayout::MAIN_AXIS_ALIGNMENT_START);
-    SetLayoutManager(answer_container_layout);
+    SetLayoutManager(answer_container_layout_);
   }
 
   ~SearchAnswerContainerView() override {
@@ -87,6 +86,14 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
   }
 
   // views::Button overrides:
+  void Layout() override {
+    bool empty_view =
+        !search_result_ || search_result_->view()->GetPreferredSize().IsEmpty();
+    answer_container_layout_->set_inside_border_insets(
+        gfx::Insets(empty_view ? 0 : kVerticalPadding, kHorizontalPadding));
+    views::Button::Layout();
+  }
+
   const char* GetClassName() const override {
     return "SearchAnswerContainerView";
   }
@@ -145,6 +152,7 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
   }
 
   AppListViewDelegate* const view_delegate_;  // Not owned.
+  views::BoxLayout* answer_container_layout_ = nullptr;
   bool selected_ = false;
   SearchResult* search_result_ = nullptr;  // Not owned.
 

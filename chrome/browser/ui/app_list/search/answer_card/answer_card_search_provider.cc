@@ -47,6 +47,11 @@ AnswerCardSearchProvider::NavigationContext::~NavigationContext() {}
 
 void AnswerCardSearchProvider::NavigationContext::StartServerRequest(
     const GURL& url) {
+  // Server request is started on the navigation context for loading and swapped
+  // into current context when loaded but the webview may retain the old view
+  // for a while. Explicitly eliminate the view size until the new view resizes.
+  contents->GetView()->SetSize(gfx::Size());
+
   contents->LoadURL(url);
   state = RequestState::NO_RESULT;
 }
