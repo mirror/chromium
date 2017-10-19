@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/media_stream_video_renderer_sink.h"
 
+#include <utility>
+
 #include "base/feature_list.h"
 #include "base/memory/weak_ptr.h"
 #include "base/run_loop.h"
@@ -31,11 +33,11 @@ namespace content {
 // should be destructed on the IO thread.
 class MediaStreamVideoRendererSink::FrameDeliverer {
  public:
-  FrameDeliverer(const RepaintCB& repaint_cb,
+  FrameDeliverer(RepaintCB repaint_cb,
                  scoped_refptr<base::SingleThreadTaskRunner> media_task_runner,
                  scoped_refptr<base::TaskRunner> worker_task_runner,
                  media::GpuVideoAcceleratorFactories* gpu_factories)
-      : repaint_cb_(repaint_cb),
+      : repaint_cb_(std::move(repaint_cb)),
         state_(STOPPED),
         frame_size_(kMinFrameSize, kMinFrameSize),
         media_task_runner_(media_task_runner),
@@ -164,18 +166,18 @@ class MediaStreamVideoRendererSink::FrameDeliverer {
 
 MediaStreamVideoRendererSink::MediaStreamVideoRendererSink(
     const blink::WebMediaStreamTrack& video_track,
-    const base::Closure& error_cb,
-    const RepaintCB& repaint_cb,
-    const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
-    const scoped_refptr<base::SingleThreadTaskRunner>& media_task_runner,
-    const scoped_refptr<base::TaskRunner>& worker_task_runner,
+    base::Closure error_cb,
+    RepaintCB repaint_cb,
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> media_task_runner,
+    scoped_refptr<base::TaskRunner> worker_task_runner,
     media::GpuVideoAcceleratorFactories* gpu_factories)
-    : error_cb_(error_cb),
-      repaint_cb_(repaint_cb),
+    : error_cb_(std::move(error_cb)),
+      repaint_cb_(std::move(repaint_cb)),
       video_track_(video_track),
-      io_task_runner_(io_task_runner),
-      media_task_runner_(media_task_runner),
-      worker_task_runner_(worker_task_runner),
+      io_task_runner_(std::move(io_task_runner)),
+      media_task_runner_(std::move(media_task_runner)),
+      worker_task_runner_(std::move(worker_task_runner)),
       gpu_factories_(gpu_factories) {}
 
 MediaStreamVideoRendererSink::~MediaStreamVideoRendererSink() {}

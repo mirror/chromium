@@ -2162,8 +2162,7 @@ RenderFrameImpl::JavaScriptIsolatedWorldRequest::JavaScriptIsolatedWorldRequest(
     : id_(id),
       notify_result_(notify_result),
       routing_id_(routing_id),
-      render_frame_impl_(render_frame_impl) {
-}
+      render_frame_impl_(std::move(render_frame_impl)) {}
 
 RenderFrameImpl::JavaScriptIsolatedWorldRequest::
     ~JavaScriptIsolatedWorldRequest() {

@@ -74,9 +74,9 @@ std::unique_ptr<PepperCdmWrapper> PepperCdmWrapperImpl::Create(
 
 PepperCdmWrapperImpl::PepperCdmWrapperImpl(
     ScopedHelperPlugin helper_plugin,
-    const scoped_refptr<PepperPluginInstanceImpl>& plugin_instance)
+    scoped_refptr<PepperPluginInstanceImpl> plugin_instance)
     : helper_plugin_(std::move(helper_plugin)),
-      plugin_instance_(plugin_instance) {
+      plugin_instance_(std::move(plugin_instance)) {
   DCHECK(helper_plugin_);
   DCHECK(plugin_instance_.get());
   // Plugin must be a CDM.

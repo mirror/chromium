@@ -142,7 +142,7 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   // uniquely identifies a guest WebContents that's hosted by this
   // BrowserPlugin.
   BrowserPlugin(RenderFrame* render_frame,
-                const base::WeakPtr<BrowserPluginDelegate>& delegate);
+                base::WeakPtr<BrowserPluginDelegate> delegate);
 
   ~BrowserPlugin() override;
 

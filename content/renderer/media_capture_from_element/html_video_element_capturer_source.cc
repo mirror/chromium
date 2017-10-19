@@ -4,6 +4,8 @@
 
 #include "content/renderer/media_capture_from_element/html_video_element_capturer_source.h"
 
+#include <utility>
+
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
@@ -42,10 +44,10 @@ HtmlVideoElementCapturerSource::CreateFromWebMediaPlayerImpl(
 }
 
 HtmlVideoElementCapturerSource::HtmlVideoElementCapturerSource(
-    const base::WeakPtr<blink::WebMediaPlayer>& player,
-    const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
-    : web_media_player_(player),
-      io_task_runner_(io_task_runner),
+    base::WeakPtr<blink::WebMediaPlayer> player,
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
+    : web_media_player_(std::move(player)),
+      io_task_runner_(std::move(io_task_runner)),
       capture_frame_rate_(0.0),
       weak_factory_(this) {
   DCHECK(web_media_player_);

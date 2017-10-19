@@ -20,7 +20,7 @@ class ResourceDispatcher;
 class ServiceWorkerFetchContextImpl : public blink::WebWorkerFetchContext {
  public:
   ServiceWorkerFetchContextImpl(
-      const GURL& worker_script_url,
+      GURL worker_script_url,
       ChildURLLoaderFactoryGetter::Info url_loader_factory_getter_info,
       int service_worker_provider_id);
   ~ServiceWorkerFetchContextImpl() override;

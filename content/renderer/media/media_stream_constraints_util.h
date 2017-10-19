@@ -187,7 +187,7 @@ class CONTENT_EXPORT AudioCaptureSettings {
       bool enable_hotword,
       bool disable_local_echo,
       bool enable_automatic_output_device_selection,
-      const AudioProcessingProperties& audio_processing_properties);
+      AudioProcessingProperties audio_processing_properties);
   AudioCaptureSettings(const AudioCaptureSettings& other);
   AudioCaptureSettings& operator=(const AudioCaptureSettings& other);
   AudioCaptureSettings(AudioCaptureSettings&& other);

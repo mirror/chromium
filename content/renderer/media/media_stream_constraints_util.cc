@@ -118,10 +118,10 @@ VideoCaptureSettings::VideoCaptureSettings(
     : failed_constraint_name_(nullptr),
       device_id_(std::move(device_id)),
       capture_params_(capture_params),
-      noise_reduction_(noise_reduction),
+      noise_reduction_(std::move(noise_reduction)),
       track_adapter_settings_(track_adapter_settings),
       min_frame_rate_(min_frame_rate),
-      max_frame_rate_(max_frame_rate) {
+      max_frame_rate_(std::move(max_frame_rate)) {
   DCHECK(!min_frame_rate ||
          *min_frame_rate_ <= capture_params.requested_format.frame_rate);
   DCHECK_LE(track_adapter_settings.max_width,
@@ -153,14 +153,14 @@ AudioCaptureSettings::AudioCaptureSettings(
     bool enable_hotword,
     bool disable_local_echo,
     bool enable_automatic_output_device_selection,
-    const AudioProcessingProperties& audio_processing_properties)
+    AudioProcessingProperties audio_processing_properties)
     : failed_constraint_name_(nullptr),
       device_id_(std::move(device_id)),
       audio_parameters_(audio_parameters),
       hotword_enabled_(enable_hotword),
       disable_local_echo_(disable_local_echo),
       render_to_associated_sink_(enable_automatic_output_device_selection),
-      audio_processing_properties_(audio_processing_properties) {}
+      audio_processing_properties_(std::move(audio_processing_properties)) {}
 
 AudioCaptureSettings::AudioCaptureSettings(const AudioCaptureSettings& other) =
     default;

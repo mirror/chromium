@@ -20,8 +20,8 @@ namespace content {
 
 WebServiceWorkerCacheStorageImpl::WebServiceWorkerCacheStorageImpl(
     ThreadSafeSender* thread_safe_sender,
-    const url::Origin& origin)
-    : thread_safe_sender_(thread_safe_sender), origin_(origin) {}
+    url::Origin origin)
+    : thread_safe_sender_(thread_safe_sender), origin_(std::move(origin)) {}
 
 WebServiceWorkerCacheStorageImpl::~WebServiceWorkerCacheStorageImpl() {
 }

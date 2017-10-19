@@ -259,9 +259,9 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
   struct PendingTrackInfo {
     PendingTrackInfo(
         MediaStreamVideoTrack* track,
-        const VideoCaptureDeliverFrameCB& frame_callback,
+        VideoCaptureDeliverFrameCB frame_callback,
         std::unique_ptr<VideoTrackAdapterSettings> adapter_settings,
-        const ConstraintsCallback& callback);
+        ConstraintsCallback callback);
     PendingTrackInfo(PendingTrackInfo&& other);
     PendingTrackInfo& operator=(PendingTrackInfo&& other);
     ~PendingTrackInfo();

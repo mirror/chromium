@@ -27,7 +27,7 @@ class CONTENT_EXPORT PepperFileChooserHost
  public:
   // Structure to store the information about chosen files.
   struct ChosenFileInfo {
-    ChosenFileInfo(const std::string& path, const std::string& display_name);
+    ChosenFileInfo(std::string path, std::string display_name);
     std::string path;
     std::string display_name;  // May be empty.
   };

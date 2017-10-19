@@ -30,7 +30,7 @@ class NumericRangeSet {
  public:
   NumericRangeSet() = default;
   NumericRangeSet(base::Optional<T> min, base::Optional<T> max)
-      : min_(min), max_(max) {}
+      : min_(std::move(min)), max_(std::move(max)) {}
   NumericRangeSet(const NumericRangeSet& other) = default;
   NumericRangeSet& operator=(const NumericRangeSet& other) = default;
   ~NumericRangeSet() = default;

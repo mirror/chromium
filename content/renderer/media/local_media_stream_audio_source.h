@@ -24,7 +24,7 @@ class CONTENT_EXPORT LocalMediaStreamAudioSource
   // ID are read from |device_info|.
   LocalMediaStreamAudioSource(int consumer_render_frame_id,
                               const MediaStreamDevice& device,
-                              const ConstraintsCallback& started_callback);
+                              ConstraintsCallback started_callback);
 
   ~LocalMediaStreamAudioSource() final;
 

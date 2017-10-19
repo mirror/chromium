@@ -45,9 +45,11 @@ void IncrementCounter(DataChannelCounters counter) {
 // has gone away.
 RtcDataChannelHandler::Observer::Observer(
     RtcDataChannelHandler* handler,
-    const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
+    scoped_refptr<base::SingleThreadTaskRunner> main_thread,
     webrtc::DataChannelInterface* channel)
-    : handler_(handler), main_thread_(main_thread), channel_(channel) {
+    : handler_(handler),
+      main_thread_(std::move(main_thread)),
+      channel_(channel) {
   channel_->RegisterObserver(this);
 }
 

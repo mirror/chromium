@@ -4,6 +4,8 @@
 
 #include "content/renderer/pepper/pepper_platform_audio_output_dev.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/logging.h"
@@ -230,7 +232,7 @@ PepperPlatformAudioOutputDev::~PepperPlatformAudioOutputDev() {
 
 PepperPlatformAudioOutputDev::PepperPlatformAudioOutputDev(
     int render_frame_id,
-    const std::string& device_id,
+    std::string device_id,
     const GURL& document_url,
     base::TimeDelta authorization_timeout)
     : client_(NULL),
@@ -241,7 +243,7 @@ PepperPlatformAudioOutputDev::PepperPlatformAudioOutputDev(
       start_on_authorized_(true),
       play_on_start_(false),
       session_id_(0),
-      device_id_(device_id),
+      device_id_(std::move(device_id)),
       security_origin_(document_url),
       did_receive_auth_(base::WaitableEvent::ResetPolicy::MANUAL,
                         base::WaitableEvent::InitialState::NOT_SIGNALED),

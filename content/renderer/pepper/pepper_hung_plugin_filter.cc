@@ -4,6 +4,8 @@
 
 #include "content/renderer/pepper/pepper_hung_plugin_filter.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "content/child/child_process.h"
 #include "content/common/frame_messages.h"
@@ -24,19 +26,17 @@ const int kBlockedHardThresholdSec = kHungThresholdSec * 1.5;
 
 }  // namespace
 
-PepperHungPluginFilter::PepperHungPluginFilter(
-    const base::FilePath& plugin_path,
-    int frame_routing_id,
-    int plugin_child_id)
-    : plugin_path_(plugin_path),
+PepperHungPluginFilter::PepperHungPluginFilter(base::FilePath plugin_path,
+                                               int frame_routing_id,
+                                               int plugin_child_id)
+    : plugin_path_(std::move(plugin_path)),
       frame_routing_id_(frame_routing_id),
       plugin_child_id_(plugin_child_id),
       filter_(RenderThread::Get()->GetSyncMessageFilter()),
       io_task_runner_(ChildProcess::current()->io_task_runner()),
       pending_sync_message_count_(0),
       hung_plugin_showing_(false),
-      timer_task_pending_(false) {
-}
+      timer_task_pending_(false) {}
 
 void PepperHungPluginFilter::BeginBlockOnSyncMessage() {
   base::AutoLock lock(lock_);

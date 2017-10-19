@@ -6,6 +6,8 @@
 
 #include <stddef.h>
 
+#include <utility>
+
 #include "base/base64.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -181,7 +183,7 @@ class PepperMediaStreamVideoTrackHost::FrameDeliverer
     : public base::RefCountedThreadSafe<FrameDeliverer> {
  public:
   FrameDeliverer(scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-                 const VideoCaptureDeliverFrameCB& new_frame_callback);
+                 VideoCaptureDeliverFrameCB new_frame_callback);
 
   void DeliverVideoFrame(const scoped_refptr<media::VideoFrame>& frame);
 
@@ -199,9 +201,9 @@ class PepperMediaStreamVideoTrackHost::FrameDeliverer
 
 PepperMediaStreamVideoTrackHost::FrameDeliverer::FrameDeliverer(
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-    const VideoCaptureDeliverFrameCB& new_frame_callback)
-    : io_task_runner_(io_task_runner), new_frame_callback_(new_frame_callback) {
-}
+    VideoCaptureDeliverFrameCB new_frame_callback)
+    : io_task_runner_(std::move(io_task_runner)),
+      new_frame_callback_(std::move(new_frame_callback)) {}
 
 PepperMediaStreamVideoTrackHost::FrameDeliverer::~FrameDeliverer() {
 }

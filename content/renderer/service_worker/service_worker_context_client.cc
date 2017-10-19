@@ -459,10 +459,10 @@ class ServiceWorkerContextClient::NavigationPreloadRequest final
     : public mojom::URLLoaderClient {
  public:
   NavigationPreloadRequest(int fetch_event_id,
-                           const GURL& url,
+                           GURL url,
                            mojom::FetchEventPreloadHandlePtr preload_handle)
       : fetch_event_id_(fetch_event_id),
-        url_(url),
+        url_(std::move(url)),
         url_loader_(std::move(preload_handle->url_loader)),
         binding_(this, std::move(preload_handle->url_loader_client_request)) {}
 
@@ -614,8 +614,8 @@ ServiceWorkerContextClient::ThreadSpecificInstance() {
 ServiceWorkerContextClient::ServiceWorkerContextClient(
     int embedded_worker_id,
     int64_t service_worker_version_id,
-    const GURL& service_worker_scope,
-    const GURL& script_url,
+    GURL service_worker_scope,
+    GURL script_url,
     bool is_script_streaming,
     mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
     mojom::ControllerServiceWorkerRequest controller_request,
@@ -624,8 +624,8 @@ ServiceWorkerContextClient::ServiceWorkerContextClient(
     std::unique_ptr<EmbeddedWorkerInstanceClientImpl> embedded_worker_client)
     : embedded_worker_id_(embedded_worker_id),
       service_worker_version_id_(service_worker_version_id),
-      service_worker_scope_(service_worker_scope),
-      script_url_(script_url),
+      service_worker_scope_(std::move(service_worker_scope)),
+      script_url_(std::move(script_url)),
       sender_(ChildThreadImpl::current()->thread_safe_sender()),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       io_thread_task_runner_(ChildThreadImpl::current()->GetIOTaskRunner()),

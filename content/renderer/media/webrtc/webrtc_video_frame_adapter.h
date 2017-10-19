@@ -22,9 +22,8 @@ class WebRtcVideoFrameAdapter : public webrtc::VideoFrameBuffer {
       base::Callback<void(const scoped_refptr<media::VideoFrame>&,
                           scoped_refptr<media::VideoFrame>*)>;
 
-  WebRtcVideoFrameAdapter(
-      const scoped_refptr<media::VideoFrame>& frame,
-      const CopyTextureFrameCallback& copy_texture_callback);
+  WebRtcVideoFrameAdapter(scoped_refptr<media::VideoFrame> frame,
+                          CopyTextureFrameCallback copy_texture_callback);
 
   scoped_refptr<media::VideoFrame> getMediaVideoFrame() const { return frame_; }
 

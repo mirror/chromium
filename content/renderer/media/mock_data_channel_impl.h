@@ -16,8 +16,7 @@ namespace content {
 
 class MockDataChannel : public webrtc::DataChannelInterface {
  public:
-  MockDataChannel(const std::string& label,
-                  const webrtc::DataChannelInit* config);
+  MockDataChannel(std::string label, const webrtc::DataChannelInit* config);
 
   void RegisterObserver(webrtc::DataChannelObserver* observer) override;
   void UnregisterObserver() override;

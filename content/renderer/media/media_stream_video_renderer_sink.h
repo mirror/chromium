@@ -45,11 +45,11 @@ class CONTENT_EXPORT MediaStreamVideoRendererSink
  public:
   MediaStreamVideoRendererSink(
       const blink::WebMediaStreamTrack& video_track,
-      const base::Closure& error_cb,
-      const MediaStreamVideoRenderer::RepaintCB& repaint_cb,
-      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
-      const scoped_refptr<base::SingleThreadTaskRunner>& media_task_runner,
-      const scoped_refptr<base::TaskRunner>& worker_task_runner,
+      base::Closure error_cb,
+      MediaStreamVideoRenderer::RepaintCB repaint_cb,
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> media_task_runner,
+      scoped_refptr<base::TaskRunner> worker_task_runner,
       media::GpuVideoAcceleratorFactories* gpu_factories);
 
   // MediaStreamVideoRenderer implementation. Called on the main thread.

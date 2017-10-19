@@ -4,6 +4,8 @@
 
 #include "content/renderer/pepper/pepper_in_process_router.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
@@ -23,8 +25,8 @@ namespace content {
 
 class PepperInProcessRouter::Channel : public IPC::Sender {
  public:
-  Channel(const base::Callback<bool(IPC::Message*)>& callback)
-      : callback_(callback) {}
+  Channel(base::Callback<bool(IPC::Message*)> callback)
+      : callback_(std::move(callback)) {}
 
   ~Channel() override {}
 

@@ -6,6 +6,8 @@
 
 #include <inttypes.h>
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/containers/circular_deque.h"
@@ -94,7 +96,7 @@ void GetVpxCodecParameters(media::VideoCodecProfile codec,
 
 class VideoEncoderShim::EncoderImpl {
  public:
-  explicit EncoderImpl(const base::WeakPtr<VideoEncoderShim>& shim);
+  explicit EncoderImpl(base::WeakPtr<VideoEncoderShim> shim);
   ~EncoderImpl();
 
   void Initialize(media::VideoPixelFormat input_format,
@@ -110,9 +112,8 @@ class VideoEncoderShim::EncoderImpl {
 
  private:
   struct PendingEncode {
-    PendingEncode(const scoped_refptr<media::VideoFrame>& frame,
-                  bool force_keyframe)
-        : frame(frame), force_keyframe(force_keyframe) {}
+    PendingEncode(scoped_refptr<media::VideoFrame> frame, bool force_keyframe)
+        : frame(std::move(frame)), force_keyframe(force_keyframe) {}
     ~PendingEncode() {}
 
     scoped_refptr<media::VideoFrame> frame;
@@ -146,12 +147,10 @@ class VideoEncoderShim::EncoderImpl {
   base::circular_deque<BitstreamBuffer> buffers_;
 };
 
-VideoEncoderShim::EncoderImpl::EncoderImpl(
-    const base::WeakPtr<VideoEncoderShim>& shim)
-    : shim_(shim),
+VideoEncoderShim::EncoderImpl::EncoderImpl(base::WeakPtr<VideoEncoderShim> shim)
+    : shim_(std::move(shim)),
       renderer_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      initialized_(false) {
-}
+      initialized_(false) {}
 
 VideoEncoderShim::EncoderImpl::~EncoderImpl() {
   if (initialized_)

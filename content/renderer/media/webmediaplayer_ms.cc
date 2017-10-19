@@ -58,14 +58,14 @@ namespace content {
 // should be destructed on the IO thread.
 class WebMediaPlayerMS::FrameDeliverer {
  public:
-  FrameDeliverer(const base::WeakPtr<WebMediaPlayerMS>& player,
-                 const MediaStreamVideoRenderer::RepaintCB& enqueue_frame_cb)
+  FrameDeliverer(base::WeakPtr<WebMediaPlayerMS> player,
+                 MediaStreamVideoRenderer::RepaintCB enqueue_frame_cb)
       : last_frame_opaque_(true),
         last_frame_rotation_(media::VIDEO_ROTATION_0),
         received_first_frame_(false),
         main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-        player_(player),
-        enqueue_frame_cb_(enqueue_frame_cb),
+        player_(std::move(player)),
+        enqueue_frame_cb_(std::move(enqueue_frame_cb)),
         weak_factory_(this) {
     io_thread_checker_.DetachFromThread();
   }
@@ -176,10 +176,10 @@ WebMediaPlayerMS::WebMediaPlayerMS(
       video_rotation_(media::VIDEO_ROTATION_0),
       media_log_(std::move(media_log)),
       renderer_factory_(std::move(factory)),
-      io_task_runner_(io_task_runner),
-      compositor_task_runner_(compositor_task_runner),
-      media_task_runner_(media_task_runner),
-      worker_task_runner_(worker_task_runner),
+      io_task_runner_(std::move(io_task_runner)),
+      compositor_task_runner_(std::move(compositor_task_runner)),
+      media_task_runner_(std::move(media_task_runner)),
+      worker_task_runner_(std::move(worker_task_runner)),
       gpu_factories_(gpu_factories),
       initial_audio_output_device_id_(sink_id.Utf8()),
       initial_security_origin_(security_origin.IsNull()

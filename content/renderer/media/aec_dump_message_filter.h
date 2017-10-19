@@ -34,8 +34,8 @@ class CONTENT_EXPORT AecDumpMessageFilter : public IPC::MessageFilter {
   };
 
   AecDumpMessageFilter(
-      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
-      const scoped_refptr<base::SingleThreadTaskRunner>& main_task_runner);
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> main_task_runner);
 
   // Getter for the one AecDumpMessageFilter object.
   static scoped_refptr<AecDumpMessageFilter> Get();

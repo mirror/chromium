@@ -4,6 +4,8 @@
 
 #include "content/renderer/input/input_handler_wrapper.h"
 
+#include <utility>
+
 #include "base/command_line.h"
 #include "base/location.h"
 #include "content/public/common/content_features.h"
@@ -18,9 +20,9 @@ namespace content {
 InputHandlerWrapper::InputHandlerWrapper(
     InputHandlerManager* input_handler_manager,
     int routing_id,
-    const scoped_refptr<base::SingleThreadTaskRunner>& main_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> main_task_runner,
     const base::WeakPtr<cc::InputHandler>& input_handler,
-    const base::WeakPtr<RenderWidget>& render_widget,
+    base::WeakPtr<RenderWidget> render_widget,
     bool enable_smooth_scrolling)
     : input_handler_manager_(input_handler_manager),
       routing_id_(routing_id),
@@ -28,8 +30,8 @@ InputHandlerWrapper::InputHandlerWrapper(
                            this,
                            base::FeatureList::IsEnabled(
                                features::kTouchpadAndWheelScrollLatching)),
-      main_task_runner_(main_task_runner),
-      render_widget_(render_widget) {
+      main_task_runner_(std::move(main_task_runner)),
+      render_widget_(std::move(render_widget)) {
   DCHECK(input_handler);
   input_handler_proxy_.set_smooth_scroll_enabled(enable_smooth_scrolling);
 }

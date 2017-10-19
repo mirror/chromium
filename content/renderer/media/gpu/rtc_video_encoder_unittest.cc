@@ -4,6 +4,8 @@
 
 #include <stdint.h>
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
@@ -44,8 +46,8 @@ class EncodedImageCallbackWrapper : public webrtc::EncodedImageCallback {
                           const webrtc::CodecSpecificInfo* codec_specific_info,
                           const webrtc::RTPFragmentationHeader* fragmentation)>;
 
-  EncodedImageCallbackWrapper(const EncodedCallback& encoded_callback)
-      : encoded_callback_(encoded_callback) {}
+  EncodedImageCallbackWrapper(EncodedCallback encoded_callback)
+      : encoded_callback_(std::move(encoded_callback)) {}
 
   Result OnEncodedImage(
       const webrtc::EncodedImage& encoded_image,

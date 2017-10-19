@@ -51,11 +51,11 @@ InputEventAckState InputEventDispositionToAck(
 } // namespace
 
 InputHandlerManager::InputHandlerManager(
-    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     InputHandlerManagerClient* client,
     SynchronousInputHandlerProxyClient* sync_handler_client,
     blink::scheduler::RendererScheduler* renderer_scheduler)
-    : task_runner_(task_runner),
+    : task_runner_(std::move(task_runner)),
       client_(client),
       synchronous_handler_proxy_client_(sync_handler_client),
       renderer_scheduler_(renderer_scheduler),

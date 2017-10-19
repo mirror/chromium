@@ -470,7 +470,7 @@ PepperPluginInstanceImpl::PepperPluginInstanceImpl(
     PluginModule* module,
     ppapi::PPP_Instance_Combined* instance_interface,
     WebPluginContainer* container,
-    const GURL& plugin_url)
+    GURL plugin_url)
     : RenderFrameObserver(render_frame),
       render_frame_(render_frame),
       module_(module),
@@ -481,7 +481,7 @@ PepperPluginInstanceImpl::PepperPluginInstanceImpl(
       container_(container),
       layer_bound_to_fullscreen_(false),
       layer_is_hardware_(false),
-      plugin_url_(plugin_url),
+      plugin_url_(std::move(plugin_url)),
       document_url_(container ? GURL(container->GetDocument().Url()) : GURL()),
       is_flash_plugin_(module->name() == kFlashPluginName),
       has_been_clicked_(false),

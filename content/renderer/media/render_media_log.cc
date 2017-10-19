@@ -5,6 +5,7 @@
 #include "content/renderer/media/render_media_log.h"
 
 #include <sstream>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/location.h"
@@ -39,8 +40,8 @@ void Log(media::MediaLogEvent* event) {
 
 namespace content {
 
-RenderMediaLog::RenderMediaLog(const GURL& security_origin)
-    : security_origin_(security_origin),
+RenderMediaLog::RenderMediaLog(GURL security_origin)
+    : security_origin_(std::move(security_origin)),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
       tick_clock_(new base::DefaultTickClock()),
       last_ipc_send_time_(tick_clock_->NowTicks()),

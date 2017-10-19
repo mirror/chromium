@@ -16,7 +16,7 @@ namespace content {
 class CONTENT_EXPORT RTCRtpContributingSource
     : public blink::WebRTCRtpContributingSource {
  public:
-  explicit RTCRtpContributingSource(const webrtc::RtpSource& source);
+  explicit RTCRtpContributingSource(webrtc::RtpSource source);
   ~RTCRtpContributingSource() override;
 
   blink::WebRTCRtpContributingSourceType SourceType() const override;

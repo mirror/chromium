@@ -97,8 +97,8 @@ class CONTENT_EXPORT AudioRendererMixerManager
     MixerKey(int source_render_frame_id,
              const media::AudioParameters& params,
              media::AudioLatency::LatencyType latency,
-             const std::string& device_id,
-             const url::Origin& security_origin);
+             std::string device_id,
+             url::Origin security_origin);
     MixerKey(const MixerKey& other);
     int source_render_frame_id;
     media::AudioParameters params;

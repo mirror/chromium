@@ -30,7 +30,7 @@ class CONTENT_EXPORT AudioRendererSinkCacheImpl
 
   AudioRendererSinkCacheImpl(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-      const CreateSinkCallback& create_sink_callback,
+      CreateSinkCallback create_sink_callback,
       base::TimeDelta delete_timeout);
 
   ~AudioRendererSinkCacheImpl() final;

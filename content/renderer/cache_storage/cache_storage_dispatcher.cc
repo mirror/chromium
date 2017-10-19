@@ -136,7 +136,7 @@ void ClearCallbacksMapWithErrors(T* callbacks_map) {
 class CacheStorageDispatcher::WebCache : public blink::WebServiceWorkerCache {
  public:
   WebCache(base::WeakPtr<CacheStorageDispatcher> dispatcher, int cache_id)
-      : dispatcher_(dispatcher), cache_id_(cache_id) {}
+      : dispatcher_(std::move(dispatcher)), cache_id_(cache_id) {}
 
   ~WebCache() override {
     if (dispatcher_)

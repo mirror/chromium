@@ -5,6 +5,7 @@
 #include "content/renderer/media/rtc_dtmf_sender_handler.h"
 
 #include <string>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/location.h"
@@ -22,8 +23,9 @@ class RtcDtmfSenderHandler::Observer :
     public base::RefCountedThreadSafe<Observer>,
     public webrtc::DtmfSenderObserverInterface {
  public:
-  explicit Observer(const base::WeakPtr<RtcDtmfSenderHandler>& handler)
-      : main_thread_(base::ThreadTaskRunnerHandle::Get()), handler_(handler) {}
+  explicit Observer(base::WeakPtr<RtcDtmfSenderHandler> handler)
+      : main_thread_(base::ThreadTaskRunnerHandle::Get()),
+        handler_(std::move(handler)) {}
 
  private:
   friend class base::RefCountedThreadSafe<Observer>;

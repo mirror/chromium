@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/webrtc/track_observer.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/location.h"
 
@@ -14,9 +16,9 @@ class CONTENT_EXPORT TrackObserver::TrackObserverImpl
       public webrtc::ObserverInterface {
  public:
   TrackObserverImpl(
-      const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
+      scoped_refptr<base::SingleThreadTaskRunner> main_thread,
       const scoped_refptr<webrtc::MediaStreamTrackInterface>& track)
-      : main_thread_(main_thread), track_(track) {
+      : main_thread_(std::move(main_thread)), track_(track) {
     // We're on the signaling thread.
     DCHECK(!main_thread_->BelongsToCurrentThread());
     track->RegisterObserver(this);

@@ -4,6 +4,8 @@
 
 #include "content/renderer/devtools/render_widget_screen_metrics_emulator.h"
 
+#include <utility>
+
 #include "content/common/resize_params.h"
 #include "content/public/common/context_menu_params.h"
 #include "content/renderer/devtools/render_widget_screen_metrics_emulator_delegate.h"
@@ -12,17 +14,16 @@ namespace content {
 
 RenderWidgetScreenMetricsEmulator::RenderWidgetScreenMetricsEmulator(
     RenderWidgetScreenMetricsEmulatorDelegate* delegate,
-    const blink::WebDeviceEmulationParams& params,
+    blink::WebDeviceEmulationParams params,
     const ResizeParams& resize_params,
     const gfx::Rect& view_screen_rect,
     const gfx::Rect& window_screen_rect)
     : delegate_(delegate),
-      emulation_params_(params),
+      emulation_params_(std::move(params)),
       scale_(1.f),
       original_resize_params_(resize_params),
       original_view_screen_rect_(view_screen_rect),
-      original_window_screen_rect_(window_screen_rect) {
-}
+      original_window_screen_rect_(window_screen_rect) {}
 
 RenderWidgetScreenMetricsEmulator::~RenderWidgetScreenMetricsEmulator() {
   // needs_resize_ack was handled during OnResize() and may cause a DCHECK to

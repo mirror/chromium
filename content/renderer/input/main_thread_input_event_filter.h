@@ -23,7 +23,7 @@ namespace content {
 class MainThreadInputEventFilter : public IPC::MessageFilter {
  public:
   MainThreadInputEventFilter(
-      const base::Callback<void(const IPC::Message&)>& main_listener,
+      base::Callback<void(const IPC::Message&)> main_listener,
       const scoped_refptr<base::SingleThreadTaskRunner>& main_task_runner);
 
   // IPC::MessageFilter implementation.

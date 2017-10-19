@@ -4,6 +4,8 @@
 
 #include "content/renderer/fetchers/multi_resolution_image_resource_fetcher.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "content/child/image_decoder.h"
@@ -27,8 +29,8 @@ MultiResolutionImageResourceFetcher::MultiResolutionImageResourceFetcher(
     int id,
     WebURLRequest::RequestContext request_context,
     blink::WebCachePolicy cache_policy,
-    const Callback& callback)
-    : callback_(callback),
+    Callback callback)
+    : callback_(std::move(callback)),
       id_(id),
       http_status_code_(0),
       image_url_(image_url) {

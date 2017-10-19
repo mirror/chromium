@@ -30,8 +30,8 @@ class CONTENT_EXPORT PluginPowerSaverHelper : public RenderFrameObserver {
   friend class RenderFrameImpl;
 
   struct PeripheralPlugin {
-    PeripheralPlugin(const url::Origin& content_origin,
-                     const base::Closure& unthrottle_callback);
+    PeripheralPlugin(url::Origin content_origin,
+                     base::Closure unthrottle_callback);
     PeripheralPlugin(const PeripheralPlugin& other);
     ~PeripheralPlugin();
 

@@ -60,7 +60,7 @@ class CONTENT_EXPORT WebMediaPlayerMSCompositor
       scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
       const blink::WebMediaStream& web_stream,
-      const base::WeakPtr<WebMediaPlayerMS>& player);
+      base::WeakPtr<WebMediaPlayerMS> player);
 
   void EnqueueFrame(scoped_refptr<media::VideoFrame> frame);
 

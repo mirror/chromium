@@ -24,7 +24,7 @@ namespace content {
 class RenderCdmFactory : public media::CdmFactory {
  public:
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-  explicit RenderCdmFactory(const CreatePepperCdmCB& create_pepper_cdm_cb);
+  explicit RenderCdmFactory(CreatePepperCdmCB create_pepper_cdm_cb);
 #else
   RenderCdmFactory();
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)

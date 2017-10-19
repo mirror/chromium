@@ -4,6 +4,8 @@
 
 #include "content/renderer/pepper/pepper_file_system_host.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/callback.h"
 #include "content/child/child_thread_impl.h"
@@ -38,13 +40,13 @@ PepperFileSystemHost::PepperFileSystemHost(RendererPpapiHost* host,
 PepperFileSystemHost::PepperFileSystemHost(RendererPpapiHost* host,
                                            PP_Instance instance,
                                            PP_Resource resource,
-                                           const GURL& root_url,
+                                           GURL root_url,
                                            PP_FileSystemType type)
     : ResourceHost(host->GetPpapiHost(), instance, resource),
       renderer_ppapi_host_(host),
       type_(type),
       opened_(true),
-      root_url_(root_url),
+      root_url_(std::move(root_url)),
       called_open_(true) {}
 
 PepperFileSystemHost::~PepperFileSystemHost() {}

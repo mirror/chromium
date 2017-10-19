@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/local_media_stream_audio_source.h"
 
+#include <utility>
+
 #include "content/renderer/media/audio_device_factory.h"
 #include "content/renderer/media/webrtc_logging.h"
 #include "content/renderer/render_frame_impl.h"
@@ -13,10 +15,10 @@ namespace content {
 LocalMediaStreamAudioSource::LocalMediaStreamAudioSource(
     int consumer_render_frame_id,
     const MediaStreamDevice& device,
-    const ConstraintsCallback& started_callback)
+    ConstraintsCallback started_callback)
     : MediaStreamAudioSource(true /* is_local_source */),
       consumer_render_frame_id_(consumer_render_frame_id),
-      started_callback_(started_callback) {
+      started_callback_(std::move(started_callback)) {
   DVLOG(1) << "LocalMediaStreamAudioSource::LocalMediaStreamAudioSource()";
   SetDevice(device);
 

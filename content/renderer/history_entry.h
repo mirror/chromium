@@ -51,7 +51,7 @@ class CONTENT_EXPORT HistoryEntry {
  public:
   class CONTENT_EXPORT HistoryNode {
    public:
-    HistoryNode(const base::WeakPtr<HistoryEntry>& entry,
+    HistoryNode(base::WeakPtr<HistoryEntry> entry,
                 const blink::WebHistoryItem& item);
     ~HistoryNode();
 

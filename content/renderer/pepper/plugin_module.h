@@ -68,9 +68,9 @@ class CONTENT_EXPORT PluginModule : public base::RefCounted<PluginModule>,
   // The module lifetime delegate is a non-owning pointer that must outlive
   // all plugin modules. In practice it will be a global singleton that
   // tracks which modules are alive.
-  PluginModule(const std::string& name,
-               const std::string& version,
-               const base::FilePath& path,
+  PluginModule(std::string name,
+               std::string version,
+               base::FilePath path,
                const ppapi::PpapiPermissions& perms);
 
   // Sets the given class as being associated with this module. It will be

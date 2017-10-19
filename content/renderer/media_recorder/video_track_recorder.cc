@@ -169,13 +169,13 @@ media::VideoCodecProfile CodecEnumerator::CodecIdToVEAProfile(CodecId codec) {
 }  // anonymous namespace
 
 VideoTrackRecorder::Encoder::Encoder(
-    const OnEncodedVideoCB& on_encoded_video_callback,
+    OnEncodedVideoCB on_encoded_video_callback,
     int32_t bits_per_second,
     scoped_refptr<base::SingleThreadTaskRunner> encoding_task_runner)
     : main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      encoding_task_runner_(encoding_task_runner),
+      encoding_task_runner_(std::move(encoding_task_runner)),
       paused_(false),
-      on_encoded_video_callback_(on_encoded_video_callback),
+      on_encoded_video_callback_(std::move(on_encoded_video_callback)),
       bits_per_second_(bits_per_second),
       num_frames_in_encode_(0) {
   DCHECK(!on_encoded_video_callback_.is_null());

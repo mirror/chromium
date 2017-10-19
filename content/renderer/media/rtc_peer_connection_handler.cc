@@ -362,10 +362,12 @@ void CopyConstraintsIntoRtcConfiguration(
 class SessionDescriptionRequestTracker {
  public:
   SessionDescriptionRequestTracker(
-      const base::WeakPtr<RTCPeerConnectionHandler>& handler,
-      const base::WeakPtr<PeerConnectionTracker>& tracker,
+      base::WeakPtr<RTCPeerConnectionHandler> handler,
+      base::WeakPtr<PeerConnectionTracker> tracker,
       PeerConnectionTracker::Action action)
-      : handler_(handler), tracker_(tracker), action_(action) {}
+      : handler_(std::move(handler)),
+        tracker_(std::move(tracker)),
+        action_(action) {}
 
   void TrackOnSuccess(const webrtc::SessionDescriptionInterface* desc) {
     DCHECK(thread_checker_.CalledOnValidThread());
@@ -401,15 +403,14 @@ class CreateSessionDescriptionRequest
     : public webrtc::CreateSessionDescriptionObserver {
  public:
   explicit CreateSessionDescriptionRequest(
-      const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
+      scoped_refptr<base::SingleThreadTaskRunner> main_thread,
       const blink::WebRTCSessionDescriptionRequest& request,
       const base::WeakPtr<RTCPeerConnectionHandler>& handler,
       const base::WeakPtr<PeerConnectionTracker>& tracker,
       PeerConnectionTracker::Action action)
-      : main_thread_(main_thread),
+      : main_thread_(std::move(main_thread)),
         webkit_request_(request),
-        tracker_(handler, tracker, action) {
-  }
+        tracker_(handler, tracker, action) {}
 
   void OnSuccess(webrtc::SessionDescriptionInterface* desc) override {
     if (!main_thread_->BelongsToCurrentThread()) {
@@ -459,15 +460,14 @@ class SetSessionDescriptionRequest
     : public webrtc::SetSessionDescriptionObserver {
  public:
   explicit SetSessionDescriptionRequest(
-      const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
+      scoped_refptr<base::SingleThreadTaskRunner> main_thread,
       const blink::WebRTCVoidRequest& request,
       const base::WeakPtr<RTCPeerConnectionHandler>& handler,
       const base::WeakPtr<PeerConnectionTracker>& tracker,
       PeerConnectionTracker::Action action)
-      : main_thread_(main_thread),
+      : main_thread_(std::move(main_thread)),
         webkit_request_(request),
-        tracker_(handler, tracker, action) {
-  }
+        tracker_(handler, tracker, action) {}
 
   void OnSuccess() override {
     if (!main_thread_->BelongsToCurrentThread()) {
@@ -736,12 +736,9 @@ class GetRTCStatsCallback : public webrtc::RTCStatsCollectorCallback {
   }
 
  protected:
-  GetRTCStatsCallback(
-      const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
-      blink::WebRTCStatsReportCallback* callback)
-      : main_thread_(main_thread),
-        callback_(callback) {
-  }
+  GetRTCStatsCallback(scoped_refptr<base::SingleThreadTaskRunner> main_thread,
+                      blink::WebRTCStatsReportCallback* callback)
+      : main_thread_(std::move(main_thread)), callback_(callback) {}
   ~GetRTCStatsCallback() override { DCHECK(!callback_); }
 
   void OnStatsDeliveredOnMainThread(
@@ -984,8 +981,8 @@ class RTCPeerConnectionHandler::Observer
     : public base::RefCountedThreadSafe<RTCPeerConnectionHandler::Observer>,
       public PeerConnectionObserver {
  public:
-  Observer(const base::WeakPtr<RTCPeerConnectionHandler>& handler)
-      : handler_(handler),
+  Observer(base::WeakPtr<RTCPeerConnectionHandler> handler)
+      : handler_(std::move(handler)),
         main_thread_(base::ThreadTaskRunnerHandle::Get()),
         stream_adapter_map_(handler_->stream_adapter_map_),
         native_peer_connection_(nullptr) {

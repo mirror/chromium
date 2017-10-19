@@ -98,7 +98,7 @@ class PepperCompositorHost : public ppapi::host::ResourceHost {
   // A list of layers. It is used for updating layers' properties in
   // subsequent CommitLayers() calls.
   struct LayerData {
-    LayerData(const scoped_refptr<cc::Layer>& cc,
+    LayerData(scoped_refptr<cc::Layer> cc,
               const ppapi::CompositorLayerData& pp);
     LayerData(const LayerData& other);
     ~LayerData();

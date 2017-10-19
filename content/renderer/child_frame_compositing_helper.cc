@@ -162,12 +162,12 @@ ChildFrameCompositingHelper::CreateForRenderFrameProxy(
 }
 
 ChildFrameCompositingHelper::ChildFrameCompositingHelper(
-    const base::WeakPtr<BrowserPlugin>& browser_plugin,
+    base::WeakPtr<BrowserPlugin> browser_plugin,
     blink::WebRemoteFrame* frame,
     RenderFrameProxy* render_frame_proxy,
     int host_routing_id)
     : host_routing_id_(host_routing_id),
-      browser_plugin_(browser_plugin),
+      browser_plugin_(std::move(browser_plugin)),
       render_frame_proxy_(render_frame_proxy),
       frame_(frame) {
   enable_surface_references_ =

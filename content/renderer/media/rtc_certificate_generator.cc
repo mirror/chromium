@@ -51,10 +51,10 @@ class RTCCertificateGeneratorRequest
      base::OnTaskRunnerDeleter>;
  public:
   RTCCertificateGeneratorRequest(
-      const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
-      const scoped_refptr<base::SingleThreadTaskRunner>& worker_thread)
-      : main_thread_(main_thread),
-        worker_thread_(worker_thread) {
+      scoped_refptr<base::SingleThreadTaskRunner> main_thread,
+      scoped_refptr<base::SingleThreadTaskRunner> worker_thread)
+      : main_thread_(std::move(main_thread)),
+        worker_thread_(std::move(worker_thread)) {
     DCHECK(main_thread_);
     DCHECK(worker_thread_);
   }

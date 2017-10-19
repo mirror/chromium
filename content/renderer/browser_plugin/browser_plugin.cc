@@ -75,9 +75,8 @@ BrowserPlugin* BrowserPlugin::GetFromNode(blink::WebNode& node) {
   return it == browser_plugins->end() ? nullptr : it->second;
 }
 
-BrowserPlugin::BrowserPlugin(
-    RenderFrame* render_frame,
-    const base::WeakPtr<BrowserPluginDelegate>& delegate)
+BrowserPlugin::BrowserPlugin(RenderFrame* render_frame,
+                             base::WeakPtr<BrowserPluginDelegate> delegate)
     : attached_(false),
       render_frame_routing_id_(render_frame->GetRoutingID()),
       container_(nullptr),
@@ -87,7 +86,7 @@ BrowserPlugin::BrowserPlugin(
       mouse_locked_(false),
       ready_(false),
       browser_plugin_instance_id_(browser_plugin::kInstanceIDNone),
-      delegate_(delegate),
+      delegate_(std::move(delegate)),
       weak_ptr_factory_(this) {
   browser_plugin_instance_id_ =
       BrowserPluginManager::Get()->GetNextInstanceID();

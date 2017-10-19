@@ -4,6 +4,7 @@
 
 #include "content/renderer/media/rtc_certificate.h"
 
+#include <utility>
 #include <vector>
 
 #include "base/memory/ptr_util.h"
@@ -14,8 +15,8 @@
 namespace content {
 
 RTCCertificate::RTCCertificate(
-    const rtc::scoped_refptr<rtc::RTCCertificate>& certificate)
-    : certificate_(certificate) {
+    rtc::scoped_refptr<rtc::RTCCertificate> certificate)
+    : certificate_(std::move(certificate)) {
   DCHECK(certificate_);
 }
 

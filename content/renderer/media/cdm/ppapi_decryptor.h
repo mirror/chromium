@@ -103,8 +103,8 @@ class PpapiDecryptor : public media::ContentDecryptionModule,
  private:
   PpapiDecryptor(
       std::unique_ptr<PepperCdmWrapper> pepper_cdm_wrapper,
-      const media::SessionMessageCB& session_message_cb,
-      const media::SessionClosedCB& session_closed_cb,
+      media::SessionMessageCB session_message_cb,
+      media::SessionClosedCB session_closed_cb,
       const media::SessionKeysChangeCB& session_keys_change_cb,
       const media::SessionExpirationUpdateCB& session_expiration_update_cb);
 

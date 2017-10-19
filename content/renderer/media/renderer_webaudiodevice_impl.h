@@ -78,7 +78,7 @@ class CONTENT_EXPORT RendererWebAudioDeviceImpl
                              const blink::WebAudioLatencyHint& latency_hint,
                              blink::WebAudioDevice::RenderCallback* callback,
                              int session_id,
-                             const url::Origin& security_origin,
+                             url::Origin security_origin,
                              const OutputDeviceParamsCallback& device_params_cb,
                              const RenderFrameIdCallback& render_frame_id_cb);
 

@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/media_permission_dispatcher.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/single_thread_task_runner.h"
@@ -43,8 +45,8 @@ blink::mojom::PermissionDescriptorPtr MediaPermissionTypeToPermissionDescriptor(
 namespace content {
 
 MediaPermissionDispatcher::MediaPermissionDispatcher(
-    const ConnectToServiceCB& connect_to_service_cb)
-    : connect_to_service_cb_(connect_to_service_cb),
+    ConnectToServiceCB connect_to_service_cb)
+    : connect_to_service_cb_(std::move(connect_to_service_cb)),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
       next_request_id_(0),
       weak_factory_(this) {

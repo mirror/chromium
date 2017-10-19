@@ -29,7 +29,7 @@ class CategorizedWorkerPoolThread : public base::SimpleThread {
       base::ConditionVariable* has_ready_to_run_tasks_cv)
       : SimpleThread(name_prefix, options),
         pool_(pool),
-        categories_(categories),
+        categories_(std::move(categories)),
         has_ready_to_run_tasks_cv_(has_ready_to_run_tasks_cv) {}
 
   void Run() override { pool_->Run(categories_, has_ready_to_run_tasks_cv_); }

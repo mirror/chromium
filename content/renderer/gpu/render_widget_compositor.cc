@@ -107,7 +107,7 @@ class ReportTimeSwapPromise : public cc::SwapPromise {
  public:
   ReportTimeSwapPromise(
       ReportTimeCallback callback,
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner);
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
   ~ReportTimeSwapPromise() override;
 
   void DidActivate() override {}
@@ -126,8 +126,8 @@ class ReportTimeSwapPromise : public cc::SwapPromise {
 
 ReportTimeSwapPromise::ReportTimeSwapPromise(
     ReportTimeCallback callback,
-    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner)
-    : callback_(callback), task_runner_(task_runner) {}
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
+    : callback_(std::move(callback)), task_runner_(std::move(task_runner)) {}
 
 ReportTimeSwapPromise::~ReportTimeSwapPromise() {}
 

@@ -108,7 +108,7 @@ InterfaceProviderJsWrapper::InterfaceProviderJsWrapper(
     base::WeakPtr<service_manager::Connector> connector)
     : isolate_(isolate),
       context_(isolate, context),
-      connector_(connector),
+      connector_(std::move(connector)),
       weak_factory_(this) {
   context_.SetWeak(this, &InterfaceProviderJsWrapper::ClearContext,
                    v8::WeakCallbackType::kParameter);
@@ -120,7 +120,7 @@ InterfaceProviderJsWrapper::InterfaceProviderJsWrapper(
     base::WeakPtr<service_manager::InterfaceProvider> remote_interfaces)
     : isolate_(isolate),
       context_(isolate, context),
-      remote_interfaces_(remote_interfaces),
+      remote_interfaces_(std::move(remote_interfaces)),
       weak_factory_(this) {
   context_.SetWeak(this, &InterfaceProviderJsWrapper::ClearContext,
                    v8::WeakCallbackType::kParameter);

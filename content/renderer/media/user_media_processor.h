@@ -71,7 +71,7 @@ class CONTENT_EXPORT UserMediaProcessor
       PeerConnectionDependencyFactory* dependency_factory,
       std::unique_ptr<MediaStreamDispatcher> media_stream_dispatcher,
       MediaDevicesDispatcherCallback media_devices_dispatcher_cb,
-      const scoped_refptr<base::TaskRunner>& worker_task_runner);
+      scoped_refptr<base::TaskRunner> worker_task_runner);
   ~UserMediaProcessor() override;
 
   // It can be assumed that the output of CurrentRequest() remains the same

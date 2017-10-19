@@ -95,7 +95,7 @@ class MediaStreamVideoTrack::FrameDeliverer
 MediaStreamVideoTrack::FrameDeliverer::FrameDeliverer(
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
     bool enabled)
-    : io_task_runner_(io_task_runner), enabled_(enabled) {
+    : io_task_runner_(std::move(io_task_runner)), enabled_(enabled) {
   DCHECK(io_task_runner_.get());
 }
 
@@ -272,9 +272,9 @@ MediaStreamVideoTrack::MediaStreamVideoTrack(
 MediaStreamVideoTrack::MediaStreamVideoTrack(
     MediaStreamVideoSource* source,
     const VideoTrackAdapterSettings& adapter_settings,
-    const base::Optional<bool>& noise_reduction,
+    base::Optional<bool> noise_reduction,
     bool is_screen_cast,
-    const base::Optional<double>& min_frame_rate,
+    base::Optional<double> min_frame_rate,
     const MediaStreamVideoSource::ConstraintsCallback& callback,
     bool enabled)
     : MediaStreamTrack(true),
@@ -283,9 +283,9 @@ MediaStreamVideoTrack::MediaStreamVideoTrack(
                                                     enabled)),
       adapter_settings_(
           base::MakeUnique<VideoTrackAdapterSettings>(adapter_settings)),
-      noise_reduction_(noise_reduction),
+      noise_reduction_(std::move(noise_reduction)),
       is_screencast_(is_screen_cast),
-      min_frame_rate_(min_frame_rate),
+      min_frame_rate_(std::move(min_frame_rate)),
       source_(source->GetWeakPtr()) {
   source->AddTrack(
       this, adapter_settings,

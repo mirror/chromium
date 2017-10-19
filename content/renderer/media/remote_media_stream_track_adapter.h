@@ -6,6 +6,7 @@
 #define CONTENT_RENDERER_MEDIA_REMOTE_MEDIA_TRACK_ADAPTER_H_
 
 #include <string>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/callback_forward.h"
@@ -29,9 +30,9 @@ class RemoteMediaStreamTrackAdapter
           RemoteMediaStreamTrackAdapter<WebRtcMediaStreamTrackType>> {
  public:
   RemoteMediaStreamTrackAdapter(
-      const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
+      scoped_refptr<base::SingleThreadTaskRunner> main_thread,
       WebRtcMediaStreamTrackType* webrtc_track)
-      : main_thread_(main_thread),
+      : main_thread_(std::move(main_thread)),
         webrtc_track_(webrtc_track),
         id_(webrtc_track->id()) {}
 

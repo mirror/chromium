@@ -592,8 +592,7 @@ void VideoDecoderShim::YUVConverter::Convert(
 }
 
 struct VideoDecoderShim::PendingDecode {
-  PendingDecode(uint32_t decode_id,
-                const scoped_refptr<media::DecoderBuffer>& buffer);
+  PendingDecode(uint32_t decode_id, scoped_refptr<media::DecoderBuffer> buffer);
   ~PendingDecode();
 
   const uint32_t decode_id;
@@ -602,17 +601,15 @@ struct VideoDecoderShim::PendingDecode {
 
 VideoDecoderShim::PendingDecode::PendingDecode(
     uint32_t decode_id,
-    const scoped_refptr<media::DecoderBuffer>& buffer)
-    : decode_id(decode_id), buffer(buffer) {
-}
+    scoped_refptr<media::DecoderBuffer> buffer)
+    : decode_id(decode_id), buffer(std::move(buffer)) {}
 
 VideoDecoderShim::PendingDecode::~PendingDecode() {
 }
 
 struct VideoDecoderShim::PendingFrame {
   explicit PendingFrame(uint32_t decode_id);
-  PendingFrame(uint32_t decode_id,
-               const scoped_refptr<media::VideoFrame>& frame);
+  PendingFrame(uint32_t decode_id, scoped_refptr<media::VideoFrame> frame);
   ~PendingFrame();
 
   const uint32_t decode_id;
@@ -629,9 +626,8 @@ VideoDecoderShim::PendingFrame::PendingFrame(uint32_t decode_id)
 
 VideoDecoderShim::PendingFrame::PendingFrame(
     uint32_t decode_id,
-    const scoped_refptr<media::VideoFrame>& frame)
-    : decode_id(decode_id), video_frame(frame) {
-}
+    scoped_refptr<media::VideoFrame> frame)
+    : decode_id(decode_id), video_frame(std::move(frame)) {}
 
 VideoDecoderShim::PendingFrame::~PendingFrame() {
 }
@@ -642,7 +638,7 @@ VideoDecoderShim::PendingFrame::~PendingFrame() {
 // media thread.
 class VideoDecoderShim::DecoderImpl {
  public:
-  explicit DecoderImpl(const base::WeakPtr<VideoDecoderShim>& proxy);
+  explicit DecoderImpl(base::WeakPtr<VideoDecoderShim> proxy);
   ~DecoderImpl();
 
   void Initialize(media::VideoDecoderConfig config);
@@ -678,11 +674,10 @@ class VideoDecoderShim::DecoderImpl {
 };
 
 VideoDecoderShim::DecoderImpl::DecoderImpl(
-    const base::WeakPtr<VideoDecoderShim>& proxy)
-    : shim_(proxy),
+    base::WeakPtr<VideoDecoderShim> proxy)
+    : shim_(std::move(proxy)),
       main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      weak_ptr_factory_(this) {
-}
+      weak_ptr_factory_(this) {}
 
 VideoDecoderShim::DecoderImpl::~DecoderImpl() {
   DCHECK(pending_decodes_.empty());

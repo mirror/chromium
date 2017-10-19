@@ -135,9 +135,8 @@ class EncodingSerializer : public SkPixelSerializer {
 
 class SkPictureSerializer {
  public:
-  explicit SkPictureSerializer(const base::FilePath& dirpath)
-      : dirpath_(dirpath),
-        layer_id_(0) {
+  explicit SkPictureSerializer(base::FilePath dirpath)
+      : dirpath_(std::move(dirpath)), layer_id_(0) {
     // Let skia register known effect subclasses. This basically enables
     // reflection on those subclasses required for picture serialization.
     SkiaBenchmarking::Initialize();

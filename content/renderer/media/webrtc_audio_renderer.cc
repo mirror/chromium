@@ -63,14 +63,14 @@ class SharedAudioRenderer : public MediaStreamAudioRenderer {
   using OnPlayStateRemoved =
       base::OnceCallback<void(WebRtcAudioRenderer::PlayingState*)>;
 
-  SharedAudioRenderer(const scoped_refptr<MediaStreamAudioRenderer>& delegate,
+  SharedAudioRenderer(scoped_refptr<MediaStreamAudioRenderer> delegate,
                       const blink::WebMediaStream& media_stream,
-                      const OnPlayStateChanged& on_play_state_changed,
+                      OnPlayStateChanged on_play_state_changed,
                       OnPlayStateRemoved on_play_state_removed)
-      : delegate_(delegate),
+      : delegate_(std::move(delegate)),
         media_stream_(media_stream),
         started_(false),
-        on_play_state_changed_(on_play_state_changed),
+        on_play_state_changed_(std::move(on_play_state_changed)),
         on_play_state_removed_(std::move(on_play_state_removed)) {
     DCHECK(!on_play_state_changed_.is_null());
     DCHECK(!media_stream_.IsNull());
@@ -162,23 +162,23 @@ class SharedAudioRenderer : public MediaStreamAudioRenderer {
 }  // namespace
 
 WebRtcAudioRenderer::WebRtcAudioRenderer(
-    const scoped_refptr<base::SingleThreadTaskRunner>& signaling_thread,
+    scoped_refptr<base::SingleThreadTaskRunner> signaling_thread,
     const blink::WebMediaStream& media_stream,
     int source_render_frame_id,
     int session_id,
-    const std::string& device_id,
-    const url::Origin& security_origin)
+    std::string device_id,
+    url::Origin security_origin)
     : state_(UNINITIALIZED),
       source_render_frame_id_(source_render_frame_id),
       session_id_(session_id),
-      signaling_thread_(signaling_thread),
+      signaling_thread_(std::move(signaling_thread)),
       media_stream_(media_stream),
       source_(NULL),
       play_ref_count_(0),
       start_ref_count_(0),
       sink_params_(kFormat, kChannelLayout, 0, kBitsPerSample, 0),
-      output_device_id_(device_id),
-      security_origin_(security_origin) {
+      output_device_id_(std::move(device_id)),
+      security_origin_(std::move(security_origin)) {
   WebRtcLogMessage(base::StringPrintf(
       "WAR::WAR. source_render_frame_id=%d, session_id=%d, effects=%i",
       source_render_frame_id, session_id, sink_params_.effects()));

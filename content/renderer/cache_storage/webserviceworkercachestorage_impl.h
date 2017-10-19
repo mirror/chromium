@@ -31,7 +31,7 @@ class WebServiceWorkerCacheStorageImpl
     : public blink::WebServiceWorkerCacheStorage {
  public:
   WebServiceWorkerCacheStorageImpl(ThreadSafeSender* thread_safe_sender,
-                                   const url::Origin& origin);
+                                   url::Origin origin);
   ~WebServiceWorkerCacheStorageImpl() override;
 
   // From WebServiceWorkerCacheStorage:

@@ -42,7 +42,7 @@ class P2PPortAllocator : public cricket::BasicPortAllocator {
                    std::unique_ptr<rtc::NetworkManager> network_manager,
                    rtc::PacketSocketFactory* socket_factory,
                    const Config& config,
-                   const GURL& origin);
+                   GURL origin);
   ~P2PPortAllocator() override;
 
   // Will also initialize the network manager passed into the constructor.

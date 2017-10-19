@@ -5,6 +5,7 @@
 #include "content/renderer/media/audio_input_message_filter.h"
 
 #include <string>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/single_thread_task_runner.h"
@@ -31,7 +32,7 @@ namespace content {
 
 class AudioInputMessageFilter::AudioInputIPCImpl : public media::AudioInputIPC {
  public:
-  AudioInputIPCImpl(const scoped_refptr<AudioInputMessageFilter>& filter,
+  AudioInputIPCImpl(scoped_refptr<AudioInputMessageFilter> filter,
                     int render_frame_id);
   ~AudioInputIPCImpl() override;
 
@@ -55,7 +56,7 @@ AudioInputMessageFilter* AudioInputMessageFilter::g_filter = NULL;
 
 AudioInputMessageFilter::AudioInputMessageFilter(
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
-    : sender_(NULL), io_task_runner_(io_task_runner) {
+    : sender_(NULL), io_task_runner_(std::move(io_task_runner)) {
   DCHECK(!g_filter);
   g_filter = this;
 }
@@ -167,12 +168,11 @@ void AudioInputMessageFilter::OnStreamMuted(int stream_id, bool is_muted) {
 }
 
 AudioInputMessageFilter::AudioInputIPCImpl::AudioInputIPCImpl(
-    const scoped_refptr<AudioInputMessageFilter>& filter,
+    scoped_refptr<AudioInputMessageFilter> filter,
     int render_frame_id)
-    : filter_(filter),
+    : filter_(std::move(filter)),
       render_frame_id_(render_frame_id),
-      stream_id_(kStreamIDNotSet) {
-}
+      stream_id_(kStreamIDNotSet) {}
 
 AudioInputMessageFilter::AudioInputIPCImpl::~AudioInputIPCImpl() {}
 

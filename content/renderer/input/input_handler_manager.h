@@ -52,11 +52,10 @@ class CONTENT_EXPORT InputHandlerManager {
   // underlying MessageLoop and supplied |client| and the |renderer_scheduler|
   // must outlive this object. The RendererScheduler needs to know when input
   // events and fling animations occur, which is why it's passed in here.
-  InputHandlerManager(
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-      InputHandlerManagerClient* client,
-      SynchronousInputHandlerProxyClient* sync_handler_client,
-      blink::scheduler::RendererScheduler* renderer_scheduler);
+  InputHandlerManager(scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+                      InputHandlerManagerClient* client,
+                      SynchronousInputHandlerProxyClient* sync_handler_client,
+                      blink::scheduler::RendererScheduler* renderer_scheduler);
   virtual ~InputHandlerManager();
 
   // Callable from the main thread only.

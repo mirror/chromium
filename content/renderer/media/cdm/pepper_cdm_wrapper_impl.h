@@ -63,9 +63,8 @@ class PepperCdmWrapperImpl : public PepperCdmWrapper {
       ScopedHelperPlugin;
 
   // Takes ownership of |helper_plugin| and |plugin_instance|.
-  PepperCdmWrapperImpl(
-      ScopedHelperPlugin helper_plugin,
-      const scoped_refptr<PepperPluginInstanceImpl>& plugin_instance);
+  PepperCdmWrapperImpl(ScopedHelperPlugin helper_plugin,
+                       scoped_refptr<PepperPluginInstanceImpl> plugin_instance);
 
   ScopedHelperPlugin helper_plugin_;
   scoped_refptr<PepperPluginInstanceImpl> plugin_instance_;

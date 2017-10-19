@@ -32,14 +32,14 @@ void* const kClassIdentifier = const_cast<void**>(&kClassIdentifier);
 ProcessedLocalAudioSource::ProcessedLocalAudioSource(
     int consumer_render_frame_id,
     const MediaStreamDevice& device,
-    const AudioProcessingProperties& audio_processing_properties,
-    const ConstraintsCallback& started_callback,
+    AudioProcessingProperties audio_processing_properties,
+    ConstraintsCallback started_callback,
     PeerConnectionDependencyFactory* factory)
     : MediaStreamAudioSource(true /* is_local_source */),
       consumer_render_frame_id_(consumer_render_frame_id),
       pc_factory_(factory),
-      audio_processing_properties_(audio_processing_properties),
-      started_callback_(started_callback),
+      audio_processing_properties_(std::move(audio_processing_properties)),
+      started_callback_(std::move(started_callback)),
       volume_(0),
       allow_invalid_render_frame_id_for_testing_(false) {
   DCHECK(pc_factory_);

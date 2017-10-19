@@ -25,9 +25,9 @@ class InputHandlerWrapper : public ui::InputHandlerProxyClient {
   InputHandlerWrapper(
       InputHandlerManager* input_handler_manager,
       int routing_id,
-      const scoped_refptr<base::SingleThreadTaskRunner>& main_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> main_task_runner,
       const base::WeakPtr<cc::InputHandler>& input_handler,
-      const base::WeakPtr<RenderWidget>& render_widget,
+      base::WeakPtr<RenderWidget> render_widget,
       bool enable_smooth_scrolling);
   ~InputHandlerWrapper() override;
 

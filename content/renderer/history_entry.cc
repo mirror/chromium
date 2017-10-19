@@ -36,6 +36,7 @@
 #include "content/renderer/history_entry.h"
 
 #include <algorithm>
+#include <utility>
 
 #include "base/memory/ptr_util.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -60,9 +61,9 @@ void HistoryEntry::HistoryNode::set_item(const WebHistoryItem& item) {
   item_ = item;
 }
 
-HistoryEntry::HistoryNode::HistoryNode(const base::WeakPtr<HistoryEntry>& entry,
+HistoryEntry::HistoryNode::HistoryNode(base::WeakPtr<HistoryEntry> entry,
                                        const WebHistoryItem& item)
-    : entry_(entry) {
+    : entry_(std::move(entry)) {
   if (!item.IsNull())
     set_item(item);
 }

@@ -6,6 +6,8 @@
 
 #include <stddef.h>
 
+#include <utility>
+
 #include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/nullable_string16.h"
@@ -27,13 +29,12 @@
 namespace content {
 
 ManifestParser::ManifestParser(const base::StringPiece& data,
-                               const GURL& manifest_url,
-                               const GURL& document_url)
+                               GURL manifest_url,
+                               GURL document_url)
     : data_(data),
-      manifest_url_(manifest_url),
-      document_url_(document_url),
-      failed_(false) {
-}
+      manifest_url_(std::move(manifest_url)),
+      document_url_(std::move(document_url)),
+      failed_(false) {}
 
 ManifestParser::~ManifestParser() {
 }

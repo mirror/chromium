@@ -38,7 +38,7 @@ class CONTENT_EXPORT LocalStorageCachedArea
       public base::RefCounted<LocalStorageCachedArea> {
  public:
   LocalStorageCachedArea(
-      const url::Origin& origin,
+      url::Origin origin,
       mojom::StoragePartitionService* storage_partition_service,
       LocalStorageCachedAreas* cached_areas);
 

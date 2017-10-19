@@ -21,14 +21,14 @@ SpeechRecognitionAudioSink::SpeechRecognitionAudioSink(
     const media::AudioParameters& params,
     const base::SharedMemoryHandle memory,
     std::unique_ptr<base::SyncSocket> socket,
-    const OnStoppedCB& on_stopped_cb)
+    OnStoppedCB on_stopped_cb)
     : track_(track),
       shared_memory_(memory, false),
       socket_(std::move(socket)),
       output_params_(params),
       track_stopped_(false),
       buffer_index_(0),
-      on_stopped_cb_(on_stopped_cb) {
+      on_stopped_cb_(std::move(on_stopped_cb)) {
   DCHECK(socket_.get());
   DCHECK(main_render_thread_checker_.CalledOnValidThread());
   DCHECK(params.IsValid());

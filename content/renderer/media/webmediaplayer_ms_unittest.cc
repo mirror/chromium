@@ -4,6 +4,8 @@
 
 #include <stddef.h>
 
+#include <utility>
+
 #include "base/containers/circular_deque.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
@@ -156,13 +158,13 @@ class MockMediaStreamVideoRenderer : public MediaStreamVideoRenderer {
   MockMediaStreamVideoRenderer(
       const scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       ReusableMessageLoopEvent* message_loop_controller,
-      const base::Closure& error_cb,
-      const MediaStreamVideoRenderer::RepaintCB& repaint_cb)
+      base::Closure error_cb,
+      MediaStreamVideoRenderer::RepaintCB repaint_cb)
       : started_(false),
         task_runner_(task_runner),
         message_loop_controller_(message_loop_controller),
-        error_cb_(error_cb),
-        repaint_cb_(repaint_cb),
+        error_cb_(std::move(error_cb)),
+        repaint_cb_(std::move(repaint_cb)),
         delay_till_next_generated_frame_(
             base::TimeDelta::FromSecondsD(1.0 / 30.0)) {}
 
@@ -359,10 +361,9 @@ void MockMediaStreamVideoRenderer::InjectFrame() {
 // WebMediaPlayerMS::load().
 class MockRenderFactory : public MediaStreamRendererFactory {
  public:
-  MockRenderFactory(
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-      ReusableMessageLoopEvent* message_loop_controller)
-      : task_runner_(task_runner),
+  MockRenderFactory(scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+                    ReusableMessageLoopEvent* message_loop_controller)
+      : task_runner_(std::move(task_runner)),
         message_loop_controller_(message_loop_controller) {}
 
   scoped_refptr<MediaStreamVideoRenderer> GetVideoRenderer(

@@ -112,12 +112,11 @@ class CONTENT_EXPORT GpuVideoAcceleratorFactoriesImpl
  private:
   GpuVideoAcceleratorFactoriesImpl(
       scoped_refptr<gpu::GpuChannelHost> gpu_channel_host,
-      const scoped_refptr<base::SingleThreadTaskRunner>&
-          main_thread_task_runner,
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       const scoped_refptr<ui::ContextProviderCommandBuffer>& context_provider,
       bool enable_gpu_memory_buffer_video_frames,
-      const viz::BufferToTextureTargetMap& image_texture_targets,
+      viz::BufferToTextureTargetMap image_texture_targets,
       bool enable_video_accelerator,
       media::mojom::VideoEncodeAcceleratorProviderPtrInfo unbound_vea_provider);
 

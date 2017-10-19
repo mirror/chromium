@@ -4,6 +4,8 @@
 
 #include "content/renderer/gpu/queue_message_swap_promise.h"
 
+#include <utility>
+
 #include "base/command_line.h"
 #include "content/common/view_messages.h"
 #include "content/public/common/content_switches.h"
@@ -17,8 +19,8 @@ QueueMessageSwapPromise::QueueMessageSwapPromise(
     scoped_refptr<IPC::SyncMessageFilter> message_sender,
     scoped_refptr<content::FrameSwapMessageQueue> message_queue,
     int source_frame_number)
-    : message_sender_(message_sender),
-      message_queue_(message_queue),
+    : message_sender_(std::move(message_sender)),
+      message_queue_(std::move(message_queue)),
       source_frame_number_(source_frame_number)
 #if DCHECK_IS_ON()
       ,

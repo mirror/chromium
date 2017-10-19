@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <tuple>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/callback.h"
@@ -2338,7 +2339,7 @@ class ConsoleCallbackFilter : public IPC::Listener {
  public:
   explicit ConsoleCallbackFilter(
       base::Callback<void(const base::string16&)> callback)
-      : callback_(callback) {}
+      : callback_(std::move(callback)) {}
 
   bool OnMessageReceived(const IPC::Message& msg) override {
     bool handled = true;

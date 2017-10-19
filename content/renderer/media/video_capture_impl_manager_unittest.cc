@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include <array>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/callback.h"
@@ -53,7 +54,7 @@ class MockVideoCaptureImpl : public VideoCaptureImpl,
                        base::Closure destruct_callback)
       : VideoCaptureImpl(session_id),
         pause_callback_(pause_callback),
-        destruct_callback_(destruct_callback) {}
+        destruct_callback_(std::move(destruct_callback)) {}
 
   ~MockVideoCaptureImpl() override { destruct_callback_.Run(); }
 
@@ -105,7 +106,7 @@ class MockVideoCaptureImplManager : public VideoCaptureImplManager {
   MockVideoCaptureImplManager(PauseResumeCallback* pause_callback,
                               base::Closure stop_capture_callback)
       : pause_callback_(pause_callback),
-        stop_capture_callback_(stop_capture_callback) {}
+        stop_capture_callback_(std::move(stop_capture_callback)) {}
   ~MockVideoCaptureImplManager() override {}
 
  private:

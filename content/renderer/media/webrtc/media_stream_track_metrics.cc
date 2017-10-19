@@ -7,6 +7,7 @@
 #include <inttypes.h>
 #include <set>
 #include <string>
+#include <utility>
 
 #include "base/md5.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -43,11 +44,12 @@ class MediaStreamObserver
       void(const IdSet& audio_track_ids, const IdSet& video_track_ids)>
           OnChangedCallback;
 
-  MediaStreamObserver(
-      const OnChangedCallback& callback,
-      const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
-      webrtc::MediaStreamInterface* stream)
-      : main_thread_(main_thread), stream_(stream), callback_(callback) {
+  MediaStreamObserver(OnChangedCallback callback,
+                      scoped_refptr<base::SingleThreadTaskRunner> main_thread,
+                      webrtc::MediaStreamInterface* stream)
+      : main_thread_(std::move(main_thread)),
+        stream_(stream),
+        callback_(std::move(callback)) {
     signaling_thread_.DetachFromThread();
     stream_->RegisterObserver(this);
   }

@@ -5,6 +5,7 @@
 #include "content/renderer/media/pepper_to_video_track_adapter.h"
 
 #include <string>
+#include <utility>
 
 #include "base/base64.h"
 #include "base/logging.h"
@@ -63,7 +64,7 @@ class PpFrameWriter::FrameWriterDelegate
  public:
   FrameWriterDelegate(
       scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-      const VideoCaptureDeliverFrameCB& new_frame_callback);
+      VideoCaptureDeliverFrameCB new_frame_callback);
 
   void DeliverFrame(const scoped_refptr<media::VideoFrame>& frame);
  private:
@@ -78,9 +79,9 @@ class PpFrameWriter::FrameWriterDelegate
 
 PpFrameWriter::FrameWriterDelegate::FrameWriterDelegate(
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-    const VideoCaptureDeliverFrameCB& new_frame_callback)
-    : io_task_runner_(io_task_runner), new_frame_callback_(new_frame_callback) {
-}
+    VideoCaptureDeliverFrameCB new_frame_callback)
+    : io_task_runner_(std::move(io_task_runner)),
+      new_frame_callback_(std::move(new_frame_callback)) {}
 
 PpFrameWriter::FrameWriterDelegate::~FrameWriterDelegate() {
 }
@@ -185,8 +186,8 @@ void PpFrameWriter::PutFrame(PPB_ImageData_Impl* image_data,
 // is released).
 class PpFrameWriterProxy : public FrameWriterInterface {
  public:
-  explicit PpFrameWriterProxy(const base::WeakPtr<PpFrameWriter>& writer)
-      : writer_(writer) {
+  explicit PpFrameWriterProxy(base::WeakPtr<PpFrameWriter> writer)
+      : writer_(std::move(writer)) {
     DCHECK(writer_);
   }
 

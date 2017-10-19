@@ -90,8 +90,7 @@ class AudioTrackRecorder::AudioEncoder
     : public base::RefCountedThreadSafe<AudioEncoder>,
       public media::AudioConverter::InputCallback {
  public:
-  AudioEncoder(const OnEncodedAudioCB& on_encoded_audio_cb,
-               int32_t bits_per_second);
+  AudioEncoder(OnEncodedAudioCB on_encoded_audio_cb, int32_t bits_per_second);
 
   void OnSetFormat(const media::AudioParameters& params);
 
@@ -141,9 +140,9 @@ class AudioTrackRecorder::AudioEncoder
 };
 
 AudioTrackRecorder::AudioEncoder::AudioEncoder(
-    const OnEncodedAudioCB& on_encoded_audio_cb,
+    OnEncodedAudioCB on_encoded_audio_cb,
     int32_t bits_per_second)
-    : on_encoded_audio_cb_(on_encoded_audio_cb),
+    : on_encoded_audio_cb_(std::move(on_encoded_audio_cb)),
       bits_per_second_(bits_per_second),
       paused_(false),
       opus_encoder_(nullptr) {

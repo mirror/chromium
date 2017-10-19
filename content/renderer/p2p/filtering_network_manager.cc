@@ -16,11 +16,11 @@ namespace content {
 
 FilteringNetworkManager::FilteringNetworkManager(
     rtc::NetworkManager* network_manager,
-    const GURL& requesting_origin,
+    GURL requesting_origin,
     media::MediaPermission* media_permission)
     : network_manager_(network_manager),
       media_permission_(media_permission),
-      requesting_origin_(requesting_origin),
+      requesting_origin_(std::move(requesting_origin)),
       weak_ptr_factory_(this) {
   thread_checker_.DetachFromThread();
   set_enumeration_permission(ENUMERATION_BLOCKED);

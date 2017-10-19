@@ -6,6 +6,8 @@
 
 #include <math.h>
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/logging.h"
@@ -75,10 +77,10 @@ StunProberTrial::Param::Param() {}
 StunProberTrial::Param::~Param() {}
 
 StunProberTrial::StunProberTrial(rtc::NetworkManager* network_manager,
-                                 const std::string& params,
+                                 std::string params,
                                  rtc::PacketSocketFactory* factory)
     : network_manager_(network_manager),
-      param_line_(params),
+      param_line_(std::move(params)),
       factory_(factory) {
   // We have to connect to the signal to avoid a race condition if network
   // manager hasn't received the network update when we start, the StunProber

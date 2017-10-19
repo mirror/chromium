@@ -66,9 +66,9 @@ class CONTENT_EXPORT MediaStreamVideoTrack : public MediaStreamTrack {
   MediaStreamVideoTrack(
       MediaStreamVideoSource* source,
       const VideoTrackAdapterSettings& adapter_settings,
-      const base::Optional<bool>& noise_reduction,
+      base::Optional<bool> noise_reduction,
       bool is_screen_cast,
-      const base::Optional<double>& min_frame_rate,
+      base::Optional<double> min_frame_rate,
       const MediaStreamVideoSource::ConstraintsCallback& callback,
       bool enabled);
   ~MediaStreamVideoTrack() override;

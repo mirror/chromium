@@ -6,6 +6,8 @@
 
 #include <stdint.h>
 
+#include <utility>
+
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/strings/string_util.h"
@@ -34,8 +36,8 @@ AssociatedResourceFetcher* AssociatedResourceFetcher::Create(const GURL& url) {
 class AssociatedResourceFetcherImpl::ClientImpl
     : public blink::WebAssociatedURLLoaderClient {
  public:
-  explicit ClientImpl(const Callback& callback)
-      : completed_(false), status_(LOADING), callback_(callback) {}
+  explicit ClientImpl(Callback callback)
+      : completed_(false), status_(LOADING), callback_(std::move(callback)) {}
 
   ~ClientImpl() override {}
 

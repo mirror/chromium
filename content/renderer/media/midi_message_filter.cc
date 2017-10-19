@@ -5,6 +5,7 @@
 #include "content/renderer/media/midi_message_filter.h"
 
 #include <algorithm>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/single_thread_task_runner.h"
@@ -30,7 +31,7 @@ namespace content {
 MidiMessageFilter::MidiMessageFilter(
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
     : sender_(nullptr),
-      io_task_runner_(io_task_runner),
+      io_task_runner_(std::move(io_task_runner)),
       main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       session_result_(Result::NOT_INITIALIZED),
       unacknowledged_bytes_sent_(0u) {}

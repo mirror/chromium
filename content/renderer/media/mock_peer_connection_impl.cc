@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include <utility>
 #include <vector>
 
 #include "base/logging.h"
@@ -118,7 +119,7 @@ class MockDtmfSender : public DtmfSenderInterface {
 
 FakeRtpReceiver::FakeRtpReceiver(
     rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track)
-    : track_(track) {}
+    : track_(std::move(track)) {}
 
 FakeRtpReceiver::~FakeRtpReceiver() {}
 

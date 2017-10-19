@@ -7,6 +7,8 @@
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -70,21 +72,21 @@ GpuVideoAcceleratorFactoriesImpl::Create(
 
 GpuVideoAcceleratorFactoriesImpl::GpuVideoAcceleratorFactoriesImpl(
     scoped_refptr<gpu::GpuChannelHost> gpu_channel_host,
-    const scoped_refptr<base::SingleThreadTaskRunner>& main_thread_task_runner,
-    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     const scoped_refptr<ui::ContextProviderCommandBuffer>& context_provider,
     bool enable_gpu_memory_buffer_video_frames,
-    const viz::BufferToTextureTargetMap& image_texture_targets,
+    viz::BufferToTextureTargetMap image_texture_targets,
     bool enable_video_accelerator,
     media::mojom::VideoEncodeAcceleratorProviderPtrInfo unbound_vea_provider)
-    : main_thread_task_runner_(main_thread_task_runner),
-      task_runner_(task_runner),
+    : main_thread_task_runner_(std::move(main_thread_task_runner)),
+      task_runner_(std::move(task_runner)),
       gpu_channel_host_(std::move(gpu_channel_host)),
       context_provider_refptr_(context_provider),
       context_provider_(context_provider.get()),
       enable_gpu_memory_buffer_video_frames_(
           enable_gpu_memory_buffer_video_frames),
-      image_texture_targets_(image_texture_targets),
+      image_texture_targets_(std::move(image_texture_targets)),
       video_accelerator_enabled_(enable_video_accelerator),
       gpu_memory_buffer_manager_(
           RenderThreadImpl::current()->GetGpuMemoryBufferManager()),

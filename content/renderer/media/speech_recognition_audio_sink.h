@@ -44,7 +44,7 @@ class CONTENT_EXPORT SpeechRecognitionAudioSink
                              const media::AudioParameters& params,
                              const base::SharedMemoryHandle memory,
                              std::unique_ptr<base::SyncSocket> socket,
-                             const OnStoppedCB& on_stopped_cb);
+                             OnStoppedCB on_stopped_cb);
 
   ~SpeechRecognitionAudioSink() override;
 

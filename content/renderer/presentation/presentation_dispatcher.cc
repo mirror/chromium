@@ -515,14 +515,13 @@ blink::mojom::ScreenAvailability PresentationDispatcher::GetScreenAvailability(
 }
 
 PresentationDispatcher::AvailabilityListener::AvailabilityListener(
-    const std::vector<GURL>& availability_urls)
-    : urls(availability_urls) {}
+    std::vector<GURL> availability_urls)
+    : urls(std::move(availability_urls)) {}
 
 PresentationDispatcher::AvailabilityListener::~AvailabilityListener() {}
 
-PresentationDispatcher::ListeningStatus::ListeningStatus(
-    const GURL& availability_url)
-    : url(availability_url),
+PresentationDispatcher::ListeningStatus::ListeningStatus(GURL availability_url)
+    : url(std::move(availability_url)),
       last_known_availability(blink::mojom::ScreenAvailability::UNKNOWN),
       listening_state(ListeningState::INACTIVE) {}
 

@@ -79,7 +79,7 @@ class CONTENT_EXPORT WebRtcMediaStreamTrackAdapter
 
   WebRtcMediaStreamTrackAdapter(
       PeerConnectionDependencyFactory* factory,
-      const scoped_refptr<base::SingleThreadTaskRunner>& main_thread);
+      scoped_refptr<base::SingleThreadTaskRunner> main_thread);
   virtual ~WebRtcMediaStreamTrackAdapter();
 
  private:

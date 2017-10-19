@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <string>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -254,13 +255,13 @@ AudioRendererMixerManager::MixerKey::MixerKey(
     int source_render_frame_id,
     const media::AudioParameters& params,
     media::AudioLatency::LatencyType latency,
-    const std::string& device_id,
-    const url::Origin& security_origin)
+    std::string device_id,
+    url::Origin security_origin)
     : source_render_frame_id(source_render_frame_id),
       params(params),
       latency(latency),
-      device_id(device_id),
-      security_origin(security_origin) {}
+      device_id(std::move(device_id)),
+      security_origin(std::move(security_origin)) {}
 
 AudioRendererMixerManager::MixerKey::MixerKey(const MixerKey& other) = default;
 

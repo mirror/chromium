@@ -48,7 +48,7 @@ class StunProberTrial : public stunprober::StunProber::Observer,
   };
 
   StunProberTrial(rtc::NetworkManager* network_manager,
-                  const std::string& params,
+                  std::string params,
                   rtc::PacketSocketFactory* factory);
   ~StunProberTrial() override;
 

@@ -70,13 +70,13 @@ void PpapiDecryptor::Create(
 
 PpapiDecryptor::PpapiDecryptor(
     std::unique_ptr<PepperCdmWrapper> pepper_cdm_wrapper,
-    const media::SessionMessageCB& session_message_cb,
-    const media::SessionClosedCB& session_closed_cb,
+    media::SessionMessageCB session_message_cb,
+    media::SessionClosedCB session_closed_cb,
     const media::SessionKeysChangeCB& session_keys_change_cb,
     const media::SessionExpirationUpdateCB& session_expiration_update_cb)
     : pepper_cdm_wrapper_(std::move(pepper_cdm_wrapper)),
-      session_message_cb_(session_message_cb),
-      session_closed_cb_(session_closed_cb),
+      session_message_cb_(std::move(session_message_cb)),
+      session_closed_cb_(std::move(session_closed_cb)),
       session_keys_change_cb_(session_keys_change_cb),
       session_expiration_update_cb_(session_expiration_update_cb),
       render_task_runner_(base::ThreadTaskRunnerHandle::Get()),

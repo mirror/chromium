@@ -5,6 +5,7 @@
 #include "content/renderer/media_recorder/vea_encoder.h"
 
 #include <string>
+#include <utility>
 
 #include "base/containers/queue.h"
 #include "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.h"
@@ -33,7 +34,7 @@ const int kVEAEncoderOutputBufferCount = 4;
 
 VEAEncoder::VEAEncoder(
     const VideoTrackRecorder::OnEncodedVideoCB& on_encoded_video_callback,
-    const VideoTrackRecorder::OnErrorCB& on_error_callback,
+    VideoTrackRecorder::OnErrorCB on_error_callback,
     int32_t bits_per_second,
     media::VideoCodecProfile codec,
     const gfx::Size& size)
@@ -44,7 +45,7 @@ VEAEncoder::VEAEncoder(
       gpu_factories_(RenderThreadImpl::current()->GetGpuFactories()),
       codec_(codec),
       error_notified_(false),
-      on_error_callback_(on_error_callback) {
+      on_error_callback_(std::move(on_error_callback)) {
   DCHECK(gpu_factories_);
   DCHECK_GE(size.width(), kVEAEncoderMinResolutionWidth);
   DCHECK_GE(size.height(), kVEAEncoderMinResolutionHeight);

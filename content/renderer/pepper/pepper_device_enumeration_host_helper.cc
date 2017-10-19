@@ -4,6 +4,8 @@
 
 #include "content/renderer/pepper/pepper_device_enumeration_host_helper.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/logging.h"
@@ -30,8 +32,8 @@ class PepperDeviceEnumerationHostHelper::ScopedEnumerationRequest
  public:
   // |owner| must outlive this object.
   ScopedEnumerationRequest(PepperDeviceEnumerationHostHelper* owner,
-                           const Delegate::DevicesCallback& callback)
-      : callback_(callback), requested_(false), sync_call_(false) {
+                           Delegate::DevicesCallback callback)
+      : callback_(std::move(callback)), requested_(false), sync_call_(false) {
     if (!owner->delegate_) {
       // If no delegate, return an empty list of devices.
       base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -131,7 +133,7 @@ PepperDeviceEnumerationHostHelper::PepperDeviceEnumerationHostHelper(
     PP_DeviceType_Dev device_type,
     const GURL& document_url)
     : resource_host_(resource_host),
-      delegate_(delegate),
+      delegate_(std::move(delegate)),
       device_type_(device_type) {}
 
 PepperDeviceEnumerationHostHelper::~PepperDeviceEnumerationHostHelper() {}

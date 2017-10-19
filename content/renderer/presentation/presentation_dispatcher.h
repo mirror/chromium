@@ -135,7 +135,7 @@ class CONTENT_EXPORT PresentationDispatcher
   // Tracks listeners of presentation displays availability for
   // |availability_urls|.
   struct AvailabilityListener {
-    explicit AvailabilityListener(const std::vector<GURL>& availability_urls);
+    explicit AvailabilityListener(std::vector<GURL> availability_urls);
     ~AvailabilityListener();
 
     const std::vector<GURL> urls;
@@ -145,7 +145,7 @@ class CONTENT_EXPORT PresentationDispatcher
 
   // Tracks listening status of |availability_url|.
   struct ListeningStatus {
-    explicit ListeningStatus(const GURL& availability_url);
+    explicit ListeningStatus(GURL availability_url);
     ~ListeningStatus();
 
     const GURL url;

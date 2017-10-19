@@ -5,6 +5,7 @@
 #include "content/renderer/media/cdm/render_cdm_factory.h"
 
 #include <memory>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/location.h"
@@ -26,9 +27,8 @@
 namespace content {
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-RenderCdmFactory::RenderCdmFactory(
-    const CreatePepperCdmCB& create_pepper_cdm_cb)
-    : create_pepper_cdm_cb_(create_pepper_cdm_cb) {}
+RenderCdmFactory::RenderCdmFactory(CreatePepperCdmCB create_pepper_cdm_cb)
+    : create_pepper_cdm_cb_(std::move(create_pepper_cdm_cb)) {}
 #else
 RenderCdmFactory::RenderCdmFactory() {}
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)

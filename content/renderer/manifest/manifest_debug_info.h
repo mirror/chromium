@@ -6,6 +6,7 @@
 #define CONTENT_RENDERER_MANIFEST_MANIFEST_DEBUG_INFO_H_
 
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace content {
@@ -16,8 +17,8 @@ namespace content {
 // errors result in parser failure.
 struct ManifestDebugInfo {
   struct Error {
-    Error(const std::string& message, bool critical, int line, int column)
-        : message(message),
+    Error(std::string message, bool critical, int line, int column)
+        : message(std::move(message)),
           critical(critical),
           line(line),
           column(column) {}

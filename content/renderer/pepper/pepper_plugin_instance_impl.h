@@ -630,7 +630,7 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
                            PluginModule* module,
                            ppapi::PPP_Instance_Combined* instance_interface,
                            blink::WebPluginContainer* container,
-                           const GURL& plugin_url);
+                           GURL plugin_url);
 
   bool LoadFindInterface();
   bool LoadInputEventInterface();

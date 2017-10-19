@@ -346,13 +346,13 @@ void MediaStreamVideoSource::UpdateTrackSettings(
 
 MediaStreamVideoSource::PendingTrackInfo::PendingTrackInfo(
     MediaStreamVideoTrack* track,
-    const VideoCaptureDeliverFrameCB& frame_callback,
+    VideoCaptureDeliverFrameCB frame_callback,
     std::unique_ptr<VideoTrackAdapterSettings> adapter_settings,
-    const ConstraintsCallback& callback)
+    ConstraintsCallback callback)
     : track(track),
-      frame_callback(frame_callback),
+      frame_callback(std::move(frame_callback)),
       adapter_settings(std::move(adapter_settings)),
-      callback(callback) {}
+      callback(std::move(callback)) {}
 
 MediaStreamVideoSource::PendingTrackInfo::PendingTrackInfo(
     PendingTrackInfo&& other) = default;

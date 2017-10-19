@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <memory>
 #include <string>
+#include <utility>
 
 #include "base/feature_list.h"
 #include "base/location.h"
@@ -44,7 +45,7 @@ class MediaStreamVideoWebRtcSink::WebRtcVideoSource
       : VideoTrackSource(capture_adapter, false),
         capture_adapter_(capture_adapter),
         is_screencast_(is_screencast),
-        needs_denoising_(needs_denoising) {}
+        needs_denoising_(std::move(needs_denoising)) {}
 
   WebRtcVideoCapturerAdapter* capture_adapter() const {
     return capture_adapter_.get();
@@ -99,11 +100,11 @@ webrtc::VideoTrackInterface::ContentHint ContentHintTypeToWebRtcContentHint(
 class MediaStreamVideoWebRtcSink::WebRtcVideoSourceAdapter
     : public base::RefCountedThreadSafe<WebRtcVideoSourceAdapter> {
  public:
-  WebRtcVideoSourceAdapter(const scoped_refptr<base::SingleThreadTaskRunner>&
-                               libjingle_worker_thread,
-                           const scoped_refptr<WebRtcVideoSource>& source,
-                           base::TimeDelta refresh_interval,
-                           const base::Closure& refresh_callback);
+  WebRtcVideoSourceAdapter(
+      scoped_refptr<base::SingleThreadTaskRunner> libjingle_worker_thread,
+      const scoped_refptr<WebRtcVideoSource>& source,
+      base::TimeDelta refresh_interval,
+      const base::Closure& refresh_callback);
 
   // MediaStreamVideoWebRtcSink can be destroyed on the main render thread or
   // libjingles worker thread since it posts video frames on that thread. But
@@ -171,12 +172,12 @@ class MediaStreamVideoWebRtcSink::WebRtcVideoSourceAdapter
 };
 
 MediaStreamVideoWebRtcSink::WebRtcVideoSourceAdapter::WebRtcVideoSourceAdapter(
-    const scoped_refptr<base::SingleThreadTaskRunner>& libjingle_worker_thread,
+    scoped_refptr<base::SingleThreadTaskRunner> libjingle_worker_thread,
     const scoped_refptr<WebRtcVideoSource>& source,
     base::TimeDelta refresh_interval,
     const base::Closure& refresh_callback)
     : render_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      libjingle_worker_thread_(libjingle_worker_thread),
+      libjingle_worker_thread_(std::move(libjingle_worker_thread)),
       video_source_(source),
       capture_adapter_(source->capture_adapter()) {
   io_thread_checker_.DetachFromThread();

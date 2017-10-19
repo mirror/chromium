@@ -56,10 +56,10 @@ WidgetInputHandlerImpl::WidgetInputHandlerImpl(
     scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner,
     scoped_refptr<MainThreadEventQueue> input_event_queue,
     base::WeakPtr<RenderWidget> render_widget)
-    : main_thread_task_runner_(main_thread_task_runner),
-      input_handler_manager_(manager),
-      input_event_queue_(input_event_queue),
-      render_widget_(render_widget),
+    : main_thread_task_runner_(std::move(main_thread_task_runner)),
+      input_handler_manager_(std::move(manager)),
+      input_event_queue_(std::move(input_event_queue)),
+      render_widget_(std::move(render_widget)),
       binding_(this),
       associated_binding_(this) {}
 

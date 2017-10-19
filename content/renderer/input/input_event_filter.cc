@@ -55,13 +55,13 @@ const char* GetInputMessageTypeName(const IPC::Message& message) {
 namespace content {
 
 InputEventFilter::InputEventFilter(
-    const base::Callback<void(const IPC::Message&)>& main_listener,
-    const scoped_refptr<base::SingleThreadTaskRunner>& main_task_runner,
-    const scoped_refptr<base::SingleThreadTaskRunner>& target_task_runner)
-    : main_task_runner_(main_task_runner),
-      main_listener_(main_listener),
+    base::Callback<void(const IPC::Message&)> main_listener,
+    scoped_refptr<base::SingleThreadTaskRunner> main_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> target_task_runner)
+    : main_task_runner_(std::move(main_task_runner)),
+      main_listener_(std::move(main_listener)),
       sender_(NULL),
-      target_task_runner_(target_task_runner),
+      target_task_runner_(std::move(target_task_runner)),
       input_handler_manager_(NULL) {
   DCHECK(target_task_runner_.get());
   DCHECK(main_task_runner_->BelongsToCurrentThread());

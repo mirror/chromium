@@ -133,7 +133,7 @@ class VideoTrackAdapter::VideoFrameResolutionAdapter
 VideoTrackAdapter::VideoFrameResolutionAdapter::VideoFrameResolutionAdapter(
     scoped_refptr<base::SingleThreadTaskRunner> render_message_loop,
     const VideoTrackAdapterSettings& settings)
-    : renderer_task_runner_(render_message_loop),
+    : renderer_task_runner_(std::move(render_message_loop)),
       settings_(settings),
       frame_rate_(MediaStreamVideoSource::kDefaultFrameRate),
       last_time_stamp_(base::TimeDelta::Max()),

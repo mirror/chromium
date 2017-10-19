@@ -6,6 +6,8 @@
 
 #include <stddef.h>
 
+#include <utility>
+
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
@@ -26,8 +28,8 @@ namespace content {
 class PepperFileChooserHost::CompletionHandler
     : public blink::WebFileChooserCompletion {
  public:
-  explicit CompletionHandler(const base::WeakPtr<PepperFileChooserHost>& host)
-      : host_(host) {}
+  explicit CompletionHandler(base::WeakPtr<PepperFileChooserHost> host)
+      : host_(std::move(host)) {}
 
   ~CompletionHandler() override {}
 
@@ -66,10 +68,9 @@ class PepperFileChooserHost::CompletionHandler
   DISALLOW_COPY_AND_ASSIGN(CompletionHandler);
 };
 
-PepperFileChooserHost::ChosenFileInfo::ChosenFileInfo(
-    const std::string& path,
-    const std::string& display_name)
-    : path(path), display_name(display_name) {}
+PepperFileChooserHost::ChosenFileInfo::ChosenFileInfo(std::string path,
+                                                      std::string display_name)
+    : path(std::move(path)), display_name(std::move(display_name)) {}
 
 PepperFileChooserHost::PepperFileChooserHost(RendererPpapiHost* host,
                                              PP_Instance instance,

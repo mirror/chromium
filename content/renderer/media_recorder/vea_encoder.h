@@ -30,7 +30,7 @@ class VEAEncoder final : public VideoTrackRecorder::Encoder,
  public:
   VEAEncoder(
       const VideoTrackRecorder::OnEncodedVideoCB& on_encoded_video_callback,
-      const VideoTrackRecorder::OnErrorCB& on_error_callback,
+      VideoTrackRecorder::OnErrorCB on_error_callback,
       int32_t bits_per_second,
       media::VideoCodecProfile codec,
       const gfx::Size& size);

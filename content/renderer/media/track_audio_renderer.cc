@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/track_audio_renderer.h"
 
+#include <utility>
+
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
@@ -120,16 +122,16 @@ TrackAudioRenderer::TrackAudioRenderer(
     const blink::WebMediaStreamTrack& audio_track,
     int playout_render_frame_id,
     int session_id,
-    const std::string& device_id,
-    const url::Origin& security_origin)
+    std::string device_id,
+    url::Origin security_origin)
     : audio_track_(audio_track),
       playout_render_frame_id_(playout_render_frame_id),
       session_id_(session_id),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
       num_samples_rendered_(0),
       playing_(false),
-      output_device_id_(device_id),
-      security_origin_(security_origin),
+      output_device_id_(std::move(device_id)),
+      security_origin_(std::move(security_origin)),
       volume_(0.0),
       sink_started_(false) {
   DCHECK(MediaStreamAudioTrack::From(audio_track_));

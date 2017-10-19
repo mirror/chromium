@@ -64,8 +64,8 @@ class CONTENT_EXPORT TrackAudioRenderer
   TrackAudioRenderer(const blink::WebMediaStreamTrack& audio_track,
                      int playout_render_frame_id,
                      int session_id,
-                     const std::string& device_id,
-                     const url::Origin& security_origin);
+                     std::string device_id,
+                     url::Origin security_origin);
 
   // MediaStreamAudioRenderer implementation.
   // Called on the main thread.

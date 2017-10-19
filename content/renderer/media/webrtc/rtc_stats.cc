@@ -6,6 +6,7 @@
 
 #include <set>
 #include <string>
+#include <utility>
 
 #include "base/logging.h"
 #include "base/time/time.h"
@@ -59,8 +60,8 @@ bool IsWhitelistedStats(const webrtc::RTCStats& stats) {
 }  // namespace
 
 RTCStatsReport::RTCStatsReport(
-    const scoped_refptr<const webrtc::RTCStatsReport>& stats_report)
-    : stats_report_(stats_report),
+    scoped_refptr<const webrtc::RTCStatsReport> stats_report)
+    : stats_report_(std::move(stats_report)),
       it_(stats_report_->begin()),
       end_(stats_report_->end()) {
   DCHECK(stats_report_);
@@ -99,10 +100,9 @@ size_t RTCStatsReport::Size() const {
   return stats_report_->size();
 }
 
-RTCStats::RTCStats(
-    const scoped_refptr<const webrtc::RTCStatsReport>& stats_owner,
-    const webrtc::RTCStats* stats)
-    : stats_owner_(stats_owner),
+RTCStats::RTCStats(scoped_refptr<const webrtc::RTCStatsReport> stats_owner,
+                   const webrtc::RTCStats* stats)
+    : stats_owner_(std::move(stats_owner)),
       stats_(stats),
       stats_members_(stats->Members()) {
   DCHECK(stats_owner_);
@@ -137,10 +137,9 @@ std::unique_ptr<blink::WebRTCStatsMember> RTCStats::GetMember(size_t i) const {
 }
 
 RTCStatsMember::RTCStatsMember(
-    const scoped_refptr<const webrtc::RTCStatsReport>& stats_owner,
+    scoped_refptr<const webrtc::RTCStatsReport> stats_owner,
     const webrtc::RTCStatsMemberInterface* member)
-    : stats_owner_(stats_owner),
-      member_(member) {
+    : stats_owner_(std::move(stats_owner)), member_(member) {
   DCHECK(stats_owner_);
   DCHECK(member_);
 }

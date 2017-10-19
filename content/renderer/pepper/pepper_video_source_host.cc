@@ -6,6 +6,8 @@
 
 #include <string.h>
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/numerics/safe_conversions.h"
 #include "content/public/renderer/renderer_ppapi_host.h"
@@ -35,7 +37,7 @@ class PepperVideoSourceHost::FrameReceiver
     : public FrameReaderInterface,
       public base::RefCountedThreadSafe<FrameReceiver> {
  public:
-  explicit FrameReceiver(const base::WeakPtr<PepperVideoSourceHost>& host);
+  explicit FrameReceiver(base::WeakPtr<PepperVideoSourceHost> host);
 
   // FrameReaderInterface implementation.
   void GotFrame(const scoped_refptr<media::VideoFrame>& frame) override;
@@ -50,8 +52,8 @@ class PepperVideoSourceHost::FrameReceiver
 };
 
 PepperVideoSourceHost::FrameReceiver::FrameReceiver(
-    const base::WeakPtr<PepperVideoSourceHost>& host)
-    : host_(host) {}
+    base::WeakPtr<PepperVideoSourceHost> host)
+    : host_(std::move(host)) {}
 
 PepperVideoSourceHost::FrameReceiver::~FrameReceiver() {}
 

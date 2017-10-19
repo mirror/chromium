@@ -4,6 +4,8 @@
 
 #include "content/renderer/service_worker/service_worker_fetch_context_impl.h"
 
+#include <utility>
+
 #include "base/feature_list.h"
 #include "content/child/request_extra_data.h"
 #include "content/child/resource_dispatcher.h"
@@ -13,10 +15,10 @@
 namespace content {
 
 ServiceWorkerFetchContextImpl::ServiceWorkerFetchContextImpl(
-    const GURL& worker_script_url,
+    GURL worker_script_url,
     ChildURLLoaderFactoryGetter::Info url_loader_factory_getter_info,
     int service_worker_provider_id)
-    : worker_script_url_(worker_script_url),
+    : worker_script_url_(std::move(worker_script_url)),
       url_loader_factory_getter_info_(
           std::move(url_loader_factory_getter_info)),
       service_worker_provider_id_(service_worker_provider_id) {}

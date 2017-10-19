@@ -4,6 +4,7 @@
 
 #include "content/renderer/render_widget_fullscreen_pepper.h"
 
+#include <utility>
 #include <vector>
 
 #include "base/bind.h"
@@ -270,7 +271,7 @@ RenderWidgetFullscreenPepper::RenderWidgetFullscreenPepper(
     int32_t routing_id,
     CompositorDependencies* compositor_deps,
     PepperPluginInstanceImpl* plugin,
-    const GURL& active_url,
+    GURL active_url,
     const ScreenInfo& screen_info,
     mojom::WidgetRequest widget_request)
     : RenderWidget(routing_id,
@@ -281,7 +282,7 @@ RenderWidgetFullscreenPepper::RenderWidgetFullscreenPepper(
                    false,
                    false,
                    std::move(widget_request)),
-      active_url_(active_url),
+      active_url_(std::move(active_url)),
       plugin_(plugin),
       layer_(NULL),
       mouse_lock_dispatcher_(new FullscreenMouseLockDispatcher(this)) {}

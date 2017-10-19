@@ -79,12 +79,12 @@ class CONTENT_EXPORT WebRtcAudioRenderer
   };
 
   WebRtcAudioRenderer(
-      const scoped_refptr<base::SingleThreadTaskRunner>& signaling_thread,
+      scoped_refptr<base::SingleThreadTaskRunner> signaling_thread,
       const blink::WebMediaStream& media_stream,
       int source_render_frame_id,
       int session_id,
-      const std::string& device_id,
-      const url::Origin& security_origin);
+      std::string device_id,
+      url::Origin security_origin);
 
   // Initialize function called by clients like WebRtcAudioDeviceImpl.
   // Stop() has to be called before |source| is deleted.

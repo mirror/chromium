@@ -41,7 +41,7 @@ class FilteringNetworkManager : public rtc::NetworkManagerBase,
   // worker thread |task_runner|.
   CONTENT_EXPORT FilteringNetworkManager(
       rtc::NetworkManager* network_manager,
-      const GURL& requesting_origin,
+      GURL requesting_origin,
       media::MediaPermission* media_permission);
 
   CONTENT_EXPORT ~FilteringNetworkManager() override;

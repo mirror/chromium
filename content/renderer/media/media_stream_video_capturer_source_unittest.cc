@@ -70,7 +70,7 @@ class FakeMediaStreamVideoSink : public MediaStreamVideoSink {
                            base::Closure got_frame_cb)
       : capture_time_(capture_time),
         metadata_(metadata),
-        got_frame_cb_(got_frame_cb) {}
+        got_frame_cb_(std::move(got_frame_cb)) {}
 
   void ConnectToTrack(const blink::WebMediaStreamTrack& track) {
     MediaStreamVideoSink::ConnectToTrack(

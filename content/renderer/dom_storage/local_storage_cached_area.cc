@@ -4,6 +4,8 @@
 
 #include "content/renderer/dom_storage/local_storage_cached_area.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -40,8 +42,8 @@ class GetAllCallback : public mojom::LevelDBWrapperGetAllCallback {
   }
 
  private:
-  explicit GetAllCallback(const base::Callback<void(bool)>& callback)
-      : m_callback(callback) {}
+  explicit GetAllCallback(base::Callback<void(bool)> callback)
+      : m_callback(std::move(callback)) {}
   void Complete(bool success) override { m_callback.Run(success); }
 
   base::Callback<void(bool)> m_callback;
@@ -67,11 +69,13 @@ void UnpackSource(const std::string& source,
 }
 
 LocalStorageCachedArea::LocalStorageCachedArea(
-    const url::Origin& origin,
+    url::Origin origin,
     mojom::StoragePartitionService* storage_partition_service,
     LocalStorageCachedAreas* cached_areas)
-    : origin_(origin), binding_(this),
-      cached_areas_(cached_areas), weak_factory_(this) {
+    : origin_(std::move(origin)),
+      binding_(this),
+      cached_areas_(cached_areas),
+      weak_factory_(this) {
   storage_partition_service->OpenLocalStorage(origin_,
                                               mojo::MakeRequest(&leveldb_));
   mojom::LevelDBObserverAssociatedPtrInfo ptr_info;

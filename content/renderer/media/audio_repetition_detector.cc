@@ -7,6 +7,7 @@
 #include <string.h>
 
 #include <algorithm>
+#include <utility>
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -20,9 +21,10 @@ const float kEpsilon = 4.0f / 32768.0f;
 namespace content {
 
 AudioRepetitionDetector::AudioRepetitionDetector(
-    int min_length_ms, size_t max_frames,
+    int min_length_ms,
+    size_t max_frames,
     const std::vector<int>& look_back_times,
-    const RepetitionCallback& repetition_callback)
+    RepetitionCallback repetition_callback)
     : max_look_back_ms_(0),
       min_length_ms_(min_length_ms),
       num_channels_(0),
@@ -30,7 +32,7 @@ AudioRepetitionDetector::AudioRepetitionDetector(
       buffer_size_frames_(0),
       buffer_end_index_(0),
       max_frames_(max_frames),
-      repetition_callback_(repetition_callback) {
+      repetition_callback_(std::move(repetition_callback)) {
   DCHECK(main_thread_checker_.CalledOnValidThread());
   processing_thread_checker_.DetachFromThread();
 

@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/aec_dump_message_filter.h"
 
+#include <utility>
+
 #include "base/single_thread_task_runner.h"
 #include "content/common/media/aec_dump_messages.h"
 #include "content/renderer/media/webrtc_logging.h"
@@ -19,12 +21,12 @@ namespace content {
 AecDumpMessageFilter* AecDumpMessageFilter::g_filter = NULL;
 
 AecDumpMessageFilter::AecDumpMessageFilter(
-    const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
-    const scoped_refptr<base::SingleThreadTaskRunner>& main_task_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> main_task_runner)
     : sender_(NULL),
       delegate_id_counter_(1),
-      io_task_runner_(io_task_runner),
-      main_task_runner_(main_task_runner) {
+      io_task_runner_(std::move(io_task_runner)),
+      main_task_runner_(std::move(main_task_runner)) {
   DCHECK(!g_filter);
   g_filter = this;
 }

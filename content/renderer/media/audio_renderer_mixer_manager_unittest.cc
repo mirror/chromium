@@ -5,6 +5,7 @@
 #include "content/renderer/media/audio_renderer_mixer_manager.h"
 
 #include <memory>
+#include <utility>
 
 #include "base/bind.h"
 #include "build/build_config.h"
@@ -57,9 +58,10 @@ class FakeAudioRendererSinkCache : public AudioRendererSinkCache {
   using ReleaseSinkCallback =
       base::Callback<void(const media::AudioRendererSink*)>;
 
-  FakeAudioRendererSinkCache(const GetSinkCallback& get_sink_cb,
-                             const ReleaseSinkCallback& release_sink_cb)
-      : get_sink_cb_(get_sink_cb), release_sink_cb_(release_sink_cb) {}
+  FakeAudioRendererSinkCache(GetSinkCallback get_sink_cb,
+                             ReleaseSinkCallback release_sink_cb)
+      : get_sink_cb_(std::move(get_sink_cb)),
+        release_sink_cb_(std::move(release_sink_cb)) {}
 
   media::OutputDeviceInfo GetSinkInfo(
       int source_render_frame_id,

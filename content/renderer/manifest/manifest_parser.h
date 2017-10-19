@@ -31,8 +31,8 @@ namespace content {
 class CONTENT_EXPORT ManifestParser {
  public:
   ManifestParser(const base::StringPiece& data,
-                 const GURL& manifest_url,
-                 const GURL& document_url);
+                 GURL manifest_url,
+                 GURL document_url);
   ~ManifestParser();
 
   // Parse the Manifest from a string using following:

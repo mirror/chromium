@@ -85,7 +85,7 @@ class CONTENT_EXPORT VideoTrackRecorder : public MediaStreamVideoSink {
   // passed, a new encoding thread is created and used.
   class Encoder : public base::RefCountedThreadSafe<Encoder> {
    public:
-    Encoder(const OnEncodedVideoCB& on_encoded_video_callback,
+    Encoder(OnEncodedVideoCB on_encoded_video_callback,
             int32_t bits_per_second,
             scoped_refptr<base::SingleThreadTaskRunner> encoding_task_runner =
                 nullptr);

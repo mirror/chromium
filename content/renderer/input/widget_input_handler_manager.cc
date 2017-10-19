@@ -78,8 +78,7 @@ WidgetInputHandlerManager::WidgetInputHandlerManager(
       renderer_scheduler_(renderer_scheduler),
       input_event_queue_(render_widget->GetInputEventQueue()),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      compositor_task_runner_(compositor_task_runner) {
-}
+      compositor_task_runner_(std::move(compositor_task_runner)) {}
 
 void WidgetInputHandlerManager::Init() {
   if (compositor_task_runner_) {

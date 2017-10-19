@@ -30,7 +30,7 @@ namespace content {
 class CONTENT_EXPORT DevToolsClient : public RenderFrameObserver,
                                       public blink::WebDevToolsFrontendClient {
  public:
-  DevToolsClient(RenderFrame* render_frame, const std::string& api_script);
+  DevToolsClient(RenderFrame* render_frame, std::string api_script);
   ~DevToolsClient() override;
 
  private:

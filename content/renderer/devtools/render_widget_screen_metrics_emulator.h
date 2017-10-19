@@ -27,7 +27,7 @@ class CONTENT_EXPORT RenderWidgetScreenMetricsEmulator {
  public:
   RenderWidgetScreenMetricsEmulator(
       RenderWidgetScreenMetricsEmulatorDelegate* delegate,
-      const blink::WebDeviceEmulationParams& params,
+      blink::WebDeviceEmulationParams params,
       const ResizeParams& resize_params,
       const gfx::Rect& view_screen_rect,
       const gfx::Rect& window_screen_rect);

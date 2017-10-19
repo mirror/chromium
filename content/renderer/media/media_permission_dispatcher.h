@@ -29,8 +29,7 @@ class CONTENT_EXPORT MediaPermissionDispatcher : public media::MediaPermission {
   using ConnectToServiceCB = base::Callback<void(
       mojo::InterfaceRequest<blink::mojom::PermissionService>)>;
 
-  explicit MediaPermissionDispatcher(
-      const ConnectToServiceCB& connect_to_service_cb);
+  explicit MediaPermissionDispatcher(ConnectToServiceCB connect_to_service_cb);
   ~MediaPermissionDispatcher() override;
 
   // Called when the frame owning this MediaPermissionDispatcher is navigated.

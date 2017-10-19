@@ -4,6 +4,8 @@
 
 #include "content/renderer/input/main_thread_input_event_filter.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
@@ -13,9 +15,10 @@
 namespace content {
 
 MainThreadInputEventFilter::MainThreadInputEventFilter(
-    const base::Callback<void(const IPC::Message&)>& main_listener,
+    base::Callback<void(const IPC::Message&)> main_listener,
     const scoped_refptr<base::SingleThreadTaskRunner>& main_task_runner)
-    : main_listener_(main_listener), main_task_runner_(main_task_runner) {
+    : main_listener_(std::move(main_listener)),
+      main_task_runner_(main_task_runner) {
   DCHECK(main_task_runner.get());
 }
 

@@ -15,8 +15,7 @@ namespace content {
 
 class CONTENT_EXPORT RTCStatsReport : public blink::WebRTCStatsReport {
  public:
-  RTCStatsReport(
-      const scoped_refptr<const webrtc::RTCStatsReport>& stats_report);
+  RTCStatsReport(scoped_refptr<const webrtc::RTCStatsReport> stats_report);
   ~RTCStatsReport() override;
   std::unique_ptr<blink::WebRTCStatsReport> CopyHandle() const override;
 
@@ -33,7 +32,7 @@ class CONTENT_EXPORT RTCStatsReport : public blink::WebRTCStatsReport {
 
 class CONTENT_EXPORT RTCStats : public blink::WebRTCStats {
  public:
-  RTCStats(const scoped_refptr<const webrtc::RTCStatsReport>& stats_owner,
+  RTCStats(scoped_refptr<const webrtc::RTCStatsReport> stats_owner,
            const webrtc::RTCStats* stats);
   ~RTCStats() override;
 
@@ -55,7 +54,7 @@ class CONTENT_EXPORT RTCStats : public blink::WebRTCStats {
 
 class CONTENT_EXPORT RTCStatsMember : public blink::WebRTCStatsMember {
  public:
-  RTCStatsMember(const scoped_refptr<const webrtc::RTCStatsReport>& stats_owner,
+  RTCStatsMember(scoped_refptr<const webrtc::RTCStatsReport> stats_owner,
                  const webrtc::RTCStatsMemberInterface* member);
   ~RTCStatsMember() override;
 

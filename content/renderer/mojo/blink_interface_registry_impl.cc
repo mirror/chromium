@@ -13,7 +13,7 @@ namespace content {
 
 BlinkInterfaceRegistryImpl::BlinkInterfaceRegistryImpl(
     base::WeakPtr<service_manager::BinderRegistry> interface_registry)
-    : interface_registry_(interface_registry) {}
+    : interface_registry_(std::move(interface_registry)) {}
 
 BlinkInterfaceRegistryImpl::~BlinkInterfaceRegistryImpl() = default;
 

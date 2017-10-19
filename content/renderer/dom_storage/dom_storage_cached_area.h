@@ -31,7 +31,7 @@ class CONTENT_EXPORT DOMStorageCachedArea
     : public base::RefCounted<DOMStorageCachedArea> {
  public:
   DOMStorageCachedArea(int64_t namespace_id,
-                       const GURL& origin,
+                       GURL origin,
                        DOMStorageProxy* proxy);
 
   int64_t namespace_id() const { return namespace_id_; }

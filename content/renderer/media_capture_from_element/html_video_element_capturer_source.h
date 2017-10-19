@@ -43,8 +43,8 @@ class CONTENT_EXPORT HtmlVideoElementCapturerSource final
       const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner);
 
   HtmlVideoElementCapturerSource(
-      const base::WeakPtr<blink::WebMediaPlayer>& player,
-      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner);
+      base::WeakPtr<blink::WebMediaPlayer> player,
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
   ~HtmlVideoElementCapturerSource() override;
 
   // media::VideoCapturerSource Implementation.

@@ -68,11 +68,10 @@ class CONTENT_EXPORT ChildFrameCompositingHelper {
   friend class base::RefCounted<ChildFrameCompositingHelper>;
 
  private:
-  ChildFrameCompositingHelper(
-      const base::WeakPtr<BrowserPlugin>& browser_plugin,
-      blink::WebRemoteFrame* frame,
-      RenderFrameProxy* render_frame_proxy,
-      int host_routing_id);
+  ChildFrameCompositingHelper(base::WeakPtr<BrowserPlugin> browser_plugin,
+                              blink::WebRemoteFrame* frame,
+                              RenderFrameProxy* render_frame_proxy,
+                              int host_routing_id);
 
   blink::WebPluginContainer* GetContainer();
 

@@ -4,6 +4,8 @@
 
 #include <stddef.h>
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
@@ -28,7 +30,7 @@ namespace content {
 // A very simple mock that implements only the id() method.
 class MockAudioTrackInterface : public AudioTrackInterface {
  public:
-  explicit MockAudioTrackInterface(const std::string& id) : id_(id) {}
+  explicit MockAudioTrackInterface(std::string id) : id_(std::move(id)) {}
   virtual ~MockAudioTrackInterface() {}
 
   virtual std::string id() const override { return id_; }
@@ -51,7 +53,7 @@ class MockAudioTrackInterface : public AudioTrackInterface {
 // A very simple mock that implements only the id() method.
 class MockVideoTrackInterface : public VideoTrackInterface {
  public:
-  explicit MockVideoTrackInterface(const std::string& id) : id_(id) {}
+  explicit MockVideoTrackInterface(std::string id) : id_(std::move(id)) {}
   virtual ~MockVideoTrackInterface() {}
 
   virtual std::string id() const override { return id_; }

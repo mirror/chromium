@@ -492,18 +492,18 @@ void CreateHostForInProcessModule(RenderFrameImpl* render_frame,
 
 // PluginModule ----------------------------------------------------------------
 
-PluginModule::PluginModule(const std::string& name,
-                           const std::string& version,
-                           const base::FilePath& path,
+PluginModule::PluginModule(std::string name,
+                           std::string version,
+                           base::FilePath path,
                            const ppapi::PpapiPermissions& perms)
     : callback_tracker_(new ppapi::CallbackTracker),
       is_in_destructor_(false),
       is_crashed_(false),
       broker_(NULL),
       library_(NULL),
-      name_(name),
-      version_(version),
-      path_(path),
+      name_(std::move(name)),
+      version_(std::move(version)),
+      path_(std::move(path)),
       permissions_(ppapi::PpapiPermissions::GetForCommandLine(perms.GetBits())),
       reserve_instance_id_(NULL) {
   // Ensure the globals object is created.

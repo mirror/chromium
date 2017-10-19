@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include <string>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/command_line.h"
@@ -120,13 +121,13 @@ RendererWebAudioDeviceImpl::RendererWebAudioDeviceImpl(
     const blink::WebAudioLatencyHint& latency_hint,
     WebAudioDevice::RenderCallback* callback,
     int session_id,
-    const url::Origin& security_origin,
+    url::Origin security_origin,
     const OutputDeviceParamsCallback& device_params_cb,
     const RenderFrameIdCallback& render_frame_id_cb)
     : latency_hint_(latency_hint),
       client_callback_(callback),
       session_id_(session_id),
-      security_origin_(security_origin),
+      security_origin_(std::move(security_origin)),
       frame_id_(render_frame_id_cb.Run()) {
   DCHECK(client_callback_);
   DCHECK_NE(frame_id_, MSG_ROUTING_NONE);

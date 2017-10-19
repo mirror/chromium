@@ -41,13 +41,12 @@ bool RemoveStreamDeviceFromArray(const MediaStreamDevice& device,
 // The ipc_request is garanteed to be unique when it's created in
 // MediaStreamDispatcher.
 struct MediaStreamDispatcher::Request {
-  Request(const base::WeakPtr<MediaStreamDispatcherEventHandler>& handler,
+  Request(base::WeakPtr<MediaStreamDispatcherEventHandler> handler,
           int request_id,
           int ipc_request)
-      : handler(handler),
+      : handler(std::move(handler)),
         request_id(request_id),
-        ipc_request(ipc_request) {
-  }
+        ipc_request(ipc_request) {}
   bool IsThisRequest(
       int request_id1,
       const base::WeakPtr<MediaStreamDispatcherEventHandler>& handler1) {

@@ -6,6 +6,8 @@
 
 #include <stddef.h>
 
+#include <utility>
+
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
 #include "content/renderer/media/mock_peer_connection_impl.h"
@@ -40,7 +42,8 @@ static typename V::iterator FindTrack(V* vector,
   return it;
 };
 
-MockMediaStream::MockMediaStream(const std::string& label) : label_(label) {}
+MockMediaStream::MockMediaStream(std::string label)
+    : label_(std::move(label)) {}
 
 bool MockMediaStream::AddTrack(AudioTrackInterface* track) {
   audio_track_vector_.push_back(track);
@@ -123,8 +126,8 @@ scoped_refptr<MockWebRtcAudioTrack> MockWebRtcAudioTrack::Create(
   return new rtc::RefCountedObject<MockWebRtcAudioTrack>(id);
 }
 
-MockWebRtcAudioTrack::MockWebRtcAudioTrack(const std::string& id)
-    : id_(id),
+MockWebRtcAudioTrack::MockWebRtcAudioTrack(std::string id)
+    : id_(std::move(id)),
       enabled_(true),
       state_(webrtc::MediaStreamTrackInterface::kLive) {}
 
@@ -174,9 +177,9 @@ void MockWebRtcAudioTrack::SetEnded() {
 }
 
 MockWebRtcVideoTrack::MockWebRtcVideoTrack(
-    const std::string& id,
+    std::string id,
     webrtc::VideoTrackSourceInterface* source)
-    : id_(id),
+    : id_(std::move(id)),
       source_(source),
       enabled_(true),
       state_(webrtc::MediaStreamTrackInterface::kLive),
@@ -242,11 +245,8 @@ void MockWebRtcVideoTrack::SetEnded() {
 
 class MockSessionDescription : public SessionDescriptionInterface {
  public:
-  MockSessionDescription(const std::string& type,
-                         const std::string& sdp)
-      : type_(type),
-        sdp_(sdp) {
-  }
+  MockSessionDescription(std::string type, std::string sdp)
+      : type_(std::move(type)), sdp_(std::move(sdp)) {}
   ~MockSessionDescription() override {}
   cricket::SessionDescription* description() override {
     NOTIMPLEMENTED();
@@ -291,12 +291,10 @@ class MockSessionDescription : public SessionDescriptionInterface {
 
 class MockIceCandidate : public IceCandidateInterface {
  public:
-  MockIceCandidate(const std::string& sdp_mid,
-                   int sdp_mline_index,
-                   const std::string& sdp)
-      : sdp_mid_(sdp_mid),
+  MockIceCandidate(std::string sdp_mid, int sdp_mline_index, std::string sdp)
+      : sdp_mid_(std::move(sdp_mid)),
         sdp_mline_index_(sdp_mline_index),
-        sdp_(sdp) {
+        sdp_(std::move(sdp)) {
     // Assign an valid address to |candidate_| to pass assert in code.
     candidate_.set_address(rtc::SocketAddress("127.0.0.1", 5000));
   }

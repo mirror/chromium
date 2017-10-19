@@ -4,6 +4,8 @@
 
 #include "content/renderer/devtools/devtools_client.h"
 
+#include <utility>
+
 #include "base/command_line.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/utf_string_conversions.h"
@@ -23,8 +25,8 @@ using blink::WebString;
 namespace content {
 
 DevToolsClient::DevToolsClient(RenderFrame* render_frame,
-                               const std::string& api_script)
-    : RenderFrameObserver(render_frame), api_script_(api_script) {
+                               std::string api_script)
+    : RenderFrameObserver(render_frame), api_script_(std::move(api_script)) {
   if (render_frame->IsMainFrame()) {
     web_tools_frontend_.reset(
         WebDevToolsFrontend::Create(render_frame->GetWebFrame(), this));

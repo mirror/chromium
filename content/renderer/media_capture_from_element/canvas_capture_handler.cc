@@ -44,7 +44,7 @@ class VideoCapturerSource : public media::VideoCapturerSource {
       : frame_rate_(static_cast<float>(
             std::min(static_cast<double>(media::limits::kMaxFramesPerSecond),
                      frame_rate))),
-        canvas_handler_(canvas_handler) {
+        canvas_handler_(std::move(canvas_handler)) {
     DCHECK_LE(0, frame_rate_);
   }
 
@@ -91,7 +91,7 @@ class CanvasCaptureHandler::CanvasCaptureHandlerDelegate {
  public:
   explicit CanvasCaptureHandlerDelegate(
       media::VideoCapturerSource::VideoCaptureDeliverFrameCB new_frame_callback)
-      : new_frame_callback_(new_frame_callback),
+      : new_frame_callback_(std::move(new_frame_callback)),
         weak_ptr_factory_(this) {
     io_thread_checker_.DetachFromThread();
   }
@@ -123,11 +123,11 @@ class CanvasCaptureHandler::CanvasCaptureHandlerDelegate {
 CanvasCaptureHandler::CanvasCaptureHandler(
     const blink::WebSize& size,
     double frame_rate,
-    const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
     blink::WebMediaStreamTrack* track)
     : ask_for_new_frame_(false),
       size_(size),
-      io_task_runner_(io_task_runner),
+      io_task_runner_(std::move(io_task_runner)),
       weak_ptr_factory_(this) {
   std::unique_ptr<media::VideoCapturerSource> video_source(
       new VideoCapturerSource(weak_ptr_factory_.GetWeakPtr(), frame_rate));

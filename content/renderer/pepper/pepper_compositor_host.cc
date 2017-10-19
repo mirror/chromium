@@ -141,9 +141,9 @@ int32_t VerifyCommittedLayer(const ppapi::CompositorLayerData* old_layer,
 
 }  // namespace
 
-PepperCompositorHost::LayerData::LayerData(
-    const scoped_refptr<cc::Layer>& cc,
-    const ppapi::CompositorLayerData& pp) : cc_layer(cc), pp_layer(pp) {}
+PepperCompositorHost::LayerData::LayerData(scoped_refptr<cc::Layer> cc,
+                                           const ppapi::CompositorLayerData& pp)
+    : cc_layer(std::move(cc)), pp_layer(pp) {}
 
 PepperCompositorHost::LayerData::LayerData(const LayerData& other) = default;
 

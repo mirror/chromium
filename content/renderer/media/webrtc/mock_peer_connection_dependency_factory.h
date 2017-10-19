@@ -40,7 +40,7 @@ class MockWebRtcAudioTrack : public webrtc::AudioTrackInterface {
   void SetEnded();
 
  protected:
-  MockWebRtcAudioTrack(const std::string& id);
+  MockWebRtcAudioTrack(std::string id);
   ~MockWebRtcAudioTrack() override;
 
  private:
@@ -54,7 +54,7 @@ class MockWebRtcAudioTrack : public webrtc::AudioTrackInterface {
 class MockWebRtcVideoTrack : public webrtc::VideoTrackInterface {
  public:
   static scoped_refptr<MockWebRtcVideoTrack> Create(const std::string& id);
-  MockWebRtcVideoTrack(const std::string& id,
+  MockWebRtcVideoTrack(std::string id,
                        webrtc::VideoTrackSourceInterface* source);
   void AddOrUpdateSink(rtc::VideoSinkInterface<webrtc::VideoFrame>* sink,
                        const rtc::VideoSinkWants& wants) override;
@@ -86,7 +86,7 @@ class MockWebRtcVideoTrack : public webrtc::VideoTrackInterface {
 
 class MockMediaStream : public webrtc::MediaStreamInterface {
  public:
-  explicit MockMediaStream(const std::string& label);
+  explicit MockMediaStream(std::string label);
 
   bool AddTrack(webrtc::AudioTrackInterface* track) override;
   bool AddTrack(webrtc::VideoTrackInterface* track) override;

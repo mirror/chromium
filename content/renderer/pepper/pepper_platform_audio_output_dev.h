@@ -85,7 +85,7 @@ class PepperPlatformAudioOutputDev
 
   PepperPlatformAudioOutputDev();
   PepperPlatformAudioOutputDev(int render_frame_id,
-                               const std::string& device_id,
+                               std::string device_id,
                                const GURL& document_url,
                                base::TimeDelta authorization_timeout);
 

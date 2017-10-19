@@ -45,9 +45,9 @@ class CONTENT_EXPORT InputEventFilter : public InputHandlerManagerClient,
                                         public IPC::MessageFilter {
  public:
   InputEventFilter(
-      const base::Callback<void(const IPC::Message&)>& main_listener,
-      const scoped_refptr<base::SingleThreadTaskRunner>& main_task_runner,
-      const scoped_refptr<base::SingleThreadTaskRunner>& target_task_runner);
+      base::Callback<void(const IPC::Message&)> main_listener,
+      scoped_refptr<base::SingleThreadTaskRunner> main_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> target_task_runner);
 
   // The |handler| is invoked on the thread associated with |target_loop| to
   // handle input events matching the filtered routes.

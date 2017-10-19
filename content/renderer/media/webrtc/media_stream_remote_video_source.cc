@@ -49,7 +49,7 @@ class MediaStreamRemoteVideoSource::RemoteVideoSourceDelegate
  public:
   RemoteVideoSourceDelegate(
       scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-      const VideoCaptureDeliverFrameCB& new_frame_callback);
+      VideoCaptureDeliverFrameCB new_frame_callback);
 
  protected:
   friend class base::RefCountedThreadSafe<RemoteVideoSourceDelegate>;
@@ -78,9 +78,9 @@ class MediaStreamRemoteVideoSource::RemoteVideoSourceDelegate
 MediaStreamRemoteVideoSource::RemoteVideoSourceDelegate::
     RemoteVideoSourceDelegate(
         scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-        const VideoCaptureDeliverFrameCB& new_frame_callback)
-    : io_task_runner_(io_task_runner),
-      frame_callback_(new_frame_callback),
+        VideoCaptureDeliverFrameCB new_frame_callback)
+    : io_task_runner_(std::move(io_task_runner)),
+      frame_callback_(std::move(new_frame_callback)),
       start_timestamp_(media::kNoTimestamp),
       // TODO(qiangchen): There can be two differences between clocks: 1)
       // the offset, 2) the rate (i.e., one clock runs faster than the other).

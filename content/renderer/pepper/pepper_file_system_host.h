@@ -39,7 +39,7 @@ class PepperFileSystemHost
   PepperFileSystemHost(RendererPpapiHost* host,
                        PP_Instance instance,
                        PP_Resource resource,
-                       const GURL& root_url,
+                       GURL root_url,
                        PP_FileSystemType type);
   ~PepperFileSystemHost() override;
 

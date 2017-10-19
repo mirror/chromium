@@ -157,7 +157,7 @@ class RemoteWebRtcMediaStreamAdapter::WebRtcStreamObserver
       scoped_refptr<base::SingleThreadTaskRunner> main_thread,
       scoped_refptr<WebRtcMediaStreamTrackAdapterMap> track_adapter_map,
       scoped_refptr<webrtc::MediaStreamInterface> webrtc_stream)
-      : adapter_(adapter),
+      : adapter_(std::move(adapter)),
         main_thread_(std::move(main_thread)),
         track_adapter_map_(std::move(track_adapter_map)),
         webrtc_stream_(std::move(webrtc_stream)) {

@@ -4,15 +4,16 @@
 
 #include "content/renderer/media/webrtc/rtc_rtp_contributing_source.h"
 
+#include <utility>
+
 #include "base/logging.h"
 #include "base/time/time.h"
 #include "third_party/webrtc/rtc_base/scoped_ref_ptr.h"
 
 namespace content {
 
-RTCRtpContributingSource::RTCRtpContributingSource(
-    const webrtc::RtpSource& source)
-    : source_(source) {}
+RTCRtpContributingSource::RTCRtpContributingSource(webrtc::RtpSource source)
+    : source_(std::move(source)) {}
 
 RTCRtpContributingSource::~RTCRtpContributingSource() {}
 

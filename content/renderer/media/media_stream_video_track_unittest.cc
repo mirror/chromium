@@ -4,6 +4,8 @@
 
 #include <stdint.h>
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/callback.h"
@@ -157,9 +159,7 @@ TEST_F(MediaStreamVideoTrackTest, AddAndRemoveSink) {
 class CheckThreadHelper {
  public:
   CheckThreadHelper(base::Closure callback, bool* correct)
-      : callback_(callback),
-        correct_(correct) {
-  }
+      : callback_(std::move(callback)), correct_(correct) {}
 
   ~CheckThreadHelper() {
     *correct_ = thread_checker_.CalledOnValidThread();

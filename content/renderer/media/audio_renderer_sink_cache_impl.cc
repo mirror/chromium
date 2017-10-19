@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include <algorithm>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/location.h"
@@ -63,10 +64,10 @@ std::unique_ptr<AudioRendererSinkCache> AudioRendererSinkCache::Create() {
 
 AudioRendererSinkCacheImpl::AudioRendererSinkCacheImpl(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    const CreateSinkCallback& create_sink_cb,
+    CreateSinkCallback create_sink_cb,
     base::TimeDelta delete_timeout)
     : task_runner_(std::move(task_runner)),
-      create_sink_cb_(create_sink_cb),
+      create_sink_cb_(std::move(create_sink_cb)),
       delete_timeout_(delete_timeout),
       weak_ptr_factory_(this) {
   weak_this_ = weak_ptr_factory_.GetWeakPtr();

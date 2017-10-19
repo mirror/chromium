@@ -72,8 +72,8 @@ class CONTENT_EXPORT RtcDataChannelHandler
         public webrtc::DataChannelObserver {
    public:
     Observer(RtcDataChannelHandler* handler,
-        const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
-        webrtc::DataChannelInterface* channel);
+             scoped_refptr<base::SingleThreadTaskRunner> main_thread,
+             webrtc::DataChannelInterface* channel);
 
     const scoped_refptr<base::SingleThreadTaskRunner>& main_thread() const;
     const scoped_refptr<webrtc::DataChannelInterface>& channel() const;

@@ -39,9 +39,10 @@ class CONTENT_EXPORT AudioRepetitionDetector {
   // problem, and will only affect computational efficiency.
   // |look_back_times| is a vector of look back times (in milliseconds) for the
   // detector to keep track.
-  AudioRepetitionDetector(int min_length_ms, size_t max_frames,
+  AudioRepetitionDetector(int min_length_ms,
+                          size_t max_frames,
                           const std::vector<int>& look_back_times,
-                          const RepetitionCallback& repetition_callback);
+                          RepetitionCallback repetition_callback);
 
   virtual ~AudioRepetitionDetector();
 

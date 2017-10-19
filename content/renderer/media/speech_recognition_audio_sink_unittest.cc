@@ -67,9 +67,9 @@ class MockSyncSocket : public base::SyncSocket {
       : buffer_(shared_buffer),
         in_failure_mode_(false) {}
 
-  MockSyncSocket(SharedBuffer* shared_buffer, const OnSendCB& on_send_cb)
+  MockSyncSocket(SharedBuffer* shared_buffer, OnSendCB on_send_cb)
       : buffer_(shared_buffer),
-        on_send_cb_(on_send_cb),
+        on_send_cb_(std::move(on_send_cb)),
         in_failure_mode_(false) {}
 
   size_t Send(const void* buffer, size_t length) override;

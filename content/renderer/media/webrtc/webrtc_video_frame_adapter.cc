@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/webrtc/webrtc_video_frame_adapter.h"
 
+#include <utility>
+
 #include "base/logging.h"
 #include "third_party/webrtc/rtc_base/refcountedobject.h"
 
@@ -11,8 +13,8 @@ namespace {
 
 class I420Adapter : public webrtc::I420BufferInterface {
  public:
-  explicit I420Adapter(const scoped_refptr<media::VideoFrame>& frame)
-      : frame_(frame) {}
+  explicit I420Adapter(scoped_refptr<media::VideoFrame> frame)
+      : frame_(std::move(frame)) {}
 
  private:
   int width() const override { return frame_->visible_rect().width(); }
@@ -66,9 +68,10 @@ void IsValidFrame(const scoped_refptr<media::VideoFrame>& frame) {
 namespace content {
 
 WebRtcVideoFrameAdapter::WebRtcVideoFrameAdapter(
-    const scoped_refptr<media::VideoFrame>& frame,
-    const CopyTextureFrameCallback& copy_texture_callback)
-    : frame_(frame), copy_texture_callback_(copy_texture_callback) {}
+    scoped_refptr<media::VideoFrame> frame,
+    CopyTextureFrameCallback copy_texture_callback)
+    : frame_(std::move(frame)),
+      copy_texture_callback_(std::move(copy_texture_callback)) {}
 
 WebRtcVideoFrameAdapter::~WebRtcVideoFrameAdapter() {
 }

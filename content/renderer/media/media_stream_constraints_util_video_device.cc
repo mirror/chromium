@@ -50,16 +50,16 @@ blink::WebString ToWebString(::mojom::FacingMode facing_mode) {
 
 struct Candidate {
  public:
-  Candidate(const std::string& device_id,
+  Candidate(std::string device_id,
             const media::VideoCaptureFormat& format,
             ::mojom::FacingMode facing_mode,
             media::PowerLineFrequency power_line_frequency,
-            const base::Optional<bool>& noise_reduction)
-      : device_id_(device_id),
+            base::Optional<bool> noise_reduction)
+      : device_id_(std::move(device_id)),
         format_(format),
         facing_mode_(facing_mode),
         power_line_frequency_(power_line_frequency),
-        noise_reduction_(noise_reduction) {}
+        noise_reduction_(std::move(noise_reduction)) {}
 
   // These accessor-like methods transform types to what Blink constraint
   // classes expect.

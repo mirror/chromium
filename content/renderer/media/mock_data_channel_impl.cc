@@ -4,18 +4,19 @@
 
 #include "content/renderer/media/mock_data_channel_impl.h"
 
+#include <utility>
+
 #include "base/logging.h"
 
 namespace content {
 
-MockDataChannel::MockDataChannel(const std::string& label,
-                const webrtc::DataChannelInit* config)
-    : label_(label),
+MockDataChannel::MockDataChannel(std::string label,
+                                 const webrtc::DataChannelInit* config)
+    : label_(std::move(label)),
       reliable_(config->reliable),
       state_(webrtc::DataChannelInterface::kConnecting),
       config_(*config),
-      observer_(nullptr) {
-}
+      observer_(nullptr) {}
 
 MockDataChannel::~MockDataChannel() {
 }

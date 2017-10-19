@@ -4,6 +4,8 @@
 
 #include "content/renderer/devtools/devtools_agent_filter.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "content/child/child_process.h"
 #include "content/common/devtools_messages.h"
@@ -20,14 +22,10 @@ namespace {
 
 class MessageImpl : public WebDevToolsAgent::MessageDescriptor {
  public:
-  MessageImpl(
-      const std::string& method,
-      const std::string& message,
-      int routing_id)
-      : method_(method),
-        msg_(message),
-        routing_id_(routing_id) {
-  }
+  MessageImpl(std::string method, std::string message, int routing_id)
+      : method_(std::move(method)),
+        msg_(std::move(message)),
+        routing_id_(routing_id) {}
   ~MessageImpl() override {}
   WebDevToolsAgent* Agent() override {
     DevToolsAgent* agent = DevToolsAgent::FromRoutingId(routing_id_);

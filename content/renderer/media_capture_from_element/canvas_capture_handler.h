@@ -70,7 +70,7 @@ class CONTENT_EXPORT CanvasCaptureHandler final
   CanvasCaptureHandler(
       const blink::WebSize& size,
       double frame_rate,
-      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
       blink::WebMediaStreamTrack* track);
 
   void CreateNewFrame(const SkImage* image);

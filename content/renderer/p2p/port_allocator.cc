@@ -21,12 +21,12 @@ P2PPortAllocator::P2PPortAllocator(
     std::unique_ptr<rtc::NetworkManager> network_manager,
     rtc::PacketSocketFactory* socket_factory,
     const Config& config,
-    const GURL& origin)
+    GURL origin)
     : cricket::BasicPortAllocator(network_manager.get(), socket_factory),
       network_manager_(std::move(network_manager)),
       socket_dispatcher_(socket_dispatcher),
       config_(config),
-      origin_(origin) {
+      origin_(std::move(origin)) {
   DCHECK(socket_dispatcher);
   DCHECK(network_manager_);
   DCHECK(socket_factory);

@@ -5,6 +5,7 @@
 #include "content/renderer/dom_storage/dom_storage_cached_area.h"
 
 #include <limits>
+#include <utility>
 
 #include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
@@ -15,11 +16,11 @@
 namespace content {
 
 DOMStorageCachedArea::DOMStorageCachedArea(int64_t namespace_id,
-                                           const GURL& origin,
+                                           GURL origin,
                                            DOMStorageProxy* proxy)
     : ignore_all_mutations_(false),
       namespace_id_(namespace_id),
-      origin_(origin),
+      origin_(std::move(origin)),
       proxy_(proxy),
       weak_factory_(this) {}
 

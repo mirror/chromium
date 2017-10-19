@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 #include <string>
+#include <utility>
 
 #include "base/command_line.h"
 #include "base/hash.h"
@@ -129,10 +130,10 @@ WebMediaPlayerMSCompositor::WebMediaPlayerMSCompositor(
     scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
     const blink::WebMediaStream& web_stream,
-    const base::WeakPtr<WebMediaPlayerMS>& player)
-    : compositor_task_runner_(compositor_task_runner),
-      io_task_runner_(io_task_runner),
-      player_(player),
+    base::WeakPtr<WebMediaPlayerMS> player)
+    : compositor_task_runner_(std::move(compositor_task_runner)),
+      io_task_runner_(std::move(io_task_runner)),
+      player_(std::move(player)),
       video_frame_provider_client_(nullptr),
       current_frame_used_by_compositor_(false),
       last_render_length_(base::TimeDelta::FromSecondsD(1.0 / 60.0)),

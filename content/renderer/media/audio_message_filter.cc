@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/audio_message_filter.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
@@ -20,7 +22,7 @@ const int kStreamIDNotSet = -1;
 
 class AudioMessageFilter::AudioOutputIPCImpl : public media::AudioOutputIPC {
  public:
-  AudioOutputIPCImpl(const scoped_refptr<AudioMessageFilter>& filter,
+  AudioOutputIPCImpl(scoped_refptr<AudioMessageFilter> filter,
                      int render_frame_id);
   ~AudioOutputIPCImpl() override;
 
@@ -47,7 +49,7 @@ AudioMessageFilter* AudioMessageFilter::g_filter = NULL;
 
 AudioMessageFilter::AudioMessageFilter(
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
-    : sender_(NULL), io_task_runner_(io_task_runner) {
+    : sender_(NULL), io_task_runner_(std::move(io_task_runner)) {
   DCHECK(!g_filter);
   g_filter = this;
 }
@@ -63,9 +65,9 @@ AudioMessageFilter* AudioMessageFilter::Get() {
 }
 
 AudioMessageFilter::AudioOutputIPCImpl::AudioOutputIPCImpl(
-    const scoped_refptr<AudioMessageFilter>& filter,
+    scoped_refptr<AudioMessageFilter> filter,
     int render_frame_id)
-    : filter_(filter),
+    : filter_(std::move(filter)),
       render_frame_id_(render_frame_id),
       stream_id_(kStreamIDNotSet),
       stream_created_(false) {}

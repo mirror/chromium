@@ -322,11 +322,11 @@ UserMediaProcessor::UserMediaProcessor(
     PeerConnectionDependencyFactory* dependency_factory,
     std::unique_ptr<MediaStreamDispatcher> media_stream_dispatcher,
     MediaDevicesDispatcherCallback media_devices_dispatcher_cb,
-    const scoped_refptr<base::TaskRunner>& worker_task_runner)
+    scoped_refptr<base::TaskRunner> worker_task_runner)
     : dependency_factory_(dependency_factory),
       media_stream_dispatcher_(std::move(media_stream_dispatcher)),
       media_devices_dispatcher_cb_(std::move(media_devices_dispatcher_cb)),
-      worker_task_runner_(worker_task_runner),
+      worker_task_runner_(std::move(worker_task_runner)),
       render_frame_(render_frame),
       weak_factory_(this) {
   DCHECK(dependency_factory_);

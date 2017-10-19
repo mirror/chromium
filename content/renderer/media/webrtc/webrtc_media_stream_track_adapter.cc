@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.h"
 
+#include <utility>
+
 #include "content/renderer/media/media_stream_audio_track.h"
 #include "content/renderer/media/webrtc/media_stream_video_webrtc_sink.h"
 #include "content/renderer/media/webrtc/peer_connection_dependency_factory.h"
@@ -57,9 +59,9 @@ WebRtcMediaStreamTrackAdapter::CreateRemoteTrackAdapter(
 
 WebRtcMediaStreamTrackAdapter::WebRtcMediaStreamTrackAdapter(
     PeerConnectionDependencyFactory* factory,
-    const scoped_refptr<base::SingleThreadTaskRunner>& main_thread)
+    scoped_refptr<base::SingleThreadTaskRunner> main_thread)
     : factory_(factory),
-      main_thread_(main_thread),
+      main_thread_(std::move(main_thread)),
       remote_track_can_complete_initialization_(
           base::WaitableEvent::ResetPolicy::MANUAL,
           base::WaitableEvent::InitialState::NOT_SIGNALED),

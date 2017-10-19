@@ -5,6 +5,7 @@
 #include "content/renderer/pepper/plugin_power_saver_helper.h"
 
 #include <string>
+#include <utility>
 
 #include "base/command_line.h"
 #include "base/location.h"
@@ -30,10 +31,10 @@ const char kPeripheralHeuristicHistogram[] =
 }  // namespace
 
 PluginPowerSaverHelper::PeripheralPlugin::PeripheralPlugin(
-    const url::Origin& content_origin,
-    const base::Closure& unthrottle_callback)
-    : content_origin(content_origin),
-      unthrottle_callback(unthrottle_callback) {}
+    url::Origin content_origin,
+    base::Closure unthrottle_callback)
+    : content_origin(std::move(content_origin)),
+      unthrottle_callback(std::move(unthrottle_callback)) {}
 
 PluginPowerSaverHelper::PeripheralPlugin::PeripheralPlugin(
     const PeripheralPlugin& other) = default;
