@@ -250,7 +250,7 @@ cr.define('cr.ui', function() {
       this.menu.hide();
 
       this.showingEvents_.removeAll();
-      this.focus();
+      cr.dispatchSimpleEvent(this, 'force_focus');
 
       var event = new UIEvent(
           'menuhide', {bubbles: true, cancelable: false, view: window});
