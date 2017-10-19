@@ -25,6 +25,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/android/bluetooth_chooser_android.h"
 #include "chrome/browser/ui/android/infobars/framebust_block_infobar.h"
+#include "chrome/browser/ui/android/infobars/near_oom_infobar.h"
 #include "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h"
 #include "chrome/browser/ui/blocked_content/popup_tracker.h"
 #include "chrome/browser/ui/find_bar/find_notification_details.h"
@@ -236,6 +237,8 @@ void TabWebContentsDelegateAndroid::OnFindResultAvailable(
 
   Java_TabWebContentsDelegateAndroid_onFindResultAvailable(env, obj,
                                                            details_object);
+
+  NearOomInfoBar::Show(web_contents);
 }
 
 void TabWebContentsDelegateAndroid::FindMatchRectsReply(
