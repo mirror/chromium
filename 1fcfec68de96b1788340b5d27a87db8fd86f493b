@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e28fd6f_766c387d",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-19T20:26:12Z",
+      "side": 1,
+      "message": "May be we can make ScopedImageFlags take these extra params and deal with skipping the op, applying the alpha override, decoding etc. and return what flags to use? Then we can share this bit of code with both serialization and raster.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 35
+      },
+      "revId": "1fcfec68de96b1788340b5d27a87db8fd86f493b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
