@@ -39,8 +39,6 @@
 #include "base/message_loop/message_loop.h"
 #include "components/crash/content/browser/child_process_crash_observer_android.h"
 #include "components/crash/content/browser/crash_dump_observer_android.h"
-#include "net/android/network_change_notifier_factory_android.h"
-#include "net/base/network_change_notifier.h"
 #endif
 
 #if defined(USE_X11)
@@ -135,10 +133,6 @@ void ShellBrowserMainParts::PreEarlyInitialization() {
 #endif
 #if !defined(OS_CHROMEOS) && defined(USE_AURA) && defined(OS_LINUX)
   ui::InitializeInputMethodForTesting();
-#endif
-#if defined(OS_ANDROID)
-  net::NetworkChangeNotifier::SetFactory(
-      new net::NetworkChangeNotifierFactoryAndroid());
 #endif
 }
 
