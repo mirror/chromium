@@ -4,6 +4,8 @@
 
 #include "content/renderer/pepper/pepper_device_enumeration_host_helper.h"
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/logging.h"
@@ -170,10 +172,10 @@ int32_t PepperDeviceEnumerationHostHelper::OnEnumerateDevices(
   if (enumerate_devices_context_.is_valid())
     return PP_ERROR_INPROGRESS;
 
-  enumerate_.reset(new ScopedEnumerationRequest(
+  enumerate_ = std::make_unique<ScopedEnumerationRequest>(
       this,
       base::Bind(&PepperDeviceEnumerationHostHelper::OnEnumerateDevicesComplete,
-                 base::Unretained(this))));
+                 base::Unretained(this)));
   if (!enumerate_->requested())
     return PP_ERROR_FAILED;
 
@@ -184,9 +186,9 @@ int32_t PepperDeviceEnumerationHostHelper::OnEnumerateDevices(
 int32_t PepperDeviceEnumerationHostHelper::OnMonitorDeviceChange(
     HostMessageContext* /* context */,
     uint32_t callback_id) {
-  monitor_.reset(new ScopedMonitoringRequest(
+  monitor_ = std::make_unique<ScopedMonitoringRequest>(
       this, base::Bind(&PepperDeviceEnumerationHostHelper::OnNotifyDeviceChange,
-                       base::Unretained(this), callback_id)));
+                       base::Unretained(this), callback_id));
 
   return monitor_->requested() ? PP_OK : PP_ERROR_FAILED;
 }

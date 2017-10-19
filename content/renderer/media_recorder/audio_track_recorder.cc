@@ -5,6 +5,7 @@
 #include "content/renderer/media_recorder/audio_track_recorder.h"
 
 #include <stdint.h>
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -189,17 +190,17 @@ void AudioTrackRecorder::AudioEncoder::OnSetFormat(
   DVLOG(1) << "|input_params_|:" << input_params_.AsHumanReadableString()
            << " -->|output_params_|:" << output_params_.AsHumanReadableString();
 
-  converter_.reset(new media::AudioConverter(input_params_, output_params_,
-                                             false /* disable_fifo */));
+  converter_ = std::make_unique<media::AudioConverter>(
+      input_params_, output_params_, false /* disable_fifo */);
   converter_->AddInput(this);
   converter_->PrimeWithSilence();
 
-  fifo_.reset(new media::AudioFifo(
+  fifo_ = std::make_unique<media::AudioFifo>(
       input_params_.channels(),
-      kMaxNumberOfFifoBuffers * input_params_.frames_per_buffer()));
+      kMaxNumberOfFifoBuffers * input_params_.frames_per_buffer());
 
-  buffer_.reset(new float[output_params_.channels() *
-                          output_params_.frames_per_buffer()]);
+  buffer_ = std::make_unique<float[]>(output_params_.channels() *
+                                      output_params_.frames_per_buffer());
 
   // Initialize OpusEncoder.
   int opus_result;

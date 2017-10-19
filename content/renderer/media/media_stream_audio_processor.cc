@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <algorithm>
 #include <limits>
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -217,7 +218,8 @@ class MediaStreamAudioFifo {
       // possible, twice the larger of the two is a (probably) loose upper bound
       // on the FIFO size.
       const int fifo_frames = 2 * std::max(source_frames, destination_frames);
-      fifo_.reset(new media::AudioFifo(destination_channels, fifo_frames));
+      fifo_ =
+          std::make_unique<media::AudioFifo>(destination_channels, fifo_frames);
     }
 
     // May be created in the main render thread and used in the audio threads.
@@ -465,8 +467,8 @@ void MediaStreamAudioProcessor::OnAecDumpFile(
 
   if (audio_processing_) {
     if (!worker_queue_) {
-      worker_queue_.reset(new rtc::TaskQueue("aecdump-worker-queue",
-                                             rtc::TaskQueue::Priority::LOW));
+      worker_queue_ = std::make_unique<rtc::TaskQueue>(
+          "aecdump-worker-queue", rtc::TaskQueue::Priority::LOW);
     }
     // Here tasks will be posted on the |worker_queue_|. It must be
     // kept alive until StopEchoCancellationDump is called or the
@@ -709,7 +711,7 @@ void MediaStreamAudioProcessor::InitializeAudioProcessingModule(
   if (goog_typing_detection) {
     // TODO(xians): Remove this |typing_detector_| after the typing suppression
     // is enabled by default.
-    typing_detector_.reset(new webrtc::TypingDetection());
+    typing_detector_ = std::make_unique<webrtc::TypingDetection>();
     EnableTypingDetection(audio_processing_.get(), typing_detector_.get());
   }
 
@@ -782,16 +784,14 @@ void MediaStreamAudioProcessor::InitializeCaptureFifo(
       16,
       output_frames);
 
-  capture_fifo_.reset(
-      new MediaStreamAudioFifo(input_format.channels(),
-                               fifo_output_channels,
-                               input_format.frames_per_buffer(),
-                               processing_frames,
-                               input_format.sample_rate()));
+  capture_fifo_ = std::make_unique<MediaStreamAudioFifo>(
+      input_format.channels(), fifo_output_channels,
+      input_format.frames_per_buffer(), processing_frames,
+      input_format.sample_rate());
 
   if (audio_processing_) {
-    output_bus_.reset(new MediaStreamAudioBus(output_format_.channels(),
-                                              output_frames));
+    output_bus_ = std::make_unique<MediaStreamAudioBus>(
+        output_format_.channels(), output_frames);
   }
 }
 
@@ -814,12 +814,9 @@ void MediaStreamAudioProcessor::InitializeRenderFifoIfNeeded(
       frames_per_buffer);
 
   const int analysis_frames = sample_rate / 100;  // 10 ms chunks.
-  render_fifo_.reset(
-      new MediaStreamAudioFifo(number_of_channels,
-                               number_of_channels,
-                               frames_per_buffer,
-                               analysis_frames,
-                               sample_rate));
+  render_fifo_ = std::make_unique<MediaStreamAudioFifo>(
+      number_of_channels, number_of_channels, frames_per_buffer,
+      analysis_frames, sample_rate);
 }
 
 int MediaStreamAudioProcessor::ProcessData(const float* const* process_ptrs,

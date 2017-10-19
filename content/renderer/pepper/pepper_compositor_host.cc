@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 #include <limits>
+#include <memory>
 #include <utility>
 
 #include "base/logging.h"
@@ -128,7 +129,7 @@ int32_t VerifyCommittedLayer(const ppapi::CompositorLayerData* old_layer,
     if (!base::SharedMemory::IsHandleValid(shm_handle))
       return PP_ERROR_FAILED;
 
-    image_shm->reset(new base::SharedMemory(shm_handle, true));
+    *image_shm = std::make_unique<base::SharedMemory>(shm_handle, true);
     if (!(*image_shm)->Map(desc.stride * desc.size.height)) {
       image_shm->reset();
       return PP_ERROR_NOMEMORY;
@@ -362,7 +363,8 @@ int32_t PepperCompositorHost::OnHostMsgCommitLayers(
 
   std::unique_ptr<std::unique_ptr<base::SharedMemory>[]> image_shms;
   if (layers.size() > 0) {
-    image_shms.reset(new std::unique_ptr<base::SharedMemory>[layers.size()]);
+    image_shms =
+        std::make_unique<std::unique_ptr<base::SharedMemory>[]>(layers.size());
     if (!image_shms)
       return PP_ERROR_NOMEMORY;
     // Verfiy the layers first, if an error happens, we will return the error to

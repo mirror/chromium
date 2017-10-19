@@ -269,7 +269,8 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
       renderer_scheduler_(renderer_scheduler) {
 #if !defined(OS_ANDROID) && !defined(OS_WIN) && !defined(OS_FUCHSIA)
   if (g_sandbox_enabled && sandboxEnabled()) {
-    sandbox_support_.reset(new RendererBlinkPlatformImpl::SandboxSupport);
+    sandbox_support_ =
+        std::make_unique<RendererBlinkPlatformImpl::SandboxSupport>();
   } else {
     DVLOG(1) << "Disabling sandbox support for testing.";
   }
@@ -286,19 +287,19 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
     quota_message_filter_ = RenderThreadImpl::current()->quota_message_filter();
     shared_bitmap_manager_ =
         RenderThreadImpl::current()->shared_bitmap_manager();
-    blob_registry_.reset(new WebBlobRegistryImpl(
+    blob_registry_ = std::make_unique<WebBlobRegistryImpl>(
         RenderThreadImpl::current()->GetIOTaskRunner().get(),
-        base::ThreadTaskRunnerHandle::Get(), thread_safe_sender_.get()));
-    web_idb_factory_.reset(new WebIDBFactoryImpl(
+        base::ThreadTaskRunnerHandle::Get(), thread_safe_sender_.get());
+    web_idb_factory_ = std::make_unique<WebIDBFactoryImpl>(
         sync_message_filter_,
-        RenderThreadImpl::current()->GetIOTaskRunner().get()));
+        RenderThreadImpl::current()->GetIOTaskRunner().get());
   } else {
     service_manager::mojom::ConnectorRequest request;
     connector_ = service_manager::Connector::Create(&request);
   }
 
-  blink_interface_provider_.reset(
-      new BlinkInterfaceProviderImpl(connector_.get()));
+  blink_interface_provider_ =
+      std::make_unique<BlinkInterfaceProviderImpl>(connector_.get());
   top_level_blame_context_.Initialize();
   renderer_scheduler_->SetTopLevelBlameContext(&top_level_blame_context_);
 
@@ -406,11 +407,11 @@ blink::WebClipboard* RendererBlinkPlatformImpl::Clipboard() {
 
 blink::WebFileUtilities* RendererBlinkPlatformImpl::GetFileUtilities() {
   if (!file_utilities_) {
-    file_utilities_.reset(
-        new FileUtilities(mojom::ThreadSafeFileUtilitiesHostPtr::Create(
+    file_utilities_ = std::make_unique<FileUtilities>(
+        mojom::ThreadSafeFileUtilitiesHostPtr::Create(
             std::move(file_utilities_host_info_),
             base::CreateSequencedTaskRunnerWithTraits(
-                {base::WithBaseSyncPrimitives()}))));
+                {base::WithBaseSyncPrimitives()})));
     file_utilities_->set_sandbox_enabled(sandboxEnabled());
   }
   return file_utilities_.get();
@@ -524,8 +525,8 @@ RendererBlinkPlatformImpl::CreateLocalStorageNamespace() {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableMojoLocalStorage)) {
     if (!local_storage_cached_areas_) {
-      local_storage_cached_areas_.reset(new LocalStorageCachedAreas(
-          RenderThreadImpl::current()->GetStoragePartitionService()));
+      local_storage_cached_areas_ = std::make_unique<LocalStorageCachedAreas>(
+          RenderThreadImpl::current()->GetStoragePartitionService());
     }
     return base::MakeUnique<LocalStorageNamespace>(
         local_storage_cached_areas_.get());

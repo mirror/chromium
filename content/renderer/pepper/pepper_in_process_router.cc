@@ -4,6 +4,8 @@
 
 #include "content/renderer/pepper/pepper_in_process_router.h"
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
@@ -39,12 +41,12 @@ PepperInProcessRouter::PepperInProcessRouter(RendererPpapiHostImpl* host_impl)
       pending_message_id_(0),
       reply_result_(false),
       weak_factory_(this) {
-  browser_channel_.reset(new Channel(base::Bind(
-      &PepperInProcessRouter::SendToBrowser, base::Unretained(this))));
-  host_to_plugin_router_.reset(new Channel(base::Bind(
-      &PepperInProcessRouter::SendToPlugin, base::Unretained(this))));
-  plugin_to_host_router_.reset(new Channel(
-      base::Bind(&PepperInProcessRouter::SendToHost, base::Unretained(this))));
+  browser_channel_ = std::make_unique<Channel>(base::Bind(
+      &PepperInProcessRouter::SendToBrowser, base::Unretained(this)));
+  host_to_plugin_router_ = std::make_unique<Channel>(
+      base::Bind(&PepperInProcessRouter::SendToPlugin, base::Unretained(this)));
+  plugin_to_host_router_ = std::make_unique<Channel>(
+      base::Bind(&PepperInProcessRouter::SendToHost, base::Unretained(this)));
 }
 
 PepperInProcessRouter::~PepperInProcessRouter() {}

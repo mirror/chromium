@@ -4,6 +4,7 @@
 
 #include "content/renderer/manifest/manifest_manager.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -119,7 +120,7 @@ void ManifestManager::FetchManifest() {
     return;
   }
 
-  fetcher_.reset(new ManifestFetcher(manifest_url_));
+  fetcher_ = std::make_unique<ManifestFetcher>(manifest_url_);
   fetcher_->Start(
       render_frame()->GetWebFrame(),
       render_frame()->GetWebFrame()->GetDocument().ManifestUseCredentials(),

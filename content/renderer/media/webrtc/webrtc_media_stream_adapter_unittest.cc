@@ -38,7 +38,8 @@ namespace content {
 class WebRtcMediaStreamAdapterTest : public ::testing::Test {
  public:
   void SetUp() override {
-    dependency_factory_.reset(new MockPeerConnectionDependencyFactory());
+    dependency_factory_ =
+        std::make_unique<MockPeerConnectionDependencyFactory>();
     track_adapter_map_ =
         new WebRtcMediaStreamTrackAdapterMap(dependency_factory_.get());
   }

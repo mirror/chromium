@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 
+#include <memory>
 #include <string>
 
 #include "base/bind.h"
@@ -123,10 +124,11 @@ class AudioTrackRecorderTest : public TestWithParam<ATRTestParams> {
         opus_decoder_(nullptr) {
     ResetDecoder(first_params_);
     PrepareBlinkTrack();
-    audio_track_recorder_.reset(new AudioTrackRecorder(
-        blink_track_, base::Bind(&AudioTrackRecorderTest::OnEncodedAudio,
-                                 base::Unretained(this)),
-        0 /* bits_per_second */));
+    audio_track_recorder_ = std::make_unique<AudioTrackRecorder>(
+        blink_track_,
+        base::Bind(&AudioTrackRecorderTest::OnEncodedAudio,
+                   base::Unretained(this)),
+        0 /* bits_per_second */);
   }
 
   ~AudioTrackRecorderTest() {
@@ -150,7 +152,7 @@ class AudioTrackRecorderTest : public TestWithParam<ATRTestParams> {
         opus_decoder_create(kDefaultSampleRate, params.channels(), &error);
     EXPECT_TRUE(error == OPUS_OK && opus_decoder_);
 
-    buffer_.reset(new float[kFramesPerBuffer * params.channels()]);
+    buffer_ = std::make_unique<float[]>(kFramesPerBuffer * params.channels());
   }
 
   std::unique_ptr<media::AudioBus> GetFirstSourceAudioBus() {

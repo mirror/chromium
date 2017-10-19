@@ -8,6 +8,7 @@
 #include <GLES2/gl2ext.h>
 #include <GLES2/gl2extchromium.h>
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -693,7 +694,7 @@ void VideoDecoderShim::DecoderImpl::Initialize(
   DCHECK(!decoder_);
 #if !defined(MEDIA_DISABLE_LIBVPX)
   if (config.codec() == media::kCodecVP9) {
-    decoder_.reset(new media::VpxVideoDecoder());
+    decoder_ = std::make_unique<media::VpxVideoDecoder>();
   } else
 #endif
 
@@ -817,9 +818,9 @@ void VideoDecoderShim::DecoderImpl::OnOutputComplete(
 
   std::unique_ptr<PendingFrame> pending_frame;
   if (!frame->metadata()->IsTrue(media::VideoFrameMetadata::END_OF_STREAM))
-    pending_frame.reset(new PendingFrame(decode_id_, frame));
+    pending_frame = std::make_unique<PendingFrame>(decode_id_, frame);
   else
-    pending_frame.reset(new PendingFrame(decode_id_));
+    pending_frame = std::make_unique<PendingFrame>(decode_id_);
 
   main_task_runner_->PostTask(
       FROM_HERE, base::BindOnce(&VideoDecoderShim::OnOutputComplete, shim_,
@@ -846,7 +847,7 @@ VideoDecoderShim::VideoDecoderShim(
   DCHECK(host_);
   DCHECK(media_task_runner_.get());
   DCHECK(context_provider_.get());
-  decoder_impl_.reset(new DecoderImpl(weak_ptr_factory_.GetWeakPtr()));
+  decoder_impl_ = std::make_unique<DecoderImpl>(weak_ptr_factory_.GetWeakPtr());
 }
 
 VideoDecoderShim::~VideoDecoderShim() {

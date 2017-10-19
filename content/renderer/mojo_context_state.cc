@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include <map>
+#include <memory>
 #include <string>
 
 #include "base/bind.h"
@@ -92,7 +93,7 @@ scoped_refptr<base::RefCountedMemory> GetBuiltinModuleData(
   std::unique_ptr<ModuleSourceMap>& module_sources = g_module_sources.Get();
   if (!module_sources) {
     // Initialize the module source map on first access.
-    module_sources.reset(new ModuleSourceMap);
+    module_sources = std::make_unique<ModuleSourceMap>();
     for (size_t i = 0; i < arraysize(kBuiltinModuleResources); ++i) {
       const auto& resource = kBuiltinModuleResources[i];
       scoped_refptr<base::RefCountedMemory> data =
@@ -131,7 +132,7 @@ MojoContextState::MojoContextState(blink::WebLocalFrame* frame,
       module_prefix_(GetModulePrefixForBindingsType(bindings_type, frame)) {
   gin::PerContextData* context_data = gin::PerContextData::From(context);
   gin::ContextHolder* context_holder = context_data->context_holder();
-  runner_.reset(new MojoMainRunner(frame_, context_holder));
+  runner_ = std::make_unique<MojoMainRunner>(frame_, context_holder);
   gin::Runner::Scope scoper(runner_.get());
   gin::ModuleRegistry::From(context)->AddObserver(this);
   content::RenderFrame::FromWebFrame(frame)

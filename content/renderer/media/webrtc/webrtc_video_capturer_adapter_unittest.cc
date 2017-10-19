@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include <algorithm>
+#include <memory>
 
 #include "base/bind.h"
 #include "base/optional.h"
@@ -100,8 +101,8 @@ class WebRtcVideoCapturerAdapterTest
       bool expect_final_downscale) {
     // Reset and configure adapter to the test.
     adapter_->RemoveSink(this);
-    adapter_.reset(new WebRtcVideoCapturerAdapter(is_screencast,
-                                                  construction_content_hint));
+    adapter_ = std::make_unique<WebRtcVideoCapturerAdapter>(
+        is_screencast, construction_content_hint);
 
     const int kInputWidth = 1280;
     const int kInputHeight = 720;

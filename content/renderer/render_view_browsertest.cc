@@ -4,6 +4,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <memory>
 #include <tuple>
 
 #include "base/bind.h"
@@ -220,7 +221,7 @@ class RenderViewImplTest : public RenderViewTest {
  public:
   RenderViewImplTest() {
     // Attach a pseudo keyboard device to this object.
-    mock_keyboard_.reset(new MockKeyboard());
+    mock_keyboard_ = std::make_unique<MockKeyboard>();
   }
 
   ~RenderViewImplTest() override {}

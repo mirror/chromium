@@ -4,6 +4,8 @@
 
 #include "content/renderer/device_sensors/device_motion_event_pump.h"
 
+#include <memory>
+
 #include "base/memory/ptr_util.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/render_frame.h"
@@ -176,8 +178,8 @@ void DeviceMotionEventPump::SensorEntry::OnSensorCreated(
   const device::SensorReadingSharedBuffer* buffer =
       static_cast<const device::SensorReadingSharedBuffer*>(
           shared_buffer.get());
-  shared_buffer_reader.reset(
-      new device::SensorReadingSharedBufferReader(buffer));
+  shared_buffer_reader =
+      std::make_unique<device::SensorReadingSharedBufferReader>(buffer);
 
   DCHECK_GT(params->minimum_frequency, 0.0);
   DCHECK_GE(params->maximum_frequency, params->minimum_frequency);

@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 #include <limits>
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -250,9 +251,9 @@ void WebMediaPlayerMS::Load(LoadType load_type,
       web_stream_.IsNull() ? std::string() : web_stream_.Id().Utf8();
   media_log_->AddEvent(media_log_->CreateLoadEvent(stream_id));
 
-  frame_deliverer_.reset(new WebMediaPlayerMS::FrameDeliverer(
+  frame_deliverer_ = std::make_unique<WebMediaPlayerMS::FrameDeliverer>(
       AsWeakPtr(),
-      base::Bind(&WebMediaPlayerMSCompositor::EnqueueFrame, compositor_)));
+      base::Bind(&WebMediaPlayerMSCompositor::EnqueueFrame, compositor_));
   video_frame_provider_ = renderer_factory_->GetVideoRenderer(
       web_stream_,
       media::BindToCurrentLoop(

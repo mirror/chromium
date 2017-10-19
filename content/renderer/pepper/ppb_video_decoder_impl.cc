@@ -4,6 +4,7 @@
 
 #include "content/renderer/pepper/ppb_video_decoder_impl.h"
 
+#include <memory>
 #include <string>
 
 #include "base/logging.h"
@@ -130,7 +131,8 @@ bool PPB_VideoDecoder_Impl::Init(PP_Resource graphics_context,
   // This is not synchronous, but subsequent IPC messages will be buffered, so
   // it is okay to immediately send IPC messages.
   if (command_buffer->channel()) {
-    decoder_.reset(new media::GpuVideoDecodeAcceleratorHost(command_buffer));
+    decoder_ =
+        std::make_unique<media::GpuVideoDecodeAcceleratorHost>(command_buffer);
     media::VideoDecodeAccelerator::Config config(PPToMediaProfile(profile));
     config.supported_output_formats.assign(
         {media::PIXEL_FORMAT_XRGB, media::PIXEL_FORMAT_ARGB});

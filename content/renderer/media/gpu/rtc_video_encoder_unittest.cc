@@ -4,6 +4,8 @@
 
 #include <stdint.h>
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
@@ -144,7 +146,7 @@ class RTCVideoEncoderTest
 
   void RegisterEncodeCompleteCallback(
       const EncodedImageCallbackWrapper::EncodedCallback& callback) {
-    callback_wrapper_.reset(new EncodedImageCallbackWrapper(callback));
+    callback_wrapper_ = std::make_unique<EncodedImageCallbackWrapper>(callback);
     rtc_encoder_->RegisterEncodeCompleteCallback(callback_wrapper_.get());
   }
 

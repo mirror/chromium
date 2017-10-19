@@ -773,7 +773,7 @@ void ServiceWorkerContextClient::WorkerContextStarted(
   // Initialize pending callback maps. This needs to be freed on the
   // same thread before the worker context goes away in
   // willDestroyWorkerContext.
-  context_.reset(new WorkerContextData(this));
+  context_ = std::make_unique<WorkerContextData>(this);
 
   blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration_info;
   ServiceWorkerVersionAttributes version_attrs;
@@ -1650,8 +1650,8 @@ void ServiceWorkerContextClient::OnDidGetClient(
   std::unique_ptr<blink::WebServiceWorkerClientInfo> web_client;
   if (!client.IsEmpty()) {
     DCHECK(client.IsValid());
-    web_client.reset(new blink::WebServiceWorkerClientInfo(
-        ToWebServiceWorkerClientInfo(client)));
+    web_client = std::make_unique<blink::WebServiceWorkerClientInfo>(
+        ToWebServiceWorkerClientInfo(client));
   }
   callbacks->OnSuccess(std::move(web_client));
   context_->client_callbacks.Remove(request_id);
@@ -1691,8 +1691,8 @@ void ServiceWorkerContextClient::OnOpenWindowResponse(
   std::unique_ptr<blink::WebServiceWorkerClientInfo> web_client;
   if (!client.IsEmpty()) {
     DCHECK(client.IsValid());
-    web_client.reset(new blink::WebServiceWorkerClientInfo(
-        ToWebServiceWorkerClientInfo(client)));
+    web_client = std::make_unique<blink::WebServiceWorkerClientInfo>(
+        ToWebServiceWorkerClientInfo(client));
   }
   callbacks->OnSuccess(std::move(web_client));
   context_->client_callbacks.Remove(request_id);
@@ -1754,8 +1754,8 @@ void ServiceWorkerContextClient::OnNavigateClientResponse(
   std::unique_ptr<blink::WebServiceWorkerClientInfo> web_client;
   if (!client.IsEmpty()) {
     DCHECK(client.IsValid());
-    web_client.reset(new blink::WebServiceWorkerClientInfo(
-        ToWebServiceWorkerClientInfo(client)));
+    web_client = std::make_unique<blink::WebServiceWorkerClientInfo>(
+        ToWebServiceWorkerClientInfo(client));
   }
   callbacks->OnSuccess(std::move(web_client));
   context_->client_callbacks.Remove(request_id);

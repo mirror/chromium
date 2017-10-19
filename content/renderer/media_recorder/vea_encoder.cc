@@ -4,6 +4,7 @@
 
 #include "content/renderer/media_recorder/vea_encoder.h"
 
+#include <memory>
 #include <string>
 
 #include "base/containers/queue.h"
@@ -158,8 +159,9 @@ void VEAEncoder::EncodeOnEncodingTaskRunner(scoped_refptr<VideoFrame> frame,
   if (output_buffers_.empty() || vea_requested_input_coded_size_.IsEmpty()) {
     // TODO(emircan): Investigate if resetting encoder would help.
     DVLOG(3) << "Might drop frame.";
-    last_frame_.reset(new std::pair<scoped_refptr<VideoFrame>, base::TimeTicks>(
-        frame, capture_timestamp));
+    last_frame_ =
+        std::make_unique<std::pair<scoped_refptr<VideoFrame>, base::TimeTicks>>(
+            frame, capture_timestamp);
     return;
   }
 

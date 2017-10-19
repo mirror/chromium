@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/media_stream_video_renderer_sink.h"
 
+#include <memory>
+
 #include "base/feature_list.h"
 #include "base/memory/weak_ptr.h"
 #include "base/run_loop.h"
@@ -45,8 +47,9 @@ class MediaStreamVideoRendererSink::FrameDeliverer {
         gpu_factories->ShouldUseGpuMemoryBuffersForVideoFrames() &&
         base::FeatureList::IsEnabled(
             features::kWebRtcUseGpuMemoryBufferVideoFrames)) {
-      gpu_memory_buffer_pool_.reset(new media::GpuMemoryBufferVideoFramePool(
-          media_task_runner, worker_task_runner, gpu_factories));
+      gpu_memory_buffer_pool_ =
+          std::make_unique<media::GpuMemoryBufferVideoFramePool>(
+              media_task_runner, worker_task_runner, gpu_factories);
     }
   }
 
@@ -183,8 +186,9 @@ MediaStreamVideoRendererSink::~MediaStreamVideoRendererSink() {}
 void MediaStreamVideoRendererSink::Start() {
   DCHECK(main_thread_checker_.CalledOnValidThread());
 
-  frame_deliverer_.reset(new MediaStreamVideoRendererSink::FrameDeliverer(
-      repaint_cb_, media_task_runner_, worker_task_runner_, gpu_factories_));
+  frame_deliverer_ =
+      std::make_unique<MediaStreamVideoRendererSink::FrameDeliverer>(
+          repaint_cb_, media_task_runner_, worker_task_runner_, gpu_factories_);
   io_task_runner_->PostTask(
       FROM_HERE, base::BindOnce(&FrameDeliverer::Start,
                                 base::Unretained(frame_deliverer_.get())));

@@ -50,9 +50,9 @@ struct TestEntry {
 class MockNetworkManager : public rtc::NetworkManager {
  public:
   MockNetworkManager() {
-    network_.reset(new rtc::Network("test_eth0", "Test Network Adapter 1",
-                                    rtc::IPAddress(0x12345600U), 24,
-                                    rtc::ADAPTER_TYPE_ETHERNET));
+    network_ = std::make_unique<rtc::Network>(
+        "test_eth0", "Test Network Adapter 1", rtc::IPAddress(0x12345600U), 24,
+        rtc::ADAPTER_TYPE_ETHERNET);
   }
   // Mimic the current behavior that once the first signal is sent, any future
   // StartUpdating() will trigger another one.
@@ -133,7 +133,7 @@ class FilteringNetworkManagerTest : public testing::Test,
         task_runner_(new base::TestSimpleTaskRunner()),
         task_runner_handle_(task_runner_) {}
   void SetupNetworkManager(bool multiple_routes_requested) {
-    mock_network_manager_.reset(new MockNetworkManager());
+    mock_network_manager_ = std::make_unique<MockNetworkManager>();
     if (multiple_routes_requested) {
       FilteringNetworkManager* filtering_network_manager =
           new FilteringNetworkManager(mock_network_manager_.get(), GURL(),
@@ -141,8 +141,8 @@ class FilteringNetworkManagerTest : public testing::Test,
       filtering_network_manager->Initialize();
       network_manager_.reset(filtering_network_manager);
     } else {
-      network_manager_.reset(
-          new EmptyNetworkManager(mock_network_manager_.get()));
+      network_manager_ =
+          std::make_unique<EmptyNetworkManager>(mock_network_manager_.get());
     }
     network_manager_->SignalNetworksChanged.connect(
         this, &FilteringNetworkManagerTest::OnNetworksChanged);

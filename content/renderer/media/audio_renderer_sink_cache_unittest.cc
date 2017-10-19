@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include <array>
+#include <memory>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -365,7 +366,7 @@ TEST_F(AudioRendererSinkCacheTest, SmokeTest) {
 
   std::array<std::unique_ptr<base::Thread>, kThreadCount> threads;
   for (int i = 0; i < kThreadCount; ++i) {
-    threads[i].reset(new base::Thread(std::to_string(i)));
+    threads[i] = std::make_unique<base::Thread>(std::to_string(i));
     threads[i]->Start();
   }
 

@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
+
 #include "content/renderer/media/webrtc/rtc_stats.h"
 
 #include "testing/gtest/include/gtest/gtest.h"
@@ -17,10 +19,10 @@ TEST(RTCStatsTest, OnlyIncludeWhitelistedStats_GetStats) {
 
   rtc::scoped_refptr<webrtc::RTCStatsReport> webrtc_report =
       webrtc::RTCStatsReport::Create(42);
-  webrtc_report->AddStats(std::unique_ptr<webrtc::RTCTestStats>(
-      new webrtc::RTCTestStats(not_whitelisted_id, 42)));
-  webrtc_report->AddStats(std::unique_ptr<webrtc::RTCPeerConnectionStats>(
-      new webrtc::RTCPeerConnectionStats(whitelisted_id, 42)));
+  webrtc_report->AddStats(
+      std::make_unique<webrtc::RTCTestStats>(not_whitelisted_id, 42));
+  webrtc_report->AddStats(
+      std::make_unique<webrtc::RTCPeerConnectionStats>(whitelisted_id, 42));
 
   RTCStatsReport report(webrtc_report.get());
   EXPECT_FALSE(report.GetStats(blink::WebString::FromUTF8(not_whitelisted_id)));
@@ -33,10 +35,10 @@ TEST(RTCStatsTest, OnlyIncludeWhitelistedStats_Iteration) {
 
   rtc::scoped_refptr<webrtc::RTCStatsReport> webrtc_report =
       webrtc::RTCStatsReport::Create(42);
-  webrtc_report->AddStats(std::unique_ptr<webrtc::RTCTestStats>(
-      new webrtc::RTCTestStats(not_whitelisted_id, 42)));
-  webrtc_report->AddStats(std::unique_ptr<webrtc::RTCPeerConnectionStats>(
-      new webrtc::RTCPeerConnectionStats(whitelisted_id, 42)));
+  webrtc_report->AddStats(
+      std::make_unique<webrtc::RTCTestStats>(not_whitelisted_id, 42));
+  webrtc_report->AddStats(
+      std::make_unique<webrtc::RTCPeerConnectionStats>(whitelisted_id, 42));
 
   RTCStatsReport report(webrtc_report.get());
   std::unique_ptr<blink::WebRTCStats> stats = report.Next();

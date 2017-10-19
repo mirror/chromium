@@ -5,6 +5,7 @@
 #include "content/renderer/shared_worker/embedded_shared_worker_stub.h"
 
 #include <stdint.h>
+#include <memory>
 #include <utility>
 
 #include "base/feature_list.h"
@@ -145,8 +146,8 @@ EmbeddedSharedWorkerStub::EmbeddedSharedWorkerStub(
     // is attached or explicit resume notification is received.
     impl_->PauseWorkerContextOnStart();
   }
-  worker_devtools_agent_.reset(
-      new SharedWorkerDevToolsAgent(route_id, impl_));
+  worker_devtools_agent_ =
+      std::make_unique<SharedWorkerDevToolsAgent>(route_id, impl_);
   impl_->StartWorkerContext(
       url_, blink::WebString::FromUTF8(name_),
       blink::WebString::FromUTF8(info->content_security_policy),

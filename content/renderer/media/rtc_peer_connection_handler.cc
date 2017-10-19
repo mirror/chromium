@@ -6,6 +6,7 @@
 
 #include <string.h>
 
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -1408,7 +1409,8 @@ void RTCPeerConnectionHandler::SetLocalDescription(
   }
 
   if (!first_local_description_ && IsOfferOrAnswer(native_desc)) {
-    first_local_description_.reset(new FirstSessionDescription(native_desc));
+    first_local_description_ =
+        std::make_unique<FirstSessionDescription>(native_desc);
     if (first_remote_description_) {
       ReportFirstSessionDescriptions(
           *first_local_description_,
@@ -1466,7 +1468,8 @@ void RTCPeerConnectionHandler::SetRemoteDescription(
   }
 
   if (!first_remote_description_ && IsOfferOrAnswer(native_desc)) {
-    first_remote_description_.reset(new FirstSessionDescription(native_desc));
+    first_remote_description_ =
+        std::make_unique<FirstSessionDescription>(native_desc);
     if (first_local_description_) {
       ReportFirstSessionDescriptions(
           *first_local_description_,

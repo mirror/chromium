@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -125,7 +126,7 @@ class FakeSpeechRecognizer {
     // Shared memory is allocated, mapped and shared.
     const uint32_t kSharedMemorySize =
         media::ComputeAudioInputBufferSize(sink_params, 1u);
-    shared_memory_.reset(new base::SharedMemory());
+    shared_memory_ = std::make_unique<base::SharedMemory>();
     ASSERT_TRUE(shared_memory_->CreateAndMapAnonymous(kSharedMemorySize));
     memset(shared_memory_->memory(), 0, kSharedMemorySize);
     *foreign_memory_handle = shared_memory_->handle().Duplicate();
@@ -142,10 +143,10 @@ class FakeSpeechRecognizer {
     buffer->params.size = 0U;
 
     // Create a shared buffer for the |MockSyncSocket|s.
-    shared_buffer_.reset(new MockSyncSocket::SharedBuffer());
+    shared_buffer_ = std::make_unique<MockSyncSocket::SharedBuffer>();
 
     // Local socket will receive signals from the producer.
-    receiving_socket_.reset(new MockSyncSocket(shared_buffer_.get()));
+    receiving_socket_ = std::make_unique<MockSyncSocket>(shared_buffer_.get());
 
     // We automatically trigger a Receive when data is sent over the socket.
     sending_socket_ = new MockSyncSocket(
@@ -260,18 +261,18 @@ class SpeechRecognitionAudioSinkTest : public testing::Test {
         MediaStreamAudioSource::From(blink_source_))->SetFormat(source_params_);
 
     // Create and initialize the consumer.
-    recognizer_.reset(new FakeSpeechRecognizer());
+    recognizer_ = std::make_unique<FakeSpeechRecognizer>();
     base::SharedMemoryHandle foreign_memory_handle;
     recognizer_->Initialize(blink_track_, sink_params_, &foreign_memory_handle);
 
     // Create the producer.
     std::unique_ptr<base::SyncSocket> sending_socket(
         recognizer_->sending_socket());
-    speech_audio_sink_.reset(new SpeechRecognitionAudioSink(
+    speech_audio_sink_ = std::make_unique<SpeechRecognitionAudioSink>(
         blink_track_, sink_params_, foreign_memory_handle,
         std::move(sending_socket),
         base::Bind(&SpeechRecognitionAudioSinkTest::StoppedCallback,
-                   base::Unretained(this))));
+                   base::Unretained(this)));
 
     // Return number of buffers needed to trigger resampling and consumption.
     return static_cast<uint32_t>(std::ceil(

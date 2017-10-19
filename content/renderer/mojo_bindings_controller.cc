@@ -4,6 +4,8 @@
 
 #include "content/renderer/mojo_bindings_controller.h"
 
+#include <memory>
+
 #include "base/memory/ptr_util.h"
 #include "content/common/view_messages.h"
 #include "content/public/renderer/render_frame.h"
@@ -43,7 +45,8 @@ void MojoBindingsController::CreateContextState() {
   v8::Local<v8::Context> context = frame->MainWorldScriptContext();
   gin::PerContextData* context_data = gin::PerContextData::From(context);
   auto data = base::MakeUnique<MojoContextStateData>();
-  data->state.reset(new MojoContextState(frame, context, bindings_type_));
+  data->state =
+      std::make_unique<MojoContextState>(frame, context, bindings_type_);
   context_data->SetUserData(kMojoContextStateKey, std::move(data));
 }
 

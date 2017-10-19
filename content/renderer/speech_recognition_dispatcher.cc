@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <memory>
 #include <utility>
 
 #include "base/strings/utf_string_conversions.h"
@@ -277,10 +278,10 @@ void SpeechRecognitionDispatcher::OnAudioReceiverReady(
   std::unique_ptr<base::SyncSocket> socket(new base::CancelableSyncSocket(
       base::SyncSocket::UnwrapHandle(descriptor)));
 
-  speech_audio_sink_.reset(new SpeechRecognitionAudioSink(
+  speech_audio_sink_ = std::make_unique<SpeechRecognitionAudioSink>(
       audio_track_, params, memory, std::move(socket),
       base::Bind(&SpeechRecognitionDispatcher::ResetAudioSink,
-                 base::Unretained(this))));
+                 base::Unretained(this)));
 #endif
 }
 

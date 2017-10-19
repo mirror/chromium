@@ -66,8 +66,8 @@ class MediaStreamRemoteVideoSourceTest
                webrtc::MediaStreamTrackInterface* webrtc_track,
                std::unique_ptr<TrackObserver>* track_observer,
                base::WaitableEvent* waitable_event) {
-              track_observer->reset(
-                  new TrackObserver(main_thread, webrtc_track));
+              *track_observer =
+                  std::make_unique<TrackObserver>(main_thread, webrtc_track);
               waitable_event->Signal();
             },
             main_thread, base::Unretained(webrtc_video_track_.get()),

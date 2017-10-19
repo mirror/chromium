@@ -4,6 +4,7 @@
 
 #include "content/renderer/media/webrtc_audio_renderer.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -432,10 +433,10 @@ int WebRtcAudioRenderer::Render(base::TimeDelta delay,
   if (prior_frames_skipped > 0) {
     const int source_frames_per_buffer = sink_params_.sample_rate() / 100;
     if (!audio_fifo_ && prior_frames_skipped != source_frames_per_buffer) {
-      audio_fifo_.reset(new media::AudioPullFifo(
+      audio_fifo_ = std::make_unique<media::AudioPullFifo>(
           kChannels, source_frames_per_buffer,
           base::Bind(&WebRtcAudioRenderer::SourceCallback,
-                     base::Unretained(this))));
+                     base::Unretained(this)));
     }
 
     std::unique_ptr<media::AudioBus> drop_bus =
@@ -684,10 +685,10 @@ void WebRtcAudioRenderer::PrepareSink() {
     if ((!audio_fifo_ && different_source_sink_frames) ||
         (audio_fifo_ &&
          audio_fifo_->SizeInFrames() != source_frames_per_buffer)) {
-      audio_fifo_.reset(new media::AudioPullFifo(
+      audio_fifo_ = std::make_unique<media::AudioPullFifo>(
           kChannels, source_frames_per_buffer,
           base::Bind(&WebRtcAudioRenderer::SourceCallback,
-                     base::Unretained(this))));
+                     base::Unretained(this)));
     }
     sink_params_ = new_sink_params;
   }

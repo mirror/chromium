@@ -578,7 +578,8 @@ void RenderViewImpl::Initialize(
       *base::CommandLine::ForCurrentProcess();
 
   if (command_line.HasSwitch(switches::kStatsCollectionController))
-    stats_collection_observer_.reset(new StatsCollectionObserver(this));
+    stats_collection_observer_ =
+        std::make_unique<StatsCollectionObserver>(this);
 
   webview()->SetDisplayMode(display_mode_);
   webview()->GetSettings()->SetPreferCompositingToLCDTextEnabled(
@@ -662,7 +663,7 @@ void RenderViewImpl::Initialize(
     OnEnableAutoResize(params.min_size, params.max_size);
   }
 
-  idle_user_detector_.reset(new IdleUserDetector(this));
+  idle_user_detector_ = std::make_unique<IdleUserDetector>(this);
 
   GetContentClient()->renderer()->RenderViewCreated(this);
 

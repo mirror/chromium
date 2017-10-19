@@ -42,7 +42,7 @@ class HeaderVisitor : public blink::WebHTTPHeaderVisitor {
 
 std::unique_ptr<HeaderVisitor> MakeHeaderVisitor(
     ServiceWorkerHeaderMap* headers) {
-  return std::unique_ptr<HeaderVisitor>(new HeaderVisitor(headers));
+  return std::make_unique<HeaderVisitor>(headers);
 }
 
 std::unique_ptr<ServiceWorkerHeaderMap> GetHeaderMap(

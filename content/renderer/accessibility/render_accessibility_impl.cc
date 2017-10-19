@@ -7,6 +7,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/containers/queue.h"
 #include "base/location.h"
@@ -320,7 +322,8 @@ int RenderAccessibilityImpl::GenerateAXID() {
 void RenderAccessibilityImpl::SetPluginTreeSource(
     RenderAccessibilityImpl::PluginAXTreeSource* plugin_tree_source) {
   plugin_tree_source_ = plugin_tree_source;
-  plugin_serializer_.reset(new PluginAXTreeSerializer(plugin_tree_source_));
+  plugin_serializer_ =
+      std::make_unique<PluginAXTreeSerializer>(plugin_tree_source_);
 
   OnPluginRootNodeUpdated();
 }
@@ -436,7 +439,7 @@ void RenderAccessibilityImpl::SendPendingAccessibilityEvents() {
       dst.bounds = src.location;
       dst.transform.reset(nullptr);
       if (src.transform)
-        dst.transform.reset(new gfx::Transform(*src.transform));
+        dst.transform = std::make_unique<gfx::Transform>(*src.transform);
     }
 
     VLOG(1) << "Accessibility event: " << ui::ToString(event.event_type)

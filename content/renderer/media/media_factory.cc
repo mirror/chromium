@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/media_factory.h"
 
+#include <memory>
+
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
@@ -321,11 +323,12 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
 
 blink::WebEncryptedMediaClient* MediaFactory::EncryptedMediaClient() {
   if (!web_encrypted_media_client_) {
-    web_encrypted_media_client_.reset(new media::WebEncryptedMediaClientImpl(
-        GetCdmFactory(), render_frame_->GetMediaPermission(),
-        new RenderMediaLog(
-            url::Origin(render_frame_->GetWebFrame()->GetSecurityOrigin())
-                .GetURL())));
+    web_encrypted_media_client_ =
+        std::make_unique<media::WebEncryptedMediaClientImpl>(
+            GetCdmFactory(), render_frame_->GetMediaPermission(),
+            new RenderMediaLog(
+                url::Origin(render_frame_->GetWebFrame()->GetSecurityOrigin())
+                    .GetURL()));
   }
   return web_encrypted_media_client_.get();
 }
@@ -521,19 +524,20 @@ media::CdmFactory* MediaFactory::GetCdmFactory() {
       BUILDFLAG(ENABLE_MOJO_CDM),
       "Mojo CDM should always be enabled when library CDM is enabled");
   if (base::FeatureList::IsEnabled(media::kMojoCdm)) {
-    cdm_factory_.reset(new media::MojoCdmFactory(GetMediaInterfaceFactory()));
+    cdm_factory_ =
+        std::make_unique<media::MojoCdmFactory>(GetMediaInterfaceFactory());
   } else {
-    cdm_factory_.reset(new RenderCdmFactory(
-        base::Bind(&PepperCdmWrapperImpl::Create, web_frame)));
+    cdm_factory_ = std::make_unique<RenderCdmFactory>(
+        base::Bind(&PepperCdmWrapperImpl::Create, web_frame));
   }
 #elif BUILDFLAG(ENABLE_MOJO_CDM)
   cdm_factory_.reset(new media::MojoCdmFactory(GetMediaInterfaceFactory()));
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
-  cdm_factory_.reset(new media::remoting::RemotingCdmFactory(
+  cdm_factory_ = std::make_unique<media::remoting::RemotingCdmFactory>(
       std::move(cdm_factory_), GetRemoterFactory(),
-      std::move(remoting_sink_observer_)));
+      std::move(remoting_sink_observer_));
 #endif  // BUILDFLAG(ENABLE_MEDIA_REMOTING)
 
   return cdm_factory_.get();
@@ -552,8 +556,8 @@ MediaFactory::CreateVideoDecodeStatsRecorder() {
 media::mojom::InterfaceFactory* MediaFactory::GetMediaInterfaceFactory() {
   if (!media_interface_factory_) {
     DCHECK(remote_interfaces_);
-    media_interface_factory_.reset(
-        new MediaInterfaceFactory(remote_interfaces_));
+    media_interface_factory_ =
+        std::make_unique<MediaInterfaceFactory>(remote_interfaces_);
   }
 
   return media_interface_factory_.get();

@@ -4,6 +4,7 @@
 
 #include "content/renderer/pepper/pepper_video_encoder_host.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -306,7 +307,7 @@ int32_t PepperVideoEncoderHost::OnHostMsgInitialize(
   return error;
 #else
   if (acceleration != PP_HARDWAREACCELERATION_ONLY) {
-    encoder_.reset(new VideoEncoderShim(this));
+    encoder_ = std::make_unique<VideoEncoderShim>(this);
     if (encoder_->Initialize(media_input_format_, input_size, media_profile,
                              initial_bitrate, this))
       return PP_OK_COMPLETIONPENDING;
@@ -554,8 +555,8 @@ bool PepperVideoEncoderHost::InitializeHardware(
   if (!EnsureGpuChannel())
     return false;
 
-  encoder_.reset(
-      new media::GpuVideoEncodeAcceleratorHost(command_buffer_.get()));
+  encoder_ = std::make_unique<media::GpuVideoEncodeAcceleratorHost>(
+      command_buffer_.get());
   return encoder_->Initialize(input_format, input_visible_size, output_profile,
                               initial_bitrate, this);
 }

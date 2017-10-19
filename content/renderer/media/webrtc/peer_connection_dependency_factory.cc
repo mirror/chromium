@@ -232,8 +232,8 @@ void PeerConnectionDependencyFactory::InitializeSignalingThread(
   jingle_glue::JingleThreadWrapper::current()->set_send_allowed(true);
   signaling_thread_ = jingle_glue::JingleThreadWrapper::current();
 
-  socket_factory_.reset(
-      new IpcPacketSocketFactory(p2p_socket_dispatcher_.get()));
+  socket_factory_ =
+      std::make_unique<IpcPacketSocketFactory>(p2p_socket_dispatcher_.get());
 
   std::unique_ptr<cricket::WebRtcVideoDecoderFactory> decoder_factory;
   std::unique_ptr<cricket::WebRtcVideoEncoderFactory> encoder_factory;
@@ -241,10 +241,10 @@ void PeerConnectionDependencyFactory::InitializeSignalingThread(
   const base::CommandLine* cmd_line = base::CommandLine::ForCurrentProcess();
   if (gpu_factories && gpu_factories->IsGpuVideoAcceleratorEnabled()) {
     if (!cmd_line->HasSwitch(switches::kDisableWebRtcHWDecoding))
-      decoder_factory.reset(new RTCVideoDecoderFactory(gpu_factories));
+      decoder_factory = std::make_unique<RTCVideoDecoderFactory>(gpu_factories);
 
     if (!cmd_line->HasSwitch(switches::kDisableWebRtcHWEncoding)) {
-      encoder_factory.reset(new RTCVideoEncoderFactory(gpu_factories));
+      encoder_factory = std::make_unique<RTCVideoEncoderFactory>(gpu_factories);
     }
   }
 
@@ -388,7 +388,7 @@ PeerConnectionDependencyFactory::CreatePeerConnection(
                                     media_permission);
     network_manager.reset(filtering_network_manager);
   } else {
-    network_manager.reset(new EmptyNetworkManager(network_manager_));
+    network_manager = std::make_unique<EmptyNetworkManager>(network_manager_);
   }
   std::unique_ptr<P2PPortAllocator> port_allocator(new P2PPortAllocator(
       p2p_socket_dispatcher_, std::move(network_manager), socket_factory_.get(),
@@ -499,8 +499,8 @@ void PeerConnectionDependencyFactory::StartStunProbeTrialOnWorkerThread(
     const std::string& params) {
   DCHECK(network_manager_);
   DCHECK(chrome_worker_thread_.task_runner()->BelongsToCurrentThread());
-  stun_trial_.reset(
-      new StunProberTrial(network_manager_, params, socket_factory_.get()));
+  stun_trial_ = std::make_unique<StunProberTrial>(network_manager_, params,
+                                                  socket_factory_.get());
 }
 
 void PeerConnectionDependencyFactory::CreateIpcNetworkManagerOnWorkerThread(

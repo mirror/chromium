@@ -4,6 +4,8 @@
 
 #include <stddef.h>
 
+#include <memory>
+
 #include "base/logging.h"
 #include "content/renderer/media/media_stream_audio_track.h"
 #include "content/renderer/media/webrtc_local_audio_source_provider.h"
@@ -34,7 +36,8 @@ class WebRtcLocalAudioSourceProviderTest : public testing::Test {
     blink_track_.Initialize(blink::WebString::FromUTF8("audio_track"),
                             audio_source);
     blink_track_.SetTrackData(new MediaStreamAudioTrack(true));
-    source_provider_.reset(new WebRtcLocalAudioSourceProvider(blink_track_));
+    source_provider_ =
+        std::make_unique<WebRtcLocalAudioSourceProvider>(blink_track_);
     source_provider_->SetSinkParamsForTesting(sink_params_);
     source_provider_->OnSetFormat(source_params_);
   }

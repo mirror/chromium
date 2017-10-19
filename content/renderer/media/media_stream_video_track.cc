@@ -4,6 +4,7 @@
 
 #include "content/renderer/media/media_stream_video_track.h"
 
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -135,7 +136,7 @@ void MediaStreamVideoTrack::FrameDeliverer::RemoveCallbackOnIO(
     if (it->first == id) {
       // Callback is copied to heap and then deleted on the target thread.
       std::unique_ptr<VideoCaptureDeliverFrameCB> callback;
-      callback.reset(new VideoCaptureDeliverFrameCB(it->second));
+      callback = std::make_unique<VideoCaptureDeliverFrameCB>(it->second);
       callbacks_.erase(it);
       task_runner->PostTask(
           FROM_HERE, base::BindOnce(&ResetCallback, base::Passed(&callback)));

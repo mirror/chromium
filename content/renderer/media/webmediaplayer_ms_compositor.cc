@@ -5,6 +5,7 @@
 #include "content/renderer/media/webmediaplayer_ms_compositor.h"
 
 #include <stdint.h>
+#include <memory>
 #include <string>
 
 #include "base/command_line.h"
@@ -151,10 +152,10 @@ WebMediaPlayerMSCompositor::WebMediaPlayerMSCompositor(
   if (remote_video && !base::CommandLine::ForCurrentProcess()->HasSwitch(
                           switches::kDisableRTCSmoothnessAlgorithm)) {
     base::AutoLock auto_lock(current_frame_lock_);
-    rendering_frame_buffer_.reset(new media::VideoRendererAlgorithm(
+    rendering_frame_buffer_ = std::make_unique<media::VideoRendererAlgorithm>(
         base::Bind(&WebMediaPlayerMSCompositor::MapTimestampsToRenderTimeTicks,
                    base::Unretained(this)),
-        &media_log_));
+        &media_log_);
   }
 
   // Just for logging purpose.
@@ -480,10 +481,10 @@ void WebMediaPlayerMSCompositor::SetAlgorithmEnabledForTesting(
   }
 
   if (!rendering_frame_buffer_) {
-    rendering_frame_buffer_.reset(new media::VideoRendererAlgorithm(
+    rendering_frame_buffer_ = std::make_unique<media::VideoRendererAlgorithm>(
         base::Bind(&WebMediaPlayerMSCompositor::MapTimestampsToRenderTimeTicks,
                    base::Unretained(this)),
-        &media_log_));
+        &media_log_);
   }
 }
 

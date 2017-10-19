@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
+
 #include "base/message_loop/message_loop.h"
 #include "content/renderer/media/mock_web_rtc_peer_connection_handler_client.h"
 #include "content/renderer/media/webrtc/mock_peer_connection_dependency_factory.h"
@@ -13,7 +15,8 @@ namespace content {
 class PeerConnectionDependencyFactoryTest : public ::testing::Test {
  public:
   void SetUp() override {
-    dependency_factory_.reset(new MockPeerConnectionDependencyFactory());
+    dependency_factory_ =
+        std::make_unique<MockPeerConnectionDependencyFactory>();
   }
 
  protected:

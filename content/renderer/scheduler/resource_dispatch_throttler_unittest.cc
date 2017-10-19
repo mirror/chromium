@@ -111,7 +111,8 @@ class ResourceDispatchThrottlerForTest : public ResourceDispatchThrottler {
 class ResourceDispatchThrottlerTest : public testing::Test, public IPC::Sender {
  public:
   ResourceDispatchThrottlerTest() : last_request_id_(0) {
-    throttler_.reset(new ResourceDispatchThrottlerForTest(this, &scheduler_));
+    throttler_ =
+        std::make_unique<ResourceDispatchThrottlerForTest>(this, &scheduler_);
   }
   ~ResourceDispatchThrottlerTest() override {}
 

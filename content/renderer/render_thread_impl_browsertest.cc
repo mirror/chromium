@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <memory>
 #include <utility>
 
 #include "base/callback.h"
@@ -172,24 +173,24 @@ class RenderThreadImplBrowserTest : public testing::Test {
     // redirection experiment concludes https://crbug.com/622400.
     base::SequencedWorkerPool::DisableForProcessForTesting();
 
-    content_renderer_client_.reset(new ContentRendererClient());
+    content_renderer_client_ = std::make_unique<ContentRendererClient>();
     SetRendererClientForTesting(content_renderer_client_.get());
 
-    browser_threads_.reset(
-        new TestBrowserThreadBundle(TestBrowserThreadBundle::IO_MAINLOOP));
+    browser_threads_ = std::make_unique<TestBrowserThreadBundle>(
+        TestBrowserThreadBundle::IO_MAINLOOP);
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner =
         base::ThreadTaskRunnerHandle::Get();
 
     InitializeMojo();
-    shell_context_.reset(new TestServiceManagerContext);
+    shell_context_ = std::make_unique<TestServiceManagerContext>();
     mojo::edk::OutgoingBrokerClientInvitation invitation;
     service_manager::Identity child_identity(
         mojom::kRendererServiceName, service_manager::mojom::kInheritUserID,
         "test");
-    child_connection_.reset(new ChildConnection(
+    child_connection_ = std::make_unique<ChildConnection>(
         child_identity, &invitation,
         ServiceManagerConnection::GetForProcess()->GetConnector(),
-        io_task_runner));
+        io_task_runner);
 
     mojo::MessagePipe pipe;
     child_connection_->BindInterface(IPC::mojom::ChannelBootstrap::Name_,
@@ -200,7 +201,7 @@ class RenderThreadImplBrowserTest : public testing::Test {
                                       std::move(pipe.handle0), io_task_runner),
                                   nullptr, io_task_runner);
 
-    mock_process_.reset(new MockRenderProcess);
+    mock_process_ = std::make_unique<MockRenderProcess>();
     test_task_counter_ = base::MakeRefCounted<TestTaskCounter>();
 
     // RenderThreadImpl expects the browser to pass these flags.

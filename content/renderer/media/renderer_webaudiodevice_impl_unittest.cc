@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
+
 #include "content/renderer/media/renderer_webaudiodevice_impl.h"
 
 #include "base/bind.h"
@@ -69,17 +71,17 @@ class RendererWebAudioDeviceImplTest
   RendererWebAudioDeviceImplTest() {}
 
   void SetupDevice(blink::WebAudioLatencyHint latencyHint) {
-    webaudio_device_.reset(new RendererWebAudioDeviceImplUnderTest(
-        media::CHANNEL_LAYOUT_MONO, 1, latencyHint, this, 0, url::Origin()));
+    webaudio_device_ = std::make_unique<RendererWebAudioDeviceImplUnderTest>(
+        media::CHANNEL_LAYOUT_MONO, 1, latencyHint, this, 0, url::Origin());
     webaudio_device_->SetMediaTaskRunnerForTesting(message_loop_.task_runner());
   }
 
   void SetupDevice(media::ChannelLayout layout, int channels) {
-    webaudio_device_.reset(new RendererWebAudioDeviceImplUnderTest(
+    webaudio_device_ = std::make_unique<RendererWebAudioDeviceImplUnderTest>(
         layout, channels,
         blink::WebAudioLatencyHint(
             blink::WebAudioLatencyHint::kCategoryInteractive),
-        this, 0, url::Origin()));
+        this, 0, url::Origin());
     webaudio_device_->SetMediaTaskRunnerForTesting(message_loop_.task_runner());
   }
 

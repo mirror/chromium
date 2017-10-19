@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <limits>
+#include <memory>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -73,7 +74,7 @@ void WebRtcAudioSink::OnSetFormat(const media::AudioParameters& params) {
   fifo_.Reset(params_.frames_per_buffer());
   const int num_pcm16_data_elements =
       params_.frames_per_buffer() * params_.channels();
-  interleaved_data_.reset(new int16_t[num_pcm16_data_elements]);
+  interleaved_data_ = std::make_unique<int16_t[]>(num_pcm16_data_elements);
 }
 
 void WebRtcAudioSink::DeliverRebufferedAudio(const media::AudioBus& audio_bus,

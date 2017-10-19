@@ -7,6 +7,7 @@
 #include <string.h>
 
 #include <cmath>
+#include <memory>
 
 #include "content/public/renderer/render_thread.h"
 #include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceOrientationListener.h"
@@ -61,7 +62,7 @@ bool DeviceOrientationEventPumpBase::InitializeReader(
     base::SharedMemoryHandle handle) {
   memset(&data_, 0, sizeof(data_));
   if (!reader_)
-    reader_.reset(new DeviceOrientationSharedMemoryReader());
+    reader_ = std::make_unique<DeviceOrientationSharedMemoryReader>();
   return reader_->Initialize(handle);
 }
 

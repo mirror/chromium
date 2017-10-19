@@ -90,8 +90,9 @@ class DeviceMotionEventPumpForTesting : public DeviceMotionEventPump {
         device::SensorReadingSharedBuffer::GetOffset(accelerometer_.type));
     accelerometer_buffer_ = static_cast<device::SensorReadingSharedBuffer*>(
         accelerometer_.shared_buffer.get());
-    accelerometer_.shared_buffer_reader.reset(
-        new device::SensorReadingSharedBufferReader(accelerometer_buffer_));
+    accelerometer_.shared_buffer_reader =
+        std::make_unique<device::SensorReadingSharedBufferReader>(
+            accelerometer_buffer_);
 
     linear_acceleration_sensor_.shared_buffer_handle = shared_memory_->Clone();
     linear_acceleration_sensor_.shared_buffer = shared_memory_->MapAtOffset(
@@ -100,9 +101,10 @@ class DeviceMotionEventPumpForTesting : public DeviceMotionEventPump {
     linear_acceleration_sensor_buffer_ =
         static_cast<device::SensorReadingSharedBuffer*>(
             linear_acceleration_sensor_.shared_buffer.get());
-    linear_acceleration_sensor_.shared_buffer_reader.reset(
-        new device::SensorReadingSharedBufferReader(
-            linear_acceleration_sensor_buffer_));
+    linear_acceleration_sensor_.shared_buffer_reader =
+        std::make_unique<device::SensorReadingSharedBufferReader>(
+
+            linear_acceleration_sensor_buffer_);
 
     gyroscope_.shared_buffer_handle = shared_memory_->Clone();
     gyroscope_.shared_buffer = shared_memory_->MapAtOffset(
@@ -110,8 +112,9 @@ class DeviceMotionEventPumpForTesting : public DeviceMotionEventPump {
         device::SensorReadingSharedBuffer::GetOffset(gyroscope_.type));
     gyroscope_buffer_ = static_cast<device::SensorReadingSharedBuffer*>(
         gyroscope_.shared_buffer.get());
-    gyroscope_.shared_buffer_reader.reset(
-        new device::SensorReadingSharedBufferReader(gyroscope_buffer_));
+    gyroscope_.shared_buffer_reader =
+        std::make_unique<device::SensorReadingSharedBufferReader>(
+            gyroscope_buffer_);
   }
 
   void StartFireEvent() { DeviceMotionEventPump::DidStartIfPossible(); }
@@ -203,8 +206,8 @@ class DeviceMotionEventPumpTest : public testing::Test {
 
  protected:
   void SetUp() override {
-    listener_.reset(new MockDeviceMotionListener);
-    motion_pump_.reset(new DeviceMotionEventPumpForTesting());
+    listener_ = std::make_unique<MockDeviceMotionListener>();
+    motion_pump_ = std::make_unique<DeviceMotionEventPumpForTesting>();
   }
 
   MockDeviceMotionListener* listener() { return listener_.get(); }

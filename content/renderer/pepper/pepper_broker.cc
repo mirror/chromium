@@ -4,6 +4,8 @@
 
 #include "content/renderer/pepper/pepper_broker.h"
 
+#include <memory>
+
 #include "build/build_config.h"
 #include "content/renderer/pepper/pepper_proxy_channel_delegate_impl.h"
 #include "content/renderer/pepper/plugin_module.h"
@@ -61,8 +63,8 @@ bool PepperBrokerDispatcherWrapper::Init(
   if (!channel_handle.is_mojo_channel_handle())
     return false;
 
-  dispatcher_delegate_.reset(new PepperProxyChannelDelegateImpl);
-  dispatcher_.reset(new ppapi::proxy::BrokerHostDispatcher());
+  dispatcher_delegate_ = std::make_unique<PepperProxyChannelDelegateImpl>();
+  dispatcher_ = std::make_unique<ppapi::proxy::BrokerHostDispatcher>();
 
   if (!dispatcher_->InitBrokerWithChannel(dispatcher_delegate_.get(),
                                           broker_pid,

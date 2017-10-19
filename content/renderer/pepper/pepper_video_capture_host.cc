@@ -4,6 +4,8 @@
 
 #include "content/renderer/pepper/pepper_video_capture_host.h"
 
+#include <memory>
+
 #include "content/renderer/media/media_stream_video_source.h"
 #include "content/renderer/pepper/host_globals.h"
 #include "content/renderer/pepper/pepper_media_device_manager.h"
@@ -257,11 +259,10 @@ int32_t PepperVideoCaptureHost::OnOpen(
   if (!document_url.is_valid())
     return PP_ERROR_FAILED;
 
-  platform_video_capture_.reset(new PepperPlatformVideoCapture(
-      renderer_ppapi_host_->GetRenderFrameForInstance(pp_instance())->
-          GetRoutingID(),
-      device_id,
-      this));
+  platform_video_capture_ = std::make_unique<PepperPlatformVideoCapture>(
+      renderer_ppapi_host_->GetRenderFrameForInstance(pp_instance())
+          ->GetRoutingID(),
+      device_id, this);
 
   open_reply_context_ = context->MakeReplyMessageContext();
 

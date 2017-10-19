@@ -461,7 +461,8 @@ class UserMediaClientImplTest : public ::testing::Test {
 
   void SetUp() override {
     // Create our test object.
-    dependency_factory_.reset(new MockPeerConnectionDependencyFactory());
+    dependency_factory_ =
+        std::make_unique<MockPeerConnectionDependencyFactory>();
 
     ms_dispatcher_ = new MockMediaStreamDispatcher();
     mojom::MediaStreamDispatcherHostPtr dispatcher_host =

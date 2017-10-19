@@ -94,11 +94,11 @@ class VideoTrackRecorderTest
   }
 
   void InitializeRecorder(VideoTrackRecorder::CodecId codec) {
-    video_track_recorder_.reset(new VideoTrackRecorder(
+    video_track_recorder_ = std::make_unique<VideoTrackRecorder>(
         codec, blink_track_,
         base::Bind(&VideoTrackRecorderTest::OnEncodedVideo,
                    base::Unretained(this)),
-        0 /* bits_per_second */));
+        0 /* bits_per_second */);
   }
 
   MOCK_METHOD5(DoOnEncodedVideo,

@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.h"
 
+#include <memory>
+
 #include "content/renderer/media/media_stream_audio_track.h"
 #include "content/renderer/media/webrtc/media_stream_video_webrtc_sink.h"
 #include "content/renderer/media/webrtc/peer_connection_dependency_factory.h"
@@ -137,9 +139,9 @@ void WebRtcMediaStreamTrackAdapter::InitializeLocalAudioTrack(
   // the webrtc::AudioSourceInterface, and also do not need references to the
   // audio level calculator or audio processor passed to the sink.
   webrtc::AudioSourceInterface* source_interface = nullptr;
-  local_track_audio_sink_.reset(
-      new WebRtcAudioSink(web_track_.Id().Utf8(), source_interface,
-                          factory_->GetWebRtcSignalingThread()));
+  local_track_audio_sink_ = std::make_unique<WebRtcAudioSink>(
+      web_track_.Id().Utf8(), source_interface,
+      factory_->GetWebRtcSignalingThread());
 
   if (auto* media_stream_source = ProcessedLocalAudioSource::From(
           MediaStreamAudioSource::From(web_track_.Source()))) {
@@ -166,8 +168,8 @@ void WebRtcMediaStreamTrackAdapter::InitializeLocalVideoTrack(
   DCHECK_EQ(web_track.Source().GetType(),
             blink::WebMediaStreamSource::kTypeVideo);
   web_track_ = web_track;
-  local_track_video_sink_.reset(
-      new MediaStreamVideoWebRtcSink(web_track_, factory_));
+  local_track_video_sink_ =
+      std::make_unique<MediaStreamVideoWebRtcSink>(web_track_, factory_);
   webrtc_track_ = local_track_video_sink_->webrtc_video_track();
   DCHECK(webrtc_track_);
   is_initialized_ = true;

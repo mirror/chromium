@@ -264,12 +264,14 @@ class RTCPeerConnectionHandlerTest : public ::testing::Test {
   }
 
   void SetUp() override {
-    mock_client_.reset(new NiceMock<MockWebRTCPeerConnectionHandlerClient>());
-    mock_dependency_factory_.reset(new MockPeerConnectionDependencyFactory());
-    pc_handler_.reset(
-        new RTCPeerConnectionHandlerUnderTest(
-            mock_client_.get(), mock_dependency_factory_.get()));
-    mock_tracker_.reset(new NiceMock<MockPeerConnectionTracker>());
+    mock_client_ =
+        std::make_unique<NiceMock<MockWebRTCPeerConnectionHandlerClient>>();
+    mock_dependency_factory_ =
+        std::make_unique<MockPeerConnectionDependencyFactory>();
+    pc_handler_ = std::make_unique<RTCPeerConnectionHandlerUnderTest>(
+
+        mock_client_.get(), mock_dependency_factory_.get());
+    mock_tracker_ = std::make_unique<NiceMock<MockPeerConnectionTracker>>();
     blink::WebRTCConfiguration config;
     blink::WebMediaConstraints constraints;
     EXPECT_TRUE(pc_handler_->InitializeForTest(

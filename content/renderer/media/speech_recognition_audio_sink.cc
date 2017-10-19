@@ -5,6 +5,7 @@
 #include "content/renderer/media/speech_recognition_audio_sink.h"
 
 #include <stddef.h>
+#include <memory>
 #include <utility>
 
 #include "base/logging.h"
@@ -92,14 +93,15 @@ void SpeechRecognitionAudioSink::OnSetFormat(
   // Allows for some delays on the peer.
   static const int kNumberOfBuffersInFifo = 2;
   int frames_in_fifo = kNumberOfBuffersInFifo * fifo_buffer_size_;
-  fifo_.reset(new media::AudioFifo(input_params.channels(), frames_in_fifo));
+  fifo_ = std::make_unique<media::AudioFifo>(input_params.channels(),
+                                             frames_in_fifo);
 
   // Create the audio converter with |disable_fifo| as false so that the
   // converter will request input_params.frames_per_buffer() each time.
   // This will not increase the complexity as there is only one client to
   // the converter.
-  audio_converter_.reset(
-      new media::AudioConverter(input_params, output_params_, false));
+  audio_converter_ = std::make_unique<media::AudioConverter>(
+      input_params, output_params_, false);
   audio_converter_->AddInput(this);
 }
 

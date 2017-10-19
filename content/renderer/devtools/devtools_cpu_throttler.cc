@@ -13,6 +13,8 @@
 
 #if defined(OS_POSIX)
 #include <signal.h>
+
+#include <memory>
 #define USE_SIGNALS 1
 #endif
 
@@ -200,7 +202,7 @@ void DevToolsCPUThrottler::SetThrottlingRate(double rate) {
   if (throttling_thread_) {
     throttling_thread_->SetThrottlingRate(rate);
   } else {
-    throttling_thread_.reset(new CPUThrottlingThread(rate));
+    throttling_thread_ = std::make_unique<CPUThrottlingThread>(rate);
   }
 }
 

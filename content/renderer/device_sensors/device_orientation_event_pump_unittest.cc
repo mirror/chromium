@@ -6,6 +6,8 @@
 
 #include <string.h>
 
+#include <memory>
+
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -76,8 +78,9 @@ class DeviceOrientationEventPumpTest : public testing::Test {
 
  protected:
   void SetUp() override {
-    listener_.reset(new MockDeviceOrientationListener);
-    orientation_pump_.reset(new DeviceOrientationEventPumpForTesting);
+    listener_ = std::make_unique<MockDeviceOrientationListener>();
+    orientation_pump_ =
+        std::make_unique<DeviceOrientationEventPumpForTesting>();
     shared_memory_ = mojo::SharedBufferHandle::Create(
         sizeof(device::DeviceOrientationHardwareBuffer));
     mapping_ =

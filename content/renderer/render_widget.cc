@@ -558,9 +558,10 @@ void RenderWidget::Init(const ShowCallback& show_callback,
   show_callback_ = show_callback;
 
   webwidget_internal_ = web_widget;
-  webwidget_mouse_lock_target_.reset(
-      new WebWidgetLockTarget(webwidget_internal_));
-  mouse_lock_dispatcher_.reset(new RenderWidgetMouseLockDispatcher(this));
+  webwidget_mouse_lock_target_ =
+      std::make_unique<WebWidgetLockTarget>(webwidget_internal_);
+  mouse_lock_dispatcher_ =
+      std::make_unique<RenderWidgetMouseLockDispatcher>(this);
 
   RenderThread::Get()->AddRoute(routing_id_, this);
   // Take a reference on behalf of the RenderThread.  This will be balanced
@@ -786,8 +787,10 @@ void RenderWidget::OnEnableDeviceEmulation(
     resize_params.visible_viewport_size = visible_viewport_size_;
     resize_params.is_fullscreen_granted = is_fullscreen_granted_;
     resize_params.display_mode = display_mode_;
-    screen_metrics_emulator_.reset(new RenderWidgetScreenMetricsEmulator(
-        this, params, resize_params, view_screen_rect_, window_screen_rect_));
+    screen_metrics_emulator_ =
+        std::make_unique<RenderWidgetScreenMetricsEmulator>(
+            this, params, resize_params, view_screen_rect_,
+            window_screen_rect_);
     screen_metrics_emulator_->Apply();
   } else {
     screen_metrics_emulator_->ChangeEmulationParams(params);

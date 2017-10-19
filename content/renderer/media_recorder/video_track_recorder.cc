@@ -4,6 +4,7 @@
 
 #include "content/renderer/media_recorder/video_track_recorder.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -181,7 +182,7 @@ VideoTrackRecorder::Encoder::Encoder(
   DCHECK(!on_encoded_video_callback_.is_null());
   if (encoding_task_runner_)
     return;
-  encoding_thread_.reset(new base::Thread("EncodingThread"));
+  encoding_thread_ = std::make_unique<base::Thread>("EncodingThread");
   encoding_thread_->Start();
   encoding_task_runner_ = encoding_thread_->task_runner();
 }
@@ -288,7 +289,7 @@ void VideoTrackRecorder::Encoder::RetrieveFrameOnMainThread(
       canvas_ = base::MakeUnique<cc::SkiaPaintCanvas>(bitmap_);
     }
     if (!video_renderer_)
-      video_renderer_.reset(new media::PaintCanvasVideoRenderer);
+      video_renderer_ = std::make_unique<media::PaintCanvasVideoRenderer>();
 
     DCHECK(context_provider->ContextGL());
     video_renderer_->Copy(video_frame.get(), canvas_.get(),

@@ -57,7 +57,8 @@ class RtcDataChannelHandlerTest : public ::testing::Test {
 // Add a client, change to the open state, and verify that the client has
 // reached the open state.
 TEST_F(RtcDataChannelHandlerTest, SetClient) {
-  handler_.reset(new RtcDataChannelHandler(signaling_thread_, channel_.get()));
+  handler_ = std::make_unique<RtcDataChannelHandler>(signaling_thread_,
+                                                     channel_.get());
   MockDataChannelHandlerClient blink_channel;
   handler_->SetClient(&blink_channel);
   channel_->changeState(webrtc::DataChannelInterface::kOpen);
@@ -68,7 +69,8 @@ TEST_F(RtcDataChannelHandlerTest, SetClient) {
 
 // Check that state() returns the expected default initial value.
 TEST_F(RtcDataChannelHandlerTest, InitialState) {
-  handler_.reset(new RtcDataChannelHandler(signaling_thread_, channel_.get()));
+  handler_ = std::make_unique<RtcDataChannelHandler>(signaling_thread_,
+                                                     channel_.get());
   EXPECT_EQ(MockDataChannelHandlerClient::kReadyStateConnecting,
             handler_->GetState());
 }
@@ -77,7 +79,8 @@ TEST_F(RtcDataChannelHandlerTest, InitialState) {
 TEST_F(RtcDataChannelHandlerTest, StateEarlyOpen) {
   channel_->changeState(webrtc::DataChannelInterface::kOpen);
   signaling_thread_->RunPendingTasks();
-  handler_.reset(new RtcDataChannelHandler(signaling_thread_, channel_.get()));
+  handler_ = std::make_unique<RtcDataChannelHandler>(signaling_thread_,
+                                                     channel_.get());
   EXPECT_EQ(MockDataChannelHandlerClient::kReadyStateOpen,
             handler_->GetState());
 }

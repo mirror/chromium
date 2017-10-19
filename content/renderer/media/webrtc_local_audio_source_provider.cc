@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/webrtc_local_audio_source_provider.h"
 
+#include <memory>
+
 #include "base/logging.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/renderer/media/audio_device_factory.h"
@@ -74,12 +76,11 @@ void WebRtcLocalAudioSourceProvider::OnSetFormat(
   // converter will request source_params.frames_per_buffer() each time.
   // This will not increase the complexity as there is only one client to
   // the converter.
-  audio_converter_.reset(
-      new media::AudioConverter(params, sink_params_, false));
+  audio_converter_ =
+      std::make_unique<media::AudioConverter>(params, sink_params_, false);
   audio_converter_->AddInput(this);
-  fifo_.reset(new media::AudioFifo(
-      params.channels(),
-      kMaxNumberOfBuffers * params.frames_per_buffer()));
+  fifo_ = std::make_unique<media::AudioFifo>(
+      params.channels(), kMaxNumberOfBuffers * params.frames_per_buffer());
 }
 
 void WebRtcLocalAudioSourceProvider::OnReadyStateChanged(

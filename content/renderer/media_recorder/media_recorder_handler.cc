@@ -4,6 +4,7 @@
 
 #include "content/renderer/media_recorder/media_recorder_handler.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -217,10 +218,9 @@ bool MediaRecorderHandler::Start(int timeslice) {
     return false;
   }
 
-  webm_muxer_.reset(new media::WebmMuxer(
+  webm_muxer_ = std::make_unique<media::WebmMuxer>(
       CodecIdToMediaVideoCodec(codec_id_), use_video_tracks, use_audio_tracks,
-      base::Bind(&MediaRecorderHandler::WriteData,
-                 weak_factory_.GetWeakPtr())));
+      base::Bind(&MediaRecorderHandler::WriteData, weak_factory_.GetWeakPtr()));
 
   if (use_video_tracks) {
     // TODO(mcasas): The muxer API supports only one video track. Extend it to

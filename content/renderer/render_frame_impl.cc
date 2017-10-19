@@ -7,6 +7,7 @@
 #include <string.h>
 #include <algorithm>
 #include <map>
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -1228,10 +1229,10 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
       weak_factory_(this) {
   service_manager::mojom::InterfaceProviderPtr remote_interfaces;
   pending_remote_interface_provider_request_ = MakeRequest(&remote_interfaces);
-  remote_interfaces_.reset(new service_manager::InterfaceProvider);
+  remote_interfaces_ = std::make_unique<service_manager::InterfaceProvider>();
   remote_interfaces_->Bind(std::move(remote_interfaces));
-  blink_interface_registry_.reset(
-      new BlinkInterfaceRegistryImpl(registry_.GetWeakPtr()));
+  blink_interface_registry_ =
+      std::make_unique<BlinkInterfaceRegistryImpl>(registry_.GetWeakPtr());
 
   // Must call after binding our own remote interfaces.
   media_factory_.SetupMojo();
@@ -2741,13 +2742,14 @@ RenderFrameImpl::GetRemoteAssociatedInterfaces() {
       mojom::AssociatedInterfaceProviderAssociatedPtr remote_interfaces;
       thread->GetRemoteRouteProvider()->GetRoute(
           routing_id_, mojo::MakeRequest(&remote_interfaces));
-      remote_associated_interfaces_.reset(
-          new AssociatedInterfaceProviderImpl(std::move(remote_interfaces)));
+      remote_associated_interfaces_ =
+          std::make_unique<AssociatedInterfaceProviderImpl>(
+              std::move(remote_interfaces));
     } else {
       // In some tests the thread may be null,
       // so set up a self-contained interface provider instead.
-      remote_associated_interfaces_.reset(
-          new AssociatedInterfaceProviderImpl());
+      remote_associated_interfaces_ =
+          std::make_unique<AssociatedInterfaceProviderImpl>();
     }
   }
   return remote_associated_interfaces_.get();
@@ -3658,9 +3660,9 @@ void RenderFrameImpl::DidFailProvisionalLoad(
   // If we failed on a browser initiated request, then make sure that our error
   // page load is regarded as the same browser initiated request.
   if (!navigation_state->IsContentInitiated()) {
-    pending_navigation_params_.reset(new NavigationParams(
+    pending_navigation_params_ = std::make_unique<NavigationParams>(
         navigation_state->common_params(), navigation_state->start_params(),
-        navigation_state->request_params()));
+        navigation_state->request_params());
   }
 
   // Load an error page.
@@ -4711,7 +4713,8 @@ blink::WebPushClient* RenderFrameImpl::PushClient() {
 
 blink::WebRelatedAppsFetcher* RenderFrameImpl::GetRelatedAppsFetcher() {
   if (!related_apps_fetcher_)
-    related_apps_fetcher_.reset(new RelatedAppsFetcher(manifest_manager_));
+    related_apps_fetcher_ =
+        std::make_unique<RelatedAppsFetcher>(manifest_manager_);
 
   return related_apps_fetcher_.get();
 }
@@ -5344,8 +5347,8 @@ void RenderFrameImpl::OnFailedNavigation(
   if (request_params.has_committed_real_load)
     frame_->SetCommittedFirstRealLoad();
 
-  pending_navigation_params_.reset(new NavigationParams(
-      common_params, StartNavigationParams(), request_params));
+  pending_navigation_params_ = std::make_unique<NavigationParams>(
+      common_params, StartNavigationParams(), request_params);
 
   // Send the provisional load failure.
   blink::WebURLError error(common_params.url, has_stale_copy_in_cache,
@@ -5666,7 +5669,7 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
     if (info.default_policy == blink::kWebNavigationPolicyCurrentTab) {
       // The BeginNavigation() call happens in didStartProvisionalLoad(). We
       // need to save information about the navigation here.
-      pending_navigation_info_.reset(new PendingNavigationInfo(info));
+      pending_navigation_info_ = std::make_unique<PendingNavigationInfo>(info);
       return blink::kWebNavigationPolicyHandledByClient;
     } else if (info.default_policy == blink::kWebNavigationPolicyDownload) {
       DownloadURL(info.url_request, blink::WebString());
@@ -6122,8 +6125,8 @@ void RenderFrameImpl::NavigateInternal(
   if (request_params.is_view_source)
     frame_->EnableViewSourceMode(true);
 
-  pending_navigation_params_.reset(
-      new NavigationParams(common_params, start_params, request_params));
+  pending_navigation_params_ = std::make_unique<NavigationParams>(
+      common_params, start_params, request_params);
 
   // Sanitize navigation start and store in |pending_navigation_params_|.
   // It will be picked up in UpdateNavigationState.
@@ -6782,9 +6785,10 @@ void RenderFrameImpl::UpdateNavigationState(DocumentState* document_state,
 
 media::MediaPermission* RenderFrameImpl::GetMediaPermission() {
   if (!media_permission_dispatcher_) {
-    media_permission_dispatcher_.reset(new MediaPermissionDispatcher(base::Bind(
-        &RenderFrameImpl::GetInterface<blink::mojom::PermissionService>,
-        base::Unretained(this))));
+    media_permission_dispatcher_ =
+        std::make_unique<MediaPermissionDispatcher>(base::Bind(
+            &RenderFrameImpl::GetInterface<blink::mojom::PermissionService>,
+            base::Unretained(this)));
   }
   return media_permission_dispatcher_.get();
 }

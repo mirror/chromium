@@ -4,6 +4,8 @@
 
 #include <stddef.h>
 
+#include <memory>
+
 #include "base/containers/circular_deque.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
@@ -138,12 +140,12 @@ class ReusableMessageLoopEvent {
 
   void RunAndWait() {
     event_->RunAndWait();
-    event_.reset(new media::WaitableMessageLoopEvent());
+    event_ = std::make_unique<media::WaitableMessageLoopEvent>();
   }
 
   void RunAndWaitForStatus(media::PipelineStatus expected) {
     event_->RunAndWaitForStatus(expected);
-    event_.reset(new media::WaitableMessageLoopEvent());
+    event_ = std::make_unique<media::WaitableMessageLoopEvent>();
   }
 
  private:

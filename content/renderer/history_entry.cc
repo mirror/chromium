@@ -36,6 +36,7 @@
 #include "content/renderer/history_entry.h"
 
 #include <algorithm>
+#include <memory>
 
 #include "base/memory/ptr_util.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -86,8 +87,8 @@ void HistoryEntry::HistoryNode::RemoveChildren() {
 }
 
 HistoryEntry::HistoryEntry() : weak_ptr_factory_(this) {
-  root_.reset(
-      new HistoryNode(weak_ptr_factory_.GetWeakPtr(), WebHistoryItem()));
+  root_ = std::make_unique<HistoryNode>(weak_ptr_factory_.GetWeakPtr(),
+                                        WebHistoryItem());
 }
 
 HistoryEntry::~HistoryEntry() {
@@ -95,7 +96,7 @@ HistoryEntry::~HistoryEntry() {
 
 HistoryEntry::HistoryEntry(const WebHistoryItem& root)
     : weak_ptr_factory_(this) {
-  root_.reset(new HistoryNode(weak_ptr_factory_.GetWeakPtr(), root));
+  root_ = std::make_unique<HistoryNode>(weak_ptr_factory_.GetWeakPtr(), root);
 }
 
 }  // namespace content

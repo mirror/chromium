@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
 #include <string>
 
 #include "base/test/scoped_task_environment.h"
@@ -22,7 +23,7 @@ class VideoTrackToPepperAdapterTest : public ::testing::Test,
                                       public FrameReaderInterface {
  public:
   VideoTrackToPepperAdapterTest() : registry_(new MockMediaStreamRegistry()) {
-    handler_.reset(new VideoTrackToPepperAdapter(registry_.get()));
+    handler_ = std::make_unique<VideoTrackToPepperAdapter>(registry_.get());
     registry_->Init(kTestStreamUrl);
     registry_->AddVideoTrack(kTestVideoTrackId);
     EXPECT_FALSE(handler_->GetFirstVideoTrack(kTestStreamUrl).IsNull());

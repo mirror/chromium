@@ -107,10 +107,8 @@ class AudioRepetitionDetectorTest : public ::testing::Test {
 
   void SetDetector(int min_length_ms, size_t max_frames,
                    const int* look_back_times, size_t num_look_back) {
-    detector_.reset(new AudioRepetitionDetectorForTest(min_length_ms,
-                                                       max_frames,
-                                                       look_back_times,
-                                                       num_look_back));
+    detector_ = std::make_unique<AudioRepetitionDetectorForTest>(
+        min_length_ms, max_frames, look_back_times, num_look_back);
   }
 
   void ResetCounters() {

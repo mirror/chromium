@@ -25,6 +25,7 @@
 #include "content/renderer/media/video_capture_impl_manager.h"
 
 #include <algorithm>
+#include <memory>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -87,7 +88,7 @@ base::Closure VideoCaptureImplManager::UseDevice(
     it->session_id = id;
     it->impl = CreateVideoCaptureImplForTesting(id);
     if (!it->impl)
-      it->impl.reset(new VideoCaptureImpl(id));
+      it->impl = std::make_unique<VideoCaptureImpl>(id);
   }
   ++it->client_count;
 

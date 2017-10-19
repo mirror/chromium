@@ -6,6 +6,8 @@
 
 #include <stdint.h>
 
+#include <memory>
+
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/strings/string_util.h"
@@ -170,7 +172,7 @@ void AssociatedResourceFetcherImpl::Start(
   request_.SetFetchRequestMode(fetch_request_mode);
   request_.SetFetchCredentialsMode(fetch_credentials_mode);
 
-  client_.reset(new ClientImpl(callback));
+  client_ = std::make_unique<ClientImpl>(callback);
 
   loader_.reset(frame->CreateAssociatedURLLoader(options_));
   loader_->LoadAsynchronously(request_, client_.get());

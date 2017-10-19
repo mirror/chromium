@@ -4,6 +4,8 @@
 
 #include "content/renderer/shared_memory_seqlock_reader.h"
 
+#include <memory>
+
 namespace content {
 namespace internal {
 
@@ -17,8 +19,8 @@ SharedMemorySeqLockReaderBase::InitializeSharedMemory(
   renderer_shared_memory_handle_ = shared_memory_handle;
   if (!base::SharedMemory::IsHandleValid(renderer_shared_memory_handle_))
     return 0;
-  renderer_shared_memory_.reset(new base::SharedMemory(
-      renderer_shared_memory_handle_, true));
+  renderer_shared_memory_ = std::make_unique<base::SharedMemory>(
+      renderer_shared_memory_handle_, true);
 
   return (renderer_shared_memory_->Map(buffer_size))
       ? renderer_shared_memory_->memory()

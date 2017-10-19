@@ -4,6 +4,8 @@
 
 #include "content/renderer/pepper/audio_helper.h"
 
+#include <memory>
+
 #include "base/logging.h"
 #include "content/common/pepper_file_util.h"
 #include "ppapi/c/pp_completion_callback.h"
@@ -45,10 +47,11 @@ void AudioHelper::StreamCreated(base::SharedMemoryHandle shared_memory_handle,
     // Trusted side of proxy can specify a callback to receive handles. In
     // this case we don't need to map any data or start the thread since it
     // will be handled by the proxy.
-    shared_memory_for_create_callback_.reset(
-        new base::SharedMemory(shared_memory_handle, false));
+    shared_memory_for_create_callback_ =
+        std::make_unique<base::SharedMemory>(shared_memory_handle, false);
     shared_memory_size_for_create_callback_ = shared_memory_size;
-    socket_for_create_callback_.reset(new base::SyncSocket(socket_handle));
+    socket_for_create_callback_ =
+        std::make_unique<base::SyncSocket>(socket_handle);
 
     create_callback_->Run(PP_OK);
 

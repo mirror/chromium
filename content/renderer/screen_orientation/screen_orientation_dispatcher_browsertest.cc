@@ -57,7 +57,7 @@ class ScreenOrientationDispatcherTest : public RenderViewTest {
  protected:
   void SetUp() override {
     RenderViewTest::SetUp();
-    dispatcher_.reset(new ScreenOrientationDispatcher(nullptr));
+    dispatcher_ = std::make_unique<ScreenOrientationDispatcher>(nullptr);
     ScreenOrientationAssociatedPtr screen_orientation;
     mojo::MakeIsolatedRequest(&screen_orientation);
     dispatcher_->SetScreenOrientationForTests(screen_orientation);

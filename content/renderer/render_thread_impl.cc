@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <limits>
 #include <map>
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -684,37 +685,37 @@ void RenderThreadImpl::Init(
   idle_notification_delay_in_ms_ = kInitialIdleHandlerDelayMs;
   idle_notifications_to_skip_ = 0;
 
-  appcache_dispatcher_.reset(
-      new AppCacheDispatcher(Get(), new AppCacheFrontendImpl()));
-  dom_storage_dispatcher_.reset(new DomStorageDispatcher());
-  main_thread_indexed_db_dispatcher_.reset(new IndexedDBDispatcher());
-  main_thread_cache_storage_dispatcher_.reset(
-      new CacheStorageDispatcher(thread_safe_sender()));
+  appcache_dispatcher_ =
+      std::make_unique<AppCacheDispatcher>(Get(), new AppCacheFrontendImpl());
+  dom_storage_dispatcher_ = std::make_unique<DomStorageDispatcher>();
+  main_thread_indexed_db_dispatcher_ = std::make_unique<IndexedDBDispatcher>();
+  main_thread_cache_storage_dispatcher_ =
+      std::make_unique<CacheStorageDispatcher>(thread_safe_sender());
 
   // Note: This may reorder messages from the ResourceDispatcher with respect to
   // other subsystems.
-  resource_dispatch_throttler_.reset(new ResourceDispatchThrottler(
+  resource_dispatch_throttler_ = std::make_unique<ResourceDispatchThrottler>(
       static_cast<RenderThread*>(this), renderer_scheduler_.get(),
       base::TimeDelta::FromSecondsD(kThrottledResourceRequestFlushPeriodS),
-      kMaxResourceRequestsPerFlushWhenThrottled));
+      kMaxResourceRequestsPerFlushWhenThrottled);
   resource_dispatcher()->set_message_sender(resource_dispatch_throttler_.get());
 
   blob_message_filter_ = new BlobMessageFilter(GetFileThreadTaskRunner());
   AddFilter(blob_message_filter_.get());
-  vc_manager_.reset(new VideoCaptureImplManager());
+  vc_manager_ = std::make_unique<VideoCaptureImplManager>();
 
-  browser_plugin_manager_.reset(new BrowserPluginManager());
+  browser_plugin_manager_ = std::make_unique<BrowserPluginManager>();
   AddObserver(browser_plugin_manager_.get());
 
 #if BUILDFLAG(ENABLE_WEBRTC)
-  peer_connection_tracker_.reset(new PeerConnectionTracker());
+  peer_connection_tracker_ = std::make_unique<PeerConnectionTracker>();
   AddObserver(peer_connection_tracker_.get());
 
   p2p_socket_dispatcher_ = new P2PSocketDispatcher(GetIOTaskRunner().get());
   AddFilter(p2p_socket_dispatcher_.get());
 
-  peer_connection_factory_.reset(
-      new PeerConnectionDependencyFactory(p2p_socket_dispatcher_.get()));
+  peer_connection_factory_ = std::make_unique<PeerConnectionDependencyFactory>(
+      p2p_socket_dispatcher_.get());
 
   aec_dump_message_filter_ = new AecDumpMessageFilter(
       GetIOTaskRunner(), message_loop()->task_runner());
@@ -874,10 +875,10 @@ void RenderThreadImpl::Init(
   }
 #endif
 
-  memory_pressure_listener_.reset(new base::MemoryPressureListener(
+  memory_pressure_listener_ = std::make_unique<base::MemoryPressureListener>(
       base::Bind(&RenderThreadImpl::OnMemoryPressure, base::Unretained(this)),
       base::Bind(&RenderThreadImpl::OnSyncMemoryPressure,
-                 base::Unretained(this))));
+                 base::Unretained(this)));
 
   if (base::FeatureList::IsEnabled(features::kMemoryCoordinator)) {
     // Disable MemoryPressureListener when memory coordinator is enabled.
@@ -1171,9 +1172,9 @@ void RenderThreadImpl::InitializeCompositorThread() {
     InputHandlerManagerClient* input_handler_manager_client =
         compositor_input_event_filter.get();
     input_event_filter_ = compositor_input_event_filter;
-    input_handler_manager_.reset(new InputHandlerManager(
+    input_handler_manager_ = std::make_unique<InputHandlerManager>(
         compositor_task_runner_, input_handler_manager_client,
-        synchronous_input_handler_proxy_client, renderer_scheduler_.get()));
+        synchronous_input_handler_proxy_client, renderer_scheduler_.get());
   } else {
 #if defined(OS_ANDROID)
     // TODO(dtapuska): Implement a mojo channel for the synchronous
@@ -1195,8 +1196,8 @@ void RenderThreadImpl::InitializeWebKit(
     gin::Debug::SetJitCodeEventHandler(vTune::GetVtuneCodeEventHandler());
 #endif
 
-  blink_platform_impl_.reset(
-      new RendererBlinkPlatformImpl(renderer_scheduler_.get()));
+  blink_platform_impl_ =
+      std::make_unique<RendererBlinkPlatformImpl>(renderer_scheduler_.get());
   SetRuntimeFeaturesDefaultsAndUpdateFromArgs(command_line);
   GetContentClient()
       ->renderer()
@@ -2350,7 +2351,7 @@ scoped_refptr<base::SingleThreadTaskRunner>
 RenderThreadImpl::GetMediaThreadTaskRunner() {
   DCHECK(message_loop()->task_runner()->BelongsToCurrentThread());
   if (!media_thread_) {
-    media_thread_.reset(new base::Thread("Media"));
+    media_thread_ = std::make_unique<base::Thread>("Media");
     media_thread_->Start();
   }
   return media_thread_->task_runner();

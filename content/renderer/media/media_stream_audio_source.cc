@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/media_stream_audio_source.h"
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -92,8 +94,7 @@ void* MediaStreamAudioSource::GetClassIdentifier() const {
 std::unique_ptr<MediaStreamAudioTrack>
 MediaStreamAudioSource::CreateMediaStreamAudioTrack(const std::string& id) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
-  return std::unique_ptr<MediaStreamAudioTrack>(
-      new MediaStreamAudioTrack(is_local_source()));
+  return std::make_unique<MediaStreamAudioTrack>(is_local_source());
 }
 
 bool MediaStreamAudioSource::EnsureSourceIsStarted() {
