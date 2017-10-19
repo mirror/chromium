@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "793ff3cf_c32d0a50",
+        "filename": "ui/keyboard/container_behavior.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-10-19T08:13:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfcbeeda_d01b9f62",
+      "range": {
+        "startLine": 40,
+        "startChar": 38,
+        "endLine": 40,
+        "endChar": 41
+      },
+      "revId": "752476e1d03949383d07d4f2768c7ebe3e508080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b5dd70d_4f3e1f0a",
         "filename": "ui/keyboard/container_full_width_behavior.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "058248c5_04198b5d",
+        "filename": "ui/keyboard/container_full_width_behavior.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-10-19T08:13:22Z",
+      "side": 1,
+      "message": "I\u0027m assuming the latter. This is actually just relocating this code as it originally was, unmodified.",
+      "parentUuid": "7b5dd70d_4f3e1f0a",
+      "range": {
+        "startLine": 68,
+        "startChar": 21,
+        "endLine": 68,
+        "endChar": 49
+      },
+      "revId": "752476e1d03949383d07d4f2768c7ebe3e508080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3867cd2d_a2330c66",
         "filename": "ui/keyboard/keyboard_controller.h",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "752476e1d03949383d07d4f2768c7ebe3e508080",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e47b08_f13c452e",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-10-19T08:13:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3867cd2d_a2330c66",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 44
+      },
+      "revId": "752476e1d03949383d07d4f2768c7ebe3e508080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
