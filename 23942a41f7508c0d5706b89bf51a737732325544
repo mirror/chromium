@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ed1fba47_0f550e2b",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadEffectParameters.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-19T23:58:48Z",
+      "side": 1,
+      "message": "Done (I also added comments/TODO to the other files with new IDL types)",
+      "parentUuid": "289e404e_5e42018e",
+      "revId": "23942a41f7508c0d5706b89bf51a737732325544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "888f5295_469fae1e",
         "filename": "third_party/WebKit/Source/modules/gamepad/GamepadHapticActuator.idl",
         "patchSetId": 7
