@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5d77089_2e3d4a78",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-19T20:51:08Z",
+      "side": 1,
+      "message": "s/autfill/autofill\n\nI find this comment a little confusing. I don\u0027t have a great replacement suggestion, but maybe something like this?\n  \"The |webState| which this autofill controller should observe.\"",
+      "range": {
+        "startLine": 16,
+        "startChar": 23,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036155d7_e65877aa",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_form_suggestion.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-19T20:51:08Z",
+      "side": 1,
+      "message": "should this be |debugDescription| instead?",
+      "range": {
+        "startLine": 54,
+        "startChar": 13,
+        "endLine": 54,
+        "endChar": 24
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7082e61b_d3fc77d5",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-19T20:51:08Z",
+      "side": 1,
+      "message": "should this use the property getter in case it was never initialized?\nex: s/_autofillController/self.autofillController",
+      "range": {
+        "startLine": 443,
+        "startChar": 2,
+        "endLine": 443,
+        "endChar": 21
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acfe0a29_f676caca",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-19T20:51:08Z",
+      "side": 1,
+      "message": "Is this import needed in this header?",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc1b512_6a93bf8a",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-19T20:51:08Z",
+      "side": 1,
+      "message": "Please move header guard up under file copyright notice.",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc25960_527dac43",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-19T20:51:08Z",
+      "side": 1,
+      "message": "s/ineligible/eligible?",
+      "range": {
+        "startLine": 36,
+        "startChar": 49,
+        "endLine": 36,
+        "endChar": 59
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a582df_b65c9c88",
+        "filename": "ios/web_view/shell/shell_view_controller.m",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-19T20:51:08Z",
+      "side": 1,
+      "message": "Remove extra semicolon",
+      "range": {
+        "startLine": 256,
+        "startChar": 2,
+        "endLine": 256,
+        "endChar": 3
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99583870_1ff03539",
+        "filename": "ios/web_view/shell/shell_view_controller.m",
+        "patchSetId": 6
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-19T20:51:08Z",
+      "side": 1,
+      "message": "Should this be ...TypeClear?",
+      "range": {
+        "startLine": 322,
+        "startChar": 38,
+        "endLine": 322,
+        "endChar": 67
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9bd8b5_938a9460",
+        "filename": "ios/web_view/shell/shell_view_controller.m",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-19T20:51:08Z",
+      "side": 1,
+      "message": "nit: It\u0027s probably fine for the shell app, but should we store the alert as something like _alertController to be sure we are actually dismissing the correct thing here.",
+      "range": {
+        "startLine": 341,
+        "startChar": 8,
+        "endLine": 341,
+        "endChar": 37
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
