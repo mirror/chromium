@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "102fa3a3_43285c6d",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-19T13:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de14d4e2_43340450",
+      "range": {
+        "startLine": 241,
+        "startChar": 46,
+        "endLine": 241,
+        "endChar": 56
+      },
+      "revId": "032e4c8afeecfa55e299e1fdfc39077fe0d80039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17fcb8ac_8e0938c1",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "032e4c8afeecfa55e299e1fdfc39077fe0d80039",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac1f1b5_cbecb370",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-19T13:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17fcb8ac_8e0938c1",
+      "range": {
+        "startLine": 242,
+        "startChar": 50,
+        "endLine": 242,
+        "endChar": 68
+      },
+      "revId": "032e4c8afeecfa55e299e1fdfc39077fe0d80039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "23bf98f4_901c4efe",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-19T13:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aec54c77_f1aa254d",
+      "range": {
+        "startLine": 349,
+        "startChar": 10,
+        "endLine": 349,
+        "endChar": 31
+      },
+      "revId": "032e4c8afeecfa55e299e1fdfc39077fe0d80039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15500007_756e970f",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "032e4c8afeecfa55e299e1fdfc39077fe0d80039",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579709e3_5c246a95",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-19T13:25:49Z",
+      "side": 1,
+      "message": "\u003e Some part of this method looks like duplicating of lines 490-600. Wouldn\u0027t it be better to fill |passwords_without_heuristics| (or something like that)  immediately in lines 490-600 (and in that case it would be apparent what\u0027s the difference between with and without heuristics.\n\nGood point. Moved the logic there.",
+      "parentUuid": "15500007_756e970f",
+      "range": {
+        "startLine": 402,
+        "startChar": 4,
+        "endLine": 402,
+        "endChar": 39
+      },
+      "revId": "032e4c8afeecfa55e299e1fdfc39077fe0d80039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -137,6 +233,30 @@
       "revId": "032e4c8afeecfa55e299e1fdfc39077fe0d80039",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d9df73_aa9279a7",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-19T13:25:49Z",
+      "side": 1,
+      "message": "\u003e What could be these reasons? I see only when there are only credit card fields. If this is the only option, please add this in comment.\nI added credit card fields and confusing autocomplete attributes as example, but I wouldn\u0027t claim that there are no more cases.",
+      "parentUuid": "d8f3d547_ca58eebb",
+      "range": {
+        "startLine": 605,
+        "startChar": 0,
+        "endLine": 608,
+        "endChar": 40
+      },
+      "revId": "032e4c8afeecfa55e299e1fdfc39077fe0d80039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
