@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0679c038_5463e768",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-19T07:49:24Z",
+      "side": 1,
+      "message": "Nit: Can you add a comment here explaining why `GURL()` is the right thing to pass in?",
+      "revId": "27c0361d3fae677547023c5ad7c1441742f1491e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ec2f36_ac31fd53",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-19T07:49:24Z",
+      "side": 1,
+      "message": "Nit: Move this above the `forwarding_client_-\u003eOnReceiveRedirect()`, just for parity with the code in `::OnReceiveRedirect()`. I don\u0027t think it\u0027s an actual timing issue, but we may wish to pass the information through the `forwarding_client_`\u0027s handler as well in the future.",
+      "revId": "27c0361d3fae677547023c5ad7c1441742f1491e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc619c93_fa21e720",
+        "filename": "content/common/throttling_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-19T07:49:24Z",
+      "side": 1,
+      "message": "Style nit: Perhaps \"The URL that\u0027s currently being processed as a redirect or response.\"",
+      "revId": "27c0361d3fae677547023c5ad7c1441742f1491e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
