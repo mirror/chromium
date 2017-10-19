@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "954582b8_370cf930",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTransitionTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-19T16:52:21Z",
+      "side": 1,
+      "message": "Do we also want to assert that the CTA was opened to the correct URL?",
+      "range": {
+        "startLine": 181,
+        "startChar": 15,
+        "endLine": 181,
+        "endChar": 25
+      },
+      "revId": "5de8b72dac8025016be31750c78506bcc5208d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a7c90e_7b290238",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-19T16:52:21Z",
+      "side": 1,
+      "message": "Nit: This looks like an exact duplicate of sendDaydreamAutopresentIntent, just with VrMainActivity.class passed to the intent. Split out duplicate code into a common function?",
+      "range": {
+        "startLine": 209,
+        "startChar": 23,
+        "endLine": 209,
+        "endChar": 41
+      },
+      "revId": "5de8b72dac8025016be31750c78506bcc5208d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
