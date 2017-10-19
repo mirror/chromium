@@ -172,3 +172,7 @@ QUIC_FLAG(bool, FLAGS_quic_enable_version_43, false)
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_allow_address_change_for_udp_proxy,
           false)
+
+// If true, allow a new BBR connection option to use a slower STARTUP once loss
+// occurs
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_slower_startup, false)
