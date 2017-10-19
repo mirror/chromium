@@ -6,8 +6,10 @@
 #define CHROMEOS_DBUS_POWER_MANAGER_CLIENT_H_
 
 #include <string>
+#include <vector>
 
 #include "base/callback.h"
+#include "base/files/scoped_file.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
@@ -19,7 +21,7 @@
 namespace power_manager {
 class PowerManagementPolicy;
 class PowerSupplyProperties;
-}
+}  // namespace power_manager
 
 namespace chromeos {
 
@@ -38,6 +40,12 @@ class CHROMEOS_EXPORT PowerManagerClient : public DBusClient {
     UNSUPPORTED,
   };
 
+  // Typemapping for |ArcTimerArgs| in timer.mojom
+  struct ArcTimerArgs {
+    int32_t clock_id;
+    base::ScopedFD expiration_fd;
+  };
+
   // Callback used for getting the current screen brightness. The param is in
   // the range [0.0, 100.0].
   typedef base::Callback<void(double)> GetScreenBrightnessPercentCallback;
@@ -47,6 +55,18 @@ class CHROMEOS_EXPORT PowerManagerClient : public DBusClient {
 
   // Callback passed to GetSwitchStates().
   typedef base::Callback<void(LidState, TabletMode)> GetSwitchStatesCallback;
+
+  // Callback passed to CreateArcTimers().
+  using CreateArcTimersCallback =
+      base::OnceCallback<void(power_manager::ArcTimerResult result)>;
+
+  // Callback passed to SetArcTimer().
+  using SetArcTimerCallback =
+      base::OnceCallback<void(power_manager::ArcTimerResult result)>;
+
+  // Callback passed to DeleteArcTimers().
+  using DeleteArcTimersCallback =
+      base::OnceCallback<void(power_manager::ArcTimerResult result)>;
 
   // Interface for observing changes from the power manager.
   class Observer {
@@ -234,6 +254,27 @@ class CHROMEOS_EXPORT PowerManagerClient : public DBusClient {
   // Returns the number of callbacks returned by GetSuspendReadinessCallback()
   // for the current suspend attempt but not yet called. Used by tests.
   virtual int GetNumPendingSuspendReadinessCallbacks() = 0;
+
+  // Creates timers backed by specific clock types for the ARC instance.
+  // |callback| returns |ArcTimerResult::ARC_TIMER_RESULT_SUCCESS| on successful
+  // creation of all timers and |ArcTimerResult::ARC_TIMER_RESULT_FAILURE|
+  // otherwise.
+  virtual void CreateArcTimers(const std::vector<ArcTimerArgs>& arc_timers_args,
+                               CreateArcTimersCallback callback) = 0;
+
+  // Sets timer corresponding to |clock_id| |seconds| + |nanoseconds| in the
+  // future. |callback| returns |ArcTimerResult::ARC_TIMER_RESULT_SUCCESS| on
+  // successful setting of timer and |ArcTimerResult::ARC_TIMER_RESULT_FAILURE|
+  // otherwise.
+  virtual void SetArcTimer(int32_t clock_id,
+                           int64_t seconds,
+                           int64_t nanoseconds,
+                           SetArcTimerCallback callback) = 0;
+
+  // Stops any existing ARC timers and deletes any resources associated with
+  // them. |callback| returns ARC_TIMER_RESULT_SUCCESS on successful setting of
+  // timer and ARC_TIMER_RESULT_FAILURE otherwise.
+  virtual void DeleteArcTimers(DeleteArcTimersCallback callback) = 0;
 
   // Creates the instance.
   static PowerManagerClient* Create(DBusClientImplementationType type);

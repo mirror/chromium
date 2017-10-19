@@ -1,0 +1,46 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Next min version: 1
+
+module arc.mojom;
+
+[Extensible]
+enum ArcTimerResult {
+  SUCCESS = 0,
+  FAILURE = 1,
+};
+
+struct ArcTimerArgs {
+  // Type of the clock for which a timer needs to be created. This value
+  // corresponds to the clock ids used by timerfd_create.
+  int32 clock_id;
+
+  // File descriptor to write to when the timer is expired. This indicates to
+  // the host that the timer is expired. This fd is owned by powerd in the host.
+  handle expiration_fd;
+};
+
+// Next method ID: 2
+interface TimerHost {
+  // Creates timers with the given arguments. Returns |ArcTimerResult::FAILURE|
+  // on error i.e. one or more timers failed to be created. Returns
+  // |ArcTimerResult::SUCCESS| on success.
+  CreateTimers@0(array<ArcTimerArgs> arc_timers_args) => (ArcTimerResult result);
+
+  // Set timer of type |clock_id| |seconds| + |nanoseconds| in the future.
+  // This call cancels any pending timers on clock of type |clock_id|. Returns
+  // |ArcTimerResult::SUCCESS| on success and |ArcTimerResult::FAILURE|
+  // otherwise.
+  SetTimer@1(int32 clock_id, int64 seconds, int64 nanoseconds) => (ArcTimerResult result);
+};
+
+// Next method ID: 2
+interface TimerInstance {
+  // Establishes full-duplex communication with the host.
+  Init@0(TimerHost host_ptr);
+
+  // Notifies host when power daemon on the host respawns.
+  OnPowerdRespawn@1();
+};
