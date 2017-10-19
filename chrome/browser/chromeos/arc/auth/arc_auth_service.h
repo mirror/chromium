@@ -48,9 +48,12 @@ class ArcAuthService : public KeyedService,
   void OnInstanceClosed() override;
 
   // mojom::AuthHost:
+  void OnProvisioned() override;
+  void OnReauthorizationComplete() override;
+  void OnReauthorizationFailed(mojom::ArcSignInStatus reason) override;
   void OnSignInComplete() override;
   void OnSignInFailed(mojom::ArcSignInStatus reason) override;
-  void RequestAccountInfo() override;
+  void RequestAccountInfo(bool initial_signin) override;
   void ReportMetrics(mojom::MetricsType metrics_type, int32_t value) override;
   void ReportAccountCheckStatus(mojom::AccountCheckStatus status) override;
 

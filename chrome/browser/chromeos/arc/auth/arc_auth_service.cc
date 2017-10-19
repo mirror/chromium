@@ -150,6 +150,26 @@ void ArcAuthService::OnInstanceClosed() {
   fetcher_.reset();
 }
 
+void ArcAuthService::OnProvisioned() {
+  // Handle the case when Android provisioned state is not in sync with
+  // Chrome flag arc.signedin. In this case Chrome waits provisioning results
+  // and fails if does not receive it from Android. In case arc.signedin is
+  // set already then this call is just ignored.
+  ArcSessionManager::Get()->OnProvisioningFinished(
+      ProvisioningResult::ALREADY_PROVISIONED);
+}
+
+void ArcAuthService::OnReauthorizationComplete() {
+  UpdateReauthorizationResultUMA(ProvisioningResult::SUCCESS,
+                                 policy_util::IsAccountManaged(profile_));
+}
+
+void ArcAuthService::OnReauthorizationFailed(mojom::ArcSignInStatus reason) {
+  UpdateReauthorizationResultUMA(
+      ConvertArcSignInStatusToProvisioningResult(reason),
+      policy_util::IsAccountManaged(profile_));
+}
+
 void ArcAuthService::OnSignInComplete() {
   ArcSessionManager::Get()->OnProvisioningFinished(ProvisioningResult::SUCCESS);
 }
@@ -199,7 +219,7 @@ void ArcAuthService::OnAccountInfoReady(mojom::AccountInfoPtr account_info,
   instance->OnAccountInfoReady(std::move(account_info), status);
 }
 
-void ArcAuthService::RequestAccountInfo() {
+void ArcAuthService::RequestAccountInfo(bool initial_signin) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   // No other auth code-related operation may be in progress.
   DCHECK(!fetcher_);
@@ -234,7 +254,7 @@ void ArcAuthService::RequestAccountInfo() {
   } else {
     // Optionally retrieve auth code in silent mode.
     auth_code_fetcher = std::make_unique<ArcBackgroundAuthCodeFetcher>(
-        profile_, ArcSessionManager::Get()->auth_context());
+        profile_, ArcSessionManager::Get()->auth_context(), initial_signin);
   }
   auth_code_fetcher->Fetch(base::Bind(&ArcAuthService::OnAuthCodeFetched,
                                       weak_ptr_factory_.GetWeakPtr()));
