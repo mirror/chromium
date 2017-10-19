@@ -12,15 +12,15 @@
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/StringHash.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/platform/WebFeaturePolicy.h"
+#include "common/feature_policy/feature_policy.h"
 
 #include <memory>
 
 namespace blink {
 
-// Returns a map between feature name (string) and WebFeaturePolicyFeature
+// Returns a map between feature name (string) and FeaturePolicyFeature
 // (enum).
-typedef HashMap<String, WebFeaturePolicyFeature> FeatureNameMap;
+typedef HashMap<String, FeaturePolicyFeature> FeatureNameMap;
 PLATFORM_EXPORT const FeatureNameMap& GetDefaultFeatureNameMap();
 
 // Converts a header policy string into a vector of whitelists, one for each
@@ -71,7 +71,7 @@ PLATFORM_EXPORT Vector<WebParsedFeaturePolicyDeclaration> ParseFeaturePolicy(
 
 // Verifies whether feature policy is enabled and |feature| is supported in
 // feature policy.
-PLATFORM_EXPORT bool IsSupportedInFeaturePolicy(WebFeaturePolicyFeature);
+PLATFORM_EXPORT bool IsSupportedInFeaturePolicy(FeaturePolicyFeature);
 
 }  // namespace blink
 

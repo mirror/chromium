@@ -22,7 +22,7 @@
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/heap/Handle.h"
-#include "public/platform/WebFeaturePolicy.h"
+#include "common/feature_policy/feature_policy.h"
 #include "public/platform/WebFloatRect.h"
 #include "public/platform/WebRect.h"
 #include "public/web/WebDocument.h"
@@ -218,7 +218,7 @@ void WebRemoteFrameImpl::SetReplicatedName(const WebString& name) {
 void WebRemoteFrameImpl::SetReplicatedFeaturePolicyHeader(
     const WebParsedFeaturePolicy& parsed_header) {
   if (RuntimeEnabledFeatures::FeaturePolicyEnabled()) {
-    WebFeaturePolicy* parent_feature_policy = nullptr;
+    FeaturePolicy* parent_feature_policy = nullptr;
     if (Parent()) {
       Frame* parent_frame = GetFrame()->Client()->Parent();
       parent_feature_policy =

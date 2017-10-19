@@ -6,12 +6,12 @@
 
 namespace content {
 
-ParsedFeaturePolicyHeader FeaturePolicyHeaderFromWeb(
+blink::ParsedFeaturePolicyHeader FeaturePolicyHeaderFromWeb(
     const blink::WebParsedFeaturePolicy& web_feature_policy_header) {
-  ParsedFeaturePolicyHeader result;
+  blink::ParsedFeaturePolicyHeader result;
   for (const blink::WebParsedFeaturePolicyDeclaration& web_declaration :
        web_feature_policy_header) {
-    ParsedFeaturePolicyDeclaration declaration;
+    blink::ParsedFeaturePolicyDeclaration declaration;
     declaration.feature = web_declaration.feature;
     declaration.matches_all_origins = web_declaration.matches_all_origins;
     for (const blink::WebSecurityOrigin& web_origin : web_declaration.origins)
@@ -22,9 +22,9 @@ ParsedFeaturePolicyHeader FeaturePolicyHeaderFromWeb(
 }
 
 blink::WebParsedFeaturePolicy FeaturePolicyHeaderToWeb(
-    const ParsedFeaturePolicyHeader& feature_policy_header) {
+    const blink::ParsedFeaturePolicyHeader& feature_policy_header) {
   std::vector<blink::WebParsedFeaturePolicyDeclaration> result;
-  for (const ParsedFeaturePolicyDeclaration& declaration :
+  for (const blink::ParsedFeaturePolicyDeclaration& declaration :
        feature_policy_header) {
     blink::WebParsedFeaturePolicyDeclaration web_declaration;
     web_declaration.feature = declaration.feature;

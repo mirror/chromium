@@ -37,7 +37,7 @@
 #include "platform/wtf/text/StringHash.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebAddressSpace.h"
-#include "public/platform/WebFeaturePolicy.h"
+#include "common/feature_policy/feature_policy.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/WebURLRequest.h"
 
@@ -94,10 +94,10 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
 
   void EnforceSuborigin(const Suborigin&);
 
-  WebFeaturePolicy* GetFeaturePolicy() const { return feature_policy_.get(); }
+  FeaturePolicy* GetFeaturePolicy() const { return feature_policy_.get(); }
   void InitializeFeaturePolicy(const WebParsedFeaturePolicy& parsed_header,
                                const WebParsedFeaturePolicy& container_policy,
-                               const WebFeaturePolicy* parent_feature_policy);
+                               const FeaturePolicy* parent_feature_policy);
   void UpdateFeaturePolicyOrigin();
 
   void ApplySandboxFlags(SandboxFlags mask);
@@ -111,7 +111,7 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
  private:
   RefPtr<SecurityOrigin> security_origin_;
   Member<ContentSecurityPolicy> content_security_policy_;
-  std::unique_ptr<WebFeaturePolicy> feature_policy_;
+  std::unique_ptr<FeaturePolicy> feature_policy_;
 
   SandboxFlags sandbox_flags_;
 

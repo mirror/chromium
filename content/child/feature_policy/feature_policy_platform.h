@@ -5,17 +5,17 @@
 #ifndef CONTENT_CHILD_FEATURE_POLICY_FEATURE_POLICY_PLATFORM_H_
 #define CONTENT_CHILD_FEATURE_POLICY_FEATURE_POLICY_PLATFORM_H_
 
-#include "content/common/feature_policy/feature_policy.h"
-#include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy.h"
 
 namespace content {
 
 // Conversions between ParsedFeaturePolicyHeader and
 // WebParsedFeaturePolicy
-ParsedFeaturePolicyHeader FeaturePolicyHeaderFromWeb(
+blink::ParsedFeaturePolicyHeader FeaturePolicyHeaderFromWeb(
     const blink::WebParsedFeaturePolicy& web_feature_policy_header);
 blink::WebParsedFeaturePolicy FeaturePolicyHeaderToWeb(
-    const ParsedFeaturePolicyHeader& feature_policy_header);
+    const blink::ParsedFeaturePolicyHeader& feature_policy_header);
 
 }  // namespace content
 

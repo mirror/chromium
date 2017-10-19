@@ -5952,7 +5952,7 @@ void Document::SetFeaturePolicy(const String& feature_policy_header) {
   if (!feature_policy_header.IsEmpty())
     UseCounter::Count(*this, WebFeature::kFeaturePolicyHeader);
 
-  WebFeaturePolicy* parent_feature_policy = nullptr;
+  FeaturePolicy* parent_feature_policy = nullptr;
   WebParsedFeaturePolicy container_policy;
   Vector<String> messages;
   const WebParsedFeaturePolicy& parsed_header = ParseFeaturePolicyHeader(
