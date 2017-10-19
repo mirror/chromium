@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aa5af89_641b4d28",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-19T10:42:01Z",
+      "side": 1,
+      "message": "can we leave some comments here, like\ninitialize with the request url, but may be updated when redirect happens,\nor something?\nthis is a little surprising for people who read this first.",
+      "range": {
+        "startLine": 290,
+        "startChar": 2,
+        "endLine": 290,
+        "endChar": 15
+      },
+      "revId": "a890e15573e33e08631b42554d2dfd5b66b717ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
