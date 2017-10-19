@@ -997,6 +997,14 @@ chrome.automation.AutomationNode.prototype.underline;
 chrome.automation.AutomationNode.prototype.lineThrough;
 
 /**
+ * Indicates the root web area within current node could be crossed when
+ * performing traversals up the ancestry chain.
+ * @type {boolean}
+ * @see https://developer.chrome.com/extensions/automation#type-crossRootWebArea
+ */
+chrome.automation.AutomationNode.prototype.crossRootWebArea;
+
+/**
  * Walking the tree.
  * @type {!Array<!chrome.automation.AutomationNode>}
  * @see https://developer.chrome.com/extensions/automation#type-children

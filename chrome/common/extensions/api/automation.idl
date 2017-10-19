@@ -690,6 +690,10 @@
     // Indicates node text is line through.
     boolean lineThrough;
 
+    // If true and the node contains root web area, the area could be crossed
+    // when performing traversals up the ancestry chain.
+    boolean crossRootWebArea;
+
     //
     // Walking the tree.
     //
