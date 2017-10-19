@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "554295a5_d1ebdcfb",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-19T21:06:35Z",
+      "side": 1,
+      "message": "Something I don\u0027t quite understand between explicit and implicit bool. Okay, thanks for trying!",
+      "parentUuid": "a3dfc697_f155f1f8",
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0789214a_2a391935",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 64
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "This is preserving the original condition that network transaction should be present in order to attempt stopcaching.",
       "parentUuid": "0789214a_2a391935",
+      "range": {
+        "startLine": 443,
+        "startChar": 2,
+        "endLine": 445,
+        "endChar": 25
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "254d5474_4a398549",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-19T21:06:35Z",
+      "side": 1,
+      "message": "The entire second condition can be replaced with network_transaction(), so how about:\n\nif (cache_.get() \u0026\u0026 (mode_ \u0026 WRITE) \u0026\u0026 !is_sparse \u0026\u0026 !range_requested_ \u0026\u0026 network_transaction()) {\n  StopCachingImpl(false);\n}",
+      "parentUuid": "bf533f3a_19cb8eb6",
       "range": {
         "startLine": 443,
         "startChar": 2,
@@ -143,6 +185,30 @@
       "side": 1,
       "message": "In this specific case, since it is partial, there is no other writer. \nFor non-partial cases:\n- 304 transactions reset their own network transactions and that\u0027s when we store the headers for them.\n- 200 transaction stores the header when network transaction is reset via WriterAboutToBeRemovedFromEntry",
       "parentUuid": "620a7566_2c337302",
+      "range": {
+        "startLine": 2109,
+        "startChar": 0,
+        "endLine": 2110,
+        "endChar": 51
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1287ea52_e705a5e0",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 64
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-19T21:06:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7e4d18cc_5910fa09",
       "range": {
         "startLine": 2109,
         "startChar": 0,
