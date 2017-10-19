@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48bdc3b4_e69e9ef1",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-19T02:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2357630_919b3cd8",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2035ef5d_526e13ce",
         "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5fcfe66a_27b4c0d5",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-19T02:17:26Z",
+      "side": 1,
+      "message": "Could you elaborate a bit more? I\u0027m not exactly sure what you\u0027re asking.",
+      "parentUuid": "2035ef5d_526e13ce",
+      "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9da6e8b6_8c54cef0",
         "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
         "patchSetId": 1
@@ -53,6 +95,42 @@
       "writtenOn": "2017-10-19T00:11:40Z",
       "side": 1,
       "message": "Should there be common infrastructure for this? Do we expect other such features to have such a counter?\nPutting them in a common place would also help ensure the messages are consistent.",
+      "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7701443c_39a81d2a",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-19T02:17:26Z",
+      "side": 1,
+      "message": "This message is specific for permission features. This code may appear a couple of times, but I\u0027m not sure that it\u0027s worthwhile to pull out into a generic function yet. At some point we may want to have a general mechanism for all feature policy features but it\u0027s not clear to me at this point. +iclelland to consider.",
+      "parentUuid": "9da6e8b6_8c54cef0",
+      "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12a0fb4_d9ca54e1",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-19T02:17:26Z",
+      "side": 1,
+      "message": "The message is specific to permission features. Since the code is so simple I\u0027m reluctant to make it more general for the time being and no good place to put it springs to mind. I think we could have a general message+logging system for all feature policy features but I\u0027d leave that to iclelland.",
+      "parentUuid": "9da6e8b6_8c54cef0",
       "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "b04cdc88_08a68ce8",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-19T02:17:26Z",
+      "side": 1,
+      "message": "I think it\u0027s debatable because it doesn\u0027t actually mean that something has gone wrong. There may be cases where developers expect these calls to fail.",
+      "parentUuid": "91600bb8_8a9cdd13",
+      "range": {
+        "startLine": 288,
+        "startChar": 51,
+        "endLine": 288,
+        "endChar": 71
+      },
+      "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fe4bb8e_e91d2771",
         "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
         "patchSetId": 1
@@ -93,6 +195,30 @@
       "writtenOn": "2017-10-19T00:11:40Z",
       "side": 1,
       "message": "This count now has a very different meaning. Do we care? Should we document that starting in M64, kEncryptedMediaDisabledByFeaturePolicy + WebFeaturePolicyFeature::kEncryptedMedia are equivalent to WebFeaturePolicyFeature::kEncryptedMedia in earlier versions?",
+      "range": {
+        "startLine": 298,
+        "startChar": 44,
+        "endLine": 298,
+        "endChar": 59
+      },
+      "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b0cd79d_01ec59d9",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-19T02:17:26Z",
+      "side": 1,
+      "message": "I think it\u0027s ok. The main reason for adding the Deprecation::CountDeprecation wasn\u0027t for merics (we already had pretty good metrics in the cross-origin usage counter). It was to get the warning. I don\u0027t think that a comment is too important - I think it\u0027s clear that when we remove the RuntimeEnabledFeatures::FeaturePolicyForEncryptedMediaEnabled() flag, that this code can also be deleted (along with the corresponding metric).",
+      "parentUuid": "6fe4bb8e_e91d2771",
       "range": {
         "startLine": 298,
         "startChar": 44,
