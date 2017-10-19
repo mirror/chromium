@@ -1520,6 +1520,30 @@
     },
     {
       "key": {
+        "uuid": "a26c29ed_0eeee8fc",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T06:08:25Z",
+      "side": 1,
+      "message": "*I* prefer consistency.",
+      "parentUuid": "ab82ae1f_83e5c029",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 23
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ecf59f5_ed303318",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 1
@@ -1614,6 +1638,30 @@
       "side": 1,
       "message": "Prefer consistency and more understandable. You can find examples in several other .cc files in c/b/c/arc, components/arc.",
       "parentUuid": "17a373d7_788cecde",
+      "range": {
+        "startLine": 82,
+        "startChar": 13,
+        "endLine": 82,
+        "endChar": 41
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a3cee9_c734aabb",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T06:08:25Z",
+      "side": 1,
+      "message": "*I* prefer consistency and more understandable log.",
+      "parentUuid": "262803b5_17d61145",
       "range": {
         "startLine": 82,
         "startChar": 13,
