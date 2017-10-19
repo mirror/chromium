@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91634278_eb58aa35",
+        "filename": "third_party/WebKit/common/message_port/cloneable_message.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-19T19:45:10Z",
+      "side": 1,
+      "message": "IT\u0027S BLOBS ALL THE WAY DOWN",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 48
+      },
+      "revId": "df2ba3dd7b1ac37debc3f8782da0f4269f370c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
