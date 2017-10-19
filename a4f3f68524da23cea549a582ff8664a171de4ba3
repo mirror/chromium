@@ -128,6 +128,30 @@
     },
     {
       "key": {
+        "uuid": "625b96de_7fd2ffb0",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-10-19T20:27:47Z",
+      "side": 1,
+      "message": "We\u0027re a bit behind on upstreaming our extensions and sometimes it\u0027s useful to prototype an extension\u0027s usage in Chrome before upstreaming.  Maybe it be safer to copy the typedefs and enums into a Chrome header.",
+      "parentUuid": "a92317f2_bcb63f49",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68d4a9ad_bcf77523",
         "filename": "ui/gl/gl_image_dxgi.h",
         "patchSetId": 19
