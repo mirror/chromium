@@ -40,8 +40,8 @@ const char kInvalidOutputDeviceId[] = "invalid-device";
 
 class MockAudioRendererSource : public WebRtcAudioRendererSource {
  public:
-  MockAudioRendererSource() {}
-  virtual ~MockAudioRendererSource() {}
+  MockAudioRendererSource() = default;
+  virtual ~MockAudioRendererSource() = default;
   MOCK_METHOD4(RenderData, void(media::AudioBus* audio_bus,
                                 int sample_rate,
                                 int audio_delay_milliseconds,

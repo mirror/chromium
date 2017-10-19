@@ -45,7 +45,7 @@ class FetcherDelegate {
     StartTimer();
   }
 
-  virtual ~FetcherDelegate() {}
+  virtual ~FetcherDelegate() = default;
 
   ResourceFetcher::Callback NewCallback() {
     return base::BindOnce(&FetcherDelegate::OnURLFetchComplete,
@@ -104,7 +104,7 @@ FetcherDelegate* FetcherDelegate::instance_ = NULL;
 
 class EvilFetcherDelegate : public FetcherDelegate {
  public:
-  ~EvilFetcherDelegate() override {}
+  ~EvilFetcherDelegate() override = default;
 
   void SetFetcher(ResourceFetcher* fetcher) { fetcher_.reset(fetcher); }
 

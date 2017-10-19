@@ -35,7 +35,7 @@ class PPB_Flash_MessageLoop_Impl::State
 
  private:
   friend class base::RefCounted<State>;
-  virtual ~State() {}
+  virtual ~State() = default;
 
   int32_t result_;
   bool run_called_;

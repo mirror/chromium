@@ -22,8 +22,7 @@ const char InterfaceProviderJsWrapper::kPerFrameModuleName[] =
 const char InterfaceProviderJsWrapper::kPerProcessModuleName[] =
     "content/public/renderer/interfaces";
 
-InterfaceProviderJsWrapper::~InterfaceProviderJsWrapper() {
-}
+InterfaceProviderJsWrapper::~InterfaceProviderJsWrapper() = default;
 
 // static
 gin::Handle<InterfaceProviderJsWrapper> InterfaceProviderJsWrapper::Create(

@@ -5,5 +5,5 @@
 #include "content/renderer/layout_test_dependencies.h"
 
 namespace content {
-LayoutTestDependencies::~LayoutTestDependencies() {}
+LayoutTestDependencies::~LayoutTestDependencies() = default;
 }  // namespace content

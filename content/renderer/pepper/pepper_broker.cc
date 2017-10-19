@@ -51,9 +51,9 @@ base::SyncSocket::Handle DuplicateHandle(base::SyncSocket::Handle handle) {
 
 }  // namespace
 
-PepperBrokerDispatcherWrapper::PepperBrokerDispatcherWrapper() {}
+PepperBrokerDispatcherWrapper::PepperBrokerDispatcherWrapper() = default;
 
-PepperBrokerDispatcherWrapper::~PepperBrokerDispatcherWrapper() {}
+PepperBrokerDispatcherWrapper::~PepperBrokerDispatcherWrapper() = default;
 
 bool PepperBrokerDispatcherWrapper::Init(
     base::ProcessId broker_pid,
@@ -209,7 +209,7 @@ PepperBroker::PendingConnection::PendingConnection() : is_authorized(false) {}
 PepperBroker::PendingConnection::PendingConnection(
     const PendingConnection& other) = default;
 
-PepperBroker::PendingConnection::~PendingConnection() {}
+PepperBroker::PendingConnection::~PendingConnection() = default;
 
 void PepperBroker::ReportFailureToClients(int error_code) {
   DCHECK_NE(PP_OK, error_code);

@@ -26,7 +26,7 @@ class PepperInProcessRouter::Channel : public IPC::Sender {
   Channel(const base::Callback<bool(IPC::Message*)>& callback)
       : callback_(callback) {}
 
-  ~Channel() override {}
+  ~Channel() override = default;
 
   bool Send(IPC::Message* message) override { return callback_.Run(message); }
 
@@ -47,7 +47,7 @@ PepperInProcessRouter::PepperInProcessRouter(RendererPpapiHostImpl* host_impl)
       base::Bind(&PepperInProcessRouter::SendToHost, base::Unretained(this))));
 }
 
-PepperInProcessRouter::~PepperInProcessRouter() {}
+PepperInProcessRouter::~PepperInProcessRouter() = default;
 
 IPC::Sender* PepperInProcessRouter::GetPluginToRendererSender() {
   return plugin_to_host_router_.get();

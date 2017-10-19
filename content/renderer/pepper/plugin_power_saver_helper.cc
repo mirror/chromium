@@ -38,14 +38,12 @@ PluginPowerSaverHelper::PeripheralPlugin::PeripheralPlugin(
 PluginPowerSaverHelper::PeripheralPlugin::PeripheralPlugin(
     const PeripheralPlugin& other) = default;
 
-PluginPowerSaverHelper::PeripheralPlugin::~PeripheralPlugin() {
-}
+PluginPowerSaverHelper::PeripheralPlugin::~PeripheralPlugin() = default;
 
 PluginPowerSaverHelper::PluginPowerSaverHelper(RenderFrame* render_frame)
     : RenderFrameObserver(render_frame) {}
 
-PluginPowerSaverHelper::~PluginPowerSaverHelper() {
-}
+PluginPowerSaverHelper::~PluginPowerSaverHelper() = default;
 
 void PluginPowerSaverHelper::DidCommitProvisionalLoad(
     bool is_new_navigation,

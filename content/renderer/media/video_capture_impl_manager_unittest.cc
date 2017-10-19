@@ -38,8 +38,8 @@ namespace {
 // simulate what the VideoCaptureHost would do.
 class PauseResumeCallback {
  public:
-  PauseResumeCallback() {}
-  virtual ~PauseResumeCallback() {}
+  PauseResumeCallback() = default;
+  virtual ~PauseResumeCallback() = default;
 
   virtual void OnPaused(media::VideoCaptureSessionId session_id) = 0;
   virtual void OnResumed(media::VideoCaptureSessionId session_id) = 0;
@@ -106,7 +106,7 @@ class MockVideoCaptureImplManager : public VideoCaptureImplManager {
                               base::Closure stop_capture_callback)
       : pause_callback_(pause_callback),
         stop_capture_callback_(stop_capture_callback) {}
-  ~MockVideoCaptureImplManager() override {}
+  ~MockVideoCaptureImplManager() override = default;
 
  private:
   std::unique_ptr<VideoCaptureImpl> CreateVideoCaptureImplForTesting(

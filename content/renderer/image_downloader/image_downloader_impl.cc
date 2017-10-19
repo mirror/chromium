@@ -94,7 +94,7 @@ ImageDownloaderImpl::ImageDownloaderImpl(RenderFrame* render_frame,
       base::BindOnce(&ImageDownloaderImpl::OnDestruct, base::Unretained(this)));
 }
 
-ImageDownloaderImpl::~ImageDownloaderImpl() {}
+ImageDownloaderImpl::~ImageDownloaderImpl() = default;
 
 // static
 void ImageDownloaderImpl::CreateMojoService(

@@ -20,10 +20,9 @@ void RenderMediaClient::Initialize() {
   media::SetMediaClient(client);
 }
 
-RenderMediaClient::RenderMediaClient() {}
+RenderMediaClient::RenderMediaClient() = default;
 
-RenderMediaClient::~RenderMediaClient() {
-}
+RenderMediaClient::~RenderMediaClient() = default;
 
 void RenderMediaClient::AddSupportedKeySystems(
     std::vector<std::unique_ptr<media::KeySystemProperties>>* key_systems) {

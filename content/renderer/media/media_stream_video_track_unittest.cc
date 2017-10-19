@@ -39,7 +39,7 @@ class MediaStreamVideoTrackTest : public ::testing::Test {
         mock_source_(nullptr),
         source_started_(false) {}
 
-  ~MediaStreamVideoTrackTest() override {}
+  ~MediaStreamVideoTrackTest() override = default;
 
   void TearDown() override {
     blink_source_.Reset();

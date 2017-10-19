@@ -36,8 +36,7 @@ WebClipboardImpl::WebClipboardImpl(RendererClipboardDelegate* delegate)
   DCHECK(delegate);
 }
 
-WebClipboardImpl::~WebClipboardImpl() {
-}
+WebClipboardImpl::~WebClipboardImpl() = default;
 
 uint64_t WebClipboardImpl::SequenceNumber(Buffer buffer) {
   ui::ClipboardType clipboard_type;

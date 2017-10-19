@@ -29,7 +29,7 @@ PepperVideoDestinationHost::PepperVideoDestinationHost(RendererPpapiHost* host,
 #endif
       weak_factory_(this) {}
 
-PepperVideoDestinationHost::~PepperVideoDestinationHost() {}
+PepperVideoDestinationHost::~PepperVideoDestinationHost() = default;
 
 int32_t PepperVideoDestinationHost::OnResourceMessageReceived(
     const IPC::Message& msg,

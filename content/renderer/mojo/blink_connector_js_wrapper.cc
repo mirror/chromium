@@ -19,7 +19,7 @@ gin::WrapperInfo BlinkConnectorJsWrapper::kWrapperInfo = {
 const char BlinkConnectorJsWrapper::kModuleName[] =
     "content/public/renderer/connector";
 
-BlinkConnectorJsWrapper::~BlinkConnectorJsWrapper() {}
+BlinkConnectorJsWrapper::~BlinkConnectorJsWrapper() = default;
 
 // static
 gin::Handle<BlinkConnectorJsWrapper> BlinkConnectorJsWrapper::Create(

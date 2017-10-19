@@ -42,7 +42,7 @@ class TestRenderAccessibilityImpl : public RenderAccessibilityImpl {
 
 class RenderAccessibilityImplTest : public RenderViewTest {
  public:
-  RenderAccessibilityImplTest() {}
+  RenderAccessibilityImplTest() = default;
 
   RenderViewImpl* view() {
     return static_cast<RenderViewImpl*>(view_);

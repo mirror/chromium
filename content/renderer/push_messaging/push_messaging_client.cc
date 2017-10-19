@@ -38,7 +38,7 @@ PushMessagingClient::PushMessagingClient(RenderFrame* render_frame)
   }
 }
 
-PushMessagingClient::~PushMessagingClient() {}
+PushMessagingClient::~PushMessagingClient() = default;
 
 void PushMessagingClient::OnDestruct() {
   delete this;

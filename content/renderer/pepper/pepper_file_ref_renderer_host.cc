@@ -43,7 +43,7 @@ PepperFileRefRendererHost::PepperFileRefRendererHost(
     file_system_type_ = PP_FILESYSTEMTYPE_INVALID;
 }
 
-PepperFileRefRendererHost::~PepperFileRefRendererHost() {}
+PepperFileRefRendererHost::~PepperFileRefRendererHost() = default;
 
 PP_FileSystemType PepperFileRefRendererHost::GetFileSystemType() const {
   return file_system_type_;

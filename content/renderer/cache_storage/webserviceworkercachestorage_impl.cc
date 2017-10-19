@@ -23,8 +23,7 @@ WebServiceWorkerCacheStorageImpl::WebServiceWorkerCacheStorageImpl(
     const url::Origin& origin)
     : thread_safe_sender_(thread_safe_sender), origin_(origin) {}
 
-WebServiceWorkerCacheStorageImpl::~WebServiceWorkerCacheStorageImpl() {
-}
+WebServiceWorkerCacheStorageImpl::~WebServiceWorkerCacheStorageImpl() = default;
 
 void WebServiceWorkerCacheStorageImpl::DispatchHas(
     std::unique_ptr<CacheStorageCallbacks> callbacks,

@@ -17,7 +17,7 @@ namespace content {
 
 class NetworkListObserver {
  public:
-  virtual ~NetworkListObserver() {}
+  virtual ~NetworkListObserver() = default;
 
   virtual void OnNetworkListChanged(
       const net::NetworkInterfaceList& list,
@@ -25,7 +25,7 @@ class NetworkListObserver {
       const net::IPAddress& default_ipv6_local_address) = 0;
 
  protected:
-  NetworkListObserver() {}
+  NetworkListObserver() = default;
 };
 
 }  // namespace content

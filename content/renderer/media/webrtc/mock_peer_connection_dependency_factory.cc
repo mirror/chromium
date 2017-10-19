@@ -116,7 +116,7 @@ void MockMediaStream::NotifyObservers() {
   }
 }
 
-MockMediaStream::~MockMediaStream() {}
+MockMediaStream::~MockMediaStream() = default;
 
 scoped_refptr<MockWebRtcAudioTrack> MockWebRtcAudioTrack::Create(
     const std::string& id) {
@@ -128,7 +128,7 @@ MockWebRtcAudioTrack::MockWebRtcAudioTrack(const std::string& id)
       enabled_(true),
       state_(webrtc::MediaStreamTrackInterface::kLive) {}
 
-MockWebRtcAudioTrack::~MockWebRtcAudioTrack() {}
+MockWebRtcAudioTrack::~MockWebRtcAudioTrack() = default;
 
 std::string MockWebRtcAudioTrack::kind() const {
   return kAudioKind;
@@ -182,7 +182,7 @@ MockWebRtcVideoTrack::MockWebRtcVideoTrack(
       state_(webrtc::MediaStreamTrackInterface::kLive),
       sink_(NULL) {}
 
-MockWebRtcVideoTrack::~MockWebRtcVideoTrack() {}
+MockWebRtcVideoTrack::~MockWebRtcVideoTrack() = default;
 
 scoped_refptr<MockWebRtcVideoTrack> MockWebRtcVideoTrack::Create(
     const std::string& id) {
@@ -247,7 +247,7 @@ class MockSessionDescription : public SessionDescriptionInterface {
       : type_(type),
         sdp_(sdp) {
   }
-  ~MockSessionDescription() override {}
+  ~MockSessionDescription() override = default;
   cricket::SessionDescription* description() override {
     NOTIMPLEMENTED();
     return NULL;
@@ -300,7 +300,7 @@ class MockIceCandidate : public IceCandidateInterface {
     // Assign an valid address to |candidate_| to pass assert in code.
     candidate_.set_address(rtc::SocketAddress("127.0.0.1", 5000));
   }
-  ~MockIceCandidate() override {}
+  ~MockIceCandidate() override = default;
   std::string sdp_mid() const override { return sdp_mid_; }
   int sdp_mline_index() const override { return sdp_mline_index_; }
   const cricket::Candidate& candidate() const override { return candidate_; }
@@ -323,7 +323,8 @@ MockPeerConnectionDependencyFactory::MockPeerConnectionDependencyFactory()
   CHECK(signaling_thread_.Start());
 }
 
-MockPeerConnectionDependencyFactory::~MockPeerConnectionDependencyFactory() {}
+MockPeerConnectionDependencyFactory::~MockPeerConnectionDependencyFactory() =
+    default;
 
 scoped_refptr<webrtc::PeerConnectionInterface>
 MockPeerConnectionDependencyFactory::CreatePeerConnection(

@@ -122,8 +122,7 @@ RenderAccessibilityImpl::RenderAccessibilityImpl(RenderFrameImpl* render_frame,
   }
 }
 
-RenderAccessibilityImpl::~RenderAccessibilityImpl() {
-}
+RenderAccessibilityImpl::~RenderAccessibilityImpl() = default;
 
 void RenderAccessibilityImpl::AccessibilityModeChanged() {
   ui::AXMode new_mode = render_frame_->accessibility_mode();

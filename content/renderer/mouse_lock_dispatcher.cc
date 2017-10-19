@@ -15,8 +15,7 @@ MouseLockDispatcher::MouseLockDispatcher() : mouse_locked_(false),
                                              target_(NULL) {
 }
 
-MouseLockDispatcher::~MouseLockDispatcher() {
-}
+MouseLockDispatcher::~MouseLockDispatcher() = default;
 
 bool MouseLockDispatcher::LockMouse(LockTarget* target) {
   if (MouseLockedOrPendingAction())

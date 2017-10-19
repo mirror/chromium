@@ -449,7 +449,7 @@ RenderThreadImpl::HistogramCustomizer::HistogramCustomizer() {
   custom_histograms_.insert("V8.MemoryHeapCommitted");
 }
 
-RenderThreadImpl::HistogramCustomizer::~HistogramCustomizer() {}
+RenderThreadImpl::HistogramCustomizer::~HistogramCustomizer() = default;
 
 void RenderThreadImpl::HistogramCustomizer::RenderViewNavigatedToHost(
     const std::string& host, size_t view_count) {
@@ -956,8 +956,7 @@ void RenderThreadImpl::Init(
                                 mojo::MakeRequest(&frame_sink_provider_));
 }
 
-RenderThreadImpl::~RenderThreadImpl() {
-}
+RenderThreadImpl::~RenderThreadImpl() = default;
 
 void RenderThreadImpl::Shutdown() {
   // In a multi-process mode, we immediately exit the renderer.
@@ -2484,8 +2483,7 @@ RenderThreadImpl::PendingFrameCreate::PendingFrameCreate(
                      base::Unretained(this)));
 }
 
-RenderThreadImpl::PendingFrameCreate::~PendingFrameCreate() {
-}
+RenderThreadImpl::PendingFrameCreate::~PendingFrameCreate() = default;
 
 void RenderThreadImpl::PendingFrameCreate::OnConnectionError() {
   size_t erased =

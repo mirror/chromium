@@ -43,7 +43,7 @@ class ImageCaptureFrameGrabber::SingleShotFrameHandler
 
  private:
   friend class base::RefCountedThreadSafe<SingleShotFrameHandler>;
-  virtual ~SingleShotFrameHandler() {}
+  virtual ~SingleShotFrameHandler() = default;
 
   // Flag to indicate that the first frames has been processed, and subsequent
   // ones can be safely discarded.

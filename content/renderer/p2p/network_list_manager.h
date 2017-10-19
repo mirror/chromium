@@ -30,7 +30,7 @@ class CONTENT_EXPORT NetworkListManager {
  protected:
   // Marked as protected to prevent explicit deletion, as
   // P2PSocketDispatcher is not owned by IpcNetworkManager.
-  virtual ~NetworkListManager() {}
+  virtual ~NetworkListManager() = default;
 };
 
 }  // namespace content

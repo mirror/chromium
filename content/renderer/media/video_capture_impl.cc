@@ -42,7 +42,7 @@ class VideoCaptureImpl::ClientBuffer
  private:
   friend class base::RefCountedThreadSafe<ClientBuffer>;
 
-  virtual ~ClientBuffer() {}
+  virtual ~ClientBuffer() = default;
 
   const std::unique_ptr<base::SharedMemory> buffer_;
   const size_t buffer_size_;

@@ -53,7 +53,7 @@ PepperVideoSourceHost::FrameReceiver::FrameReceiver(
     const base::WeakPtr<PepperVideoSourceHost>& host)
     : host_(host) {}
 
-PepperVideoSourceHost::FrameReceiver::~FrameReceiver() {}
+PepperVideoSourceHost::FrameReceiver::~FrameReceiver() = default;
 
 void PepperVideoSourceHost::FrameReceiver::GotFrame(
     const scoped_refptr<media::VideoFrame>& video_frame) {

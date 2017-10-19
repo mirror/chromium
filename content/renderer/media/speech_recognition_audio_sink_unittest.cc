@@ -209,7 +209,7 @@ namespace {
 class TestDrivenAudioSource : public MediaStreamAudioSource {
  public:
   TestDrivenAudioSource() : MediaStreamAudioSource(true) {}
-  ~TestDrivenAudioSource() final {}
+  ~TestDrivenAudioSource() final = default;
 
   // Expose protected methods as public for testing.
   using MediaStreamAudioSource::SetFormat;
@@ -220,7 +220,7 @@ class TestDrivenAudioSource : public MediaStreamAudioSource {
 
 class SpeechRecognitionAudioSinkTest : public testing::Test {
  public:
-  SpeechRecognitionAudioSinkTest() {}
+  SpeechRecognitionAudioSinkTest() = default;
 
   ~SpeechRecognitionAudioSinkTest() {
     blink_source_.Reset();

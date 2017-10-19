@@ -14,8 +14,7 @@ WebUIExtensionData::WebUIExtensionData(RenderView* render_view)
       RenderViewObserverTracker<WebUIExtensionData>(render_view) {
 }
 
-WebUIExtensionData::~WebUIExtensionData() {
-}
+WebUIExtensionData::~WebUIExtensionData() = default;
 
 std::string WebUIExtensionData::GetValue(const std::string& key) const {
   std::map<std::string, std::string>::const_iterator it =

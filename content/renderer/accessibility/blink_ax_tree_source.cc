@@ -74,7 +74,7 @@ class AXContentNodeDataSparseAttributeAdapter
   AXContentNodeDataSparseAttributeAdapter(AXContentNodeData* dst) : dst_(dst) {
     DCHECK(dst_);
   }
-  ~AXContentNodeDataSparseAttributeAdapter() override {}
+  ~AXContentNodeDataSparseAttributeAdapter() override = default;
 
  private:
   AXContentNodeData* dst_;
@@ -209,8 +209,7 @@ BlinkAXTreeSource::BlinkAXTreeSource(RenderFrameImpl* render_frame,
                                      ui::AXMode mode)
     : render_frame_(render_frame), accessibility_mode_(mode), frozen_(false) {}
 
-BlinkAXTreeSource::~BlinkAXTreeSource() {
-}
+BlinkAXTreeSource::~BlinkAXTreeSource() = default;
 
 void BlinkAXTreeSource::Freeze() {
   CHECK(!frozen_);

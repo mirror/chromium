@@ -21,8 +21,7 @@ RendererWebColorChooserImpl::RendererWebColorChooserImpl(
       client_(client) {
 }
 
-RendererWebColorChooserImpl::~RendererWebColorChooserImpl() {
-}
+RendererWebColorChooserImpl::~RendererWebColorChooserImpl() = default;
 
 bool RendererWebColorChooserImpl::OnMessageReceived(
     const IPC::Message& message) {

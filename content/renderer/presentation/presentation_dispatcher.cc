@@ -518,7 +518,7 @@ PresentationDispatcher::AvailabilityListener::AvailabilityListener(
     const std::vector<GURL>& availability_urls)
     : urls(availability_urls) {}
 
-PresentationDispatcher::AvailabilityListener::~AvailabilityListener() {}
+PresentationDispatcher::AvailabilityListener::~AvailabilityListener() = default;
 
 PresentationDispatcher::ListeningStatus::ListeningStatus(
     const GURL& availability_url)
@@ -526,6 +526,6 @@ PresentationDispatcher::ListeningStatus::ListeningStatus(
       last_known_availability(blink::mojom::ScreenAvailability::UNKNOWN),
       listening_state(ListeningState::INACTIVE) {}
 
-PresentationDispatcher::ListeningStatus::~ListeningStatus() {}
+PresentationDispatcher::ListeningStatus::~ListeningStatus() = default;
 
 }  // namespace content

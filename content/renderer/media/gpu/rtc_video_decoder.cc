@@ -57,9 +57,9 @@ RTCVideoDecoder::BufferData::BufferData(int32_t bitstream_buffer_id,
       size(size),
       visible_rect(visible_rect) {}
 
-RTCVideoDecoder::BufferData::BufferData() {}
+RTCVideoDecoder::BufferData::BufferData() = default;
 
-RTCVideoDecoder::BufferData::~BufferData() {}
+RTCVideoDecoder::BufferData::~BufferData() = default;
 
 RTCVideoDecoder::RTCVideoDecoder(webrtc::VideoCodecType type,
                                  media::GpuVideoAcceleratorFactories* factories)

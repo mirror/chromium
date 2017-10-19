@@ -136,7 +136,7 @@ void ClearCache(net::URLRequestContextGetter* getter,
 
 class RenderViewBrowserTest : public ContentBrowserTest {
  public:
-  RenderViewBrowserTest() {}
+  RenderViewBrowserTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     // This method is needed to allow interaction with in-process renderer

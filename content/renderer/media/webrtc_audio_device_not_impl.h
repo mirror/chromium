@@ -86,7 +86,7 @@ class CONTENT_EXPORT WebRtcAudioDeviceNotImpl
 #endif  // OS_IOS
 
  protected:
-  ~WebRtcAudioDeviceNotImpl() override {}
+  ~WebRtcAudioDeviceNotImpl() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WebRtcAudioDeviceNotImpl);

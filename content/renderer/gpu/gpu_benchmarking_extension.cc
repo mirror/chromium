@@ -551,8 +551,7 @@ void GpuBenchmarking::Install(RenderFrameImpl* frame) {
 GpuBenchmarking::GpuBenchmarking(RenderFrameImpl* frame)
     : render_frame_(frame) {}
 
-GpuBenchmarking::~GpuBenchmarking() {
-}
+GpuBenchmarking::~GpuBenchmarking() = default;
 
 void GpuBenchmarking::EnsureRemoteInterface() {
   if (!input_injector_) {

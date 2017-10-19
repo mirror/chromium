@@ -16,7 +16,8 @@ ServiceWorkerContextMessageFilter::ServiceWorkerContextMessageFilter()
           ChildThreadImpl::current()->thread_safe_sender()) {
 }
 
-ServiceWorkerContextMessageFilter::~ServiceWorkerContextMessageFilter() {}
+ServiceWorkerContextMessageFilter::~ServiceWorkerContextMessageFilter() =
+    default;
 
 bool ServiceWorkerContextMessageFilter::ShouldHandleMessage(
     const IPC::Message& msg) const {

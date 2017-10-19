@@ -43,7 +43,7 @@ class MockCDQualityAudioSource : public MediaStreamAudioSource {
 
 }  // namespace
 
-MockMediaStreamRegistry::MockMediaStreamRegistry() {}
+MockMediaStreamRegistry::MockMediaStreamRegistry() = default;
 
 void MockMediaStreamRegistry::Init(const std::string& stream_url) {
   stream_url_ = stream_url;

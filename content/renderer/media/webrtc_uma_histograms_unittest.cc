@@ -13,7 +13,7 @@ namespace content {
 
 class MockPerSessionWebRTCAPIMetrics : public PerSessionWebRTCAPIMetrics {
  public:
-  MockPerSessionWebRTCAPIMetrics() {}
+  MockPerSessionWebRTCAPIMetrics() = default;
 
   using PerSessionWebRTCAPIMetrics::LogUsageOnlyOnce;
 

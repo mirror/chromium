@@ -14,7 +14,8 @@ ScopedWebInputEventWithLatencyInfo::ScopedWebInputEventWithLatencyInfo(
     : event_(new blink::WebCoalescedInputEvent(*(event.get()))),
       latency_(latency_info) {}
 
-ScopedWebInputEventWithLatencyInfo::~ScopedWebInputEventWithLatencyInfo() {}
+ScopedWebInputEventWithLatencyInfo::~ScopedWebInputEventWithLatencyInfo() =
+    default;
 
 bool ScopedWebInputEventWithLatencyInfo::CanCoalesceWith(
     const ScopedWebInputEventWithLatencyInfo& other) const {

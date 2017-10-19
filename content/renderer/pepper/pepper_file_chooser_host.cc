@@ -29,7 +29,7 @@ class PepperFileChooserHost::CompletionHandler
   explicit CompletionHandler(const base::WeakPtr<PepperFileChooserHost>& host)
       : host_(host) {}
 
-  ~CompletionHandler() override {}
+  ~CompletionHandler() override = default;
 
   void DidChooseFile(
       const blink::WebVector<blink::WebString>& file_names) override {
@@ -79,7 +79,7 @@ PepperFileChooserHost::PepperFileChooserHost(RendererPpapiHost* host,
       handler_(NULL),
       weak_factory_(this) {}
 
-PepperFileChooserHost::~PepperFileChooserHost() {}
+PepperFileChooserHost::~PepperFileChooserHost() = default;
 
 int32_t PepperFileChooserHost::OnResourceMessageReceived(
     const IPC::Message& msg,

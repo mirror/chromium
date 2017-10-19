@@ -42,7 +42,7 @@ class DOMStorageProxy : public base::RefCounted<DOMStorageProxy> {
 
  protected:
   friend class base::RefCounted<DOMStorageProxy>;
-  virtual ~DOMStorageProxy() {}
+  virtual ~DOMStorageProxy() = default;
 };
 
 }  // namespace content

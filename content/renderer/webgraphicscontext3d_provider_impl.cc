@@ -14,7 +14,7 @@ WebGraphicsContext3DProviderImpl::WebGraphicsContext3DProviderImpl(
     bool software_rendering)
     : provider_(std::move(provider)), software_rendering_(software_rendering) {}
 
-WebGraphicsContext3DProviderImpl::~WebGraphicsContext3DProviderImpl() {}
+WebGraphicsContext3DProviderImpl::~WebGraphicsContext3DProviderImpl() = default;
 
 bool WebGraphicsContext3DProviderImpl::BindToCurrentThread() {
   return provider_->BindToCurrentThread();

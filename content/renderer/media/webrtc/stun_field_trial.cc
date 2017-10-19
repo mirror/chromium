@@ -70,9 +70,9 @@ std::string HistogramName(const std::string& prefix,
 
 }  // namespace
 
-StunProberTrial::Param::Param() {}
+StunProberTrial::Param::Param() = default;
 
-StunProberTrial::Param::~Param() {}
+StunProberTrial::Param::~Param() = default;
 
 StunProberTrial::StunProberTrial(rtc::NetworkManager* network_manager,
                                  const std::string& params,
@@ -88,7 +88,7 @@ StunProberTrial::StunProberTrial(rtc::NetworkManager* network_manager,
   network_manager_->StartUpdating();
 }
 
-StunProberTrial::~StunProberTrial() {}
+StunProberTrial::~StunProberTrial() = default;
 
 void StunProberTrial::SaveHistogramData() {
   DCHECK(thread_checker_.CalledOnValidThread());

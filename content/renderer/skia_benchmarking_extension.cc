@@ -178,7 +178,7 @@ SkiaBenchmarking::SkiaBenchmarking() {
   Initialize();
 }
 
-SkiaBenchmarking::~SkiaBenchmarking() {}
+SkiaBenchmarking::~SkiaBenchmarking() = default;
 
 gin::ObjectTemplateBuilder SkiaBenchmarking::GetObjectTemplateBuilder(
     v8::Isolate* isolate) {

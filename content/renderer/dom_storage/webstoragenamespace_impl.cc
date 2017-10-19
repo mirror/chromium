@@ -26,8 +26,7 @@ WebStorageNamespaceImpl::WebStorageNamespaceImpl(int64_t namespace_id)
   DCHECK_NE(kInvalidSessionStorageNamespaceId, namespace_id);
 }
 
-WebStorageNamespaceImpl::~WebStorageNamespaceImpl() {
-}
+WebStorageNamespaceImpl::~WebStorageNamespaceImpl() = default;
 
 WebStorageArea* WebStorageNamespaceImpl::CreateStorageArea(
     const blink::WebSecurityOrigin& origin) {

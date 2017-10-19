@@ -771,8 +771,8 @@ void GetRTCStatsOnSignalingThread(
 
 class PeerConnectionUMAObserver : public webrtc::UMAObserver {
  public:
-  PeerConnectionUMAObserver() {}
-  ~PeerConnectionUMAObserver() override {}
+  PeerConnectionUMAObserver() = default;
+  ~PeerConnectionUMAObserver() override = default;
   void IncrementEnumCounter(webrtc::PeerConnectionEnumCounterType counter_type,
                             int counter,
                             int counter_max) override {
@@ -943,8 +943,8 @@ LocalRTCStatsRequest::LocalRTCStatsRequest(blink::WebRTCStatsRequest impl)
     : impl_(impl) {
 }
 
-LocalRTCStatsRequest::LocalRTCStatsRequest() {}
-LocalRTCStatsRequest::~LocalRTCStatsRequest() {}
+LocalRTCStatsRequest::LocalRTCStatsRequest() = default;
+LocalRTCStatsRequest::~LocalRTCStatsRequest() = default;
 
 bool LocalRTCStatsRequest::hasSelector() const {
   return impl_.HasSelector();
@@ -998,7 +998,7 @@ class RTCPeerConnectionHandler::Observer
 
  protected:
   friend class base::RefCountedThreadSafe<RTCPeerConnectionHandler::Observer>;
-  virtual ~Observer() {}
+  virtual ~Observer() = default;
 
   void OnSignalingChange(
       PeerConnectionInterface::SignalingState new_state) override {

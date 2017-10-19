@@ -28,7 +28,7 @@ class RtcDtmfSenderHandler::Observer :
  private:
   friend class base::RefCountedThreadSafe<Observer>;
 
-  ~Observer() override {}
+  ~Observer() override = default;
 
   void OnToneChange(const std::string& tone) override {
     main_thread_->PostTask(

@@ -242,7 +242,7 @@ class CONTENT_EXPORT RenderFrameImpl
         : render_view(render_view),
           routing_id(routing_id),
           devtools_frame_token(devtools_frame_token) {}
-    ~CreateParams() {}
+    ~CreateParams() = default;
 
     RenderViewImpl* render_view;
     int32_t routing_id;

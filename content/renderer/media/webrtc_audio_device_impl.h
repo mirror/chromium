@@ -207,7 +207,7 @@ class WebRtcAudioRendererSource {
   virtual void AudioRendererThreadStopped() = 0;
 
  protected:
-  virtual ~WebRtcAudioRendererSource() {}
+  virtual ~WebRtcAudioRendererSource() = default;
 };
 
 // TODO(xians): Merge this interface with WebRtcAudioRendererSource.
@@ -234,7 +234,7 @@ class WebRtcPlayoutDataSource {
     virtual void OnRenderThreadChanged() = 0;
 
    protected:
-    virtual ~Sink() {}
+    virtual ~Sink() = default;
   };
 
   // Adds/Removes the sink of WebRtcAudioRendererSource to the ADM.
@@ -244,7 +244,7 @@ class WebRtcPlayoutDataSource {
   virtual void RemovePlayoutSink(Sink* sink) = 0;
 
  protected:
-  virtual ~WebRtcPlayoutDataSource() {}
+  virtual ~WebRtcPlayoutDataSource() = default;
 };
 
 // Note that this class inherits from webrtc::AudioDeviceModule but due to

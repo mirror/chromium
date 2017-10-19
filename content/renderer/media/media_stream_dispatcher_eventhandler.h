@@ -38,7 +38,7 @@ class CONTENT_EXPORT MediaStreamDispatcherEventHandler {
   virtual void OnDeviceOpenFailed(int request_id) = 0;
 
  protected:
-  virtual ~MediaStreamDispatcherEventHandler() {}
+  virtual ~MediaStreamDispatcherEventHandler() = default;
 };
 
 }  // namespace content

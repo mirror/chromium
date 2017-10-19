@@ -149,7 +149,7 @@ class StreamHandleListener
       blink::mojom::ServiceWorkerStreamCallbackPtr callback_ptr)
       : callback_ptr_(std::move(callback_ptr)) {}
 
-  ~StreamHandleListener() override {}
+  ~StreamHandleListener() override = default;
 
   void OnAborted() override { callback_ptr_->OnAborted(); }
   void OnCompleted() override { callback_ptr_->OnCompleted(); }
@@ -466,7 +466,7 @@ class ServiceWorkerContextClient::NavigationPreloadRequest final
         url_loader_(std::move(preload_handle->url_loader)),
         binding_(this, std::move(preload_handle->url_loader_client_request)) {}
 
-  ~NavigationPreloadRequest() override {}
+  ~NavigationPreloadRequest() override = default;
 
   void OnReceiveResponse(
       const ResourceResponseHead& response_head,
@@ -651,7 +651,7 @@ ServiceWorkerContextClient::ServiceWorkerContextClient(
       (is_script_streaming ? "InstalledScriptsManager" : "ResourceLoader"));
 }
 
-ServiceWorkerContextClient::~ServiceWorkerContextClient() {}
+ServiceWorkerContextClient::~ServiceWorkerContextClient() = default;
 
 void ServiceWorkerContextClient::OnMessageReceived(
     int thread_id,

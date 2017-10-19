@@ -12,8 +12,8 @@
 template <typename T>
 class SecureDisplayLinkTracker {
  public:
-  SecureDisplayLinkTracker() {}
-  ~SecureDisplayLinkTracker() {}
+  SecureDisplayLinkTracker() = default;
+  ~SecureDisplayLinkTracker() = default;
 
   void Add(T* link, bool is_link_secure);
   void Remove(T* link);

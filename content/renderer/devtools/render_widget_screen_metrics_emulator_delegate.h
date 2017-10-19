@@ -36,7 +36,7 @@ class CONTENT_EXPORT RenderWidgetScreenMetricsEmulatorDelegate {
                               const gfx::Rect& window_screen_rect) = 0;
 
  protected:
-  virtual ~RenderWidgetScreenMetricsEmulatorDelegate() {}
+  virtual ~RenderWidgetScreenMetricsEmulatorDelegate() = default;
 };
 
 }  // namespace content

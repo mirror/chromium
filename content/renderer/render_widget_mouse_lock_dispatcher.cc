@@ -20,7 +20,7 @@ RenderWidgetMouseLockDispatcher::RenderWidgetMouseLockDispatcher(
     RenderWidget* render_widget)
     : render_widget_(render_widget) {}
 
-RenderWidgetMouseLockDispatcher::~RenderWidgetMouseLockDispatcher() {}
+RenderWidgetMouseLockDispatcher::~RenderWidgetMouseLockDispatcher() = default;
 
 void RenderWidgetMouseLockDispatcher::SendLockMouseRequest() {
   bool user_gesture = WebUserGestureIndicator::IsProcessingUserGesture();

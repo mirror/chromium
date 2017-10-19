@@ -6,9 +6,9 @@
 
 namespace content {
 
-MainThreadEventQueueTaskList::MainThreadEventQueueTaskList() {}
+MainThreadEventQueueTaskList::MainThreadEventQueueTaskList() = default;
 
-MainThreadEventQueueTaskList::~MainThreadEventQueueTaskList() {}
+MainThreadEventQueueTaskList::~MainThreadEventQueueTaskList() = default;
 
 void MainThreadEventQueueTaskList::Queue(
     std::unique_ptr<MainThreadEventQueueTask> event) {

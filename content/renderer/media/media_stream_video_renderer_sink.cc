@@ -178,7 +178,7 @@ MediaStreamVideoRendererSink::MediaStreamVideoRendererSink(
       worker_task_runner_(worker_task_runner),
       gpu_factories_(gpu_factories) {}
 
-MediaStreamVideoRendererSink::~MediaStreamVideoRendererSink() {}
+MediaStreamVideoRendererSink::~MediaStreamVideoRendererSink() = default;
 
 void MediaStreamVideoRendererSink::Start() {
   DCHECK(main_thread_checker_.CalledOnValidThread());

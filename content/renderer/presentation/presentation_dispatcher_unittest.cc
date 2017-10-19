@@ -49,7 +49,7 @@ class MockPresentationAvailabilityObserver
  public:
   explicit MockPresentationAvailabilityObserver(const std::vector<GURL>& urls)
       : urls_(urls) {}
-  ~MockPresentationAvailabilityObserver() override {}
+  ~MockPresentationAvailabilityObserver() override = default;
 
   MOCK_METHOD1(AvailabilityChanged, void(ScreenAvailability availability));
   const WebVector<WebURL>& Urls() const override { return urls_; }
@@ -180,7 +180,7 @@ class TestPresentationDispatcher : public PresentationDispatcher {
       MockPresentationService* presentation_service)
       : PresentationDispatcher(nullptr),
         mock_presentation_service_(presentation_service) {}
-  ~TestPresentationDispatcher() override {}
+  ~TestPresentationDispatcher() override = default;
 
  private:
   void ConnectToPresentationServiceIfNeeded() override {
@@ -217,7 +217,7 @@ class PresentationDispatcherTest : public ::testing::Test {
         mock_observers_({&mock_observer1_, &mock_observer2_, &mock_observer3_}),
         dispatcher_(&presentation_service_) {}
 
-  ~PresentationDispatcherTest() override {}
+  ~PresentationDispatcherTest() override = default;
 
   void SetUp() override {
     // Set some test data.

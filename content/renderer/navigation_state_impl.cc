@@ -6,8 +6,7 @@
 
 namespace content {
 
-NavigationStateImpl::~NavigationStateImpl() {
-}
+NavigationStateImpl::~NavigationStateImpl() = default;
 
 NavigationStateImpl* NavigationStateImpl::CreateBrowserInitiated(
     const CommonNavigationParams& common_params,

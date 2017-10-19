@@ -103,7 +103,7 @@ PepperPluginRegistry::~PepperPluginRegistry() {
   DCHECK(live_modules_.empty());
 }
 
-PepperPluginRegistry::PepperPluginRegistry() {}
+PepperPluginRegistry::PepperPluginRegistry() = default;
 
 void PepperPluginRegistry::Initialize() {
   ComputePepperPluginList(&plugin_list_);

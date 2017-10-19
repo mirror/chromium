@@ -66,7 +66,7 @@ class RendererWebAudioDeviceImplTest
       public AudioDeviceFactory,
       public testing::Test {
  protected:
-  RendererWebAudioDeviceImplTest() {}
+  RendererWebAudioDeviceImplTest() = default;
 
   void SetupDevice(blink::WebAudioLatencyHint latencyHint) {
     webaudio_device_.reset(new RendererWebAudioDeviceImplUnderTest(

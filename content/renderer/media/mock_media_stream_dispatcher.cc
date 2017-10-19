@@ -23,7 +23,7 @@ MockMediaStreamDispatcher::MockMediaStreamDispatcher()
       session_id_(0),
       test_same_id_(false) {}
 
-MockMediaStreamDispatcher::~MockMediaStreamDispatcher() {}
+MockMediaStreamDispatcher::~MockMediaStreamDispatcher() = default;
 
 void MockMediaStreamDispatcher::GenerateStream(
     int request_id,

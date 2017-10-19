@@ -129,7 +129,7 @@ DeviceMotionEventPump::SensorEntry::SensorEntry(
     device::mojom::SensorType sensor_type)
     : event_pump(pump), type(sensor_type), client_binding(this) {}
 
-DeviceMotionEventPump::SensorEntry::~SensorEntry() {}
+DeviceMotionEventPump::SensorEntry::~SensorEntry() = default;
 
 void DeviceMotionEventPump::SensorEntry::RaiseError() {
   HandleSensorError();

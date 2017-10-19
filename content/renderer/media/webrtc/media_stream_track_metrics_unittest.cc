@@ -29,7 +29,7 @@ namespace content {
 class MockAudioTrackInterface : public AudioTrackInterface {
  public:
   explicit MockAudioTrackInterface(const std::string& id) : id_(id) {}
-  virtual ~MockAudioTrackInterface() {}
+  virtual ~MockAudioTrackInterface() = default;
 
   virtual std::string id() const override { return id_; }
 
@@ -52,7 +52,7 @@ class MockAudioTrackInterface : public AudioTrackInterface {
 class MockVideoTrackInterface : public VideoTrackInterface {
  public:
   explicit MockVideoTrackInterface(const std::string& id) : id_(id) {}
-  virtual ~MockVideoTrackInterface() {}
+  virtual ~MockVideoTrackInterface() = default;
 
   virtual std::string id() const override { return id_; }
 
@@ -75,7 +75,7 @@ class MockVideoTrackInterface : public VideoTrackInterface {
 
 class MockMediaStreamTrackMetrics : public MediaStreamTrackMetrics {
  public:
-  virtual ~MockMediaStreamTrackMetrics() {}
+  virtual ~MockMediaStreamTrackMetrics() = default;
 
   MOCK_METHOD4(SendLifetimeMessage,
                void(const std::string&, TrackType, LifetimeEvent, StreamType));

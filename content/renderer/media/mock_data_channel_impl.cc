@@ -17,8 +17,7 @@ MockDataChannel::MockDataChannel(const std::string& label,
       observer_(nullptr) {
 }
 
-MockDataChannel::~MockDataChannel() {
-}
+MockDataChannel::~MockDataChannel() = default;
 
 void MockDataChannel::RegisterObserver(webrtc::DataChannelObserver* observer) {
   observer_ = observer;

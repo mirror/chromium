@@ -32,7 +32,7 @@ class CompositorForwardingMessageFilterTestHandler
 
  private:
   friend class base::RefCounted<CompositorForwardingMessageFilterTestHandler>;
-  ~CompositorForwardingMessageFilterTestHandler() {}
+  ~CompositorForwardingMessageFilterTestHandler() = default;
 
   int count_;
 };

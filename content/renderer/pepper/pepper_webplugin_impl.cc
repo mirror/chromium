@@ -87,7 +87,7 @@ PepperWebPluginImpl::PepperWebPluginImpl(
     throttler_->SetWebPlugin(this);
 }
 
-PepperWebPluginImpl::~PepperWebPluginImpl() {}
+PepperWebPluginImpl::~PepperWebPluginImpl() = default;
 
 blink::WebPluginContainer* PepperWebPluginImpl::Container() const {
   return container_;

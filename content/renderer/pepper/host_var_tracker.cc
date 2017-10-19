@@ -30,7 +30,7 @@ HostVarTracker::V8ObjectVarKey::V8ObjectVarKey(PP_Instance instance,
     : instance(instance),
       hash(object.IsEmpty() ? 0 : object->GetIdentityHash()) {}
 
-HostVarTracker::V8ObjectVarKey::~V8ObjectVarKey() {}
+HostVarTracker::V8ObjectVarKey::~V8ObjectVarKey() = default;
 
 bool HostVarTracker::V8ObjectVarKey::operator<(
     const V8ObjectVarKey& other) const {
@@ -40,7 +40,7 @@ bool HostVarTracker::V8ObjectVarKey::operator<(
 HostVarTracker::HostVarTracker()
     : VarTracker(SINGLE_THREADED), last_shared_memory_map_id_(0) {}
 
-HostVarTracker::~HostVarTracker() {}
+HostVarTracker::~HostVarTracker() = default;
 
 ArrayBufferVar* HostVarTracker::CreateArrayBuffer(uint32_t size_in_bytes) {
   return new HostArrayBufferVar(size_in_bytes);

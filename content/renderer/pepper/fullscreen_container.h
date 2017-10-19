@@ -36,7 +36,7 @@ class FullscreenContainer {
   virtual void SetLayer(blink::WebLayer* layer) = 0;
 
  protected:
-  virtual ~FullscreenContainer() {}
+  virtual ~FullscreenContainer() = default;
 };
 
 }  // namespace content

@@ -33,7 +33,7 @@ class PpFrameReceiver : public MediaStreamVideoSink {
       weak_factory_(this) {
   }
 
-  ~PpFrameReceiver() override {}
+  ~PpFrameReceiver() override = default;
 
   void SetReader(FrameReaderInterface* reader) {
     DCHECK((reader_ && !reader) || (!reader_ && reader))

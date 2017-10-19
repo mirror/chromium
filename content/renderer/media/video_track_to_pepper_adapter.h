@@ -28,7 +28,7 @@ class CONTENT_EXPORT FrameReaderInterface {
   virtual void GotFrame(const scoped_refptr<media::VideoFrame>& frame) = 0;
 
  protected:
-  virtual ~FrameReaderInterface() {}
+  virtual ~FrameReaderInterface() = default;
 };
 
 // VideoTrackToPepperAdapter is a glue class between MediaStreamVideoTrack and a

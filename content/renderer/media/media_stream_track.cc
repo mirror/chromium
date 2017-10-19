@@ -17,7 +17,6 @@ MediaStreamTrack::MediaStreamTrack(bool is_local_track)
     : is_local_track_(is_local_track) {
 }
 
-MediaStreamTrack::~MediaStreamTrack() {
-}
+MediaStreamTrack::~MediaStreamTrack() = default;
 
 }  // namespace content

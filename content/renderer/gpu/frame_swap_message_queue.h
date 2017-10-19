@@ -35,7 +35,7 @@ class CONTENT_EXPORT FrameSwapMessageQueue
  public:
   class CONTENT_EXPORT SendMessageScope {
    public:
-    virtual ~SendMessageScope() {}
+    virtual ~SendMessageScope() = default;
   };
 
   explicit FrameSwapMessageQueue(int32_t routing_id);

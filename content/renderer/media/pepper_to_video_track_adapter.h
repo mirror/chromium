@@ -27,7 +27,7 @@ class CONTENT_EXPORT FrameWriterInterface {
   // of this interface should make a copy of the |image_data| before return.
   virtual void PutFrame(PPB_ImageData_Impl* image_data,
                         int64_t time_stamp_ns) = 0;
-  virtual ~FrameWriterInterface() {}
+  virtual ~FrameWriterInterface() = default;
 };
 
 // PepperToVideoTrackAdapter is a glue class between the content MediaStream and

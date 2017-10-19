@@ -36,6 +36,6 @@ FrameBlameContext::FrameBlameContext(RenderFrameImpl* render_frame,
                                       render_frame->GetRoutingID(),
                                       GetParentBlameContext(parent_frame)) {}
 
-FrameBlameContext::~FrameBlameContext() {}
+FrameBlameContext::~FrameBlameContext() = default;
 
 }  // namespace content

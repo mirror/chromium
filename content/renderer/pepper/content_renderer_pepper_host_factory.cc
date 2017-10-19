@@ -102,7 +102,7 @@ ContentRendererPepperHostFactory::ContentRendererPepperHostFactory(
     RendererPpapiHostImpl* host)
     : host_(host) {}
 
-ContentRendererPepperHostFactory::~ContentRendererPepperHostFactory() {}
+ContentRendererPepperHostFactory::~ContentRendererPepperHostFactory() = default;
 
 std::unique_ptr<ResourceHost>
 ContentRendererPepperHostFactory::CreateResourceHost(

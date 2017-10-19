@@ -59,8 +59,8 @@ struct MediaStreamDispatcher::Request {
 };
 
 struct MediaStreamDispatcher::Stream {
-  Stream() {}
-  ~Stream() {}
+  Stream() = default;
+  ~Stream() = default;
   base::WeakPtr<MediaStreamDispatcherEventHandler> handler;
   MediaStreamDevices audio_devices;
   MediaStreamDevices video_devices;
@@ -76,7 +76,7 @@ MediaStreamDispatcher::MediaStreamDispatcher(RenderFrame* render_frame)
                  base::Unretained(this)));
 }
 
-MediaStreamDispatcher::~MediaStreamDispatcher() {}
+MediaStreamDispatcher::~MediaStreamDispatcher() = default;
 
 void MediaStreamDispatcher::GenerateStream(
     int request_id,

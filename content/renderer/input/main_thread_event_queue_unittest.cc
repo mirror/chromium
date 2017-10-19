@@ -54,7 +54,7 @@ const char* kCoalescedCountHistogram =
 
 class HandledTask {
  public:
-  virtual ~HandledTask() {}
+  virtual ~HandledTask() = default;
 
   virtual blink::WebCoalescedInputEvent* taskAsEvent() = 0;
   virtual unsigned taskAsClosure() const = 0;
@@ -64,7 +64,7 @@ class HandledEvent : public HandledTask {
  public:
   explicit HandledEvent(const blink::WebCoalescedInputEvent& event)
       : event_(event.Event(), event.GetCoalescedEventsPointers()) {}
-  ~HandledEvent() override {}
+  ~HandledEvent() override = default;
 
   blink::WebCoalescedInputEvent* taskAsEvent() override { return &event_; }
   unsigned taskAsClosure() const override {
@@ -79,7 +79,7 @@ class HandledEvent : public HandledTask {
 class HandledClosure : public HandledTask {
  public:
   explicit HandledClosure(unsigned closure_id) : closure_id_(closure_id) {}
-  ~HandledClosure() override {}
+  ~HandledClosure() override = default;
 
   blink::WebCoalescedInputEvent* taskAsEvent() override {
     NOTREACHED();

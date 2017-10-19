@@ -23,7 +23,7 @@ DOMStorageCachedArea::DOMStorageCachedArea(int64_t namespace_id,
       proxy_(proxy),
       weak_factory_(this) {}
 
-DOMStorageCachedArea::~DOMStorageCachedArea() {}
+DOMStorageCachedArea::~DOMStorageCachedArea() = default;
 
 unsigned DOMStorageCachedArea::GetLength(int connection_id) {
   PrimeIfNeeded(connection_id);

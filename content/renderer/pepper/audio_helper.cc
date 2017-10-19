@@ -17,7 +17,7 @@ namespace content {
 
 AudioHelper::AudioHelper() : shared_memory_size_for_create_callback_(0) {}
 
-AudioHelper::~AudioHelper() {}
+AudioHelper::~AudioHelper() = default;
 
 int32_t AudioHelper::GetSyncSocketImpl(int* sync_socket) {
   if (socket_for_create_callback_) {

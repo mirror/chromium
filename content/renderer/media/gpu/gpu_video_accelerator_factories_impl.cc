@@ -100,7 +100,7 @@ GpuVideoAcceleratorFactoriesImpl::GpuVideoAcceleratorFactoriesImpl(
                      base::Passed(&unbound_vea_provider)));
 }
 
-GpuVideoAcceleratorFactoriesImpl::~GpuVideoAcceleratorFactoriesImpl() {}
+GpuVideoAcceleratorFactoriesImpl::~GpuVideoAcceleratorFactoriesImpl() = default;
 
 bool GpuVideoAcceleratorFactoriesImpl::CheckContextLost() {
   DCHECK(task_runner_->BelongsToCurrentThread());

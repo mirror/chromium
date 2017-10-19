@@ -189,8 +189,7 @@ ChildFrameCompositingHelper::ChildFrameCompositingHelper(
   }
 }
 
-ChildFrameCompositingHelper::~ChildFrameCompositingHelper() {
-}
+ChildFrameCompositingHelper::~ChildFrameCompositingHelper() = default;
 
 blink::WebPluginContainer* ChildFrameCompositingHelper::GetContainer() {
   if (!browser_plugin_)

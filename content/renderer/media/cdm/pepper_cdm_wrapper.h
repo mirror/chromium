@@ -27,13 +27,13 @@ class ContentDecryptorDelegate;
 // PepperCdmWrapper provides access to the Pepper CDM instance.
 class PepperCdmWrapper {
  public:
-  virtual ~PepperCdmWrapper() {}
+  virtual ~PepperCdmWrapper() = default;
 
   // Returns the ContentDecryptorDelegate* associated with this plugin.
   virtual ContentDecryptorDelegate* GetCdmDelegate() = 0;
 
  protected:
-  PepperCdmWrapper() {}
+  PepperCdmWrapper() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PepperCdmWrapper);

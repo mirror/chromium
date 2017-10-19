@@ -27,7 +27,7 @@ class MainThreadEventQueue;
 
 class CONTENT_EXPORT InputHandlerManagerClient {
  public:
-  virtual ~InputHandlerManagerClient() {}
+  virtual ~InputHandlerManagerClient() = default;
 
   // Called from the main thread.
   virtual void SetInputHandlerManager(InputHandlerManager*) = 0;
@@ -60,7 +60,7 @@ class CONTENT_EXPORT InputHandlerManagerClient {
                                          InputEventAckState ack_state) = 0;
 
  protected:
-  InputHandlerManagerClient() {}
+  InputHandlerManagerClient() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(InputHandlerManagerClient);
@@ -68,7 +68,7 @@ class CONTENT_EXPORT InputHandlerManagerClient {
 
 class CONTENT_EXPORT SynchronousInputHandlerProxyClient {
  public:
-  virtual ~SynchronousInputHandlerProxyClient() {}
+  virtual ~SynchronousInputHandlerProxyClient() = default;
 
   virtual void DidAddSynchronousHandlerProxy(
       int routing_id,
@@ -76,7 +76,7 @@ class CONTENT_EXPORT SynchronousInputHandlerProxyClient {
   virtual void DidRemoveSynchronousHandlerProxy(int routing_id) = 0;
 
  protected:
-  SynchronousInputHandlerProxyClient() {}
+  SynchronousInputHandlerProxyClient() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SynchronousInputHandlerProxyClient);

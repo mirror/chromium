@@ -75,7 +75,7 @@ class CONTENT_EXPORT RenderWidgetInputHandlerDelegate {
   virtual bool WillHandleMouseEvent(const blink::WebMouseEvent& event) = 0;
 
  protected:
-  virtual ~RenderWidgetInputHandlerDelegate() {}
+  virtual ~RenderWidgetInputHandlerDelegate() = default;
 };
 
 }  // namespace content

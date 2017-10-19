@@ -138,7 +138,7 @@ MediaFactory::MediaFactory(
     : render_frame_(render_frame),
       request_routing_token_cb_(std::move(request_routing_token_cb)) {}
 
-MediaFactory::~MediaFactory() {}
+MediaFactory::~MediaFactory() = default;
 
 void MediaFactory::SetupMojo() {
   // Only do setup once.

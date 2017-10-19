@@ -16,7 +16,7 @@ WebTrialTokenValidatorImpl::WebTrialTokenValidatorImpl(
   DCHECK(validator_.get()) << "Should not pass null validator.";
 }
 
-WebTrialTokenValidatorImpl::~WebTrialTokenValidatorImpl() {}
+WebTrialTokenValidatorImpl::~WebTrialTokenValidatorImpl() = default;
 
 blink::OriginTrialTokenStatus WebTrialTokenValidatorImpl::ValidateToken(
     const blink::WebString& token,

@@ -360,6 +360,6 @@ MediaStreamVideoSource::PendingTrackInfo&
 MediaStreamVideoSource::PendingTrackInfo::operator=(
     MediaStreamVideoSource::PendingTrackInfo&& other) = default;
 
-MediaStreamVideoSource::PendingTrackInfo::~PendingTrackInfo() {}
+MediaStreamVideoSource::PendingTrackInfo::~PendingTrackInfo() = default;
 
 }  // namespace content

@@ -22,7 +22,7 @@ MockRendererPpapiHost::MockRendererPpapiHost(RenderView* render_view,
     render_frame_ = render_view->GetMainRenderFrame();
 }
 
-MockRendererPpapiHost::~MockRendererPpapiHost() {}
+MockRendererPpapiHost::~MockRendererPpapiHost() = default;
 
 ppapi::host::PpapiHost* MockRendererPpapiHost::GetPpapiHost() {
   return &ppapi_host_;

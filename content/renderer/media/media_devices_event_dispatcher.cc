@@ -32,7 +32,7 @@ MediaDevicesEventDispatcher::MediaDevicesEventDispatcher(
       RenderFrameObserverTracker<MediaDevicesEventDispatcher>(render_frame),
       current_id_(0) {}
 
-MediaDevicesEventDispatcher::~MediaDevicesEventDispatcher() {}
+MediaDevicesEventDispatcher::~MediaDevicesEventDispatcher() = default;
 
 MediaDevicesEventDispatcher::SubscriptionId
 MediaDevicesEventDispatcher::SubscribeDeviceChangeNotifications(

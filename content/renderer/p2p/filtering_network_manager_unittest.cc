@@ -77,8 +77,8 @@ class MockNetworkManager : public rtc::NetworkManager {
 
 class MockMediaPermission : public media::MediaPermission {
  public:
-  MockMediaPermission() {}
-  ~MockMediaPermission() override {}
+  MockMediaPermission() = default;
+  ~MockMediaPermission() override = default;
 
   void RequestPermission(
       Type type,

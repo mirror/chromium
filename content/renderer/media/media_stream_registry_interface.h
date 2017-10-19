@@ -17,7 +17,7 @@ class MediaStreamRegistryInterface {
   virtual blink::WebMediaStream GetMediaStream(const std::string& url) = 0;
 
  protected:
-  virtual ~MediaStreamRegistryInterface() {}
+  virtual ~MediaStreamRegistryInterface() = default;
 };
 
 }  // namespace content

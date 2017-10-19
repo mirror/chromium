@@ -19,8 +19,7 @@ namespace content {
 RendererMainPlatformDelegate::RendererMainPlatformDelegate(
     const MainFunctionParams& parameters) {}
 
-RendererMainPlatformDelegate::~RendererMainPlatformDelegate() {
-}
+RendererMainPlatformDelegate::~RendererMainPlatformDelegate() = default;
 
 void RendererMainPlatformDelegate::PlatformInitialize() {
 }

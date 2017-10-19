@@ -57,9 +57,9 @@ class CONTENT_EXPORT LocalRTCStatsResponse : public rtc::RefCountInterface {
   virtual void addStats(const blink::WebRTCLegacyStats& stats);
 
  protected:
-  ~LocalRTCStatsResponse() override {}
+  ~LocalRTCStatsResponse() override = default;
   // Constructor for creating mocks.
-  LocalRTCStatsResponse() {}
+  LocalRTCStatsResponse() = default;
 
  private:
   blink::WebRTCStatsResponse impl_;

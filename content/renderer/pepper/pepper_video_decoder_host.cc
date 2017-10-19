@@ -84,7 +84,7 @@ PepperVideoDecoderHost::PendingDecode::PendingDecode(
       size(size),
       reply_context(reply_context) {}
 
-PepperVideoDecoderHost::PendingDecode::~PendingDecode() {}
+PepperVideoDecoderHost::PendingDecode::~PendingDecode() = default;
 
 PepperVideoDecoderHost::PepperVideoDecoderHost(RendererPpapiHost* host,
                                                PP_Instance instance,
@@ -92,7 +92,7 @@ PepperVideoDecoderHost::PepperVideoDecoderHost(RendererPpapiHost* host,
     : ResourceHost(host->GetPpapiHost(), instance, resource),
       renderer_ppapi_host_(host) {}
 
-PepperVideoDecoderHost::~PepperVideoDecoderHost() {}
+PepperVideoDecoderHost::~PepperVideoDecoderHost() = default;
 
 int32_t PepperVideoDecoderHost::OnResourceMessageReceived(
     const IPC::Message& msg,

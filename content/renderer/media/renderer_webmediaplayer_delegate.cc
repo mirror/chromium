@@ -52,7 +52,7 @@ RendererWebMediaPlayerDelegate::RendererWebMediaPlayerDelegate(
 #endif
 }
 
-RendererWebMediaPlayerDelegate::~RendererWebMediaPlayerDelegate() {}
+RendererWebMediaPlayerDelegate::~RendererWebMediaPlayerDelegate() = default;
 
 bool RendererWebMediaPlayerDelegate::IsFrameHidden() {
   if (is_frame_hidden_for_testing_)

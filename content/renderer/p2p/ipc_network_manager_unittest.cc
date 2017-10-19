@@ -25,7 +25,7 @@ class MockP2PSocketDispatcher : public NetworkListManager {
   void RemoveNetworkListObserver(
       NetworkListObserver* network_list_observer) override {}
 
-  ~MockP2PSocketDispatcher() override {}
+  ~MockP2PSocketDispatcher() override = default;
 };
 
 }  // namespace

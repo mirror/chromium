@@ -153,7 +153,7 @@ const char kFakeAudioOutputDeviceId1[] = "fake_audio_output 1";
 class MockMediaDevicesDispatcherHost
     : public ::mojom::MediaDevicesDispatcherHost {
  public:
-  MockMediaDevicesDispatcherHost() {}
+  MockMediaDevicesDispatcherHost() = default;
   void EnumerateDevices(bool request_audio_input,
                         bool request_video_input,
                         bool request_audio_output,
@@ -350,7 +350,8 @@ class UserMediaProcessorUnderTest : public UserMediaProcessor {
       class FailedAtLifeAudioSource : public MediaStreamAudioSource {
        public:
         FailedAtLifeAudioSource() : MediaStreamAudioSource(true) {}
-        ~FailedAtLifeAudioSource() override {}
+        ~FailedAtLifeAudioSource() override = default;
+
        protected:
         bool EnsureSourceIsStarted() override {
           return false;

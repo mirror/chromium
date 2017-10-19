@@ -96,7 +96,7 @@ MediaStreamCenter::MediaStreamCenter(
     blink::WebMediaStreamCenterClient* client,
     PeerConnectionDependencyFactory* factory) {}
 
-MediaStreamCenter::~MediaStreamCenter() {}
+MediaStreamCenter::~MediaStreamCenter() = default;
 
 void MediaStreamCenter::DidCreateMediaStreamTrack(
     const blink::WebMediaStreamTrack& track) {

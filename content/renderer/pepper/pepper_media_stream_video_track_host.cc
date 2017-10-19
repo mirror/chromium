@@ -203,8 +203,7 @@ PepperMediaStreamVideoTrackHost::FrameDeliverer::FrameDeliverer(
     : io_task_runner_(io_task_runner), new_frame_callback_(new_frame_callback) {
 }
 
-PepperMediaStreamVideoTrackHost::FrameDeliverer::~FrameDeliverer() {
-}
+PepperMediaStreamVideoTrackHost::FrameDeliverer::~FrameDeliverer() = default;
 
 void PepperMediaStreamVideoTrackHost::FrameDeliverer::DeliverVideoFrame(
     const scoped_refptr<media::VideoFrame>& frame) {

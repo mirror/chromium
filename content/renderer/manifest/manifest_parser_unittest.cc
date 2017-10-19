@@ -26,8 +26,8 @@ uint32_t ExtractColor(int64_t color) {
 
 class ManifestParserTest : public testing::Test  {
  protected:
-  ManifestParserTest() {}
-  ~ManifestParserTest() override {}
+  ManifestParserTest() = default;
+  ~ManifestParserTest() override = default;
 
   Manifest ParseManifestWithURLs(const base::StringPiece& data,
                                  const GURL& manifest_url,

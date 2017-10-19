@@ -16,7 +16,7 @@ class RendererWebCookieJarImpl : public blink::WebCookieJar {
   explicit RendererWebCookieJarImpl(RenderFrameImpl* sender)
       : sender_(sender) {
   }
-  virtual ~RendererWebCookieJarImpl() {}
+  virtual ~RendererWebCookieJarImpl() = default;
 
  private:
   // blink::WebCookieJar methods:

@@ -19,7 +19,7 @@ class MainThreadEventQueue;
 // 2) WebInputEvent
 class MainThreadEventQueueTask {
  public:
-  virtual ~MainThreadEventQueueTask() {}
+  virtual ~MainThreadEventQueueTask() = default;
 
   enum class FilterResult {
     // The passed in event was coalesced into this event. Don't queue

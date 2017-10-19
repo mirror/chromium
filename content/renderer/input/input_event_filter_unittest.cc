@@ -61,7 +61,7 @@ class InputEventRecorder : public content::InputHandlerManager {
         passive_(false),
         needs_main_frame_(false) {}
 
-  ~InputEventRecorder() override {}
+  ~InputEventRecorder() override = default;
 
   void set_handle_events(bool value) { handle_events_ = value; }
   void set_send_to_widget(bool value) { send_to_widget_ = value; }
@@ -127,8 +127,8 @@ class ReceivedMessage;
 
 class ReceivedItem {
  public:
-  ReceivedItem() {}
-  virtual ~ReceivedItem() {}
+  ReceivedItem() = default;
+  virtual ~ReceivedItem() = default;
 
   virtual const ReceivedMessage* ItemAsmessage() const {
     NOTREACHED();
@@ -145,7 +145,7 @@ class ReceivedMessage : public ReceivedItem {
  public:
   ReceivedMessage(const IPC::Message& message) : message_(message) {}
 
-  ~ReceivedMessage() override {}
+  ~ReceivedMessage() override = default;
 
   const IPC::Message& message() const { return message_; }
 
@@ -160,7 +160,7 @@ class ReceivedEvent : public ReceivedItem {
   ReceivedEvent(const blink::WebCoalescedInputEvent& event)
       : event_(event.Event(), event.GetCoalescedEventsPointers()) {}
 
-  ~ReceivedEvent() override {}
+  ~ReceivedEvent() override = default;
 
   const ReceivedEvent* ItemAsEvent() const override { return this; }
 

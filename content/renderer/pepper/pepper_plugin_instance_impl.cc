@@ -406,7 +406,8 @@ PepperPluginInstanceImpl* PepperPluginInstanceImpl::GetForTesting(
 PepperPluginInstanceImpl::ExternalDocumentLoader::ExternalDocumentLoader()
     : finished_loading_(false) {}
 
-PepperPluginInstanceImpl::ExternalDocumentLoader::~ExternalDocumentLoader() {}
+PepperPluginInstanceImpl::ExternalDocumentLoader::~ExternalDocumentLoader() =
+    default;
 
 void PepperPluginInstanceImpl::ExternalDocumentLoader::ReplayReceivedData(
     WebAssociatedURLLoaderClient* document_loader) {
@@ -451,7 +452,7 @@ void PepperPluginInstanceImpl::ExternalDocumentLoader::DidFail(
 PepperPluginInstanceImpl::GamepadImpl::GamepadImpl()
     : Resource(ppapi::Resource::Untracked()) {}
 
-PepperPluginInstanceImpl::GamepadImpl::~GamepadImpl() {}
+PepperPluginInstanceImpl::GamepadImpl::~GamepadImpl() = default;
 
 PPB_Gamepad_API* PepperPluginInstanceImpl::GamepadImpl::AsPPB_Gamepad_API() {
   return this;

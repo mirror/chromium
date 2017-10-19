@@ -196,7 +196,7 @@ bool DOMMediaStreamTrackToResource(
 
 }  // namespace
 
-ResourceConverter::~ResourceConverter() {}
+ResourceConverter::~ResourceConverter() = default;
 
 ResourceConverterImpl::ResourceConverterImpl(PP_Instance instance)
     : instance_(instance) {}

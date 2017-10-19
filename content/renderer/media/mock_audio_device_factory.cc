@@ -6,9 +6,9 @@
 
 namespace content {
 
-MockCapturerSource::MockCapturerSource() {}
+MockCapturerSource::MockCapturerSource() = default;
 
-MockCapturerSource::~MockCapturerSource() {}
+MockCapturerSource::~MockCapturerSource() = default;
 
 void MockCapturerSource::SetVolume(double volume) {}
 
@@ -16,7 +16,7 @@ MockAudioDeviceFactory::MockAudioDeviceFactory()
     : AudioDeviceFactory(), mock_capturer_source_(new MockCapturerSource()),
       did_create_once_(false) {}
 
-MockAudioDeviceFactory::~MockAudioDeviceFactory() {}
+MockAudioDeviceFactory::~MockAudioDeviceFactory() = default;
 
 scoped_refptr<media::AudioCapturerSource>
 MockAudioDeviceFactory::CreateAudioCapturerSource(int render_frame_id) {

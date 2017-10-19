@@ -66,8 +66,7 @@ RTCStatsReport::RTCStatsReport(
   DCHECK(stats_report_);
 }
 
-RTCStatsReport::~RTCStatsReport() {
-}
+RTCStatsReport::~RTCStatsReport() = default;
 
 std::unique_ptr<blink::WebRTCStatsReport> RTCStatsReport::CopyHandle() const {
   return std::unique_ptr<blink::WebRTCStatsReport>(
@@ -110,8 +109,7 @@ RTCStats::RTCStats(
   DCHECK(stats_owner_->Get(stats_->id()));
 }
 
-RTCStats::~RTCStats() {
-}
+RTCStats::~RTCStats() = default;
 
 blink::WebString RTCStats::Id() const {
   return blink::WebString::FromUTF8(stats_->id());
@@ -145,8 +143,7 @@ RTCStatsMember::RTCStatsMember(
   DCHECK(member_);
 }
 
-RTCStatsMember::~RTCStatsMember() {
-}
+RTCStatsMember::~RTCStatsMember() = default;
 
 blink::WebString RTCStatsMember::GetName() const {
   return blink::WebString::FromUTF8(member_->name());

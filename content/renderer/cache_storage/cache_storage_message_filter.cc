@@ -15,8 +15,7 @@ CacheStorageMessageFilter::CacheStorageMessageFilter(
     : WorkerThreadMessageFilter(thread_safe_sender) {
 }
 
-CacheStorageMessageFilter::~CacheStorageMessageFilter() {
-}
+CacheStorageMessageFilter::~CacheStorageMessageFilter() = default;
 
 bool CacheStorageMessageFilter::ShouldHandleMessage(
     const IPC::Message& msg) const {

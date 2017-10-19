@@ -109,7 +109,7 @@ class TestTaskCounter : public base::SingleThreadTaskRunner {
   }
 
  private:
-  ~TestTaskCounter() override {}
+  ~TestTaskCounter() override = default;
 
   mutable base::Lock lock_;
   int count_;
@@ -129,7 +129,7 @@ class RenderThreadImplForTest : public RenderThreadImpl {
       scoped_refptr<base::SingleThreadTaskRunner>& test_task_counter)
       : RenderThreadImpl(params, std::move(scheduler), test_task_counter) {}
 
-  ~RenderThreadImplForTest() override {}
+  ~RenderThreadImplForTest() override = default;
 };
 
 #if defined(COMPILER_MSVC)
@@ -155,7 +155,7 @@ class QuitOnTestMsgFilter : public IPC::MessageFilter {
   }
 
  private:
-  ~QuitOnTestMsgFilter() override {}
+  ~QuitOnTestMsgFilter() override = default;
 
   scoped_refptr<base::SequencedTaskRunner> origin_task_runner_;
   base::OnceClosure quit_closure_;
@@ -319,8 +319,8 @@ class RenderThreadImplGpuMemoryBufferBrowserTest
       public testing::WithParamInterface<
           ::testing::tuple<NativeBufferFlag, gfx::BufferFormat>> {
  public:
-  RenderThreadImplGpuMemoryBufferBrowserTest() {}
-  ~RenderThreadImplGpuMemoryBufferBrowserTest() override {}
+  RenderThreadImplGpuMemoryBufferBrowserTest() = default;
+  ~RenderThreadImplGpuMemoryBufferBrowserTest() override = default;
 
   gpu::GpuMemoryBufferManager* memory_buffer_manager() {
     return memory_buffer_manager_;

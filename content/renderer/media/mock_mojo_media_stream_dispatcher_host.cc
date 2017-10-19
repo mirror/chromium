@@ -6,9 +6,11 @@
 
 namespace content {
 
-MockMojoMediaStreamDispatcherHost::MockMojoMediaStreamDispatcherHost() {}
+MockMojoMediaStreamDispatcherHost::MockMojoMediaStreamDispatcherHost() =
+    default;
 
-MockMojoMediaStreamDispatcherHost::~MockMojoMediaStreamDispatcherHost() {}
+MockMojoMediaStreamDispatcherHost::~MockMojoMediaStreamDispatcherHost() =
+    default;
 
 mojom::MediaStreamDispatcherHostPtr
 MockMojoMediaStreamDispatcherHost::CreateInterfacePtrAndBind() {

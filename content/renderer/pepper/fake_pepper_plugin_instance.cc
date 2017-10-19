@@ -9,7 +9,7 @@
 
 namespace content {
 
-FakePepperPluginInstance::~FakePepperPluginInstance() {}
+FakePepperPluginInstance::~FakePepperPluginInstance() = default;
 
 content::RenderFrame* FakePepperPluginInstance::GetRenderFrame() {
   return nullptr;

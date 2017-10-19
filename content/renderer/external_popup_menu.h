@@ -27,7 +27,7 @@ class ExternalPopupMenu : public blink::WebExternalPopupMenu {
                     const blink::WebPopupMenuInfo& popup_menu_info,
                     blink::WebExternalPopupMenuClient* popup_menu_client);
 
-  virtual ~ExternalPopupMenu() {}
+  virtual ~ExternalPopupMenu() = default;
 
   void SetOriginScaleForEmulation(float scale);
 

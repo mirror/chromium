@@ -113,7 +113,7 @@ class VideoEncoderShim::EncoderImpl {
     PendingEncode(const scoped_refptr<media::VideoFrame>& frame,
                   bool force_keyframe)
         : frame(frame), force_keyframe(force_keyframe) {}
-    ~PendingEncode() {}
+    ~PendingEncode() = default;
 
     scoped_refptr<media::VideoFrame> frame;
     bool force_keyframe;
@@ -122,7 +122,7 @@ class VideoEncoderShim::EncoderImpl {
   struct BitstreamBuffer {
     BitstreamBuffer(const media::BitstreamBuffer buffer, uint8_t* mem)
         : buffer(buffer), mem(mem) {}
-    ~BitstreamBuffer() {}
+    ~BitstreamBuffer() = default;
 
     media::BitstreamBuffer buffer;
     uint8_t* mem;

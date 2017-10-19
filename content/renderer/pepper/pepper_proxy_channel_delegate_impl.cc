@@ -10,7 +10,7 @@
 
 namespace content {
 
-PepperProxyChannelDelegateImpl::~PepperProxyChannelDelegateImpl() {}
+PepperProxyChannelDelegateImpl::~PepperProxyChannelDelegateImpl() = default;
 
 base::SingleThreadTaskRunner*
 PepperProxyChannelDelegateImpl::GetIPCTaskRunner() {

@@ -35,8 +35,7 @@ ManifestParser::ManifestParser(const base::StringPiece& data,
       failed_(false) {
 }
 
-ManifestParser::~ManifestParser() {
-}
+ManifestParser::~ManifestParser() = default;
 
 void ManifestParser::Parse() {
   std::string error_msg;

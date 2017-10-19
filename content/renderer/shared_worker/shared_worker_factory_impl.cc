@@ -17,7 +17,7 @@ void SharedWorkerFactoryImpl::Create(
       base::WrapUnique(new SharedWorkerFactoryImpl()), std::move(request));
 }
 
-SharedWorkerFactoryImpl::SharedWorkerFactoryImpl() {}
+SharedWorkerFactoryImpl::SharedWorkerFactoryImpl() = default;
 
 void SharedWorkerFactoryImpl::CreateSharedWorker(
     mojom::SharedWorkerInfoPtr info,

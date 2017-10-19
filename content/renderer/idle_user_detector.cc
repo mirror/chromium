@@ -14,7 +14,7 @@ namespace content {
 IdleUserDetector::IdleUserDetector(RenderView* render_view)
     : RenderViewObserver(render_view) {}
 
-IdleUserDetector::~IdleUserDetector() {}
+IdleUserDetector::~IdleUserDetector() = default;
 
 bool IdleUserDetector::OnMessageReceived(const IPC::Message& message) {
   IPC_BEGIN_MESSAGE_MAP(IdleUserDetector, message)

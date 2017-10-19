@@ -34,8 +34,7 @@ InputHandlerWrapper::InputHandlerWrapper(
   input_handler_proxy_.set_smooth_scroll_enabled(enable_smooth_scrolling);
 }
 
-InputHandlerWrapper::~InputHandlerWrapper() {
-}
+InputHandlerWrapper::~InputHandlerWrapper() = default;
 
 void InputHandlerWrapper::NeedsMainFrame() {
   main_task_runner_->PostTask(

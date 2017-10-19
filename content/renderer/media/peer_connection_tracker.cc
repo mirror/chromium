@@ -357,8 +357,7 @@ class InternalStatsObserver : public webrtc::StatsObserver {
 PeerConnectionTracker::PeerConnectionTracker()
     : next_local_id_(1), send_target_for_test_(nullptr) {}
 
-PeerConnectionTracker::~PeerConnectionTracker() {
-}
+PeerConnectionTracker::~PeerConnectionTracker() = default;
 
 bool PeerConnectionTracker::OnControlMessageReceived(
     const IPC::Message& message) {

@@ -21,7 +21,7 @@ PepperBrowserConnection::PepperBrowserConnection(RenderFrame* render_frame)
       RenderFrameObserverTracker<PepperBrowserConnection>(render_frame),
       next_sequence_number_(1) {}
 
-PepperBrowserConnection::~PepperBrowserConnection() {}
+PepperBrowserConnection::~PepperBrowserConnection() = default;
 
 bool PepperBrowserConnection::OnMessageReceived(const IPC::Message& msg) {
   // Check if the message is an in-process reply.

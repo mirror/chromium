@@ -81,7 +81,7 @@ class MockMediaDevicesDispatcherHost
 
 class MediaDevicesEventDispatcherTest : public ::testing::Test {
  public:
-  MediaDevicesEventDispatcherTest() {}
+  MediaDevicesEventDispatcherTest() = default;
 
   void SetUp() override {
     event_dispatcher_ = MediaDevicesEventDispatcher::GetForRenderFrame(nullptr);

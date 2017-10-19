@@ -44,7 +44,7 @@ void DomAutomationController::Install(RenderFrame* render_frame,
 DomAutomationController::DomAutomationController(RenderFrame* render_frame)
     : RenderFrameObserver(render_frame) {}
 
-DomAutomationController::~DomAutomationController() {}
+DomAutomationController::~DomAutomationController() = default;
 
 gin::ObjectTemplateBuilder DomAutomationController::GetObjectTemplateBuilder(
     v8::Isolate* isolate) {

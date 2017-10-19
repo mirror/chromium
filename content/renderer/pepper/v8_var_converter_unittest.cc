@@ -53,7 +53,7 @@ void FromV8ValueComplete(const ScopedPPVar& scoped_var,
 
 class MockResourceConverter : public content::ResourceConverter {
  public:
-  ~MockResourceConverter() override {}
+  ~MockResourceConverter() override = default;
   void Reset() override {}
   bool NeedsFlush() override { return false; }
   void Flush(const base::Callback<void(bool)>& callback) override {
@@ -173,7 +173,7 @@ class V8VarConverterTest : public testing::Test {
     converter_.reset(new V8VarConverter(
         dummy, std::unique_ptr<ResourceConverter>(new MockResourceConverter)));
   }
-  ~V8VarConverterTest() override {}
+  ~V8VarConverterTest() override = default;
 
   // testing::Test implementation.
   void SetUp() override {

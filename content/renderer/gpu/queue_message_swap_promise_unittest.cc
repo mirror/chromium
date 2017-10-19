@@ -30,7 +30,7 @@ class TestRenderWidget : public RenderWidget {
   using RenderWidget::QueueMessageImpl;
 
  private:
-  ~TestRenderWidget() override {}
+  ~TestRenderWidget() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(TestRenderWidget);
 };
@@ -64,7 +64,7 @@ class TestSyncMessageFilter : public IPC::SyncMessageFilter {
   }
 
  private:
-  ~TestSyncMessageFilter() override {}
+  ~TestSyncMessageFilter() override = default;
 
   std::vector<std::unique_ptr<IPC::Message>> direct_send_messages_;
   std::vector<std::unique_ptr<IPC::Message>> last_swap_messages_;
@@ -83,7 +83,7 @@ class QueueMessageSwapPromiseTest : public testing::Test {
       : frame_swap_message_queue_(new FrameSwapMessageQueue(0)),
         sync_message_filter_(new TestSyncMessageFilter()) {}
 
-  ~QueueMessageSwapPromiseTest() override {}
+  ~QueueMessageSwapPromiseTest() override = default;
 
   std::unique_ptr<cc::SwapPromise> QueueMessageImpl(
       IPC::Message* msg,

@@ -24,7 +24,7 @@ PepperTryCatch::PepperTryCatch(PepperPluginInstanceImpl* instance,
                                V8VarConverter* var_converter)
     : instance_(instance), var_converter_(var_converter) {}
 
-PepperTryCatch::~PepperTryCatch() {}
+PepperTryCatch::~PepperTryCatch() = default;
 
 v8::Local<v8::Value> PepperTryCatch::ToV8(PP_Var var) {
   if (HasException()) {

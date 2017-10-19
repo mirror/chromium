@@ -6,8 +6,8 @@
 
 namespace content {
 
-MockLevelDBWrapper::MockLevelDBWrapper() {}
-MockLevelDBWrapper::~MockLevelDBWrapper() {}
+MockLevelDBWrapper::MockLevelDBWrapper() = default;
+MockLevelDBWrapper::~MockLevelDBWrapper() = default;
 
 void MockLevelDBWrapper::OpenLocalStorage(
     const url::Origin& origin,

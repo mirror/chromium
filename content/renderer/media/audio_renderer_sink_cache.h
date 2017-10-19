@@ -26,7 +26,7 @@ namespace content {
 // Thread safe.
 class CONTENT_EXPORT AudioRendererSinkCache {
  public:
-  virtual ~AudioRendererSinkCache() {}
+  virtual ~AudioRendererSinkCache() = default;
 
   // Creates default cache, to be used by AudioRendererMixerManager.
   static std::unique_ptr<AudioRendererSinkCache> Create();
@@ -52,7 +52,7 @@ class CONTENT_EXPORT AudioRendererSinkCache {
   virtual void ReleaseSink(const media::AudioRendererSink* sink_ptr) = 0;
 
  protected:
-  AudioRendererSinkCache() {}
+  AudioRendererSinkCache() = default;
 
   DISALLOW_COPY_AND_ASSIGN(AudioRendererSinkCache);
 };

@@ -157,7 +157,7 @@ class RenderWidgetUnittest : public testing::Test {
     DCHECK(widget_->HasOneRef());
   }
 
-  ~RenderWidgetUnittest() override {}
+  ~RenderWidgetUnittest() override = default;
 
   InteractiveRenderWidget* widget() const { return widget_.get(); }
 
@@ -464,7 +464,7 @@ class RenderWidgetPopupUnittest : public testing::Test {
     widget_->Release();
     DCHECK(widget_->HasOneRef());
   }
-  ~RenderWidgetPopupUnittest() override {}
+  ~RenderWidgetPopupUnittest() override = default;
 
   PopupRenderWidget* widget() const { return widget_.get(); }
   FakeCompositorDependencies compositor_deps_;

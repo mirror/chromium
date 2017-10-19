@@ -85,7 +85,7 @@ class PepperAudioEncoderHost::AudioEncoderImpl {
 PepperAudioEncoderHost::AudioEncoderImpl::AudioEncoderImpl()
     : opus_encoder_(nullptr) {}
 
-PepperAudioEncoderHost::AudioEncoderImpl::~AudioEncoderImpl() {}
+PepperAudioEncoderHost::AudioEncoderImpl::~AudioEncoderImpl() = default;
 
 // static
 std::vector<PP_AudioProfileDescription>

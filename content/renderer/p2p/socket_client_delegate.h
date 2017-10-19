@@ -17,7 +17,7 @@ class P2PSocketClient;
 
 class P2PSocketClientDelegate {
  public:
-  virtual ~P2PSocketClientDelegate() { }
+  virtual ~P2PSocketClientDelegate() = default;
 
   // Called after the socket has been opened with the local endpoint address
   // as argument. Please note that in the precence of multiple interfaces,

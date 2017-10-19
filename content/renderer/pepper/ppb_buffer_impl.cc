@@ -23,7 +23,7 @@ namespace content {
 PPB_Buffer_Impl::PPB_Buffer_Impl(PP_Instance instance)
     : Resource(ppapi::OBJECT_IS_IMPL, instance), size_(0), map_count_(0) {}
 
-PPB_Buffer_Impl::~PPB_Buffer_Impl() {}
+PPB_Buffer_Impl::~PPB_Buffer_Impl() = default;
 
 // static
 PP_Resource PPB_Buffer_Impl::Create(PP_Instance instance, uint32_t size) {

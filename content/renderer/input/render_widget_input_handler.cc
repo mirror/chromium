@@ -151,7 +151,7 @@ RenderWidgetInputHandler::RenderWidgetInputHandler(
   delegate->SetInputHandler(this);
 }
 
-RenderWidgetInputHandler::~RenderWidgetInputHandler() {}
+RenderWidgetInputHandler::~RenderWidgetInputHandler() = default;
 
 void RenderWidgetInputHandler::HandleInputEvent(
     const blink::WebCoalescedInputEvent& coalesced_event,

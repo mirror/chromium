@@ -187,8 +187,7 @@ PepperVideoEncoderHost::ShmBuffer::ShmBuffer(
   DCHECK(this->shm);
 }
 
-PepperVideoEncoderHost::ShmBuffer::~ShmBuffer() {
-}
+PepperVideoEncoderHost::ShmBuffer::~ShmBuffer() = default;
 
 media::BitstreamBuffer PepperVideoEncoderHost::ShmBuffer::ToBitstreamBuffer() {
   return media::BitstreamBuffer(id, shm->handle(), shm->mapped_size());

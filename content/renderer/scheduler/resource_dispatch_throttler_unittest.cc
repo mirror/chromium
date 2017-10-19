@@ -55,7 +55,7 @@ class RendererSchedulerForTest
     : public blink::scheduler::FakeRendererScheduler {
  public:
   RendererSchedulerForTest() : high_priority_work_anticipated_(false) {}
-  ~RendererSchedulerForTest() override {}
+  ~RendererSchedulerForTest() override = default;
 
   // RendererScheduler implementation:
   bool IsHighPriorityWorkAnticipated() override {
@@ -84,7 +84,7 @@ class ResourceDispatchThrottlerForTest : public ResourceDispatchThrottler {
             kRequestsPerFlush),
         now_(base::TimeTicks() + base::TimeDelta::FromDays(1)),
         flush_scheduled_(false) {}
-  ~ResourceDispatchThrottlerForTest() override {}
+  ~ResourceDispatchThrottlerForTest() override = default;
 
   void Advance(base::TimeDelta delta) { now_ += delta; }
 
@@ -113,7 +113,7 @@ class ResourceDispatchThrottlerTest : public testing::Test, public IPC::Sender {
   ResourceDispatchThrottlerTest() : last_request_id_(0) {
     throttler_.reset(new ResourceDispatchThrottlerForTest(this, &scheduler_));
   }
-  ~ResourceDispatchThrottlerTest() override {}
+  ~ResourceDispatchThrottlerTest() override = default;
 
   // IPC::Sender implementation:
   bool Send(IPC::Message* msg) override {

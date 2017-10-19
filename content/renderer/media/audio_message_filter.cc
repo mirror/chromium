@@ -70,7 +70,7 @@ AudioMessageFilter::AudioOutputIPCImpl::AudioOutputIPCImpl(
       stream_id_(kStreamIDNotSet),
       stream_created_(false) {}
 
-AudioMessageFilter::AudioOutputIPCImpl::~AudioOutputIPCImpl() {}
+AudioMessageFilter::AudioOutputIPCImpl::~AudioOutputIPCImpl() = default;
 
 std::unique_ptr<media::AudioOutputIPC> AudioMessageFilter::CreateAudioOutputIPC(
     int render_frame_id) {

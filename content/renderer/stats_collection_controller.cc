@@ -96,9 +96,9 @@ void StatsCollectionController::Install(blink::WebLocalFrame* frame) {
               controller.ToV8());
 }
 
-StatsCollectionController::StatsCollectionController() {}
+StatsCollectionController::StatsCollectionController() = default;
 
-StatsCollectionController::~StatsCollectionController() {}
+StatsCollectionController::~StatsCollectionController() = default;
 
 gin::ObjectTemplateBuilder StatsCollectionController::GetObjectTemplateBuilder(
     v8::Isolate* isolate) {

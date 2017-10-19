@@ -31,7 +31,7 @@ float MaxAmplitude(const float* audio_data, int length) {
 
 MediaStreamAudioLevelCalculator::Level::Level() : level_(0.0f) {}
 
-MediaStreamAudioLevelCalculator::Level::~Level() {}
+MediaStreamAudioLevelCalculator::Level::~Level() = default;
 
 float MediaStreamAudioLevelCalculator::Level::GetCurrent() const {
   base::AutoLock auto_lock(lock_);

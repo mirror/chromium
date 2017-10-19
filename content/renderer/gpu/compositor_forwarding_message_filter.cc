@@ -19,8 +19,8 @@ CompositorForwardingMessageFilter::CompositorForwardingMessageFilter(
   compositor_thread_checker_.DetachFromThread();
 }
 
-CompositorForwardingMessageFilter::~CompositorForwardingMessageFilter() {
-}
+CompositorForwardingMessageFilter::~CompositorForwardingMessageFilter() =
+    default;
 
 void CompositorForwardingMessageFilter::AddHandlerOnCompositorThread(
     int routing_id,

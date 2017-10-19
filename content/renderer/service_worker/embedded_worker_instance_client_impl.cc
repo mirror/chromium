@@ -116,7 +116,7 @@ EmbeddedWorkerInstanceClientImpl::EmbeddedWorkerInstanceClientImpl(
       &EmbeddedWorkerInstanceClientImpl::OnError, base::Unretained(this)));
 }
 
-EmbeddedWorkerInstanceClientImpl::~EmbeddedWorkerInstanceClientImpl() {}
+EmbeddedWorkerInstanceClientImpl::~EmbeddedWorkerInstanceClientImpl() = default;
 
 void EmbeddedWorkerInstanceClientImpl::OnError() {
   // Destroys |this| if |temporal_self_| still owns this (i.e., StartWorker()

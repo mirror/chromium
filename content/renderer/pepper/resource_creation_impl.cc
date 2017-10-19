@@ -37,7 +37,7 @@ namespace content {
 ResourceCreationImpl::ResourceCreationImpl(PepperPluginInstanceImpl* instance) {
 }
 
-ResourceCreationImpl::~ResourceCreationImpl() {}
+ResourceCreationImpl::~ResourceCreationImpl() = default;
 
 PP_Resource ResourceCreationImpl::CreateAudio1_0(
     PP_Instance instance,

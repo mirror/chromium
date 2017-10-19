@@ -42,7 +42,7 @@ HostArrayBufferVar::HostArrayBufferVar(uint32_t size_in_bytes,
   }
 }
 
-HostArrayBufferVar::~HostArrayBufferVar() {}
+HostArrayBufferVar::~HostArrayBufferVar() = default;
 
 void* HostArrayBufferVar::Map() {
   if (!valid_)

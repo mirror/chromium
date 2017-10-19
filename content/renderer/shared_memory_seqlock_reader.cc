@@ -7,9 +7,9 @@
 namespace content {
 namespace internal {
 
-SharedMemorySeqLockReaderBase::SharedMemorySeqLockReaderBase() { }
+SharedMemorySeqLockReaderBase::SharedMemorySeqLockReaderBase() = default;
 
-SharedMemorySeqLockReaderBase::~SharedMemorySeqLockReaderBase() { }
+SharedMemorySeqLockReaderBase::~SharedMemorySeqLockReaderBase() = default;
 
 void*
 SharedMemorySeqLockReaderBase::InitializeSharedMemory(

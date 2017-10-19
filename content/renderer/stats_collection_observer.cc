@@ -13,8 +13,7 @@ StatsCollectionObserver::StatsCollectionObserver(RenderViewImpl* render_view)
     : RenderViewObserver(render_view) {
 }
 
-StatsCollectionObserver::~StatsCollectionObserver() {
-}
+StatsCollectionObserver::~StatsCollectionObserver() = default;
 
 void StatsCollectionObserver::DidStartLoading() {
   DCHECK(start_time_.is_null());

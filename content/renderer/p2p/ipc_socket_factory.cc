@@ -744,8 +744,7 @@ IpcPacketSocketFactory::IpcPacketSocketFactory(
     : socket_dispatcher_(socket_dispatcher) {
 }
 
-IpcPacketSocketFactory::~IpcPacketSocketFactory() {
-}
+IpcPacketSocketFactory::~IpcPacketSocketFactory() = default;
 
 rtc::AsyncPacketSocket* IpcPacketSocketFactory::CreateUdpSocket(
     const rtc::SocketAddress& local_address,

@@ -107,7 +107,7 @@ class MockProxy : public DOMStorageProxy {
   GURL observed_page_url_;
 
  private:
-  ~MockProxy() override {}
+  ~MockProxy() override = default;
 };
 
 }  // namespace

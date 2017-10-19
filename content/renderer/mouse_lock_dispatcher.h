@@ -21,7 +21,7 @@ class CONTENT_EXPORT MouseLockDispatcher {
 
   class LockTarget {
    public:
-    virtual ~LockTarget() {}
+    virtual ~LockTarget() = default;
     // A mouse lock request was pending and this reports success or failure.
     virtual void OnLockMouseACK(bool succeeded) = 0;
     // A mouse lock was in place, but has been lost.

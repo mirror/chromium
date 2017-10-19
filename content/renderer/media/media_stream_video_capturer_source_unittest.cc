@@ -29,7 +29,7 @@ namespace {
 
 class MockVideoCapturerSource : public media::VideoCapturerSource {
  public:
-  MockVideoCapturerSource() {}
+  MockVideoCapturerSource() = default;
 
   MOCK_METHOD0(RequestRefreshFrame, void());
   MOCK_METHOD0(GetPreferredFormats, media::VideoCaptureFormats());

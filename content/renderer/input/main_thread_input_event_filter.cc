@@ -34,7 +34,6 @@ bool MainThreadInputEventFilter::GetSupportedMessageClasses(
   return true;
 }
 
-MainThreadInputEventFilter::~MainThreadInputEventFilter() {
-}
+MainThreadInputEventFilter::~MainThreadInputEventFilter() = default;
 
 }  // namespace content

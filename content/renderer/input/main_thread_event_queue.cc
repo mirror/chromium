@@ -24,7 +24,7 @@ class QueuedClosure : public MainThreadEventQueueTask {
  public:
   QueuedClosure(base::OnceClosure closure) : closure_(std::move(closure)) {}
 
-  ~QueuedClosure() override {}
+  ~QueuedClosure() override = default;
 
   FilterResult FilterNewEvent(MainThreadEventQueueTask* other_task) override {
     return other_task->IsWebInputEvent() ? FilterResult::KeepIterating
@@ -60,7 +60,7 @@ class QueuedWebInputEvent : public ScopedWebInputEventWithLatencyInfo,
         originally_cancelable_(originally_cancelable),
         callback_(std::move(callback)) {}
 
-  ~QueuedWebInputEvent() override {}
+  ~QueuedWebInputEvent() override = default;
 
   FilterResult FilterNewEvent(MainThreadEventQueueTask* other_task) override {
     if (!other_task->IsWebInputEvent())
@@ -224,7 +224,7 @@ class QueuedWebInputEvent : public ScopedWebInputEventWithLatencyInfo,
 MainThreadEventQueue::SharedState::SharedState()
     : sent_main_frame_request_(false), sent_post_task_(false) {}
 
-MainThreadEventQueue::SharedState::~SharedState() {}
+MainThreadEventQueue::SharedState::~SharedState() = default;
 
 MainThreadEventQueue::MainThreadEventQueue(
     MainThreadEventQueueClient* client,
@@ -269,7 +269,7 @@ MainThreadEventQueue::MainThreadEventQueue(
   raf_fallback_timer_.SetTaskRunner(main_task_runner);
 }
 
-MainThreadEventQueue::~MainThreadEventQueue() {}
+MainThreadEventQueue::~MainThreadEventQueue() = default;
 
 void MainThreadEventQueue::HandleEvent(
     ui::WebScopedInputEvent event,

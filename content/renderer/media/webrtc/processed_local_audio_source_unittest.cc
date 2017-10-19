@@ -50,8 +50,8 @@ constexpr int kExpectedOutputBufferSize = kSampleRate / 100;
 
 class MockMediaStreamAudioSink : public MediaStreamAudioSink {
  public:
-  MockMediaStreamAudioSink() {}
-  ~MockMediaStreamAudioSink() override {}
+  MockMediaStreamAudioSink() = default;
+  ~MockMediaStreamAudioSink() override = default;
 
   void OnData(const media::AudioBus& audio_bus,
               base::TimeTicks estimated_capture_time) override {
@@ -76,9 +76,9 @@ class MockMediaStreamAudioSink : public MediaStreamAudioSink {
 
 class ProcessedLocalAudioSourceTest : public testing::Test {
  protected:
-  ProcessedLocalAudioSourceTest() {}
+  ProcessedLocalAudioSourceTest() = default;
 
-  ~ProcessedLocalAudioSourceTest() override {}
+  ~ProcessedLocalAudioSourceTest() override = default;
 
   void SetUp() override {
     blink_audio_source_.Initialize(blink::WebString::FromUTF8("audio_label"),

@@ -174,7 +174,7 @@ AudioInputMessageFilter::AudioInputIPCImpl::AudioInputIPCImpl(
       stream_id_(kStreamIDNotSet) {
 }
 
-AudioInputMessageFilter::AudioInputIPCImpl::~AudioInputIPCImpl() {}
+AudioInputMessageFilter::AudioInputIPCImpl::~AudioInputIPCImpl() = default;
 
 std::unique_ptr<media::AudioInputIPC>
 AudioInputMessageFilter::CreateAudioInputIPC(int render_frame_id) {

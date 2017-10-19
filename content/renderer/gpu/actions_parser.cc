@@ -58,7 +58,7 @@ ActionsParser::ActionsParser(base::Value* pointer_actions_value)
       pointer_actions_value_(pointer_actions_value),
       action_index_(0) {}
 
-ActionsParser::~ActionsParser() {}
+ActionsParser::~ActionsParser() = default;
 
 bool ActionsParser::ParsePointerActionSequence() {
   const base::ListValue* pointer_list;

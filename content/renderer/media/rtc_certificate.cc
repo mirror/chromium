@@ -19,8 +19,7 @@ RTCCertificate::RTCCertificate(
   DCHECK(certificate_);
 }
 
-RTCCertificate::~RTCCertificate() {
-}
+RTCCertificate::~RTCCertificate() = default;
 
 std::unique_ptr<blink::WebRTCCertificate> RTCCertificate::ShallowCopy() const {
   return base::WrapUnique(new RTCCertificate(certificate_));

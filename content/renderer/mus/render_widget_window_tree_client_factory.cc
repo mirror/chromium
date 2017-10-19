@@ -47,7 +47,7 @@ class RenderWidgetWindowTreeClientFactoryImpl
     main_thread_task_runner_ = base::ThreadTaskRunnerHandle::Get();
   }
 
-  ~RenderWidgetWindowTreeClientFactoryImpl() override {}
+  ~RenderWidgetWindowTreeClientFactoryImpl() override = default;
 
  private:
   // ConnectionFilter implementation:

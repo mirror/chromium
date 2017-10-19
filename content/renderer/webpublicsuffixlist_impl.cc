@@ -8,8 +8,7 @@
 
 namespace content {
 
-WebPublicSuffixListImpl::~WebPublicSuffixListImpl() {
-}
+WebPublicSuffixListImpl::~WebPublicSuffixListImpl() = default;
 
 size_t WebPublicSuffixListImpl::GetPublicSuffixLength(
     const blink::WebString& host) {

@@ -51,7 +51,7 @@ class CompositorDependencies {
   virtual bool IsThreadedAnimationEnabled() = 0;
   virtual bool IsScrollAnimatorEnabled() = 0;
 
-  virtual ~CompositorDependencies() {}
+  virtual ~CompositorDependencies() = default;
 };
 
 }  // namespace content

@@ -35,7 +35,7 @@ MidiMessageFilter::MidiMessageFilter(
       session_result_(Result::NOT_INITIALIZED),
       unacknowledged_bytes_sent_(0u) {}
 
-MidiMessageFilter::~MidiMessageFilter() {}
+MidiMessageFilter::~MidiMessageFilter() = default;
 
 void MidiMessageFilter::AddClient(blink::WebMIDIAccessorClient* client) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());

@@ -49,12 +49,9 @@ int GetSessionIdForWebRtcAudioRenderer() {
 
 }  // namespace
 
+MediaStreamRendererFactoryImpl::MediaStreamRendererFactoryImpl() = default;
 
-MediaStreamRendererFactoryImpl::MediaStreamRendererFactoryImpl() {
-}
-
-MediaStreamRendererFactoryImpl::~MediaStreamRendererFactoryImpl() {
-}
+MediaStreamRendererFactoryImpl::~MediaStreamRendererFactoryImpl() = default;
 
 scoped_refptr<MediaStreamVideoRenderer>
 MediaStreamRendererFactoryImpl::GetVideoRenderer(

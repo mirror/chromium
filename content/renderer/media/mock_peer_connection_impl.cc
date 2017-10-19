@@ -72,7 +72,7 @@ class MockStreamCollection : public webrtc::StreamCollectionInterface {
   }
 
  protected:
-  ~MockStreamCollection() override {}
+  ~MockStreamCollection() override = default;
 
  private:
   typedef std::vector<rtc::scoped_refptr<MediaStreamInterface> >
@@ -106,7 +106,7 @@ class MockDtmfSender : public DtmfSenderInterface {
   int inter_tone_gap() const override { return inter_tone_gap_; }
 
  protected:
-  ~MockDtmfSender() override {}
+  ~MockDtmfSender() override = default;
 
  private:
   rtc::scoped_refptr<AudioTrackInterface> track_;
@@ -120,7 +120,7 @@ FakeRtpReceiver::FakeRtpReceiver(
     rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track)
     : track_(track) {}
 
-FakeRtpReceiver::~FakeRtpReceiver() {}
+FakeRtpReceiver::~FakeRtpReceiver() = default;
 
 rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> FakeRtpReceiver::track()
     const {
@@ -172,7 +172,7 @@ MockPeerConnectionImpl::MockPeerConnectionImpl(
       this, &MockPeerConnectionImpl::SetRemoteDescriptionWorker));
 }
 
-MockPeerConnectionImpl::~MockPeerConnectionImpl() {}
+MockPeerConnectionImpl::~MockPeerConnectionImpl() = default;
 
 rtc::scoped_refptr<webrtc::StreamCollectionInterface>
 MockPeerConnectionImpl::local_streams() {

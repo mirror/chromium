@@ -53,8 +53,8 @@ MultiResolutionImageResourceFetcher::MultiResolutionImageResourceFetcher(
                  base::Unretained(this)));
 }
 
-MultiResolutionImageResourceFetcher::~MultiResolutionImageResourceFetcher() {
-}
+MultiResolutionImageResourceFetcher::~MultiResolutionImageResourceFetcher() =
+    default;
 
 void MultiResolutionImageResourceFetcher::OnURLFetchComplete(
     const WebURLResponse& response,

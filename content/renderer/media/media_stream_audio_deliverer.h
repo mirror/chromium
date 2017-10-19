@@ -27,8 +27,8 @@ namespace content {
 template <typename Consumer>
 class MediaStreamAudioDeliverer {
  public:
-  MediaStreamAudioDeliverer() {}
-  ~MediaStreamAudioDeliverer() {}
+  MediaStreamAudioDeliverer() = default;
+  ~MediaStreamAudioDeliverer() = default;
 
   // Returns the current audio parameters. These will be invalid before the
   // first call to OnSetFormat(). This method is thread-safe.

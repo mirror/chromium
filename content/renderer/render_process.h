@@ -28,7 +28,7 @@ class RenderProcess : public ChildProcess {
   RenderProcess(const std::string& task_scheduler_name,
                 std::unique_ptr<base::TaskScheduler::InitParams>
                     task_scheduler_init_params);
-  ~RenderProcess() override {}
+  ~RenderProcess() override = default;
 
   // Keep track of the cumulative set of enabled bindings for this process,
   // across any view.

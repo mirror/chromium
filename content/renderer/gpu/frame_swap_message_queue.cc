@@ -22,8 +22,8 @@ namespace content {
 
 class FrameSwapMessageSubQueue {
  public:
-  FrameSwapMessageSubQueue() {}
-  virtual ~FrameSwapMessageSubQueue() {}
+  FrameSwapMessageSubQueue() = default;
+  virtual ~FrameSwapMessageSubQueue() = default;
   virtual bool Empty() const = 0;
   virtual void QueueMessage(int source_frame_number,
                             std::unique_ptr<IPC::Message> msg,
@@ -42,7 +42,7 @@ namespace {
 class SendMessageScopeImpl : public FrameSwapMessageQueue::SendMessageScope {
  public:
   SendMessageScopeImpl(base::Lock* lock) : auto_lock_(*lock) {}
-  ~SendMessageScopeImpl() override {}
+  ~SendMessageScopeImpl() override = default;
 
  private:
   base::AutoLock auto_lock_;
@@ -86,7 +86,7 @@ class VisualStateQueue : public FrameSwapMessageSubQueue {
 // Queue specific to MESSAGE_DELIVERY_POLICY_WITH_NEXT_SWAP.
 class SwapQueue : public FrameSwapMessageSubQueue {
  public:
-  SwapQueue() {}
+  SwapQueue() = default;
   bool Empty() const override { return queue_.empty(); }
 
   void QueueMessage(int source_frame_number,
@@ -119,8 +119,7 @@ FrameSwapMessageQueue::FrameSwapMessageQueue(int32_t routing_id)
   DETACH_FROM_THREAD(impl_thread_checker_);
 }
 
-FrameSwapMessageQueue::~FrameSwapMessageQueue() {
-}
+FrameSwapMessageQueue::~FrameSwapMessageQueue() = default;
 
 bool FrameSwapMessageQueue::Empty() const {
   base::AutoLock lock(lock_);

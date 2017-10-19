@@ -33,8 +33,8 @@ namespace {
 
 class HeaderFlattener : public WebHTTPHeaderVisitor {
  public:
-  HeaderFlattener() {}
-  ~HeaderFlattener() override {}
+  HeaderFlattener() = default;
+  ~HeaderFlattener() override = default;
 
   const std::string& buffer() const { return buffer_; }
 

@@ -31,7 +31,7 @@ MockMediaStreamVideoSource::MockMediaStreamVideoSource(
       max_requested_frame_rate_(format.frame_rate),
       attempted_to_start_(false) {}
 
-MockMediaStreamVideoSource::~MockMediaStreamVideoSource() {}
+MockMediaStreamVideoSource::~MockMediaStreamVideoSource() = default;
 
 void MockMediaStreamVideoSource::StartMockedSource() {
   DCHECK(attempted_to_start_);

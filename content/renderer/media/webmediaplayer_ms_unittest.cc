@@ -38,7 +38,7 @@ class FakeWebMediaPlayerDelegate
     : public media::WebMediaPlayerDelegate,
       public base::SupportsWeakPtr<FakeWebMediaPlayerDelegate> {
  public:
-  FakeWebMediaPlayerDelegate() {}
+  FakeWebMediaPlayerDelegate() = default;
   ~FakeWebMediaPlayerDelegate() override {
     DCHECK(!observer_);
     DCHECK(is_gone_);
@@ -182,7 +182,7 @@ class MockMediaStreamVideoRenderer : public MediaStreamVideoRenderer {
   bool Paused() { return paused_; }
 
  private:
-  ~MockMediaStreamVideoRenderer() override {}
+  ~MockMediaStreamVideoRenderer() override = default;
 
   // Main function that pushes a frame into WebMediaPlayerMS
   void InjectFrame();
@@ -205,7 +205,7 @@ class MockMediaStreamVideoRenderer : public MediaStreamVideoRenderer {
 
 class MockMediaStreamAudioRenderer : public MediaStreamAudioRenderer {
  public:
-  MockMediaStreamAudioRenderer() {}
+  MockMediaStreamAudioRenderer() = default;
 
   void Start() override {}
   void Stop() override {}
@@ -227,7 +227,7 @@ class MockMediaStreamAudioRenderer : public MediaStreamAudioRenderer {
   bool IsLocalRenderer() const override { return true; }
 
  protected:
-  ~MockMediaStreamAudioRenderer() override {}
+  ~MockMediaStreamAudioRenderer() override = default;
 };
 
 void MockMediaStreamVideoRenderer::Start() {

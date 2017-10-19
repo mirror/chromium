@@ -23,11 +23,9 @@ BrowserPluginManager* BrowserPluginManager::Get() {
   return RenderThreadImpl::current()->browser_plugin_manager();
 }
 
-BrowserPluginManager::BrowserPluginManager() {
-}
+BrowserPluginManager::BrowserPluginManager() = default;
 
-BrowserPluginManager::~BrowserPluginManager() {
-}
+BrowserPluginManager::~BrowserPluginManager() = default;
 
 void BrowserPluginManager::AddBrowserPlugin(
     int browser_plugin_instance_id,

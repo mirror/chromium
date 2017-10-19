@@ -40,8 +40,8 @@ gin::WrapperInfo TestGinObject::kWrapperInfo = { gin::kEmbedderNativeGin };
 
 class GinBrowserTest : public RenderViewTest {
  public:
-  GinBrowserTest() {}
-  ~GinBrowserTest() override {}
+  GinBrowserTest() = default;
+  ~GinBrowserTest() override = default;
 
   void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(

@@ -47,7 +47,7 @@ PepperFileSystemHost::PepperFileSystemHost(RendererPpapiHost* host,
       root_url_(root_url),
       called_open_(true) {}
 
-PepperFileSystemHost::~PepperFileSystemHost() {}
+PepperFileSystemHost::~PepperFileSystemHost() = default;
 
 int32_t PepperFileSystemHost::OnResourceMessageReceived(
     const IPC::Message& msg,

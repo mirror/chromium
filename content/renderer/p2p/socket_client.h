@@ -41,8 +41,8 @@ class P2PSocketClient : public base::RefCountedThreadSafe<P2PSocketClient> {
   virtual void SetDelegate(P2PSocketClientDelegate* delegate) = 0;
 
  protected:
-  P2PSocketClient() {}
-  virtual ~P2PSocketClient() {}
+  P2PSocketClient() = default;
+  virtual ~P2PSocketClient() = default;
 
  private:
   // Calls destructor.

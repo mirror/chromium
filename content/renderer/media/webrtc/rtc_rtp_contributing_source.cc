@@ -14,7 +14,7 @@ RTCRtpContributingSource::RTCRtpContributingSource(
     const webrtc::RtpSource& source)
     : source_(source) {}
 
-RTCRtpContributingSource::~RTCRtpContributingSource() {}
+RTCRtpContributingSource::~RTCRtpContributingSource() = default;
 
 blink::WebRTCRtpContributingSourceType RTCRtpContributingSource::SourceType()
     const {

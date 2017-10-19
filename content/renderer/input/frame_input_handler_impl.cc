@@ -45,7 +45,7 @@ FrameInputHandlerImpl::FrameInputHandlerImpl(
   }
 }
 
-FrameInputHandlerImpl::~FrameInputHandlerImpl() {}
+FrameInputHandlerImpl::~FrameInputHandlerImpl() = default;
 
 // static
 void FrameInputHandlerImpl::CreateMojoService(

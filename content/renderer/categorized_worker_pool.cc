@@ -258,7 +258,7 @@ CategorizedWorkerPool::CreateSequencedTaskRunner() {
   return new CategorizedWorkerPoolSequencedTaskRunner(this);
 }
 
-CategorizedWorkerPool::~CategorizedWorkerPool() {}
+CategorizedWorkerPool::~CategorizedWorkerPool() = default;
 
 cc::NamespaceToken CategorizedWorkerPool::GenerateNamespaceToken() {
   base::AutoLock lock(lock_);
@@ -424,6 +424,6 @@ void CategorizedWorkerPool::ClosureTask::RunOnWorkerThread() {
   std::move(closure_).Run();
 }
 
-CategorizedWorkerPool::ClosureTask::~ClosureTask() {}
+CategorizedWorkerPool::ClosureTask::~ClosureTask() = default;
 
 }  // namespace content

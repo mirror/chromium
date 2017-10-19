@@ -52,7 +52,7 @@ RTCRtpSender::RTCRtpSender(
   DCHECK(track_adapter_ == webrtc_rtp_sender_->track());
 }
 
-RTCRtpSender::~RTCRtpSender() {}
+RTCRtpSender::~RTCRtpSender() = default;
 
 std::unique_ptr<RTCRtpSender> RTCRtpSender::ShallowCopy() const {
   std::vector<std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>

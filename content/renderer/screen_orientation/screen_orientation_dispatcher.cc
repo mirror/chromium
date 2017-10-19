@@ -16,8 +16,7 @@ ScreenOrientationDispatcher::ScreenOrientationDispatcher(
     : RenderFrameObserver(render_frame) {
 }
 
-ScreenOrientationDispatcher::~ScreenOrientationDispatcher() {
-}
+ScreenOrientationDispatcher::~ScreenOrientationDispatcher() = default;
 
 void ScreenOrientationDispatcher::OnDestruct() {
   delete this;

@@ -207,7 +207,7 @@ bool InputEventFilter::OnMessageReceived(const IPC::Message& message) {
   return true;
 }
 
-InputEventFilter::~InputEventFilter() {}
+InputEventFilter::~InputEventFilter() = default;
 
 void InputEventFilter::ForwardToHandler(int associated_routing_id,
                                         const IPC::Message& message,

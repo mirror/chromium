@@ -875,7 +875,7 @@ RenderFrameImpl::UniqueNameFrameAdapter::UniqueNameFrameAdapter(
     RenderFrameImpl* render_frame)
     : render_frame_(render_frame) {}
 
-RenderFrameImpl::UniqueNameFrameAdapter::~UniqueNameFrameAdapter() {}
+RenderFrameImpl::UniqueNameFrameAdapter::~UniqueNameFrameAdapter() = default;
 
 bool RenderFrameImpl::UniqueNameFrameAdapter::IsMainFrame() const {
   return render_frame_->IsMainFrame();
@@ -2166,8 +2166,7 @@ RenderFrameImpl::JavaScriptIsolatedWorldRequest::JavaScriptIsolatedWorldRequest(
 }
 
 RenderFrameImpl::JavaScriptIsolatedWorldRequest::
-    ~JavaScriptIsolatedWorldRequest() {
-}
+    ~JavaScriptIsolatedWorldRequest() = default;
 
 void RenderFrameImpl::JavaScriptIsolatedWorldRequest::Completed(
     const blink::WebVector<v8::Local<v8::Value>>& result) {

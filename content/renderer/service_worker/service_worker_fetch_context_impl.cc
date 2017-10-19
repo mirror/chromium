@@ -21,7 +21,7 @@ ServiceWorkerFetchContextImpl::ServiceWorkerFetchContextImpl(
           std::move(url_loader_factory_getter_info)),
       service_worker_provider_id_(service_worker_provider_id) {}
 
-ServiceWorkerFetchContextImpl::~ServiceWorkerFetchContextImpl() {}
+ServiceWorkerFetchContextImpl::~ServiceWorkerFetchContextImpl() = default;
 
 void ServiceWorkerFetchContextImpl::InitializeOnWorkerThread(
     scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner) {

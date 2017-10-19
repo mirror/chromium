@@ -31,8 +31,7 @@ DevToolsClient::DevToolsClient(RenderFrame* render_frame,
   }
 }
 
-DevToolsClient::~DevToolsClient() {
-}
+DevToolsClient::~DevToolsClient() = default;
 
 void DevToolsClient::DidClearWindowObject() {
   if (!api_script_.empty())

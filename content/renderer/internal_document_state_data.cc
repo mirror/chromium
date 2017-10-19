@@ -45,7 +45,6 @@ InternalDocumentStateData* InternalDocumentStateData::FromDocumentState(
   return data;
 }
 
-InternalDocumentStateData::~InternalDocumentStateData() {
-}
+InternalDocumentStateData::~InternalDocumentStateData() = default;
 
 }  // namespace content

@@ -78,7 +78,7 @@ class RTCCertificateGeneratorRequest
 
  private:
   friend class base::RefCountedThreadSafe<RTCCertificateGeneratorRequest>;
-  ~RTCCertificateGeneratorRequest() {}
+  ~RTCCertificateGeneratorRequest() = default;
 
   void GenerateCertificateOnWorkerThread(
       const blink::WebRTCKeyParams key_params,

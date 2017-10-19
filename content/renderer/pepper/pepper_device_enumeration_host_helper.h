@@ -42,7 +42,7 @@ class CONTENT_EXPORT PepperDeviceEnumerationHostHelper {
  public:
   class Delegate {
    public:
-    virtual ~Delegate() {}
+    virtual ~Delegate() = default;
 
     using DevicesCallback = base::Callback<void(
         const std::vector<ppapi::DeviceRefData>& /* devices */)>;

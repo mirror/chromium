@@ -39,8 +39,7 @@ uint32_t GetCurrentCursorPositionInFrame(blink::WebLocalFrame* localFrame) {
 TextInputClientObserver::TextInputClientObserver(RenderWidget* render_widget)
     : render_widget_(render_widget) {}
 
-TextInputClientObserver::~TextInputClientObserver() {
-}
+TextInputClientObserver::~TextInputClientObserver() = default;
 
 bool TextInputClientObserver::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;

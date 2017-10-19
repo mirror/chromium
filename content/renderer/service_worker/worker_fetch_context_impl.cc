@@ -25,7 +25,7 @@ WorkerFetchContextImpl::WorkerFetchContextImpl(
           std::move(url_loader_factory_getter_info)),
       thread_safe_sender_(ChildThreadImpl::current()->thread_safe_sender()) {}
 
-WorkerFetchContextImpl::~WorkerFetchContextImpl() {}
+WorkerFetchContextImpl::~WorkerFetchContextImpl() = default;
 
 void WorkerFetchContextImpl::InitializeOnWorkerThread(
     scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner) {

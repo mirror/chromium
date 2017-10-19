@@ -15,8 +15,7 @@ MockMediaStreamVideoSink::MockMediaStreamVideoSink()
       state_(blink::WebMediaStreamSource::kReadyStateLive),
       weak_factory_(this) {}
 
-MockMediaStreamVideoSink::~MockMediaStreamVideoSink() {
-}
+MockMediaStreamVideoSink::~MockMediaStreamVideoSink() = default;
 
 VideoCaptureDeliverFrameCB
 MockMediaStreamVideoSink::GetDeliverFrameCB() {

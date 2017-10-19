@@ -38,6 +38,6 @@ bool HostResourceVar::IsPending() const {
   return pp_resource_ == 0 && creation_message_;
 }
 
-HostResourceVar::~HostResourceVar() {}
+HostResourceVar::~HostResourceVar() = default;
 
 }  // namespace content

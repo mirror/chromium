@@ -97,7 +97,7 @@ RTCVideoEncoderFactory::RTCVideoEncoderFactory(
   CHECK_EQ(profiles_.size(), supported_codecs_.size());
 }
 
-RTCVideoEncoderFactory::~RTCVideoEncoderFactory() {}
+RTCVideoEncoderFactory::~RTCVideoEncoderFactory() = default;
 
 webrtc::VideoEncoder* RTCVideoEncoderFactory::CreateVideoEncoder(
     const cricket::VideoCodec& codec) {

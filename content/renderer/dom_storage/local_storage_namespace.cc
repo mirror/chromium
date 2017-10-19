@@ -21,8 +21,7 @@ LocalStorageNamespace::LocalStorageNamespace(
     : local_storage_cached_areas_(local_storage_cached_areas) {
 }
 
-LocalStorageNamespace::~LocalStorageNamespace() {
-}
+LocalStorageNamespace::~LocalStorageNamespace() = default;
 
 WebStorageArea* LocalStorageNamespace::CreateStorageArea(
     const blink::WebSecurityOrigin& origin) {

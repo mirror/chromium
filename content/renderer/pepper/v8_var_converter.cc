@@ -298,7 +298,7 @@ V8VarConverter::V8VarConverter(
       object_vars_allowed_(kDisallowObjectVars),
       resource_converter_(resource_converter.release()) {}
 
-V8VarConverter::~V8VarConverter() {}
+V8VarConverter::~V8VarConverter() = default;
 
 // To/FromV8Value use a stack-based DFS search to traverse V8/Var graph. Each
 // iteration, the top node on the stack examined. If the node has not been

@@ -28,7 +28,7 @@ class MessageImpl : public WebDevToolsAgent::MessageDescriptor {
         msg_(message),
         routing_id_(routing_id) {
   }
-  ~MessageImpl() override {}
+  ~MessageImpl() override = default;
   WebDevToolsAgent* Agent() override {
     DevToolsAgent* agent = DevToolsAgent::FromRoutingId(routing_id_);
     if (!agent)
@@ -60,7 +60,7 @@ bool DevToolsAgentFilter::OnMessageReceived(const IPC::Message& message) {
   return false;
 }
 
-DevToolsAgentFilter::~DevToolsAgentFilter() {}
+DevToolsAgentFilter::~DevToolsAgentFilter() = default;
 
 void DevToolsAgentFilter::OnDispatchOnInspectorBackend(
     int session_id,

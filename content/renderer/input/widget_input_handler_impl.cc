@@ -63,7 +63,7 @@ WidgetInputHandlerImpl::WidgetInputHandlerImpl(
       binding_(this),
       associated_binding_(this) {}
 
-WidgetInputHandlerImpl::~WidgetInputHandlerImpl() {}
+WidgetInputHandlerImpl::~WidgetInputHandlerImpl() = default;
 
 void WidgetInputHandlerImpl::SetAssociatedBinding(
     mojom::WidgetInputHandlerAssociatedRequest request) {

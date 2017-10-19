@@ -18,8 +18,8 @@ namespace content {
 // rtc::RTCCertificate and content::RTCCertificate.
 class RTCCertificateGenerator : public blink::WebRTCCertificateGenerator {
  public:
-  RTCCertificateGenerator() {}
-  ~RTCCertificateGenerator() override {}
+  RTCCertificateGenerator() = default;
+  ~RTCCertificateGenerator() override = default;
 
   // blink::WebRTCCertificateGenerator implementation.
   void GenerateCertificate(

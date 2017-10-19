@@ -70,8 +70,7 @@ WebRtcVideoFrameAdapter::WebRtcVideoFrameAdapter(
     const CopyTextureFrameCallback& copy_texture_callback)
     : frame_(frame), copy_texture_callback_(copy_texture_callback) {}
 
-WebRtcVideoFrameAdapter::~WebRtcVideoFrameAdapter() {
-}
+WebRtcVideoFrameAdapter::~WebRtcVideoFrameAdapter() = default;
 
 webrtc::VideoFrameBuffer::Type WebRtcVideoFrameAdapter::type() const {
   return Type::kNative;

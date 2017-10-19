@@ -31,7 +31,7 @@ MockWebRTCPeerConnectionHandlerClient()
 }
 
 MockWebRTCPeerConnectionHandlerClient::
-~MockWebRTCPeerConnectionHandlerClient() {}
+    ~MockWebRTCPeerConnectionHandlerClient() = default;
 
 void MockWebRTCPeerConnectionHandlerClient::didGenerateICECandidateWorker(
     const blink::WebRTCICECandidate& candidate) {

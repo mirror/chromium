@@ -65,7 +65,7 @@ class CompositorExternalBeginFrameSource
    private:
     friend class base::RefCountedThreadSafe<
                      CompositorExternalBeginFrameSourceProxy>;
-    virtual ~CompositorExternalBeginFrameSourceProxy() {}
+    virtual ~CompositorExternalBeginFrameSourceProxy() = default;
 
     CompositorExternalBeginFrameSource* begin_frame_source_;
 

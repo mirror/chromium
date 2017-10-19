@@ -91,7 +91,7 @@ class CONTENT_EXPORT RenderWidgetCompositorDelegate {
       std::unique_ptr<viz::CopyOutputRequest> request) = 0;
 
  protected:
-  virtual ~RenderWidgetCompositorDelegate() {}
+  virtual ~RenderWidgetCompositorDelegate() = default;
 };
 
 }  // namespace content

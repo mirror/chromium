@@ -88,9 +88,8 @@ MediaStreamRemoteVideoSource::RemoteVideoSourceDelegate::
       time_diff_(base::TimeTicks::Now() - base::TimeTicks() -
                  base::TimeDelta::FromMicroseconds(rtc::TimeMicros())) {}
 
-MediaStreamRemoteVideoSource::
-RemoteVideoSourceDelegate::~RemoteVideoSourceDelegate() {
-}
+MediaStreamRemoteVideoSource::RemoteVideoSourceDelegate::
+    ~RemoteVideoSourceDelegate() = default;
 
 namespace {
 void DoNothing(const scoped_refptr<rtc::RefCountInterface>& ref) {}

@@ -17,8 +17,7 @@
 
 namespace content {
 
-RendererClipboardDelegate::RendererClipboardDelegate() {
-}
+RendererClipboardDelegate::RendererClipboardDelegate() = default;
 
 uint64_t RendererClipboardDelegate::GetSequenceNumber(ui::ClipboardType type) {
   uint64_t sequence_number = 0;

@@ -92,7 +92,7 @@ void WidgetInputHandlerManager::Init() {
   }
 }
 
-WidgetInputHandlerManager::~WidgetInputHandlerManager() {}
+WidgetInputHandlerManager::~WidgetInputHandlerManager() = default;
 
 void WidgetInputHandlerManager::AddAssociatedInterface(
     mojom::WidgetInputHandlerAssociatedRequest request) {

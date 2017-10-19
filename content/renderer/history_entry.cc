@@ -67,8 +67,7 @@ HistoryEntry::HistoryNode::HistoryNode(const base::WeakPtr<HistoryEntry>& entry,
     set_item(item);
 }
 
-HistoryEntry::HistoryNode::~HistoryNode() {
-}
+HistoryEntry::HistoryNode::~HistoryNode() = default;
 
 std::vector<HistoryEntry::HistoryNode*> HistoryEntry::HistoryNode::children()
     const {
@@ -90,8 +89,7 @@ HistoryEntry::HistoryEntry() : weak_ptr_factory_(this) {
       new HistoryNode(weak_ptr_factory_.GetWeakPtr(), WebHistoryItem()));
 }
 
-HistoryEntry::~HistoryEntry() {
-}
+HistoryEntry::~HistoryEntry() = default;
 
 HistoryEntry::HistoryEntry(const WebHistoryItem& root)
     : weak_ptr_factory_(this) {

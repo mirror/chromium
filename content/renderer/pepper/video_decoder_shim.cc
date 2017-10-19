@@ -606,8 +606,7 @@ VideoDecoderShim::PendingDecode::PendingDecode(
     : decode_id(decode_id), buffer(buffer) {
 }
 
-VideoDecoderShim::PendingDecode::~PendingDecode() {
-}
+VideoDecoderShim::PendingDecode::~PendingDecode() = default;
 
 struct VideoDecoderShim::PendingFrame {
   explicit PendingFrame(uint32_t decode_id);
@@ -633,8 +632,7 @@ VideoDecoderShim::PendingFrame::PendingFrame(
     : decode_id(decode_id), video_frame(frame) {
 }
 
-VideoDecoderShim::PendingFrame::~PendingFrame() {
-}
+VideoDecoderShim::PendingFrame::~PendingFrame() = default;
 
 // DecoderImpl runs the underlying VideoDecoder on the media thread, receiving
 // calls from the VideoDecodeShim on the main thread and sending results back.

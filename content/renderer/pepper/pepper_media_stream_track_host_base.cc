@@ -31,7 +31,7 @@ PepperMediaStreamTrackHostBase::PepperMediaStreamTrackHostBase(
       host_(host),
       buffer_manager_(this) {}
 
-PepperMediaStreamTrackHostBase::~PepperMediaStreamTrackHostBase() {}
+PepperMediaStreamTrackHostBase::~PepperMediaStreamTrackHostBase() = default;
 
 bool PepperMediaStreamTrackHostBase::InitBuffers(int32_t number_of_buffers,
                                                  int32_t buffer_size,

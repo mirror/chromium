@@ -23,7 +23,7 @@ namespace {
 class HeaderVisitor : public blink::WebHTTPHeaderVisitor {
  public:
   explicit HeaderVisitor(ServiceWorkerHeaderMap* headers) : headers_(headers) {}
-  ~HeaderVisitor() override {}
+  ~HeaderVisitor() override = default;
 
   void VisitHeader(const blink::WebString& name,
                    const blink::WebString& value) override {

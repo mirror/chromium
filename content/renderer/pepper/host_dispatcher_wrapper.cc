@@ -31,7 +31,7 @@ HostDispatcherWrapper::HostDispatcherWrapper(
       permissions_(perms),
       is_external_(is_external) {}
 
-HostDispatcherWrapper::~HostDispatcherWrapper() {}
+HostDispatcherWrapper::~HostDispatcherWrapper() = default;
 
 bool HostDispatcherWrapper::Init(const IPC::ChannelHandle& channel_handle,
                                  PP_GetInterface_Func local_get_interface,

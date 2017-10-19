@@ -129,7 +129,7 @@ ReportTimeSwapPromise::ReportTimeSwapPromise(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner)
     : callback_(callback), task_runner_(task_runner) {}
 
-ReportTimeSwapPromise::~ReportTimeSwapPromise() {}
+ReportTimeSwapPromise::~ReportTimeSwapPromise() = default;
 
 void ReportTimeSwapPromise::DidSwap() {
   task_runner_->PostTask(

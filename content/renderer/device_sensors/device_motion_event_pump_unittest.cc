@@ -46,7 +46,7 @@ class MockDeviceMotionListener : public blink::WebDeviceMotionListener {
       : did_change_device_motion_(false), number_of_events_(0) {
     memset(&data_, 0, sizeof(data_));
   }
-  ~MockDeviceMotionListener() override {}
+  ~MockDeviceMotionListener() override = default;
 
   void DidChangeDeviceMotion(const device::MotionData& data) override {
     memcpy(&data_, &data, sizeof(data));
@@ -74,7 +74,7 @@ class DeviceMotionEventPumpForTesting : public DeviceMotionEventPump {
  public:
   DeviceMotionEventPumpForTesting()
       : DeviceMotionEventPump(nullptr), stop_on_fire_event_(true) {}
-  ~DeviceMotionEventPumpForTesting() override {}
+  ~DeviceMotionEventPumpForTesting() override = default;
 
   // DeviceMotionEventPump:
   void SendStartMessage() override {

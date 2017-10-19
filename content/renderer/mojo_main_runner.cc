@@ -31,8 +31,7 @@ MojoMainRunner::MojoMainRunner(blink::WebLocalFrame* frame,
   gin::PerContextData::From(context_holder->context())->set_runner(this);
 }
 
-MojoMainRunner::~MojoMainRunner() {
-}
+MojoMainRunner::~MojoMainRunner() = default;
 
 void MojoMainRunner::Run(const std::string& source,
                          const std::string& resource_name) {

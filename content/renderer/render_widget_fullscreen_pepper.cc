@@ -111,8 +111,7 @@ FullscreenMouseLockDispatcher::FullscreenMouseLockDispatcher(
     RenderWidgetFullscreenPepper* widget) : widget_(widget) {
 }
 
-FullscreenMouseLockDispatcher::~FullscreenMouseLockDispatcher() {
-}
+FullscreenMouseLockDispatcher::~FullscreenMouseLockDispatcher() = default;
 
 void FullscreenMouseLockDispatcher::SendLockMouseRequest() {
   widget_->Send(new ViewHostMsg_LockMouse(widget_->routing_id(), false, true));
@@ -131,7 +130,7 @@ class PepperWidget : public WebWidget {
       : widget_(widget) {
   }
 
-  virtual ~PepperWidget() {}
+  virtual ~PepperWidget() = default;
 
   // WebWidget API
   void Close() override { delete this; }
@@ -286,8 +285,7 @@ RenderWidgetFullscreenPepper::RenderWidgetFullscreenPepper(
       layer_(NULL),
       mouse_lock_dispatcher_(new FullscreenMouseLockDispatcher(this)) {}
 
-RenderWidgetFullscreenPepper::~RenderWidgetFullscreenPepper() {
-}
+RenderWidgetFullscreenPepper::~RenderWidgetFullscreenPepper() = default;
 
 void RenderWidgetFullscreenPepper::Invalidate() {
   InvalidateRect(gfx::Rect(size_.width(), size_.height()));

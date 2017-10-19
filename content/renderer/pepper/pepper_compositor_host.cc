@@ -147,7 +147,7 @@ PepperCompositorHost::LayerData::LayerData(
 
 PepperCompositorHost::LayerData::LayerData(const LayerData& other) = default;
 
-PepperCompositorHost::LayerData::~LayerData() {}
+PepperCompositorHost::LayerData::~LayerData() = default;
 
 PepperCompositorHost::PepperCompositorHost(
     RendererPpapiHost* host,

@@ -21,7 +21,7 @@ LocalStorageCachedAreas::LocalStorageCachedAreas(
                              ? kTotalCacheLimitInBytesLowEnd
                              : kTotalCacheLimitInBytes) {}
 
-LocalStorageCachedAreas::~LocalStorageCachedAreas() {}
+LocalStorageCachedAreas::~LocalStorageCachedAreas() = default;
 
 scoped_refptr<LocalStorageCachedArea> LocalStorageCachedAreas::GetCachedArea(
     const url::Origin& origin) {

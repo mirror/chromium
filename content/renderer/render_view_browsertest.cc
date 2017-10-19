@@ -223,7 +223,7 @@ class RenderViewImplTest : public RenderViewTest {
     mock_keyboard_.reset(new MockKeyboard());
   }
 
-  ~RenderViewImplTest() override {}
+  ~RenderViewImplTest() override = default;
 
   void SetUp() override {
     // Enable Blink's experimental and test only features so that test code

@@ -47,7 +47,7 @@ PepperInProcessResourceCreation::PepperInProcessResourceCreation(
     PepperPluginInstanceImpl* instance)
     : ResourceCreationImpl(instance), host_impl_(host_impl) {}
 
-PepperInProcessResourceCreation::~PepperInProcessResourceCreation() {}
+PepperInProcessResourceCreation::~PepperInProcessResourceCreation() = default;
 
 PP_Resource PepperInProcessResourceCreation::CreateBrowserFont(
     PP_Instance instance,

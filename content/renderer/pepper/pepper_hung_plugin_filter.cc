@@ -74,7 +74,7 @@ bool PepperHungPluginFilter::OnMessageReceived(const IPC::Message& message) {
   return false;
 }
 
-PepperHungPluginFilter::~PepperHungPluginFilter() {}
+PepperHungPluginFilter::~PepperHungPluginFilter() = default;
 
 void PepperHungPluginFilter::EnsureTimerScheduled() {
   lock_.AssertAcquired();

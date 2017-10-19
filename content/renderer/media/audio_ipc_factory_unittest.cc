@@ -37,7 +37,7 @@ std::unique_ptr<base::Thread> MakeIOThread() {
 class FakeRemoteFactory : public mojom::RendererAudioOutputStreamFactory {
  public:
   FakeRemoteFactory() : binding_(this) {}
-  ~FakeRemoteFactory() override {}
+  ~FakeRemoteFactory() override = default;
 
   void RequestDeviceAuthorization(
       media::mojom::AudioOutputStreamProviderRequest stream_provider,
@@ -81,8 +81,8 @@ class FakeAudioIPCDelegate : public media::AudioOutputIPCDelegate {
 
 class AudioIPCFactoryTest : public testing::Test {
  public:
-  AudioIPCFactoryTest() {}
-  ~AudioIPCFactoryTest() override {}
+  AudioIPCFactoryTest() = default;
+  ~AudioIPCFactoryTest() override = default;
 
   void RequestAuthorizationOnIOThread(
       std::unique_ptr<media::AudioOutputIPC> output_ipc) {

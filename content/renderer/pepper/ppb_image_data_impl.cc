@@ -54,7 +54,7 @@ PPB_ImageData_Impl::PPB_ImageData_Impl(PP_Instance instance, ForTest)
   backend_.reset(new ImageDataPlatformBackend());
 }
 
-PPB_ImageData_Impl::~PPB_ImageData_Impl() {}
+PPB_ImageData_Impl::~PPB_ImageData_Impl() = default;
 
 bool PPB_ImageData_Impl::Init(PP_ImageDataFormat format,
                               int width,
@@ -128,8 +128,7 @@ SkBitmap PPB_ImageData_Impl::GetMappedBitmap() const {
 ImageDataPlatformBackend::ImageDataPlatformBackend() : width_(0), height_(0) {
 }
 
-ImageDataPlatformBackend::~ImageDataPlatformBackend() {
-}
+ImageDataPlatformBackend::~ImageDataPlatformBackend() = default;
 
 bool ImageDataPlatformBackend::Init(PPB_ImageData_Impl* impl,
                                     PP_ImageDataFormat format,
@@ -216,7 +215,7 @@ SkBitmap ImageDataPlatformBackend::GetMappedBitmap() const {
 
 ImageDataSimpleBackend::ImageDataSimpleBackend() : map_count_(0) {}
 
-ImageDataSimpleBackend::~ImageDataSimpleBackend() {}
+ImageDataSimpleBackend::~ImageDataSimpleBackend() = default;
 
 bool ImageDataSimpleBackend::Init(PPB_ImageData_Impl* impl,
                                   PP_ImageDataFormat format,

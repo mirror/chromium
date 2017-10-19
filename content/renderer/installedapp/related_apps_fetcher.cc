@@ -16,7 +16,7 @@ namespace content {
 RelatedAppsFetcher::RelatedAppsFetcher(ManifestManager* manifest_manager)
     : manifest_manager_(manifest_manager) {}
 
-RelatedAppsFetcher::~RelatedAppsFetcher() {}
+RelatedAppsFetcher::~RelatedAppsFetcher() = default;
 
 void RelatedAppsFetcher::GetManifestRelatedApplications(
     std::unique_ptr<blink::WebCallbacks<

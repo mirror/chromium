@@ -414,7 +414,6 @@ PepperVideoCaptureHost::BufferInfo::BufferInfo()
 PepperVideoCaptureHost::BufferInfo::BufferInfo(const BufferInfo& other) =
     default;
 
-PepperVideoCaptureHost::BufferInfo::~BufferInfo() {
-}
+PepperVideoCaptureHost::BufferInfo::~BufferInfo() = default;
 
 }  // namespace content

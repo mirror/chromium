@@ -34,8 +34,7 @@ MojoBindingsController::MojoBindingsController(RenderFrame* render_frame,
       RenderFrameObserverTracker<MojoBindingsController>(render_frame),
       bindings_type_(bindings_type) {}
 
-MojoBindingsController::~MojoBindingsController() {
-}
+MojoBindingsController::~MojoBindingsController() = default;
 
 void MojoBindingsController::CreateContextState() {
   v8::HandleScope handle_scope(blink::MainThreadIsolate());

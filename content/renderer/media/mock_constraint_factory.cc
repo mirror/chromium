@@ -13,9 +13,9 @@
 
 namespace content {
 
-MockConstraintFactory::MockConstraintFactory() {}
+MockConstraintFactory::MockConstraintFactory() = default;
 
-MockConstraintFactory::~MockConstraintFactory() {}
+MockConstraintFactory::~MockConstraintFactory() = default;
 
 blink::WebMediaTrackConstraintSet& MockConstraintFactory::AddAdvanced() {
   advanced_.emplace_back();

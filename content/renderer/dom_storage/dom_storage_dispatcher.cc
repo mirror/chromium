@@ -39,7 +39,7 @@ class MessageThrottlingFilter : public IPC::MessageFilter {
   void Shutdown() { sender_ = NULL; }
 
  private:
-  ~MessageThrottlingFilter() override {}
+  ~MessageThrottlingFilter() override = default;
 
   bool OnMessageReceived(const IPC::Message& message) override;
 
@@ -139,7 +139,7 @@ class DomStorageDispatcher::ProxyImpl : public DOMStorageProxy {
   typedef std::map<std::string, CachedAreaHolder> CachedAreaMap;
   typedef std::list<CompletionCallback> CallbackList;
 
-  ~ProxyImpl() override {}
+  ~ProxyImpl() override = default;
 
   void PushPendingCallback(const CompletionCallback& callback) {
     // Terminate the renderer if an excessive number of calls are made,

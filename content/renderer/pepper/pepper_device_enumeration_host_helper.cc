@@ -134,7 +134,8 @@ PepperDeviceEnumerationHostHelper::PepperDeviceEnumerationHostHelper(
       delegate_(delegate),
       device_type_(device_type) {}
 
-PepperDeviceEnumerationHostHelper::~PepperDeviceEnumerationHostHelper() {}
+PepperDeviceEnumerationHostHelper::~PepperDeviceEnumerationHostHelper() =
+    default;
 
 bool PepperDeviceEnumerationHostHelper::HandleResourceMessage(
     const IPC::Message& msg,

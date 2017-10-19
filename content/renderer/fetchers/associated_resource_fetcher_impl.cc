@@ -37,7 +37,7 @@ class AssociatedResourceFetcherImpl::ClientImpl
   explicit ClientImpl(const Callback& callback)
       : completed_(false), status_(LOADING), callback_(callback) {}
 
-  ~ClientImpl() override {}
+  ~ClientImpl() override = default;
 
   virtual void Cancel() { OnLoadCompleteInternal(LOAD_FAILED); }
 

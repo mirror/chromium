@@ -229,7 +229,7 @@ class RendererBlinkPlatformImpl::FileUtilities : public WebFileUtilitiesImpl {
 class RendererBlinkPlatformImpl::SandboxSupport
     : public blink::WebSandboxSupport {
  public:
-  virtual ~SandboxSupport() {}
+  virtual ~SandboxSupport() = default;
 
 #if defined(OS_MACOSX)
   bool LoadFont(NSFont* src_font,

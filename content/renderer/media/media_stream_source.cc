@@ -11,8 +11,7 @@ namespace content {
 
 const char MediaStreamSource::kSourceId[] = "sourceId";
 
-MediaStreamSource::MediaStreamSource() {
-}
+MediaStreamSource::MediaStreamSource() = default;
 
 MediaStreamSource::~MediaStreamSource() {
   DCHECK(thread_checker_.CalledOnValidThread());

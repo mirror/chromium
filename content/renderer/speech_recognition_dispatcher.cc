@@ -39,7 +39,7 @@ SpeechRecognitionDispatcher::SpeechRecognitionDispatcher(
       recognizer_client_(NULL),
       next_id_(1) {}
 
-SpeechRecognitionDispatcher::~SpeechRecognitionDispatcher() {}
+SpeechRecognitionDispatcher::~SpeechRecognitionDispatcher() = default;
 
 void SpeechRecognitionDispatcher::AbortAllRecognitions() {
   ResetAudioSink();

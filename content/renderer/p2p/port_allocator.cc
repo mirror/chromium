@@ -52,7 +52,7 @@ P2PPortAllocator::P2PPortAllocator(
   }
 }
 
-P2PPortAllocator::~P2PPortAllocator() {}
+P2PPortAllocator::~P2PPortAllocator() = default;
 
 void P2PPortAllocator::Initialize() {
   BasicPortAllocator::Initialize();

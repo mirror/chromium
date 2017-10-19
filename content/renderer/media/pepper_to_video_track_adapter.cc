@@ -82,8 +82,7 @@ PpFrameWriter::FrameWriterDelegate::FrameWriterDelegate(
     : io_task_runner_(io_task_runner), new_frame_callback_(new_frame_callback) {
 }
 
-PpFrameWriter::FrameWriterDelegate::~FrameWriterDelegate() {
-}
+PpFrameWriter::FrameWriterDelegate::~FrameWriterDelegate() = default;
 
 void PpFrameWriter::FrameWriterDelegate::DeliverFrame(
     const scoped_refptr<media::VideoFrame>& frame) {
@@ -190,7 +189,7 @@ class PpFrameWriterProxy : public FrameWriterInterface {
     DCHECK(writer_);
   }
 
-  ~PpFrameWriterProxy() override {}
+  ~PpFrameWriterProxy() override = default;
 
   void PutFrame(PPB_ImageData_Impl* image_data,
                 int64_t time_stamp_ns) override {

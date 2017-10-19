@@ -19,7 +19,7 @@ DeviceOrientationEventPumpBase::DeviceOrientationEventPumpBase(
     RenderThread* thread)
     : DeviceSensorEventPump<blink::WebDeviceOrientationListener>(thread) {}
 
-DeviceOrientationEventPumpBase::~DeviceOrientationEventPumpBase() {}
+DeviceOrientationEventPumpBase::~DeviceOrientationEventPumpBase() = default;
 
 void DeviceOrientationEventPumpBase::FireEvent() {
   DCHECK(listener());

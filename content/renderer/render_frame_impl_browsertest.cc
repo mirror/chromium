@@ -50,7 +50,7 @@ namespace content {
 // of process frame even though it is in the same process as its parent.
 class RenderFrameImplTest : public RenderViewTest {
  public:
-  ~RenderFrameImplTest() override {}
+  ~RenderFrameImplTest() override = default;
 
   void SetUp() override {
     blink::WebRuntimeFeatures::EnableOverlayScrollbars(
@@ -130,7 +130,7 @@ class RenderFrameTestObserver : public RenderFrameObserver {
   explicit RenderFrameTestObserver(RenderFrame* render_frame)
       : RenderFrameObserver(render_frame), visible_(false) {}
 
-  ~RenderFrameTestObserver() override {}
+  ~RenderFrameTestObserver() override = default;
 
   // RenderFrameObserver implementation.
   void WasShown() override { visible_ = true; }

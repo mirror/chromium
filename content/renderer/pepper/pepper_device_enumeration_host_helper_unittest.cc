@@ -106,7 +106,7 @@ class PepperDeviceEnumerationHostHelperTest : public testing::Test {
                             PP_DEVICETYPE_DEV_AUDIOCAPTURE,
                             GURL("http://example.com")) {}
 
-  ~PepperDeviceEnumerationHostHelperTest() override {}
+  ~PepperDeviceEnumerationHostHelperTest() override = default;
 
   void SimulateMonitorDeviceChangeReceived(uint32_t callback_id) {
     PpapiHostMsg_DeviceEnumeration_MonitorDeviceChange msg(callback_id);

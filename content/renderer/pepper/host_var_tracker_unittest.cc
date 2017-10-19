@@ -69,7 +69,7 @@ class PepperTryCatchForTest : public PepperTryCatch {
 
 class HostVarTrackerTest : public PpapiUnittest {
  public:
-  HostVarTrackerTest() {}
+  HostVarTrackerTest() = default;
 
   void TearDown() override {
     v8::Isolate::GetCurrent()->RequestGarbageCollectionForTesting(

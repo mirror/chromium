@@ -79,7 +79,7 @@ LocalStorageCachedArea::LocalStorageCachedArea(
   leveldb_->AddObserver(std::move(ptr_info));
 }
 
-LocalStorageCachedArea::~LocalStorageCachedArea() {}
+LocalStorageCachedArea::~LocalStorageCachedArea() = default;
 
 unsigned LocalStorageCachedArea::GetLength() {
   EnsureLoaded();

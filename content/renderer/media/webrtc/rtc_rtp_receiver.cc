@@ -28,7 +28,7 @@ RTCRtpReceiver::RTCRtpReceiver(
   DCHECK(track_adapter_);
 }
 
-RTCRtpReceiver::~RTCRtpReceiver() {}
+RTCRtpReceiver::~RTCRtpReceiver() = default;
 
 std::unique_ptr<RTCRtpReceiver> RTCRtpReceiver::ShallowCopy() const {
   std::vector<std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>

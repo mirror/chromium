@@ -32,7 +32,7 @@ class CONTENT_EXPORT RenderWidgetOwnerDelegate {
       const blink::WebMouseEvent& event) = 0;
 
  protected:
-  virtual ~RenderWidgetOwnerDelegate() {}
+  virtual ~RenderWidgetOwnerDelegate() = default;
 };
 
 }  // namespace content

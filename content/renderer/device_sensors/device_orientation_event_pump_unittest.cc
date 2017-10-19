@@ -26,7 +26,7 @@ class MockDeviceOrientationListener
   MockDeviceOrientationListener() : did_change_device_orientation_(false) {
     memset(&data_, 0, sizeof(data_));
   }
-  ~MockDeviceOrientationListener() override {}
+  ~MockDeviceOrientationListener() override = default;
 
   void DidChangeDeviceOrientation(
       const device::OrientationData& data) override {
@@ -53,7 +53,7 @@ class DeviceOrientationEventPumpForTesting : public DeviceOrientationEventPump {
  public:
   DeviceOrientationEventPumpForTesting()
       : DeviceOrientationEventPump(nullptr) {}
-  ~DeviceOrientationEventPumpForTesting() override {}
+  ~DeviceOrientationEventPumpForTesting() override = default;
 
   void DidStart(mojo::ScopedSharedBufferHandle renderer_handle) {
     DeviceOrientationEventPump::DidStart(std::move(renderer_handle));

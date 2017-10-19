@@ -18,7 +18,7 @@ class MockResource : public ppapi::Resource {
       : Resource(ppapi::OBJECT_IS_IMPL, instance) {}
 
  private:
-  ~MockResource() override {}
+  ~MockResource() override = default;
 };
 
 }  // namespace content

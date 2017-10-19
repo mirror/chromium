@@ -94,7 +94,7 @@ class TestRemoteFactory : public mojom::RendererAudioOutputStreamFactory {
       : expect_request_(false),
         binding_(this, mojo::MakeRequest(&this_proxy_)) {}
 
-  ~TestRemoteFactory() override {}
+  ~TestRemoteFactory() override = default;
 
   void RequestDeviceAuthorization(
       media::mojom::AudioOutputStreamProviderRequest stream_provider_request,
@@ -177,8 +177,8 @@ class MockStream : public media::mojom::AudioOutputStream {
 
 class MockDelegate : public media::AudioOutputIPCDelegate {
  public:
-  MockDelegate() {}
-  ~MockDelegate() override {}
+  MockDelegate() = default;
+  ~MockDelegate() override = default;
 
   void OnStreamCreated(base::SharedMemoryHandle mem_handle,
                        base::SyncSocket::Handle socket_handle) {
