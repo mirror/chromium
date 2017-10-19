@@ -425,6 +425,7 @@ bool ParamTraits<viz::RenderPass>::Read(const base::Pickle* m,
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"),
                "ParamTraits::RenderPass::Read");
   uint64_t id;
+  float temperature;
   gfx::Rect output_rect;
   gfx::Rect damage_rect;
   gfx::Transform transform_to_root_target;
@@ -438,8 +439,8 @@ bool ParamTraits<viz::RenderPass>::Read(const base::Pickle* m,
 
   uint32_t quad_list_size;
 
-  if (!ReadParam(m, iter, &id) || !ReadParam(m, iter, &output_rect) ||
-      !ReadParam(m, iter, &damage_rect) ||
+  if (!ReadParam(m, iter, &id) || !ReadParam(m, iter, &temperature) ||
+      !ReadParam(m, iter, &output_rect) || !ReadParam(m, iter, &damage_rect) ||
       !ReadParam(m, iter, &transform_to_root_target) ||
       !ReadParam(m, iter, &filters) ||
       !ReadParam(m, iter, &background_filters) ||
@@ -451,10 +452,10 @@ bool ParamTraits<viz::RenderPass>::Read(const base::Pickle* m,
       !ReadParam(m, iter, &quad_list_size))
     return false;
 
-  p->SetAll(id, output_rect, damage_rect, transform_to_root_target, filters,
-            background_filters, color_space, has_transparent_background,
-            cache_render_pass, has_damage_from_contributing_content,
-            generate_mipmap);
+  p->SetAll(id, temperature, output_rect, damage_rect, transform_to_root_target,
+            filters, background_filters, color_space,
+            has_transparent_background, cache_render_pass,
+            has_damage_from_contributing_content, generate_mipmap);
 
   for (uint32_t i = 0; i < quad_list_size; ++i) {
     viz::DrawQuad::Material material;

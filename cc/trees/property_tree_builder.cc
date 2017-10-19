@@ -682,6 +682,14 @@ static inline int NumDescendantsThatDrawContent(LayerImpl* layer) {
   return num_descendants_that_draw_content;
 }
 
+static inline float ColorTemperature(Layer* layer) {
+  return layer->color_temperature();
+}
+
+static inline float ColorTemperature(LayerImpl* layer) {
+  return layer->test_properties()->color_temperature;
+}
+
 static inline float EffectiveOpacity(Layer* layer) {
   return layer->EffectiveOpacity();
 }
@@ -756,6 +764,9 @@ bool ShouldCreateRenderSurface(LayerType* layer,
       current_transform.Preserves2dAxisAlignment() && animation_axis_aligned;
   const bool is_root = !Parent(layer);
   if (is_root)
+    return true;
+
+  if (ColorTemperature(layer) > 0.0f)
     return true;
 
   // If the layer uses a mask.
@@ -910,6 +921,7 @@ bool PropertyTreeBuilderContext<LayerType>::AddEffectNodeIfNeeded(
     LayerType* layer,
     DataForRecursion<LayerType>* data_for_children) const {
   const bool is_root = !Parent(layer);
+  const bool has_temperature = ColorTemperature(layer) > 0.f;
   const bool has_transparency = EffectiveOpacity(layer) != 1.f;
   const bool has_potential_opacity_animation =
       HasPotentialOpacityAnimation(layer);
@@ -933,9 +945,10 @@ bool PropertyTreeBuilderContext<LayerType>::AddEffectNodeIfNeeded(
   bool has_non_axis_aligned_clip =
       not_axis_aligned_since_last_clip && LayerClipsSubtree(layer);
 
-  bool requires_node =
-      is_root || has_transparency || has_potential_opacity_animation ||
-      has_non_axis_aligned_clip || should_create_render_surface;
+  bool requires_node = is_root || has_transparency || has_temperature ||
+                       has_potential_opacity_animation ||
+                       has_non_axis_aligned_clip ||
+                       should_create_render_surface;
 
   int parent_id = data_from_ancestor.effect_tree_parent;
 
@@ -949,6 +962,7 @@ bool PropertyTreeBuilderContext<LayerType>::AddEffectNodeIfNeeded(
   EffectNode* node = effect_tree_.back();
 
   node->stable_id = layer->id();
+  node->color_temperature = ColorTemperature(layer);
   node->opacity = Opacity(layer);
   node->blend_mode = BlendMode(layer);
   node->unscaled_mask_target_size = layer->bounds();
