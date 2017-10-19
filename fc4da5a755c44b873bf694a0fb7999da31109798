@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "933933ac_44882c7f",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-19T23:16:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9205ef93_f1d78006",
+      "revId": "fc4da5a755c44b873bf694a0fb7999da31109798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00bf76ca_6154d057",
         "filename": "content/browser/appcache/appcache_subresource_url_factory.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f86343d5_3048b198",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-19T23:16:54Z",
+      "side": 1,
+      "message": "I\u0027ve made the TODO more formal. I think I\u0027d like to commit what I\u0027ve got now and to start work on unittests immediately. We\u0027re not regressing on unittesting since there were no unittests for the equivalent logic pre-refactor (so we\u0027re in no worse position), and we start getting bake time on the production code changes.\n\nEither way, I expect to have unittests ready early next week.",
+      "parentUuid": "00bf76ca_6154d057",
+      "revId": "fc4da5a755c44b873bf694a0fb7999da31109798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6194187_62898fab",
         "filename": "content/browser/appcache/appcache_url_loader_request.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-19T07:00:54Z",
       "side": 1,
       "message": "Would we also need to call something like this... in case we don\u0027t call network_loader_-\u003eFollowRedirect?\n\nhttps://cs.chromium.org/chromium/src/net/url_request/redirect_util.h?sq\u003dpackage:chromium\u0026l\u003d24",
+      "revId": "fc4da5a755c44b873bf694a0fb7999da31109798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e37f9f_8e511849",
+        "filename": "content/browser/appcache/appcache_url_loader_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-19T23:16:54Z",
+      "side": 1,
+      "message": "Done, Thnx.\n\nI think in practice it\u0027s safe not to because the appcache doesn\u0027t rely on any of the header values that are updated by UpdateHttpRequest(), but it\u0027s probably a good idea for the sake of future proof\u0027age (the \u0027origin\u0027 header seems like it could come into play).",
+      "parentUuid": "e6194187_62898fab",
       "revId": "fc4da5a755c44b873bf694a0fb7999da31109798",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
