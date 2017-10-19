@@ -16,6 +16,24 @@
       "revId": "8a8997210055ba84753f6a333def51f830006bf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58fc4ca_ff432524",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-19T21:29:40Z",
+      "side": 0,
+      "message": "I think so.  The new code should mostly mimic the else branch here - |tab_strip_model()-\u003eAddWebContents(...)| is also called in case of NEW_FOREGROUND_TAB toward the end of chrome::Navigate.  OTOH, I am not really sure\n\n1) why the code below special-cases CanSupportWindowFeature(FEATURE_TABSTRIP).\n2) why explicit calls to SetBounds and Show are needed.\n\nDo you think we can ask somebody else to take a look here?  FWIW, it seems to work fine.",
+      "parentUuid": "457847d6_e1963cf4",
+      "revId": "8a8997210055ba84753f6a333def51f830006bf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
