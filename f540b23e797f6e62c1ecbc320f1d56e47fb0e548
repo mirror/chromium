@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40c29458_b6e7f870",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-19T00:58:41Z",
+      "side": 1,
+      "message": "Should we have controller/ here?\n\nIn terms of access privilege to //base types, I think that controller/ should be the same as core/ and modules/.",
+      "revId": "f540b23e797f6e62c1ecbc320f1d56e47fb0e548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
