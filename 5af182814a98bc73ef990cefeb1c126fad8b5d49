@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "9636aa8e_487e51d5",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-19T21:36:35Z",
+      "side": 1,
+      "message": "It should be fine to use WebSandboxFlags in chrome/ since it\u0027s just an enum.  We\u0027ve got a whole bunch of other uses of things from third_party/WebKit/public/web in chrome/: https://cs.chromium.org/search/?q\u003d%22%23include+%5C%22third_party/WebKit/%22+file:chrome/\u0026p\u003d2\u0026sq\u003dpackage:chromium\u0026type\u003dcs.  Was there something that actually disallowed that when you tried it?",
+      "parentUuid": "ee8e4009_5b806649",
+      "range": {
+        "startLine": 693,
+        "startChar": 1,
+        "endLine": 711,
+        "endChar": 3
+      },
+      "revId": "5af182814a98bc73ef990cefeb1c126fad8b5d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca831e21_8d94cf82",
         "filename": "content/public/browser/web_contents.h",
         "patchSetId": 16
