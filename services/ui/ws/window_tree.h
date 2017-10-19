@@ -428,7 +428,10 @@ class WindowTree : public mojom::WindowTree,
       const display::Display& display_to_create,
       const display::ViewportMetrics& transport_viewport_metrics,
       bool is_primary_display,
-      const ClientWindowId& client_window_id);
+      const ClientWindowId& client_window_id,
+      const std::vector<display::Display>& software_mirroring_display_list,
+      display::DisplayManager::MultiDisplayMode mode,
+      int64_t mirroring_display_id);
 
   bool ProcessSwapDisplayRoots(int64_t display_id1, int64_t display_id2);
   bool ProcessSetBlockingContainers(std::vector<mojom::BlockingContainersPtr>
@@ -577,12 +580,18 @@ class WindowTree : public mojom::WindowTree,
                       mojom::WmViewportMetricsPtr viewport_metrics,
                       bool is_primary_display,
                       Id window_id,
+                      const std::vector<display::Display>& software_mirroring_display_list,
+                      display::DisplayManager::MultiDisplayMode mode,
+                      int64_t mirroring_display_id,
                       const SetDisplayRootCallback& callback) override;
   void SetDisplayConfiguration(
       const std::vector<display::Display>& displays,
       std::vector<ui::mojom::WmViewportMetricsPtr> transport_metrics,
       int64_t primary_display_id,
       int64_t internal_display_id,
+      const std::vector<display::Display>& software_mirroring_display_list,
+      display::DisplayManager::MultiDisplayMode mode,
+      int64_t mirroring_display_id,
       const SetDisplayConfigurationCallback& callback) override;
   void SwapDisplayRoots(int64_t display_id1,
                         int64_t display_id2,

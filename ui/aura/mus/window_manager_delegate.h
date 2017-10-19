@@ -124,7 +124,10 @@ class AURA_EXPORT WindowManagerClient {
   virtual void SetDisplayConfiguration(
       const std::vector<display::Display>& displays,
       std::vector<ui::mojom::WmViewportMetricsPtr> viewport_metrics,
-      int64_t primary_display_id) = 0;
+      int64_t primary_display_id,
+      const std::vector<display::Display>& software_mirroring_display_list,
+      display::DisplayManager::MultiDisplayMode mode,
+      int64_t mirroring_display_id) = 0;
 
   // Adds |display| as a new display moving |window_tree_host| to the new
   // display. This results in closing the previous display |window_tree_host|

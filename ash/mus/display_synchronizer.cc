@@ -56,9 +56,13 @@ void DisplaySynchronizer::SendDisplayConfigurationToServer() {
     viewport_metrics->ui_scale_factor = display_info.configured_ui_scale();
     metrics.push_back(std::move(viewport_metrics));
   }
+  LOG(ERROR) << "MSW DisplaySynchronizer::SendDisplayConfigurationToServer " << displays.size() << "/" << display_manager->software_mirroring_display_list().size() << "/" << display_manager->multi_display_mode() << "/" << display_manager->mirroring_display_id();
   window_manager_client_->SetDisplayConfiguration(
       displays, std::move(metrics),
-      WindowTreeHostManager::GetPrimaryDisplayId());
+      WindowTreeHostManager::GetPrimaryDisplayId(),
+      display_manager->software_mirroring_display_list(),
+      display_manager->multi_display_mode(),
+      display_manager->mirroring_display_id());
 
   sent_initial_config_ = true;
 }

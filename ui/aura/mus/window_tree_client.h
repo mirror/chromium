@@ -522,7 +522,10 @@ class AURA_EXPORT WindowTreeClient
   void SetDisplayConfiguration(
       const std::vector<display::Display>& displays,
       std::vector<ui::mojom::WmViewportMetricsPtr> viewport_metrics,
-      int64_t primary_display_id) override;
+      int64_t primary_display_id,
+      const std::vector<display::Display>& software_mirroring_display_list,
+      display::DisplayManager::MultiDisplayMode mode,
+      int64_t mirroring_display_id) override;
   void AddDisplayReusingWindowTreeHost(
       WindowTreeHostMus* window_tree_host,
       const display::Display& display,

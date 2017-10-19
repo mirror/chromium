@@ -57,7 +57,10 @@ class DisplayManager : public UserIdTrackerObserver,
       const std::vector<display::Display>& displays,
       const std::vector<display::ViewportMetrics>& viewport_metrics,
       int64_t primary_display_id,
-      int64_t internal_display_id);
+      int64_t internal_display_id,
+      const std::vector<display::Display>& software_mirroring_display_list,
+      display::DisplayManager::MultiDisplayMode mode,
+      int64_t mirroring_display_id);
 
   // Returns the UserDisplayManager for |user_id|. DisplayManager owns the
   // return value.

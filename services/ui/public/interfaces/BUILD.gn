@@ -65,9 +65,11 @@ source_set("tests") {
   sources = [
     "cursor/cursor_struct_traits_unittest.cc",
     "ime/ime_struct_traits_unittest.cc",
+    "window_manager_struct_traits_unittest.cc",
   ]
 
   deps = [
+   ":interfaces",
     "//base",
     "//base/test:test_support",
     "//services/ui/public/interfaces/cursor",

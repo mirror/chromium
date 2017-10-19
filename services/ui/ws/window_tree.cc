@@ -308,7 +308,10 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
     const display::Display& display_to_create,
     const display::ViewportMetrics& viewport_metrics,
     bool is_primary_display,
-    const ClientWindowId& client_window_id) {
+    const ClientWindowId& client_window_id,
+    const std::vector<display::Display>& software_mirroring_display_list,
+    display::DisplayManager::MultiDisplayMode mode,
+    int64_t mirroring_display_id) {
   DCHECK(window_manager_state_);  // Only called for window manager.
   DVLOG(3) << "SetDisplayRoot client=" << id_
            << " global window_id=" << client_window_id.ToString();
@@ -338,6 +341,13 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
     return nullptr;
   }
 
+  LOG(ERROR) << "MSW WindowTree::ProcessSetDisplayRoot " << software_mirroring_display_list.size() << "/" << mode << "/" << mirroring_display_id; 
+  if (!software_mirroring_display_list.empty() ||
+      mode != display::DisplayManager::EXTENDED ||
+      mirroring_display_id != display::kInvalidDisplayId) {
+    NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus unified/mirroring modes.";
+  }
+
   Display* display = display_manager()->AddDisplayForWindowManager(
       is_primary_display, display_to_create, viewport_metrics);
   DCHECK(display);
@@ -347,7 +357,7 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
   DCHECK(display_root);
   DCHECK(display_root->root()->children().empty());
 
-  // NOTE: this doesn't resize the window in anyway. We assume the client takes
+  // NOTE: this doesn't resize the window in any way. We assume the client takes
   // care of any modifications it needs to do.
   roots_.insert(window);
   Operation op(this, window_server_, OperationType::ADD_WINDOW);
@@ -2439,14 +2449,19 @@ void WindowTree::SetKeyEventsThatDontHideCursor(
       std::move(dont_hide_cursor_list));
 }
 
-void WindowTree::SetDisplayRoot(const display::Display& display,
-                                mojom::WmViewportMetricsPtr viewport_metrics,
-                                bool is_primary_display,
-                                Id window_id,
-                                const SetDisplayRootCallback& callback) {
+void WindowTree::SetDisplayRoot(
+    const display::Display& display,
+    mojom::WmViewportMetricsPtr viewport_metrics,
+    bool is_primary_display,
+    Id window_id,
+    const std::vector<display::Display>& software_mirroring_display_list,
+    display::DisplayManager::MultiDisplayMode mode,
+    int64_t mirroring_display_id,
+    const SetDisplayRootCallback& callback) {
   ServerWindow* display_root = ProcessSetDisplayRoot(
       display, TransportMetricsToDisplayMetrics(*viewport_metrics),
-      is_primary_display, MakeClientWindowId(window_id));
+      is_primary_display, MakeClientWindowId(window_id),
+      software_mirroring_display_list, mode, mirroring_display_id);
   if (!display_root) {
     callback.Run(false);
     return;
@@ -2460,12 +2475,16 @@ void WindowTree::SetDisplayConfiguration(
     std::vector<ui::mojom::WmViewportMetricsPtr> transport_metrics,
     int64_t primary_display_id,
     int64_t internal_display_id,
+    const std::vector<display::Display>& software_mirroring_display_list,
+    display::DisplayManager::MultiDisplayMode mode,
+    int64_t mirroring_display_id,
     const SetDisplayConfigurationCallback& callback) {
   std::vector<display::ViewportMetrics> metrics;
   for (auto& transport_ptr : transport_metrics)
     metrics.push_back(TransportMetricsToDisplayMetrics(*transport_ptr));
   callback.Run(display_manager()->SetDisplayConfiguration(
-      displays, metrics, primary_display_id, internal_display_id));
+      displays, metrics, primary_display_id, internal_display_id,
+      software_mirroring_display_list, mode, mirroring_display_id));
 }
 
 void WindowTree::SwapDisplayRoots(int64_t display_id1,

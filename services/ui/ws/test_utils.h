@@ -150,7 +150,10 @@ class WindowTreeTestApi {
                              bool is_primary_display,
                              const ClientWindowId& client_window_id) {
     return tree_->ProcessSetDisplayRoot(display_to_create, viewport_metrics,
-                                        is_primary_display, client_window_id);
+                                        is_primary_display, client_window_id,
+                                        std::vector<display::Display>(),
+                                        display::DisplayManager::EXTENDED,
+                                        display::kInvalidDisplayId);
   }
 
   bool ProcessSwapDisplayRoots(int64_t display_id1, int64_t display_id2) {

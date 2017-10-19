@@ -66,6 +66,18 @@ enum WindowType {
   UNKNOWN,
 };
 
+// How secondary displays will be used.
+// 1) EXTENDED mode extends the desktop to additional dislpays.
+// 2) MIRRORING mode copies the content of the primary display to
+//    the 2nd display (Software Mirroring). Does not support 3+ displays.
+// 3) UNIFIED mode creates single virtual desktop across multiple displays.
+// See display::DisplayManager::MultiDisplayMode.
+enum MultiDisplayMode {
+  EXTENDED,
+  MIRRORING,
+  UNIFIED,
+};
+
 // Used when the window manager explicitly adds a new display.
 struct WmViewportMetrics {
   gfx.mojom.Rect bounds_in_pixels;

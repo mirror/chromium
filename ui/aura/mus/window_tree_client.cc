@@ -828,9 +828,12 @@ void WindowTreeClient::OnWindowMusCreated(WindowMus* window) {
             display_init_params->viewport_metrics.bounds_in_pixels.size()));
 
     if (window_manager_client_) {
+      LOG(ERROR) << "MSW WindowTreeClient::OnWindowMusCreated, calling SetDisplayRoot.";
       window_manager_client_->SetDisplayRoot(
           display, display_init_params->viewport_metrics.Clone(),
           display_init_params->is_primary_display, window->server_id(),
+          display_init_params->software_mirroring_display_list,
+          display_init_params->mode, display_init_params->mirroring_display_id,
           base::Bind(&OnAckMustSucceed));
     }
   }
@@ -2088,16 +2091,21 @@ void WindowTreeClient::RequestClose(Window* window) {
 void WindowTreeClient::SetDisplayConfiguration(
     const std::vector<display::Display>& displays,
     std::vector<ui::mojom::WmViewportMetricsPtr> viewport_metrics,
-    int64_t primary_display_id) {
+    int64_t primary_display_id,
+    const std::vector<display::Display>& software_mirroring_display_list,
+    display::DisplayManager::MultiDisplayMode mode,
+    int64_t mirroring_display_id) {
   DCHECK_EQ(displays.size(), viewport_metrics.size());
   if (window_manager_client_) {
     const int64_t internal_display_id =
         display::Display::HasInternalDisplay()
             ? display::Display::InternalDisplayId()
             : display::kInvalidDisplayId;
+    LOG(ERROR) << "MSW WindowTreeClient::SetDisplayConfiguration"; 
     window_manager_client_->SetDisplayConfiguration(
         displays, std::move(viewport_metrics), primary_display_id,
-        internal_display_id, base::Bind(&OnAckMustSucceed));
+        internal_display_id, software_mirroring_display_list, mode,
+        mirroring_display_id, base::Bind(&OnAckMustSucceed));
   }
 }
 
@@ -2112,9 +2120,12 @@ void WindowTreeClient::AddDisplayReusingWindowTreeHost(
     // after this SetDisplayConfiguration() is called.
     const bool is_primary_display = true;
     WindowMus* display_root_window = WindowMus::Get(window_tree_host->window());
+    LOG(ERROR) << "MSW WindowTreeClient::AddDisplayReusingWindowTreeHost NO DETAILS...";
     window_manager_client_->SetDisplayRoot(
         display, std::move(viewport_metrics), is_primary_display,
-        display_root_window->server_id(), base::Bind(&OnAckMustSucceed));
+        display_root_window->server_id(), std::vector<display::Display>(),
+        display::DisplayManager::EXTENDED, display::kInvalidDisplayId,
+        base::Bind(&OnAckMustSucceed));
     window_tree_host->compositor()->SetLocalSurfaceId(
         display_root_window->GetOrAllocateLocalSurfaceId(
             window_tree_host->GetBoundsInPixels().size()));

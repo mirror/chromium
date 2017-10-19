@@ -30,6 +30,7 @@ void WindowManagerWindowTreeFactory::CreateWindowTree(
     mojom::WindowTreeRequest window_tree_request,
     mojom::WindowTreeClientPtr window_tree_client,
     bool automatically_create_display_roots) {
+  LOG(ERROR) << "MSW WindowManagerWindowTreeFactory::CreateWindowTree() " << automatically_create_display_roots;
   if (window_tree_) {
     DVLOG(1) << "CreateWindowTree() called more than once.";
     return;
