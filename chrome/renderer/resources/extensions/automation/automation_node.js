@@ -825,7 +825,8 @@ var boolAttributes = [
     'containerLiveAtomic',
     'containerLiveBusy',
     'liveAtomic',
-    'scrollable'
+    'scrollable',
+    'crossRootWebArea'
 ];
 
 var intAttributes = [
