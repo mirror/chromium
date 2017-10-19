@@ -176,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "3d2316d0_13623f26",
+        "filename": "ui/gfx/test/fontconfig_util_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-19T11:28:37Z",
+      "side": 1,
+      "message": "I would prefer the one per line, but this is indeed what clang-format did to it, for better or worse.",
+      "parentUuid": "6811dc73_69311848",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20e8848d_f23847d2",
         "filename": "ui/gfx/test/fontconfig_util_linux.cc",
         "patchSetId": 2
@@ -190,6 +208,24 @@
       "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4ecf43_d2250710",
+        "filename": "ui/gfx/test/fontconfig_util_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-19T11:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20e8848d_f23847d2",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "b96fe73c_cb358c15",
+        "filename": "ui/gfx/test/fontconfig_util_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-19T11:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82f92c96_cca7e2f7",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8937039_c6af4ea9",
         "filename": "ui/gfx/test/fontconfig_util_linux.cc",
         "patchSetId": 2
@@ -224,6 +278,24 @@
       "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7220ba1_d3618988",
+        "filename": "ui/gfx/test/fontconfig_util_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-19T11:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8937039_c6af4ea9",
+      "revId": "965847b47157d2a1cbf8b3787fa6be7e88bf7f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
