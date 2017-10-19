@@ -52,6 +52,24 @@
       "revId": "fc0947e6b072ce632ae4e382c8f883cd28aab681",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b63e2334_ccaf8b7b",
+        "filename": "testing/buildbot/chromium.perf.fyi.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116018
+      },
+      "writtenOn": "2017-10-19T19:55:37Z",
+      "side": 1,
+      "message": "Sorry wasn\u0027t clear, meant that the data being sent to the dashboard is basically just fake data in this case for the dummy histogram benchmark (I think it just sends a fixed number), so it didn\u0027t seem like it mattered which browser was run.",
+      "parentUuid": "5fc03def_88a545c2",
+      "revId": "fc0947e6b072ce632ae4e382c8f883cd28aab681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
