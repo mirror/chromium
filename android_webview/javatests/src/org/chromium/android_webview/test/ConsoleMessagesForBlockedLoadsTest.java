@@ -21,7 +21,9 @@ import org.chromium.android_webview.AwConsoleMessage;
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.test.util.CommonResources;
+import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
+import org.chromium.content.common.ContentSwitches;
 import org.chromium.net.test.util.TestWebServer;
 
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ import java.util.List;
  * by the embedder via WebChromeClient.onConsoleMessage.
  */
 @RunWith(AwJUnit4ClassRunner.class)
+@CommandLineFlags.Add(ContentSwitches.HOST_RESOLVER_RULES + "=MAP * 127.0.0.1")
 public class ConsoleMessagesForBlockedLoadsTest {
     @Rule
     public AwActivityTestRule mActivityTestRule = new AwActivityTestRule();
@@ -56,7 +59,7 @@ public class ConsoleMessagesForBlockedLoadsTest {
     }
 
     private void startWebServer() throws Exception {
-        mWebServer = TestWebServer.start();
+        mWebServer = TestWebServer.start(0, "example.test");
     }
 
     private AwConsoleMessage getSingleErrorMessage() {
