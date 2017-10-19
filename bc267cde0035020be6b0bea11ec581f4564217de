@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "006d97ec_a64fdfc0",
+        "filename": "build/toolchain/win/rc/rc.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-19T17:45:06Z",
+      "side": 1,
+      "message": "Weeeeeeeeeeeeeee",
+      "revId": "bc267cde0035020be6b0bea11ec581f4564217de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
