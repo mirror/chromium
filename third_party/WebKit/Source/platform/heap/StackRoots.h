@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 Google Inc. All rights reserved.
+ * Copyright (C) 2013 Google Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -28,22 +28,41 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "modules/webdatabase/sqlite/SQLiteFileSystem.h"
+#ifndef StackRoots_h
+#define StackRoots_h
 
-#include "platform/heap/Handle.h"
-#include "platform/wtf/text/CString.h"
-#include "third_party/sqlite/sqlite3.h"
+#include "build/build_config.h"
+#include "platform/heap/BlinkGC.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Vector.h"
 
-// SQLiteFileSystem::registerSQLiteVFS() is implemented in the
-// platform-specific files SQLiteFileSystemChromium{Win|Posix}.cpp
 namespace blink {
 
-SQLiteFileSystem::SQLiteFileSystem() {}
+class ThreadHeap;
 
-int SQLiteFileSystem::OpenDatabase(const String& filename, sqlite3** database) {
-  return sqlite3_open_v2(filename.Utf8().data(), database,
-                         SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,
-                         "chromium_vfs");
-}
+class StackRoots final {
+  WTF_MAKE_NONCOPYABLE(StackRoots);
+
+ public:
+  explicit StackRoots(ThreadHeap*);
+  void Visit(Visitor*);
+  void RecordStackEnd(intptr_t* end_of_stack) { end_of_stack_ = end_of_stack; }
+
+ private:
+  void CopyStackUntilMarker(void* marker);
+  void VisitAsanFakeStackForPointer(Visitor*, Address ptr);
+
+  ThreadHeap* heap_;
+#if defined(ADDRESS_SANITIZER)
+  void* asan_fake_stack_;
+#endif
+  intptr_t* start_of_stack_;
+  intptr_t* end_of_stack_;
+  Vector<Address> stack_copy_;
+  void* marker_;
+};
 
 }  // namespace blink
+
+#endif  // StackRoots_h
