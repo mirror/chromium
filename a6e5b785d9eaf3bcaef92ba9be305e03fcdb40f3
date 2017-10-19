@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "224234d6_5aa97e49",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-19T14:42:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "02956609_5812d4ff",
+      "range": {
+        "startLine": 578,
+        "startChar": 6,
+        "endLine": 578,
+        "endChar": 30
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "885203f7_f61df93d",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 10
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "b8e50967_982b6392",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-19T14:42:18Z",
+      "side": 1,
+      "message": "I mean that the yielded python string will include \u0027\\0\u0027, which is slightly unintuitive, and so warrants a quick comment.  Note that line 382 (in this patch) does the same.",
+      "parentUuid": "b6853703_1ef54b51",
+      "range": {
+        "startLine": 378,
+        "startChar": 43,
+        "endLine": 378,
+        "endChar": 44
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb024204_c71c9ba5",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 10
@@ -187,6 +235,30 @@
       "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeafa587_ef2cb9a0",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-19T14:42:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "133e050a_46967f7f",
+      "range": {
+        "startLine": 422,
+        "startChar": 10,
+        "endLine": 422,
+        "endChar": 38
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -331,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "124f2a7b_8d33e8ee",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-19T14:42:18Z",
+      "side": 1,
+      "message": "You can do:\n  \u0027%x:%x\u0027 % (offset, len(value))\nor\n  \u0027{:x}:{:x}\u0027.format(offset, len(value))",
+      "parentUuid": "d353bab7_84133453",
+      "range": {
+        "startLine": 436,
+        "startChar": 12,
+        "endLine": 436,
+        "endChar": 48
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aceba564_3d7fb923",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 10
@@ -425,6 +521,30 @@
     },
     {
       "key": {
+        "uuid": "41d32f34_2957afa1",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-19T14:42:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b14bdbb_87730ecd",
+      "range": {
+        "startLine": 520,
+        "startChar": 9,
+        "endLine": 520,
+        "endChar": 24
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "280d265d_4d58b6f8",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 10
@@ -504,6 +624,24 @@
       "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3dae42_65be57df",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-19T14:42:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e68b3d9e_cdca16d0",
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
