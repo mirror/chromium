@@ -87,7 +87,7 @@ bool VideoTrackToPepperAdapter::Open(const std::string& url,
 
 bool VideoTrackToPepperAdapter::Close(FrameReaderInterface* reader) {
   DCHECK(thread_checker_. CalledOnValidThread());
-  SourceInfoMap::iterator it = reader_to_receiver_.find(reader);
+  auto it = reader_to_receiver_.find(reader);
   if (it == reader_to_receiver_.end())
     return false;
   delete it->second;

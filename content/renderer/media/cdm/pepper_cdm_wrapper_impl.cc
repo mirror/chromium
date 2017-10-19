@@ -55,7 +55,7 @@ std::unique_ptr<PepperCdmWrapper> PepperCdmWrapperImpl::Create(
   DCHECK(!plugin->IsPlaceholder());  // Prevented by Blink.
 
   // Only Pepper plugins are supported, so it must ultimately be a ppapi object.
-  PepperWebPluginImpl* ppapi_plugin = static_cast<PepperWebPluginImpl*>(plugin);
+  auto* ppapi_plugin = static_cast<PepperWebPluginImpl*>(plugin);
   scoped_refptr<PepperPluginInstanceImpl> plugin_instance =
       ppapi_plugin->instance();
   if (!plugin_instance.get())

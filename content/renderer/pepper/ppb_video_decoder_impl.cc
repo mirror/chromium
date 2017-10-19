@@ -116,8 +116,7 @@ bool PPB_VideoDecoder_Impl::Init(PP_Resource graphics_context,
   if (enter_context.failed())
     return false;
 
-  PPB_Graphics3D_Impl* graphics_3d =
-      static_cast<PPB_Graphics3D_Impl*>(enter_context.object());
+  auto* graphics_3d = static_cast<PPB_Graphics3D_Impl*>(enter_context.object());
 
   gpu::CommandBufferProxyImpl* command_buffer =
       graphics_3d->GetCommandBufferProxy();
@@ -161,7 +160,7 @@ int32_t PPB_VideoDecoder_Impl::Decode(
   if (enter.failed())
     return PP_ERROR_FAILED;
 
-  PPB_Buffer_Impl* buffer = static_cast<PPB_Buffer_Impl*>(enter.object());
+  auto* buffer = static_cast<PPB_Buffer_Impl*>(enter.object());
   DCHECK_GE(bitstream_buffer->id, 0);
   media::BitstreamBuffer decode_buffer(bitstream_buffer->id,
                                        buffer->shared_memory()->handle(),

@@ -160,7 +160,7 @@ RenderFrameProxy* RenderFrameProxy::CreateFrameProxy(
 // static
 RenderFrameProxy* RenderFrameProxy::FromRoutingID(int32_t routing_id) {
   RoutingIDProxyMap* proxies = g_routing_id_proxy_map.Pointer();
-  RoutingIDProxyMap::iterator it = proxies->find(routing_id);
+  auto it = proxies->find(routing_id);
   return it == proxies->end() ? NULL : it->second;
 }
 
@@ -169,7 +169,7 @@ RenderFrameProxy* RenderFrameProxy::FromWebFrame(
     blink::WebRemoteFrame* web_frame) {
   // TODO(dcheng): Turn this into a DCHECK() if it doesn't crash on canary.
   CHECK(web_frame);
-  FrameMap::iterator iter = g_frame_map.Get().find(web_frame);
+  auto iter = g_frame_map.Get().find(web_frame);
   if (iter != g_frame_map.Get().end()) {
     RenderFrameProxy* proxy = iter->second;
     DCHECK_EQ(web_frame, proxy->web_frame());
@@ -525,7 +525,7 @@ void RenderFrameProxy::FrameDetached(DetachType type) {
 
   // Remove the entry in the WebFrame->RenderFrameProxy map, as the |web_frame_|
   // is no longer valid.
-  FrameMap::iterator it = g_frame_map.Get().find(web_frame_);
+  auto it = g_frame_map.Get().find(web_frame_);
   CHECK(it != g_frame_map.Get().end());
   CHECK_EQ(it->second, this);
   g_frame_map.Get().erase(it);

@@ -152,7 +152,7 @@ int32_t PepperFileChooserHost::OnShow(
   params.requestor = renderer_ppapi_host_->GetDocumentURL(pp_instance());
 
   handler_ = new CompletionHandler(AsWeakPtr());
-  RenderFrameImpl* render_frame = static_cast<RenderFrameImpl*>(
+  auto* render_frame = static_cast<RenderFrameImpl*>(
       renderer_ppapi_host_->GetRenderFrameForInstance(pp_instance()));
 
   if (!render_frame || !render_frame->ScheduleFileChooser(params, handler_)) {
@@ -174,7 +174,7 @@ void PepperFileChooserHost::DidCreateResourceHosts(
 
   std::vector<ppapi::FileRefCreateInfo> chosen_files;
   for (size_t i = 0; i < browser_ids.size(); ++i) {
-    PepperFileRefRendererHost* renderer_host = new PepperFileRefRendererHost(
+    auto* renderer_host = new PepperFileRefRendererHost(
         renderer_ppapi_host_, pp_instance(), 0, file_paths[i]);
     int renderer_id =
         renderer_ppapi_host_->GetPpapiHost()->AddPendingResourceHost(

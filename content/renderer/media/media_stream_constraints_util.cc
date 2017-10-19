@@ -269,8 +269,8 @@ VideoTrackAdapterSettings SelectVideoTrackAdapterSettings(
   ResolutionSet::Point resolution = resolution_set.SelectClosestPointToIdeal(
       basic_constraint_set, source_format.frame_size.height(),
       source_format.frame_size.width());
-  int track_max_height = static_cast<int>(std::round(resolution.height()));
-  int track_max_width = static_cast<int>(std::round(resolution.width()));
+  auto track_max_height = static_cast<int>(std::round(resolution.height()));
+  auto track_max_width = static_cast<int>(std::round(resolution.width()));
   double track_min_aspect_ratio =
       std::max(resolution_set.min_aspect_ratio(),
                static_cast<double>(resolution_set.min_width()) /

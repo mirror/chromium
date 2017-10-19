@@ -822,8 +822,7 @@ void ContentDecryptorDelegate::OnSessionMessage(PP_Var session_id,
   ArrayBufferVar* message_array_buffer = ArrayBufferVar::FromPPVar(message);
   std::vector<uint8_t> message_vector;
   if (message_array_buffer) {
-    const uint8_t* data =
-        static_cast<const uint8_t*>(message_array_buffer->Map());
+    const auto* data = static_cast<const uint8_t*>(message_array_buffer->Map());
     message_vector.assign(data, data + message_array_buffer->ByteLength());
   }
 
@@ -992,7 +991,7 @@ static uint8_t* GetMappedBuffer(PP_Resource resource,
   if (!enter.succeeded())
     return NULL;
 
-  uint8_t* mapped_data = static_cast<uint8_t*>(enter.object()->Map());
+  auto* mapped_data = static_cast<uint8_t*>(enter.object()->Map());
   if (!enter.object()->IsMapped() || !mapped_data)
     return NULL;
 
@@ -1165,7 +1164,7 @@ bool ContentDecryptorDelegate::MakeMediaBufferResource(
       (stream_type == Decryptor::kAudio) ? audio_input_resource_
                                          : video_input_resource_;
 
-  const size_t data_size = static_cast<size_t>(buffer->data_size());
+  const auto data_size = static_cast<size_t>(buffer->data_size());
   if (!media_resource.get() || media_resource->size() < data_size) {
     // Either the buffer hasn't been created yet, or we have one that isn't big
     // enough to fit |size| bytes.

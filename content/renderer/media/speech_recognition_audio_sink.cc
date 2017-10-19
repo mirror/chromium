@@ -37,8 +37,7 @@ SpeechRecognitionAudioSink::SpeechRecognitionAudioSink(
       media::ComputeAudioInputBufferSize(params, 1u);
   CHECK(shared_memory_.Map(kSharedMemorySize));
 
-  media::AudioInputBuffer* buffer =
-      static_cast<media::AudioInputBuffer*>(shared_memory_.memory());
+  auto* buffer = static_cast<media::AudioInputBuffer*>(shared_memory_.memory());
 
   // The peer must manage their own counter and reset it to 0.
   DCHECK_EQ(0U, buffer->params.size);

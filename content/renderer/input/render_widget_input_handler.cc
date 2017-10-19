@@ -218,8 +218,7 @@ void RenderWidgetInputHandler::HandleInputEvent(
 
   bool prevent_default = false;
   if (WebInputEvent::IsMouseEventType(input_event.GetType())) {
-    const WebMouseEvent& mouse_event =
-        static_cast<const WebMouseEvent&>(input_event);
+    const auto& mouse_event = static_cast<const WebMouseEvent&>(input_event);
     TRACE_EVENT2("renderer", "HandleMouseMove", "x",
                  mouse_event.PositionInWidget().x, "y",
                  mouse_event.PositionInWidget().y);
@@ -248,7 +247,7 @@ void RenderWidgetInputHandler::HandleInputEvent(
   }
 
   if (WebInputEvent::IsGestureEventType(input_event.GetType())) {
-    const WebGestureEvent& gesture_event =
+    const auto& gesture_event =
         static_cast<const WebGestureEvent&>(input_event);
     prevent_default =
         prevent_default || delegate_->WillHandleGestureEvent(gesture_event);
@@ -271,7 +270,7 @@ void RenderWidgetInputHandler::HandleInputEvent(
   if (input_event.GetType() == WebInputEvent::kTouchStart ||
       input_event.GetType() == WebInputEvent::kTouchMove ||
       input_event.GetType() == WebInputEvent::kTouchEnd) {
-    const WebTouchEvent& touch = static_cast<const WebTouchEvent&>(input_event);
+    const auto& touch = static_cast<const WebTouchEvent&>(input_event);
 
     LogPassiveEventListenersUma(processed, touch.dispatch_type,
                                 input_event.TimeStampSeconds(), latency_info);
@@ -309,8 +308,7 @@ void RenderWidgetInputHandler::HandleInputEvent(
                                       : INPUT_EVENT_ACK_STATE_CONSUMED;
   if (processed == WebInputEventResult::kNotHandled &&
       input_event.GetType() == WebInputEvent::kTouchStart) {
-    const WebTouchEvent& touch_event =
-        static_cast<const WebTouchEvent&>(input_event);
+    const auto& touch_event = static_cast<const WebTouchEvent&>(input_event);
     // Hit-test for all the pressed touch points. If there is a touch-handler
     // for any of the touch points, then the renderer should continue to receive
     // touch events.
@@ -330,7 +328,7 @@ void RenderWidgetInputHandler::HandleInputEvent(
   if (input_event.GetType() == WebInputEvent::kGestureScrollBegin ||
       input_event.GetType() == WebInputEvent::kGestureScrollEnd ||
       input_event.GetType() == WebInputEvent::kGestureScrollUpdate) {
-    const WebGestureEvent& gesture_event =
+    const auto& gesture_event =
         static_cast<const WebGestureEvent&>(input_event);
     if (gesture_event.source_device == blink::kWebGestureDeviceTouchpad) {
       delegate_->ObserveGestureEventAndResult(

@@ -213,7 +213,7 @@ void SpeechRecognitionDispatcher::OnRecognitionEnded(int request_id) {
   // TODO(tommi): It is possible that the handle isn't found in the array if
   // the user just refreshed the page. It seems that we then get a notification
   // for the previously loaded instance of the page.
-  HandleMap::iterator iter = handle_map_.find(request_id);
+  auto iter = handle_map_.find(request_id);
   if (iter == handle_map_.end()) {
     DLOG(ERROR) << "OnRecognitionEnded called for a handle that doesn't exist";
   } else {
@@ -230,7 +230,7 @@ void SpeechRecognitionDispatcher::OnRecognitionEnded(int request_id) {
 void SpeechRecognitionDispatcher::OnResultsRetrieved(
     int request_id, const SpeechRecognitionResults& results) {
   size_t provisional_count = 0;
-  SpeechRecognitionResults::const_iterator it = results.begin();
+  auto it = results.begin();
   for (; it != results.end(); ++it) {
     if (it->is_provisional)
       ++provisional_count;
@@ -287,9 +287,7 @@ void SpeechRecognitionDispatcher::OnAudioReceiverReady(
 int SpeechRecognitionDispatcher::GetOrCreateIDForHandle(
     const WebSpeechRecognitionHandle& handle) {
   // Search first for an existing mapping.
-  for (HandleMap::iterator iter = handle_map_.begin();
-      iter != handle_map_.end();
-      ++iter) {
+  for (auto iter = handle_map_.begin(); iter != handle_map_.end(); ++iter) {
     if (iter->second.Equals(handle))
       return iter->first;
   }
@@ -302,9 +300,7 @@ int SpeechRecognitionDispatcher::GetOrCreateIDForHandle(
 
 bool SpeechRecognitionDispatcher::HandleExists(
     const WebSpeechRecognitionHandle& handle) {
-  for (HandleMap::iterator iter = handle_map_.begin();
-      iter != handle_map_.end();
-      ++iter) {
+  for (auto iter = handle_map_.begin(); iter != handle_map_.end(); ++iter) {
     if (iter->second.Equals(handle))
       return true;
   }
@@ -319,7 +315,7 @@ void SpeechRecognitionDispatcher::ResetAudioSink() {
 
 const WebSpeechRecognitionHandle& SpeechRecognitionDispatcher::GetHandleFromID(
     int request_id) {
-  HandleMap::iterator iter = handle_map_.find(request_id);
+  auto iter = handle_map_.find(request_id);
   CHECK(iter != handle_map_.end());
   return iter->second;
 }

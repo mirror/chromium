@@ -210,7 +210,7 @@ class PowerSaverTestPluginDelegate : public PluginInstanceThrottler::Observer {
     }
 
     // Refcounted by the returned PP_Var.
-    ppapi::DictionaryVar* dictionary = new ppapi::DictionaryVar;
+    auto* dictionary = new ppapi::DictionaryVar;
     dictionary->Set(ppapi::StringVar::StringToPPVar("source"),
                     ppapi::StringVar::StringToPPVar(source));
     dictionary->Set(ppapi::StringVar::StringToPPVar("isHiddenForPlaceholder"),
@@ -686,9 +686,7 @@ void PluginModule::PluginCrashed() {
   is_crashed_ = true;
 
   // Notify all instances that they crashed.
-  for (PluginInstanceSet::iterator i = instances_.begin();
-       i != instances_.end();
-       ++i)
+  for (auto i = instances_.begin(); i != instances_.end(); ++i)
     (*i)->InstanceCrashed();
 
   PepperPluginRegistry::GetInstance()->PluginModuleDead(this);

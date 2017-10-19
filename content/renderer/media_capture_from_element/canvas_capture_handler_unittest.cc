@@ -164,9 +164,8 @@ TEST_P(CanvasCaptureHandlerTest, GetFormatsStartAndStop) {
   InSequence s;
   const blink::WebMediaStreamSource& web_media_stream_source = track_.Source();
   EXPECT_FALSE(web_media_stream_source.IsNull());
-  MediaStreamVideoCapturerSource* const ms_source =
-      static_cast<MediaStreamVideoCapturerSource*>(
-          web_media_stream_source.GetExtraData());
+  auto* const ms_source = static_cast<MediaStreamVideoCapturerSource*>(
+      web_media_stream_source.GetExtraData());
   EXPECT_TRUE(ms_source != nullptr);
   media::VideoCapturerSource* source = GetVideoCapturerSource(ms_source);
   EXPECT_TRUE(source != nullptr);

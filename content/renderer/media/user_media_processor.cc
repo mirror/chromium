@@ -72,11 +72,11 @@ bool IsSameDevice(const MediaStreamDevice& device,
 
 bool IsSameSource(const blink::WebMediaStreamSource& source,
                   const blink::WebMediaStreamSource& other_source) {
-  MediaStreamSource* const source_extra_data =
+  auto* const source_extra_data =
       static_cast<MediaStreamSource*>(source.GetExtraData());
   const MediaStreamDevice& device = source_extra_data->device();
 
-  MediaStreamSource* const other_source_extra_data =
+  auto* const other_source_extra_data =
       static_cast<MediaStreamSource*>(other_source.GetExtraData());
   const MediaStreamDevice& other_device = other_source_extra_data->device();
 
@@ -97,7 +97,7 @@ bool IsValidVideoContentSource(const std::string& source) {
 
 void SurfaceHardwareEchoCancellationSetting(
     blink::WebMediaStreamSource* source) {
-  MediaStreamAudioSource* source_impl =
+  auto* source_impl =
       static_cast<MediaStreamAudioSource*>(source->GetExtraData());
   media::AudioParameters params = source_impl->GetAudioParameters();
   if (params.IsValid() &&
@@ -646,7 +646,7 @@ void UserMediaProcessor::OnAudioSourceStarted(
 
   for (auto it = pending_local_sources_.begin();
        it != pending_local_sources_.end(); ++it) {
-    MediaStreamSource* const source_extra_data =
+    auto* const source_extra_data =
         static_cast<MediaStreamSource*>((*it).GetExtraData());
     if (source_extra_data != source)
       continue;
@@ -790,7 +790,7 @@ MediaStreamAudioSource* UserMediaProcessor::CreateAudioSource(
 
   // The audio device is not associated with screen capture and also requires
   // processing.
-  ProcessedLocalAudioSource* source = new ProcessedLocalAudioSource(
+  auto* source = new ProcessedLocalAudioSource(
       render_frame_->GetRoutingID(), device, audio_processing_properties,
       source_ready, dependency_factory_);
   *has_sw_echo_cancellation =
@@ -1012,7 +1012,7 @@ const blink::WebMediaStreamSource* UserMediaProcessor::FindLocalSource(
     const LocalStreamSources& sources,
     const MediaStreamDevice& device) const {
   for (const auto& local_source : sources) {
-    MediaStreamSource* const source =
+    auto* const source =
         static_cast<MediaStreamSource*>(local_source.GetExtraData());
     const MediaStreamDevice& active_device = source->device();
     if (IsSameDevice(active_device, device))
@@ -1050,7 +1050,7 @@ bool UserMediaProcessor::RemoveLocalSource(
     const blink::WebMediaStreamSource& source) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
-  for (LocalStreamSources::iterator device_it = local_sources_.begin();
+  for (auto device_it = local_sources_.begin();
        device_it != local_sources_.end(); ++device_it) {
     if (IsSameSource(*device_it, source)) {
       local_sources_.erase(device_it);
@@ -1059,10 +1059,10 @@ bool UserMediaProcessor::RemoveLocalSource(
   }
 
   // Check if the source was pending.
-  for (LocalStreamSources::iterator device_it = pending_local_sources_.begin();
+  for (auto device_it = pending_local_sources_.begin();
        device_it != pending_local_sources_.end(); ++device_it) {
     if (IsSameSource(*device_it, source)) {
-      MediaStreamSource* const source_extra_data =
+      auto* const source_extra_data =
           static_cast<MediaStreamSource*>(source.GetExtraData());
       NotifyCurrentRequestInfoOfAudioSourceStarted(
           source_extra_data, MEDIA_DEVICE_TRACK_START_FAILURE,
@@ -1138,16 +1138,14 @@ void UserMediaProcessor::OnLocalSourceStopped(
   const bool some_source_removed = RemoveLocalSource(source);
   CHECK(some_source_removed);
 
-  MediaStreamSource* source_impl =
-      static_cast<MediaStreamSource*>(source.GetExtraData());
+  auto* source_impl = static_cast<MediaStreamSource*>(source.GetExtraData());
   media_stream_dispatcher_->StopStreamDevice(source_impl->device());
 }
 
 void UserMediaProcessor::StopLocalSource(
     const blink::WebMediaStreamSource& source,
     bool notify_dispatcher) {
-  MediaStreamSource* source_impl =
-      static_cast<MediaStreamSource*>(source.GetExtraData());
+  auto* source_impl = static_cast<MediaStreamSource*>(source.GetExtraData());
   DVLOG(1) << "UserMediaProcessor::StopLocalSource("
            << "{device_id = " << source_impl->device().id << "})";
 

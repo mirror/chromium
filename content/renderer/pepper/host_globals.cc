@@ -42,9 +42,7 @@ typedef std::set<WebPluginContainer*> ContainerSet;
 // Adds all WebPluginContainers associated with the given module to the set.
 void GetAllContainersForModule(PluginModule* module, ContainerSet* containers) {
   const PluginModule::PluginInstanceSet& instances = module->GetAllInstances();
-  for (PluginModule::PluginInstanceSet::const_iterator i = instances.begin();
-       i != instances.end();
-       ++i) {
+  for (auto i = instances.begin(); i != instances.end(); ++i) {
     WebPluginContainer* container = (*i)->container();
     // If "Delete" is called on an instance, the instance sets its container to
     // NULL, but the instance may actually outlive its container. Callers of
@@ -106,7 +104,7 @@ ppapi::VarTracker* HostGlobals::GetVarTracker() { return &host_var_tracker_; }
 
 ppapi::CallbackTracker* HostGlobals::GetCallbackTrackerForInstance(
     PP_Instance instance) {
-  InstanceMap::iterator found = instance_map_.find(instance);
+  auto found = instance_map_.find(instance);
   if (found == instance_map_.end())
     return NULL;
   return found->second->module()->GetCallbackTracker().get();
@@ -181,8 +179,7 @@ void HostGlobals::BroadcastLogWithSource(PP_Module pp_module,
   }
 
   WebConsoleMessage message = MakeLogMessage(level, source, value);
-  for (ContainerSet::iterator i = containers.begin(); i != containers.end();
-       ++i) {
+  for (auto i = containers.begin(); i != containers.end(); ++i) {
     WebLocalFrame* frame = (*i)->GetDocument().GetFrame();
     if (frame)
       frame->AddMessageToConsole(message);
@@ -217,7 +214,7 @@ PP_Module HostGlobals::AddModule(PluginModule* module) {
 void HostGlobals::ModuleDeleted(PP_Module module) {
   DLOG_IF(ERROR, !CheckIdType(module, ppapi::PP_ID_TYPE_MODULE))
       << module << " is not a PP_Module.";
-  ModuleMap::iterator found = module_map_.find(module);
+  auto found = module_map_.find(module);
   if (found == module_map_.end()) {
     NOTREACHED();
     return;
@@ -228,7 +225,7 @@ void HostGlobals::ModuleDeleted(PP_Module module) {
 PluginModule* HostGlobals::GetModule(PP_Module module) {
   DLOG_IF(ERROR, !CheckIdType(module, ppapi::PP_ID_TYPE_MODULE))
       << module << " is not a PP_Module.";
-  ModuleMap::iterator found = module_map_.find(module);
+  auto found = module_map_.find(module);
   if (found == module_map_.end())
     return NULL;
   return found->second;
@@ -269,7 +266,7 @@ void HostGlobals::InstanceCrashed(PP_Instance instance) {
 PepperPluginInstanceImpl* HostGlobals::GetInstance(PP_Instance instance) {
   DLOG_IF(ERROR, !CheckIdType(instance, ppapi::PP_ID_TYPE_INSTANCE))
       << instance << " is not a PP_Instance.";
-  InstanceMap::iterator found = instance_map_.find(instance);
+  auto found = instance_map_.find(instance);
   if (found == instance_map_.end())
     return NULL;
   return found->second;

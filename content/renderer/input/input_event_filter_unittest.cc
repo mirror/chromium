@@ -109,7 +109,7 @@ class InputEventRecorder : public content::InputHandlerManager {
  private:
   struct Record {
     Record(const WebInputEvent* event) {
-      const char* ptr = reinterpret_cast<const char*>(event);
+      const auto* ptr = reinterpret_cast<const char*>(event);
       event_data.assign(ptr, ptr + event->size());
     }
     std::vector<char> event_data;
@@ -467,8 +467,7 @@ TEST_F(InputEventFilterTest, NonBlockingWheel) {
   // Third message is coalesced.
   {
     const ReceivedEvent& message = message_recorder_.event_at(2);
-    const WebMouseWheelEvent& event =
-        static_cast<const WebMouseWheelEvent&>(message.event());
+    const auto& event = static_cast<const WebMouseWheelEvent&>(message.event());
     kEvents[2].dispatch_type =
         WebInputEvent::DispatchType::kListenersNonBlockingPassive;
     EXPECT_EQ(kEvents[2].size(), event.size());
@@ -512,8 +511,7 @@ TEST_F(InputEventFilterTest, NonBlockingTouch) {
   // Third message is coalesced.
   {
     const ReceivedEvent& message = message_recorder_.event_at(2);
-    const WebTouchEvent& event =
-        static_cast<const WebTouchEvent&>(message.event());
+    const auto& event = static_cast<const WebTouchEvent&>(message.event());
     EXPECT_EQ(kEvents[3].size(), event.size());
     EXPECT_EQ(1u, kEvents[3].touches_length);
     EXPECT_EQ(kEvents[3].touches[0].PositionInWidget().x,

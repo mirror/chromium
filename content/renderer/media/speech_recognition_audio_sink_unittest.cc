@@ -93,7 +93,7 @@ size_t MockSyncSocket::Send(const void* buffer, size_t length) {
   if (in_failure_mode_)
     return 0;
 
-  const uint8_t* b = static_cast<const uint8_t*>(buffer);
+  const auto* b = static_cast<const uint8_t*>(buffer);
   for (size_t i = 0; i < length; ++i, ++buffer_->length)
     buffer_->data[buffer_->start + buffer_->length] = b[i];
 
@@ -102,7 +102,7 @@ size_t MockSyncSocket::Send(const void* buffer, size_t length) {
 }
 
 size_t MockSyncSocket::Receive(void* buffer, size_t length) {
-  uint8_t* b = static_cast<uint8_t*>(buffer);
+  auto* b = static_cast<uint8_t*>(buffer);
   for (size_t i = buffer_->start; i < buffer_->length; ++i, ++buffer_->start)
     b[i] = buffer_->data[buffer_->start];
 
@@ -132,7 +132,7 @@ class FakeSpeechRecognizer {
     ASSERT_TRUE(foreign_memory_handle->IsValid());
 
     // Wrap the shared memory for the audio bus.
-    media::AudioInputBuffer* buffer =
+    auto* buffer =
         static_cast<media::AudioInputBuffer*>(shared_memory_->memory());
 
     audio_track_bus_ = media::AudioBus::WrapMemory(sink_params, buffer->audio);
@@ -292,7 +292,7 @@ class SpeechRecognitionAudioSinkTest : public testing::Test {
                             blink::WebMediaStreamSource::kTypeAudio,
                             blink::WebString::FromUTF8("dummy_source_name"),
                             false /* remote */);
-    TestDrivenAudioSource* const audio_source = new TestDrivenAudioSource();
+    auto* const audio_source = new TestDrivenAudioSource();
     audio_source->SetDevice(
         MediaStreamDevice(device_type, "mock_device_id", "Mock device"));
     blink_source.SetExtraData(audio_source);  // Takes ownership.
@@ -411,7 +411,7 @@ TEST_F(SpeechRecognitionAudioSinkTest, CheckIsSupportedAudioTrack) {
   EXPECT_EQ(NUM_MEDIA_TYPES, p.size());
 
   // Check the the entire policy.
-  for (SupportedTrackPolicy::iterator it = p.begin(); it != p.end(); ++it) {
+  for (auto it = p.begin(); it != p.end(); ++it) {
     blink::WebMediaStreamTrack blink_track;
     PrepareBlinkTrackOfType(it->first, &blink_track);
     ASSERT_EQ(

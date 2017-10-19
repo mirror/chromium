@@ -767,7 +767,7 @@ TEST_F(WebMediaPlayerMSTest, Playing_ErrorFrame) {
 
   MockMediaStreamVideoRenderer* provider = LoadAndGetFrameProvider(false);
 
-  const int kBrokenFrame = static_cast<int>(FrameType::BROKEN_FRAME);
+  const auto kBrokenFrame = static_cast<int>(FrameType::BROKEN_FRAME);
   int tokens[] = {0,   33,  66,  100, 133, 166, 200, 233, 266, 300,
                   333, 366, 400, 433, 466, 500, 533, 566, 600, kBrokenFrame};
   std::vector<int> timestamps(tokens, tokens + sizeof(tokens) / sizeof(int));
@@ -799,7 +799,7 @@ TEST_P(WebMediaPlayerMSTest, PlayThenPause) {
   // cc::VideoFrameProviderClient should also be paused.
   MockMediaStreamVideoRenderer* provider = LoadAndGetFrameProvider(false);
 
-  const int kTestBrake = static_cast<int>(FrameType::TEST_BRAKE);
+  const auto kTestBrake = static_cast<int>(FrameType::TEST_BRAKE);
   int tokens[] = {0,   33,  66,  100, 133, kTestBrake, 166, 200, 233, 266,
                   300, 333, 366, 400, 433, 466,        500, 533, 566, 600};
   std::vector<int> timestamps(tokens, tokens + sizeof(tokens) / sizeof(int));
@@ -839,7 +839,7 @@ TEST_P(WebMediaPlayerMSTest, PlayThenPauseThenPlay) {
   // WebMediaPlayerMS can be resumed after a period of paused status.
   MockMediaStreamVideoRenderer* provider = LoadAndGetFrameProvider(false);
 
-  const int kTestBrake = static_cast<int>(FrameType::TEST_BRAKE);
+  const auto kTestBrake = static_cast<int>(FrameType::TEST_BRAKE);
   int tokens[] = {0,   33,         66,  100, 133, kTestBrake, 166,
                   200, 233,        266, 300, 333, 366,        400,
                   433, kTestBrake, 466, 500, 533, 566,        600};
@@ -894,7 +894,7 @@ INSTANTIATE_TEST_CASE_P(,
 TEST_F(WebMediaPlayerMSTest, RotationChange) {
   MockMediaStreamVideoRenderer* provider = LoadAndGetFrameProvider(true);
 
-  const int kTestBrake = static_cast<int>(FrameType::TEST_BRAKE);
+  const auto kTestBrake = static_cast<int>(FrameType::TEST_BRAKE);
   static int tokens[] = {0, 33, kTestBrake};
   std::vector<int> timestamps(tokens, tokens + sizeof(tokens) / sizeof(int));
   provider->QueueFrames(timestamps, false, false, 17, media::VIDEO_ROTATION_90);
@@ -935,7 +935,7 @@ TEST_F(WebMediaPlayerMSTest, OpacityChange) {
   MockMediaStreamVideoRenderer* provider = LoadAndGetFrameProvider(true);
 
   // Push one opaque frame.
-  const int kTestBrake = static_cast<int>(FrameType::TEST_BRAKE);
+  const auto kTestBrake = static_cast<int>(FrameType::TEST_BRAKE);
   static int tokens[] = {0, kTestBrake};
   std::vector<int> timestamps(tokens, tokens + arraysize(tokens));
   provider->QueueFrames(timestamps, true);
@@ -978,7 +978,7 @@ TEST_F(WebMediaPlayerMSTest, BackgroundRendering) {
   // explode.
   MockMediaStreamVideoRenderer* provider = LoadAndGetFrameProvider(true);
 
-  const int kTestBrake = static_cast<int>(FrameType::TEST_BRAKE);
+  const auto kTestBrake = static_cast<int>(FrameType::TEST_BRAKE);
   int tokens[] = {0,   33,         66,  100, 133, kTestBrake, 166,
                   200, 233,        266, 300, 333, 366,        400,
                   433, kTestBrake, 466, 500, 533, 566,        600};

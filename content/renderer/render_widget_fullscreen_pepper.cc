@@ -166,8 +166,7 @@ class PepperWidget : public WebWidget {
     // mouse events, and then send to the plugin.
     if (WebInputEvent::IsGestureEventType(event.GetType())) {
       bool result = false;
-      const WebGestureEvent* gesture_event =
-          static_cast<const WebGestureEvent*>(&event);
+      const auto* gesture_event = static_cast<const WebGestureEvent*>(&event);
       switch (event.GetType()) {
         case WebInputEvent::kGestureTap: {
           WebMouseEvent mouse(WebInputEvent::kMouseMove,
@@ -207,8 +206,7 @@ class PepperWidget : public WebWidget {
     // generates context menu events. Since we don't have a WebView, we need to
     // do the necessary translation ourselves.
     if (WebInputEvent::IsMouseEventType(event.GetType())) {
-      const WebMouseEvent& mouse_event =
-          reinterpret_cast<const WebMouseEvent&>(event);
+      const auto& mouse_event = reinterpret_cast<const WebMouseEvent&>(event);
       bool send_context_menu_event = false;
       // On Mac/Linux, we handle it on mouse down.
       // On Windows, we handle it on mouse up.

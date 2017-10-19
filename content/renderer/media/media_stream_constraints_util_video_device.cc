@@ -396,7 +396,7 @@ double PowerLineFrequencyConstraintSourceDistance(
   bool constraint_has_max = ConstraintHasMax(constraint);
   long constraint_min = constraint_has_min ? ConstraintMin(constraint) : -1L;
   long constraint_max = constraint_has_max ? ConstraintMax(constraint) : -1L;
-  long source_value_long = static_cast<long>(source_value);
+  auto source_value_long = static_cast<long>(source_value);
 
   if ((constraint_has_max && source_value_long > constraint_max) ||
       (constraint_has_min && source_value_long < constraint_min) ||

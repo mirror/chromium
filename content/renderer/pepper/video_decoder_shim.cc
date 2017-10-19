@@ -852,7 +852,7 @@ VideoDecoderShim::VideoDecoderShim(
 VideoDecoderShim::~VideoDecoderShim() {
   DCHECK(RenderThreadImpl::current());
   // Delete any remaining textures.
-  TextureIdMap::iterator it = texture_id_map_.begin();
+  auto it = texture_id_map_.begin();
   for (; it != texture_id_map_.end(); ++it)
     DeleteTexture(it->second);
   texture_id_map_.clear();
@@ -940,7 +940,7 @@ void VideoDecoderShim::AssignPictureBuffers(
     return;
   }
   DCHECK_EQ(buffers.size(), pending_texture_mailboxes_.size());
-  GLuint num_textures = base::checked_cast<GLuint>(buffers.size());
+  auto num_textures = base::checked_cast<GLuint>(buffers.size());
   std::vector<uint32_t> local_texture_ids(num_textures);
   gpu::gles2::GLES2Interface* gles2 = context_provider_->ContextGL();
   for (uint32_t i = 0; i < num_textures; i++) {
@@ -958,7 +958,7 @@ void VideoDecoderShim::AssignPictureBuffers(
 
 void VideoDecoderShim::ReusePictureBuffer(int32_t picture_buffer_id) {
   DCHECK(RenderThreadImpl::current());
-  uint32_t texture_id = static_cast<uint32_t>(picture_buffer_id);
+  auto texture_id = static_cast<uint32_t>(picture_buffer_id);
   if (textures_to_dismiss_.find(texture_id) != textures_to_dismiss_.end()) {
     DismissTexture(texture_id);
   } else if (texture_id_map_.find(texture_id) != texture_id_map_.end()) {
@@ -1028,9 +1028,8 @@ void VideoDecoderShim::OnOutputComplete(std::unique_ptr<PendingFrame> frame) {
            ++it) {
         textures_to_dismiss_.insert(it->first);
       }
-      for (TextureIdSet::const_iterator it = available_textures_.begin();
-           it != available_textures_.end();
-           ++it) {
+      for (auto it = available_textures_.begin();
+           it != available_textures_.end(); ++it) {
         DismissTexture(*it);
       }
       available_textures_.clear();
@@ -1057,7 +1056,7 @@ void VideoDecoderShim::SendPictures() {
   while (!pending_frames_.empty() && !available_textures_.empty()) {
     const std::unique_ptr<PendingFrame>& frame = pending_frames_.front();
 
-    TextureIdSet::iterator it = available_textures_.begin();
+    auto it = available_textures_.begin();
     uint32_t texture_id = *it;
     available_textures_.erase(it);
 

@@ -72,8 +72,7 @@ int32_t PepperVideoDestinationHost::OnHostMsgPutFrame(
       image_data_resource.host_resource(), true);
   if (enter.failed())
     return PP_ERROR_BADRESOURCE;
-  PPB_ImageData_Impl* image_data_impl =
-      static_cast<PPB_ImageData_Impl*>(enter.object());
+  auto* image_data_impl = static_cast<PPB_ImageData_Impl*>(enter.object());
 
   if (!PPB_ImageData_Impl::IsImageDataFormatSupported(
           image_data_impl->format()))
@@ -84,7 +83,7 @@ int32_t PepperVideoDestinationHost::OnHostMsgPutFrame(
 
   // Convert PP_TimeTicks (a double, in seconds) to a video timestamp (int64_t,
   // nanoseconds).
-  const int64_t timestamp_ns =
+  const auto timestamp_ns =
       static_cast<int64_t>(timestamp * base::Time::kNanosecondsPerSecond);
   // Check that timestamps are strictly increasing.
 #if DCHECK_IS_ON()

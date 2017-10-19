@@ -36,8 +36,8 @@ InternalDocumentStateData* InternalDocumentStateData::FromDocumentState(
     DocumentState* ds) {
   if (!ds)
     return NULL;
-  InternalDocumentStateData* data = static_cast<InternalDocumentStateData*>(
-      ds->GetUserData(&kUserDataKey));
+  auto* data =
+      static_cast<InternalDocumentStateData*>(ds->GetUserData(&kUserDataKey));
   if (!data) {
     data = new InternalDocumentStateData;
     ds->SetUserData(&kUserDataKey, base::WrapUnique(data));

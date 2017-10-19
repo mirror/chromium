@@ -26,7 +26,7 @@ void StatsCollectionObserver::DidStopLoading() {
   stop_time_ = base::Time::Now();
 
   // Stop observing so we don't get called again.
-  RenderViewImpl* impl = static_cast<RenderViewImpl*>(render_view());
+  auto* impl = static_cast<RenderViewImpl*>(render_view());
   impl->RemoveObserver(this);
 }
 

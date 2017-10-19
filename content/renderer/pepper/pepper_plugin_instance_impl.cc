@@ -410,8 +410,7 @@ PepperPluginInstanceImpl::ExternalDocumentLoader::~ExternalDocumentLoader() {}
 
 void PepperPluginInstanceImpl::ExternalDocumentLoader::ReplayReceivedData(
     WebAssociatedURLLoaderClient* document_loader) {
-  for (std::list<std::string>::iterator it = data_.begin(); it != data_.end();
-       ++it) {
+  for (auto it = data_.begin(); it != data_.end(); ++it) {
     document_loader->DidReceiveData(it->c_str(), it->length());
   }
   if (finished_loading_) {
@@ -569,8 +568,7 @@ PepperPluginInstanceImpl::~PepperPluginInstanceImpl() {
   // unregister themselves inside the delete call).
   PluginObjectSet plugin_object_copy;
   live_plugin_objects_.swap(plugin_object_copy);
-  for (PluginObjectSet::iterator i = plugin_object_copy.begin();
-       i != plugin_object_copy.end();
+  for (auto i = plugin_object_copy.begin(); i != plugin_object_copy.end();
        ++i) {
     (*i)->InstanceDeleted();
   }
@@ -1000,10 +998,9 @@ bool PepperPluginInstanceImpl::
   // Set the composition target.
   for (size_t i = 0; i < ime_text_spans.size(); ++i) {
     if (ime_text_spans[i].thick) {
-      std::vector<uint32_t>::iterator it =
-          std::find(event.composition_segment_offsets.begin(),
-                    event.composition_segment_offsets.end(),
-                    utf8_offsets[2 * i + 2]);
+      auto it = std::find(event.composition_segment_offsets.begin(),
+                          event.composition_segment_offsets.end(),
+                          utf8_offsets[2 * i + 2]);
       if (it != event.composition_segment_offsets.end()) {
         event.composition_target_segment =
             it - event.composition_segment_offsets.begin();
@@ -2301,9 +2298,7 @@ void PepperPluginInstanceImpl::SimulateInputEvent(
       CreateSimulatedWebInputEvents(
           input_event, view_data_.rect.point.x + view_data_.rect.size.width / 2,
           view_data_.rect.point.y + view_data_.rect.size.height / 2);
-  for (std::vector<std::unique_ptr<WebInputEvent>>::iterator it =
-           events.begin();
-       it != events.end(); ++it) {
+  for (auto it = events.begin(); it != events.end(); ++it) {
     widget->HandleInputEvent(blink::WebCoalescedInputEvent(*it->get()));
   }
 }
@@ -2366,7 +2361,7 @@ PepperPluginInstanceImpl::GetContentDecryptorDelegate() {
   if (content_decryptor_delegate_)
     return content_decryptor_delegate_.get();
 
-  const PPP_ContentDecryptor_Private* plugin_decryption_interface =
+  const auto* plugin_decryption_interface =
       static_cast<const PPP_ContentDecryptor_Private*>(
           module_->GetPluginInterface(PPP_CONTENTDECRYPTOR_PRIVATE_INTERFACE));
   if (!plugin_decryption_interface)
@@ -2868,8 +2863,7 @@ PP_Bool PepperPluginInstanceImpl::SetCursor(PP_Instance instance,
   EnterResourceNoLock<PPB_ImageData_API> enter(image, true);
   if (enter.failed())
     return PP_FALSE;
-  PPB_ImageData_Impl* image_data =
-      static_cast<PPB_ImageData_Impl*>(enter.object());
+  auto* image_data = static_cast<PPB_ImageData_Impl*>(enter.object());
 
   ImageDataAutoMapper auto_mapper(image_data);
   if (!auto_mapper.is_valid())
@@ -3327,7 +3321,7 @@ int32_t PepperPluginInstanceImpl::Navigate(
 int PepperPluginInstanceImpl::MakePendingFileRefRendererHost(
     const base::FilePath& path) {
   RendererPpapiHostImpl* host_impl = module_->renderer_ppapi_host();
-  PepperFileRefRendererHost* file_ref_host(
+  auto* file_ref_host(
       new PepperFileRefRendererHost(host_impl, pp_instance(), 0, path));
   return host_impl->GetPpapiHost()->AddPendingResourceHost(
       std::unique_ptr<ppapi::host::ResourceHost>(file_ref_host));
@@ -3440,7 +3434,7 @@ PepperPluginInstanceImpl::GetOrCreateLockTargetAdapter() {
 
 MouseLockDispatcher* PepperPluginInstanceImpl::GetMouseLockDispatcher() {
   if (flash_fullscreen_) {
-    RenderWidgetFullscreenPepper* container =
+    auto* container =
         static_cast<RenderWidgetFullscreenPepper*>(fullscreen_container_);
     return container->mouse_lock_dispatcher();
   }

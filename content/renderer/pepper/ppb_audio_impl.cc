@@ -33,16 +33,15 @@ PPB_Audio_Impl::PPB_Audio_Impl(PP_Instance instance)
     : Resource(ppapi::OBJECT_IS_IMPL, instance),
       audio_(NULL),
       playback_throttled_(false) {
-  PepperPluginInstanceImpl* plugin_instance =
-      static_cast<PepperPluginInstanceImpl*>(
-          PepperPluginInstance::Get(pp_instance()));
+  auto* plugin_instance = static_cast<PepperPluginInstanceImpl*>(
+      PepperPluginInstance::Get(pp_instance()));
   if (plugin_instance && plugin_instance->throttler()) {
     plugin_instance->throttler()->AddObserver(this);
   }
 }
 
 PPB_Audio_Impl::~PPB_Audio_Impl() {
-  PepperPluginInstanceImpl* instance = static_cast<PepperPluginInstanceImpl*>(
+  auto* instance = static_cast<PepperPluginInstanceImpl*>(
       PepperPluginInstance::Get(pp_instance()));
   if (instance) {
     if (instance->throttler()) {
@@ -77,7 +76,7 @@ PP_Bool PPB_Audio_Impl::StartPlayback() {
     return PP_TRUE;
 
   // If plugin is in power saver mode, defer audio IPC communication.
-  PepperPluginInstanceImpl* instance = static_cast<PepperPluginInstanceImpl*>(
+  auto* instance = static_cast<PepperPluginInstanceImpl*>(
       PepperPluginInstance::Get(pp_instance()));
   if (instance && instance->throttler() &&
       instance->throttler()->power_saver_enabled()) {
@@ -103,7 +102,7 @@ PP_Bool PPB_Audio_Impl::StopPlayback() {
     StartDeferredPlayback();
   }
 
-  PepperPluginInstanceImpl* instance = static_cast<PepperPluginInstanceImpl*>(
+  auto* instance = static_cast<PepperPluginInstanceImpl*>(
       PepperPluginInstance::Get(pp_instance()));
   if (instance)
     instance->audio_controller().RemoveInstance(this);
@@ -125,7 +124,7 @@ int32_t PPB_Audio_Impl::Open(PP_Resource config,
     return PP_ERROR_FAILED;
   config_ = config;
 
-  PepperPluginInstanceImpl* instance = static_cast<PepperPluginInstanceImpl*>(
+  auto* instance = static_cast<PepperPluginInstanceImpl*>(
       PepperPluginInstance::Get(pp_instance()));
   if (!instance)
     return PP_ERROR_FAILED;
@@ -171,7 +170,7 @@ void PPB_Audio_Impl::OnSetStreamInfo(
 }
 
 void PPB_Audio_Impl::OnThrottleStateChange() {
-  PepperPluginInstanceImpl* instance = static_cast<PepperPluginInstanceImpl*>(
+  auto* instance = static_cast<PepperPluginInstanceImpl*>(
       PepperPluginInstance::Get(pp_instance()));
   if (playback_throttled_ && instance && instance->throttler() &&
       !instance->throttler()->power_saver_enabled()) {
@@ -184,7 +183,7 @@ void PPB_Audio_Impl::StartDeferredPlayback() {
   DCHECK(playback_throttled_);
   playback_throttled_ = false;
 
-  PepperPluginInstanceImpl* instance = static_cast<PepperPluginInstanceImpl*>(
+  auto* instance = static_cast<PepperPluginInstanceImpl*>(
       PepperPluginInstance::Get(pp_instance()));
   if (instance)
     instance->audio_controller().AddInstance(this);

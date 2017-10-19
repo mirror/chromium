@@ -163,8 +163,7 @@ PepperGraphics2DHost* PepperGraphics2DHost::Create(
     const PP_Size& size,
     PP_Bool is_always_opaque,
     scoped_refptr<PPB_ImageData_Impl> backing_store) {
-  PepperGraphics2DHost* resource_host =
-      new PepperGraphics2DHost(host, instance, resource);
+  auto* resource_host = new PepperGraphics2DHost(host, instance, resource);
   if (!resource_host->Init(size.width,
                            size.height,
                            PP_ToBool(is_always_opaque),
@@ -244,8 +243,7 @@ bool PepperGraphics2DHost::ReadImageData(PP_Resource image,
   EnterResourceNoLock<PPB_ImageData_API> enter(image, true);
   if (enter.failed())
     return false;
-  PPB_ImageData_Impl* image_resource =
-      static_cast<PPB_ImageData_Impl*>(enter.object());
+  auto* image_resource = static_cast<PPB_ImageData_Impl*>(enter.object());
   if (!PPB_ImageData_Impl::IsImageDataFormatSupported(image_resource->format()))
     return false;  // Must be in the right format.
 
@@ -405,8 +403,7 @@ int32_t PepperGraphics2DHost::OnHostMsgPaintImageData(
                                                true);
   if (enter.failed())
     return PP_ERROR_BADRESOURCE;
-  PPB_ImageData_Impl* image_resource =
-      static_cast<PPB_ImageData_Impl*>(enter.object());
+  auto* image_resource = static_cast<PPB_ImageData_Impl*>(enter.object());
 
   QueuedOperation operation(QueuedOperation::PAINT);
   operation.paint_image = image_resource;
@@ -418,8 +415,8 @@ int32_t PepperGraphics2DHost::OnHostMsgPaintImageData(
 
   // Validate the bitmap position using the previously-validated rect, there
   // should be no painted area outside of the image.
-  int64_t x64 = static_cast<int64_t>(top_left.x);
-  int64_t y64 = static_cast<int64_t>(top_left.y);
+  auto x64 = static_cast<int64_t>(top_left.x);
+  auto y64 = static_cast<int64_t>(top_left.y);
   if (x64 + static_cast<int64_t>(operation.paint_src_rect.x()) < 0 ||
       x64 + static_cast<int64_t>(operation.paint_src_rect.right()) >
           image_data_->width())
@@ -469,8 +466,7 @@ int32_t PepperGraphics2DHost::OnHostMsgReplaceContents(
                                                true);
   if (enter.failed())
     return PP_ERROR_BADRESOURCE;
-  PPB_ImageData_Impl* image_resource =
-      static_cast<PPB_ImageData_Impl*>(enter.object());
+  auto* image_resource = static_cast<PPB_ImageData_Impl*>(enter.object());
 
   if (!PPB_ImageData_Impl::IsImageDataFormatSupported(image_resource->format()))
     return PP_ERROR_BADARGUMENT;

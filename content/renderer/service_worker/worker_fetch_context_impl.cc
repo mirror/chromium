@@ -50,7 +50,7 @@ std::unique_ptr<blink::WebURLLoader> WorkerFetchContextImpl::CreateURLLoader(
 }
 
 void WorkerFetchContextImpl::WillSendRequest(blink::WebURLRequest& request) {
-  RequestExtraData* extra_data = new RequestExtraData();
+  auto* extra_data = new RequestExtraData();
   extra_data->set_service_worker_provider_id(service_worker_provider_id_);
   extra_data->set_render_frame_id(parent_frame_id_);
   extra_data->set_initiated_in_secure_context(is_secure_context_);

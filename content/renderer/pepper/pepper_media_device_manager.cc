@@ -242,7 +242,7 @@ MediaStreamType PepperMediaDeviceManager::FromPepperDeviceType(
 void PepperMediaDeviceManager::NotifyDeviceOpened(int request_id,
                                                   bool succeeded,
                                                   const std::string& label) {
-  OpenCallbackMap::iterator iter = open_callbacks_.find(request_id);
+  auto iter = open_callbacks_.find(request_id);
   if (iter == open_callbacks_.end()) {
     // The callback may have been unregistered.
     return;

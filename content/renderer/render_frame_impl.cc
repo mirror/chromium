@@ -441,7 +441,7 @@ WebURLRequest CreateURLRequestForNavigation(
   request.SetPreviewsState(
       static_cast<WebURLRequest::PreviewsState>(common_params.previews_state));
 
-  RequestExtraData* extra_data = new RequestExtraData();
+  auto* extra_data = new RequestExtraData();
   extra_data->set_stream_override(std::move(stream_override));
   extra_data->set_navigation_initiated_by_renderer(
       request_params.nav_entry_id == 0);
@@ -494,9 +494,8 @@ CommonNavigationParams MakeCommonNavigationParams(
   base::TimeTicks ui_timestamp =
       base::TimeTicks() +
       base::TimeDelta::FromSecondsD(info.url_request.UiStartTime());
-  FrameMsg_UILoadMetricsReportType::Value report_type =
-      static_cast<FrameMsg_UILoadMetricsReportType::Value>(
-          info.url_request.InputPerfMetricReportPolicy());
+  auto report_type = static_cast<FrameMsg_UILoadMetricsReportType::Value>(
+      info.url_request.InputPerfMetricReportPolicy());
 
   // No history-navigation is expected to happen.
   DCHECK(info.navigation_type != blink::kWebNavigationTypeBackForward);
@@ -980,8 +979,7 @@ RenderFrame* RenderFrame::FromRoutingID(int routing_id) {
 
 // static
 RenderFrameImpl* RenderFrameImpl::FromRoutingID(int routing_id) {
-  RoutingIDFrameMap::iterator iter =
-      g_routing_id_frame_map.Get().find(routing_id);
+  auto iter = g_routing_id_frame_map.Get().find(routing_id);
   if (iter != g_routing_id_frame_map.Get().end())
     return iter->second;
   return NULL;
@@ -1121,7 +1119,7 @@ RenderFrame* RenderFrame::FromWebFrame(blink::WebLocalFrame* web_frame) {
 // static
 void RenderFrame::ForEach(RenderFrameVisitor* visitor) {
   FrameMap* frames = g_frame_map.Pointer();
-  for (FrameMap::iterator it = frames->begin(); it != frames->end(); ++it) {
+  for (auto it = frames->begin(); it != frames->end(); ++it) {
     if (!visitor->Visit(it->second))
       return;
   }
@@ -1140,7 +1138,7 @@ int RenderFrame::GetRoutingIdForWebFrame(blink::WebFrame* web_frame) {
 
 // static
 RenderFrameImpl* RenderFrameImpl::FromWebFrame(blink::WebFrame* web_frame) {
-  FrameMap::iterator iter = g_frame_map.Get().find(web_frame);
+  auto iter = g_frame_map.Get().find(web_frame);
   if (iter != g_frame_map.Get().end())
     return iter->second;
   return NULL;
@@ -2465,7 +2463,7 @@ bool RenderFrameImpl::RunJavaScriptDialog(JavaScriptDialogType type,
   if (suppress_further_dialogs_)
     return false;
 
-  int32_t message_length = static_cast<int32_t>(message.length());
+  auto message_length = static_cast<int32_t>(message.length());
   if (WebUserGestureIndicator::ProcessedUserGestureSinceLoad(frame_)) {
     UMA_HISTOGRAM_COUNTS("JSDialogs.CharacterCount.UserGestureSinceLoad",
                          message_length);
@@ -3013,7 +3011,7 @@ RenderFrameImpl::CreateApplicationCacheHost(
                 frame_->GetProvisionalDocumentLoader())
           : DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
 
-  NavigationStateImpl* navigation_state =
+  auto* navigation_state =
       static_cast<NavigationStateImpl*>(document_state->navigation_state());
 
   return base::MakeUnique<RendererWebApplicationCacheHostImpl>(
@@ -3136,7 +3134,7 @@ void RenderFrameImpl::DidAccessInitialDocument() {
   if (!has_accessed_initial_document_) {
     DocumentState* document_state =
         DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
-    NavigationStateImpl* navigation_state =
+    auto* navigation_state =
         static_cast<NavigationStateImpl*>(document_state->navigation_state());
 
     if (!navigation_state->request_committed()) {
@@ -3253,7 +3251,7 @@ void RenderFrameImpl::FrameDetached(DetachType type) {
   // the RenderFrameImpl.  In contrast, the main frame is owned by its
   // containing RenderViewHost (so that they have the same lifetime), so only
   // removal from the map is needed and no deletion.
-  FrameMap::iterator it = g_frame_map.Get().find(frame_);
+  auto it = g_frame_map.Get().find(frame_);
   CHECK(it != g_frame_map.Get().end());
   CHECK_EQ(it->second, this);
   g_frame_map.Get().erase(it);
@@ -3424,7 +3422,7 @@ void RenderFrameImpl::WillSendSubmitEvent(const blink::WebFormElement& form) {
 void RenderFrameImpl::WillSubmitForm(const blink::WebFormElement& form) {
   DocumentState* document_state =
       DocumentState::FromDocumentLoader(frame_->GetProvisionalDocumentLoader());
-  NavigationStateImpl* navigation_state =
+  auto* navigation_state =
       static_cast<NavigationStateImpl*>(document_state->navigation_state());
   InternalDocumentStateData* internal_data =
       InternalDocumentStateData::FromDocumentState(document_state);
@@ -3489,8 +3487,8 @@ void RenderFrameImpl::DidCreateDocumentLoader(
   UpdateNavigationState(document_state, false /* was_within_same_document */,
                         content_initiated);
 
-  NavigationStateImpl* navigation_state = static_cast<NavigationStateImpl*>(
-      document_state->navigation_state());
+  auto* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
 
   // Set the navigation start time in blink.
   document_loader->SetNavigationStartTime(
@@ -3580,8 +3578,8 @@ void RenderFrameImpl::DidStartProvisionalLoad(
 
   DocumentState* document_state =
       DocumentState::FromDocumentLoader(document_loader);
-  NavigationStateImpl* navigation_state = static_cast<NavigationStateImpl*>(
-      document_state->navigation_state());
+  auto* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
   bool is_top_most = !frame_->Parent();
   if (is_top_most) {
     render_view_->set_navigation_gesture(
@@ -3646,7 +3644,7 @@ void RenderFrameImpl::DidFailProvisionalLoad(
 
   DocumentState* document_state =
       DocumentState::FromDocumentLoader(document_loader);
-  NavigationStateImpl* navigation_state =
+  auto* navigation_state =
       static_cast<NavigationStateImpl*>(document_state->navigation_state());
 
   // If this is a failed back/forward/reload navigation, then we need to do a
@@ -3714,7 +3712,7 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
 
   DocumentState* document_state =
       DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
-  NavigationStateImpl* navigation_state =
+  auto* navigation_state =
       static_cast<NavigationStateImpl*>(document_state->navigation_state());
   const WebURLResponse& web_url_response =
       frame_->GetDocumentLoader()->GetResponse();
@@ -3996,11 +3994,10 @@ void RenderFrameImpl::RunScriptsAtDocumentIdle() {
 
 void RenderFrameImpl::DidHandleOnloadEvents() {
   if (!frame_->Parent()) {
-    FrameMsg_UILoadMetricsReportType::Value report_type =
-        static_cast<FrameMsg_UILoadMetricsReportType::Value>(
-            frame_->GetDocumentLoader()
-                ->GetRequest()
-                .InputPerfMetricReportPolicy());
+    auto report_type = static_cast<FrameMsg_UILoadMetricsReportType::Value>(
+        frame_->GetDocumentLoader()
+            ->GetRequest()
+            .InputPerfMetricReportPolicy());
     base::TimeTicks ui_timestamp =
         base::TimeTicks() +
         base::TimeDelta::FromSecondsD(
@@ -4227,8 +4224,7 @@ blink::WebColorChooser* RenderFrameImpl::CreateColorChooser(
     blink::WebColorChooserClient* client,
     const blink::WebColor& initial_color,
     const blink::WebVector<blink::WebColorSuggestion>& suggestions) {
-  RendererWebColorChooserImpl* color_chooser =
-      new RendererWebColorChooserImpl(this, client);
+  auto* color_chooser = new RendererWebColorChooserImpl(this, client);
   std::vector<ColorSuggestion> color_suggestions;
   for (size_t i = 0; i < suggestions.size(); i++) {
     color_suggestions.push_back(
@@ -4364,7 +4360,7 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
   DCHECK(document_state);
   InternalDocumentStateData* internal_data =
       InternalDocumentStateData::FromDocumentState(document_state);
-  NavigationStateImpl* navigation_state =
+  auto* navigation_state =
       static_cast<NavigationStateImpl*>(document_state->navigation_state());
   ui::PageTransition transition_type = navigation_state->GetTransitionType();
   if (provisional_document_loader &&
@@ -4393,7 +4389,7 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
   WebString requested_with;
   std::unique_ptr<StreamOverrideParameters> stream_override;
   if (request.GetExtraData()) {
-    RequestExtraData* old_extra_data =
+    auto* old_extra_data =
         static_cast<RequestExtraData*>(request.GetExtraData());
 
     custom_user_agent = old_extra_data->custom_user_agent();
@@ -4427,8 +4423,7 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
   WebFrame* parent = frame_->Parent();
 
   WebDocument frame_document = frame_->GetDocument();
-  RequestExtraData* extra_data =
-      static_cast<RequestExtraData*>(request.GetExtraData());
+  auto* extra_data = static_cast<RequestExtraData*>(request.GetExtraData());
   if (!extra_data)
     extra_data = new RequestExtraData();
   extra_data->set_visibility_state(VisibilityState());
@@ -4462,7 +4457,7 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
     // For navigation requests, we should copy the flag which indicates if this
     // was a navigation initiated by the renderer to the new RequestExtraData
     // instance.
-    RequestExtraData* current_request_data =
+    auto* current_request_data =
         static_cast<RequestExtraData*>(request.GetExtraData());
     if (current_request_data) {
       extra_data->set_navigation_initiated_by_renderer(
@@ -4481,7 +4476,7 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
       request.SetPreviewsState(static_cast<WebURLRequest::PreviewsState>(
           navigation_state->common_params().previews_state));
     } else {
-      WebURLRequest::PreviewsState request_previews_state =
+      auto request_previews_state =
           static_cast<WebURLRequest::PreviewsState>(previews_state_);
 
       // The decision of whether or not to enable Client Lo-Fi is made earlier
@@ -4931,7 +4926,7 @@ bool RenderFrameImpl::IsHidden() {
 }
 
 bool RenderFrameImpl::IsLocalRoot() const {
-  bool is_local_root = static_cast<bool>(render_widget_);
+  auto is_local_root = static_cast<bool>(render_widget_);
   DCHECK_EQ(is_local_root,
             !(frame_->Parent() && frame_->Parent()->IsWebLocalFrame()));
   return is_local_root;
@@ -4955,7 +4950,7 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
 
   DocumentState* document_state =
       DocumentState::FromDocumentLoader(document_loader);
-  NavigationStateImpl* navigation_state =
+  auto* navigation_state =
       static_cast<NavigationStateImpl*>(document_state->navigation_state());
   InternalDocumentStateData* internal_data =
       InternalDocumentStateData::FromDocumentState(document_state);
@@ -5064,8 +5059,7 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
 
     // Set zoom level, but don't do it for full-page plugin since they don't use
     // the same zoom settings.
-    HostZoomLevels::iterator host_zoom =
-        host_zoom_levels_.find(GURL(request.Url()));
+    auto host_zoom = host_zoom_levels_.find(GURL(request.Url()));
     if (render_view_->webview()->MainFrame()->IsWebLocalFrame() &&
         render_view_->webview()
             ->MainFrame()
@@ -5217,11 +5211,9 @@ void RenderFrameImpl::DidStopLoading() {
   // this state anymore.
   history_subframe_unique_names_.clear();
 
-  blink::WebIconURL::Type icon_types_mask =
-      static_cast<blink::WebIconURL::Type>(
-          blink::WebIconURL::kTypeFavicon |
-          blink::WebIconURL::kTypeTouchPrecomposed |
-          blink::WebIconURL::kTypeTouch);
+  auto icon_types_mask = static_cast<blink::WebIconURL::Type>(
+      blink::WebIconURL::kTypeFavicon |
+      blink::WebIconURL::kTypeTouchPrecomposed | blink::WebIconURL::kTypeTouch);
   SendUpdateFaviconURL(icon_types_mask);
 
   render_view_->FrameDidStopLoading(frame_);
@@ -6498,7 +6490,7 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
   if (!info.url_request.GetExtraData())
     info.url_request.SetExtraData(new RequestExtraData());
   if (info.is_client_redirect) {
-    RequestExtraData* extra_data =
+    auto* extra_data =
         static_cast<RequestExtraData*>(info.url_request.GetExtraData());
     extra_data->set_transition_type(ui::PageTransitionFromInt(
         extra_data->transition_type() | ui::PAGE_TRANSITION_CLIENT_REDIRECT));
@@ -7039,7 +7031,7 @@ void RenderFrameImpl::PepperStopsPlayback(PepperPluginInstanceImpl* instance) {
 }
 
 void RenderFrameImpl::OnSetPepperVolume(int32_t pp_instance, double volume) {
-  PepperPluginInstanceImpl* instance = static_cast<PepperPluginInstanceImpl*>(
+  auto* instance = static_cast<PepperPluginInstanceImpl*>(
       PepperPluginInstance::Get(pp_instance));
   if (instance)
     instance->audio_controller().SetVolume(volume);

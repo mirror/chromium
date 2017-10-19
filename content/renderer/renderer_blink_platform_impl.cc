@@ -1048,7 +1048,7 @@ RendererBlinkPlatformImpl::CreateOffscreenGraphicsContext3DProvider(
   }
   Collect3DContextInformation(gl_info, gpu_channel_host->gpu_info());
 
-  content::WebGraphicsContext3DProviderImpl* share_provider_impl =
+  auto* share_provider_impl =
       static_cast<content::WebGraphicsContext3DProviderImpl*>(share_provider);
   ui::ContextProviderCommandBuffer* share_context = nullptr;
 

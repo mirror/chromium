@@ -35,8 +35,7 @@ void OnEmbedAck(bool success) {
 void RendererWindowTreeClient::CreateIfNecessary(int routing_id) {
   if (!IsRunningInMash() || Get(routing_id))
     return;
-  RendererWindowTreeClient* connection =
-      new RendererWindowTreeClient(routing_id);
+  auto* connection = new RendererWindowTreeClient(routing_id);
   g_connections.Get().insert(std::make_pair(routing_id, connection));
 }
 

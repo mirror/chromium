@@ -107,7 +107,7 @@ class CodecEnumerator {
 };
 
 CodecEnumerator* GetCodecEnumerator() {
-  static CodecEnumerator* enumerator = new CodecEnumerator();
+  static auto* enumerator = new CodecEnumerator();
   return enumerator;
 }
 

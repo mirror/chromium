@@ -59,7 +59,7 @@ TEST_F(EventConversionTest, TouchStart) {
 
   std::unique_ptr<blink::WebInputEvent> event_out(
       CreateWebInputEvent(pp_event));
-  const blink::WebTouchEvent* touch_out =
+  const auto* touch_out =
       static_cast<const blink::WebTouchEvent*>(event_out.get());
   ASSERT_TRUE(touch_out);
   EXPECT_EQ(touch.GetType(), touch_out->GetType());
@@ -87,7 +87,7 @@ TEST_F(EventConversionTest, TouchMove) {
 
   std::unique_ptr<blink::WebInputEvent> event_out(
       CreateWebInputEvent(pp_event));
-  const blink::WebTouchEvent* touch_out =
+  const auto* touch_out =
       static_cast<const blink::WebTouchEvent*>(event_out.get());
   ASSERT_TRUE(touch_out);
   EXPECT_EQ(touch.GetType(), touch_out->GetType());
@@ -115,7 +115,7 @@ TEST_F(EventConversionTest, TouchEnd) {
 
   std::unique_ptr<blink::WebInputEvent> event_out(
       CreateWebInputEvent(pp_event));
-  const blink::WebTouchEvent* touch_out =
+  const auto* touch_out =
       static_cast<const blink::WebTouchEvent*>(event_out.get());
   ASSERT_TRUE(touch_out);
   EXPECT_EQ(touch.GetType(), touch_out->GetType());
@@ -144,7 +144,7 @@ TEST_F(EventConversionTest, TouchCancel) {
 
   std::unique_ptr<blink::WebInputEvent> event_out(
       CreateWebInputEvent(pp_event));
-  const blink::WebTouchEvent* touch_out =
+  const auto* touch_out =
       static_cast<const blink::WebTouchEvent*>(event_out.get());
   ASSERT_TRUE(touch_out);
   EXPECT_EQ(touch.GetType(), touch_out->GetType());

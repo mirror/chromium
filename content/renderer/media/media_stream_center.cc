@@ -166,7 +166,7 @@ blink::WebAudioSourceProvider*
 MediaStreamCenter::CreateWebAudioSourceFromMediaStreamTrack(
     const blink::WebMediaStreamTrack& track) {
   DVLOG(1) << "MediaStreamCenter::createWebAudioSourceFromMediaStreamTrack";
-  MediaStreamTrack* media_stream_track =
+  auto* media_stream_track =
       static_cast<MediaStreamTrack*>(track.GetTrackData());
   if (!media_stream_track) {
     DLOG(ERROR) << "Native track missing for webaudio source.";
@@ -203,7 +203,7 @@ void MediaStreamCenter::DidStopMediaStreamSource(
     const blink::WebMediaStreamSource& web_source) {
   if (web_source.IsNull())
     return;
-  MediaStreamSource* const source =
+  auto* const source =
       static_cast<MediaStreamSource*>(web_source.GetExtraData());
   DCHECK(source);
   source->StopSource();

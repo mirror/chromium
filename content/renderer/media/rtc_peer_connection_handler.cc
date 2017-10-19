@@ -548,7 +548,7 @@ class StatsResponse : public webrtc::StatsObserver {
     TRACE_EVENT0("webrtc", "StatsResponse::OnComplete");
     // We can't use webkit objects directly since they use a single threaded
     // heap allocator.
-    std::vector<Report*>* report_copies = new std::vector<Report*>();
+    auto* report_copies = new std::vector<Report*>();
     report_copies->reserve(reports.size());
     for (auto* r : reports)
       report_copies->push_back(new Report(r));
@@ -918,8 +918,7 @@ void ConvertConstraintsToWebrtcOfferOptions(
 }
 
 std::set<RTCPeerConnectionHandler*>* GetPeerConnectionHandlers() {
-  static std::set<RTCPeerConnectionHandler*>* handlers =
-      new std::set<RTCPeerConnectionHandler*>();
+  static auto* handlers = new std::set<RTCPeerConnectionHandler*>();
   return handlers;
 }
 
@@ -1817,7 +1816,7 @@ std::unique_ptr<blink::WebRTCRtpSender> RTCPeerConnectionHandler::AddTrack(
 
 bool RTCPeerConnectionHandler::RemoveTrack(blink::WebRTCRtpSender* web_sender) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  RTCRtpSender* sender = static_cast<RTCRtpSender*>(web_sender);
+  auto* sender = static_cast<RTCRtpSender*>(web_sender);
   if (!native_peer_connection_->RemoveTrack(sender->webrtc_rtp_sender())) {
     return false;
   }

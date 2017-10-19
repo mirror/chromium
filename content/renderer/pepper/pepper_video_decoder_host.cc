@@ -131,8 +131,7 @@ int32_t PepperVideoDecoderHost::OnHostMsgInitialize(
       graphics_context.host_resource(), true);
   if (enter_graphics.failed())
     return PP_ERROR_FAILED;
-  PPB_Graphics3D_Impl* graphics3d =
-      static_cast<PPB_Graphics3D_Impl*>(enter_graphics.object());
+  auto* graphics3d = static_cast<PPB_Graphics3D_Impl*>(enter_graphics.object());
 
   gpu::CommandBufferProxyImpl* command_buffer =
       graphics3d->GetCommandBufferProxy();
@@ -315,7 +314,7 @@ int32_t PepperVideoDecoderHost::OnHostMsgRecyclePicture(
     return PP_ERROR_FAILED;
   DCHECK(decoder_);
 
-  PictureBufferMap::iterator it = picture_buffer_map_.find(texture_id);
+  auto it = picture_buffer_map_.find(texture_id);
   if (it == picture_buffer_map_.end())
     return PP_ERROR_BADARGUMENT;
 
@@ -382,8 +381,7 @@ void PepperVideoDecoderHost::ProvidePictureBuffers(
 }
 
 void PepperVideoDecoderHost::PictureReady(const media::Picture& picture) {
-  PictureBufferMap::iterator it =
-      picture_buffer_map_.find(picture.picture_buffer_id());
+  auto it = picture_buffer_map_.find(picture.picture_buffer_id());
   DCHECK(it != picture_buffer_map_.end());
   DCHECK(it->second == PictureBufferState::ASSIGNED);
   it->second = PictureBufferState::IN_USE;
@@ -398,7 +396,7 @@ void PepperVideoDecoderHost::PictureReady(const media::Picture& picture) {
 }
 
 void PepperVideoDecoderHost::DismissPictureBuffer(int32_t picture_buffer_id) {
-  PictureBufferMap::iterator it = picture_buffer_map_.find(picture_buffer_id);
+  auto it = picture_buffer_map_.find(picture_buffer_id);
   DCHECK(it != picture_buffer_map_.end());
 
   // If the texture is still used by the plugin keep it until the plugin
@@ -417,7 +415,7 @@ void PepperVideoDecoderHost::DismissPictureBuffer(int32_t picture_buffer_id) {
 
 void PepperVideoDecoderHost::NotifyEndOfBitstreamBuffer(
     int32_t bitstream_buffer_id) {
-  PendingDecodeList::iterator it = GetPendingDecodeById(bitstream_buffer_id);
+  auto it = GetPendingDecodeById(bitstream_buffer_id);
   if (it == pending_decodes_.end()) {
     NOTREACHED();
     return;

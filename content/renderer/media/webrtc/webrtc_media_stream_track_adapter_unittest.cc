@@ -49,7 +49,7 @@ class WebRtcMediaStreamTrackAdapterTest : public ::testing::Test {
                           blink::WebMediaStreamSource::kTypeAudio,
                           blink::WebString::FromUTF8("local_audio_track"),
                           false);
-    MediaStreamAudioSource* audio_source = new MediaStreamAudioSource(true);
+    auto* audio_source = new MediaStreamAudioSource(true);
     // Takes ownership of |audio_source|.
     web_source.SetExtraData(audio_source);
 
@@ -65,7 +65,7 @@ class WebRtcMediaStreamTrackAdapterTest : public ::testing::Test {
                           blink::WebMediaStreamSource::kTypeVideo,
                           blink::WebString::FromUTF8("local_video_track"),
                           false);
-    MockMediaStreamVideoSource* video_source = new MockMediaStreamVideoSource();
+    auto* video_source = new MockMediaStreamVideoSource();
     // Takes ownership of |video_source|.
     web_source.SetExtraData(video_source);
 

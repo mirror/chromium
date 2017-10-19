@@ -326,7 +326,7 @@ int32_t PepperMediaStreamVideoTrackHost::SendFrameToTrack(int32_t index) {
 
     int32_t y_stride = plugin_frame_size_.width();
     int32_t uv_stride = (plugin_frame_size_.width() + 1) / 2;
-    uint8_t* y_data = static_cast<uint8_t*>(pp_frame->data);
+    auto* y_data = static_cast<uint8_t*>(pp_frame->data);
     // Default to I420
     uint8_t* u_data = y_data + plugin_frame_size_.GetArea();
     uint8_t* v_data = y_data + (plugin_frame_size_.GetArea() * 5 / 4);
@@ -337,8 +337,8 @@ int32_t PepperMediaStreamVideoTrackHost::SendFrameToTrack(int32_t index) {
       v_data = tmp;
     }
 
-    int64_t ts_ms = static_cast<int64_t>(pp_frame->timestamp *
-                                         base::Time::kMillisecondsPerSecond);
+    auto ts_ms = static_cast<int64_t>(pp_frame->timestamp *
+                                      base::Time::kMillisecondsPerSecond);
     scoped_refptr<VideoFrame> frame = media::VideoFrame::WrapExternalYuvData(
         FromPpapiFormat(plugin_frame_format_),
         plugin_frame_size_,

@@ -35,8 +35,7 @@ SkBitmap ImageFromDataUrl(const GURL& url) {
     // Decode the image using Blink's image decoder.
     content::ImageDecoder decoder(
         gfx::Size(gfx::kFaviconSize, gfx::kFaviconSize));
-    const unsigned char* src_data =
-        reinterpret_cast<const unsigned char*>(data.data());
+    const auto* src_data = reinterpret_cast<const unsigned char*>(data.data());
 
     return decoder.Decode(src_data, data.size());
   }

@@ -305,9 +305,8 @@ TEST_P(MainThreadEventQueueTest, NonBlockingWheel) {
               handled_tasks_.at(0)->taskAsEvent()->Event().size());
     EXPECT_EQ(kEvents[0].GetType(),
               handled_tasks_.at(0)->taskAsEvent()->Event().GetType());
-    const WebMouseWheelEvent* last_wheel_event =
-        static_cast<const WebMouseWheelEvent*>(
-            handled_tasks_.at(0)->taskAsEvent()->EventPointer());
+    const auto* last_wheel_event = static_cast<const WebMouseWheelEvent*>(
+        handled_tasks_.at(0)->taskAsEvent()->EventPointer());
     EXPECT_EQ(WebInputEvent::DispatchType::kListenersNonBlockingPassive,
               last_wheel_event->dispatch_type);
     WebMouseWheelEvent coalesced_event = kEvents[0];
@@ -321,14 +320,14 @@ TEST_P(MainThreadEventQueueTest, NonBlockingWheel) {
     WebMouseWheelEvent coalesced_event = kEvents[0];
     std::vector<const WebInputEvent*> coalesced_events =
         handled_tasks_[0]->taskAsEvent()->GetCoalescedEventsPointers();
-    const WebMouseWheelEvent* coalesced_wheel_event0 =
+    const auto* coalesced_wheel_event0 =
         static_cast<const WebMouseWheelEvent*>(coalesced_events[0]);
     coalesced_event.dispatch_type =
         WebInputEvent::DispatchType::kListenersNonBlockingPassive;
     EXPECT_EQ(coalesced_event, *coalesced_wheel_event0);
 
     coalesced_event = kEvents[1];
-    const WebMouseWheelEvent* coalesced_wheel_event1 =
+    const auto* coalesced_wheel_event1 =
         static_cast<const WebMouseWheelEvent*>(coalesced_events[1]);
     coalesced_event.dispatch_type =
         WebInputEvent::DispatchType::kListenersNonBlockingPassive;
@@ -336,9 +335,8 @@ TEST_P(MainThreadEventQueueTest, NonBlockingWheel) {
   }
 
   {
-    const WebMouseWheelEvent* last_wheel_event =
-        static_cast<const WebMouseWheelEvent*>(
-            handled_tasks_.at(1)->taskAsEvent()->EventPointer());
+    const auto* last_wheel_event = static_cast<const WebMouseWheelEvent*>(
+        handled_tasks_.at(1)->taskAsEvent()->EventPointer());
     WebMouseWheelEvent coalesced_event = kEvents[2];
     ui::Coalesce(kEvents[3], &coalesced_event);
     coalesced_event.dispatch_type =
@@ -350,14 +348,14 @@ TEST_P(MainThreadEventQueueTest, NonBlockingWheel) {
     WebMouseWheelEvent coalesced_event = kEvents[2];
     std::vector<const WebInputEvent*> coalesced_events =
         handled_tasks_[1]->taskAsEvent()->GetCoalescedEventsPointers();
-    const WebMouseWheelEvent* coalesced_wheel_event0 =
+    const auto* coalesced_wheel_event0 =
         static_cast<const WebMouseWheelEvent*>(coalesced_events[0]);
     coalesced_event.dispatch_type =
         WebInputEvent::DispatchType::kListenersNonBlockingPassive;
     EXPECT_EQ(coalesced_event, *coalesced_wheel_event0);
 
     coalesced_event = kEvents[3];
-    const WebMouseWheelEvent* coalesced_wheel_event1 =
+    const auto* coalesced_wheel_event1 =
         static_cast<const WebMouseWheelEvent*>(coalesced_events[1]);
     coalesced_event.dispatch_type =
         WebInputEvent::DispatchType::kListenersNonBlockingPassive;
@@ -401,7 +399,7 @@ TEST_P(MainThreadEventQueueTest, NonBlockingTouch) {
             handled_tasks_.at(0)->taskAsEvent()->Event().size());
   EXPECT_EQ(kEvents[0].GetType(),
             handled_tasks_.at(0)->taskAsEvent()->Event().GetType());
-  const WebTouchEvent* last_touch_event = static_cast<const WebTouchEvent*>(
+  const auto* last_touch_event = static_cast<const WebTouchEvent*>(
       handled_tasks_.at(0)->taskAsEvent()->EventPointer());
   kEvents[0].dispatch_type =
       WebInputEvent::DispatchType::kListenersNonBlockingPassive;
@@ -450,14 +448,14 @@ TEST_P(MainThreadEventQueueTest, NonBlockingTouch) {
     WebTouchEvent coalesced_event = kEvents[2];
     std::vector<const WebInputEvent*> coalesced_events =
         handled_tasks_[2]->taskAsEvent()->GetCoalescedEventsPointers();
-    const WebTouchEvent* coalesced_touch_event0 =
+    const auto* coalesced_touch_event0 =
         static_cast<const WebTouchEvent*>(coalesced_events[0]);
     coalesced_event.dispatch_type =
         WebInputEvent::DispatchType::kListenersNonBlockingPassive;
     EXPECT_EQ(coalesced_event, *coalesced_touch_event0);
 
     coalesced_event = kEvents[3];
-    const WebTouchEvent* coalesced_touch_event1 =
+    const auto* coalesced_touch_event1 =
         static_cast<const WebTouchEvent*>(coalesced_events[1]);
     coalesced_event.dispatch_type =
         WebInputEvent::DispatchType::kListenersNonBlockingPassive;
@@ -506,7 +504,7 @@ TEST_P(MainThreadEventQueueTest, BlockingTouch) {
                              true)));
     EXPECT_EQ(0u, event_queue().size());
 
-    const WebTouchEvent* last_touch_event = static_cast<const WebTouchEvent*>(
+    const auto* last_touch_event = static_cast<const WebTouchEvent*>(
         handled_tasks_.at(1)->taskAsEvent()->EventPointer());
     EXPECT_EQ(kEvents[1].unique_touch_event_id,
               last_touch_event->unique_touch_event_id);
@@ -562,9 +560,8 @@ TEST_P(MainThreadEventQueueTest, InterleavedEvents) {
               handled_tasks_.at(0)->taskAsEvent()->Event().size());
     EXPECT_EQ(kWheelEvents[0].GetType(),
               handled_tasks_.at(0)->taskAsEvent()->Event().GetType());
-    const WebMouseWheelEvent* last_wheel_event =
-        static_cast<const WebMouseWheelEvent*>(
-            handled_tasks_.at(0)->taskAsEvent()->EventPointer());
+    const auto* last_wheel_event = static_cast<const WebMouseWheelEvent*>(
+        handled_tasks_.at(0)->taskAsEvent()->EventPointer());
     EXPECT_EQ(WebInputEvent::DispatchType::kListenersNonBlockingPassive,
               last_wheel_event->dispatch_type);
     WebMouseWheelEvent coalesced_event = kWheelEvents[0];
@@ -578,7 +575,7 @@ TEST_P(MainThreadEventQueueTest, InterleavedEvents) {
               handled_tasks_.at(1)->taskAsEvent()->Event().size());
     EXPECT_EQ(kTouchEvents[0].GetType(),
               handled_tasks_.at(1)->taskAsEvent()->Event().GetType());
-    const WebTouchEvent* last_touch_event = static_cast<const WebTouchEvent*>(
+    const auto* last_touch_event = static_cast<const WebTouchEvent*>(
         handled_tasks_.at(1)->taskAsEvent()->EventPointer());
     WebTouchEvent coalesced_event = kTouchEvents[0];
     ui::Coalesce(kTouchEvents[1], &coalesced_event);
@@ -984,7 +981,7 @@ TEST_P(MainThreadEventQueueTest, BlockingTouchesDuringFling) {
   EXPECT_EQ(kEvents.GetType(),
             handled_tasks_.at(0)->taskAsEvent()->Event().GetType());
   EXPECT_TRUE(last_touch_start_forced_nonblocking_due_to_fling());
-  const WebTouchEvent* last_touch_event = static_cast<const WebTouchEvent*>(
+  const auto* last_touch_event = static_cast<const WebTouchEvent*>(
       handled_tasks_.at(0)->taskAsEvent()->EventPointer());
   kEvents.dispatch_type = WebInputEvent::kListenersForcedNonBlockingDueToFling;
   EXPECT_EQ(kEvents, *last_touch_event);
@@ -1073,7 +1070,7 @@ TEST_P(MainThreadEventQueueTest, BlockingTouchesOutsideFling) {
             handled_tasks_.at(0)->taskAsEvent()->Event().GetType());
   EXPECT_EQ(kEvents.dispatch_type, WebInputEvent::kBlocking);
   EXPECT_FALSE(last_touch_start_forced_nonblocking_due_to_fling());
-  const WebTouchEvent* last_touch_event = static_cast<const WebTouchEvent*>(
+  const auto* last_touch_event = static_cast<const WebTouchEvent*>(
       handled_tasks_.at(0)->taskAsEvent()->EventPointer());
   EXPECT_EQ(kEvents, *last_touch_event);
 

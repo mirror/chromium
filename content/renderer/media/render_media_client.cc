@@ -16,7 +16,7 @@
 namespace content {
 
 void RenderMediaClient::Initialize() {
-  static RenderMediaClient* client = new RenderMediaClient();
+  static auto* client = new RenderMediaClient();
   media::SetMediaClient(client);
 }
 

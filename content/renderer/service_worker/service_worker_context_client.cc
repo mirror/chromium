@@ -1316,7 +1316,7 @@ void ServiceWorkerContextClient::DispatchSyncEvent(
       base::MakeUnique<DispatchSyncEventCallback>(std::move(callback)));
 
   // TODO(shimazu): Use typemap when this is moved to blink-side.
-  blink::WebServiceWorkerContextProxy::LastChanceOption web_last_chance =
+  auto web_last_chance =
       mojo::ConvertTo<blink::WebServiceWorkerContextProxy::LastChanceOption>(
           last_chance);
 
@@ -1439,9 +1439,8 @@ void ServiceWorkerContextClient::DispatchBackgroundFetchClickEvent(
           std::move(callback)));
 
   // TODO(peter): Use typemap when this is moved to blink-side.
-  blink::WebServiceWorkerContextProxy::BackgroundFetchState web_state =
-      mojo::ConvertTo<
-          blink::WebServiceWorkerContextProxy::BackgroundFetchState>(state);
+  auto web_state = mojo::ConvertTo<
+      blink::WebServiceWorkerContextProxy::BackgroundFetchState>(state);
 
   proxy_->DispatchBackgroundFetchClickEvent(
       request_id, blink::WebString::FromUTF8(developer_id), web_state);

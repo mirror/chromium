@@ -105,7 +105,7 @@ class PepperWebPluginImplBrowserTest
     PP_Resource image = ppb_image_data_->Create(
         pp_instance_, ppb_image_data_->GetNativeImageDataFormat(), &size,
         PP_TRUE);
-    int32_t* pixels = static_cast<int32_t*>(ppb_image_data_->Map(image));
+    auto* pixels = static_cast<int32_t*>(ppb_image_data_->Map(image));
     pixels[0] = 0xff000000;
     pixels[1] = 0xffffffff;
     ppb_image_data_->Unmap(image);

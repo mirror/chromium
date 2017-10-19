@@ -271,7 +271,7 @@ void ProcessedLocalAudioSource::Capture(const media::AudioBus* audio_bus,
   // Map internal volume range of [0.0, 1.0] into [0, 255] used by AGC.
   // The volume can be higher than 255 on Linux, and it will be cropped to
   // 255 since AGC does not allow values out of range.
-  int current_volume = static_cast<int>((volume * MaxVolume()) + 0.5);
+  auto current_volume = static_cast<int>((volume * MaxVolume()) + 0.5);
   // Note: Using NoBarrier_Store() because the timing of visibility of the
   // updated volume information on other threads can be relaxed.
   base::subtle::NoBarrier_Store(&volume_, current_volume);

@@ -103,8 +103,7 @@ class InteractiveRenderWidget : public RenderWidget {
 
   // Overridden from RenderWidget:
   bool HasTouchEventHandlersAt(const gfx::Point& point) const override {
-    for (std::vector<gfx::Rect>::const_iterator iter = rects_.begin();
-         iter != rects_.end(); ++iter) {
+    for (auto iter = rects_.begin(); iter != rects_.end(); ++iter) {
       if ((*iter).Contains(point))
         return true;
     }

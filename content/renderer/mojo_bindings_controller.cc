@@ -62,7 +62,7 @@ MojoContextState* MojoBindingsController::GetContextState() {
   gin::PerContextData* context_data = gin::PerContextData::From(context);
   if (!context_data)
     return NULL;
-  MojoContextStateData* context_state = static_cast<MojoContextStateData*>(
+  auto* context_state = static_cast<MojoContextStateData*>(
       context_data->GetUserData(kMojoContextStateKey));
   return context_state ? context_state->state.get() : NULL;
 }

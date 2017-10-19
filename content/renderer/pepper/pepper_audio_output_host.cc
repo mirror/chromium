@@ -43,15 +43,14 @@ PepperAudioOutputHost::PepperAudioOutputHost(RendererPpapiHostImpl* host,
                               host->GetRenderFrameForInstance(pp_instance())),
                           PP_DEVICETYPE_DEV_AUDIOOUTPUT,
                           host->GetDocumentURL(instance)) {
-  PepperPluginInstanceImpl* plugin_instance =
-      static_cast<PepperPluginInstanceImpl*>(
-          PepperPluginInstance::Get(pp_instance()));
+  auto* plugin_instance = static_cast<PepperPluginInstanceImpl*>(
+      PepperPluginInstance::Get(pp_instance()));
   if (plugin_instance && plugin_instance->throttler())
     plugin_instance->throttler()->AddObserver(this);
 }
 
 PepperAudioOutputHost::~PepperAudioOutputHost() {
-  PepperPluginInstanceImpl* instance = static_cast<PepperPluginInstanceImpl*>(
+  auto* instance = static_cast<PepperPluginInstanceImpl*>(
       PepperPluginInstance::Get(pp_instance()));
   if (instance) {
     if (instance->throttler()) {
@@ -130,7 +129,7 @@ int32_t PepperAudioOutputHost::OnStartOrStop(
   if (!audio_output_)
     return PP_ERROR_FAILED;
 
-  PepperPluginInstanceImpl* instance = static_cast<PepperPluginInstanceImpl*>(
+  auto* instance = static_cast<PepperPluginInstanceImpl*>(
       PepperPluginInstance::Get(pp_instance()));
 
   if (playback) {
@@ -237,7 +236,7 @@ void PepperAudioOutputHost::SendOpenReply(int32_t result) {
 }
 
 void PepperAudioOutputHost::OnThrottleStateChange() {
-  PepperPluginInstanceImpl* instance = static_cast<PepperPluginInstanceImpl*>(
+  auto* instance = static_cast<PepperPluginInstanceImpl*>(
       PepperPluginInstance::Get(pp_instance()));
   if (playback_throttled_ && instance && instance->throttler() &&
       !instance->throttler()->power_saver_enabled()) {
@@ -254,7 +253,7 @@ void PepperAudioOutputHost::StartDeferredPlayback() {
   DCHECK(playback_throttled_);
   playback_throttled_ = false;
 
-  PepperPluginInstanceImpl* instance = static_cast<PepperPluginInstanceImpl*>(
+  auto* instance = static_cast<PepperPluginInstanceImpl*>(
       PepperPluginInstance::Get(pp_instance()));
   if (instance)
     instance->audio_controller().AddInstance(this);

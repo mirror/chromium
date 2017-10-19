@@ -110,7 +110,7 @@ void InputEventFilter::QueueClosureForMainThreadEventQueue(
     int routing_id,
     const base::Closure& closure) {
   DCHECK(target_task_runner_->BelongsToCurrentThread());
-  RouteQueueMap::iterator iter = route_queues_.find(routing_id);
+  auto iter = route_queues_.find(routing_id);
   if (iter != route_queues_.end()) {
     iter->second->QueueClosure(closure);
     return;
@@ -127,7 +127,7 @@ void InputEventFilter::DispatchNonBlockingEventToMainThread(
     ui::WebScopedInputEvent event,
     const ui::LatencyInfo& latency_info) {
   DCHECK(target_task_runner_->BelongsToCurrentThread());
-  RouteQueueMap::iterator iter = route_queues_.find(routing_id);
+  auto iter = route_queues_.find(routing_id);
   if (iter != route_queues_.end()) {
     iter->second->HandleEvent(
         std::move(event), latency_info, DISPATCH_TYPE_NON_BLOCKING,
@@ -272,7 +272,7 @@ void InputEventFilter::DidForwardToHandlerAndOverscroll(
       ack_state == INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING_DUE_TO_FLING ||
       ack_state == INPUT_EVENT_ACK_STATE_NOT_CONSUMED) {
     DCHECK(!overscroll_params);
-    RouteQueueMap::iterator iter = route_queues_.find(routing_id);
+    auto iter = route_queues_.find(routing_id);
     if (iter != route_queues_.end()) {
       iter->second->HandleEvent(std::move(event), latency_info, dispatch_type,
                                 ack_state, std::move(callback));

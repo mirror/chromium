@@ -73,8 +73,7 @@ class RTCVideoEncoderTest
   media::MockVideoEncodeAccelerator* ExpectCreateInitAndDestroyVEA() {
     // The VEA will be owned by the RTCVideoEncoder once
     // factory.CreateVideoEncodeAccelerator() is called.
-    media::MockVideoEncodeAccelerator* mock_vea =
-        new media::MockVideoEncodeAccelerator();
+    auto* mock_vea = new media::MockVideoEncodeAccelerator();
 
     EXPECT_CALL(*mock_gpu_factories_.get(), DoCreateVideoEncodeAccelerator())
         .WillRepeatedly(Return(mock_vea));

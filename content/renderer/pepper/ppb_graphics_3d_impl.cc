@@ -260,8 +260,7 @@ bool PPB_Graphics3D_Impl::InitRaw(
   if (!plugin_instance->is_flash_plugin())
     UMA_HISTOGRAM_BOOLEAN("Pepper.Graphics3DHasShareGroup", !!share_context);
   if (share_context) {
-    PPB_Graphics3D_Impl* share_graphics =
-        static_cast<PPB_Graphics3D_Impl*>(share_context);
+    auto* share_graphics = static_cast<PPB_Graphics3D_Impl*>(share_context);
     share_buffer = share_graphics->GetCommandBufferProxy();
   }
 
@@ -348,7 +347,7 @@ void PPB_Graphics3D_Impl::SendContextLost() {
   // send the Graphics3DContextLost to the plugin; the instance may care about
   // that event even though this context has been destroyed.
   PP_Instance this_pp_instance = pp_instance();
-  const PPP_Graphics3D* ppp_graphics_3d = static_cast<const PPP_Graphics3D*>(
+  const auto* ppp_graphics_3d = static_cast<const PPP_Graphics3D*>(
       instance->module()->GetPluginInterface(PPP_GRAPHICS_3D_INTERFACE));
   // We have to check *again* that the instance exists, because it could have
   // been deleted during GetPluginInterface(). Even the PluginModule could be

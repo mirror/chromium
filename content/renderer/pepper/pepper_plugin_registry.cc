@@ -46,7 +46,7 @@ const PepperPluginInfo* PepperPluginRegistry::GetInfoForPlugin(
 }
 
 PluginModule* PepperPluginRegistry::GetLiveModule(const base::FilePath& path) {
-  NonOwningModuleMap::iterator module_iter = live_modules_.find(path);
+  auto module_iter = live_modules_.find(path);
   if (module_iter == live_modules_.end())
     return NULL;
 
@@ -61,8 +61,7 @@ PluginModule* PepperPluginRegistry::GetLiveModule(const base::FilePath& path) {
   if (instance_set.empty())
     return module_iter->second;
 
-  PluginModule::PluginInstanceSet::const_iterator instance_iter =
-      instance_set.begin();
+  auto instance_iter = instance_set.begin();
   while (instance_iter != instance_set.end()) {
     if (!(*instance_iter)->is_deleted())
       return module_iter->second;
@@ -83,9 +82,7 @@ void PepperPluginRegistry::PluginModuleDead(PluginModule* dead_module) {
 
   // Modules aren't destroyed very often and there are normally at most a
   // couple of them. So for now we just do a brute-force search.
-  for (NonOwningModuleMap::iterator i = live_modules_.begin();
-       i != live_modules_.end();
-       ++i) {
+  for (auto i = live_modules_.begin(); i != live_modules_.end(); ++i) {
     if (i->second == dead_module) {
       live_modules_.erase(i);
       return;

@@ -48,7 +48,7 @@ class RTCStatsWhitelist {
 };
 
 RTCStatsWhitelist* GetStatsWhitelist() {
-  static RTCStatsWhitelist* whitelist = new RTCStatsWhitelist();
+  static auto* whitelist = new RTCStatsWhitelist();
   return whitelist;
 }
 

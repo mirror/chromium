@@ -379,9 +379,8 @@ void PepperURLLoaderHost::Close() {
 }
 
 WebLocalFrame* PepperURLLoaderHost::GetFrame() {
-  PepperPluginInstanceImpl* instance_object =
-      static_cast<PepperPluginInstanceImpl*>(
-          renderer_ppapi_host_->GetPluginInstance(pp_instance()));
+  auto* instance_object = static_cast<PepperPluginInstanceImpl*>(
+      renderer_ppapi_host_->GetPluginInstance(pp_instance()));
   if (!instance_object || instance_object->is_deleted())
     return NULL;
   return instance_object->GetContainer()->GetDocument().GetFrame();

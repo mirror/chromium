@@ -322,7 +322,7 @@ void* CreateHistogram(
 }
 
 void AddHistogramSample(void* hist, int sample) {
-  base::Histogram* histogram = static_cast<base::Histogram*>(hist);
+  auto* histogram = static_cast<base::Histogram*>(hist);
   histogram->Add(sample);
 }
 
@@ -2498,7 +2498,7 @@ void RenderThreadImpl::OnSyncMemoryPressure(
   if (!blink::MainThreadIsolate())
     return;
 
-  v8::MemoryPressureLevel v8_memory_pressure_level =
+  auto v8_memory_pressure_level =
       static_cast<v8::MemoryPressureLevel>(memory_pressure_level);
 
 #if !BUILDFLAG(ALLOW_CRITICAL_MEMORY_PRESSURE_HANDLING_IN_FOREGROUND)

@@ -123,7 +123,7 @@ void PepperWebSocketHost::DidReceiveArrayBuffer(
     return;
 
   // Send an IPC to transport received data.
-  uint8_t* data = static_cast<uint8_t*>(binaryData.Data());
+  auto* data = static_cast<uint8_t*>(binaryData.Data());
   std::vector<uint8_t> array_message(data, data + binaryData.ByteLength());
   host()->SendUnsolicitedReply(
       pp_resource(),
@@ -216,10 +216,8 @@ int32_t PepperWebSocketHost::OnHostMsgConnect(
 
   // Validate protocols.
   std::string protocol_string;
-  for (std::vector<std::string>::const_iterator vector_it = protocols.begin();
-       vector_it != protocols.end();
+  for (auto vector_it = protocols.begin(); vector_it != protocols.end();
        ++vector_it) {
-
     // Check containing characters.
     for (std::string::const_iterator string_it = vector_it->begin();
          string_it != vector_it->end();
@@ -275,8 +273,7 @@ int32_t PepperWebSocketHost::OnHostMsgClose(
   close_reply_ = context->MakeReplyMessageContext();
   initiating_close_ = true;
 
-  blink::WebPepperSocket::CloseEventCode event_code =
-      static_cast<blink::WebPepperSocket::CloseEventCode>(code);
+  auto event_code = static_cast<blink::WebPepperSocket::CloseEventCode>(code);
   if (code == PP_WEBSOCKETSTATUSCODE_NOT_SPECIFIED) {
     // PP_WEBSOCKETSTATUSCODE_NOT_SPECIFIED and CloseEventCodeNotSpecified are
     // assigned to different values. A conversion is needed if

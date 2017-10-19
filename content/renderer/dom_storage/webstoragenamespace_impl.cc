@@ -44,8 +44,7 @@ WebStorageNamespace* WebStorageNamespaceImpl::copy() {
 
 bool WebStorageNamespaceImpl::IsSameNamespace(
     const WebStorageNamespace& other) const {
-  const WebStorageNamespaceImpl* other_impl =
-      static_cast<const WebStorageNamespaceImpl*>(&other);
+  const auto* other_impl = static_cast<const WebStorageNamespaceImpl*>(&other);
   return namespace_id_ == other_impl->namespace_id_;
 }
 

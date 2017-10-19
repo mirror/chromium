@@ -155,8 +155,7 @@ InputEventData GetEventWithCommonFieldsAndType(const WebInputEvent& web_event) {
 
 void AppendKeyEvent(const WebInputEvent& event,
                     std::vector<InputEventData>* result_events) {
-  const WebKeyboardEvent& key_event =
-      static_cast<const WebKeyboardEvent&>(event);
+  const auto& key_event = static_cast<const WebKeyboardEvent&>(event);
   InputEventData result = GetEventWithCommonFieldsAndType(event);
   result.event_modifiers = ConvertEventModifiers(key_event.GetModifiers());
   result.key_code = key_event.windows_key_code;
@@ -167,8 +166,7 @@ void AppendKeyEvent(const WebInputEvent& event,
 
 void AppendCharEvent(const WebInputEvent& event,
                      std::vector<InputEventData>* result_events) {
-  const WebKeyboardEvent& key_event =
-      static_cast<const WebKeyboardEvent&>(event);
+  const auto& key_event = static_cast<const WebKeyboardEvent&>(event);
 
   // This is a bit complex, the input event will normally just have one 16-bit
   // character in it, but may be zero or more than one. The text array is
@@ -208,7 +206,7 @@ void AppendMouseEvent(const WebInputEvent& event,
                     static_cast<int>(PP_INPUTEVENT_MOUSEBUTTON_MIDDLE),
                 "MouseMiddle should match");
 
-  const WebMouseEvent& mouse_event = static_cast<const WebMouseEvent&>(event);
+  const auto& mouse_event = static_cast<const WebMouseEvent&>(event);
   InputEventData result = GetEventWithCommonFieldsAndType(event);
   result.event_modifiers = ConvertEventModifiers(mouse_event.GetModifiers());
   if (mouse_event.GetType() == WebInputEvent::kMouseDown ||
@@ -227,8 +225,7 @@ void AppendMouseEvent(const WebInputEvent& event,
 
 void AppendMouseWheelEvent(const WebInputEvent& event,
                            std::vector<InputEventData>* result_events) {
-  const WebMouseWheelEvent& mouse_wheel_event =
-      static_cast<const WebMouseWheelEvent&>(event);
+  const auto& mouse_wheel_event = static_cast<const WebMouseWheelEvent&>(event);
   InputEventData result = GetEventWithCommonFieldsAndType(event);
   result.event_modifiers =
       ConvertEventModifiers(mouse_wheel_event.GetModifiers());
@@ -279,8 +276,7 @@ void SetPPTouchPoints(const WebTouchPoint* touches,
 
 void AppendTouchEvent(const WebInputEvent& event,
                       std::vector<InputEventData>* result_events) {
-  const WebTouchEvent& touch_event =
-      reinterpret_cast<const WebTouchEvent&>(event);
+  const auto& touch_event = reinterpret_cast<const WebTouchEvent&>(event);
 
   InputEventData result = GetEventWithCommonFieldsAndType(event);
 
@@ -356,7 +352,7 @@ void SetWebTouchPointsIfNotYetSet(
 }
 
 WebTouchEvent* BuildTouchEvent(const InputEventData& event) {
-  WebTouchEvent* web_event = new WebTouchEvent();
+  auto* web_event = new WebTouchEvent();
   WebTouchPoint::State state = WebTouchPoint::kStateUndefined;
   WebInputEvent::Type type = WebInputEvent::kUndefined;
   switch (event.event_type) {
@@ -408,14 +404,14 @@ WebKeyboardEvent* BuildKeyEvent(const InputEventData& event) {
     default:
       NOTREACHED();
   }
-  WebKeyboardEvent* key_event =
+  auto* key_event =
       new WebKeyboardEvent(type, event.event_modifiers, event.event_time_stamp);
   key_event->windows_key_code = event.key_code;
   return key_event;
 }
 
 WebKeyboardEvent* BuildCharEvent(const InputEventData& event) {
-  WebKeyboardEvent* key_event = new WebKeyboardEvent(
+  auto* key_event = new WebKeyboardEvent(
       WebInputEvent::kChar, event.event_modifiers, event.event_time_stamp);
 
   // Make sure to not read beyond the buffer in case some bad code doesn't
@@ -454,7 +450,7 @@ WebMouseEvent* BuildMouseEvent(const InputEventData& event) {
     default:
       NOTREACHED();
   }
-  WebMouseEvent* mouse_event =
+  auto* mouse_event =
       new WebMouseEvent(type, event.event_modifiers, event.event_time_stamp);
   mouse_event->pointer_type = blink::WebPointerProperties::PointerType::kMouse;
   mouse_event->button = static_cast<WebMouseEvent::Button>(event.mouse_button);
@@ -475,7 +471,7 @@ WebMouseEvent* BuildMouseEvent(const InputEventData& event) {
 }
 
 WebMouseWheelEvent* BuildMouseWheelEvent(const InputEventData& event) {
-  WebMouseWheelEvent* mouse_wheel_event =
+  auto* mouse_wheel_event =
       new WebMouseWheelEvent(WebInputEvent::kMouseWheel, event.event_modifiers,
                              event.event_time_stamp);
   mouse_wheel_event->delta_x = event.wheel_delta.x;
@@ -674,7 +670,7 @@ std::vector<std::unique_ptr<WebInputEvent>> CreateSimulatedWebInputEvents(
       break;
 
     case PP_INPUTEVENT_TYPE_WHEEL: {
-      WebMouseWheelEvent* web_mouse_wheel_event =
+      auto* web_mouse_wheel_event =
           static_cast<WebMouseWheelEvent*>(original_event.get());
       web_mouse_wheel_event->SetPositionInWidget(plugin_x, plugin_y);
       events.push_back(std::move(original_event));
@@ -696,7 +692,7 @@ std::vector<std::unique_ptr<WebInputEvent>> CreateSimulatedWebInputEvents(
     }
 
     case PP_INPUTEVENT_TYPE_CHAR: {
-      WebKeyboardEvent* web_char_event =
+      auto* web_char_event =
           static_cast<WebKeyboardEvent*>(original_event.get());
 
       WebUChar code = 0, text = 0;

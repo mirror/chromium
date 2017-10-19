@@ -102,7 +102,7 @@ class MediaDevicesEventDispatcherTest : public ::testing::Test {
 
 TEST_F(MediaDevicesEventDispatcherTest, SubscribeUnsubscribeSingleType) {
   for (size_t i = 0; i < NUM_MEDIA_DEVICE_TYPES; ++i) {
-    MediaDeviceType type = static_cast<MediaDeviceType>(i);
+    auto type = static_cast<MediaDeviceType>(i);
     MediaDeviceInfoArray device_infos;
     MockMediaDevicesEventSubscriber subscriber1, subscriber2;
     EXPECT_CALL(media_devices_dispatcher_,
@@ -167,7 +167,7 @@ TEST_F(MediaDevicesEventDispatcherTest, SubscribeUnsubscribeAllTypes) {
 
   // Simulate a device changes for all types.
   for (size_t i = 0; i < NUM_MEDIA_DEVICE_TYPES; ++i) {
-    MediaDeviceType type = static_cast<MediaDeviceType>(i);
+    auto type = static_cast<MediaDeviceType>(i);
     EXPECT_CALL(subscriber1, EventDispatched(type, _));
     EXPECT_CALL(subscriber2, EventDispatched(type, _));
     event_dispatcher_->DispatchDevicesChangedEvent(type, device_infos);
@@ -176,7 +176,7 @@ TEST_F(MediaDevicesEventDispatcherTest, SubscribeUnsubscribeAllTypes) {
 
   // Unsubscribe one of the subscribers.
   for (size_t i = 0; i < NUM_MEDIA_DEVICE_TYPES; ++i) {
-    MediaDeviceType type = static_cast<MediaDeviceType>(i);
+    auto type = static_cast<MediaDeviceType>(i);
     EXPECT_CALL(
         media_devices_dispatcher_,
         UnsubscribeDeviceChangeNotifications(type, subscription_list_1[type]));
@@ -188,14 +188,14 @@ TEST_F(MediaDevicesEventDispatcherTest, SubscribeUnsubscribeAllTypes) {
   EXPECT_CALL(subscriber1, EventDispatched(_, _)).Times(0);
   EXPECT_CALL(subscriber2, EventDispatched(_, _)).Times(NUM_MEDIA_DEVICE_TYPES);
   for (size_t i = 0; i < NUM_MEDIA_DEVICE_TYPES; ++i) {
-    MediaDeviceType type = static_cast<MediaDeviceType>(i);
+    auto type = static_cast<MediaDeviceType>(i);
     event_dispatcher_->DispatchDevicesChangedEvent(type, device_infos);
     base::RunLoop().RunUntilIdle();
   }
 
   // Unsubscribe the other subscriber.
   for (size_t i = 0; i < NUM_MEDIA_DEVICE_TYPES; ++i) {
-    MediaDeviceType type = static_cast<MediaDeviceType>(i);
+    auto type = static_cast<MediaDeviceType>(i);
     EXPECT_CALL(
         media_devices_dispatcher_,
         UnsubscribeDeviceChangeNotifications(type, subscription_list_2[type]));

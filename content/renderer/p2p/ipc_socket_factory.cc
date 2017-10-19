@@ -443,7 +443,7 @@ int IpcPacketSocket::SendTo(const void *data, size_t data_size,
 
   send_bytes_available_ -= data_size;
 
-  const char* data_char = reinterpret_cast<const char*>(data);
+  const auto* data_char = reinterpret_cast<const char*>(data);
   std::vector<char> data_vector(data_char, data_char + data_size);
   uint64_t packet_id = client_->Send(address_chrome, data_vector, options);
 
@@ -751,8 +751,7 @@ rtc::AsyncPacketSocket* IpcPacketSocketFactory::CreateUdpSocket(
     const rtc::SocketAddress& local_address,
     uint16_t min_port,
     uint16_t max_port) {
-  P2PSocketClientImpl* socket_client =
-      new P2PSocketClientImpl(socket_dispatcher_);
+  auto* socket_client = new P2PSocketClientImpl(socket_dispatcher_);
   std::unique_ptr<IpcPacketSocket> socket(new IpcPacketSocket());
   if (!socket->Init(P2P_SOCKET_UDP, socket_client, local_address, min_port,
                     max_port, rtc::SocketAddress())) {
@@ -772,8 +771,7 @@ rtc::AsyncPacketSocket* IpcPacketSocketFactory::CreateServerTcpSocket(
 
   P2PSocketType type = (opts & rtc::PacketSocketFactory::OPT_STUN) ?
       P2P_SOCKET_STUN_TCP_SERVER : P2P_SOCKET_TCP_SERVER;
-  P2PSocketClientImpl* socket_client =
-      new P2PSocketClientImpl(socket_dispatcher_);
+  auto* socket_client = new P2PSocketClientImpl(socket_dispatcher_);
   std::unique_ptr<IpcPacketSocket> socket(new IpcPacketSocket());
   if (!socket->Init(type, socket_client, local_address, min_port, max_port,
                     rtc::SocketAddress())) {
@@ -798,8 +796,7 @@ rtc::AsyncPacketSocket* IpcPacketSocketFactory::CreateClientTcpSocket(
     type = (opts & rtc::PacketSocketFactory::OPT_STUN) ?
         P2P_SOCKET_STUN_TCP_CLIENT : P2P_SOCKET_TCP_CLIENT;
   }
-  P2PSocketClientImpl* socket_client =
-      new P2PSocketClientImpl(socket_dispatcher_);
+  auto* socket_client = new P2PSocketClientImpl(socket_dispatcher_);
   std::unique_ptr<IpcPacketSocket> socket(new IpcPacketSocket());
   if (!socket->Init(type, socket_client, local_address, 0, 0, remote_address))
     return NULL;

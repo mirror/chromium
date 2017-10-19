@@ -177,7 +177,7 @@ base::string16 LocalStorageCachedArea::Uint8VectorToString16(
     const std::vector<uint8_t>& input) {
   if (input.empty())
     return base::string16();
-  StorageFormat format = static_cast<StorageFormat>(input[0]);
+  auto format = static_cast<StorageFormat>(input[0]);
   const size_t payload_size = input.size() - 1;
   base::string16 result;
   bool corrupt = false;
@@ -222,7 +222,7 @@ std::vector<uint8_t> LocalStorageCachedArea::String16ToUint8Vector(
     std::copy(input.begin(), input.end(), result.begin() + 1);
     return result;
   }
-  const uint8_t* data = reinterpret_cast<const uint8_t*>(input.data());
+  const auto* data = reinterpret_cast<const uint8_t*>(input.data());
   std::vector<uint8_t> result;
   result.reserve(input.size() * sizeof(base::char16) + 1);
   result.push_back(static_cast<uint8_t>(StorageFormat::UTF16));

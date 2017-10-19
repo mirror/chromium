@@ -244,8 +244,8 @@ void SkiaBenchmarking::Rasterize(gin::Arguments* args) {
 
   blink::WebArrayBuffer buffer =
       blink::WebArrayBuffer::Create(bitmap.computeByteSize(), 1);
-  uint32_t* packed_pixels = reinterpret_cast<uint32_t*>(bitmap.getPixels());
-  uint8_t* buffer_pixels = reinterpret_cast<uint8_t*>(buffer.Data());
+  auto* packed_pixels = reinterpret_cast<uint32_t*>(bitmap.getPixels());
+  auto* buffer_pixels = reinterpret_cast<uint8_t*>(buffer.Data());
   // Swizzle from native Skia format to RGBA as we copy out.
   for (size_t i = 0; i < bitmap.computeByteSize(); i += 4) {
     uint32_t c = packed_pixels[i >> 2];

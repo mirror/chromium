@@ -97,7 +97,7 @@ void DataFromWebURLResponse(RendererPpapiHostImpl* host_impl,
     base::FilePath external_path = blink::WebStringToFilePath(file_path);
     // TODO(teravest): Write a utility function to create resource hosts in the
     // renderer and browser.
-    PepperFileRefRendererHost* renderer_host =
+    auto* renderer_host =
         new PepperFileRefRendererHost(host_impl, pp_instance, 0, external_path);
     int renderer_pending_host_id =
         host_impl->GetPpapiHost()->AddPendingResourceHost(

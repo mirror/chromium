@@ -124,8 +124,7 @@ void DOMStorageCachedArea::ApplyMutation(
 
     // We have to retain local additions which happened after this
     // clear operation from another process.
-    std::map<base::string16, int>::iterator iter =
-        ignore_key_mutations_.begin();
+    auto iter = ignore_key_mutations_.begin();
     while (iter != ignore_key_mutations_.end()) {
       base::NullableString16 value = old->GetItem(iter->first);
       if (!value.is_null()) {
@@ -220,8 +219,7 @@ void DOMStorageCachedArea::OnSetItemComplete(const base::string16& key,
     Reset();
     return;
   }
-  std::map<base::string16, int>::iterator found =
-      ignore_key_mutations_.find(key);
+  auto found = ignore_key_mutations_.find(key);
   DCHECK(found != ignore_key_mutations_.end());
   if (--found->second == 0)
     ignore_key_mutations_.erase(found);
@@ -230,8 +228,7 @@ void DOMStorageCachedArea::OnSetItemComplete(const base::string16& key,
 void DOMStorageCachedArea::OnRemoveItemComplete(const base::string16& key,
                                                 bool success) {
   DCHECK(success);
-  std::map<base::string16, int>::iterator found =
-      ignore_key_mutations_.find(key);
+  auto found = ignore_key_mutations_.find(key);
   DCHECK(found != ignore_key_mutations_.end());
   if (--found->second == 0)
     ignore_key_mutations_.erase(found);

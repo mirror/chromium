@@ -350,8 +350,7 @@ void RTCVideoDecoder::DismissPictureBuffer(int32_t id) {
   DVLOG(3) << "DismissPictureBuffer. id=" << id;
   DCheckGpuVideoAcceleratorFactoriesTaskRunnerIsCurrent();
 
-  std::map<int32_t, media::PictureBuffer>::iterator it =
-      assigned_picture_buffers_.find(id);
+  auto it = assigned_picture_buffers_.find(id);
   if (it == assigned_picture_buffers_.end()) {
     NOTREACHED() << "Missing picture buffer: " << id;
     return;
@@ -374,8 +373,7 @@ void RTCVideoDecoder::PictureReady(const media::Picture& picture) {
   DVLOG(3) << "PictureReady";
   DCheckGpuVideoAcceleratorFactoriesTaskRunnerIsCurrent();
 
-  std::map<int32_t, media::PictureBuffer>::iterator it =
-      assigned_picture_buffers_.find(picture.picture_buffer_id());
+  auto it = assigned_picture_buffers_.find(picture.picture_buffer_id());
   if (it == assigned_picture_buffers_.end()) {
     NOTREACHED() << "Missing picture buffer: " << picture.picture_buffer_id();
     NotifyError(media::VideoDecodeAccelerator::PLATFORM_FAILURE);
@@ -612,7 +610,7 @@ bool RTCVideoDecoder::SaveToPendingBuffers_Locked(
   }
 
   // Clone the input image and save it to the queue.
-  uint8_t* buffer = new uint8_t[input_image._length];
+  auto* buffer = new uint8_t[input_image._length];
   // TODO(wuchengli): avoid memcpy. Extend webrtc::VideoDecoder::Decode()
   // interface to take a non-const ptr to the frame and add a method to the
   // frame that will swap buffers with another.
@@ -703,8 +701,7 @@ void RTCVideoDecoder::ReusePictureBuffer(int64_t picture_buffer_id) {
   DVLOG(3) << "ReusePictureBuffer. id=" << picture_buffer_id;
 
   DCHECK(!picture_buffers_at_display_.empty());
-  PictureBufferTextureMap::iterator display_iterator =
-      picture_buffers_at_display_.find(picture_buffer_id);
+  auto display_iterator = picture_buffers_at_display_.find(picture_buffer_id);
   const auto texture_ids = display_iterator->second;
   DCHECK(display_iterator != picture_buffers_at_display_.end());
   picture_buffers_at_display_.erase(display_iterator);

@@ -147,7 +147,7 @@ void PpFrameWriter::PutFrame(PPB_ImageData_Impl* image_data,
   }
 
   const uint8_t* src_data = static_cast<uint8_t*>(bitmap.getPixels());
-  const int src_stride = static_cast<int>(bitmap.rowBytes());
+  const auto src_stride = static_cast<int>(bitmap.rowBytes());
   const int width = bitmap.width();
   const int height = bitmap.height();
 
@@ -228,7 +228,7 @@ bool PepperToVideoTrackAdapter::Open(MediaStreamRegistryInterface* registry,
   // existing sources.
   base::Base64Encode(base::RandBytesAsString(64), &track_id);
 
-  PpFrameWriter* writer = new PpFrameWriter();
+  auto* writer = new PpFrameWriter();
 
   // Create a new webkit video track.
   blink::WebMediaStreamSource webkit_source;

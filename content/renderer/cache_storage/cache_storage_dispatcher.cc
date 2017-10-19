@@ -61,9 +61,8 @@ void PopulateWebRequestFromFetchRequest(
     blink::WebServiceWorkerRequest* web_request) {
   web_request->SetURL(request.url);
   web_request->SetMethod(WebString::FromASCII(request.method));
-  for (ServiceWorkerHeaderMap::const_iterator i = request.headers.begin(),
-                                              end = request.headers.end();
-       i != end; ++i) {
+  for (auto i = request.headers.begin(), end = request.headers.end(); i != end;
+       ++i) {
     web_request->SetHeader(WebString::FromASCII(i->first),
                            WebString::FromASCII(i->second));
   }
@@ -212,8 +211,7 @@ CacheStorageDispatcher* CacheStorageDispatcher::ThreadSpecificInstance(
   if (g_cache_storage_dispatcher_tls.Pointer()->Get())
     return g_cache_storage_dispatcher_tls.Pointer()->Get();
 
-  CacheStorageDispatcher* dispatcher =
-      new CacheStorageDispatcher(thread_safe_sender);
+  auto* dispatcher = new CacheStorageDispatcher(thread_safe_sender);
   if (WorkerThread::GetCurrentId())
     WorkerThread::AddObserver(dispatcher);
   return dispatcher;

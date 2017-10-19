@@ -383,9 +383,8 @@ PeerConnectionDependencyFactory::CreatePeerConnection(
 
   std::unique_ptr<rtc::NetworkManager> network_manager;
   if (port_config.enable_multiple_routes) {
-    FilteringNetworkManager* filtering_network_manager =
-        new FilteringNetworkManager(network_manager_, requesting_origin,
-                                    media_permission);
+    auto* filtering_network_manager = new FilteringNetworkManager(
+        network_manager_, requesting_origin, media_permission);
     network_manager.reset(filtering_network_manager);
   } else {
     network_manager.reset(new EmptyNetworkManager(network_manager_));

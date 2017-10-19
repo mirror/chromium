@@ -193,7 +193,7 @@ void DevToolsAgent::SetCPUThrottlingRate(double rate) {
 
 // static
 DevToolsAgent* DevToolsAgent::FromRoutingId(int routing_id) {
-  IdToAgentMap::iterator it = g_agent_for_routing_id.Get().find(routing_id);
+  auto it = g_agent_for_routing_id.Get().find(routing_id);
   if (it != g_agent_for_routing_id.Get().end()) {
     return it->second;
   }

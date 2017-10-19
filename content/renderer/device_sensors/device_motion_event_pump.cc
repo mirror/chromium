@@ -173,9 +173,8 @@ void DeviceMotionEventPump::SensorEntry::OnSensorCreated(
     return;
   }
 
-  const device::SensorReadingSharedBuffer* buffer =
-      static_cast<const device::SensorReadingSharedBuffer*>(
-          shared_buffer.get());
+  const auto* buffer = static_cast<const device::SensorReadingSharedBuffer*>(
+      shared_buffer.get());
   shared_buffer_reader.reset(
       new device::SensorReadingSharedBufferReader(buffer));
 

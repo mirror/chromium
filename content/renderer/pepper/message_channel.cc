@@ -78,7 +78,7 @@ gin::WrapperInfo MessageChannel::kWrapperInfo = {gin::kEmbedderNativeGin};
 // static
 MessageChannel* MessageChannel::Create(PepperPluginInstanceImpl* instance,
                                        v8::Persistent<v8::Object>* result) {
-  MessageChannel* message_channel = new MessageChannel(instance);
+  auto* message_channel = new MessageChannel(instance);
   v8::HandleScope handle_scope(instance->GetIsolate());
   v8::Context::Scope context_scope(instance->GetMainWorldContext());
   gin::Handle<MessageChannel> handle =

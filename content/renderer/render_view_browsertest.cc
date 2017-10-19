@@ -820,7 +820,7 @@ TEST_F(RenderViewImplTest, OriginReplicationForSwapOut) {
       "Hello <iframe src='data:text/html,frame 1'></iframe>"
       "<iframe src='data:text/html,frame 2'></iframe>");
   WebFrame* web_frame = frame()->GetWebFrame();
-  TestRenderFrame* child_frame = static_cast<TestRenderFrame*>(
+  auto* child_frame = static_cast<TestRenderFrame*>(
       RenderFrame::FromWebFrame(web_frame->FirstChild()->ToWebLocalFrame()));
 
   // Swap the child frame out and pass a replicated origin to be set for
@@ -842,9 +842,8 @@ TEST_F(RenderViewImplTest, OriginReplicationForSwapOut) {
   // Now, swap out the second frame using a unique origin and verify that it is
   // replicated correctly.
   replication_state.origin = url::Origin();
-  TestRenderFrame* child_frame2 =
-      static_cast<TestRenderFrame*>(RenderFrame::FromWebFrame(
-          web_frame->FirstChild()->NextSibling()->ToWebLocalFrame()));
+  auto* child_frame2 = static_cast<TestRenderFrame*>(RenderFrame::FromWebFrame(
+      web_frame->FirstChild()->NextSibling()->ToWebLocalFrame()));
   child_frame2->SwapOut(kProxyRoutingId + 1, true, replication_state);
   EXPECT_TRUE(web_frame->FirstChild()->NextSibling()->IsWebRemoteFrame());
   EXPECT_TRUE(
@@ -883,7 +882,7 @@ TEST_F(RenderViewImplScaleFactorTest, UpdateDSFAfterSwapIn) {
       routing_id, kProxyRoutingId, MSG_ROUTING_NONE, MSG_ROUTING_NONE,
       MSG_ROUTING_NONE, base::UnguessableToken::Create(), replication_state,
       nullptr, widget_params, FrameOwnerProperties());
-  TestRenderFrame* provisional_frame =
+  auto* provisional_frame =
       static_cast<TestRenderFrame*>(RenderFrameImpl::FromRoutingID(routing_id));
   EXPECT_TRUE(provisional_frame);
 
@@ -912,7 +911,7 @@ TEST_F(RenderViewImplTest, DetachingProxyAlsoDestroysProvisionalFrame) {
 
   LoadHTML("Hello <iframe src='data:text/html,frame 1'></iframe>");
   WebFrame* web_frame = frame()->GetWebFrame();
-  TestRenderFrame* child_frame = static_cast<TestRenderFrame*>(
+  auto* child_frame = static_cast<TestRenderFrame*>(
       RenderFrame::FromWebFrame(web_frame->FirstChild()->ToWebLocalFrame()));
 
   // Swap the child frame out.
@@ -932,7 +931,7 @@ TEST_F(RenderViewImplTest, DetachingProxyAlsoDestroysProvisionalFrame) {
       MSG_ROUTING_NONE, base::UnguessableToken::Create(), replication_state,
       nullptr, widget_params, FrameOwnerProperties());
   {
-    TestRenderFrame* provisional_frame = static_cast<TestRenderFrame*>(
+    auto* provisional_frame = static_cast<TestRenderFrame*>(
         RenderFrameImpl::FromRoutingID(routing_id));
     EXPECT_TRUE(provisional_frame);
   }
@@ -948,7 +947,7 @@ TEST_F(RenderViewImplTest, DetachingProxyAlsoDestroysProvisionalFrame) {
   // thus any subsequent messages (such as OnNavigate) already in flight for it
   // should be dropped.
   {
-    TestRenderFrame* provisional_frame = static_cast<TestRenderFrame*>(
+    auto* provisional_frame = static_cast<TestRenderFrame*>(
         RenderFrameImpl::FromRoutingID(routing_id));
     EXPECT_FALSE(provisional_frame);
   }
@@ -965,7 +964,7 @@ TEST_F(RenderViewImplTest, SetZoomLevelAfterCrossProcessNavigation) {
   LoadHTML("Hello world!");
 
   // Swap the main frame out after which it should become a WebRemoteFrame.
-  TestRenderFrame* main_frame =
+  auto* main_frame =
       static_cast<TestRenderFrame*>(view()->GetMainRenderFrame());
   main_frame->SwapOut(kProxyRoutingId, true,
                       ReconstructReplicationStateForTesting(main_frame));
@@ -1907,7 +1906,7 @@ TEST_F(RendererErrorPageTest, MAYBE_Suppresses) {
   CommonNavigationParams common_params;
   common_params.navigation_type = FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT;
   common_params.url = GURL("data:text/html,test data");
-  TestRenderFrame* main_frame = static_cast<TestRenderFrame*>(frame());
+  auto* main_frame = static_cast<TestRenderFrame*>(frame());
   main_frame->Navigate(common_params, StartNavigationParams(),
                        RequestNavigationParams());
 
@@ -1937,7 +1936,7 @@ TEST_F(RendererErrorPageTest, MAYBE_DoesNotSuppress) {
   CommonNavigationParams common_params;
   common_params.navigation_type = FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT;
   common_params.url = GURL("data:text/html,test data");
-  TestRenderFrame* main_frame = static_cast<TestRenderFrame*>(frame());
+  auto* main_frame = static_cast<TestRenderFrame*>(frame());
   main_frame->Navigate(common_params, StartNavigationParams(),
                        RequestNavigationParams());
 
@@ -1969,7 +1968,7 @@ TEST_F(RendererErrorPageTest, MAYBE_HttpStatusCodeErrorWithEmptyBody) {
   CommonNavigationParams common_params;
   common_params.navigation_type = FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT;
   common_params.url = GURL("data:text/html,test data");
-  TestRenderFrame* main_frame = static_cast<TestRenderFrame*>(frame());
+  auto* main_frame = static_cast<TestRenderFrame*>(frame());
   main_frame->Navigate(common_params, StartNavigationParams(),
                        RequestNavigationParams());
 

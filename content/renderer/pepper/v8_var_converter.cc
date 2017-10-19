@@ -94,7 +94,7 @@ bool GetOrCreateV8Value(v8::Local<v8::Context> context,
   if (ppapi::VarTracker::IsVarTypeRefcounted(var.type)) {
     if (parent_ids->count(var.value.as_id) != 0)
       return false;
-    VarHandleMap::iterator it = visited_ids->find(var.value.as_id);
+    auto it = visited_ids->find(var.value.as_id);
     if (it != visited_ids->end()) {
       *result = it->second;
       return true;
@@ -141,8 +141,7 @@ bool GetOrCreateV8Value(v8::Local<v8::Context> context,
         result->Clear();
         return false;
       }
-      HostArrayBufferVar* host_buffer =
-          static_cast<HostArrayBufferVar*>(buffer);
+      auto* host_buffer = static_cast<HostArrayBufferVar*>(buffer);
       *result = blink::WebArrayBufferConverter::ToV8Value(
           &host_buffer->webkit_buffer(), context->Global(), isolate);
       break;
@@ -399,10 +398,8 @@ bool V8VarConverter::ToV8Value(const PP_Var& var,
       DCHECK(current_v8->IsObject());
       v8::Local<v8::Object> v8_object = current_v8.As<v8::Object>();
 
-      for (DictionaryVar::KeyValueMap::const_iterator iter =
-               dict_var->key_value_map().begin();
-           iter != dict_var->key_value_map().end();
-           ++iter) {
+      for (auto iter = dict_var->key_value_map().begin();
+           iter != dict_var->key_value_map().end(); ++iter) {
         const std::string& key = iter->first;
         const PP_Var& child_var = iter->second.get();
         v8::Local<v8::Value> child_v8;

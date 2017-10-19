@@ -82,8 +82,7 @@ RendererPpapiHostImpl* RendererPpapiHostImpl::CreateOnModuleForOutOfProcess(
     ppapi::proxy::HostDispatcher* dispatcher,
     const ppapi::PpapiPermissions& permissions) {
   DCHECK(!module->renderer_ppapi_host());
-  RendererPpapiHostImpl* result =
-      new RendererPpapiHostImpl(module, dispatcher, permissions);
+  auto* result = new RendererPpapiHostImpl(module, dispatcher, permissions);
 
   // Takes ownership of pointer.
   module->SetRendererPpapiHost(std::unique_ptr<RendererPpapiHostImpl>(result));
@@ -96,8 +95,7 @@ RendererPpapiHostImpl* RendererPpapiHostImpl::CreateOnModuleForInProcess(
     PluginModule* module,
     const ppapi::PpapiPermissions& permissions) {
   DCHECK(!module->renderer_ppapi_host());
-  RendererPpapiHostImpl* result =
-      new RendererPpapiHostImpl(module, permissions);
+  auto* result = new RendererPpapiHostImpl(module, permissions);
 
   // Takes ownership of pointer.
   module->SetRendererPpapiHost(std::unique_ptr<RendererPpapiHostImpl>(result));

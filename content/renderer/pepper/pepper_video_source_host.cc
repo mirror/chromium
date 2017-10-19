@@ -221,7 +221,7 @@ void PepperVideoSourceHost::SendGetFrameReply() {
     return;
   }
 
-  uint8_t* bitmap_pixels = static_cast<uint8_t*>(bitmap.getPixels());
+  auto* bitmap_pixels = static_cast<uint8_t*>(bitmap.getPixels());
   if (!bitmap_pixels) {
     SendGetFrameErrorReply(PP_ERROR_FAILED);
     return;

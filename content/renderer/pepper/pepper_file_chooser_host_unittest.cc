@@ -111,8 +111,7 @@ TEST_F(PepperFileChooserHostTest, Show) {
   selected_info.file_path = base::FilePath(FILE_PATH_LITERAL("myp\\ath/foo"));
   std::vector<content::FileChooserFileInfo> selected_info_vector;
   selected_info_vector.push_back(selected_info);
-  RenderFrameImpl* frame_impl =
-      static_cast<RenderFrameImpl*>(view_->GetMainRenderFrame());
+  auto* frame_impl = static_cast<RenderFrameImpl*>(view_->GetMainRenderFrame());
   FrameMsg_RunFileChooserResponse response(frame_impl->GetRoutingID(),
                                            selected_info_vector);
   EXPECT_TRUE(frame_impl->OnMessageReceived(response));

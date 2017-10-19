@@ -273,9 +273,7 @@ WebDragData DropDataToWebDragData(const DropData& drop_data) {
     item_list.push_back(item);
   }
 
-  for (std::vector<ui::FileInfo>::const_iterator it =
-           drop_data.filenames.begin();
-       it != drop_data.filenames.end();
+  for (auto it = drop_data.filenames.begin(); it != drop_data.filenames.end();
        ++it) {
     WebDragData::Item item;
     item.storage_type = WebDragData::Item::kStorageTypeFilename;
@@ -285,10 +283,8 @@ WebDragData DropDataToWebDragData(const DropData& drop_data) {
     item_list.push_back(item);
   }
 
-  for (std::vector<DropData::FileSystemFileInfo>::const_iterator it =
-           drop_data.file_system_files.begin();
-       it != drop_data.file_system_files.end();
-       ++it) {
+  for (auto it = drop_data.file_system_files.begin();
+       it != drop_data.file_system_files.end(); ++it) {
     WebDragData::Item item;
     item.storage_type = WebDragData::Item::kStorageTypeFileSystemFile;
     item.file_system_url = it->url;
@@ -297,10 +293,8 @@ WebDragData DropDataToWebDragData(const DropData& drop_data) {
     item_list.push_back(item);
   }
 
-  for (std::map<base::string16, base::string16>::const_iterator it =
-           drop_data.custom_data.begin();
-       it != drop_data.custom_data.end();
-       ++it) {
+  for (auto it = drop_data.custom_data.begin();
+       it != drop_data.custom_data.end(); ++it) {
     WebDragData::Item item;
     item.storage_type = WebDragData::Item::kStorageTypeString;
     item.string_type = WebString::FromUTF16(it->first);
@@ -2006,7 +2000,7 @@ void RenderWidget::OnRequestCompositionUpdates(bool immediate_request,
 void RenderWidget::OnOrientationChange() {
   WebWidget* web_widget = GetWebWidget();
   if (web_widget && web_widget->IsWebFrameWidget()) {
-    WebFrameWidget* web_frame_widget = static_cast<WebFrameWidget*>(web_widget);
+    auto* web_frame_widget = static_cast<WebFrameWidget*>(web_widget);
     // LocalRoot() might return null for provisional main frames. In this case,
     // the frame hasn't committed a navigation and is not swapped into the tree
     // yet, so it doesn't make sense to send orientation change events to it.

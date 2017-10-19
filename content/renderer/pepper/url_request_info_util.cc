@@ -70,8 +70,7 @@ bool AppendFileRefToBody(PP_Instance instance,
       renderer_ppapi_host->GetPpapiHost()->GetResourceHost(resource);
   if (!resource_host || !resource_host->IsFileRefHost())
     return false;
-  PepperFileRefRendererHost* file_ref_host =
-      static_cast<PepperFileRefRendererHost*>(resource_host);
+  auto* file_ref_host = static_cast<PepperFileRefRendererHost*>(resource_host);
   switch (file_ref_host->GetFileSystemType()) {
     case PP_FILESYSTEMTYPE_LOCALTEMPORARY:
     case PP_FILESYSTEMTYPE_LOCALPERSISTENT:
@@ -225,7 +224,7 @@ bool CreateWebURLRequest(PP_Instance instance,
   }
 
   if (data->has_custom_user_agent || !name_version.empty()) {
-    RequestExtraData* extra_data = new RequestExtraData();
+    auto* extra_data = new RequestExtraData();
     if (data->has_custom_user_agent) {
       extra_data->set_custom_user_agent(
           WebString::FromUTF8(data->custom_user_agent));

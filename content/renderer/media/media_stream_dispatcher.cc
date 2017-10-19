@@ -23,8 +23,8 @@ namespace {
 
 bool RemoveStreamDeviceFromArray(const MediaStreamDevice& device,
                                  MediaStreamDevices* devices) {
-  for (MediaStreamDevices::iterator device_it = devices->begin();
-       device_it != devices->end(); ++device_it) {
+  for (auto device_it = devices->begin(); device_it != devices->end();
+       ++device_it) {
     if (device_it->IsSameDevice(device)) {
       devices->erase(device_it);
       return true;
@@ -114,7 +114,7 @@ void MediaStreamDispatcher::StopStreamDevice(const MediaStreamDevice& device) {
 
   // Remove |device| from all streams in |label_stream_map_|.
   bool device_found = false;
-  LabelStreamMap::iterator stream_it = label_stream_map_.begin();
+  auto stream_it = label_stream_map_.begin();
   while (stream_it != label_stream_map_.end()) {
     MediaStreamDevices& audio_devices = stream_it->second.audio_devices;
     MediaStreamDevices& video_devices = stream_it->second.video_devices;
@@ -161,7 +161,7 @@ void MediaStreamDispatcher::CloseDevice(const std::string& label) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!label.empty());
 
-  LabelStreamMap::iterator it = label_stream_map_.find(label);
+  auto it = label_stream_map_.find(label);
   if (it == label_stream_map_.end())
     return;
   label_stream_map_.erase(it);
@@ -292,7 +292,7 @@ void MediaStreamDispatcher::OnDeviceStopped(const std::string& label,
   DVLOG(1) << __func__ << " label=" << label << " device_id=" << device.id;
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  LabelStreamMap::iterator it = label_stream_map_.find(label);
+  auto it = label_stream_map_.find(label);
   if (it == label_stream_map_.end()) {
     // This can happen if a user happen stop a the device from JS at the same
     // time as the underlying media device is unplugged from the system.
@@ -340,7 +340,7 @@ int MediaStreamDispatcher::audio_session_id(const std::string& label,
                                             int index) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  LabelStreamMap::iterator it = label_stream_map_.find(label);
+  auto it = label_stream_map_.find(label);
   if (it == label_stream_map_.end() ||
       it->second.audio_devices.size() <= static_cast<size_t>(index)) {
     return MediaStreamDevice::kNoId;
@@ -358,7 +358,7 @@ int MediaStreamDispatcher::video_session_id(const std::string& label,
                                             int index) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  LabelStreamMap::iterator it = label_stream_map_.find(label);
+  auto it = label_stream_map_.find(label);
   if (it == label_stream_map_.end() ||
       it->second.video_devices.size() <= static_cast<size_t>(index)) {
     return MediaStreamDevice::kNoId;
