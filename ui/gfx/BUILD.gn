@@ -815,5 +815,6 @@ fuzzer_test("color_transform_fuzzer") {
   deps = [
     ":gfx",
   ]
-  libfuzzer_options = [ "max_len=1024" ]
+  dict = "color_transform_fuzzer.dict"
+  libfuzzer_options = [ "max_len=32768" ]
 }
