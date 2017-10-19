@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cfe2a48_269baae9",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-19T05:06:24Z",
+      "side": 1,
+      "message": "Won\u0027t this DLOG(ERROR) and incorrectly return false if we go through the fdio_clone_fd() path and it returns ZX_OK?",
+      "range": {
+        "startLine": 62,
+        "startChar": 13,
+        "endLine": 62,
+        "endChar": 17
+      },
+      "revId": "6e746f056a1b0ee25b7f591dd159baa94e7dfebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
