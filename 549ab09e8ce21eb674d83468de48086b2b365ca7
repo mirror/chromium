@@ -46,6 +46,30 @@
       "revId": "549ab09e8ce21eb674d83468de48086b2b365ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040c8143_6f41b5d7",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T21:46:22Z",
+      "side": 1,
+      "message": "In Google C++ style, move-only types are passed by value combined with std::move(). That should work here as well.",
+      "parentUuid": "86f719e0_4b196198",
+      "range": {
+        "startLine": 118,
+        "startChar": 18,
+        "endLine": 118,
+        "endChar": 50
+      },
+      "revId": "549ab09e8ce21eb674d83468de48086b2b365ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
