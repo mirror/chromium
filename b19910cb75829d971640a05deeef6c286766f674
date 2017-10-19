@@ -70,6 +70,24 @@
       "revId": "b19910cb75829d971640a05deeef6c286766f674",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d507c015_5ca7b084",
+        "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-19T21:49:51Z",
+      "side": 1,
+      "message": "I don\u0027t see any comment in the latest PS. Did you forget to upload?\n\nI don\u0027t think you should make RtcEventLogOutputSink implement Observer, I think you should force anything that implements RtcEventLogOutputSink to implement reference counting (of which Observer is an example).\n\nBy default I think raw pointers should be avoided. scoped_refptr (or unique_ptr) is one way, WeakPtr/WeakPtrFactory is another, which makes it possible to check if its still alive. I\u0027ve seen many bugs based on dangling raw pointers as a result of assumptions no longer holding that could have been avoided by a different design.\n\nAlso, note guidou\u0027s comments.",
+      "parentUuid": "a479d83d_a67c66f4",
+      "revId": "b19910cb75829d971640a05deeef6c286766f674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
