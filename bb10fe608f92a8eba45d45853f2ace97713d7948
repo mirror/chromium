@@ -193,6 +193,24 @@
       "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4a8f2f_f7dd8ff4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-19T15:29:03Z",
+      "side": 1,
+      "message": "Let me clarify my point.\n\nIIUC, this CL doesn\u0027t handle a case that\n  E is a BeforeUnloadEvent object, and\n  E\u0027s type is beforeunload, and\n  the return value is not null\nIn this case, we need to do preventDefault (\u003d set E\u0027s cancel flag).  However, this CL seems not cancelling it.\n\nSo, I think that we need to do some refactoring around here just in order to fix beforeunload event.  I\u0027m fine to ignore \"special error event handling\" case.  It seems not implemented here.  I vaguely remember that we have \"special error event handling\" case\u0027s code somewhere else.",
+      "parentUuid": "3999ca79_0e476f69",
+      "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
