@@ -1003,12 +1003,9 @@ Console.ConsoleViewMessage = class {
 
     this._element.className = 'console-message-wrapper';
     this._element.removeChildren();
-
-    this._nestingLevelMarkers = [];
-    for (var i = 0; i < this._nestingLevel; ++i)
-      this._nestingLevelMarkers.push(this._element.createChild('div', 'nesting-level-marker'));
-    this._updateCloseGroupDecorations();
     this._element.message = this;
+
+    this.updateNestingLevel(this._nestingLevel);
 
     switch (this._message.level) {
       case ConsoleModel.ConsoleMessage.MessageLevel.Verbose:
@@ -1044,6 +1041,25 @@ Console.ConsoleViewMessage = class {
     this._element.appendChild(this.contentElement());
     if (this._repeatCount > 1)
       this._showRepeatCountElement();
+  }
+
+  /**
+   * @param {number} nestingLevel
+   */
+  updateNestingLevel(nestingLevel) {
+    this._nestingLevel = nestingLevel;
+    if (!this._element)
+      return;
+    if (this._nestingLevelMarkers) {
+      if (this._nestingLevelMarkers.length === nestingLevel)
+        return;
+      for (var marker of this._nestingLevelMarkers)
+        marker.remove();
+    }
+    this._nestingLevelMarkers = [];
+    for (var i = 0; i < this._nestingLevel; ++i)
+      this._nestingLevelMarkers.push(this._element.createChild('div', 'nesting-level-marker'));
+    this._updateCloseGroupDecorations();
   }
 
   /**
@@ -1346,7 +1362,7 @@ Console.ConsoleGroupViewMessage = class extends Console.ConsoleViewMessage {
     if (!this._element) {
       super.toMessageElement();
       this._expandGroupIcon = UI.Icon.create('', 'expand-group-icon');
-      this._contentElement.insertBefore(this._expandGroupIcon, this._contentElement.firstChild);
+      this._element.insertBefore(this._expandGroupIcon, this._element.firstChild);
       this.setCollapsed(this._collapsed);
     }
     return this._element;
