@@ -22,6 +22,30 @@
       "revId": "17e39492f9a563c90e8be6bbae69676773066be6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df40674_f9dc62ec",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 2632,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-19T23:52:04Z",
+      "side": 1,
+      "message": "Yes, they\u0027re Linux specific.  They\u0027re only used on platforms that have enable_native_window_nav_buttons\u003dtrue, which is currently only Linux\nhttps://cs.chromium.org/chromium/src/chrome/common/features.gni?rcl\u003d1a452c9d2b7df9f73971527a1fcd8247c374c2ab\u0026l\u003d51\n\nBut I think it would be too complex if we were to guard all of the BUILD.gn files with \"if (enable_native_window_nav_buttons)\" and all of the c++ code with \"#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)\"",
+      "parentUuid": "9453bf19_028bbe87",
+      "range": {
+        "startLine": 2632,
+        "startChar": 7,
+        "endLine": 2632,
+        "endChar": 49
+      },
+      "revId": "17e39492f9a563c90e8be6bbae69676773066be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
