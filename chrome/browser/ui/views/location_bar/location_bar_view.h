@@ -235,6 +235,7 @@ class LocationBarView : public LocationBar,
   void UpdateWithoutTabRestore() override;
   ToolbarModel* GetToolbarModel() override;
   content::WebContents* GetWebContents() override;
+  bool SwitchToTabWithURL(const std::string& url, bool close_this) override;
 
   // ZoomEventManagerObserver:
   // Updates the view for the zoom icon when default zoom levels change.
