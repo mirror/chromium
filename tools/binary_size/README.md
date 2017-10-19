@@ -146,6 +146,11 @@ Collect size information and dump it into a `.size` file.
 **Note:** Refer to
 [diagnose_bloat.py](https://cs.chromium.org/search/?q=file:diagnose_bloat.py+gn_args)
 for list of GN args to build a Release binary (or just use the tool with --single).
+
+**Googlers:** Fetch a .size file from perf bots via:
+
+    GIT_REV="HEAD~200"
+    tools/binary_size/diagnose_bloat.py --single --cloud --unstripped $GIT_REV
 ***
 
 Example Usage:
@@ -214,6 +219,10 @@ Example session:
 >>> help(canned_queries)
 ...
 >>> Print(canned_queries.TemplatesByName(depth=-1))
+...
+>>> syms = size_info.symbols.WherePathMatches(r'skia').Sorted()
+>>> Print(syms, verbose=True)  # Show full symbol names with parameter types.
+>>> Print(ReadStringLiterals(syms))  # Dump all string literals from skia files.
 ```
 
 ### Roadmap
@@ -226,11 +235,8 @@ Example session:
     * Collect java symbol information
     * Collect .apk entry information
 1. More `console` features:
-   * CSV output (for pasting into a spreadsheet).
    * Add `SplitByName()` - Like `GroupByName()`, but recursive.
    * A canned query, that does what ShowGlobals does (as described in [Windows Binary Sizes](https://www.chromium.org/developers/windows-binary-sizes)).
-   * Show symbol counts by bucket size.
-     * 3 symbols < 64 bytes. 10 symbols < 128, 3 < 256, 5 < 512, 0 < 1024, 3 < 2048
 1. More `html_report` features:
    * Able to render size diffs (tint negative size red).
    * Break down by other groupings (Create from result of `SplitByName()`)
