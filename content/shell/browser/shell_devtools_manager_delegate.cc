@@ -170,6 +170,8 @@ void ShellDevToolsManagerDelegate::StartHttpHandler(
   DevToolsAgentHost::StartRemoteDebuggingServer(
       CreateSocketFactory(), frontend_url, browser_context->GetPath(),
       base::FilePath());
+
+  DevToolsAgentHost::StartRemoteDebuggingPipeHandler(3, 4);
 }
 
 // static
