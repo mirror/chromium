@@ -31,6 +31,19 @@ ControllerServiceWorkerConnector::GetControllerServiceWorker() {
   return controller_service_worker_.get();
 }
 
+void ControllerServiceWorkerConnector::AddControllerConnectionErrorHandler(
+    uint64_t handler_id,
+    base::RepeatingClosure handler) {
+  DCHECK(!base::ContainsKey(controller_connection_error_handlers_, handler_id));
+  controller_connection_error_handlers_[handler_id] = handler;
+}
+
+void ControllerServiceWorkerConnector::RemoveControllerConnectionErrorHandler(
+    uint64_t handler_id) {
+  DCHECK(base::ContainsKey(controller_connection_error_handlers_, handler_id));
+  controller_connection_error_handlers_.erase(handler_id);
+}
+
 void ControllerServiceWorkerConnector::OnContainerHostConnectionClosed() {
   container_host_ = nullptr;
 }
@@ -38,9 +51,9 @@ void ControllerServiceWorkerConnector::OnContainerHostConnectionClosed() {
 ControllerServiceWorkerConnector::~ControllerServiceWorkerConnector() = default;
 
 void ControllerServiceWorkerConnector::OnControllerConnectionClosed() {
-  // TODO(kinuko): If this happens during a resource loader we should let the
-  // loader know and restart.
   controller_service_worker_.reset();
+  for (const auto& handler : controller_connection_error_handlers_)
+    handler.second.Run();
 }
 
 }  // namespace content
