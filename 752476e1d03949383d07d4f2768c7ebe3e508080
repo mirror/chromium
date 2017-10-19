@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfcbeeda_d01b9f62",
+        "filename": "ui/keyboard/container_behavior.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-19T05:54:17Z",
+      "side": 1,
+      "message": "can we make this const?",
+      "range": {
+        "startLine": 40,
+        "startChar": 38,
+        "endLine": 40,
+        "endChar": 41
+      },
+      "revId": "752476e1d03949383d07d4f2768c7ebe3e508080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5dd70d_4f3e1f0a",
+        "filename": "ui/keyboard/container_full_width_behavior.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-19T05:54:17Z",
+      "side": 1,
+      "message": "If shelf is positioned on the left side of screen as you commented, should we need to set the width of the screen instead of that of the workspace?\n\nOr shelf size may not be included into the bounds of the root window?",
+      "range": {
+        "startLine": 68,
+        "startChar": 21,
+        "endLine": 68,
+        "endChar": 49
+      },
+      "revId": "752476e1d03949383d07d4f2768c7ebe3e508080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3867cd2d_a2330c66",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-19T05:54:17Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 44
+      },
+      "revId": "752476e1d03949383d07d4f2768c7ebe3e508080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
