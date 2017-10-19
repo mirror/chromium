@@ -16,6 +16,24 @@
       "revId": "60a72571db94cea33532ae448d4f0135349a0b0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b773ed3d_69be817c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DOMStorageItemsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-10-19T19:33:30Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f340ed33_785210f4",
+      "revId": "60a72571db94cea33532ae448d4f0135349a0b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
