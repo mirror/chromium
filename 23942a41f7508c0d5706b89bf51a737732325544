@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c77c743d_c39872bd",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadEffectParameters.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-19T00:49:29Z",
+      "side": 1,
+      "message": "Use the three-line copyright. This copyright is an old version.",
+      "revId": "23942a41f7508c0d5706b89bf51a737732325544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b24d915_7fa02b5b",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadEffectParameters.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-19T00:49:29Z",
+      "side": 1,
+      "message": "Add a link to the spec.",
+      "revId": "23942a41f7508c0d5706b89bf51a737732325544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888f5295_469fae1e",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadHapticActuator.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-19T00:49:29Z",
+      "side": 1,
+      "message": "Use the three-line copyright.",
+      "revId": "23942a41f7508c0d5706b89bf51a737732325544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
