@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c2b454c_955f383e",
+        "filename": "net/http/http_auth_handler_factory_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-19T23:53:59Z",
+      "side": 1,
+      "message": "My understanding is that the error codes used in this test (except for ERR_UNSUPPORTED_AUTH_SCHEME) are arbitrary.  How about using int literals instead?",
+      "parentUuid": "5456ad46_c543239d",
+      "revId": "38c62a4cd7aa232e267bc1ff810f1996d216fab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42ae6360_2b435491",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "38c62a4cd7aa232e267bc1ff810f1996d216fab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2253b61_c3921989",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2555,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-19T23:53:59Z",
+      "side": 1,
+      "message": "The error code is only used for logging, it only shows up in NetLog.  The error code has already been created for this, but I\u0027m happy to remove it.  How about using the more general ERR_TIMED_OUT instead, it seems kind of appropriate?",
+      "parentUuid": "42ae6360_2b435491",
+      "revId": "38c62a4cd7aa232e267bc1ff810f1996d216fab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
