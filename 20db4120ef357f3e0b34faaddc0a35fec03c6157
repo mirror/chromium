@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1681eb96_71e566d6",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-19T17:34:08Z",
+      "side": 1,
+      "message": "So we no longer need to pass IDs in the mojo world, is this because the the target is already known due to the way the interface is bound?",
+      "range": {
+        "startLine": 65,
+        "startChar": 1,
+        "endLine": 65,
+        "endChar": 12
+      },
+      "revId": "20db4120ef357f3e0b34faaddc0a35fec03c6157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
