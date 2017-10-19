@@ -49,6 +49,7 @@ namespace {
 const char kCapability_UserID[] = "service_manager:user_id";
 const char kCapability_ClientProcess[] = "service_manager:client_process";
 const char kCapability_InstanceName[] = "service_manager:instance_name";
+const char kCapability_Singleton[] = "service_manager:singleton";
 const char kCapability_AllUsers[] = "service_manager:all_users";
 const char kCapability_ServiceManager[] = "service_manager:service_manager";
 
@@ -721,6 +722,89 @@ class ServiceManager::ServiceImpl : public Service {
   DISALLOW_COPY_AND_ASSIGN(ServiceImpl);
 };
 
+// A container of Instances that stores them with an Identity and an
+// InstanceType so they can be resolved based on part of that Identity:
+// - all_users services are resolved based on the service name and instance ID.
+// - singleton services are resolved uniquely on the service name.
+class ServiceManager::IdentityToInstanceMap {
+ public:
+  IdentityToInstanceMap() = default;
+  ~IdentityToInstanceMap() = default;
+
+  const std::vector<Instance*>& all_instances() const { return all_instances_; }
+
+  void Put(const Identity& identity, InstanceType type, Instance* instance) {
+    DCHECK_NE(instance, nullptr);
+    DCHECK_EQ(Get(identity), nullptr);
+    switch (type) {
+      case DEFAULT:
+        default_instances_.insert(std::make_pair(identity, instance));
+        break;
+      case ALL_USERS:
+        all_user_instances_.insert(std::make_pair(
+            NameAndInstanceId(identity.name(), identity.instance()), instance));
+        break;
+      case SINGLETON:
+        singleton_instances_.insert(std::make_pair(identity.name(), instance));
+        break;
+      default:
+        NOTREACHED();
+    }
+    all_instances_.push_back(instance);
+  }
+
+  Instance* Get(const Identity& identity) {
+    auto default_iter = default_instances_.find(identity);
+    if (default_iter != default_instances_.end())
+      return default_iter->second;
+    auto all_user_iter = all_user_instances_.find(
+        NameAndInstanceId(identity.name(), identity.instance()));
+    if (all_user_iter != all_user_instances_.end())
+      return all_user_iter->second;
+    auto singleton_iter = singleton_instances_.find(identity.name());
+    if (singleton_iter != singleton_instances_.end())
+      return singleton_iter->second;
+    return nullptr;
+  }
+
+  bool Erase(const Identity& identity) {
+    for (size_t i = 0; i < all_instances_.size(); i++) {
+      if (all_instances_[i]->identity() == identity) {
+        all_instances_.erase(all_instances_.begin() + i);
+        break;
+      }
+    }
+
+    auto default_iter = default_instances_.find(identity);
+    if (default_iter != default_instances_.end()) {
+      default_instances_.erase(default_iter);
+      return true;
+    }
+    auto all_user_iter = all_user_instances_.find(
+        NameAndInstanceId(identity.name(), identity.instance()));
+    if (all_user_iter != all_user_instances_.end()) {
+      all_user_instances_.erase(all_user_iter);
+      return true;
+    }
+    auto singleton_iter = singleton_instances_.find(identity.name());
+    if (singleton_iter != singleton_instances_.end()) {
+      singleton_instances_.erase(singleton_iter);
+      return true;
+    }
+    return false;
+  }
+
+ private:
+  std::map<Identity, Instance*> default_instances_;
+  using NameAndInstanceId = std::pair<std::string, std::string>;
+  std::map<NameAndInstanceId, Instance*> all_user_instances_;
+  std::map<std::string, Instance*> singleton_instances_;
+
+  std::vector<Instance*> all_instances_;
+
+  DISALLOW_COPY_AND_ASSIGN(IdentityToInstanceMap);
+};
+
 // static
 ServiceManager::TestAPI::TestAPI(ServiceManager* service_manager)
     : service_manager_(service_manager) {}
@@ -728,11 +812,8 @@ ServiceManager::TestAPI::~TestAPI() {}
 
 bool ServiceManager::TestAPI::HasRunningInstanceForName(
     const std::string& name) const {
-  for (const auto& entry : service_manager_->identity_to_instance_) {
-    if (entry.first.name() == name)
-      return true;
-  }
-  return false;
+  Identity identity(name, /*user_id=*/"", /*instance_id=*/"");
+  return service_manager_->identity_to_instance_->Get(identity) != nullptr;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -743,6 +824,7 @@ ServiceManager::ServiceManager(std::unique_ptr<ServiceProcessLauncherFactory>
                                std::unique_ptr<base::Value> catalog_contents,
                                catalog::ManifestProvider* manifest_provider)
     : catalog_(std::move(catalog_contents), manifest_provider),
+      identity_to_instance_(std::make_unique<IdentityToInstanceMap>()),
       service_process_launcher_factory_(
           std::move(service_process_launcher_factory)),
       weak_ptr_factory_(this) {
@@ -753,9 +835,9 @@ ServiceManager::ServiceManager(std::unique_ptr<ServiceProcessLauncherFactory>
   InterfaceProviderSpecMap specs;
   specs[mojom::kServiceManager_ConnectorSpec] = std::move(spec);
 
-  service_manager_instance_ = CreateInstance(
-      Identity(), CreateServiceManagerIdentity(), std::move(specs));
-  singletons_.insert(service_manager::mojom::kServiceName);
+  service_manager_instance_ =
+      CreateInstance(Identity(), CreateServiceManagerIdentity(),
+                     InstanceType::SINGLETON, std::move(specs));
 
   mojom::ServicePtr service;
   service_context_.reset(new ServiceContext(base::MakeUnique<ServiceImpl>(this),
@@ -799,7 +881,7 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
   DCHECK(base::IsValidGUID(params->target().user_id()));
   DCHECK_NE(mojom::kInheritUserID, params->target().user_id());
   DCHECK(!params->HasClientProcessInfo() ||
-         !identity_to_instance_.count(params->target()));
+         GetExistingInstance(params->target()) == nullptr);
 
   // Connect to an existing matching instance, if possible.
   if (!params->HasClientProcessInfo() && ConnectToExistingInstance(&params))
@@ -825,11 +907,13 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
           ? it->second
           : GetPermissiveInterfaceProviderSpec();
 
+  bool all_user_instance = HasCapability(connection_spec, kCapability_AllUsers);
+  bool singleton_instance =
+      HasCapability(connection_spec, kCapability_Singleton);
   const Identity original_target(params->target());
-  const std::string user_id =
-      HasCapability(connection_spec, kCapability_AllUsers)
-          ? base::GenerateGUID()
-          : params->target().user_id();
+  const std::string user_id = all_user_instance || singleton_instance
+                                  ? base::GenerateGUID()
+                                  : params->target().user_id();
   const Identity target(params->target().name(), user_id, instance_name);
   params->set_target(target);
 
@@ -840,16 +924,20 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
   // the lifetime of the service that started them, instead they are owned by
   // the Service Manager.
   Identity source_identity_for_creation;
-  if (HasCapability(connection_spec, kCapability_AllUsers)) {
-    singletons_.insert(target.name());
+
+  InstanceType instance_type;
+  if (all_user_instance || singleton_instance) {
+    instance_type =
+        all_user_instance ? InstanceType::ALL_USERS : InstanceType::SINGLETON;
     source_identity_for_creation = CreateServiceManagerIdentity();
   } else {
+    instance_type = InstanceType::DEFAULT;
     source_identity_for_creation = params->source();
   }
 
   bool result_interface_provider_specs_empty = interface_provider_specs.empty();
   Instance* instance = CreateInstance(source_identity_for_creation, target,
-                                      interface_provider_specs);
+                                      instance_type, interface_provider_specs);
 
   // Below are various paths through which a new Instance can be bound to a
   // Service proxy.
@@ -965,8 +1053,7 @@ void ServiceManager::InitCatalog(mojom::ServicePtr catalog) {
 
   Instance* instance =
       CreateInstance(CreateServiceManagerIdentity(), CreateCatalogIdentity(),
-                     std::move(specs));
-  singletons_.insert(catalog::mojom::kServiceName);
+                     InstanceType::SINGLETON, std::move(specs));
   instance->StartWithService(std::move(catalog));
 }
 
@@ -1000,42 +1087,14 @@ void ServiceManager::OnInstanceStopped(const Identity& identity) {
 
 ServiceManager::Instance* ServiceManager::GetExistingInstance(
     const Identity& identity) const {
-  const auto& it = identity_to_instance_.find(identity);
-  Instance* instance = it != identity_to_instance_.end() ? it->second : nullptr;
-  if (instance)
-    return instance;
-
-  if (singletons_.find(identity.name()) != singletons_.end()) {
-    for (auto entry : identity_to_instance_) {
-      if (entry.first.name() == identity.name() &&
-          entry.first.instance() == identity.instance()) {
-        return entry.second;
-      }
-    }
-  }
-  return nullptr;
+  return identity_to_instance_->Get(identity);
 }
 
 void ServiceManager::EraseInstanceIdentity(Instance* instance) {
-  const Identity& identity = instance->identity();
-
-  auto it = identity_to_instance_.find(identity);
-  if (it != identity_to_instance_.end()) {
-    identity_to_instance_.erase(it);
-    return;
-  }
-
-  if (singletons_.find(identity.name()) != singletons_.end()) {
-    singletons_.erase(identity.name());
-    for (auto it = identity_to_instance_.begin();
-         it != identity_to_instance_.end(); ++it) {
-      if (it->first.name() == identity.name() &&
-          it->first.instance() == identity.instance()) {
-        identity_to_instance_.erase(it);
-        return;
-      }
-    }
-  }
+  identity_to_instance_->Erase(instance->identity());
+  // TODO: ** JAY ** asserting here that something did get removed is hit
+  // everytime (as OnInstanceError/OnInstanceUnreachable is called multiple
+  // times per instance). Investigate.
 }
 
 void ServiceManager::NotifyServiceStarted(const Identity& identity,
@@ -1074,6 +1133,7 @@ bool ServiceManager::ConnectToExistingInstance(
 ServiceManager::Instance* ServiceManager::CreateInstance(
     const Identity& source,
     const Identity& target,
+    InstanceType instance_type,
     const InterfaceProviderSpecMap& specs) {
   CHECK(target.user_id() != mojom::kInheritUserID);
 
@@ -1085,9 +1145,7 @@ ServiceManager::Instance* ServiceManager::CreateInstance(
   // NOTE: |instance| has been passed elsewhere. Use |raw_instance| from this
   // point forward. It's safe for the extent of this method.
 
-  auto result =
-      identity_to_instance_.insert(std::make_pair(target, raw_instance));
-  DCHECK(result.second);
+  identity_to_instance_->Put(target, instance_type, raw_instance);
 
   mojom::RunningServiceInfoPtr info = raw_instance->CreateRunningServiceInfo();
   listeners_.ForAllPtrs([&info](mojom::ServiceManagerListener* listener) {
@@ -1100,9 +1158,11 @@ ServiceManager::Instance* ServiceManager::CreateInstance(
 void ServiceManager::AddListener(mojom::ServiceManagerListenerPtr listener) {
   // TODO(beng): filter instances provided by those visible to this service.
   std::vector<mojom::RunningServiceInfoPtr> instances;
-  instances.reserve(identity_to_instance_.size());
-  for (auto& instance : identity_to_instance_)
-    instances.push_back(instance.second->CreateRunningServiceInfo());
+  const std::vector<Instance*>& all_instances =
+      identity_to_instance_->all_instances();
+  instances.reserve(all_instances.size());
+  for (auto* instance : all_instances)
+    instances.push_back(instance->CreateRunningServiceInfo());
   listener->OnInit(std::move(instances));
 
   listeners_.AddPtr(std::move(listener));

@@ -20,6 +20,7 @@
 #include "base/process/process.h"
 #include "base/process/process_handle.h"
 #include "base/run_loop.h"
+#include "base/strings/string_number_conversions.h"
 #include "build/build_config.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
@@ -38,6 +39,32 @@
 namespace service_manager {
 
 namespace {
+
+void OnServiceStartedCallback(int* start_count,
+                              std::string* service_name,
+                              const base::Closure& continuation,
+                              const service_manager::Identity& identity) {
+  (*start_count)++;
+  *service_name = identity.name();
+  continuation.Run();
+}
+
+void OnServiceFailedToStartCallback(bool* run,
+                                    const base::Closure& continuation,
+                                    const service_manager::Identity& identity) {
+  *run = true;
+  continuation.Run();
+}
+
+void OnServicePIDReceivedCallback(std::string* service_name,
+                                  uint32_t* serivce_pid,
+                                  const base::Closure& continuation,
+                                  const service_manager::Identity& identity,
+                                  uint32_t pid) {
+  *service_name = identity.name();
+  *serivce_pid = pid;
+  continuation.Run();
+}
 
 class ServiceManagerTestClient : public test::ServiceTestClient,
                                  public test::mojom::CreateInstanceTest {
@@ -273,6 +300,24 @@ class ServiceManagerTest : public test::ServiceTest,
                                     platform_channel_pair.PassServerHandle()));
   }
 
+  void StartEmbedderService() {
+    base::RunLoop loop;
+    int start_count = 0;
+    std::string service_name;
+    set_service_started_callback(
+        base::BindRepeating(&OnServiceStartedCallback, &start_count,
+                            &service_name, loop.QuitClosure()));
+    bool failed_to_start = false;
+    set_service_failed_to_start_callback(base::BindRepeating(
+        &OnServiceFailedToStartCallback, &failed_to_start, loop.QuitClosure()));
+
+    connector()->StartService("service_manager_unittest_embedder");
+    loop.Run();
+    EXPECT_FALSE(failed_to_start);
+    EXPECT_EQ(1, start_count);
+    EXPECT_EQ("service_manager_unittest_embedder", service_name);
+  }
+
   void KillTarget() {
     target_.Terminate(0, false);
   }
@@ -371,60 +416,16 @@ TEST_F(ServiceManagerTest, CreateInstance) {
   KillTarget();
 }
 
-void OnServiceStartedCallback(int* start_count,
-                              std::string* service_name,
-                              const base::Closure& continuation,
-                              const service_manager::Identity& identity) {
-  (*start_count)++;
-  *service_name = identity.name();
-  continuation.Run();
-}
-
-void OnServiceFailedToStartCallback(
-      bool* run,
-      const base::Closure& continuation,
-      const service_manager::Identity& identity) {
-  *run = true;
-  continuation.Run();
-}
-
-void OnServicePIDReceivedCallback(std::string* service_name,
-                                  uint32_t* serivce_pid,
-                                  const base::Closure& continuation,
-                                  const service_manager::Identity& identity,
-                                  uint32_t pid) {
-  *service_name = identity.name();
-  *serivce_pid = pid;
-  continuation.Run();
-}
-
-// Tests that creating connecting to a singleton packaged service work.
+// Tests that creating a singleton packaged service work.
 TEST_F(ServiceManagerTest, CreatePackagedSingletonInstance) {
   AddListenerAndWaitForApplications();
 
   // Connect to the embedder service first.
-  {
-    base::RunLoop loop;
-    int start_count = 0;
-    std::string service_name;
-    set_service_started_callback(base::BindRepeating(
-        &OnServiceStartedCallback,
-        &start_count, &service_name, loop.QuitClosure()));
-    bool failed_to_start = false;
-    set_service_failed_to_start_callback(base::BindRepeating(
-        &OnServiceFailedToStartCallback,
-        &failed_to_start, loop.QuitClosure()));
+  StartEmbedderService();
 
-    connector()->StartService("service_manager_unittest_embedder");
-    loop.Run();
-    EXPECT_FALSE(failed_to_start);
-    EXPECT_EQ(1, start_count);
-    EXPECT_EQ("service_manager_unittest_embedder", service_name);
-  }
-
-  {
+  int start_count = 0;
+  for (int i = 0; i < 2; i++) {
     base::RunLoop loop;
-    int start_count = 0;
     std::string service_name;
     set_service_started_callback(base::BindRepeating(
         &OnServiceStartedCallback,
@@ -436,10 +437,47 @@ TEST_F(ServiceManagerTest, CreatePackagedSingletonInstance) {
 
     // Connect to the packaged singleton service.
     connector()->StartService("service_manager_unittest_singleton");
+    if (i == 1) {
+      // The second time the existing service instance should be used.
+      // Wait briefly and test no new service was created.
+      base::MessageLoop::current()->task_runner()->PostDelayedTask(
+          FROM_HERE, loop.QuitClosure(), base::TimeDelta::FromSeconds(2));
+    }
     loop.Run();
+
     EXPECT_FALSE(failed_to_start);
     EXPECT_EQ(1, start_count);
-    EXPECT_EQ("service_manager_unittest_singleton", service_name);
+  }
+}
+
+// Tests that connecting to a packaged service with different instance names
+// creates multiple services.
+TEST_F(ServiceManagerTest, CreateMultiplePackagedInstances) {
+  AddListenerAndWaitForApplications();
+
+  // Connect to the embedder service first.
+  StartEmbedderService();
+
+  int start_count = 0;
+  for (int i = 0; i < 3; i++) {
+    base::RunLoop loop;
+    std::string service_name;
+    set_service_started_callback(base::BindRepeating(
+        &OnServiceStartedCallback,
+        &start_count, &service_name, loop.QuitClosure()));
+    bool failed_to_start = false;
+    set_service_failed_to_start_callback(base::BindRepeating(
+        &OnServiceFailedToStartCallback,
+        &failed_to_start, loop.QuitClosure()));
+
+    // Connect to the packaged singleton service.
+    Identity identity("service_manager_unittest_simple", mojom::kInheritUserID,
+                      base::IntToString(i));
+    connector()->StartService(identity);
+    loop.Run();
+
+    EXPECT_FALSE(failed_to_start);
+    EXPECT_EQ(i + 1, start_count);
   }
 }
 

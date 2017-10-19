@@ -20,6 +20,9 @@
         "service_manager_unittest_singleton": [
           "service_manager_unittest:singleton"
         ],
+        "service_manager_unittest_simple": [
+          "service_manager_unittest:simple"
+        ],
         "service_manager_unittest_target": [ ]
       }
     }
