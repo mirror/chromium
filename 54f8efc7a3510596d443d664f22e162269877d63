@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0adb67de_d1c3cb50",
+        "filename": "gpu/command_buffer/tests/fuzzer_main.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-19T16:26:52Z",
+      "side": 1,
+      "message": "nit: actually, I believe we don\u0027t need this switch any more, because we set the proper value in GpuPreferences. It was needed at some point in the past because we were checking the flag in ui/gl which doesn\u0027t read GpuPreferences, but that\u0027s gone now with your recent patch, correct?",
+      "revId": "54f8efc7a3510596d443d664f22e162269877d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
