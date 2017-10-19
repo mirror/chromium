@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e996e1d5_125df5d1",
+        "filename": "chromecast/media/cma/backend/fuchsia/fuchsia_volume_control.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1234161
+      },
+      "writtenOn": "2017-10-19T16:42:59Z",
+      "side": 1,
+      "message": "As mentioned, I can easily add this to the client API -- the underlying FIDL plumbing has been in place for some time. \n\nThe native Fuchsia API accepts gain in dB -- range [-160.0, 20.0] and default 0.0.  \nI could instead accept a \u0027volume\u0027 multiplier , if this simplifies your code. \nThis would translate to range [0.00000001, 10.0] and default 1.0.\n\nAs implemented, your incoming audio signal would still need to conform to range [-1.0, 1.0]. I could apply this volume PRE-mixer, but it would be no different than if your mixer did it.\n\nLet me know if you need volume control at this level and want to move forward with this.  Glad to do it and standing ready to do so.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 51
+      },
+      "revId": "701fe99ea89b3e8142548ff84996268dd2feaa89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a64a9eaa_9bca90e1",
+        "filename": "chromecast/media/cma/backend/fuchsia/mixer_output_stream_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1234161
+      },
+      "writtenOn": "2017-10-19T16:42:59Z",
+      "side": 1,
+      "message": "Sergey -- as a side note, I\u0027ve implemented an addition to the client API that allows you to derive the maximum amount of buffer space available.  \n\nLike min_delay, it represents a delta from CLOCK_MONOTONIC: specifically the last frame I have internal space to accept without blocking or memory-allocation.  This will likely be 500ms or more, so it shouldn\u0027t pose a problem to your relatively just-in-time mixer. Just want you to be aware.",
+      "range": {
+        "startLine": 175,
+        "startChar": 15,
+        "endLine": 175,
+        "endChar": 56
+      },
+      "revId": "701fe99ea89b3e8142548ff84996268dd2feaa89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
