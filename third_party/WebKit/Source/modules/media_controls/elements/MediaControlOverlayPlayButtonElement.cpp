@@ -13,6 +13,7 @@
 #include "modules/media_controls/elements/MediaControlElementsHelper.h"
 #include "platform/runtime_enabled_features.h"
 #include "public/platform/Platform.h"
+#include "public/platform/WebSize.h"
 
 namespace {
 
@@ -79,6 +80,11 @@ void MediaControlOverlayPlayButtonElement::DefaultEventHandler(Event* event) {
 
 bool MediaControlOverlayPlayButtonElement::KeepEventInNode(Event* event) {
   return MediaControlElementsHelper::IsUserInteractionEvent(event);
+}
+
+WebSize MediaControlOverlayPlayButtonElement::GetSizeOrDefault() const {
+  // The modern play button has a fixed size of 56x56px.
+  return WebSize(56, 56);
 }
 
 }  // namespace blink
