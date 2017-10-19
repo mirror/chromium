@@ -234,8 +234,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   TextCheckerClient& GetTextCheckerClient() const override;
 
-  std::unique_ptr<WebURLLoader> CreateURLLoader(const ResourceRequest&,
-                                                RefPtr<WebTaskRunner>) override;
+  std::unique_ptr<WebURLLoaderFactory> CreateURLLoaderFactory() override;
 
   service_manager::InterfaceProvider* GetInterfaceProvider() override;
 

@@ -1160,8 +1160,8 @@ std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
     const ResourceRequest& request,
     scoped_refptr<WebTaskRunner> task_runner) {
   DCHECK(!IsDetached());
+  WrappedResourceRequest webreq(request);
   if (MasterDocumentLoader()->GetServiceWorkerNetworkProvider()) {
-    WrappedResourceRequest webreq(request);
     auto loader =
         MasterDocumentLoader()
             ->GetServiceWorkerNetworkProvider()
@@ -1169,8 +1169,8 @@ std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
     if (loader)
       return loader;
   }
-
-  return GetFrame()->CreateURLLoader(request, task_runner);
+  return GetFrame()->GetURLLoaderFactory()->CreateURLLoader(
+      webreq, task_runner->ToSingleThreadTaskRunner());
 }
 
 FetchContext* FrameFetchContext::Detach() {
