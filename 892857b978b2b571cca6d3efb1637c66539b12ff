@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25030c3b_3d6f5560",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-19T06:33:59Z",
+      "side": 1,
+      "message": "this can be removed (just replace g_is_bubble_showing with g_page_info_bubble in the code below - it should behave the same)",
+      "revId": "892857b978b2b571cca6d3efb1637c66539b12ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d815d8_d88aafff",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-19T06:33:59Z",
+      "side": 1,
+      "message": "getPageInfoBubble -\u003e getPageInfoBubbleForTest",
+      "range": {
+        "startLine": 232,
+        "startChar": 29,
+        "endLine": 232,
+        "endChar": 46
+      },
+      "revId": "892857b978b2b571cca6d3efb1637c66539b12ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64761e2f_da8ae1b2",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1442,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-19T06:33:59Z",
+      "side": 1,
+      "message": "(this line can be removed, keep the one above but check g_page_info_bubble instead)",
+      "revId": "892857b978b2b571cca6d3efb1637c66539b12ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1d7543_cd87204e",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-19T06:33:59Z",
+      "side": 1,
+      "message": "The should only be 0 or 1 headers at the top. I think this can be merged with the stuff below.",
+      "revId": "892857b978b2b571cca6d3efb1637c66539b12ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da27a43_64e8d391",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-19T06:33:59Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this - there\u0027s nothing relying on it after the run loop spins in FinishTransition() below",
+      "revId": "892857b978b2b571cca6d3efb1637c66539b12ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
