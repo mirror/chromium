@@ -34,6 +34,24 @@
       "revId": "55d1f172c97f4faeffce2699e708d1fc95360bd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "662b0f3b_64f1b891",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_cell.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-19T16:57:13Z",
+      "side": 1,
+      "message": "Can you raise this issue (how the invisible text looks on selected entries) on the bug and include screenshots of the selected state with and without this?",
+      "parentUuid": "51e4af7d_100e3a0c",
+      "revId": "55d1f172c97f4faeffce2699e708d1fc95360bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
