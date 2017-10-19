@@ -3941,9 +3941,9 @@ void WebContentsImpl::ViewSource(RenderFrameHostImpl* frame) {
                                             ->GetLastCommittedEntry());
   if (!last_original_entry)
     return;
-  FrameNavigationEntry* frame_entry =
+  FrameNavigationEntry* original_frame_entry =
       last_original_entry->GetFrameEntry(frame->frame_tree_node());
-  if (!frame_entry)
+  if (!original_frame_entry)
     return;
 
   WebContents* view_source_contents = Clone();
@@ -3954,21 +3954,33 @@ void WebContentsImpl::ViewSource(RenderFrameHostImpl* frame) {
   if (!last_cloned_entry)
     return;
 
-  GURL url = frame->GetLastCommittedURL();
-  GURL view_source_url =
-      GURL(content::kViewSourceScheme + std::string(":") + url.spec());
-  last_cloned_entry->SetVirtualURL(view_source_url);
-  last_cloned_entry->SetURL(url);
-
   // Do not restore scroller position.
-  PageState page_state = frame_entry->page_state().RemoveScrollOffset();
+  // TODO(creis, lukasza, arthursonzogni): Do not reuse the original PageState,
+  // but start from a new one and only copy the needed data.
+  const PageState& new_page_state =
+      original_frame_entry->page_state().RemoveScrollOffset();
 
-  // Trim |last_cloned_entry| to the subtree of |frame|.
-  last_cloned_entry->SetPageState(page_state);
+  // By doing |site_instance = nullptr|, the new page will be opened in a new
+  // process (for consistency with the behavior of allocating a new process for
+  // handling new tab opened by middle-clicking a link).
+  last_cloned_entry->root_node()->frame_entry = new FrameNavigationEntry(
+      /* frame_unique_name = */ std::string(),
+      /* item_sequence_number = */ 0,
+      /* document_sequence_number = */ 0,
+      /* site_instance = */ nullptr,
+      /* source_site_instance = */ nullptr,
+      /* url = */ original_frame_entry->url(),
+      /* referrer = */ Referrer(),
+      // (wait rebase from parent) /* redirect_chain = */ std::vector<GURL>(),
+      // (wait rebase from parent) /* page_state = */ new_page_state,
+      /* method = */ original_frame_entry->method(),
+      /* post_id = */ original_frame_entry->post_id());
+  last_cloned_entry->root_node()->frame_entry->SetPageState(new_page_state);
+  last_cloned_entry->root_node()->children.clear();
 
-  // Open in a new process (for consistency with the behavior of allocating a
-  // new process for handling new tab opened by middle-clicking a link).
-  last_cloned_entry->set_site_instance(nullptr);
+  GURL view_source_url = GURL(content::kViewSourceScheme + std::string(":") +
+                              original_frame_entry->url().spec());
+  last_cloned_entry->SetVirtualURL(view_source_url);
 
   // Do not restore title, derive it from the url.
   view_source_contents->UpdateTitleForEntry(last_cloned_entry,
