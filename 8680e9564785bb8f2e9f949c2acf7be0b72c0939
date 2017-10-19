@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9411c00c_3d306adc",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-19T12:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96710b0d_ea5ced98",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 10
+      },
+      "revId": "8680e9564785bb8f2e9f949c2acf7be0b72c0939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eb6ea3d_a7bc9e31",
         "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
         "patchSetId": 3
@@ -141,6 +165,30 @@
       "revId": "8680e9564785bb8f2e9f949c2acf7be0b72c0939",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aabbd6b7_d4bdc738",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-19T12:28:06Z",
+      "side": 1,
+      "message": "Chatted offline. My mistake was making this non-trivial object a struct and not a class. This is fixed in the latest PS with class-y things like accessors and setters, and member_names_.\n\nSorry for the confusion!",
+      "parentUuid": "465cacab_24a8015d",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 47
+      },
+      "revId": "8680e9564785bb8f2e9f949c2acf7be0b72c0939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
