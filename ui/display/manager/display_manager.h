@@ -79,11 +79,11 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 #endif
   };
 
-  // How the second display will be used.
-  // 1) EXTENDED mode extends the desktop to the second dislpay.
+  // How secondary displays will be used.
+  // 1) EXTENDED mode extends the desktop to additional dislpays.
   // 2) MIRRORING mode copies the content of the primary display to
-  //    the 2nd display. (Software Mirroring).
-  // 3) UNIFIED mode creates single desktop across multiple displays.
+  //    the 2nd display (Software Mirroring). Only supports 2 displays for now.
+  // 3) UNIFIED mode creates single virtual desktop across multiple displays.
   enum MultiDisplayMode {
     EXTENDED = 0,
     MIRRORING,

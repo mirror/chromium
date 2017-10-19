@@ -77,7 +77,8 @@ bool DisplayManager::SetDisplayConfiguration(
     const std::vector<display::Display>& displays,
     const std::vector<display::ViewportMetrics>& viewport_metrics,
     int64_t primary_display_id,
-    int64_t internal_display_id) {
+    int64_t internal_display_id,
+    const std::vector<display::Display>& mirrors) {
   if (window_server_->display_creation_config() !=
       DisplayCreationConfig::MANUAL) {
     LOG(ERROR) << "SetDisplayConfiguration is only valid when roots manually "
@@ -123,6 +124,10 @@ bool DisplayManager::SetDisplayConfiguration(
   }
   // See comment in header as to why this doesn't use Display::SetInternalId().
   internal_display_id_ = internal_display_id;
+
+  LOG(ERROR) << "MSW ui::ws::DisplayManager::SetDisplayConfiguration " << mirrors.size(); 
+  if (!mirrors.empty())
+    NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus unified/mirroring modes.";
 
   display::DisplayList& display_list =
       display::ScreenManager::GetInstance()->GetScreen()->display_list();

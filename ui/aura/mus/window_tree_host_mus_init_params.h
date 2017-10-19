@@ -39,6 +39,12 @@ struct AURA_EXPORT DisplayInitParams {
   ui::mojom::WmViewportMetrics viewport_metrics;
 
   bool is_primary_display = false;
+
+  // In unified mode, |display| is the virtual unified display and this list
+  // describes how virtual display content is shown on the physical displays.
+  // In mirroring mode, this list contains a single destination display.
+  // See display::DisplayManager::software_mirroring_display_list_ for details.
+  std::vector<display::Display> mirrors;
 };
 
 // Used to create a WindowTreeHostMus. The typical case is to use
