@@ -69,6 +69,24 @@
       "revId": "72dc9fe9c7dddfbc8585339b94a0aa9a61d5e31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689498e0_9b722dd8",
+        "filename": "ui/views/accessibility/ax_window_obj_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-19T02:46:35Z",
+      "side": 1,
+      "message": "I was asking what component that code lives in. Is it ui/app_list, or ash/, or something similar?\n\nBecause, if the code involved all lives in places that can have dependency on ui/accessibility (where ui::AXRole is defined), then it would be better to define the property there, as a proper ui::AXRole value, rather than as an int, and having to cast it here.",
+      "parentUuid": "202b43ad_19a37b59",
+      "revId": "72dc9fe9c7dddfbc8585339b94a0aa9a61d5e31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
