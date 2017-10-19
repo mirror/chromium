@@ -734,6 +734,34 @@ TEST_F(BluetoothBlueZTest, StopDiscovery) {
   discovery_sessions_.clear();
   callback_count_ = 0;
 
+  // Test that the Stop cannot be called if the previous Stop is still in
+  // progress.
+  adapter_->SetPowered(true, GetCallback(), GetErrorCallback());
+  adapter_->StartDiscoverySession(
+      base::Bind(&BluetoothBlueZTest::DiscoverySessionCallback,
+                 base::Unretained(this)),
+      GetErrorCallback());
+  base::RunLoop().Run();
+  EXPECT_EQ(2, callback_count_);
+  EXPECT_EQ(0, error_callback_count_);
+  callback_count_ = 0;
+  ASSERT_TRUE(adapter_->IsPowered());
+  ASSERT_TRUE(adapter_->IsDiscovering());
+  ASSERT_EQ((size_t)1, discovery_sessions_.size());
+  ASSERT_TRUE(discovery_sessions_[0]->IsActive());
+
+  // First call to Stop() should succeed.
+  discovery_sessions_[0]->Stop(GetCallback(), GetErrorCallback());
+  // Second call to Stop() while the first is in progress should fail.
+  discovery_sessions_[0]->Stop(GetCallback(), GetErrorCallback());
+
+  base::RunLoop().Run();
+  EXPECT_EQ(1, callback_count_);
+  EXPECT_EQ(1, error_callback_count_);
+  discovery_sessions_.clear();
+  callback_count_ = 0;
+  error_callback_count_ = 0;
+
   // Test that the Stop callbacks get called even if the
   // BluetoothDiscoverySession objects gets deleted
   adapter_->SetPowered(true, GetCallback(), GetErrorCallback());
