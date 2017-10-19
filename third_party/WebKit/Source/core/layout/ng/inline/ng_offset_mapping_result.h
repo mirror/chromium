@@ -122,10 +122,9 @@ class CORE_EXPORT NGOffsetMappingResult {
   // character does not exist.
   unsigned EndOfLastNonCollapsedCharacter(const Node&, unsigned offset) const;
 
-  // Returns true if the character at the position is non-collapsed. If the
-  // offset is at the end of the node, returns false.
-  // TODO(xiaochengh): Rename to IsBeforeNonCollapsedCharacter().
-  bool IsNonCollapsedCharacter(const Node&, unsigned offset) const;
+  // Returns true if the offset is right before a non-collapsed character. If
+  // the offset is at the end of the node, returns false.
+  bool IsBeforeNonCollapsedCharacter(const Node&, unsigned offset) const;
 
   // Returns true if the offset is right after a non-collapsed character. If the
   // offset is at the beginning of the node, returns false.

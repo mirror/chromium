@@ -1993,7 +1993,7 @@ bool LayoutText::ContainsCaretOffset(int text_offset) const {
     if (!GetNode())
       return false;
     const NGOffsetMappingResult& mapping = GetNGOffsetMapping();
-    if (mapping.IsNonCollapsedCharacter(*GetNode(), text_offset))
+    if (mapping.IsBeforeNonCollapsedCharacter(*GetNode(), text_offset))
       return true;
     if (mapping.IsAfterNonCollapsedCharacter(*GetNode(), text_offset)) {
       UChar char_before = mapping.GetCharacterBefore(*GetNode(), text_offset);
