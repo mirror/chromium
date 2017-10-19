@@ -346,19 +346,14 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   void SetNumOpenStreams(size_t num_streams);
 
   // Send the data in |data| to the peer in as few packets as possible.
-  // Returns a pair with the number of bytes consumed from data, and a boolean
-  // indicating if the fin bit was consumed.  This does not indicate the data
-  // has been sent on the wire: it may have been turned into a packet and queued
-  // if the socket was unexpectedly blocked.
-  // If |listener| is provided, then it will be informed once ACKs have been
-  // received for all the packets written in this call.
-  // The |listener| is not owned by the QuicConnection and must outlive it.
-  virtual QuicConsumedData SendStreamData(
-      QuicStreamId id,
-      QuicIOVector iov,
-      QuicStreamOffset offset,
-      StreamSendingState state,
-      QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
+  // Returns the number of bytes consumed from data, and a boolean indicating if
+  // the fin bit was consumed.  This does not indicate the data has been sent on
+  // the wire: it may have been turned into a packet and queued if the socket
+  // was unexpectedly blocked.
+  virtual QuicConsumedData SendStreamData(QuicStreamId id,
+                                          QuicIOVector iov,
+                                          QuicStreamOffset offset,
+                                          StreamSendingState state);
 
   // Send a RST_STREAM frame to the peer.
   virtual void SendRstStream(QuicStreamId id,

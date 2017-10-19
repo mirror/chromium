@@ -452,15 +452,9 @@ void QuicSentPacketManager::MarkPacketHandled(QuicPacketNumber packet_number,
   // Remove the most recent packet, if it is pending retransmission.
   pending_retransmissions_.erase(newest_transmission);
 
-  // The AckListener needs to be notified about the most recent
-  // transmission, since that's the one only one it tracks.
   if (newest_transmission == packet_number) {
     unacked_packets_.NotifyStreamFramesAcked(*info, ack_delay_time);
-    unacked_packets_.NotifyAndClearListeners(&info->ack_listeners,
-                                             ack_delay_time);
   } else {
-    unacked_packets_.NotifyAndClearListeners(newest_transmission,
-                                             ack_delay_time);
     RecordSpuriousRetransmissions(*info, packet_number);
     // Remove the most recent packet from flight if it's a crypto handshake
     // packet, since they won't be acked now that one has been processed.

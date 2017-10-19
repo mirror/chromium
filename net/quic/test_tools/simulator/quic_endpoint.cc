@@ -244,7 +244,7 @@ void QuicEndpoint::WriteStreamData() {
     iov.iov_len = transmission_size;
     QuicIOVector io_vector(&iov, 1, transmission_size);
     QuicConsumedData consumed_data = connection_.SendStreamData(
-        kDataStream, io_vector, bytes_transferred_, NO_FIN, nullptr);
+        kDataStream, io_vector, bytes_transferred_, NO_FIN);
 
     DCHECK(consumed_data.bytes_consumed <= transmission_size);
     bytes_transferred_ += consumed_data.bytes_consumed;
