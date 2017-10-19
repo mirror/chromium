@@ -90533,7 +90533,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>pkotwicz@chromium.org</owner>
   <owner>yfriedman@chromium.org</owner>
   <summary>
-    Records the error code when installing a WebAPK from Google Play fails.
+    Records the error code when installing a WebAPK from Google Play fails. The
+    error code refers to: go/webapk-install-googleplayerrorcode. For example:
+    908: ERROR_DOWNLOAD_INTERNAL_FREE_SPACE; 910: ERROR_INSTALL_INCOMPLETE
   </summary>
 </histogram>
 
