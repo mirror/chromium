@@ -177,7 +177,7 @@ GLuint VideoDecoderShim::YUVConverter::CompileShader(const char* name,
                                                      const char* code) {
   GLuint shader = gl_->CreateShader(type);
 
-  gl_->ShaderSource(shader, 1, (const GLchar**)&code, NULL);
+  gl_->ShaderSource(shader, 1, static_cast<const GLchar**>(&code), NULL);
   gl_->CompileShader(shader);
 
 #ifndef NDEBUG

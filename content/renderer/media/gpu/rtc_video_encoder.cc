@@ -757,8 +757,8 @@ void RTCVideoEncoder::Impl::ReturnEncodedImage(
       if (!GetRTPFragmentationHeaderH264(&header, image._buffer,
                                          image._length)) {
         DLOG(ERROR) << "Failed to get RTP fragmentation header for H264";
-        NotifyError(
-            (media::VideoEncodeAccelerator::Error)WEBRTC_VIDEO_CODEC_ERROR);
+        NotifyError(static_cast<media::VideoEncodeAccelerator::Error>(
+            WEBRTC_VIDEO_CODEC_ERROR));
         return;
       }
       break;

@@ -56,13 +56,14 @@ class GfxImageDeserializer final : public SkImageDeserializer {
     sk_sp<SkImage> img;
     // Try PNG first.
     SkBitmap bitmap;
-    if (gfx::PNGCodec::Decode((const uint8_t*)data, size, &bitmap)) {
+    if (gfx::PNGCodec::Decode(static_cast<const uint8_t*>(data), size,
+                              &bitmap)) {
       bitmap.setImmutable();
       img = SkImage::MakeFromBitmap(bitmap);
     } else {
       // Try JPEG.
       std::unique_ptr<SkBitmap> decoded_jpeg(
-          gfx::JPEGCodec::Decode((const uint8_t*)data, size));
+          gfx::JPEGCodec::Decode(static_cast<const uint8_t*>(data), size));
       if (decoded_jpeg) {
         decoded_jpeg->setImmutable();
         img = SkImage::MakeFromBitmap(*decoded_jpeg);

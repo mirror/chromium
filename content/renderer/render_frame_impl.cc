@@ -754,7 +754,7 @@ NOINLINE void BadCastCrashIntentionally() {
   };
 
   A a;
-  (void)(B*) & a;
+  (void)reinterpret_cast<B*>(&a);
 }
 
 #if defined(ADDRESS_SANITIZER) || defined(SYZYASAN)
