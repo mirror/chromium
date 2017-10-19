@@ -46,6 +46,30 @@
       "revId": "ab976f9a7f4ea02bd56e5cd47db38744867b0f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda50c4c_42314f4b",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_bypass_protocol_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-19T20:52:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0ae7bd3_9e4c1dbc",
+      "range": {
+        "startLine": 473,
+        "startChar": 4,
+        "endLine": 473,
+        "endChar": 71
+      },
+      "revId": "ab976f9a7f4ea02bd56e5cd47db38744867b0f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
