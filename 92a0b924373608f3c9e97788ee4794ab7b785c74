@@ -16,6 +16,24 @@
       "revId": "92a0b924373608f3c9e97788ee4794ab7b785c74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4ae5a7_130adf03",
+        "filename": "third_party/WebKit/LayoutTests/animations/3d/change-transform-in-end-event.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-19T14:26:13Z",
+      "side": 1,
+      "message": "Or double-rAF, to be precise. I\u0027m not clear if there\u0027s any additional benefit to scheduling this immediately-finishing animation instead.",
+      "parentUuid": "955eb1f3_dcca53c2",
+      "revId": "92a0b924373608f3c9e97788ee4794ab7b785c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
