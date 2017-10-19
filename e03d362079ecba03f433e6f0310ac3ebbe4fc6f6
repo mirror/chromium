@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "49e9f834_6880ffc5",
+        "filename": "chromeos/components/tether/crash_recovery_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-19T17:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e97cee0f_af11abc4",
+      "range": {
+        "startLine": 22,
+        "startChar": 35,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "e03d362079ecba03f433e6f0310ac3ebbe4fc6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9720db2_f841c85a",
         "filename": "chromeos/components/tether/crash_recovery_manager.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "e03d362079ecba03f433e6f0310ac3ebbe4fc6f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b698624_dffedae7",
+        "filename": "chromeos/components/tether/crash_recovery_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-19T17:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9720db2_f841c85a",
+      "range": {
+        "startLine": 26,
+        "startChar": 74,
+        "endLine": 26,
+        "endChar": 80
+      },
+      "revId": "e03d362079ecba03f433e6f0310ac3ebbe4fc6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
