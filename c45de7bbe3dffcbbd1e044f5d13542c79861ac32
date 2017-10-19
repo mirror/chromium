@@ -16,6 +16,24 @@
       "revId": "c45de7bbe3dffcbbd1e044f5d13542c79861ac32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1263137_baedb143",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-19T19:19:02Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "668683cc_0c3dc408",
+      "revId": "c45de7bbe3dffcbbd1e044f5d13542c79861ac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

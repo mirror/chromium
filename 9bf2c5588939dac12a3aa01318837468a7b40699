@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9813e7d1_e94b3e6b",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-19T19:19:02Z",
+      "side": 1,
+      "message": "nit: \"(undefined,\" to \"(undefined /* stateObject */,\"\n(same below).",
+      "revId": "9bf2c5588939dac12a3aa01318837468a7b40699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e5bf7a_33b5f819",
+        "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-19T19:19:02Z",
+      "side": 1,
+      "message": "How about something to test the gibberish case, maybe\n\ntestRedirect(\u0027chrome://extensions/invalidSubpath\u0027, true);\nexpectEquals(window.location.pathname, \u0027/\u0027);",
+      "revId": "9bf2c5588939dac12a3aa01318837468a7b40699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
