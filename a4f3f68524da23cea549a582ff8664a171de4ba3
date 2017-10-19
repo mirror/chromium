@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "06c168f8_37c2c680",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_dxgi.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-19T20:45:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84ff80a2_3cf659ec",
+      "range": {
+        "startLine": 92,
+        "startChar": 20,
+        "endLine": 92,
+        "endChar": 25
+      },
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b969e1aa_8e2f653f",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_dxgi.cc",
         "patchSetId": 19
@@ -39,6 +63,24 @@
       "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e35555_00f91895",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_dxgi.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-19T20:45:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b969e1aa_8e2f653f",
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "0f44cf06_8050a486",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_dxgi.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-19T20:45:10Z",
+      "side": 1,
+      "message": "Agreed - I think I\u0027d like to postpone renaming this for this change.",
+      "parentUuid": "1f6d94f5_f3c01c9a",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 9
+      },
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5d3f629_d3b99fab",
         "filename": "ui/gfx/mojo/buffer_types.mojom",
         "patchSetId": 19
@@ -79,6 +145,24 @@
       "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba5a9e3_e8a6c937",
+        "filename": "ui/gfx/mojo/buffer_types.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-19T20:45:10Z",
+      "side": 1,
+      "message": "I removed dxgi_handle here, and just marshal the data through shared_memory_handle, but I added the todo as well.",
+      "parentUuid": "b5d3f629_d3b99fab",
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "e4bbffae_0d826f1a",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-19T20:45:10Z",
+      "side": 1,
+      "message": "I believe the only thing I needed was EGL_D3D_TEXTURE_ANGLE, so just inlining that #define here would work.  Ken/Geoff, how would you feel about this?",
+      "parentUuid": "625b96de_7fd2ffb0",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68d4a9ad_bcf77523",
         "filename": "ui/gl/gl_image_dxgi.h",
         "patchSetId": 19
@@ -166,6 +274,24 @@
       "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd8ac96_f7a5b024",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-19T20:45:10Z",
+      "side": 1,
+      "message": "Changed to ScopedHandle\u0026\u0026 to indicate that we are taking ownership.",
+      "parentUuid": "68d4a9ad_bcf77523",
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
