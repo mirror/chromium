@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "3ec514a4_1cde69e1",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-19T23:01:52Z",
+      "side": 1,
+      "message": "I think it\u0027s fine to just add WebSandboxFlags.h to the relevant section in that file:\n\n  # No inclusion of WebKit from the browser, other than strictly enum/POD,\n  # header-only types, and some selected common code.\n  ...\n\nbecause WebSandboxFlags is an enum and hence should be allowed.  (FWIW, I also sanity-checked this by dcheng@ and he agreed that this should be allowed.)",
+      "parentUuid": "94a890c0_e08ccc29",
+      "range": {
+        "startLine": 693,
+        "startChar": 1,
+        "endLine": 711,
+        "endChar": 3
+      },
+      "revId": "5af182814a98bc73ef990cefeb1c126fad8b5d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca831e21_8d94cf82",
         "filename": "content/public/browser/web_contents.h",
         "patchSetId": 16
