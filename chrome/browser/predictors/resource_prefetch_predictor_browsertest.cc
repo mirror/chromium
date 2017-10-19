@@ -11,12 +11,14 @@
 #include "base/run_loop.h"
 #include "base/strings/string_util.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/scoped_feature_list.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
 #include "chrome/browser/predictors/loading_data_collector.h"
 #include "chrome/browser/predictors/loading_predictor.h"
 #include "chrome/browser/predictors/loading_predictor_factory.h"
 #include "chrome/browser/predictors/loading_stats_collector.h"
 #include "chrome/browser/predictors/loading_test_util.h"
+#include "chrome/browser/predictors/resource_prefetch_common.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -320,18 +322,17 @@ class PrefetchingObserver : public TestLoadingObserver {
 
 class ResourcePrefetchPredictorBrowserTest : public InProcessBrowserTest {
  protected:
-  using URLRequestSummary = URLRequestSummary;
-
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII("force-fieldtrials", "trial/group");
-    std::string params = base::StringPrintf(
-        "trial.group:%s/%s/%s/%s", kModeParamName, kExternalPrefetchingMode,
-        kEnableUrlLearningParamName, "true");
-    command_line->AppendSwitchASCII("force-fieldtrial-params", params);
-    std::string enabled_feature = base::StringPrintf(
-        "%s<trial", kSpeculativeResourcePrefetchingFeatureName);
-    command_line->AppendSwitchASCII("enable-features", enabled_feature);
+  ResourcePrefetchPredictorBrowserTest() {
+    std::map<std::string, std::string> parameters;
+    parameters[kModeParamName] = kExternalPrefetchingMode;
+    parameters[kEnableUrlLearningParamName] = "true";
+    scoped_feature_list_.InitAndEnableFeatureWithParameters(
+        predictors::kSpeculativeResourcePrefetchingFeature, parameters);
   }
+
+  ~ResourcePrefetchPredictorBrowserTest() override {}
+
+  using URLRequestSummary = URLRequestSummary;
 
   void SetUpOnMainThread() override {
     // Resolving all hosts to local allows us to have
@@ -718,6 +719,7 @@ class ResourcePrefetchPredictorBrowserTest : public InProcessBrowserTest {
     return ++visit_count_[main_frame_url];
   }
 
+  base::test::ScopedFeatureList scoped_feature_list_;
   LoadingPredictor* predictor_;
   ResourcePrefetchPredictor* resource_prefetch_predictor_;
   std::unique_ptr<net::EmbeddedTestServer> https_server_;
@@ -729,19 +731,7 @@ class ResourcePrefetchPredictorBrowserTest : public InProcessBrowserTest {
 
 // Subclass to test HintOrigin::NAVIGATION.
 class ResourcePrefetchPredictorPrefetchingBrowserTest
-    : public ResourcePrefetchPredictorBrowserTest {
- protected:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII("force-fieldtrials", "trial/group");
-    std::string params = base::StringPrintf(
-        "trial.group:%s/%s/%s/%s", kModeParamName, kPrefetchingMode,
-        kEnableUrlLearningParamName, "true");
-    command_line->AppendSwitchASCII("force-fieldtrial-params", params);
-    std::string enabled_feature = base::StringPrintf(
-        "%s<trial", kSpeculativeResourcePrefetchingFeatureName);
-    command_line->AppendSwitchASCII("enable-features", enabled_feature);
-  }
-};
+    : public ResourcePrefetchPredictorBrowserTest {};
 
 IN_PROC_BROWSER_TEST_F(ResourcePrefetchPredictorBrowserTest, Simple) {
   AddResourcesFromSubresourceHtml();

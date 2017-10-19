@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include "base/base_switches.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/debug/stack_trace.h"
@@ -106,6 +107,7 @@ BrowserTestBase::BrowserTestBase()
       use_software_compositing_(false),
       set_up_called_(false),
       disable_io_checks_(false) {
+  field_trial_list_ = std::make_unique<base::FieldTrialList>(nullptr);
 #if defined(OS_MACOSX)
   base::mac::SetOverrideAmIBundled(true);
 #endif
@@ -255,9 +257,17 @@ void BrowserTestBase::SetUp() {
                                     disabled_features);
   }
 
+  std::string field_trial_states;
+  base::FieldTrialList::AllStatesToString(&field_trial_states);
+  if (!field_trial_states.empty()) {
+    command_line->AppendSwitchASCII(switches::kForceFieldTrials,
+                                    field_trial_states);
+  }
+
   // Need to wipe feature list clean, since BrowserMain calls
   // FeatureList::SetInstance, which expects no instance to exist.
   base::FeatureList::ClearInstanceForTesting();
+  field_trial_list_ = nullptr;
 
   auto ui_task = base::MakeUnique<base::Closure>(base::Bind(
       &BrowserTestBase::ProxyRunTestOnMainThreadLoop, base::Unretained(this)));
