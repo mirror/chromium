@@ -32,8 +32,8 @@
 
 ; --enable-sandbox-logging causes the sandbox to log failures to the syslog.
 (if (param-true? disable-sandbox-denial-logging)
-   (deny default (with no-log))
-   (deny default))
+  (deny default (with no-log))
+  (deny default))
 
 (if (param-true? enable-logging) (debug deny))
 
@@ -86,6 +86,9 @@
   (path "/dev/urandom"))
 
 (allow file-write-data (path "/dev/null"))
+
+; Reads from /etc.
+(allow file-read-data (path "/private/etc/passwd"))
 
 ; Reads from /usr.
 (allow file-read-data
