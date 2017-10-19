@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4071c3d4_dc30e72a",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-19T19:53:17Z",
+      "side": 1,
+      "message": "Would you mind removing this? When I was comparing this to your new method I assumed there was some significance to specifying this explicitly but I don\u0027t think there is.",
+      "range": {
+        "startLine": 355,
+        "startChar": 6,
+        "endLine": 355,
+        "endChar": 25
+      },
+      "revId": "f4373d106c528590f67ead7ea1046c41cbae1993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
