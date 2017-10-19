@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "81c94605_c7da0553",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-19T22:53:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "502f3e85_312b2e23",
+      "range": {
+        "startLine": 20,
+        "startChar": 33,
+        "endLine": 21,
+        "endChar": 61
+      },
+      "revId": "65c5377b5d71d693b4295e21c363cbcab33ed864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9bbe6e1_ed95a03e",
         "filename": "cc/tiles/tile_manager.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "65c5377b5d71d693b4295e21c363cbcab33ed864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30b52e3_3ad9d62d",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-19T22:53:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9bbe6e1_ed95a03e",
+      "range": {
+        "startLine": 900,
+        "startChar": 32,
+        "endLine": 900,
+        "endChar": 66
+      },
+      "revId": "65c5377b5d71d693b4295e21c363cbcab33ed864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
