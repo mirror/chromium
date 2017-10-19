@@ -622,6 +622,14 @@ class HostResolverImplTest : public testing::Test {
     return resolver_->IsIPv6Reachable(net_log);
   }
 
+  const HostCache::Entry* GetCacheEntry(const Request& req) {
+    DCHECK(resolver_.get() && resolver_->GetHostCache());
+    const HostCache::Key key(req.info().hostname(), req.info().address_family(),
+                             req.info().host_resolver_flags());
+    return resolver_->GetHostCache()->LookupStale(key, base::TimeTicks(),
+                                                  nullptr);
+  }
+
   void MakeCacheStale() {
     DCHECK(resolver_.get());
     resolver_->GetHostCache()->OnNetworkChange();
@@ -1825,10 +1833,24 @@ TEST_F(HostResolverImplDnsTest, DnsTask) {
   EXPECT_THAT(requests_[1]->result(), IsOk());
   // Resolved by MockDnsClient.
   EXPECT_TRUE(requests_[1]->HasOneAddress("127.0.0.1", 80));
+
+  // Resolutions done by DnsClient are known to have performed a DNS lookup,
+  // so they should result in a cache entry with SOURCE_DNS.
+  const HostCache::Entry* cache_entry = GetCacheEntry(*requests_[1]);
+  ASSERT_NE(nullptr, cache_entry);
+  EXPECT_EQ(HostCache::Entry::SOURCE_DNS, cache_entry->source());
+
   // Fallback to ProcTask.
   EXPECT_THAT(requests_[2]->result(), IsError(ERR_NAME_NOT_RESOLVED));
   EXPECT_THAT(requests_[3]->result(), IsOk());
   EXPECT_TRUE(requests_[3]->HasOneAddress("192.168.1.102", 80));
+
+  // Resolutions done by ProcTask could have performed a DNS lookup, or
+  // consulted a HOSTS file, or anything else, so they should result in a cache
+  // entry with SOURCE_UNKNOWN.
+  cache_entry = GetCacheEntry(*requests_[3]);
+  ASSERT_NE(nullptr, cache_entry);
+  EXPECT_EQ(HostCache::Entry::SOURCE_UNKNOWN, cache_entry->source());
 }
 
 // Test successful and failing resolutions in HostResolverImpl::DnsTask when
