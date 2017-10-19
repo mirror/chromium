@@ -45,6 +45,53 @@
       "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650695d5_40063f3d",
+        "filename": "content/browser/download/download_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-19T22:36:18Z",
+      "side": 1,
+      "message": "Does UploadDataStreamBuilder::Build work?  DownloadManagerImpl::BeginDownloadInternal seems to get file system context and blob context that can be passed to Build, but not sure if it works.\n\nIt seems the advantage of using content::ResourceRequestBody is it supports different kind of storage, like file, blob and bytes. So we can defer the costly IO operation when the upload happens. However in the function below we didn\u0027t implement blob and file, so it only supports bytes, which is also a in-memory copy same as copying std::string.\n\nI\u0027m not sure but alternatively, what about ask the download::Client for element_readers, so we can directly do net::ElementsUploadDataStream(std::move(element_readers), 0). In that way, we also don\u0027t have to use content::ResourceRequestBody. But this moves the work to build the reader to client.\n\nPlease discuss with David also.",
+      "parentUuid": "27f6e95f_e2e430f6",
+      "range": {
+        "startLine": 217,
+        "startChar": 1,
+        "endLine": 217,
+        "endChar": 2
+      },
+      "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d746692_70657266",
+        "filename": "content/browser/download/download_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-19T22:36:18Z",
+      "side": 1,
+      "message": "Is this always 0?",
+      "range": {
+        "startLine": 294,
+        "startChar": 40,
+        "endLine": 294,
+        "endChar": 50
+      },
+      "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
