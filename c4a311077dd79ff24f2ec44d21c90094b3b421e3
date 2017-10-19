@@ -16,6 +16,24 @@
       "revId": "c4a311077dd79ff24f2ec44d21c90094b3b421e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db724ce_a09351f0",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-10-19T06:08:25Z",
+      "side": 1,
+      "message": "At the moment Range will be collapsed to end, as I can see from the Layout test.\nCode that you suggested differs from the original and doesn\u0027t collapse the range.\nI will try to run Layout tests with that change locally to see.",
+      "parentUuid": "65688b0c_087527c1",
+      "revId": "c4a311077dd79ff24f2ec44d21c90094b3b421e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
