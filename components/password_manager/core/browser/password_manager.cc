@@ -519,10 +519,27 @@ void PasswordManager::CreatePendingLoginManagers(
     logger->LogMessage(Logger::STRING_CREATE_LOGIN_MANAGERS_METHOD);
   }
 
+  PasswordManagerClient::NavigationEntryToCheck entry_to_check =
+      PasswordManagerClient::NavigationEntryToCheck::LAST_COMMITTED;
+  const PasswordForm::Scheme effective_form_scheme =
+      forms.empty() ? PasswordForm::SCHEME_HTML : forms.front().scheme;
+  switch (effective_form_scheme) {
+    case PasswordForm::SCHEME_HTML:
+    case PasswordForm::SCHEME_OTHER:
+    case PasswordForm::SCHEME_USERNAME_ONLY:
+      entry_to_check =
+          PasswordManagerClient::NavigationEntryToCheck::LAST_COMMITTED;
+      break;
+    case PasswordForm::SCHEME_BASIC:
+    case PasswordForm::SCHEME_DIGEST:
+      entry_to_check = PasswordManagerClient::NavigationEntryToCheck::VISIBLE;
+      break;
+  }
+
   // Record whether or not this top-level URL has at least one password field.
   client_->AnnotateNavigationEntry(!forms.empty());
 
-  if (!client_->IsFillingEnabledForCurrentPage())
+  if (!client_->IsFillingEnabledForCurrentPage(entry_to_check))
     return;
 
   if (logger) {

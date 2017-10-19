@@ -11,7 +11,8 @@ bool PasswordManagerClient::IsSavingAndFillingEnabledForCurrentPage() const {
   return true;
 }
 
-bool PasswordManagerClient::IsFillingEnabledForCurrentPage() const {
+bool PasswordManagerClient::IsFillingEnabledForCurrentPage(
+    NavigationEntryToCheck entry_to_check) const {
   return true;
 }
 

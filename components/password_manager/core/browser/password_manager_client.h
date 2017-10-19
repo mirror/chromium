@@ -50,6 +50,8 @@ class PasswordManagerClient {
   using CredentialsCallback =
       base::Callback<void(const autofill::PasswordForm*)>;
 
+  enum class NavigationEntryToCheck { LAST_COMMITTED, VISIBLE };
+
   PasswordManagerClient() {}
   virtual ~PasswordManagerClient() {}
 
@@ -60,7 +62,11 @@ class PasswordManagerClient {
 
   // Checks if filling is enabled for the current page. Filling is disabled when
   // password manager is disabled, or in the presence of SSL errors on a page.
-  virtual bool IsFillingEnabledForCurrentPage() const;
+  // |entry_to_check| specifies which navigation entry is relevant for the
+  // check; the last commited one is relevant for HTML forms, the visible is for
+  // HTTP auth.
+  virtual bool IsFillingEnabledForCurrentPage(
+      NavigationEntryToCheck entry_to_check) const;
 
   // Checks if manual filling fallback is enabled for the current page.
   virtual bool IsFillingFallbackEnabledForCurrentPage() const;

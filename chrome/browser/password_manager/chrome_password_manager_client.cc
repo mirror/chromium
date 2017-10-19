@@ -196,11 +196,18 @@ ChromePasswordManagerClient::ChromePasswordManagerClient(
 
 ChromePasswordManagerClient::~ChromePasswordManagerClient() {}
 
-bool ChromePasswordManagerClient::IsPasswordManagementEnabledForCurrentPage()
-    const {
+bool ChromePasswordManagerClient::IsPasswordManagementEnabledForCurrentPage(
+    NavigationEntryToCheck entry_to_check) const {
   DCHECK(web_contents());
-  content::NavigationEntry* entry =
-      web_contents()->GetController().GetLastCommittedEntry();
+  content::NavigationEntry* entry = nullptr;
+  switch (entry_to_check) {
+    case NavigationEntryToCheck::LAST_COMMITTED:
+      entry = web_contents()->GetController().GetLastCommittedEntry();
+      break;
+    case NavigationEntryToCheck::VISIBLE:
+      entry = web_contents()->GetController().GetVisibleEntry();
+      break;
+  }
   bool is_enabled = false;
   if (!entry) {
     // TODO(gcasto): Determine if fix for crbug.com/388246 is relevant here.
@@ -249,13 +256,18 @@ bool ChromePasswordManagerClient::IsSavingAndFillingEnabledForCurrentPage()
   }
   // TODO(melandory): remove saving_and_filling_passwords_enabled_ check from
   // here once we decide to switch to new settings behavior for everyone.
+  // LAST_COMMITTED is used because "current page" implies that the navigation
+  // to it has already committed.
   return *saving_and_filling_passwords_enabled_ && !IsIncognito() &&
-         IsFillingEnabledForCurrentPage();
+         IsFillingEnabledForCurrentPage(
+             password_manager::PasswordManagerClient::NavigationEntryToCheck::
+                 LAST_COMMITTED);
 }
 
-bool ChromePasswordManagerClient::IsFillingEnabledForCurrentPage() const {
+bool ChromePasswordManagerClient::IsFillingEnabledForCurrentPage(
+    NavigationEntryToCheck entry_to_check) const {
   return !DidLastPageLoadEncounterSSLErrors() &&
-         IsPasswordManagementEnabledForCurrentPage();
+         IsPasswordManagementEnabledForCurrentPage(entry_to_check);
 }
 
 bool ChromePasswordManagerClient::IsFillingFallbackEnabledForCurrentPage()
