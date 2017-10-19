@@ -22,6 +22,30 @@
       "revId": "9bcac46c049f19e7cae31dc5e456231637f1970a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f4ea68f_a8994fcd",
+        "filename": "third_party/WebKit/Source/core/input/TouchEventManagerTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-19T21:03:36Z",
+      "side": 1,
+      "message": "Now I see. Done.",
+      "parentUuid": "048585d5_5b67a97d",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 21
+      },
+      "revId": "9bcac46c049f19e7cae31dc5e456231637f1970a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
