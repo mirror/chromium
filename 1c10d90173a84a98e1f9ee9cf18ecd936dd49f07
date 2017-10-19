@@ -34,6 +34,24 @@
       "revId": "1c10d90173a84a98e1f9ee9cf18ecd936dd49f07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8565054b_688882da",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1301,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T19:41:14Z",
+      "side": 1,
+      "message": "Doh, missed another previous conversation.\n\nSo can we add FORMTYPE_COUNT on the PDFium side? With the understanding that it\u0027s a constant that may increase in value if we add more form types.\n\nThen static_assert it\u0027s equal to kCount here, and drop |kOther|? In the rare event that PDFium does add a new form type, there will be a mismatch and the PDFium DEPS roll with fail, forcing us to update the Chromium side to keep it in sync.",
+      "parentUuid": "0971dca5_75f7c2bf",
+      "revId": "1c10d90173a84a98e1f9ee9cf18ecd936dd49f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
