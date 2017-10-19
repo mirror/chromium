@@ -19,6 +19,7 @@ namespace {
 SafeJsonParser::Factory g_factory = nullptr;
 
 SafeJsonParser* Create(service_manager::Connector* connector,
+                       bool isolated,
                        const std::string& unsafe_json,
                        const SafeJsonParser::SuccessCallback& success_callback,
                        const SafeJsonParser::ErrorCallback& error_callback) {
@@ -29,8 +30,10 @@ SafeJsonParser* Create(service_manager::Connector* connector,
   return new SafeJsonParserAndroid(unsafe_json, success_callback,
                                    error_callback);
 #else
-  return new SafeJsonParserImpl(connector, unsafe_json, success_callback,
-                                error_callback);
+  return new SafeJsonParserImpl(connector,
+                                isolated ? SafeJsonParserImpl::RunMode::ISOLATED
+                                         : SafeJsonParserImpl::RunMode::SHARED,
+                                unsafe_json, success_callback, error_callback);
 #endif
 }
 
@@ -46,8 +49,18 @@ void SafeJsonParser::Parse(service_manager::Connector* connector,
                            const std::string& unsafe_json,
                            const SuccessCallback& success_callback,
                            const ErrorCallback& error_callback) {
-  SafeJsonParser* parser =
-      Create(connector, unsafe_json, success_callback, error_callback);
+  SafeJsonParser* parser = Create(connector, /*isolated=*/true, unsafe_json,
+                                  success_callback, error_callback);
+  parser->Start();
+}
+
+// static
+void SafeJsonParser::ParseShared(service_manager::Connector* connector,
+                                 const std::string& unsafe_json,
+                                 const SuccessCallback& success_callback,
+                                 const ErrorCallback& error_callback) {
+  SafeJsonParser* parser = Create(connector, /*isolated=*/false, unsafe_json,
+                                  success_callback, error_callback);
   parser->Start();
 }
 
