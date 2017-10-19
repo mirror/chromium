@@ -73,6 +73,16 @@ enum FetchCredentialsMode {
   PASSWORD,
 };
 
+// https://fetch.spec.whatwg.org/#concept-request-cache-mode
+enum FetchCacheMode {
+  DEFAULT,
+  NO_STORE,
+  RELOAD,
+  NO_CACHE,
+  FORCE_CACHE,
+  ONLY_IF_CACHED,
+};
+
 // The redirect mode indicating how redirects should be handled.
 // https://fetch.spec.whatwg.org/#concept-request-redirect-mode
 enum FetchRedirectMode {
