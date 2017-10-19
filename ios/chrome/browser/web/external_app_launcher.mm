@@ -14,6 +14,7 @@
 #import "ios/chrome/browser/open_url_util.h"
 #import "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h"
 #import "ios/chrome/browser/ui/ui_util.h"
+#import "ios/chrome/browser/web/external_app_launching_state.h"
 #include "ios/chrome/browser/web/features.h"
 #import "ios/chrome/browser/web/legacy_mailto_url_rewriter.h"
 #import "ios/chrome/browser/web/mailto_handler.h"
@@ -59,6 +60,13 @@ void RecordExternalApplicationOpened(bool opened) {
   UMA_HISTOGRAM_BOOLEAN("Tab.ExternalApplicationOpened", opened);
 }
 
+// Logs an entry for |IOS.RepeatedExternalAppBlocked|. If the user decided to
+// block the app from opening in response to the repeated external app prompt,
+// pass true. Otherwise, if the user allowed the application to run pass false.
+void RecordRepeatedExternalApplicationPrompt(bool blocked) {
+  UMA_HISTOGRAM_BOOLEAN("IOS.RepeatedExternalAppBlocked", blocked);
+}
+
 // Returns whether gURL has the scheme of a URL that initiates a call.
 bool UrlHasPhoneCallScheme(const GURL& gURL) {
   return gURL.SchemeIs("tel") || gURL.SchemeIs("facetime") ||
@@ -75,7 +83,6 @@ NSString* PromptActionString(NSString* scheme) {
   NOTREACHED();
   return @"";
 }
-
 // Launches the mail client app represented by |handler| and records metrics.
 void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
   NSString* launchURL = [handler rewriteMailtoURL:URL];
@@ -88,6 +95,16 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
 }  // namespace
 
 @interface ExternalAppLauncher ()
+
+// This is a dictionary that maps between external application redirection key
+// and External Application state.
+// the key is a space seperated combination of the absloute string for the
+// original source URL, and the scheme of the external Application URL.
+@property(nonatomic, strong)
+    NSMutableDictionary<NSString*, ExternalAppLaunchingState*>*
+        appLaunchingStates;
+@property(atomic, assign) BOOL isPromptActive;
+
 // Returns the Phone/FaceTime call argument from |URL|.
 + (NSString*)formatCallArgument:(NSURL*)URL;
 // Shows a prompt for the user to choose which mail client app to use to
@@ -104,182 +121,282 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
 - (void)openExternalAppWithURL:(NSURL*)URL
                         prompt:(NSString*)prompt
                      openLabel:(NSString*)openLabel;
-@end
 
-@implementation ExternalAppLauncher
+// Opens URL in an external application if possible (optionally after
+// confirming via dialog in case that user didn't interact using
+// |linkClicked| or if the external application is face time) or returns NO
+// if there is no such application available.
+- (BOOL)internalOpenURL:(const GURL&)toURL
+                fromURL:(const GURL&)srcURL
+            linkClicked:(BOOL)linkClicked {
+  // Presents an alert controller on the root view controller with |prompt| as
+  // body text, |accept label| and |reject label| as button labels, with
+  // |acceptHandler| and |rejectHandlers| as handlers for the buttons.
+  -(void)showExternalAppLauncherPrompt : (NSString*)prompt acceptLabel
+      : (NSString*)acceptLabel rejectLabel
+      : (NSString*)rejectLabel acceptHandler
+      : (void (^)(UIAlertAction* action))acceptHandler rejectHandler
+      : (void (^)(UIAlertAction* action))rejectHandler;
+  @end
 
-+ (NSString*)formatCallArgument:(NSURL*)URL {
-  NSCharacterSet* charSet =
-      [NSCharacterSet characterSetWithCharactersInString:@"/"];
-  NSString* scheme = [NSString stringWithFormat:@"%@:", [URL scheme]];
-  NSString* URLString = [URL absoluteString];
-  if ([URLString length] <= [scheme length])
-    return URLString;
-  NSString* prompt = [[[[URL absoluteString] substringFromIndex:[scheme length]]
-      stringByTrimmingCharactersInSet:charSet] stringByRemovingPercentEncoding];
-  // Returns original URL string if there's nothing interesting to display
-  // other than the scheme itself.
-  if (![prompt length])
-    return URLString;
-  return prompt;
-}
+      @implementation ExternalAppLauncher
 
-- (void)promptForMailClientWithURL:(const GURL&)URL
-                       URLRewriter:(MailtoURLRewriter*)rewriter {
-  // No user chosen default. Prompt user now.
-  NSString* title =
-      l10n_util::GetNSString(IDS_IOS_CHOOSE_DEFAULT_EMAIL_CLIENT_APP);
-  NSString* subtitle =
-      l10n_util::GetNSString(IDS_IOS_CHOOSE_EMAIL_APP_HOW_TO_CHANGE);
-  // TODO(crbug.com/761519): Use Action Sheet style for iPad as well.
-  UIAlertControllerStyle style = IsIPadIdiom()
-                                     ? UIAlertControllerStyleAlert
-                                     : UIAlertControllerStyleActionSheet;
-  UIAlertController* alertController =
-      [UIAlertController alertControllerWithTitle:title
-                                          message:subtitle
-                                   preferredStyle:style];
-  // There must be more than one available handlers to present a prompt to user.
-  DCHECK([[rewriter defaultHandlers] count] > 1U);
-  GURL copiedURLToOpen = URL;
-  for (MailtoHandler* handler in [rewriter defaultHandlers]) {
-    if (![handler isAvailable])
-      continue;
-    UIAlertAction* action = [UIAlertAction
-        actionWithTitle:[handler appName]
-                  style:UIAlertActionStyleDefault
-                handler:^(UIAlertAction* _Nonnull action) {
-                  DCHECK(handler);
-                  [rewriter setDefaultHandlerID:[handler appStoreID]];
-                  LaunchMailClientApp(copiedURLToOpen, handler);
-                }];
-    [alertController addAction:action];
+      @synthesize appLaunchingStates = _appLaunchingStates;
+  @synthesize isPromptActive = _isPromptActive;
+
+  +(NSString*)formatCallArgument : (NSURL*)URL {
+    NSCharacterSet* charSet =
+        [NSCharacterSet characterSetWithCharactersInString:@"/"];
+    NSString* scheme = [NSString stringWithFormat:@"%@:", [URL scheme]];
+    NSString* URLString = [URL absoluteString];
+    if ([URLString length] <= [scheme length])
+      return URLString;
+    NSString* prompt =
+        [[[[URL absoluteString] substringFromIndex:[scheme length]]
+            stringByTrimmingCharactersInSet:charSet]
+            stringByRemovingPercentEncoding];
+    // Returns original URL string if there's nothing interesting to display
+    // other than the scheme itself.
+    if (![prompt length])
+      return URLString;
+    return prompt;
   }
 
-  UIAlertAction* cancelAction =
-      [UIAlertAction actionWithTitle:l10n_util::GetNSString(IDS_CANCEL)
-                               style:UIAlertActionStyleCancel
-                             handler:nil];
-  [alertController addAction:cancelAction];
-
-  [[[[UIApplication sharedApplication] keyWindow] rootViewController]
-      presentViewController:alertController
-                   animated:YES
-                 completion:nil];
-}
-
-- (void)promptMDCStyleForMailClientWithURL:(const GURL&)URL
-                               URLRewriter:(MailtoURLRewriter*)rewriter {
-  GURL copiedURLToOpen = URL;
-  OpenMailHandlerViewController* mailHandlerChooser =
-      [[OpenMailHandlerViewController alloc]
-          initWithRewriter:rewriter
-           selectedHandler:^(MailtoHandler* _Nonnull handler) {
-             LaunchMailClientApp(copiedURLToOpen, handler);
-           }];
-  MDCBottomSheetController* bottomSheet = [[MDCBottomSheetController alloc]
-      initWithContentViewController:mailHandlerChooser];
-  [[[[UIApplication sharedApplication] keyWindow] rootViewController]
-      presentViewController:bottomSheet
-                   animated:YES
-                 completion:nil];
-}
-
-- (void)openExternalAppWithURL:(NSURL*)URL
-                        prompt:(NSString*)prompt
-                     openLabel:(NSString*)openLabel {
-  UIAlertController* alertController =
-      [UIAlertController alertControllerWithTitle:nil
-                                          message:prompt
-                                   preferredStyle:UIAlertControllerStyleAlert];
-  UIAlertAction* openAction =
-      [UIAlertAction actionWithTitle:openLabel
-                               style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction* action) {
-                               RecordExternalApplicationOpened(true);
-                               OpenUrlWithCompletionHandler(URL, nil);
-                             }];
-  UIAlertAction* cancelAction =
-      [UIAlertAction actionWithTitle:l10n_util::GetNSString(IDS_CANCEL)
-                               style:UIAlertActionStyleCancel
-                             handler:^(UIAlertAction* action) {
-                               RecordExternalApplicationOpened(false);
-                             }];
-  [alertController addAction:cancelAction];
-  [alertController addAction:openAction];
-
-  [[[[UIApplication sharedApplication] keyWindow] rootViewController]
-      presentViewController:alertController
-                   animated:YES
-                 completion:nil];
-}
-
-- (BOOL)openURL:(const GURL&)gURL linkClicked:(BOOL)linkClicked {
-  if (!gURL.is_valid() || !gURL.has_scheme())
-    return NO;
-
-  // Don't open external application if chrome is not active.
-  if ([[UIApplication sharedApplication] applicationState] !=
-      UIApplicationStateActive)
-    return NO;
-
-  NSURL* URL = net::NSURLWithGURL(gURL);
-  if (base::ios::IsRunningOnOrLater(10, 3, 0)) {
-    if (UrlHasAppStoreScheme(gURL)) {
-      NSString* prompt = l10n_util::GetNSString(IDS_IOS_OPEN_IN_ANOTHER_APP);
-      NSString* openLabel =
-          l10n_util::GetNSString(IDS_IOS_APP_LAUNCHER_OPEN_APP_BUTTON_LABEL);
-      [self openExternalAppWithURL:URL prompt:prompt openLabel:openLabel];
-      return YES;
+  -(instancetype)init {
+    self = [super init];
+    if (self) {
+      _appLaunchingStates = [[NSMutableDictionary alloc] init];
+      _isPromptActive = NO;
     }
-  } else {
-    // Prior to iOS 10.3, iOS does not prompt user when facetime: and
-    // facetime-audio: URL schemes are opened, so Chrome needs to present an
-    // alert before placing a phone call.
-    if (UrlHasPhoneCallScheme(gURL)) {
-      [self openExternalAppWithURL:URL
-                            prompt:[[self class] formatCallArgument:URL]
-                         openLabel:PromptActionString([URL scheme])];
-      return YES;
+    return self;
+  }
+
+  -(void)promptForMailClientWithURL : (const GURL&)URL URLRewriter
+      : (MailtoURLRewriter*)rewriter {
+    // No user chosen default. Prompt user now.
+    NSString* title =
+        l10n_util::GetNSString(IDS_IOS_CHOOSE_DEFAULT_EMAIL_CLIENT_APP);
+    NSString* subtitle =
+        l10n_util::GetNSString(IDS_IOS_CHOOSE_EMAIL_APP_HOW_TO_CHANGE);
+    // TODO(crbug.com/761519): Use Action Sheet style for iPad as well.
+    UIAlertControllerStyle style = IsIPadIdiom()
+                                       ? UIAlertControllerStyleAlert
+                                       : UIAlertControllerStyleActionSheet;
+    UIAlertController* alertController =
+        [UIAlertController alertControllerWithTitle:title
+                                            message:subtitle
+                                     preferredStyle:style];
+    // There must be more than one available handlers to present a prompt to
+    // user.
+    DCHECK([[rewriter defaultHandlers] count] > 1U);
+    GURL copiedURLToOpen = URL;
+    for (MailtoHandler* handler in [rewriter defaultHandlers]) {
+      if (![handler isAvailable])
+        continue;
+      UIAlertAction* action = [UIAlertAction
+          actionWithTitle:[handler appName]
+                    style:UIAlertActionStyleDefault
+                  handler:^(UIAlertAction* _Nonnull action) {
+                    DCHECK(handler);
+                    [rewriter setDefaultHandlerID:[handler appStoreID]];
+                    LaunchMailClientApp(copiedURLToOpen, handler);
+                  }];
+      [alertController addAction:action];
     }
-    // Prior to iOS 10.3, Chrome prompts user with an alert before opening
-    // App Store when user did not tap on any links and an iTunes app URL is
-    // opened. This maintains parity with Safari in pre-10.3 environment.
-    if (!linkClicked && UrlHasAppStoreScheme(gURL)) {
-      NSString* prompt = l10n_util::GetNSString(IDS_IOS_OPEN_IN_ANOTHER_APP);
-      NSString* openLabel =
-          l10n_util::GetNSString(IDS_IOS_APP_LAUNCHER_OPEN_APP_BUTTON_LABEL);
-      [self openExternalAppWithURL:URL prompt:prompt openLabel:openLabel];
-      return YES;
+
+    UIAlertAction* cancelAction =
+        [UIAlertAction actionWithTitle:l10n_util::GetNSString(IDS_CANCEL)
+                                 style:UIAlertActionStyleCancel
+                               handler:nil];
+    [alertController addAction:cancelAction];
+
+    [[[[UIApplication sharedApplication] keyWindow] rootViewController]
+        presentViewController:alertController
+                     animated:YES
+                   completion:nil];
+  }
+
+  -(void)promptMDCStyleForMailClientWithURL : (const GURL&)URL URLRewriter
+      : (MailtoURLRewriter*)rewriter {
+    GURL copiedURLToOpen = URL;
+    OpenMailHandlerViewController* mailHandlerChooser =
+        [[OpenMailHandlerViewController alloc]
+            initWithRewriter:rewriter
+             selectedHandler:^(MailtoHandler* _Nonnull handler) {
+               LaunchMailClientApp(copiedURLToOpen, handler);
+             }];
+    MDCBottomSheetController* bottomSheet = [[MDCBottomSheetController alloc]
+        initWithContentViewController:mailHandlerChooser];
+    [[[[UIApplication sharedApplication] keyWindow] rootViewController]
+        presentViewController:bottomSheet
+                     animated:YES
+                   completion:nil];
+  }
+
+  -(void)showExternalAppLauncherPrompt : (NSString*)prompt acceptLabel
+      : (NSString*)acceptLabel rejectLabel
+      : (NSString*)rejectLabel acceptHandler
+      : (void (^)(UIAlertAction* action))acceptHandler rejectHandler
+      : (void (^)(UIAlertAction* action))rejectHandler {
+    UIAlertController* alertController = [UIAlertController
+        alertControllerWithTitle:nil
+                         message:prompt
+                  preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* acceptAction =
+        [UIAlertAction actionWithTitle:acceptLabel
+                                 style:UIAlertActionStyleDefault
+                               handler:acceptHandler];
+    UIAlertAction* rejectAction =
+        [UIAlertAction actionWithTitle:rejectLabel
+                                 style:UIAlertActionStyleCancel
+                               handler:rejectHandler];
+    [alertController addAction:rejectAction];
+    [alertController addAction:acceptAction];
+
+    [[[[UIApplication sharedApplication] keyWindow] rootViewController]
+        presentViewController:alertController
+                     animated:YES
+                   completion:nil];
+  }
+
+  -(void)openExternalAppWithURL : (NSURL*)URL prompt
+      : (NSString*)prompt openLabel : (NSString*)openLabel {
+    [self showExternalAppLauncherPrompt:prompt
+        acceptLabel:openLabel
+        rejectLabel:l10n_util::GetNSString(IDS_CANCEL)
+        acceptHandler:^(UIAlertAction* action) {
+          RecordExternalApplicationOpened(true);
+          OpenUrlWithCompletionHandler(URL, nil);
+        }
+        rejectHandler:^(UIAlertAction* action) {
+          RecordExternalApplicationOpened(false);
+        }];
+  }
+
+  -(BOOL)openURL : (const GURL&)toURL fromURL : (const GURL&)srcURL linkClicked
+      : (BOOL)linkClicked {
+    if (!toURL.is_valid() || !toURL.has_scheme())
+      return NO;
+
+    // Don't open external application if chrome is not active.
+    if ([[UIApplication sharedApplication] applicationState] !=
+        UIApplicationStateActive)
+      return NO;
+
+    // Don't try to open external application if a prompt is already active.
+    if (_isPromptActive)
+      return NO;
+
+    NSString* key =
+        base::SysUTF8ToNSString(srcURL.GetContent() + " " + toURL.scheme());
+    if (_appLaunchingStates[key] == nil)
+      _appLaunchingStates[key] = [[ExternalAppLaunchingState alloc] init];
+    __weak ExternalAppLaunchingState* state = _appLaunchingStates[key];
+    [state update];
+    LaunchAction action = [state launchAction];
+    switch (action) {
+      case Block: {
+        return NO;
+      }
+      case Prompt: {
+        __weak ExternalAppLauncher* weakSelf = self;
+        __block GURL appURL = toURL;
+        _isPromptActive = YES;
+
+        [self showExternalAppLauncherPrompt:
+                  l10n_util::GetNSString(IDS_IOS_OPEN_IN_REPEATEDLY_ANOTHER_APP)
+            acceptLabel:l10n_util::GetNSString(
+                            IDS_IOS_OPEN_IN_REPEATEDLY_ANOTHER_APP_ALLOW)
+            rejectLabel:l10n_util::GetNSString(
+                            IDS_IOS_OPEN_IN_REPEATEDLY_ANOTHER_APP_BLOCK)
+            acceptHandler:^(UIAlertAction* action) {
+              if (weakSelf) {
+                // By confirming that user want to launch the application, there
+                // is no need to check for |linkClicked|.
+                [weakSelf openURL:appURL linkClicked:YES];
+                RecordRepeatedExternalApplicationPrompt(NO);
+                weakSelf.isPromptActive = NO;
+              }
+            }
+            rejectHandler:^(UIAlertAction* action) {
+              // TODO(crbug.com/674649): Once non modal dialogs are implemented,
+              // update this to always prompt instead of blocking the app.
+              [state block];
+              RecordRepeatedExternalApplicationPrompt(YES);
+              weakSelf.isPromptActive = NO;
+            }];
+        return YES;
+      }
+      case Allow: {
+        return [self internalOpenURL:toURL linkClicked:linkClicked];
+      }
     }
   }
 
-  // If feature mailto: URL rewriting is enabled, replaces |URL| with a
-  // rewritten URL if it is of mailto: scheme.
-  if (base::FeatureList::IsEnabled(kMailtoUrlRewriting) &&
-      gURL.SchemeIs(url::kMailToScheme)) {
-    MailtoURLRewriter* rewriter =
-        base::FeatureList::IsEnabled(kMailtoPromptForUserChoice)
-            ? [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers]
-            : [LegacyMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
-    NSString* handlerID = [rewriter defaultHandlerID];
-    if (!handlerID) {
-      if (base::FeatureList::IsEnabled(kMailtoPromptInMdcStyle))
-        [self promptMDCStyleForMailClientWithURL:gURL URLRewriter:rewriter];
-      else
-        [self promptForMailClientWithURL:gURL URLRewriter:rewriter];
+  -(BOOL)internalOpenURL : (const GURL&)gURL linkClicked : (BOOL)linkClicked {
+    // Don't open external application if chrome is not active.
+    if ([[UIApplication sharedApplication] applicationState] !=
+        UIApplicationStateActive)
+      return NO;
+
+    NSURL* URL = net::NSURLWithGURL(gURL);
+    if (base::ios::IsRunningOnOrLater(10, 3, 0)) {
+      if (UrlHasAppStoreScheme(gURL)) {
+        NSString* prompt = l10n_util::GetNSString(IDS_IOS_OPEN_IN_ANOTHER_APP);
+        NSString* openLabel =
+            l10n_util::GetNSString(IDS_IOS_APP_LAUNCHER_OPEN_APP_BUTTON_LABEL);
+        [self openExternalAppWithURL:URL prompt:prompt openLabel:openLabel];
+        return YES;
+      }
+    } else {
+      // Prior to iOS 10.3, iOS does not prompt user when facetime: and
+      // facetime-audio: URL schemes are opened, so Chrome needs to present an
+      // alert before placing a phone call.
+      if (UrlHasPhoneCallScheme(gURL)) {
+        [self openExternalAppWithURL:URL
+                              prompt:[[self class] formatCallArgument:URL]
+                           openLabel:PromptActionString([URL scheme])];
+        return YES;
+      }
+      // Prior to iOS 10.3, Chrome prompts user with an alert before opening
+      // App Store when user did not tap on any links and an iTunes app URL is
+      // opened. This maintains parity with Safari in pre-10.3 environment.
+      if (!linkClicked && UrlHasAppStoreScheme(gURL)) {
+        NSString* prompt = l10n_util::GetNSString(IDS_IOS_OPEN_IN_ANOTHER_APP);
+        NSString* openLabel =
+            l10n_util::GetNSString(IDS_IOS_APP_LAUNCHER_OPEN_APP_BUTTON_LABEL);
+        [self openExternalAppWithURL:URL prompt:prompt openLabel:openLabel];
+        return YES;
+      }
+    }
+
+    // If feature mailto: URL rewriting is enabled, replaces |URL| with a
+    // rewritten URL if it is of mailto: scheme.
+    if (base::FeatureList::IsEnabled(kMailtoUrlRewriting) &&
+        gURL.SchemeIs(url::kMailToScheme)) {
+      MailtoURLRewriter* rewriter =
+          base::FeatureList::IsEnabled(kMailtoPromptForUserChoice)
+              ? [NullableMailtoURLRewriter
+                    mailtoURLRewriterWithStandardHandlers]
+              : [LegacyMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
+      NSString* handlerID = [rewriter defaultHandlerID];
+      if (!handlerID) {
+        if (base::FeatureList::IsEnabled(kMailtoPromptInMdcStyle))
+          [self promptMDCStyleForMailClientWithURL:gURL URLRewriter:rewriter];
+        else
+          [self promptForMailClientWithURL:gURL URLRewriter:rewriter];
+        return YES;
+      }
+      MailtoHandler* handler = [rewriter defaultHandlerByID:handlerID];
+      LaunchMailClientApp(gURL, handler);
       return YES;
     }
-    MailtoHandler* handler = [rewriter defaultHandlerByID:handlerID];
-    LaunchMailClientApp(gURL, handler);
-    return YES;
+
+    // If the following call returns YES, an external application is about to be
+    // launched and Chrome will go into the background now.
+    // TODO(crbug.com/622735): This call still needs to be updated.
+    // It's heavily nested so some refactoring is needed.
+    return [[UIApplication sharedApplication] openURL:URL];
   }
 
-  // If the following call returns YES, an external application is about to be
-  // launched and Chrome will go into the background now.
-  // TODO(crbug.com/622735): This call still needs to be updated.
-  // It's heavily nested so some refactoring is needed.
-  return [[UIApplication sharedApplication] openURL:URL];
-}
-
-@end
+  @end
