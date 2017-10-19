@@ -17,6 +17,7 @@
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
 #include "ui/views/view.h"
+#include "ui/views/widget/widget_delegate.h"
 
 namespace views {
 class BoxLayout;
@@ -53,7 +54,8 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
                                       public views::ButtonListener,
                                       public SearchBoxModelObserver,
                                       public SpeechUIModelObserver,
-                                      public AppListViewDelegateObserver {
+                                      public AppListViewDelegateObserver,
+                                      public views::WidgetDelegate {
  public:
   SearchBoxView(SearchBoxViewDelegate* delegate,
                 AppListViewDelegate* view_delegate,
@@ -118,6 +120,11 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   void OnGestureEvent(ui::GestureEvent* event) override;
   void OnMouseEvent(ui::MouseEvent* event) override;
   void OnKeyEvent(ui::KeyEvent* evetn) override;
+  views::Widget* GetWidget() override;
+  const views::Widget* GetWidget() const override;
+
+  // Overridden from views::WidgetDelegate:
+  ui::AXRole GetAccessibleWindowRole() const override;
 
   // Overridden from views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
