@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad5474a1_4a4d1cd1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-19T22:52:32Z",
+      "side": 1,
+      "message": "Mention for views only somewhere?",
+      "revId": "927cfdc0ea874a351c130a927150f2c98d762a0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9f095b_1260804d",
+        "filename": "ui/views/controls/combobox/combobox.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-19T22:52:32Z",
+      "side": 1,
+      "message": "Swap these two?",
+      "range": {
+        "startLine": 785,
+        "startChar": 9,
+        "endLine": 785,
+        "endChar": 59
+      },
+      "revId": "927cfdc0ea874a351c130a927150f2c98d762a0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c26e084e_fa5cf69a",
+        "filename": "ui/views/controls/combobox/combobox.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-19T22:52:32Z",
+      "side": 1,
+      "message": "Move between OnPaint() and OnFocus()?",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 62
+      },
+      "revId": "927cfdc0ea874a351c130a927150f2c98d762a0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
