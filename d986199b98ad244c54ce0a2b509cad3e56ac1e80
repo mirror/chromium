@@ -22,6 +22,30 @@
       "revId": "d986199b98ad244c54ce0a2b509cad3e56ac1e80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b751ac_6addc87d",
+        "filename": "third_party/breakpad/minidump_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-19T21:19:33Z",
+      "side": 1,
+      "message": "How\u0027s this?",
+      "parentUuid": "2d41777a_bd4c6c8b",
+      "range": {
+        "startLine": 53,
+        "startChar": 40,
+        "endLine": 53,
+        "endChar": 54
+      },
+      "revId": "d986199b98ad244c54ce0a2b509cad3e56ac1e80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
