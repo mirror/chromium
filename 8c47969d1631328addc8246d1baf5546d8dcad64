@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b5f2afa9_f6f58767",
+        "filename": "chrome/app/chrome_exe_main_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-19T01:18:21Z",
+      "side": 1,
+      "message": "Yes, the feature flag is not initialized at this point. I am still trying to find a way to solve this.",
+      "parentUuid": "86e4c97e_3def6e82",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb763108_f2e49c17",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 24
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "0d42cb99_c5ae4168",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-19T01:18:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb763108_f2e49c17",
+      "range": {
+        "startLine": 23,
+        "startChar": 45,
+        "endLine": 23,
+        "endChar": 53
+      },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0d67953_ce4c5714",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 24
@@ -56,6 +98,24 @@
       "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d736f881_def0fadc",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-19T01:18:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0d67953_ce4c5714",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "cd137766_9894c5c8",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-19T01:18:21Z",
+      "side": 1,
+      "message": "That makes sense. Done.",
+      "parentUuid": "efb302ac_b19538a5",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b8101c0_07619423",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 24
@@ -87,6 +165,24 @@
       "writtenOn": "2017-10-17T11:06:07Z",
       "side": 1,
       "message": "Does it really have to go in the Start Menu? That may be rather intrusive. What happens after the user deletes such a shortcut?",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ee4837_a3a08e69",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-19T01:18:21Z",
+      "side": 1,
+      "message": "afaik, that app must have a shortcut on the start menu for this to work. If the user deletes the shortcut, we\u0027ll try to install a new one; if the app has been registered already, we simply exist early in this method. The \"if (fileExists) ... \" code below handles this.",
+      "parentUuid": "9b8101c0_07619423",
       "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "06d115eb_b04f3f65",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-19T01:18:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8abd5e3_c3fa17d7",
+      "range": {
+        "startLine": 250,
+        "startChar": 7,
+        "endLine": 250,
+        "endChar": 15
+      },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb359f8d_97ab119b",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 24
@@ -174,6 +294,30 @@
       "writtenOn": "2017-10-17T12:00:50Z",
       "side": 1,
       "message": "Wondering if this can this be returned back to the caller of PrepareForNativeNotification for ownership somewhere. Or does that break everything?\n\nAlso:\ns/activator_reg/activator_register/",
+      "range": {
+        "startLine": 253,
+        "startChar": 34,
+        "endLine": 253,
+        "endChar": 35
+      },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "627b3b26_dc7064e2",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-19T01:18:21Z",
+      "side": 1,
+      "message": "Hmm, I am not sure if we need to do the ownership transfer as it\u0027s used only once in PrepareForNativeNotification().",
+      "parentUuid": "eb359f8d_97ab119b",
       "range": {
         "startLine": 253,
         "startChar": 34,
@@ -244,6 +388,24 @@
     },
     {
       "key": {
+        "uuid": "b7a6acdb_a9c7a29d",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-19T01:18:21Z",
+      "side": 1,
+      "message": "Thanks for the suggestions~\n\nI\u0027ll definitely clean this up after I get everything here to work. Currently, I just want to stay consistent as much as possible with the original implementation in the Windows header files. In this way, I can make sure there are no bugs introduced in those code and then focus on the code that are not working now.",
+      "parentUuid": "6346ef8d_905f10f3",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "281c33d8_5c645454",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 24
@@ -255,6 +417,30 @@
       "writtenOn": "2017-10-17T12:00:50Z",
       "side": 1,
       "message": "Don\u0027t you need to initialize _hr? \nAlso:\ns/_hr/hr_/",
+      "range": {
+        "startLine": 260,
+        "startChar": 10,
+        "endLine": 260,
+        "endChar": 13
+      },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d2ef95e_a1b00208",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-19T01:18:21Z",
+      "side": 1,
+      "message": "RoInitializeWrapper2 is a reimplementaton of RoInitializeWrapper in corewrappers.h.\nThere\u0027s no initialization for this variable in the original implementation, so I guess it\u0027s working fine although I admit that the variable \"should\" be initialized explicitly. Anyway, I\u0027ve added the initialization.",
+      "parentUuid": "281c33d8_5c645454",
       "range": {
         "startLine": 260,
         "startChar": 10,
@@ -281,6 +467,24 @@
       "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ed67ed_20222663",
+        "filename": "chrome/app/chrome_native_notification_prep_win.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-19T01:18:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43ed6a24_cd598278",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
