@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84c98303_5cdc355c",
+        "filename": "components/safe_browsing/db/database_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-19T02:10:21Z",
+      "side": 1,
+      "message": "Nit: #include \u003cutility\u003e for std::move",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "8d220bcf76f9e9edf274fede4f90205a72c56a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "949dacee_b593ca89",
+        "filename": "components/safe_browsing/db/database_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-19T02:10:21Z",
+      "side": 1,
+      "message": "Does brace initialization something like this work?\n\nauto store_state_map \u003d std::make_unique\u003cStoreStateMap\u003e({ { GetChromeUrlApiId(), \"\" } });",
+      "range": {
+        "startLine": 93,
+        "startChar": 57,
+        "endLine": 93,
+        "endChar": 58
+      },
+      "revId": "8d220bcf76f9e9edf274fede4f90205a72c56a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b6cea4e_dbd55b20",
+        "filename": "components/safe_browsing/db/database_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-19T02:10:21Z",
+      "side": 1,
+      "message": "Nit: we can use std::make_unique now (same signature), so you can remove this and the ptr_util.h include.",
+      "range": {
+        "startLine": 93,
+        "startChar": 31,
+        "endLine": 93,
+        "endChar": 41
+      },
+      "revId": "8d220bcf76f9e9edf274fede4f90205a72c56a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09e0516_1499fe41",
+        "filename": "components/safe_browsing/db/database_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-19T02:10:21Z",
+      "side": 1,
+      "message": "Nit: #include \u003cmemory\u003e for std::unique_ptr",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "8d220bcf76f9e9edf274fede4f90205a72c56a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
