@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aee99ac_4a09760b",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-19T19:38:05Z",
+      "side": 1,
+      "message": "s/let/const/ since it doesn\u0027t get reassigned.",
+      "revId": "5508752b028a1ba24bb42f6d201d9bd1bffd1e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c84f74c6_bc4c6885",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-19T19:38:05Z",
+      "side": 1,
+      "message": "s/let/const/",
+      "revId": "5508752b028a1ba24bb42f6d201d9bd1bffd1e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da986504_3aedc4fc",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-19T19:38:05Z",
+      "side": 1,
+      "message": "s/let/const/",
+      "revId": "5508752b028a1ba24bb42f6d201d9bd1bffd1e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7859a2a0_3858cf66",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-19T19:38:05Z",
+      "side": 1,
+      "message": "as discussed offline, let\u0027s consolidate the *Close_ functions.",
+      "revId": "5508752b028a1ba24bb42f6d201d9bd1bffd1e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

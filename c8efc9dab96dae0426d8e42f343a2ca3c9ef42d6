@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91eca867_a794a3c9",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-19T19:38:05Z",
+      "side": 0,
+      "message": "I think this is still needed for the JS code to set it\u0027s height/width correctly.",
+      "revId": "c8efc9dab96dae0426d8e42f343a2ca3c9ef42d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
