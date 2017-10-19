@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a81a1b6c_8e37748d",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-19T15:55:17Z",
+      "side": 1,
+      "message": "typo: a",
+      "range": {
+        "startLine": 179,
+        "startChar": 45,
+        "endLine": 179,
+        "endChar": 46
+      },
+      "revId": "51231a5fb39de53d3682ea52a95549a4f9367fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514e812c_f0d400b2",
+        "filename": "content/test/data/empty_worker.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-19T15:55:17Z",
+      "side": 1,
+      "message": "Just reusing content/test/data/service_worker/worker.js seems to be cleaner.\n\nWe are sort of creating dependency on some other test someone else wrote, but I think that\u0027s fine since we\u0027re really testing service workers. And this file is also not visibly linked to browsing_data codebase.",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 36
+      },
+      "revId": "51231a5fb39de53d3682ea52a95549a4f9367fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f75f7e_24ce53d8",
+        "filename": "content/test/data/site_data.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-19T15:55:17Z",
+      "side": 1,
+      "message": "Consistency: Please mark other methods that are not exposed to C++ as private as well.\n\nBonus points for tidying them into an anonymous namespace:\n\n(function() {\n  // Anonymous namespace.\n}());",
+      "range": {
+        "startLine": 63,
+        "startChar": 19,
+        "endLine": 63,
+        "endChar": 20
+      },
+      "revId": "51231a5fb39de53d3682ea52a95549a4f9367fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
