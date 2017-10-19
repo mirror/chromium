@@ -2285,7 +2285,7 @@ TEST_P(WebViewTest, FullscreenResetScrollAndScaleFullscreenStyles) {
   LocalFrame* frame = web_view_impl->MainFrameImpl()->GetFrame();
   Element* element = frame->GetDocument()->getElementById("fullscreenElement");
   std::unique_ptr<UserGestureIndicator> gesture =
-      LocalFrame::CreateUserGesture(frame);
+      Frame::NotifyUserActivation(frame);
   Fullscreen::RequestFullscreen(*element);
   web_view_impl->DidEnterFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
@@ -2325,7 +2325,7 @@ TEST_P(WebViewTest, FullscreenResetScrollAndScaleExitAndReenter) {
   LocalFrame* frame = web_view_impl->MainFrameImpl()->GetFrame();
   Element* element = frame->GetDocument()->getElementById("fullscreenElement");
   std::unique_ptr<UserGestureIndicator> gesture =
-      LocalFrame::CreateUserGesture(frame);
+      Frame::NotifyUserActivation(frame);
   Fullscreen::RequestFullscreen(*element);
   web_view_impl->DidEnterFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
@@ -2381,7 +2381,7 @@ TEST_P(WebViewTest, EnterFullscreenResetScrollAndScaleState) {
   LocalFrame* frame = web_view_impl->MainFrameImpl()->GetFrame();
   Element* element = frame->GetDocument()->body();
   std::unique_ptr<UserGestureIndicator> gesture =
-      LocalFrame::CreateUserGesture(frame);
+      Frame::NotifyUserActivation(frame);
   Fullscreen::RequestFullscreen(*element);
   web_view_impl->DidEnterFullscreen();
 
