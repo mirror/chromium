@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84eaab9a_7ac92705",
+        "filename": "tools/perf/conditionally_execute",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-19T02:49:03Z",
+      "side": 1,
+      "message": "I\u0027d just delete this completely.",
+      "revId": "f209b08063a9cabada1f945ff697b07d2ddf85af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d0262c_46b6d6ee",
+        "filename": "tools/perf/conditionally_execute",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-19T02:49:03Z",
+      "side": 1,
+      "message": "While here, could fix the grammar (\"Did not find ...\"). But I\u0027d just delete this completely too.",
+      "revId": "f209b08063a9cabada1f945ff697b07d2ddf85af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
