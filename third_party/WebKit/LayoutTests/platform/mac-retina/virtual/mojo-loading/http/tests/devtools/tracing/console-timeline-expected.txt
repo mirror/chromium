@@ -2,7 +2,6 @@ Tests console.timeline and timelineEnd commands.
 
 
 Running: testStartStopTimeline
-Main._lateInitialization
 timestamp 0
 Timeline 'one'
 timestamp 1
