@@ -3246,6 +3246,10 @@ const FeatureEntry kFeatureEntries[] = {
 #endif  // defined(OS_MACOSX)
 
 #if defined(OS_CHROMEOS)
+    {"enable-floating-virtual-keyboard",
+     flag_descriptions::kEnableFloatingVirtualKeyboardName,
+     flag_descriptions::kEnableFloatingVirtualKeyboardDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(switches::kEnableFloatingVirtualKeyboard)},
     {"enable-per-user-timezone", flag_descriptions::kEnablePerUserTimezoneName,
      flag_descriptions::kEnablePerUserTimezoneDescription, kOsCrOS,
      SINGLE_DISABLE_VALUE_TYPE(chromeos::switches::kDisablePerUserTimezone)},
