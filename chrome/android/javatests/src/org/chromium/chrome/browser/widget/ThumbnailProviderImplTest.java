@@ -5,6 +5,8 @@
 package org.chromium.chrome.browser.widget;
 
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.test.filters.MediumTest;
 
 import org.junit.After;
@@ -42,13 +44,13 @@ public class ThumbnailProviderImplTest {
     private ThumbnailProviderImpl mThumbnailProvider;
     private DiscardableReferencePool mReferencePool;
 
+    private static final long TIMEOUT_MS = 10000;
+    private static final long INTERVAL_MS = 500;
+
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
-        ThreadUtils.runOnUiThread(() -> {
-            mReferencePool = new DiscardableReferencePool();
-            mThumbnailProvider = new ThumbnailProviderImpl(mReferencePool);
-        });
+        initializeOnUiThread();
     }
 
     @After
@@ -68,8 +70,10 @@ public class ThumbnailProviderImplTest {
         final TestThumbnailRequest request = new TestThumbnailRequest(
                 testFilePath, requiredSize, thumbnailRetrievedCallbackHelper);
 
-        ThreadUtils.runOnUiThread(() -> {
-            mThumbnailProvider.getThumbnail(request);
+        ThreadUtils.runOnUiThread(new Runnable() {
+            public void run() {
+                mThumbnailProvider.getThumbnail(request);
+            }
         });
 
         thumbnailRetrievedCallbackHelper.waitForCallback(
@@ -90,8 +94,10 @@ public class ThumbnailProviderImplTest {
         final TestThumbnailRequest request = new TestThumbnailRequest(
                 testFilePath, requiredSize, thumbnailRetrievedCallbackHelper);
 
-        ThreadUtils.runOnUiThread(() -> {
-            mThumbnailProvider.getThumbnail(request);
+        ThreadUtils.runOnUiThread(new Runnable() {
+            public void run() {
+                mThumbnailProvider.getThumbnail(request);
+            }
         });
 
         thumbnailRetrievedCallbackHelper.waitForCallback(
@@ -172,6 +178,13 @@ public class ThumbnailProviderImplTest {
         Assert.assertEquals(expectedHeight, request.getRetrievedThumbnail().getHeight());
     }
 
+    private void initializeOnUiThread() {
+        ThreadUtils.runOnUiThread(() -> {
+            mReferencePool = new DiscardableReferencePool();
+            mThumbnailProvider = new ThumbnailProviderImpl(mReferencePool);
+        });
+    }
+
     private static class TestThumbnailRequest implements ThumbnailRequest {
         private final String mTestFilePath;
         private final int mRequiredSize;
@@ -186,13 +199,17 @@ public class ThumbnailProviderImplTest {
         }
 
         @Override
-        public String getFilePath() {
+        public @Nullable String getFilePath() {
             return mTestFilePath;
         }
 
         @Override
-        public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
-            Assert.assertEquals(mTestFilePath, filePath);
+        public @Nullable String getContentId() {
+            return "contentId"; // None-null value for ThumbnailProviderImpl to work
+        }
+
+        @Override
+        public void onThumbnailRetrieved(@NonNull String contentId, @Nullable Bitmap thumbnail) {
             mRetrievedThumbnail = thumbnail;
             mThumbnailRetrievedCallbackHelper.notifyCalled();
         }
