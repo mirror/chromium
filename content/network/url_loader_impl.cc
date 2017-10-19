@@ -139,7 +139,7 @@ std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
             body, file_task_runner, element));
         break;
       case ResourceRequestBody::Element::TYPE_FILE_FILESYSTEM:
-        NOTIMPLEMENTED();
+        CHECK(true);
         break;
       case ResourceRequestBody::Element::TYPE_BLOB: {
         NOTIMPLEMENTED();
