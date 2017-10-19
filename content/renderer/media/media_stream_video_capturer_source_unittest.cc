@@ -46,7 +46,7 @@ class MockVideoCapturerSource : public media::VideoCapturerSource {
     MockStartCapture(params, new_frame_callback, running_callback);
     SetRunning(true);
   }
-  void StopCapture() {
+  void StopCapture() override {
     MockStopCapture();
     SetRunning(false);
   }

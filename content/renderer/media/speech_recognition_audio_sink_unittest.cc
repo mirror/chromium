@@ -222,7 +222,7 @@ class SpeechRecognitionAudioSinkTest : public testing::Test {
  public:
   SpeechRecognitionAudioSinkTest() {}
 
-  ~SpeechRecognitionAudioSinkTest() {
+  ~SpeechRecognitionAudioSinkTest() override {
     blink_source_.Reset();
     blink_track_.Reset();
     speech_audio_sink_.reset();

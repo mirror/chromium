@@ -84,7 +84,7 @@ class MediaRecorderHandlerTest : public TestWithParam<MediaRecorderTestParams>,
     registry_.Init(kTestStreamUrl);
   }
 
-  ~MediaRecorderHandlerTest() {
+  ~MediaRecorderHandlerTest() override {
     registry_.reset();
     blink::WebHeap::CollectAllGarbageForTesting();
   }

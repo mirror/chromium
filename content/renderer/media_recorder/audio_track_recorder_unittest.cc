@@ -129,7 +129,7 @@ class AudioTrackRecorderTest : public TestWithParam<ATRTestParams> {
         0 /* bits_per_second */));
   }
 
-  ~AudioTrackRecorderTest() {
+  ~AudioTrackRecorderTest() override {
     opus_decoder_destroy(opus_decoder_);
     opus_decoder_ = nullptr;
     blink_track_.Reset();

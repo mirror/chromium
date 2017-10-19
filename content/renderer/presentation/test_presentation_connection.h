@@ -13,7 +13,7 @@ namespace content {
 class TestPresentationConnection : public blink::WebPresentationConnection {
  public:
   TestPresentationConnection();
-  ~TestPresentationConnection();
+  ~TestPresentationConnection() override;
 
   MOCK_METHOD0(Init, void());
 };

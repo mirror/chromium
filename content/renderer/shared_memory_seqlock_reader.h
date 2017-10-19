@@ -46,7 +46,7 @@ class SharedMemorySeqLockReader
     : private internal::SharedMemorySeqLockReaderBase {
  public:
   SharedMemorySeqLockReader() : buffer_(0) { }
-  virtual ~SharedMemorySeqLockReader() { }
+  ~SharedMemorySeqLockReader() override {}
 
   bool GetLatestData(Data* data) {
     DCHECK(buffer_);

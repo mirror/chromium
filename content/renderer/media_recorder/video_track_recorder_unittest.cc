@@ -86,7 +86,7 @@ class VideoTrackRecorderTest
                     ->BelongsToCurrentThread());
   }
 
-  ~VideoTrackRecorderTest() {
+  ~VideoTrackRecorderTest() override {
     blink_track_.Reset();
     blink_source_.Reset();
     video_track_recorder_.reset();
