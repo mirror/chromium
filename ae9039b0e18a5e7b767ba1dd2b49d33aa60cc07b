@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb7aa76d_77ee65c8",
+        "filename": "base/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-19T15:42:56Z",
+      "side": 1,
+      "message": "I think that this prevent us from having this in base/ ? (and we should re-use the task_manager code), maybe this could be in chrome/browser/memory/ ?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 79
+      },
+      "revId": "ae9039b0e18a5e7b767ba1dd2b49d33aa60cc07b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b8f668_7dce2fad",
+        "filename": "base/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-19T15:42:56Z",
+      "side": 1,
+      "message": "WIP and not totally cleaned up, just wanted to give you a general overview.",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 31
+      },
+      "revId": "ae9039b0e18a5e7b767ba1dd2b49d33aa60cc07b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e56d5c_8eb8a677",
+        "filename": "base/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-19T15:42:56Z",
+      "side": 1,
+      "message": "I need to fix these box drawing characters.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 7
+      },
+      "revId": "ae9039b0e18a5e7b767ba1dd2b49d33aa60cc07b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca28959_23ddf7f3",
+        "filename": "base/memory/swap_thrashing_delegate_win_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-19T15:42:56Z",
+      "side": 1,
+      "message": "I\u0027ll add more state transition tests using the Mock PageFaultDetectionWindow.",
+      "revId": "ae9039b0e18a5e7b767ba1dd2b49d33aa60cc07b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
