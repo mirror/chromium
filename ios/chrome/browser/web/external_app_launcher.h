@@ -19,6 +19,10 @@ class GURL;
 // if there is no such application available.
 - (BOOL)openURL:(const GURL&)gURL linkClicked:(BOOL)linkClicked;
 
+- (BOOL)openURL:(const GURL&)gURL
+        fromURL:(const GURL&)srcURL
+    linkClicked:(BOOL)linkClicked;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_WEB_EXTERNAL_APP_LAUNCHER_H_
