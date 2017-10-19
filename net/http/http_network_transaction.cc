@@ -1319,14 +1319,12 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
   }
 
   if (IsSecureRequest()) {
-    stream_->GetSSLInfo(&response_.ssl_info);
-    if (response_.ssl_info.is_valid() &&
-        !IsCertStatusError(response_.ssl_info.cert_status)) {
-      session_->http_stream_factory()->ProcessAlternativeServices(
-          session_, response_.headers.get(),
-          url::SchemeHostPort(request_->url));
-    }
+    session_->http_stream_factory()->ProcessAlternativeServices(
+        session_, response_.headers.get(), url::SchemeHostPort(request_->url));
   }
+
+  if (IsSecureRequest())
+    stream_->GetSSLInfo(&response_.ssl_info);
 
   int rv = HandleAuthChallenge();
   if (rv != OK)
