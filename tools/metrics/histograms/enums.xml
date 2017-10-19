@@ -27066,6 +27066,19 @@ from previous Chrome versions.
   <int value="10" label="FAILED_TO_FIND_NAMESPACE"/>
 </enum>
 
+<enum name="NativeMacShareService">
+  <int value="0" label="Unknown/Custom"/>
+  <int value="1" label="Email"/>
+  <int value="2" label="Message"/>
+  <int value="3" label="Note"/>
+  <int value="4" label="Reminder"/>
+  <int value="5" label="Twitter"/>
+  <int value="6" label="Facebook"/>
+  <int value="7" label="LinkedIn"/>
+  <int value="8" label="SinaWeibo"/>
+  <int value="9" label="TencentWeibo"/>
+</enum>
+
 <enum name="NatTypeCounters">
   <int value="0" label="Not behind a NAT."/>
   <int value="1" label="Behind a NAT of unknown type."/>

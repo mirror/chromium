@@ -37495,6 +37495,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="NativeMacShare.Failure" enum="NativeMacShareService">
+  <owner>lgrey@chromium.org</owner>
+  <summary>
+    The user started sharing via a native share service but either canceled, or
+    the share failed.
+  </summary>
+</histogram>
+
+<histogram name="NativeMacShare.Success" enum="NativeMacShareService">
+  <owner>lgrey@chromium.org</owner>
+  <summary>The user successfully used a native share service.</summary>
+</histogram>
+
 <histogram name="Navigation.BackForward.CacheFlags" enum="NavigationCacheEnum">
   <owner>clamy@chromium.org</owner>
   <summary>The cache flags set on back-forward navigations.</summary>
