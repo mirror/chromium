@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afd47a84_9e5aad79",
+        "filename": "chrome/browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-19T19:29:20Z",
+      "side": 1,
+      "message": "Can you try https://cs.chromium.org/chromium/src/content/public/test/browser_test_utils.cc?l\u003d566\u0026gs\u003dcpp%253Acontent%253A%253ANavigateIframeToURL(content%253A%253AWebContents%2B*%252C%2Bstd%253A%253A__1%253A%253Abasic_string%253Cchar%253E%252C%2Bconst%2BGURL%2B%2526)%2540chromium%252F..%252F..%252Fcontent%252Fpublic%252Ftest%252Fbrowser_test_utils.cc%257Cdef\u0026gsn\u003dNavigateIframeToURL\u0026ct\u003dxref_usages",
+      "revId": "97f7fa1f89c52bebcf106f2deb6a5aaccfeeb5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f05bef_0958b418",
+        "filename": "components/payments/content/payment_request_web_contents_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-19T19:29:20Z",
+      "side": 1,
+      "message": "Add a comment.\n\nAlso, what about main frame navigations that are in the same document? https://cs.chromium.org/chromium/src/content/public/browser/navigation_handle.h?rcl\u003dd56d158d2a98e4b9db7ad6817c1e0ebcd74f432c\u0026l\u003d172. If they wouldn\u0027t close the payment request, I wouldn\u0027t count as abort. I guess you\u0027d have to check.",
+      "revId": "97f7fa1f89c52bebcf106f2deb6a5aaccfeeb5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
