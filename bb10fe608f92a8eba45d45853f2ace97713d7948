@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b60505c8_1d77ff39",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-10-19T10:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa0a50a7_a12f0473",
+      "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42a3c31d_a8513bdf",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec484fd_2290b04e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-10-19T10:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42a3c31d_a8513bdf",
+      "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -64,6 +100,42 @@
       "writtenOn": "2017-10-19T10:25:12Z",
       "side": 1,
       "message": "Hmm, this seems a little different from what the spec is saying.  \"The event handler processing algorithm\" step 5 says \"if E is a BeforeUnloadEvent object and E\u0027s type is beforeunload\", so the condition should be:\n    event-\u003eIsBeforeUnloadEvent() \u0026\u0026 event-type() \u003d\u003d EventTypeNames::beforeunload\n\nIf the condition is true, we need to check if |return_value| is null or non-null.  If the above condition is false (not beforeunload), then we need to check if |return_value| is false or not (ignoring special error event handling case).",
+      "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7de9d36_6d197916",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-10-19T10:45:24Z",
+      "side": 1,
+      "message": "So, that part of the spec is implemented correctly right now (as far as my understanding, might be wrong)\nThe return value of the BeforeUnloadEvent is converted to string here. https://cs.chromium.org/chromium/src/third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp?q\u003dv8abstracteventlistener\u0026dr\u003dCSs\u0026l\u003d170\n\nThe non-null checking is done in https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/Document.cpp?sq\u003dpackage:chromium\u0026l\u003d3354\n\nThe testcase that previously failed has this scenario: a CustomEvent with type beforeunload is fired, and the onbeforeunload function returns a boolean false. \nIn the spec, it should be going to the \"Otherwise\" section of step 5. See the note explaining why the event will not be canceled.\n\nThe test fails because the CustomEvent is not a BeforeUnloadEvent, so the return value is not converted to string because it doesn\u0027t fulfill the condition of the if clause in this file that I linked, meaning it stays as a boolean false. That means it will fullfill ShouldPreventDefault(return_value) and the event got canceled.\n\nBut it\u0027s also possible that we move all the step 5 check for BeforeUnloadEvent or events with type beforeunload here so it will be less confusing. I don\u0027t know if that\u0027s better though.",
+      "parentUuid": "87538057_3e8177d2",
+      "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022a75a1_af6fb5c0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-10-19T10:45:24Z",
+      "side": 1,
+      "message": "Not sure, but even if there is an event like that, the OnBeforeUnloadEventHandler doesn\u0027t apply to it (it only applies to events with the type \u0027beforeunload\u0027)",
+      "parentUuid": "4db743c3_e060446b",
       "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
