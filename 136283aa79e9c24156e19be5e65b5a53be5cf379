@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b92d9096_49b85a6b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1998,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-19T02:26:51Z",
+      "side": 1,
+      "message": "nit: better to use early-return style to reduce indentation.\n\nif (!mapping.IsAfter...)\n  return false;\nconst UChar char_before \u003d ...\nreturn char_before !\u003d kNewlineCharacter;",
+      "revId": "136283aa79e9c24156e19be5e65b5a53be5cf379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b3fbc0_1e229066",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1999,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-19T02:26:51Z",
+      "side": 1,
+      "message": "nit: s/UChar/const UChar/",
+      "revId": "136283aa79e9c24156e19be5e65b5a53be5cf379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41404b44_9818ec94",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-19T02:26:51Z",
+      "side": 1,
+      "message": "nit: s/unsigned/const unsigned/",
+      "revId": "136283aa79e9c24156e19be5e65b5a53be5cf379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd46564_51ffd452",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-19T02:26:51Z",
+      "side": 1,
+      "message": "To reduce indentation, it is better to utilize early-return style.\n\nif (text_offset \u003d\u003d 0)\n  return false;\nif (!mapping.IsAfterNonCollapsedCharacter(*node, dom_offset))\n  return false;\nconst UCHAR char_before \u003d mapping.GetCharacterBefore(*node, dom_offset);\nreturn char_before !\u003d kNewlineCharacter;",
+      "revId": "136283aa79e9c24156e19be5e65b5a53be5cf379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5540aa74_05cc1e53",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-19T02:26:51Z",
+      "side": 1,
+      "message": "I have seen this pattern, returning 0 for out-of bound character access\nin |std::string|.\n\nI guess this is derived from string representation in C, ending \u0027\\0\u0027.\n\nHaving \"\u0026#0;\" or text.nodeValue \u003d \u0027foo\\0bar\u0027 may be rare case, and I\u0027m\nnot sure some functions seeing such \u0027\\0\u0027.\n\nIs it better to return |base::Optional\u003cUChar\u003e|?",
+      "revId": "136283aa79e9c24156e19be5e65b5a53be5cf379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
