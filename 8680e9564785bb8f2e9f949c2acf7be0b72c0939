@@ -117,6 +117,30 @@
       "revId": "8680e9564785bb8f2e9f949c2acf7be0b72c0939",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "465cacab_24a8015d",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-19T01:18:36Z",
+      "side": 1,
+      "message": "I\u0027m really lost now.\n\nPageData is a struct. A struct with two members: an int and a bool.\n\nWhy does it have a \"non-trivial\" destructor? Why are we treating it as heavyweight?",
+      "parentUuid": "758d3924_d78b29b6",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 47
+      },
+      "revId": "8680e9564785bb8f2e9f949c2acf7be0b72c0939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
