@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5254a41c_e7b060cb",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-19T00:19:46Z",
+      "side": 1,
+      "message": "Two problems with using ReadbackYUVInterface as it is now. It doesn\u0027t read Alpha channel, would need another read call. Canvas textures have origin flipped, and it would need to be post processed. I want to tackle these requirements in the future refactor explained in the bug and move to that. We want to ship a working async functionality quickly-for a blocked client- and improve on it.\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d774297",
+      "parentUuid": "397c062c_f850e3ee",
+      "range": {
+        "startLine": 238,
+        "startChar": 1,
+        "endLine": 239,
+        "endChar": 55
+      },
+      "revId": "e07873256d6f2d3291e0e3aa62d050ef813211c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1778edc_e060bb46",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 9
