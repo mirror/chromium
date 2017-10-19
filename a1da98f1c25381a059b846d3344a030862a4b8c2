@@ -16,6 +16,24 @@
       "revId": "a1da98f1c25381a059b846d3344a030862a4b8c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8da6f27_70c506c7",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-19T22:10:19Z",
+      "side": 1,
+      "message": "I\u0027ll add a TODO to refine this in the future. There are many cases in this patch where we\u0027re overly cautious about when to dirty for the sake of simplicity.",
+      "parentUuid": "e9ea92d8_9a386122",
+      "revId": "a1da98f1c25381a059b846d3344a030862a4b8c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
