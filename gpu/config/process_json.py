@@ -610,8 +610,6 @@ def process_json_file(json_filepath, list_tag,
                           True)
   data_exception_file.write('namespace gpu {\n')
   data_file.write('namespace gpu {\n\n')
-  data_file.write('const char k%sVersion[] = "%s";\n\n' %
-                  (list_tag, json_data['version']))
   data_file.write('const GpuControlList::Entry k%sEntries[] = {\n' % list_tag)
   ids = []
   entry_count = 0
