@@ -85,6 +85,7 @@ bool LinkedAppIconsHandler::Parse(Extension* extension, base::string16* error) {
 
       LinkedAppIcons::IconInfo info;
       info.url = GURL(url_string);
+      LOG(ERROR) << url_string << " " << info.url.spec();
       if (!info.url.is_valid()) {
         *error = base::UTF8ToUTF16(
             extensions::manifest_errors::kInvalidLinkedAppIconURL);
