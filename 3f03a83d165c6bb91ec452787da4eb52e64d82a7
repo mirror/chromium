@@ -22,6 +22,30 @@
       "revId": "3f03a83d165c6bb91ec452787da4eb52e64d82a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3238035d_43db548f",
+        "filename": "net/spdy/core/spdy_alt_svc_wire_format.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-10-19T18:37:29Z",
+      "side": 1,
+      "message": "Done, will undo these changes and do them in google3 instead.",
+      "parentUuid": "f123ce9d_231914b4",
+      "range": {
+        "startLine": 81,
+        "startChar": 59,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "3f03a83d165c6bb91ec452787da4eb52e64d82a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
