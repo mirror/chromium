@@ -1068,8 +1068,15 @@ void BrowserPluginGuest::OnUpdateGeometry(
     int browser_plugin_instance_id,
     const gfx::Rect& view_rect,
     const viz::LocalSurfaceId& local_surface_id) {
-  // The plugin has moved within the embedder without resizing or the
-  // embedder/container's view rect changing.
+  if (guest_window_rect_.size() != view_rect.size() &&
+      local_surface_id_ == local_surface_id) {
+    SiteInstance* owner_site_instance = delegate_->GetOwnerSiteInstance();
+    bad_message::ReceivedBadMessage(
+        owner_site_instance->GetProcess(),
+        bad_message::BPG_VIEW_SIZE_CHANGED_LOCAL_SURFACE_ID_UNCHANGED);
+    return;
+  }
+
   guest_window_rect_ = view_rect;
   GetWebContents()->SendScreenRects();
   if (local_surface_id_ != local_surface_id) {
