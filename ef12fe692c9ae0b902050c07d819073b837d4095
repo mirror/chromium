@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7088b5bd_5af3b3aa",
+        "filename": "ui/keyboard/container_full_width_behavior.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-19T04:28:28Z",
+      "side": 1,
+      "message": "Can you add unittests for this class?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "ef12fe692c9ae0b902050c07d819073b837d4095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d4f7e1_1f7166a1",
+        "filename": "ui/keyboard/keyboard_layout_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-19T04:28:28Z",
+      "side": 1,
+      "message": "I don\u0027t want to expose ContainerBehavior to outside of KeyboardController directly because it has public methods that are not needed by KeyboardLayoutManager.\n\nCan you add a proxy method for AdjustSetBoundsRequest to KeyboardController?",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 43
+      },
+      "revId": "ef12fe692c9ae0b902050c07d819073b837d4095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
