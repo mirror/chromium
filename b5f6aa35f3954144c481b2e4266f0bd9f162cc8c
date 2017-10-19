@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "14f4d74d_18211606",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-19T19:28:02Z",
+      "side": 1,
+      "message": "Chromium\u0027s officially supported platforms are (some distributions of) Linux, macOS, iOS, Windows, Android. V8 supports several more, including I think AIX?, possibly FreeBSD, et c. I don\u0027t know if this code will ever be used in or for V8; for the time being I think it\u0027s OK for you to just land what you need for your immediate project. But be aware that changes might be needed in the future for more broad platform support.",
+      "parentUuid": "d2265ec6_37b0ef20",
+      "revId": "b5f6aa35f3954144c481b2e4266f0bd9f162cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0dec68e9_6933fbe3",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 5
