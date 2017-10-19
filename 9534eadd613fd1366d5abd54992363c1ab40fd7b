@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e72fe67f_e07ca978",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-19T22:28:36Z",
+      "side": 1,
+      "message": "nit: Seems odd that getting bypasses transactions, but setting doesn\u0027t. Consider passing in the DB and doing the transaction work in the setter?",
+      "revId": "9534eadd613fd1366d5abd54992363c1ab40fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c759d41d_6117d87c",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-19T22:28:36Z",
+      "side": 1,
+      "message": "nit: \"Defines the\" is redundant here and below. \"Maximum time interval between...\" is sufficient.",
+      "revId": "9534eadd613fd1366d5abd54992363c1ab40fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d16cfdf_b93c56e1",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-19T22:28:36Z",
+      "side": 1,
+      "message": "nit: I think the clauses should be separate sentences, as they\u0027re completely independent. Also, the 2nd one sems more important than the first one. (flip them?)",
+      "revId": "9534eadd613fd1366d5abd54992363c1ab40fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b277d9_66c36af6",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-19T22:28:36Z",
+      "side": 1,
+      "message": "nit: Can this be const? My intention is that the pointer never changes, not that the Clock instance is const. not sure how constness interacts with unique_ptr.",
+      "revId": "9534eadd613fd1366d5abd54992363c1ab40fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e90949fc_a5d0ced7",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-19T22:28:36Z",
+      "side": 1,
+      "message": "Not actionable, but just a warning that this irregularity adds to the system\u0027s complexity.",
+      "revId": "9534eadd613fd1366d5abd54992363c1ab40fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
