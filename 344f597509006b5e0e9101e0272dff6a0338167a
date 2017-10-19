@@ -46,6 +46,30 @@
       "revId": "344f597509006b5e0e9101e0272dff6a0338167a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b167037_efc2f488",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-19T21:41:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the original rationale was for not checking #hasCompleted..() but best to leave this code alone unless tedchoc@ approves a change.",
+      "parentUuid": "2723d2bf_c2e72eb6",
+      "range": {
+        "startLine": 501,
+        "startChar": 12,
+        "endLine": 504,
+        "endChar": 13
+      },
+      "revId": "344f597509006b5e0e9101e0272dff6a0338167a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
