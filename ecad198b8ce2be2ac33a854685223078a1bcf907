@@ -68,6 +68,30 @@
       "revId": "ecad198b8ce2be2ac33a854685223078a1bcf907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a82bc0_97b027f7",
+        "filename": "chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1248123
+      },
+      "writtenOn": "2017-10-19T01:25:10Z",
+      "side": 1,
+      "message": "I thought maybe too but seems possible they might change to /maps/? or /maps/lite/ etc. at some point. Really, just www.google.com/ is pretty good.",
+      "parentUuid": "de6f8bdd_7de03e8e",
+      "range": {
+        "startLine": 227,
+        "startChar": 41,
+        "endLine": 227,
+        "endChar": 51
+      },
+      "revId": "ecad198b8ce2be2ac33a854685223078a1bcf907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
