@@ -77,6 +77,15 @@ class CHROMEOS_EXPORT FakePowerManagerClient : public PowerManagerClient {
   void GetSwitchStates(const GetSwitchStatesCallback& callback) override;
   base::Closure GetSuspendReadinessCallback() override;
   int GetNumPendingSuspendReadinessCallbacks() override;
+  void CreateArcTimers(
+      const std::vector<chromeos::PowerManagerClient::ArcTimerArgs>&
+          arc_timers_args,
+      CreateArcTimersCallback callback) override;
+  void SetArcTimer(int32_t clock_id,
+                   int64_t seconds,
+                   int64_t nanoseconds,
+                   SetArcTimerCallback callback) override;
+  void DeleteArcTimers(DeleteArcTimersCallback callback) override;
 
   // Pops the first report from |video_activity_reports_|, returning whether the
   // activity was fullscreen or not. There must be at least one report.
