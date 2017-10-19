@@ -6,14 +6,26 @@ package org.chromium.chrome.browser.webapps;
 
 import static org.chromium.chrome.browser.ChromeSwitches.SKIP_WEBAPK_VERIFICATION;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Process;
+import android.text.TextUtils;
+
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationState;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.chrome.browser.ChromeVersionInfo;
+import org.chromium.content_public.browser.WebContents;
 import org.chromium.webapk.lib.client.WebApkIdentityServiceClient;
 import org.chromium.webapk.lib.client.WebApkValidator;
 
@@ -69,6 +81,49 @@ public class ChromeWebApkHost {
 
         WebApkIdentityServiceClient.getInstance().checkBrowserBacksWebApkAsync(
                 ContextUtils.getApplicationContext(), webApkPackageName, callback);
+    }
+
+    @CalledByNative
+    private static boolean hasPermission(String packageName, String permission) {
+        Log.e("ABCD", "haspermission step1 with packagename =" + packageName);
+        PackageInfo packageInfo;
+        try {
+            packageInfo =
+                    ContextUtils.getApplicationContext().getPackageManager().getPackageInfo(
+                            packageName, PackageManager.GET_PERMISSIONS);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+        String[] requestedPermissions = packageInfo.requestedPermissions;
+        Log.e("ABCD", "haspermission step2");
+        if (requestedPermissions == null) return false;
+
+        // Loops each <uses-permission> tag to retrieve the permission flag.
+        for (int i = 0; i < requestedPermissions.length; ++i) {
+            Log.e("ABCD", "haspermission step3 with permission ="+requestedPermissions[i]);
+            if (!TextUtils.equals(requestedPermissions[i], permission)) continue;
+
+            Log.e("ABCD", "haspermission step4");
+            if ((packageInfo.requestedPermissionsFlags[i]
+                    & PackageManager.PERMISSION_GRANTED) == 0) return false;
+        }
+        Log.e("ABCD", "haspermission step5");
+        return true;
+    }
+
+    @CalledByNative
+    private static boolean hasAndroidLocationPermission(String packageName) {
+        return hasPermission(packageName, Manifest.permission.ACCESS_FINE_LOCATION)
+                || hasPermission(packageName, Manifest.permission.ACCESS_COARSE_LOCATION);
+    }
+
+    @CalledByNative
+    private static boolean isPermissionRevokedByPolicy(String packageName) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return true;
+
+       return ContextUtils.getApplicationContext().getPackageManager().isPermissionRevokedByPolicy(
+               Manifest.permission.ACCESS_FINE_LOCATION, packageName);
     }
 
     private static native boolean nativeCanLaunchRendererInWebApkProcess();

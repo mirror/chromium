@@ -7,8 +7,13 @@ package org.chromium.webapk.lib.runtime_library;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.Messenger;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationManagerCompat;
@@ -17,7 +22,6 @@ import android.support.v4.app.NotificationManagerCompat;
  * Implements services offered by the WebAPK to Chrome.
  */
 public class WebApkServiceImpl extends IWebApkApi.Stub {
-
     public static final String KEY_SMALL_ICON_ID = "small_icon_id";
     public static final String KEY_HOST_BROWSER_UID = "host_browser_uid";
 
@@ -71,6 +75,35 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
     @Override
     public void cancelNotification(String platformTag, int platformID) {
         getNotificationManager().cancel(platformTag, platformID);
+    }
+
+    @Override
+    public void requestPermission(final IPermissionRequestCallback callback, final String[] permissions){
+        Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback()  {
+            @Override
+            public boolean handleMessage(Message message) {
+                Bundle data = message.getData();
+                int[] results = data.getIntArray(PermissionActivity.EXTRA_GRANT_RESULTS);
+                try {
+                    callback.onRequestPermissionsResult(permissions, results);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        });
+        final Messenger messenger = new Messenger(handler);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(); //mContext, PermissionActivity.class);
+                intent.setClassName(mContext, "org.chromium.webapk.shell_apk.PermissionActivity");
+                intent.putExtra(PermissionActivity.EXTRA_PERMISSIONS, permissions);
+                intent.putExtra(PermissionActivity.EXTRA_RESULT_RECEIVER, messenger);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     public boolean notificationPermissionEnabled() {
