@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25cfedc0_d390694d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4494,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-19T06:49:52Z",
+      "side": 1,
+      "message": "I find this comment somewhat misleading.  Even with RLS, we wouldn\u0027t want to use the root ScrollableArea\u0027s height here, because it\u0027s based on the layout viewport size.  We would still want to use the FrameView size.",
+      "revId": "6d52f79210cc7bb71d1f1a16b1c8063b84624d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f2423c_faa3a625",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4499,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-19T06:49:52Z",
+      "side": 1,
+      "message": "I think it would be clearer to just use GetDocument().View()-\u003eHeight() here.",
+      "revId": "6d52f79210cc7bb71d1f1a16b1c8063b84624d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
