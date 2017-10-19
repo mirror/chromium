@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fb397d62_d78a18da",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T21:40:05Z",
+      "side": 1,
+      "message": "CWVAutofillControllerDelegate could be a property of CWVWebView. Exactly like navigationDelegate or UIDelegate. What do you think?",
+      "parentUuid": "65fb405d_e404ad2a",
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d68bc62_01e997ef",
         "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
         "patchSetId": 5
@@ -128,6 +146,30 @@
       "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58b8c8d1_b746fbc2",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T21:40:05Z",
+      "side": 1,
+      "message": "Style Guide explicitly asks to optimize for reading rather than for writing:\nhttp://go/objc-style#optimize-for-the-reader-not-the-writer\n\nCode is read by the order of magnitude more often then it\u0027s written.",
+      "parentUuid": "d139c82b_404c3ef8",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 43
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -269,6 +311,30 @@
       "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "010c798b_56645b57",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T21:40:05Z",
+      "side": 1,
+      "message": "I think \"Client can display whatever UI they want\" statement is also true for content menu and alert() callbacks? And for those callbacks CWVWebView API uses \"run\" term. Do you think \"form suggestion\" callback is really different from other UI callbacks to justify a different term?",
+      "parentUuid": "73838d0c_d9e4e033",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

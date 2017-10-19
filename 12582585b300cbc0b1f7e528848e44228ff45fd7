@@ -237,6 +237,29 @@
     },
     {
       "key": {
+        "uuid": "67b554c0_1989efbd",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T21:40:05Z",
+      "side": 1,
+      "message": "Is it a requirement to call fillFormSuggestionBlock at least once? Is it ok to call fillFormSuggestionBlock more than once? Could you please update comments to answer these questions.",
+      "range": {
+        "startLine": 30,
+        "startChar": 26,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dc25960_527dac43",
         "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
         "patchSetId": 6
@@ -281,6 +304,52 @@
       "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6586a4ab_f80e98e7",
+        "filename": "ios/web_view/public/cwv_autofill_form_suggestion.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T21:40:05Z",
+      "side": 1,
+      "message": "Optional nit: Adding comma after last item will make this enum more maintainable",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca14164_3d6d6ce8",
+        "filename": "ios/web_view/public/cwv_autofill_form_suggestion.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T21:40:05Z",
+      "side": 1,
+      "message": "I think I initially misunderstood the purpose of this class. I thought that the object will represent a suggestion for filling the form, but in reality the object will represent the action which should be performed on the form (Clear, Fill, Ignore).\n\nIs this true? If so then I think we should not use Suggestion word in the name, because Ignore does not fill like \"a suggestion for filling the form\". I\u0027m not trying to suggest a different class name yet, but I\u0027m trying to understand the purpose of this class.",
+      "range": {
+        "startLine": 24,
+        "startChar": 16,
+        "endLine": 24,
+        "endChar": 26
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
