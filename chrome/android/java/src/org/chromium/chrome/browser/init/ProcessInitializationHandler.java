@@ -619,8 +619,6 @@ public class ProcessInitializationHandler {
     }
 
     private void startModerateBindingManagementIfNeeded(Context context) {
-        // Moderate binding doesn't apply to low end devices.
-        if (SysUtils.isLowEndDevice()) return;
         ChildProcessLauncherHelper.startModerateBindingManagement(context);
     }
 

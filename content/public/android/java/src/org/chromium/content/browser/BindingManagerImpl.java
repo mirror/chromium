@@ -54,6 +54,7 @@ class BindingManagerImpl implements BindingManager {
 
         @Override
         public void onTrimMemory(final int level) {
+android.util.Log.w("boliu", "onTrimMemory " + level);
             ThreadUtils.assertOnUiThread();
             LauncherThread.post(new Runnable() {
                 @Override
@@ -63,13 +64,16 @@ class BindingManagerImpl implements BindingManager {
                         return;
                     }
                     if (level <= TRIM_MEMORY_RUNNING_MODERATE) {
+android.util.Log.w("boliu", "reduce low");
                         reduce(MODERATE_BINDING_LOW_REDUCE_RATIO);
                     } else if (level <= TRIM_MEMORY_RUNNING_LOW) {
+android.util.Log.w("boliu", "reduce high");
                         reduce(MODERATE_BINDING_HIGH_REDUCE_RATIO);
                     } else if (level == TRIM_MEMORY_UI_HIDDEN) {
                         // This will be handled by |mDelayedClearer|.
                         return;
                     } else {
+android.util.Log.w("boliu", "reduce all");
                         removeAllConnections();
                     }
                 }
@@ -118,6 +122,7 @@ class BindingManagerImpl implements BindingManager {
         }
 
         private void addConnectionImpl(ManagedConnection managedConnection) {
+            if (mMaxSize == 0) return;
             // Note that the size of connections is currently fairly small (20).
             // If it became bigger we should consider using an alternate data structure so we don't
             // have to traverse the list every time.
@@ -355,13 +360,15 @@ class BindingManagerImpl implements BindingManager {
 
     @Override
     public void startModerateBindingManagement(Context context, int maxSize) {
+android.util.Log.w("boliu", "startModerateBindingManagement");
         assert LauncherThread.runningOnLauncherThread();
-        if (mIsLowMemoryDevice) return;
+        if (mIsLowMemoryDevice) maxSize = 0;
 
         if (mModerateBindingPool == null) {
             Log.i(TAG, "Moderate binding enabled: maxSize=%d", maxSize);
             mModerateBindingPool = new ModerateBindingPool(maxSize);
             if (context != null) {
+android.util.Log.w("boliu", "startModerateBindingManagement register");
                 // Note that it is safe to call Context.registerComponentCallbacks from a background
                 // thread.
                 context.registerComponentCallbacks(mModerateBindingPool);
