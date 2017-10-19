@@ -42,6 +42,91 @@
     },
     {
       "key": {
+        "uuid": "2af75a0b_c6adedb2",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T22:26:41Z",
+      "side": 1,
+      "message": "HISTORY_KEYWORD, despite its name, may not be a page that has been visited before.  It\u0027s only used for when someone creates a custom search engine that doesn\u0027t do a search (doesn\u0027t have a %s in the URL).  The user can type that keyword and hit enter to go that page.  It\u0027s more like a glorified bookmark.  I don\u0027t know what to call it, but calling a \"URL from history\" is not accurate.",
+      "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a226ef4e_d413331c",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T22:26:41Z",
+      "side": 1,
+      "message": "These are also searches from history, just may not be history from this particular machine.  (It may be a search done when the user is logged in on google.com and does a search, in Chrome or outside.)",
+      "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66bce3e_7946df80",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T22:26:41Z",
+      "side": 1,
+      "message": "This is deprecated.  Do you really want to add a string for it?  Nothing should be returning this type anymore.",
+      "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75bd9ec1_c2c7a35d",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T22:26:41Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf33134_f1d9b1e3",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T22:26:41Z",
+      "side": 1,
+      "message": "This is not used yet, but it\u0027s like a URL from history (just possibly a history from something the user did while logged in on google.com, possibly not using Chrome).",
+      "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78c3f7f8_b42e36c7",
         "filename": "components/omnibox/browser/autocomplete_match_type.h",
         "patchSetId": 2
@@ -87,6 +172,69 @@
       "writtenOn": "2017-10-19T22:00:34Z",
       "side": 1,
       "message": "Add unit test",
+      "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe21122_6647cbc4",
+        "filename": "components/omnibox/browser/omnibox_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T22:26:41Z",
+      "side": 1,
+      "message": "Please add a comment.  For example, is this the type of the new text?  (If so, it should probably be next to the |display_text| parameter.)",
+      "range": {
+        "startLine": 156,
+        "startChar": 67,
+        "endLine": 156,
+        "endChar": 71
+      },
+      "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e986d7dc_0f0cd921",
+        "filename": "components/omnibox_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T22:26:41Z",
+      "side": 1,
+      "message": "It\u0027s odd that sometimes in the desc\u003d field you use present tense (\"matches\") and something you use past tense (\"matched\").",
+      "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f260578_8c178ffe",
+        "filename": "components/omnibox_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T22:26:41Z",
+      "side": 1,
+      "message": "I find this phrasing odd.  It may not be a completion.  Ditto below where you mention \"autocomplete\".  Can you simply eliminate mention of these terms?  I think this sentence for example reads fine without this bit.",
+      "range": {
+        "startLine": 62,
+        "startChar": 141,
+        "endLine": 62,
+        "endChar": 158
+      },
       "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
