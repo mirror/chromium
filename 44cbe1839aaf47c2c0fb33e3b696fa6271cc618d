@@ -65,6 +65,47 @@
     },
     {
       "key": {
+        "uuid": "f5df0578_f932e9d6",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T15:05:23Z",
+      "side": 1,
+      "message": "Ah, he changed this in response to my comment on an earlier patch. Previously Jun did have GetMaxDepth, but I had thought it would be good to have a limit in case of very large nested inputs, due to the recursive nature of checking the depth. I\u0027m guessing that\u0027s not a problem, then?",
+      "parentUuid": "7754a1bd_f2266f67",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 32
+      },
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b04528_cf8ea360",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-19T15:05:23Z",
+      "side": 1,
+      "message": "nit: remove \"non-canonical\"?",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7461d187_510e257d",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 4
