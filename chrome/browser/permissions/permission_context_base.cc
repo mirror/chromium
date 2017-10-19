@@ -125,8 +125,11 @@ void PermissionContextBase::RequestPermission(
   // a decision, or if the origin is under embargo. If so, respect that
   // decision.
   // TODO(raymes): Pass in the RenderFrameHost of the request here.
+  content::RenderFrameHost* render_frame_host =
+      content::RenderFrameHost::FromID(id.render_process_id(), id.render_frame_id());
+  std::string package_name = render_frame_host != nullptr ? render_frame_host->GetPackageName() : "";
   PermissionResult result = GetPermissionStatus(
-      nullptr /* render_frame_host */, requesting_origin, embedding_origin);
+      render_frame_host, requesting_origin, embedding_origin);
 
   if (result.content_setting == CONTENT_SETTING_ALLOW ||
       result.content_setting == CONTENT_SETTING_BLOCK) {

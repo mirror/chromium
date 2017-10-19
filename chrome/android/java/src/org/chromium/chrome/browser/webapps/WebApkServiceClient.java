@@ -17,6 +17,7 @@ import org.chromium.base.Log;
 import org.chromium.chrome.browser.metrics.WebApkUma;
 import org.chromium.chrome.browser.notifications.NotificationBuilderBase;
 import org.chromium.webapk.lib.client.WebApkServiceConnectionManager;
+import org.chromium.webapk.lib.runtime_library.IPermissionRequestCallback;
 import org.chromium.webapk.lib.runtime_library.IWebApkApi;
 
 /**
@@ -104,6 +105,19 @@ public class WebApkServiceClient {
             @Override
             public void useApi(IWebApkApi api) throws RemoteException {
                 api.cancelNotification(platformTag, platformID);
+            }
+        };
+
+        mConnectionManager.connect(
+                ContextUtils.getApplicationContext(), webApkPackage, connectionCallback);
+    }
+
+    public void requestPermission(String webApkPackage, final IPermissionRequestCallback callback,
+            final String[] permissions) {
+        final ApiUseCallback connectionCallback = new ApiUseCallback() {
+            @Override
+            public void useApi(IWebApkApi api) throws RemoteException {
+                api.requestPermission(callback, permissions);
             }
         };
 
