@@ -21,11 +21,11 @@ class NGPhysicalFragment;
 class CORE_EXPORT NGLineBoxFragmentBuilder final
     : public NGContainerFragmentBuilder {
   STACK_ALLOCATED();
-
  public:
   NGLineBoxFragmentBuilder(NGInlineNode,
                            RefPtr<const ComputedStyle>,
-                           NGWritingMode);
+                           NGWritingMode,
+                           TextDirection);
 
   NGLogicalSize Size() const final;
 
@@ -38,6 +38,8 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
 
   void SetMetrics(const NGLineHeightMetrics&);
   const NGLineHeightMetrics& Metrics() const { return metrics_; }
+
+  void SetBlockSize(LayoutUnit);
 
   void AddPositionedFloat(const NGPositionedFloat&);
 
@@ -52,6 +54,7 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
   NGInlineNode node_;
 
   NGLineHeightMetrics metrics_;
+  LayoutUnit block_size_;
   Vector<NGPositionedFloat> positioned_floats_;
 
   RefPtr<NGInlineBreakToken> break_token_;
