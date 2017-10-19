@@ -53,10 +53,10 @@
 
     function justZoomed(event) {
         t2.step(function() {
-            assert_equals(event.clientX, 83);
-            assert_equals(event.clientY, 83);
-            assert_equals(event.pageX, 83);
-            assert_equals(event.pageY, 83);
+            assert_approx_equals(event.clientX, 83.33333, floatPrecision);
+            assert_approx_equals(event.clientY, 83.33333, floatPrecision);
+            assert_approx_equals(event.pageX, 83.33333, floatPrecision);
+            assert_approx_equals(event.pageY, 83.33333, floatPrecision);
             t2.done();
         });
         eventSender.setPageZoomFactor(1.0)
@@ -88,10 +88,10 @@
 
     function zoomedAndScrolled(event) {
         t4.step(function() {
-            assert_equals(event.clientX, 83);
-            assert_equals(event.clientY, 83);
-            assert_equals(event.pageX, 133);
-            assert_equals(event.pageY, 133);
+            assert_approx_equals(event.clientX, 83.33333, floatPrecision);
+            assert_approx_equals(event.clientY, 83.33333, floatPrecision);
+            assert_approx_equals(event.pageX, 133.33333, floatPrecision);
+            assert_approx_equals(event.pageY, 133.33333, floatPrecision);
             t4.done();
         });
         eventSender.setPageZoomFactor(1.0);
