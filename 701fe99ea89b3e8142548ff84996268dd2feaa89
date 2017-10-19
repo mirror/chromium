@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3d7f505_8d18739b",
+        "filename": "chromecast/media/cma/backend/fuchsia/fuchsia_volume_control.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-19T17:20:26Z",
+      "side": 1,
+      "message": "I don\u0027t think we need it right now. Volume needs to be set per stream, so as long as mixing happens in the browser process we don\u0027t need to control system volume here. I\u0027ll probably write a doc discussing this issue in more details.",
+      "parentUuid": "e996e1d5_125df5d1",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 51
+      },
+      "revId": "701fe99ea89b3e8142548ff84996268dd2feaa89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a64a9eaa_9bca90e1",
         "filename": "chromecast/media/cma/backend/fuchsia/mixer_output_stream_fuchsia.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-19T16:42:59Z",
       "side": 1,
       "message": "Sergey -- as a side note, I\u0027ve implemented an addition to the client API that allows you to derive the maximum amount of buffer space available.  \n\nLike min_delay, it represents a delta from CLOCK_MONOTONIC: specifically the last frame I have internal space to accept without blocking or memory-allocation.  This will likely be 500ms or more, so it shouldn\u0027t pose a problem to your relatively just-in-time mixer. Just want you to be aware.",
+      "range": {
+        "startLine": 175,
+        "startChar": 15,
+        "endLine": 175,
+        "endChar": 56
+      },
+      "revId": "701fe99ea89b3e8142548ff84996268dd2feaa89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce394ed_234d7988",
+        "filename": "chromecast/media/cma/backend/fuchsia/mixer_output_stream_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-19T17:20:26Z",
+      "side": 1,
+      "message": "ok. I don\u0027t think we need it right now, but it may become useful in the future.",
+      "parentUuid": "a64a9eaa_9bca90e1",
       "range": {
         "startLine": 175,
         "startChar": 15,
