@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e735f96e_d1a41a74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-19T18:19:28Z",
+      "side": 1,
+      "message": "Please spell out Feature Policy. I\u0027m guessing most people won\u0027t make the connection.",
+      "range": {
+        "startLine": 7,
+        "startChar": 49,
+        "endLine": 7,
+        "endChar": 51
+      },
+      "revId": "b62978f77ff4a9b62b2e867dcd027a426d47c5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81802671_cb3b9d09",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encrypted-media/encrypted-media-default-feature-policy.https.sub.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-19T18:19:28Z",
+      "side": 1,
+      "message": "It would appear that this requires a specific exception message in order for implementations to pass the WPT. I don\u0027t think they are supposed to do that. This appears to be a general issue with the FP tests (and one that existed before this CL). Is there a plan to address this?",
+      "revId": "b62978f77ff4a9b62b2e867dcd027a426d47c5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
