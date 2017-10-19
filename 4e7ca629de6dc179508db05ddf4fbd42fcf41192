@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c43ee4da_15f007cc",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-19T01:42:22Z",
+      "side": 1,
+      "message": "Good point.\n\nActually we don\u0027t need to SetGeolocationDelegate at all. It is documented as optional and a default GeolocationDelegate is then applied.\n\nSo I have removed the call from Chrome and Cast browser_main files.",
+      "parentUuid": "8d9f5bd0_0d044b33",
+      "range": {
+        "startLine": 297,
+        "startChar": 20,
+        "endLine": 297,
+        "endChar": 21
+      },
+      "revId": "4e7ca629de6dc179508db05ddf4fbd42fcf41192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2345ebb_4ceb8379",
         "filename": "chromecast/browser/cast_browser_main_parts.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "4e7ca629de6dc179508db05ddf4fbd42fcf41192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf6b239_631e8aa4",
+        "filename": "chromecast/browser/cast_browser_main_parts.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-19T01:42:22Z",
+      "side": 1,
+      "message": "Removed per other comment",
+      "parentUuid": "e2345ebb_4ceb8379",
+      "revId": "4e7ca629de6dc179508db05ddf4fbd42fcf41192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
