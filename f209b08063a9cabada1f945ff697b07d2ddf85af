@@ -105,6 +105,24 @@
       "revId": "f209b08063a9cabada1f945ff697b07d2ddf85af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a69f2f_84c21ab8",
+        "filename": "tools/perf/conditionally_execute",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T15:15:10Z",
+      "side": 1,
+      "message": "Getting rid of this one was the main motivation for this CL, actually: it\u0027s the only hook that consistently generates output, even though it\u0027s not doing anything.\n\nThe best solution I could think of is to set the logger level to info if it\u0027s running on the bots... but I\u0027m not sure if there\u0027s a way to detect that?",
+      "parentUuid": "db32f2b8_5c681280",
+      "revId": "f209b08063a9cabada1f945ff697b07d2ddf85af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
