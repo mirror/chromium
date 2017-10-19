@@ -29,6 +29,7 @@ SaveCardBubbleView* CreateSaveCardBubbleView(
             location_bar->GetSaveCreditCardBubblePoint()));
     autofill::SaveCardBubbleViews* bubble =
         new SaveCardBubbleViews(nullptr, anchor, web_contents, controller);
+    bubble->set_parent_window(web_contents->GetNativeView());
     KeepBubbleAnchored(bubble, location_bar->save_credit_card_decoration());
     bubble->Show(user_gesture ? autofill::SaveCardBubbleViews::USER_GESTURE
                               : autofill::SaveCardBubbleViews::AUTOMATIC);
