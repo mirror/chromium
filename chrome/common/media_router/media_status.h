@@ -18,6 +18,23 @@ struct HangoutsMediaStatusExtraData {
   bool local_present = false;
 };
 
+// TODO(zhaobin): Use the Mojo enum directly after we use mojo to implement the
+// API for all MRPs.
+// Possible intellicast option value for Media Remoting.
+enum class MediaRemotingPolicy {
+  // Never activates Media Remoting
+  NEVER = 0,
+  // Automatically decides when to activate Media Remoting.
+  AUTO,
+  // Always activates Media Remoting.
+  ALWAYS
+};
+
+struct MirroringStatusExtraData {
+  // MediaRemotingPolicy value for Media Remoting.
+  MediaRemotingPolicy policy = MediaRemotingPolicy::AUTO;
+};
+
 // Represents the current state of a media content.
 struct MediaStatus {
  public:
@@ -68,6 +85,9 @@ struct MediaStatus {
 
   // Only set for Hangouts routes.
   base::Optional<HangoutsMediaStatusExtraData> hangouts_extra_data;
+
+  // Only set for Cast routes.
+  base::Optional<MirroringStatusExtraData> mirroring_extra_data;
 };
 
 }  // namespace media_router

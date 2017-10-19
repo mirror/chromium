@@ -14,6 +14,42 @@
 namespace mojo {
 
 template <>
+struct EnumTraits<media_router::mojom::MediaRemotingPolicy,
+                  media_router::MediaRemotingPolicy> {
+  static media_router::mojom::MediaRemotingPolicy ToMojom(
+      media_router::MediaRemotingPolicy intellicast_option) {
+    switch (intellicast_option) {
+      case media_router::MediaRemotingPolicy::NEVER:
+        return media_router::mojom::MediaRemotingPolicy::NEVER;
+      case media_router::MediaRemotingPolicy::AUTO:
+        return media_router::mojom::MediaRemotingPolicy::AUTO;
+      case media_router::MediaRemotingPolicy::ALWAYS:
+        return media_router::mojom::MediaRemotingPolicy::ALWAYS;
+    }
+    NOTREACHED() << "Unknown intellicast option"
+                 << static_cast<int>(intellicast_option);
+    return media_router::mojom::MediaRemotingPolicy::AUTO;
+  }
+
+  static bool FromMojom(media_router::mojom::MediaRemotingPolicy input,
+                        media_router::MediaRemotingPolicy* output) {
+    switch (input) {
+      case media_router::mojom::MediaRemotingPolicy::NEVER:
+        *output = media_router::MediaRemotingPolicy::NEVER;
+        return true;
+      case media_router::mojom::MediaRemotingPolicy::AUTO:
+        *output = media_router::MediaRemotingPolicy::AUTO;
+        return true;
+      case media_router::mojom::MediaRemotingPolicy::ALWAYS:
+        *output = media_router::MediaRemotingPolicy::ALWAYS;
+        return true;
+    }
+    NOTREACHED() << "Unknown intellicast option" << static_cast<int>(input);
+    return false;
+  }
+};
+
+template <>
 struct EnumTraits<media_router::mojom::MediaStatus::PlayState,
                   media_router::MediaStatus::PlayState> {
   static media_router::mojom::MediaStatus::PlayState ToMojom(
@@ -104,6 +140,11 @@ struct StructTraits<media_router::mojom::MediaStatusDataView,
   hangouts_extra_data(const media_router::MediaStatus& status) {
     return status.hangouts_extra_data;
   }
+
+  static const base::Optional<media_router::MirroringStatusExtraData>&
+  mirroring_extra_data(const media_router::MediaStatus& status) {
+    return status.mirroring_extra_data;
+  }
 };
 
 template <>
@@ -116,6 +157,18 @@ struct StructTraits<media_router::mojom::HangoutsMediaStatusExtraDataDataView,
   static bool local_present(
       const media_router::HangoutsMediaStatusExtraData& data) {
     return data.local_present;
+  }
+};
+
+template <>
+struct StructTraits<media_router::mojom::MirroringStatusExtraDataDataView,
+                    media_router::MirroringStatusExtraData> {
+  static bool Read(media_router::mojom::MirroringStatusExtraDataDataView data,
+                   media_router::MirroringStatusExtraData* out);
+
+  static media_router::MediaRemotingPolicy policy(
+      const media_router::MirroringStatusExtraData& data) {
+    return data.policy;
   }
 };
 

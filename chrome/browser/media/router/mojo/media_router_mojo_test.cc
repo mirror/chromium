@@ -131,7 +131,7 @@ void MockEventPageRequestManager::RunOrDefer(
 }
 
 MockMediaController::MockMediaController()
-    : binding_(this), hangouts_binding_(this) {}
+    : binding_(this), hangouts_binding_(this), mirroring_binding_(this) {}
 
 MockMediaController::~MockMediaController() {}
 

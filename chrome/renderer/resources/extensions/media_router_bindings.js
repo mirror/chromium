@@ -295,6 +295,7 @@ define('media_router_bindings', [
       InterfacePtrController: bindings.InterfacePtrController,
       InterfaceRequest: bindings.InterfaceRequest,
       MediaController: mediaControllerMojom.MediaController,
+      MediaRemotingPolicy: mediaStatusMojom.MediaRemotingPolicy,
       MediaStatus: mediaStatusMojom.MediaStatus,
       MediaStatusObserverPtr: mediaStatusMojom.MediaStatusObserverPtr,
       MirrorServiceRemoter: remotingMojom.MirrorServiceRemoter,

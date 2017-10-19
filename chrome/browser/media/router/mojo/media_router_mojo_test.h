@@ -214,7 +214,8 @@ class MockEventPageRequestManager : public EventPageRequestManager {
 };
 
 class MockMediaController : public mojom::MediaController,
-                            mojom::HangoutsMediaRouteController {
+                            mojom::HangoutsMediaRouteController,
+                            mojom::MirroringMediaRouteController {
  public:
   MockMediaController();
   ~MockMediaController();
@@ -235,10 +236,18 @@ class MockMediaController : public mojom::MediaController,
   };
   MOCK_METHOD0(ConnectHangoutsMediaRouteController, void());
   MOCK_METHOD1(SetLocalPresent, void(bool local_present));
+  void ConnectMirroringMediaRouteController(
+      mojom::MirroringMediaRouteControllerRequest controller_request) override {
+    mirroring_binding_.Bind(std::move(controller_request));
+    ConnectMirroringMediaRouteController();
+  };
+  MOCK_METHOD0(ConnectMirroringMediaRouteController, void());
+  MOCK_METHOD1(SetMediaRemotingPolicy, void(MediaRemotingPolicy option));
 
  private:
   mojo::Binding<mojom::MediaController> binding_;
   mojo::Binding<mojom::HangoutsMediaRouteController> hangouts_binding_;
+  mojo::Binding<mojom::MirroringMediaRouteController> mirroring_binding_;
 };
 
 class MockMediaRouteController : public MediaRouteController {
