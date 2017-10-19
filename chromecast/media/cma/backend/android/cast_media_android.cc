@@ -12,10 +12,6 @@
 #include "chromecast/public/video_plane.h"
 #include "chromecast/public/volume_control.h"
 
-#if BUILDFLAG(ENABLE_ATHINGS_LOOPBACK)
-#include "chromecast/media/cma/backend/android/loopback_audio_manager.h"
-#endif  // BUILDFLAG(ENABLE_ATHINGS_LOOPBACK)
-
 namespace chromecast {
 namespace media {
 namespace {
@@ -96,16 +92,14 @@ bool CastMediaShlib::SupportsMediaClockRateChange() {
   return false;
 }
 
-#if BUILDFLAG(ENABLE_ATHINGS_LOOPBACK)
+#if 0  // disable since loopback is implemented in chromecast/internal.
 void CastMediaShlib::AddLoopbackAudioObserver(LoopbackAudioObserver* observer) {
   LOG(INFO) << __func__ << ":";
-  LoopbackAudioManager::Get()->AddLoopbackAudioObserver(observer);
 }
 
 void CastMediaShlib::RemoveLoopbackAudioObserver(
     LoopbackAudioObserver* observer) {
   LOG(INFO) << __func__ << ":";
-  LoopbackAudioManager::Get()->RemoveLoopbackAudioObserver(observer);
 }
 #endif
 
