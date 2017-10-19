@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "482c543d_694d89b7",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-10-19T15:08:14Z",
+      "side": 1,
+      "message": "nit: string -\u003e a stringview or a const char*",
+      "revId": "5260f2eb1d7087943ec6c49478b915058ef86882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd06845_7c5a69d4",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-10-19T15:08:14Z",
+      "side": 1,
+      "message": "nit: change returned type for const char* (no need for string creation)",
+      "revId": "5260f2eb1d7087943ec6c49478b915058ef86882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa5133e_849a8263",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-10-19T15:08:14Z",
+      "side": 1,
+      "message": "nit: change returned type for const char* (no need for string creation)",
+      "revId": "5260f2eb1d7087943ec6c49478b915058ef86882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
