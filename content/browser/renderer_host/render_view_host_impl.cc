@@ -440,11 +440,11 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
     NOTREACHED();
   }
 
-  const std::string touch_enabled_switch =
+  std::string touch_enabled_switch =
       command_line.HasSwitch(switches::kTouchEventFeatureDetection)
           ? command_line.GetSwitchValueASCII(
                 switches::kTouchEventFeatureDetection)
-          : switches::kTouchEventFeatureDetectionAuto;
+          : switches::kTouchEventFeatureDetectionDisabled;
   prefs.touch_event_feature_detection_enabled =
       (touch_enabled_switch == switches::kTouchEventFeatureDetectionAuto)
           ? (ui::GetTouchScreensAvailability() ==
@@ -452,6 +452,10 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
           : (touch_enabled_switch.empty() ||
              touch_enabled_switch ==
                  switches::kTouchEventFeatureDetectionEnabled);
+#if defined(OS_ANDROID)
+  prefs.touch_event_feature_detection_enabled = true;
+#endif  // defined(OS_ANDROID)
+
   std::tie(prefs.available_pointer_types, prefs.available_hover_types) =
       ui::GetAvailablePointerAndHoverTypes();
   prefs.primary_pointer_type =
