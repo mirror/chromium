@@ -16,6 +16,24 @@
       "revId": "226637c2aaa32c52d78ba3d67e95d1d480f43433",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042b074f_c3fd88a3",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-19T00:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c51089e_95341788",
+      "revId": "226637c2aaa32c52d78ba3d67e95d1d480f43433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
