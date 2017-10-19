@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "c4da689e_92a07b84",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-10-19T20:43:43Z",
+      "side": 1,
+      "message": "I find it a bit weird to do\n\nif (isVrIntent) { return dispatchVrIntent() }\n\nassert !isVrIntent;\n\nIf someone changes the order, they shouldn\u0027t do it without reading the comment.",
+      "parentUuid": "ed969357_26181125",
+      "range": {
+        "startLine": 223,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 9
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e37b075_38b10c9f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
         "patchSetId": 3
