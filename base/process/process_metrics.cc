@@ -75,7 +75,10 @@ std::unique_ptr<Value> SystemMetrics::ToValue() const {
 
   res->SetInteger("committed_memory", static_cast<int>(committed_memory_));
 #if defined(OS_LINUX) || defined(OS_ANDROID)
-  res->Set("meminfo", memory_info_.ToValue());
+  std::unique_ptr<DictionaryValue> meminfo = memory_info_.ToValue();
+  std::unique_ptr<DictionaryValue> vmstat = vmstat_info_.ToValue();
+  meminfo->MergeDictionary(vmstat.get());
+  res->Set("meminfo", std::move(meminfo));
   res->Set("diskinfo", disk_info_.ToValue());
 #endif
 #if defined(OS_CHROMEOS)
