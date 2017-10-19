@@ -16,6 +16,24 @@
       "revId": "daeb3657fe9e9145d1d3291a96d8d52b53271135",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a3fe77_1cab3aff",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T18:36:20Z",
+      "side": 0,
+      "message": "There\u0027s no style guide guidance on this, but https://chromium-cpp.appspot.com/ says it\u0027s allowed (Non-Static Class Member Initializers) and the linked discussion thread starts off with \"Allow and encourage use of in-class member initializers\".\n\nI\u0027m moving them out of the constructor in phases. They\u0027ll mostly be gone soon. |client_| has to stay, and not sure about |mouse_down_state_|.",
+      "parentUuid": "3ddc50ec_0015466c",
+      "revId": "daeb3657fe9e9145d1d3291a96d8d52b53271135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
