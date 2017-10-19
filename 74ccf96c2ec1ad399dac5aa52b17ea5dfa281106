@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61d39c75_b2b16e2f",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1411,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T10:24:35Z",
+      "side": 1,
+      "message": "nit: because this is \"user\" facing, maybe call it \"User Activation v2\" and leave the details for the description?",
+      "revId": "74ccf96c2ec1ad399dac5aa52b17ea5dfa281106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a12741_0c287eb4",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T10:24:35Z",
+      "side": 1,
+      "message": "nit: maybe open a bug to track this?",
+      "revId": "74ccf96c2ec1ad399dac5aa52b17ea5dfa281106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

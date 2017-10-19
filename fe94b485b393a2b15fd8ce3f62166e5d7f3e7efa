@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "14444727_6a97bee4",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1172,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T10:24:35Z",
+      "side": 1,
+      "message": "Google C++ coding style (https://google.github.io/styleguide/cppguide.html#Casting) says \"when needed\". Usually downward casting isn\u0027t \"needed\". My main concern is that it makes things harder to read.",
+      "parentUuid": "c53578fd_7a14c7b7",
+      "revId": "fe94b485b393a2b15fd8ce3f62166e5d7f3e7efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7aa9248_1e4d07ce",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
         "patchSetId": 9
