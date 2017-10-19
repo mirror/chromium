@@ -984,7 +984,9 @@ FloatSize LocalDOMWindow::GetViewportSize(
   return GetFrame()->IsMainFrame() &&
                  !page->GetSettings().GetInertVisualViewport()
              ? FloatSize(page->GetVisualViewport().VisibleRect().Size())
-             : FloatSize(view->VisibleContentRect(scrollbar_inclusion).Size());
+             : FloatSize(view->LayoutViewportScrollableArea()
+                             ->VisibleContentRect(scrollbar_inclusion)
+                             .Size());
 }
 
 int LocalDOMWindow::innerHeight() const {
