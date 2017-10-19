@@ -16,6 +16,24 @@
       "revId": "f7c2188634821962e29109d0cc9ccfecef98b648",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5fa0311_6262113a",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1152319
+      },
+      "writtenOn": "2017-10-19T16:11:15Z",
+      "side": 1,
+      "message": "For system token db loading we may want that (the tradeoffs are beyond my knowledge), but that\u0027s an unrelated CL.\n\nFor this CL: retrying is not required for TpmCanAttemptOwnership, since it\u0027s a best-effort activity to resume initialization early if it was interrupted on the 1st boot. If not resumed here (though preferable), will still be resumed when a user logs in, or on the next boot.",
+      "parentUuid": "c90ac9c8_e1513a1b",
+      "revId": "f7c2188634821962e29109d0cc9ccfecef98b648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
