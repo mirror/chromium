@@ -4,12 +4,14 @@
 
 module mojo.common.mojom;
 
-[Native]
-struct Time;
+struct Time {
+  TimeDelta origin_offset;
+};
 
 struct TimeDelta {
   int64 microseconds;
 };
 
-[Native]
-struct TimeTicks;
+struct TimeTicks {
+  TimeDelta origin_offset;
+};
