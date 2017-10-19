@@ -1,0 +1,260 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00f0a577_bee06d78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/FeedbackCollector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-19T19:11:02Z",
+      "side": 1,
+      "message": "Nit: Could you add a @see #getLogs() just so it\u0027s clearer that we need to care about both?",
+      "revId": "b4f8906f142c3dc64764c1ff194b9e494ea5db9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bcd727c_6445141a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/FeedbackCollector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-19T19:11:02Z",
+      "side": 1,
+      "message": "Nit: This ended up as a oneliner now. Do you need the curlies and the semicolon?",
+      "range": {
+        "startLine": 140,
+        "startChar": 94,
+        "endLine": 140,
+        "endChar": 97
+      },
+      "revId": "b4f8906f142c3dc64764c1ff194b9e494ea5db9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf7b0a4_5b210817",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/FeedbackCollector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-19T19:11:02Z",
+      "side": 1,
+      "message": "Nit: Could you add a @see #getBundle() just so it\u0027s clearer that we need to care about both?",
+      "revId": "b4f8906f142c3dc64764c1ff194b9e494ea5db9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3cf196_ecddd940",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/FeedbackCollector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-19T19:11:02Z",
+      "side": 1,
+      "message": "Nit: The rest of this class is so well documented. Could you add a oneliner comment saying that if the timeout hasn\u0027t expired yet, we we\u0027ll wait until all async sources are ready?",
+      "revId": "b4f8906f142c3dc64764c1ff194b9e494ea5db9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a963c8a_e91108d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/FeedbackReporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-19T19:11:02Z",
+      "side": 1,
+      "message": "Nit: The format of this looks a bit off. Could we see if it\u0027s possible to temporarily turn on and off clang-format for this file? Also, see comment about FeedbackSource for filing a bug. Probably want to include this example too?",
+      "revId": "b4f8906f142c3dc64764c1ff194b9e494ea5db9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26be245b_4bef1d3c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/FeedbackSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-19T19:11:02Z",
+      "side": 1,
+      "message": "Nit: This formatting looks a little bit interesting. Could you see if temporarily disabling clang-format would be possible for these lines?\nAlso, could you file a bug with clang-format? The guide to do so is here: https://chromium.googlesource.com/chromium/src/+/master/docs/clang_format.md#reporting-problems\n\nI think they want expected format, and what you got (i.e. the current state of the CL).",
+      "revId": "b4f8906f142c3dc64764c1ff194b9e494ea5db9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f1d547_0f5a27a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/FeedbackSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-19T19:11:02Z",
+      "side": 1,
+      "message": "Nit: Could we just return null nowadays?",
+      "revId": "b4f8906f142c3dc64764c1ff194b9e494ea5db9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0d8d70_8f1053c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/ScreenshotTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-19T19:11:02Z",
+      "side": 1,
+      "message": "Nit: Does this still need to be public?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 7
+      },
+      "revId": "b4f8906f142c3dc64764c1ff194b9e494ea5db9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bdb6bba_f28423ac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/ScreenshotTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-19T19:11:02Z",
+      "side": 1,
+      "message": "Nit: This comment isn\u0027t super helpful. If you want to keep it, would you want to say something about the lifetime requirements of the Activity?",
+      "revId": "b4f8906f142c3dc64764c1ff194b9e494ea5db9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f4d435_09e12e26",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/ScreenshotTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-19T19:11:02Z",
+      "side": 1,
+      "message": "Is this supposed to store |callback| to mCallback?",
+      "revId": "b4f8906f142c3dc64764c1ff194b9e494ea5db9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebbc589e_197397c5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/ScreenshotTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-19T19:11:02Z",
+      "side": 1,
+      "message": "Nit: Could you add a short comment above this to just say that since neither the compositor, nor the Android view screenshot was kicked off, we\u0027re admitting defeat and giving |null| back?",
+      "revId": "b4f8906f142c3dc64764c1ff194b9e494ea5db9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16228754_97dbaa38",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/ScreenshotTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-19T19:11:02Z",
+      "side": 1,
+      "message": "Nit: I\u0027m not super sure where, but since we\u0027re getting this callback and setting mDone and mBitmap later based off of this, could you write somewhere about the threading guarantee of the invocation of nativeGrabWindowSnapshotAsync?",
+      "revId": "b4f8906f142c3dc64764c1ff194b9e494ea5db9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23087ff_53b84c9e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/ScreenshotTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-19T19:11:02Z",
+      "side": 1,
+      "message": "Nit: Could shouldTakeCompositorScreenshot just take an Activity instead, and then move this instanceof check within there? I mean, the Activity being of type ChromeActivity seems very much in line with the decision making of whether we should take a compositor screenshot.\n\nOr is the idea that that would make it weird and feel unsafe to cast the |activity| to ChromeActivity in the invocation of nativeGrabWindowSnapshotAsync then?",
+      "revId": "b4f8906f142c3dc64764c1ff194b9e494ea5db9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36665fa5_c0eb7e9b",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/feedback/FeedbackCollectorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-19T19:11:02Z",
+      "side": 1,
+      "message": "Nit: Isn\u0027t this you? There are a few other tests too where I don\u0027t think we need this, since it\u0027s not an anonymous inner class usage.",
+      "range": {
+        "startLine": 327,
+        "startChar": 16,
+        "endLine": 327,
+        "endChar": 38
+      },
+      "revId": "b4f8906f142c3dc64764c1ff194b9e494ea5db9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
