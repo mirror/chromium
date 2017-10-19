@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5049fd13_ab40e376",
+        "filename": "extensions/browser/api/document_scan/document_scan_interface_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-19T03:00:47Z",
+      "side": 1,
+      "message": "you could switch OnListScannersResultReceived and OnScanCompleted away from mocks, too :)\n\nand maybe avouid RunUntildle by passing |Scan| a callback that quits a RunLoop.",
+      "revId": "6c0d2fa9d9e016c70daf89febe6ef621d3f1f9e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
