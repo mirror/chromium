@@ -94,7 +94,7 @@ enum SettingsPageActiveOnRebootRequiredHistogramValue {
 base::FilePath VerifyAndRenameDownloadedCleaner(
     base::FilePath downloaded_path,
     ChromeCleanerFetchStatus fetch_status) {
-  base::ThreadRestrictions::AssertIOAllowed();
+  base::AssertBlockingAllowed();
 
   if (downloaded_path.empty() || !base::PathExists(downloaded_path))
     return base::FilePath();
