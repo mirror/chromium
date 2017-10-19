@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c01fe9e_f652ff72",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-19T00:25:43Z",
+      "side": 1,
+      "message": "I don\u0027t think we want this? --secondary-ui-md should be cutting page_info_bubble_controller.mm out of the picture, so it\u0027s not good for a regression test for a fix there.\n\npage_info_bubble_controller_unittest.mm may be the place to put a test for the cocoa bubble.",
+      "revId": "da93d154a1d5b11a17baa91a738e7ea770ddc176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85cdba9_21d4f5df",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-19T00:25:43Z",
+      "side": 1,
+      "message": "I wonder if it\u0027s a bug that about:blank says \"your connection to this site is not secure\"... this should be fine. So long as it doesn\u0027t show \"You\u0027re showing a secure Google Chrome page\" since that has a really simple layout",
+      "range": {
+        "startLine": 42,
+        "startChar": 47,
+        "endLine": 42,
+        "endChar": 66
+      },
+      "revId": "da93d154a1d5b11a17baa91a738e7ea770ddc176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
