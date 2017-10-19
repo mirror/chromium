@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2caaee66_36368793",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlButtonPanelElement.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T13:45:51Z",
+      "side": 1,
+      "message": "Can you add a class comment explaining what this class is meant to do?",
+      "revId": "23deb20453803d398aa57cf70fed9bb13ea3f4eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4529ef_014ee030",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlDivElement.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T13:45:51Z",
+      "side": 1,
+      "message": "nit: no need to do this as it is done in MediaControlElementBase.h and it\u0027s used for the override only.",
+      "revId": "23deb20453803d398aa57cf70fed9bb13ea3f4eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5567598c_16aae7ee",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T13:45:51Z",
+      "side": 1,
+      "message": "Maybe `const Element\u0026` instead of using a pointer? or do we sometimes pass `nullptr` here?",
+      "revId": "23deb20453803d398aa57cf70fed9bb13ea3f4eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518d7b5c_ef990340",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T13:45:51Z",
+      "side": 1,
+      "message": "Would it make sense to have the default passed as a `const WebSize\u0026` instead of two int?",
+      "revId": "23deb20453803d398aa57cf70fed9bb13ea3f4eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cedf22b9_e5a38df0",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-19T13:45:51Z",
+      "side": 1,
+      "message": "Assuming you use a WebSize for the default value, it could look like:\n```\nreturn MediaControlsElementHelper::GetSizeOrDefault(this, HasOverflowButton() ? WebSize(36, 36) : WebSize(0, 0));\n```\n\nThough, it doesn\u0027t change much apart from using ternary operators and we all know they are the best!",
+      "revId": "23deb20453803d398aa57cf70fed9bb13ea3f4eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
