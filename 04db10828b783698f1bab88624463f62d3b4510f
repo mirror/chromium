@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "887dae3b_c16dacd7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-19T14:26:38Z",
+      "side": 1,
+      "message": "nit: Please remove trailing whitespace.",
+      "range": {
+        "startLine": 10,
+        "startChar": 60,
+        "endLine": 10,
+        "endChar": 61
+      },
+      "revId": "04db10828b783698f1bab88624463f62d3b4510f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ababd9_ad3f1489",
+        "filename": "components/password_manager/core/browser/resources/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-19T14:26:38Z",
+      "side": 1,
+      "message": "Please add yourself to OWNERS if you don\u0027t mind, since you are adding this feature to iOS and are a good future point of contact for it.",
+      "revId": "04db10828b783698f1bab88624463f62d3b4510f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
