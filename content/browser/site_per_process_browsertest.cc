@@ -736,10 +736,10 @@ class SitePerProcessFeaturePolicyBrowserTest
         "FeaturePolicy,FeaturePolicyExperimentalFeatures");
   }
 
-  ParsedFeaturePolicyHeader CreateFPHeader(
+  blink::ParsedFeaturePolicyHeader CreateFPHeader(
       blink::WebFeaturePolicyFeature feature,
       const std::vector<GURL>& origins) {
-    ParsedFeaturePolicyHeader result(1);
+    blink::ParsedFeaturePolicyHeader result(1);
     result[0].feature = feature;
     result[0].matches_all_origins = false;
     DCHECK(!origins.empty());
@@ -748,9 +748,9 @@ class SitePerProcessFeaturePolicyBrowserTest
     return result;
   }
 
-  ParsedFeaturePolicyHeader CreateFPHeaderMatchesAll(
+  blink::ParsedFeaturePolicyHeader CreateFPHeaderMatchesAll(
       blink::WebFeaturePolicyFeature feature) {
-    ParsedFeaturePolicyHeader result(1);
+    blink::ParsedFeaturePolicyHeader result(1);
     result[0].feature = feature;
     result[0].matches_all_origins = true;
     return result;
@@ -10676,7 +10676,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessFeaturePolicyBrowserTest,
 
   // Validate that the effective container policy contains a single non-unique
   // origin.
-  const ParsedFeaturePolicyHeader initial_effective_policy =
+  const blink::ParsedFeaturePolicyHeader initial_effective_policy =
       root->child_at(2)->effective_frame_policy().container_policy;
   EXPECT_EQ(1UL, initial_effective_policy[0].origins.size());
   EXPECT_FALSE(initial_effective_policy[0].origins[0].unique());
@@ -10685,9 +10685,9 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessFeaturePolicyBrowserTest,
   // contain a unique origin, but effective policy should remain unchanged.
   EXPECT_TRUE(ExecuteScript(
       root, "document.getElementById('child-2').setAttribute('sandbox','')"));
-  const ParsedFeaturePolicyHeader updated_effective_policy =
+  const blink::ParsedFeaturePolicyHeader updated_effective_policy =
       root->child_at(2)->effective_frame_policy().container_policy;
-  const ParsedFeaturePolicyHeader updated_pending_policy =
+  const blink::ParsedFeaturePolicyHeader updated_pending_policy =
       root->child_at(2)->pending_frame_policy().container_policy;
   EXPECT_EQ(1UL, updated_effective_policy[0].origins.size());
   EXPECT_FALSE(updated_effective_policy[0].origins[0].unique());
@@ -10696,7 +10696,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessFeaturePolicyBrowserTest,
 
   // Navigate the frame; pending policy should now be committed.
   NavigateFrameToURL(root->child_at(2), nav_url);
-  const ParsedFeaturePolicyHeader final_effective_policy =
+  const blink::ParsedFeaturePolicyHeader final_effective_policy =
       root->child_at(2)->effective_frame_policy().container_policy;
   EXPECT_EQ(1UL, final_effective_policy[0].origins.size());
   EXPECT_TRUE(final_effective_policy[0].origins[0].unique());
