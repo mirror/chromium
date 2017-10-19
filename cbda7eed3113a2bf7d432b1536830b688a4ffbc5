@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65c55599_6ba2aa09",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-19T06:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1801f640_556987b9",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30ab23e5_559ff365",
         "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f60b784_380d3c00",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-19T06:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30ab23e5_559ff365",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "087bf0d1_24414ec3",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-19T06:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6d02007_635ee678",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a393aa23_99b8f0d6",
         "filename": "ash/frame/default_header_painter.h",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d3115de9_087ecbec",
+        "filename": "ash/frame/default_header_painter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-19T06:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a393aa23_99b8f0d6",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef547b7a_6f6c5a93",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-18T01:13:21Z",
       "side": 1,
       "message": "should this check |hit_test| like the thing below? Otherwise |hit_test| is unused for the early return and this check should come first in the method.",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49275467_ddb3e685",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-19T06:03:33Z",
+      "side": 1,
+      "message": "Moved it down.\n\nI think this is fine. If we are in the button container, we don\u0027t care what ash thinks of our point (it would return CAPTION).",
+      "parentUuid": "ef547b7a_6f6c5a93",
       "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "427136a6_52ead7f6",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-19T06:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83fd3457_22d9ed1b",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0df50f5d_d702c4d6",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 5
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "46767bca_c26d758a",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-19T06:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0df50f5d_d702c4d6",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bb1f447_95cd2993",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 5
@@ -132,6 +258,30 @@
       "writtenOn": "2017-10-18T01:13:21Z",
       "side": 1,
       "message": "Do these urls matter? (does GURL() break the test?). Maybe\n\nconst GURL dummy_url(\"http://example.org/\");",
+      "range": {
+        "startLine": 456,
+        "startChar": 25,
+        "endLine": 456,
+        "endChar": 53
+      },
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37867f60_d4f6013b",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-19T06:03:33Z",
+      "side": 1,
+      "message": "App parsing fails with a null URL. I removed the scope below.",
+      "parentUuid": "4bb1f447_95cd2993",
       "range": {
         "startLine": 456,
         "startChar": 25,
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "6e8b8170_2f3fbb04",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-19T06:03:33Z",
+      "side": 1,
+      "message": "It can for ash, might need to change back for other platforms. We\u0027ll see I suppose.",
+      "parentUuid": "606c4f23_5c25298b",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abbb64eb_17129a21",
         "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
         "patchSetId": 5
@@ -172,6 +340,24 @@
       "writtenOn": "2017-10-18T01:13:21Z",
       "side": 1,
       "message": "how much of this will actually get used?\n\nWould it be better to make a dummy model that shows nothing rather than adding a coupling to AppMenuModel which could do some really bizarre/unwanted stuff.",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0aeeebe_d852a04b",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-19T06:03:33Z",
+      "side": 1,
+      "message": "I\u0027m planning to subclass AppMenuModel to do my bidding in fact. We need some of the weirder parts of the AppMenu like the zoom buttons and the extension icons. For now, it\u0027ll do some weird things, but will be a good representation of intended functionality.\n\nAlso, next CL to do a more real menu is more or less ready for a look: https://chromium-review.googlesource.com/c/chromium/src/+/721226",
+      "parentUuid": "abbb64eb_17129a21",
       "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "0933f5bb_e0232b79",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-19T06:03:33Z",
+      "side": 1,
+      "message": "Uhhhh. Looking at the AppMenuButton I cribbed this from, it seems to just hold the menu forever? I can change the AppMenu API to do this if you think it\u0027s worth it. There\u0027s already an AppMenuObserver class, but it\u0027s only ever used in tests.",
+      "parentUuid": "2b3db088_efead080",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aee5c78b_578a7217",
         "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
         "patchSetId": 5
@@ -206,6 +410,24 @@
       "writtenOn": "2017-10-18T01:13:21Z",
       "side": 1,
       "message": "does this need to be unique_ptr? (can it be a value member, initialized once in the constructor?)\n\nOtherwise it should be reset when the menu is closed too.",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09888f0a_8e76a461",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-19T06:03:33Z",
+      "side": 1,
+      "message": "The constructor does a bunch of work deciding what the menu should and shouldn\u0027t construct which can change between Shows. I\u0027m kind of tempted to split that part of the constructor into a separate call so it\u0027s more obvious..",
+      "parentUuid": "aee5c78b_578a7217",
       "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -226,6 +448,24 @@
       "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4432299d_c332771e",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-19T06:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11f04c3f_c8c69997",
+      "revId": "cbda7eed3113a2bf7d432b1536830b688a4ffbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
