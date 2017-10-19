@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "f5a4ab50_017a3c6c",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-19T21:38:03Z",
+      "side": 1,
+      "message": "Here we need to:\n1. Implement this design for Windows / Linux and Chrome OS\n2. Implement my design for Mac OS, Chrome on Mac OS does not use aura::Window at all.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 70
+      },
+      "revId": "5454cbc5ff944d16cbf97367c99a884e147bdcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf8b3cf_eea46a3d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-19T21:38:03Z",
+      "side": 1,
+      "message": "Note, this is only several examples of the event-\u003eIsReserved() check. We need to do this check in bunch of components.",
+      "range": {
+        "startLine": 254,
+        "startChar": 76,
+        "endLine": 254,
+        "endChar": 97
+      },
+      "revId": "5454cbc5ff944d16cbf97367c99a884e147bdcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec75122d_ca9d2225",
         "filename": "ui/aura/window.cc",
         "patchSetId": 4
