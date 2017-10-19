@@ -37,7 +37,10 @@ class DiceHeaderHelper : public SigninHeaderHelper {
   // the header must not be added.
   // |sync_account_id| is not empty if Sync is currently enabled for this
   // account.
-  std::string BuildRequestHeader(const std::string& sync_account_id);
+  // |show_signout_confirmation| is true if Gaia must display the signout
+  // confirmation dialog.
+  std::string BuildRequestHeader(const std::string& sync_account_id,
+                                 bool show_signout_confirmation);
 
  private:
   // SigninHeaderHelper implementation:
