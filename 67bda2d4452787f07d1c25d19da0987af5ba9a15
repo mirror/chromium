@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b3247f96_22810e6e",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-19T23:27:43Z",
+      "side": 1,
+      "message": "Actually, that is a fatal error. BrowserGpuChannelHostFactory already does the retry, so if we get null, it\u0027s fatal.",
+      "revId": "67bda2d4452787f07d1c25d19da0987af5ba9a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3850516_d69a5014",
         "filename": "content/browser/gpu/gpu_process_host.cc",
         "patchSetId": 8
