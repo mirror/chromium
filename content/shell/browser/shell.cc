@@ -190,6 +190,10 @@ Shell* Shell::CreateNewWindow(BrowserContext* browser_context,
                               const scoped_refptr<SiteInstance>& site_instance,
                               const gfx::Size& initial_size) {
   WebContents::CreateParams create_params(browser_context, site_instance);
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kForcePresentationReceiverForTesting)) {
+    create_params.is_presentation_receiver = true;
+  }
   create_params.initial_size = AdjustWindowSize(initial_size);
   WebContents* web_contents = WebContents::Create(create_params);
   Shell* shell = CreateShell(web_contents, create_params.initial_size);

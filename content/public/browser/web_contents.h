@@ -170,6 +170,11 @@ class WebContents : public PageNavigator,
     // Note that the pre-created renderer process may not be used if the first
     // navigation requires a dedicated or privileged process, such as a WebUI.
     bool initialize_renderer;
+
+    // True if the WebContents is hosting a presentation created by the
+    // Presentation API, to set proper sandboxing flags. See:
+    // https://w3c.github.io/presentation-api/#creating-a-receiving-browsing-context
+    bool is_presentation_receiver;
   };
 
   // Creates a new WebContents.
