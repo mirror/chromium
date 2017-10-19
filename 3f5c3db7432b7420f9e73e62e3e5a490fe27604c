@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4e2549e_0c097d31",
+        "filename": "ash/public/interfaces/vpn_list.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "nit: \u0027an Arc\u0027",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9a525e_709209bb",
+        "filename": "ash/public/interfaces/vpn_list.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "Maybe document each of these?",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f153bf_229dd8b7",
+        "filename": "ash/public/interfaces/vpn_list.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "Fix indent here and bwlow",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1651711_194f9cae",
+        "filename": "ash/public/interfaces/vpn_list.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "|package_name| or |app_id|? (What\u0027s the difference?)",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83bd9aac_aee325ff",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "We set a bad precident here with two constructors, but we generally avoid that pattern. The new addtion is particularly bad because it\u0027s somewhat arbitrarily different from the 3rd party constructor.\n\nI would prefer to create static methods instead, e.g. VpnProvider::CreateBuiltIn(), VpnProvider::CreateThirdParty(...), etc.",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd02b90_8ab52896",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "blank line",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c57fd89_89746f9a",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "blank line",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae8644c_0a4f2e62",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "blank line",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c64645_a69e8d11",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "blank line",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

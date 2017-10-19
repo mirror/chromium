@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2dfbe35_9b580c76",
+        "filename": "ash/public/interfaces/vpn_list.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "Fix indent",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5e047f_b272d705",
+        "filename": "ash/system/network/vpn_list.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "auto iter \u003d\n(it\u0027s not a provider struct, it\u0027s an iterator)",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6858e88c_4308c72c",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "OPN? This should probably be \u0027BUILT_IN_VPN\u0027.",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dae876d_76d47e71",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "The existing implementaiton sets a bad precident; we should avouid using multiple constructors like this, especially when the difference between the arguments is not explicitly clear. Instead provide just a default constructor + static helpers to buiild the class, e.g.\n\nstatic VPNProvider* CreateThirdPartyVPN(extension_id, provider_name) {\n  vpn \u003d new VPNProvider;\n  vpn-\u003eapp_id \u003d extension_id;\n  pbn-\u003eprovider_name \u003d third_party_provider_name;\n}",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16648245_693f66b9",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "We should rename vpn_providers_ something like extension_vpn_providers_, and generally replace \"third party\" with \"extension\" throughout to make the code more clear.",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1607a29c_2611d9e7",
+        "filename": "ash/system/network/vpn_list_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "We should add ARC tests also.",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f74189c_25d36ad3",
+        "filename": "ash/system/network/vpn_list_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "extension_providers",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e5054bb_5fc862c3",
+        "filename": "ash/system/network/vpn_list_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "Connected or connecting networks will always be first in |networks|, so this can be:\n\nfor (const chromeos::NetworkState* const\u0026 network : networks) {\n  if (!network-\u003eIsConnectingOrConnected())\n    break;\n  if (network-\u003evpn_provider_type() !\u003d shill::kProviderArcVpn)\n    continue;\n  ...",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd81ab3_b4144266",
+        "filename": "ash/system/network/vpn_list_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "auto iter (or arc_provider_iter)\nWhen using \u0027auto\u0027 it is especially important to name variables clearly.",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623877f0_f5fcca44",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_helper.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "Can the app list changes be moved to a separate CL? I\u0027m not the best reviewer for these at this point.\n\nFWIW, \"helper\" isn\u0027t a great class name, especially since other classess access it through the prefs class (which is a little awkward). It should also probably either be in the app_list namespace or have AppList in the class name to differentiate this from similar code in the system tray.",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2bc2bfd_17c5e7e5",
+        "filename": "chromeos/network/network_state.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "Combine these sentences:\nIf the network uses a third-party or Arc VPN provider, |shill::kHostProperty| contains the extension ID or package name.",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9091b142_2bc4748a",
+        "filename": "chromeos/network/network_state.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:03:17Z",
+      "side": 1,
+      "message": "// Extension ID or Arc package name for extension or Arc provided VPNs.",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
