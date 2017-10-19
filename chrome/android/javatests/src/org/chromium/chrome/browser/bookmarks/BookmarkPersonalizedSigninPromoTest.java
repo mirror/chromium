@@ -31,6 +31,7 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
@@ -80,6 +81,7 @@ public class BookmarkPersonalizedSigninPromoTest {
         onView(withId(R.id.signin_promo_view_container)).check(doesNotExist());
     }
 
+    @DisabledTest(message = "crbug.com/776405")
     @Test
     @LargeTest
     public void testAutoDismissPromo() throws Exception {
