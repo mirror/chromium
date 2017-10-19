@@ -230,7 +230,7 @@ void PlatformThread::Join(PlatformThreadHandle thread_handle) {
   // the thread referred to by |thread_handle| may still be running long-lived /
   // blocking tasks.
 #if 0
-  base::ThreadRestrictions::AssertIOAllowed();
+  base::AssertBlockingAllowed();
 #endif
 
   DWORD thread_id = 0;
