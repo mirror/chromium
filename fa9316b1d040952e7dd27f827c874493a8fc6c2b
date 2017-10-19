@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "095686cd_a91835c0",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-19T20:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed09acc_7026286a",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 8
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4c3de9a_ec4fa97e",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-19T20:06:23Z",
+      "side": 1,
+      "message": "I\u0027m not sure using origin here is a good idea, since hosts are considered blacklisted using their host name only, and not port, scheme, or suborigin.",
+      "parentUuid": "9c243c65_6b82ea9e",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1898d2cb_32bcc77c",
         "filename": "components/previews/core/previews_black_list.cc",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6331ffa_957db396",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-19T20:06:23Z",
+      "side": 1,
+      "message": "Yes, right now only PreviewsIOData is using this. The reason why I\u0027m not passing a pointer to PreviewsIOData to the blacklist is because I think it is not a good design. At the current state, the blacklist doesn\u0027t know about PreviewsIOData, and it is much cleaner that way. Furthermore, by having this design pattern. any other class wanted to listen to blacklist event can implement the interface and add itself to the |observer_list_|.",
+      "parentUuid": "1898d2cb_32bcc77c",
+      "range": {
+        "startLine": 72,
+        "startChar": 24,
+        "endLine": 72,
+        "endChar": 34
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a69dfd8e_f99988ad",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-19T20:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7cb80da_1e478542",
+      "range": {
+        "startLine": 210,
+        "startChar": 5,
+        "endLine": 210,
+        "endChar": 11
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37954cfd_2f7a96f8",
         "filename": "components/previews/core/previews_black_list.h",
         "patchSetId": 8
@@ -114,6 +210,30 @@
       "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91aa09f_14c2da4f",
+        "filename": "components/previews/core/previews_black_list.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-19T20:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37954cfd_2f7a96f8",
+      "range": {
+        "startLine": 81,
+        "startChar": 69,
+        "endLine": 81,
+        "endChar": 74
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "1a568ccd_859c656e",
+        "filename": "components/previews/core/previews_black_list_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-19T20:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9274f931_fc39c0ff",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16b7f6c4_d70cbbca",
         "filename": "components/previews/core/previews_logger.h",
         "patchSetId": 8
@@ -183,6 +327,30 @@
       "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5863a4f_81f23465",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-19T20:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16b7f6c4_d70cbbca",
+      "range": {
+        "startLine": 86,
+        "startChar": 15,
+        "endLine": 86,
+        "endChar": 21
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
