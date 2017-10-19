@@ -43,13 +43,16 @@ struct membuf : std::streambuf {
 bool PrintMinidumpProcess(const uint8_t* data,
                           size_t size,
                           const std::vector<string>& symbol_paths) {
+  size += 8;
   std::unique_ptr<SimpleSymbolSupplier> symbol_supplier;
   char* ptr = static_cast<char*>(malloc(size));
   if (!ptr)
     return false;
 
+  // Add signature and version number.
+  *(reinterpret_cast<uint64_t*>(ptr)) = 0xa793504d444d;
   std::unique_ptr<char, base::FreeDeleter> buffer(ptr);
-  memcpy(buffer.get(), data, size);
+  memcpy(buffer.get() + 8, data, size - 8);
 
   membuf sbuf(buffer.get(), buffer.get() + size);
   std::istream input(&sbuf);
