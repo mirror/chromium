@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "9e55987d_9a04e9e0",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T16:05:54Z",
+      "side": 1,
+      "message": "Hmm we\u0027ll definitely want to include UX people on that. Intuitively that feels really user hostile to me. Fine as a stepping stone, but something we need to refine for production.",
+      "parentUuid": "b3ee4837_a3a08e69",
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8962d305_38467f94",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 24
