@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77ccfdeb_c8e81099",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7177,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-19T01:28:55Z",
+      "side": 1,
+      "message": "This only needs to be done for non-drawing ops right? Only those should affect state that this canvas needs to track.",
+      "range": {
+        "startLine": 7177,
+        "startChar": 4,
+        "endLine": 7177,
+        "endChar": 42
+      },
+      "revId": "738c9fb3e81b31d320deddaa88090194064d4b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e10ec07_7fa8897f",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7212,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-19T01:28:55Z",
+      "side": 1,
+      "message": "+1. The preamble step is creating a list because that\u0027s what the raster command takes. You can make this additional param on the raster command be a direct PaintRecord.",
+      "range": {
+        "startLine": 7209,
+        "startChar": 2,
+        "endLine": 7212,
+        "endChar": 53
+      },
+      "revId": "738c9fb3e81b31d320deddaa88090194064d4b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165dfe2d_ffb97a04",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7246,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-19T01:28:55Z",
+      "side": 1,
+      "message": "Is this needed? We are taking care of balancing save/restores added during serialization in the loop above. And I thought for records this balancing is done at record time?",
+      "range": {
+        "startLine": 7246,
+        "startChar": 2,
+        "endLine": 7246,
+        "endChar": 44
+      },
+      "revId": "738c9fb3e81b31d320deddaa88090194064d4b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
