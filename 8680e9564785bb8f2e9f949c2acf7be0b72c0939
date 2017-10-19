@@ -69,6 +69,30 @@
       "revId": "8680e9564785bb8f2e9f949c2acf7be0b72c0939",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec674136_1adb7781",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-19T01:04:25Z",
+      "side": 1,
+      "message": "\"Since the class has a non-trivial destructor\"\n\nBut it\u0027s a struct.",
+      "parentUuid": "123c65b5_2c838618",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 47
+      },
+      "revId": "8680e9564785bb8f2e9f949c2acf7be0b72c0939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
