@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_UI_VIEWS_EXTENSIONS_BOOKMARK_APP_CONFIRMATION_VIEW_H_
-#define CHROME_BROWSER_UI_VIEWS_EXTENSIONS_BOOKMARK_APP_CONFIRMATION_VIEW_H_
+#ifndef CHROME_BROWSER_UI_VIEWS_EXTENSIONS_PWA_CONFIRMATION_VIEW_H_
+#define CHROME_BROWSER_UI_VIEWS_EXTENSIONS_PWA_CONFIRMATION_VIEW_H_
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
@@ -12,24 +12,16 @@
 #include "ui/views/controls/textfield/textfield_controller.h"
 #include "ui/views/window/dialog_delegate.h"
 
-namespace views {
-class Checkbox;
-class Textfield;
-}
-
-// BookmarkAppConfirmationView provides views for editing the details to
+// PWAConfirmationView provides views for editing the details to
 // create a bookmark app with. (More tools > Add to desktop)
-class BookmarkAppConfirmationView : public views::DialogDelegateView,
-                                    public views::TextfieldController {
+class PWAConfirmationView : public views::DialogDelegateView {
  public:
-  BookmarkAppConfirmationView(
-      const WebApplicationInfo& web_app_info,
-      chrome::AppInstallationAcceptanceCallback callback);
-  ~BookmarkAppConfirmationView() override;
+  PWAConfirmationView(const WebApplicationInfo& web_app_info,
+                      chrome::AppInstallationAcceptanceCallback callback);
+  ~PWAConfirmationView() override;
 
  private:
   // Overridden from views::WidgetDelegate:
-  views::View* GetInitiallyFocusedView() override;
   ui::ModalType GetModalType() const override;
   base::string16 GetWindowTitle() const override;
   bool ShouldShowCloseButton() const override;
@@ -43,12 +35,9 @@ class BookmarkAppConfirmationView : public views::DialogDelegateView,
   // Overridden from views::View:
   gfx::Size GetMinimumSize() const override;
 
-  // Overridden from views::TextfieldController:
-  void ContentsChanged(views::Textfield* sender,
-                       const base::string16& new_contents) override;
-
-  // Get the trimmed contents of the title text field.
-  base::string16 GetTrimmedTitle() const;
+  void CreateDialog(const base::string16& title,
+                    const base::string16& origin,
+                    const std::vector<WebApplicationInfo::IconInfo>& icons);
 
   // The WebApplicationInfo that the user is editing.
   WebApplicationInfo web_app_info_;
@@ -56,13 +45,7 @@ class BookmarkAppConfirmationView : public views::DialogDelegateView,
   // The callback to be invoked when the dialog is completed.
   chrome::AppInstallationAcceptanceCallback callback_;
 
-  // Checkbox to launch as a window.
-  views::Checkbox* open_as_window_checkbox_;
-
-  // Textfield showing the title of the app.
-  views::Textfield* title_tf_;
-
-  DISALLOW_COPY_AND_ASSIGN(BookmarkAppConfirmationView);
+  DISALLOW_COPY_AND_ASSIGN(PWAConfirmationView);
 };
 
-#endif  // CHROME_BROWSER_UI_VIEWS_EXTENSIONS_BOOKMARK_APP_CONFIRMATION_VIEW_H_
+#endif  // CHROME_BROWSER_UI_VIEWS_EXTENSIONS_PWA_CONFIRMATION_VIEW_H_

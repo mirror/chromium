@@ -4,6 +4,9 @@
 
 #include "chrome/browser/ui/views/extensions/bookmark_app_confirmation_view.h"
 
+#include "chrome/browser/ui/views/extensions/pwa_confirmation_view.h"
+#include "chrome/browser/ui/views/extensions/web_app_info_image_source.h"
+
 #include "base/callback_helpers.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
@@ -20,7 +23,6 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image_skia.h"
-#include "ui/gfx/image/image_skia_source.h"
 #include "ui/views/controls/button/checkbox.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/layout/grid_layout.h"
@@ -33,33 +35,13 @@ namespace {
 // Minimum width of the the bubble.
 const int kMinBubbleWidth = 300;
 
-class WebAppInfoImageSource : public gfx::ImageSkiaSource {
- public:
-  WebAppInfoImageSource(int dip_size, const WebApplicationInfo& info)
-      : dip_size_(dip_size), info_(info) {}
-  ~WebAppInfoImageSource() override {}
-
- private:
-  gfx::ImageSkiaRep GetImageForScale(float scale) override {
-    int size = base::saturated_cast<int>(dip_size_ * scale);
-    for (const auto& icon_info : info_.icons) {
-      if (icon_info.width == size)
-        return gfx::ImageSkiaRep(icon_info.data, scale);
-    }
-    return gfx::ImageSkiaRep();
-  }
-
-  int dip_size_;
-  WebApplicationInfo info_;
-};
-
 }  // namespace
 
 BookmarkAppConfirmationView::~BookmarkAppConfirmationView() {}
 
 BookmarkAppConfirmationView::BookmarkAppConfirmationView(
     const WebApplicationInfo& web_app_info,
-    chrome::ShowBookmarkAppDialogCallback callback)
+    chrome::AppInstallationAcceptanceCallback callback)
     : web_app_info_(web_app_info),
       callback_(std::move(callback)),
       open_as_window_checkbox_(nullptr),
@@ -86,7 +68,7 @@ BookmarkAppConfirmationView::BookmarkAppConfirmationView(
   views::ImageView* icon_image_view = new views::ImageView();
   gfx::Size image_size(icon_size, icon_size);
   gfx::ImageSkia image(
-      base::MakeUnique<WebAppInfoImageSource>(icon_size, web_app_info_),
+      base::MakeUnique<WebAppInfoImageSource>(icon_size, web_app_info_.icons),
       image_size);
   icon_image_view->SetImageSize(image_size);
   icon_image_view->SetImage(image);
@@ -182,7 +164,7 @@ namespace chrome {
 
 void ShowBookmarkAppDialog(gfx::NativeWindow parent,
                            const WebApplicationInfo& web_app_info,
-                           ShowBookmarkAppDialogCallback callback) {
+                           AppInstallationAcceptanceCallback callback) {
   constrained_window::CreateBrowserModalDialogViews(
       new BookmarkAppConfirmationView(web_app_info, std::move(callback)),
       parent)
