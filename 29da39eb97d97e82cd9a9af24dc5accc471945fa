@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92fea102_3322eb9f",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-19T20:41:24Z",
+      "side": 0,
+      "message": "This is outdated, so just remove it.",
+      "range": {
+        "startLine": 1025,
+        "startChar": 39,
+        "endLine": 1025,
+        "endChar": 0
+      },
+      "revId": "29da39eb97d97e82cd9a9af24dc5accc471945fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
