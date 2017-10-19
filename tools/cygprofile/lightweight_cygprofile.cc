@@ -98,6 +98,17 @@ class DelayedDumper {
 DelayedDumper g_dump_later;
 
 extern "C" {
+
+// Static initializer on purpose. Will disable instrumentation after
+// |kDelayInS|.
+DelayedDumper g_dump_later;
+
+extern "C" {
+void __cyg_profile_func_enter(void* unused1, void* unused2)
+    __attribute__((no_instrument_function));
+void __cyg_profile_func_exit(void* unused1, void* unused2)
+    __attribute__((no_instrument_function));
+
 void __cyg_profile_func_enter(void* unused1, void* unused2) {
   // To avoid any risk of infinite recusion, this *must* *never* call any
   // instrumented function.
