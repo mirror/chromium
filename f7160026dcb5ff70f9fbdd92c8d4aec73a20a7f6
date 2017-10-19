@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "727644bd_2a408f02",
+        "filename": "components/machine_intelligence/proto/generic_logistic_regression_model.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-19T17:37:19Z",
+      "side": 1,
+      "message": "Yes, my understanding is that it only affects serialization.\n\nproto2 defaults to unpacked if not specified.",
+      "parentUuid": "ab1cc63f_a86ff834",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e1a33ba_a021ab3a",
         "filename": "components/machine_intelligence/proto/generic_logistic_regression_model.proto",
         "patchSetId": 3

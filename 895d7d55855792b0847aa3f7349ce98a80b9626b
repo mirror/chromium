@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "430ebed7_7eb7d961",
+        "filename": "components/machine_intelligence/ranker_example_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-19T17:37:19Z",
+      "side": 1,
+      "message": "This seems like a private helper. If it\u0027s only to indended to be used by the type specific getters, maybe hide this in an internal namespace?",
+      "revId": "895d7d55855792b0847aa3f7349ce98a80b9626b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
