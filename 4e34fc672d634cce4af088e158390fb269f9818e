@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ecf4401_143a2b6a",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-10-19T17:01:58Z",
+      "side": 1,
+      "message": "As mentioned in https://chromium-review.googlesource.com/c/chromium/src/+/637003/13/content/browser/renderer_host/delegated_frame_host.cc",
+      "revId": "4e34fc672d634cce4af088e158390fb269f9818e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
