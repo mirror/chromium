@@ -326,6 +326,34 @@
       <message name="IDS_OPTIONS_ADVANCED_SECTION_TITLE_PRIVACY">
         Privacy
       </message>
+
+      <!-- Accessibility labels for autocomplete match types.
+           These are parameterized on the text being completed into the omnibox.
+      -->
+      <message name="IDS_ACC_AUTOCOMPLETE_HISTORY" desc="Descriptive text for screenreaders when the text the user typed matched an entry from history.">
+        URL from history: <ph name="TEXT">$1<ex>https://www.chromium.org</ex></ph>
+      </message>
+      <message name="IDS_ACC_AUTOCOMPLETE_SEARCH_HISTORY" desc="Descriptive text for screenreaders when the text the user typed matches a search from their history.">
+        Search from history for <ph name="TEXT">$1<ex>dogs</ex></ph>
+      </message>
+      <message name="IDS_ACC_AUTOCOMPLETE_SEARCH" desc="Descriptive text for screenreaders when the text the user typed is selected for searching as a completion.">
+        Search for <ph name="TEXT">$1<ex>dogs</ex></ph>
+      </message>
+      <message name="IDS_ACC_AUTOCOMPLETE_SUGGESTED_SEARCH" desc="Descriptive text for screenreaders describing a suggested search query in autocomplete.">
+        Suggested search for <ph name="TEXT">$1<ex>dogs</ex></ph>
+      </message>
+      <message name="IDS_ACC_AUTOCOMPLETE_EXTENSION" desc="Descriptive text for screenreaders when the text the user typed matches an extension.">
+        URL from extension: <ph name="TEXT">$1<ex>https://www.chromium.org</ex></ph>
+      </message>
+      <message name="IDS_ACC_AUTOCOMPLETE_CONTACT" desc="Descriptive text for screenreaders when the text the user typed matches a contact in their address book.">
+        URL from contact: <ph name="TEXT">$1<ex>https://www.chromium.org</ex></ph>
+      </message>
+      <message name="IDS_ACC_AUTOCOMPLETE_BOOKMARK" desc="Descriptive text for screenreaders when the text the user typed matches a bookmark.">
+        URL from bookmark: <ph name="TEXT">$1<ex>https://www.chromium.org</ex></ph>
+      </message>
+      <message name="IDS_ACC_AUTOCOMPLETE_CLIPBOARD" desc="Descriptive text for screenreaders when the text the user typed matches the contents of the clipboard.">
+        URL from clipboard: <ph name="TEXT">$1<ex>https://www.chromium.org</ex></ph>
+      </message>
     </messages>
   </release>
 </grit>

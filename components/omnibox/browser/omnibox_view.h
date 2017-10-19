@@ -152,7 +152,8 @@ class OmniboxView {
   // should be notified of the change.
   virtual void OnTemporaryTextMaybeChanged(const base::string16& display_text,
                                            bool save_original_selection,
-                                           bool notify_text_changed) = 0;
+                                           bool notify_text_changed,
+                                           AutocompleteMatch::Type type) = 0;
 
   // Called when the inline autocomplete text in the model may have changed.
   // |display_text| is the new text to show; |user_text_length| is the length of
