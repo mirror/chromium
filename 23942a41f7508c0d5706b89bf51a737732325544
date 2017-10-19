@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55d7a465_b724a4e9",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadEffectParameters.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-19T20:56:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c77c743d_c39872bd",
+      "revId": "23942a41f7508c0d5706b89bf51a737732325544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b24d915_7fa02b5b",
         "filename": "third_party/WebKit/Source/modules/gamepad/GamepadEffectParameters.idl",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-19T00:49:29Z",
       "side": 1,
       "message": "Add a link to the spec.",
+      "revId": "23942a41f7508c0d5706b89bf51a737732325544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8834947e_b71cfea3",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadEffectParameters.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-19T20:56:29Z",
+      "side": 1,
+      "message": "The proposed spec changes are currently described in a doc:\n\nhttps://docs.google.com/document/d/1jPKzVRNzzU4dUsvLpSXm1VXPQZ8FP-0lKMT-R_p-s6g\n\nShould I link to it or wait until we have something on github.com/w3c/gamepad?",
+      "parentUuid": "2b24d915_7fa02b5b",
       "revId": "23942a41f7508c0d5706b89bf51a737732325544",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "23942a41f7508c0d5706b89bf51a737732325544",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19370a9b_8f969e8f",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadHapticActuator.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-19T20:56:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "888f5295_469fae1e",
+      "revId": "23942a41f7508c0d5706b89bf51a737732325544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
