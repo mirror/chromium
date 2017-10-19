@@ -105,10 +105,16 @@ void RecordChromeModuleInfo(
 }
 
 void SetupStabilityDebugging() {
-  if (!base::FeatureList::IsEnabled(
+// DO NOT SUBMIT
+#if 0
+  if (false !base::FeatureList::IsEnabled(
           browser_watcher::kStabilityDebuggingFeature)) {
     return;
   }
+#else
+  // DO NOT SUBMIT
+  return;
+#endif
 
   SCOPED_UMA_HISTOGRAM_TIMER("ActivityTracker.Record.SetupTime");
 
@@ -186,12 +192,16 @@ void SetupStabilityDebugging() {
     const bool should_flush = base::GetFieldTrialParamByFeatureAsBool(
         browser_watcher::kStabilityDebuggingFeature,
         browser_watcher::kInitFlushParam, false);
-    if (should_flush) {
+
+    // DO NOT SUBMIT
+#if 0
+    if (true || should_flush) {
       base::PostTaskWithTraits(
           FROM_HERE, {base::MayBlock()},
           base::Bind(&base::PersistentMemoryAllocator::Flush,
                      base::Unretained(global_tracker->allocator()), true));
     }
+#endif
 
     // Store a copy of the system profile in this allocator. There will be some
     // delay before this gets populated, perhaps as much as a minute. Because
@@ -199,7 +209,8 @@ void SetupStabilityDebugging() {
     metrics::GlobalPersistentSystemProfile::GetInstance()
         ->RegisterPersistentAllocator(global_tracker->allocator());
 
-    browser_watcher::RegisterStabilityVEH();
+    // DO NOT SUBMIT
+    // browser_watcher::RegisterStabilityVEH();
   }
 }
 #endif  // defined(OS_WIN)
