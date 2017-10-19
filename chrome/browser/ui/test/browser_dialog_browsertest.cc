@@ -53,7 +53,14 @@ TEST(BrowserDialogTest, Invoke) {
   ASSERT_NE(it, dialog_cases.end()) << "Dialog '" << dialog_name
                                     << "' not found.";
 
-  base::CommandLine command(invoker);
+  // Don't create test output for the subprocess (the paths will conflict).
+  base::CommandLine::StringVector argv = invoker.argv();
+  std::string ascii(switches::kTestLauncherOutput);
+  base::CommandLine::StringType native_switch(ascii.begin(), ascii.end());
+  base::EraseIf(argv, [native_switch](const auto& arg) -> bool {
+    return arg.find(native_switch) != arg.npos;  // Substring search.
+  });
+  base::CommandLine command(argv);
 
   // Replace TestBrowserDialog.Invoke with |dialog_name|.
   command.AppendSwitchASCII(base::kGTestFilterFlag, dialog_name);
