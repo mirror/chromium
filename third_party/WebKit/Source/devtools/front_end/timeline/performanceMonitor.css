@@ -8,6 +8,27 @@
   overflow: hidden;
 }
 
+.perfmon-pane.suspended {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.perfmon-pane .perfmon-chart-suspend-overlay {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  font-size: 26px;
+  align-items:  center;
+  justify-content:  center;
+}
+
+.perfmon-pane.suspended .perfmon-chart-suspend-overlay {
+  display: flex;
+}
+
 .perfmon-control-pane {
   display: flex;
   flex-direction: column;
