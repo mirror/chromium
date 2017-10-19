@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3478995_d01e6289",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-19T18:43:54Z",
+      "side": 1,
+      "message": "We didn\u0027t previously check whether the search engine promo was completed, just whether it had been shown this session, so this is potentially changing the logic around whether we show the signin promo.",
+      "range": {
+        "startLine": 501,
+        "startChar": 12,
+        "endLine": 504,
+        "endChar": 13
+      },
+      "revId": "344f597509006b5e0e9101e0272dff6a0338167a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
