@@ -27,6 +27,11 @@
         mediaControlsButtonCoordinates(video, "toggle-closed-captions-button");
     clickAtCoordinates(coords[0], coords[1]);
 
+    // Disabling pointer events on the text track item to avoid a flakyness with
+    // :hover sometimes applying.
+    textTrackListItemAtIndex(video, 0).style = 'pointer-events: none;';
+    textTrackListItemAtIndex(video, 1).style = 'pointer-events: none;';
+
     testRunner.layoutAndPaintAsyncThen(() => {
       testRunner.notifyDone();
     });
