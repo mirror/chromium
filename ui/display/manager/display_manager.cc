@@ -655,6 +655,7 @@ void DisplayManager::OnNativeDisplaysChanged(
   first_display_id_ = updated_displays[0].id();
   std::set<gfx::Point> origins;
 
+#if !defined(NDEBUG)
   if (updated_displays.size() == 1) {
     VLOG(1) << "OnNativeDisplaysChanged(1):" << updated_displays[0].ToString();
   } else {
@@ -662,6 +663,7 @@ void DisplayManager::OnNativeDisplaysChanged(
             << ") [0]=" << updated_displays[0].ToString()
             << ", [1]=" << updated_displays[1].ToString();
   }
+#endif
 
   bool internal_display_connected = false;
   num_connected_displays_ = updated_displays.size();
@@ -1133,9 +1135,9 @@ void DisplayManager::SetTouchCalibrationData(
     }
     display_info_list.push_back(info);
   }
-  if (update)
+  if (update) {
     UpdateDisplaysWith(display_info_list);
-  else {
+  } else {
     display_info_[display_id].SetTouchCalibrationData(touch_device_identifier,
                                                       calibration_data);
   }
@@ -1157,9 +1159,9 @@ void DisplayManager::ClearTouchCalibrationData(
     }
     display_info_list.push_back(info);
   }
-  if (update)
+  if (update) {
     UpdateDisplaysWith(display_info_list);
-  else {
+  } else {
     if (touch_device_identifier) {
       display_info_[display_id].ClearTouchCalibrationData(
           *touch_device_identifier);
@@ -1489,6 +1491,7 @@ Display DisplayManager::CreateDisplayFromDisplayInfoById(int64_t id) {
   new_display.set_rotation(display_info.GetActiveRotation());
   new_display.set_touch_support(display_info.touch_support());
   new_display.set_maximum_cursor_size(display_info.maximum_cursor_size());
+  new_display.set_color_space(display_info.color_space());
 
   if (internal_display_has_accelerometer_ && Display::IsInternalDisplayId(id)) {
     new_display.set_accelerometer_support(
