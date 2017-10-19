@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cef0a02_8c27283e",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-19T18:54:40Z",
+      "side": 1,
+      "message": "\"when path-based breaks down\" or \"than path-based breakdowns\" ?",
+      "range": {
+        "startLine": 237,
+        "startChar": 69,
+        "endLine": 238,
+        "endChar": 25
+      },
+      "revId": "a0142b28d8d55329cea8de66acfe111a237b2656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ed65d5_531f2e7c",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-19T18:54:40Z",
+      "side": 1,
+      "message": "For this case, symbol_count doesn\u0027t get used. So may as well do this in line 225 (assuming path_list[0] is always defined so \"not prefix\" is guaranteed false) ?",
+      "range": {
+        "startLine": 242,
+        "startChar": 4,
+        "endLine": 242,
+        "endChar": 17
+      },
+      "revId": "a0142b28d8d55329cea8de66acfe111a237b2656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c788ec63_a809959e",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-19T18:54:40Z",
+      "side": 1,
+      "message": "Does this still apply?",
+      "range": {
+        "startLine": 298,
+        "startChar": 2,
+        "endLine": 298,
+        "endChar": 34
+      },
+      "revId": "a0142b28d8d55329cea8de66acfe111a237b2656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1339e836_18576e37",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-19T18:54:40Z",
+      "side": 1,
+      "message": "Should this happen after the logging below? Otherwise you\u0027d get confusing output like\n\nSymbol path reported by .map not found by nm.\nsym\u003dfoo\npaths\u003d[\u0027bar\u0027, \u0027foo\u0027]     \u003d\u003e But we just said it wasn\u0027t found!",
+      "range": {
+        "startLine": 325,
+        "startChar": 6,
+        "endLine": 325,
+        "endChar": 45
+      },
+      "revId": "a0142b28d8d55329cea8de66acfe111a237b2656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7bb167_8e1a2f5d",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-19T18:54:40Z",
+      "side": 1,
+      "message": "alias list to be shared among each",
+      "range": {
+        "startLine": 336,
+        "startChar": 26,
+        "endLine": 336,
+        "endChar": 40
+      },
+      "revId": "a0142b28d8d55329cea8de66acfe111a237b2656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a28ebc_2743a6af",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-19T18:54:40Z",
+      "side": 1,
+      "message": "NIT: Technically MiB, but at least do MB (all caps)?",
+      "range": {
+        "startLine": 907,
+        "startChar": 39,
+        "endLine": 907,
+        "endChar": 41
+      },
+      "revId": "a0142b28d8d55329cea8de66acfe111a237b2656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23a2ecd_44654dd1",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-19T18:54:40Z",
+      "side": 1,
+      "message": "This does linear search in list so we\u0027d have O(len(name_list)^2) behavior.\n\nIf fast enough, maybe add comment?\n  # Linear search but |name_list| is small.",
+      "range": {
+        "startLine": 158,
+        "startChar": 7,
+        "endLine": 158,
+        "endChar": 28
+      },
+      "revId": "a0142b28d8d55329cea8de66acfe111a237b2656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

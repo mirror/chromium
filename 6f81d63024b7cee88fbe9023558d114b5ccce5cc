@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98eb3b5c_053fc615",
+        "filename": "tools/binary_size/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-19T18:54:40Z",
+      "side": 1,
+      "message": "NIT: \"contains\" (refers to \"odd unnamed symbol\").",
+      "range": {
+        "startLine": 80,
+        "startChar": 24,
+        "endLine": 80,
+        "endChar": 31
+      },
+      "revId": "6f81d63024b7cee88fbe9023558d114b5ccce5cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
