@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "759023ef_144266fb",
+        "filename": "components/signin/core/common/profile_management_switches.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-19T12:05:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "746f9f1f_e8fe5272",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 46
+      },
+      "revId": "1fd61748c30cc2ed5cdd77316f50543906b7f1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d209936_74ff3bba",
         "filename": "components/signin/core/common/profile_management_switches.h",
         "patchSetId": 21
@@ -45,6 +69,30 @@
       "revId": "1fd61748c30cc2ed5cdd77316f50543906b7f1d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aefb28eb_e78fd0f1",
+        "filename": "components/signin/core/common/profile_management_switches.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-19T12:05:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d209936_74ff3bba",
+      "range": {
+        "startLine": 84,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 36
+      },
+      "revId": "1fd61748c30cc2ed5cdd77316f50543906b7f1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
