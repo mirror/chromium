@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b5079e5_844d3782",
+        "filename": "android_webview/glue/java/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-10-19T00:32:32Z",
+      "side": 1,
+      "message": "A bug in automated script... done.",
+      "parentUuid": "61320cc3_e8503df9",
+      "revId": "6a74e6863f0a4b27a2a7177914dd2c9ce0af62a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b249c496_204203d0",
         "filename": "components/gcm_driver/DEPS",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "6a74e6863f0a4b27a2a7177914dd2c9ce0af62a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f575fc5_35530e8d",
+        "filename": "components/gcm_driver/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-10-19T00:32:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b249c496_204203d0",
+      "revId": "6a74e6863f0a4b27a2a7177914dd2c9ce0af62a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
