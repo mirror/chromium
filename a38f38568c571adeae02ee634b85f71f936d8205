@@ -16,6 +16,24 @@
       "revId": "a38f38568c571adeae02ee634b85f71f936d8205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac53279_0a48f2e0",
+        "filename": "ui/chromeos/ui_chromeos_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2017-10-19T09:05:37Z",
+      "side": 1,
+      "message": "The order is correct.\nIDS_IME_NAME_KEYBOARD_MARATHI_PHONETIC should be ahead of IDS_IME_NAME_KEYBOARD_MYANMAR",
+      "parentUuid": "77eb39ab_0fad8635",
+      "revId": "a38f38568c571adeae02ee634b85f71f936d8205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
