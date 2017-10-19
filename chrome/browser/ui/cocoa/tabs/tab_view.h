@@ -63,15 +63,7 @@ const SkColor kDefaultTabTextColor = SkColorSetARGB(0xA0, 0x00, 0x00, 0x00);
   BOOL isInfiniteAlert_;  // Valid only when alertState_ != kAlertNone.
   tabs::AlertState alertState_;
 
-  CGFloat hoverAlpha_;  // How strong the hover glow is.
-  NSTimeInterval hoverHoldEndTime_;  // When the hover glow will begin dimming.
-
-  CGFloat alertAlpha_;  // How strong the alert glow is.
-  NSTimeInterval alertHoldEndTime_;  // When the hover glow will begin dimming.
-
-  NSTimeInterval lastGlowUpdate_;  // Time either glow was last updated.
-
-  NSPoint hoverPoint_;  // Current location of hover in view coords.
+   NSPoint hoverPoint_;  // Current location of hover in view coords.
 
   // The location of the current mouseDown event in window coordinates.
   NSPoint mouseDownPoint_;
@@ -93,9 +85,6 @@ const SkColor kDefaultTabTextColor = SkColorSetARGB(0xA0, 0x00, 0x00, 0x00);
 // NSMixedState -> selected
 // NSOffState   -> none
 @property(assign, nonatomic) NSCellStateValue state;
-
-@property(assign, nonatomic) CGFloat hoverAlpha;
-@property(assign, nonatomic) CGFloat alertAlpha;
 
 // Determines if the tab is in the process of animating closed. It may still
 // be visible on-screen, but should not respond to/initiate any events. Upon
