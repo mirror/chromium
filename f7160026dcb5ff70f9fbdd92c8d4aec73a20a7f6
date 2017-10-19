@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d31e69dd_f3f41021",
+        "filename": "components/machine_intelligence/generic_logistic_regression_inference.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e20621a_7f5abc5a",
+      "range": {
+        "startLine": 26,
+        "startChar": 21,
+        "endLine": 26,
+        "endChar": 22
+      },
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "127a789e_12a2ba05",
         "filename": "components/machine_intelligence/generic_logistic_regression_inference.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc113a0_e254e998",
+        "filename": "components/machine_intelligence/generic_logistic_regression_inference.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "127a789e_12a2ba05",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "ab1cc63f_a86ff834",
+        "filename": "components/machine_intelligence/proto/generic_logistic_regression_model.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:47:03Z",
+      "side": 1,
+      "message": "Done.\n\nI was wondering, does it make a difference if the proto is not serialized? The way I understand it, I don\u0027t think it does. But, in any case, it doesn\u0027t hurt.",
+      "parentUuid": "c6a30a9d_40ce5446",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e1a33ba_a021ab3a",
         "filename": "components/machine_intelligence/proto/generic_logistic_regression_model.proto",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8dfeeb_f354abf3",
+        "filename": "components/machine_intelligence/proto/generic_logistic_regression_model.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e1a33ba_a021ab3a",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "a1dbff87_84c5748e",
+        "filename": "components/machine_intelligence/ranker_example_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:47:03Z",
+      "side": 1,
+      "message": "Deleted the function.",
+      "parentUuid": "fe84947b_9b9f7529",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6debd79_330c09c0",
         "filename": "components/machine_intelligence/ranker_example_util.cc",
         "patchSetId": 3
@@ -107,6 +203,24 @@
       "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d1975cf_bfa24062",
+        "filename": "components/machine_intelligence/ranker_example_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:47:03Z",
+      "side": 1,
+      "message": "Good catch. Int32 should be sufficient for our purposes. If we ever find a case where int32 is not enough, we can add int64 feature types.",
+      "parentUuid": "b6debd79_330c09c0",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "cb1c6e8d_2b709e1f",
+        "filename": "components/machine_intelligence/ranker_example_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae3f3549_f1fdaee6",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1da88515_593043e1",
         "filename": "components/machine_intelligence/ranker_example_util.h",
         "patchSetId": 3
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "bf03e1e0_5e2f0a1b",
+        "filename": "components/machine_intelligence/ranker_example_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1da88515_593043e1",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbd3ae43_aa116789",
         "filename": "components/machine_intelligence/ranker_example_util.h",
         "patchSetId": 3
@@ -158,6 +308,24 @@
       "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b3fd23_4f87c813",
+        "filename": "components/machine_intelligence/ranker_example_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbd3ae43_aa116789",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
