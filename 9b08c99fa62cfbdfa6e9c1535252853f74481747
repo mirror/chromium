@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f78bc684_d7f02a09",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1644,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-19T23:40:46Z",
+      "side": 1,
+      "message": "Can we put this workaround in a #if defined(OS_MACOSX) block and maybe even check for 10.9? It might help to lift that check out of this tight loop and define a local const bool ignore_offset_for_test or similar? (it seems good to draw attention to the platform-dependent nature of this workaround, so it can hopefully be removed later on)",
+      "revId": "9b08c99fa62cfbdfa6e9c1535252853f74481747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a84102e7_60fff29f",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3950,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-19T23:40:46Z",
+      "side": 1,
+      "message": "optional nit: \"Each flag is 4\" or similar",
+      "revId": "9b08c99fa62cfbdfa6e9c1535252853f74481747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
