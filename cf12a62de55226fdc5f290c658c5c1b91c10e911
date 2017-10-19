@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9efbe1fe_02b51746",
+        "filename": "services/service_manager/sandbox/sandbox.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-19T18:11:54Z",
+      "side": 1,
+      "message": "Remove this too.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "cf12a62de55226fdc5f290c658c5c1b91c10e911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1248952_eb07d9cb",
+        "filename": "services/service_manager/sandbox/sandbox.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-19T18:11:54Z",
+      "side": 1,
+      "message": "after performing any sandbox warmup",
+      "range": {
+        "startLine": 37,
+        "startChar": 57,
+        "endLine": 37,
+        "endChar": 58
+      },
+      "revId": "cf12a62de55226fdc5f290c658c5c1b91c10e911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
