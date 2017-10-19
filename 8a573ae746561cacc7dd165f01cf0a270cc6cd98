@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd903972_20bc7354",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-19T03:36:42Z",
+      "side": 1,
+      "message": "tl;dr: setEnabled doesn\u0027t work here since level dropdown is a \u003cdiv\u003e.  Tried switching to UI.ToolbarButton, but it has a different enabled-state color, so I opted to introduce this new \u0027disabled\u0027 class.\n\n\n\nSadly, setEnabled(false) does not affect the console level dropdown selector at all, it still responds to click events and looks the same.  setEnabled(false) does `this.element.disabled \u003d !enabled`, which only affects \"actually disabled\" elements (e.g. button, input, select https://www.w3.org/TR/html5/disabled-elements.html ), not \u003cdiv\u003es or \u003cspan\u003es which make up the level dropdown\u0027s ToolbarText and ToolbarItem.\n\nAn alternative that I considered was switching the console level dropdown to use UI.ToolbarButton with turnIntoSelect().  We already have a grayed out style for disabled buttons, however, enabled buttons look different from enabled ToolbarText.  ToolbarButtons with a select were given an extra dark color specifically for DeviceMode ( https://chromium.googlesource.com/chromium/src/+/e182ebe11e040ba0f4834ddd5da5a79b4467f906 ).",
+      "parentUuid": "725b4bf7_9c7423a8",
+      "revId": "8a573ae746561cacc7dd165f01cf0a270cc6cd98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c56db242_3de95703",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/toolbar.css",
         "patchSetId": 2
