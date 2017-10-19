@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "feeeff1e_396e4e8c",
+        "filename": "content/child/web_url_request_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-19T04:15:33Z",
+      "side": 1,
+      "message": "What happens if size_getter_binding_ gets dropped after OnCalculatedSize() but before GetSize() is called?",
+      "revId": "a7023fce194ae22796790340885239c986d68d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f232b5e7_0055a2e4",
         "filename": "content/common/resource_messages.cc",
         "patchSetId": 13
