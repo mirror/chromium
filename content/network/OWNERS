@@ -5,6 +5,8 @@ mmenke@chromium.org
 rdsmith@chromium.org
 scottmg@chromium.org
 yzshen@chromium.org
+yhirano@chromium.org
+kinuko@chromium.org
 
 per-file manifest.json=set noparent
 per-file manifest.json=file://ipc/SECURITY_OWNERS
