@@ -802,6 +802,8 @@ ThreadActivityTracker::ActivityId ThreadActivityTracker::PushActivity(
 void ThreadActivityTracker::ChangeActivity(ActivityId id,
                                            Activity::Type type,
                                            const ActivityData& data) {
+// DO NOT SUBMIT
+#if 0
   DCHECK(CalledOnValidThread());
   DCHECK(type != Activity::ACT_NULL || &data != &kNullActivityData);
   DCHECK_LT(id, header_->current_depth.load(std::memory_order_acquire));
@@ -819,6 +821,7 @@ void ThreadActivityTracker::ChangeActivity(ActivityId id,
     if (&data != &kNullActivityData)
       activity->data = data;
   }
+#endif  // 0
 }
 
 void ThreadActivityTracker::PopActivity(ActivityId id) {
@@ -884,6 +887,8 @@ void ThreadActivityTracker::RecordExceptionActivity(const void* program_counter,
                                                     const void* origin,
                                                     Activity::Type type,
                                                     const ActivityData& data) {
+// DO NOT SUBMIT
+#if 0
   // A thread-checker creates a lock to check the thread-id which means
   // re-entry into this code if lock acquisitions are being tracked.
   DCHECK(CalledOnValidThread());
@@ -895,6 +900,7 @@ void ThreadActivityTracker::RecordExceptionActivity(const void* program_counter,
   // The data has changed meaning that some other thread trying to copy the
   // contents for reporting purposes could get bad data.
   header_->data_unchanged.store(0, std::memory_order_relaxed);
+#endif
 }
 
 bool ThreadActivityTracker::IsValid() const {
@@ -1397,6 +1403,8 @@ void GlobalActivityTracker::SetProcessExitCallback(
 void GlobalActivityTracker::RecordProcessLaunch(
     ProcessId process_id,
     const FilePath::StringType& cmd) {
+// DO NOT SUBMIT
+#if 0
   const int64_t pid = process_id;
   DCHECK_NE(GetProcessId(), pid);
   DCHECK_NE(0, pid);
@@ -1415,12 +1423,17 @@ void GlobalActivityTracker::RecordProcessLaunch(
 #else
   known_processes_.insert(std::make_pair(pid, cmd));
 #endif
+
+#endif  // 0
 }
 
 void GlobalActivityTracker::RecordProcessLaunch(
     ProcessId process_id,
     const FilePath::StringType& exe,
     const FilePath::StringType& args) {
+// DO NOT SUBMIT
+#if 0
+
   const int64_t pid = process_id;
   if (exe.find(FILE_PATH_LITERAL(" "))) {
     RecordProcessLaunch(pid, FilePath::StringType(FILE_PATH_LITERAL("\"")) +
@@ -1428,10 +1441,14 @@ void GlobalActivityTracker::RecordProcessLaunch(
   } else {
     RecordProcessLaunch(pid, exe + FILE_PATH_LITERAL(' ') + args);
   }
+#endif  // 0
 }
 
 void GlobalActivityTracker::RecordProcessExit(ProcessId process_id,
                                               int exit_code) {
+
+// DO NOT SUBMIT
+#if 0
   const int64_t pid = process_id;
   DCHECK_NE(GetProcessId(), pid);
   DCHECK_NE(0, pid);
@@ -1465,6 +1482,7 @@ void GlobalActivityTracker::RecordProcessExit(ProcessId process_id,
   }
 
   CleanupAfterProcess(pid, now_stamp, exit_code, std::move(command_line));
+#endif  // 0
 }
 
 void GlobalActivityTracker::SetProcessPhase(ProcessPhase phase) {
@@ -1554,6 +1572,8 @@ void GlobalActivityTracker::CleanupAfterProcess(int64_t process_id,
 }
 
 void GlobalActivityTracker::RecordLogMessage(StringPiece message) {
+// DO NOT SUBMIT
+#if 0
   // Allocate at least one extra byte so the string is NUL terminated. All
   // memory returned by the allocator is guaranteed to be zeroed.
   PersistentMemoryAllocator::Reference ref =
@@ -1564,9 +1584,12 @@ void GlobalActivityTracker::RecordLogMessage(StringPiece message) {
     memcpy(memory, message.data(), message.size());
     allocator_->MakeIterable(ref);
   }
+#endif
 }
 
 void GlobalActivityTracker::RecordModuleInfo(const ModuleInfo& info) {
+// DO NOT SUBMIT
+#if 0
   AutoLock lock(modules_lock_);
   auto found = modules_.find(info.file);
   if (found != modules_.end()) {
@@ -1587,12 +1610,16 @@ void GlobalActivityTracker::RecordModuleInfo(const ModuleInfo& info) {
     return;
   allocator_->MakeIterable(record);
   modules_.emplace(info.file, record);
+#endif
 }
 
 void GlobalActivityTracker::RecordFieldTrial(const std::string& trial_name,
                                              StringPiece group_name) {
+// DO NOT SUBMIT
+#if 0
   const std::string key = std::string("FieldTrial.") + trial_name;
   process_data_.SetString(key, group_name);
+#endif
 }
 
 void GlobalActivityTracker::RecordException(const void* pc,
