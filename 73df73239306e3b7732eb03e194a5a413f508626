@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f265331e_6ff18847",
+        "filename": "components/policy/resources/policy_templates.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-19T08:32:59Z",
+      "side": 1,
+      "message": "Julian raised a very good point offline:\nWe should be absolutely sure what this change means for the translation process before committing.\nI expect that 9 strings (those which contained the trademark character) should be sent for retranslation, and I should make sure that we know that that\u0027s exactly what will happen.",
+      "range": {
+        "startLine": 123,
+        "startChar": 108,
+        "endLine": 123,
+        "endChar": 125
+      },
+      "revId": "73df73239306e3b7732eb03e194a5a413f508626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
