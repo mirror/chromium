@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b86904f7_5b3a7fd7",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-19T18:41:20Z",
+      "side": 1,
+      "message": "Using /\\b\\W/ seems to cause problems with non-English languages (which use characters not in A-Z). This one seems more robust.",
+      "parentUuid": "c27a45d0_4d2d0db5",
+      "revId": "1996daf1d34fb4d6957da4d93a8e385f6c72f985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4858660b_9256cf2f",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "496cc727_4daa6e88",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-19T18:41:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4858660b_9256cf2f",
+      "revId": "1996daf1d34fb4d6957da4d93a8e385f6c72f985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa786b34_0d8068e1",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "1996daf1d34fb4d6957da4d93a8e385f6c72f985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe12678_d825d4e0",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-10-19T18:41:20Z",
+      "side": 1,
+      "message": "See above -- \\w doesn\u0027t know about some unicode characters causing problems in other languages.",
+      "parentUuid": "aa786b34_0d8068e1",
+      "revId": "1996daf1d34fb4d6957da4d93a8e385f6c72f985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
