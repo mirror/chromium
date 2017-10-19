@@ -163,6 +163,30 @@
       "revId": "d0560e6a3c47f4d82d01703977bdba887ad00c1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810e2d27_54c922ba",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimationsTest.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T14:42:05Z",
+      "side": 1,
+      "message": "Right, but the parameters we ultimately use for the frame counts are the computed counts. I\u0027m a bit worried that otherwise we don\u0027t really have a test that for some animation constructed from HTML we produce accurate counts. I.e. what if the composited animation count doesn\u0027t include the new animations? We could accidentally count newly started animations as main thread.",
+      "parentUuid": "4f1fc898_5da2bbab",
+      "range": {
+        "startLine": 1358,
+        "startChar": 63,
+        "endLine": 1358,
+        "endChar": 65
+      },
+      "revId": "d0560e6a3c47f4d82d01703977bdba887ad00c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
