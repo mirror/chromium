@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c41442de_6d0e693e",
+        "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-10-19T09:32:29Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "8eda5b92_5906999e",
+      "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c51dc7c_37f4a042",
         "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-19T09:15:01Z",
       "side": 1,
       "message": "also, why do we need the non-memory metrics for this heap profiler test?",
+      "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92578c9f_48640a8f",
+        "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-10-19T09:32:29Z",
+      "side": 1,
+      "message": "We measure performance overhead of using heap profiling.",
+      "parentUuid": "3c51dc7c_37f4a042",
       "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d76c3130_9a6d671e",
+        "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-10-19T09:32:29Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "ec0e4e7c_d58db75c",
+      "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93921940_4b7fc0a3",
         "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-19T09:15:01Z",
       "side": 1,
       "message": "instead of a classmethod, you can make it a class attribute, e.g. just something like:\n\n\nclass _HeapProfilingBenchmark(..):\n  HEAP_PROFILING_MODE \u003d NotImplemented\n\n\nclass PseudoHeapProfilingBenchmark(_HeapProfilingBenchmark):\n  HEAP_PROFILING_MODE \u003d \u0027pseudo\u0027",
+      "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70a409b_fa8b2962",
+        "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-10-19T09:32:29Z",
+      "side": 1,
+      "message": "Thanks",
+      "parentUuid": "93921940_4b7fc0a3",
       "revId": "f15fb78591480dd0a23addf2a3bd03eab2242beb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
