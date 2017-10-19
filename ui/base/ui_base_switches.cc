@@ -13,6 +13,11 @@ const base::Feature kDirectManipulationStylus = {
     "DirectManipulationStylus", base::FEATURE_ENABLED_BY_DEFAULT};
 #endif  // defined(OS_WIN)
 
+// Applies the material design mode passed via --top-chrome-md to elements
+// throughout Chrome (not just top Chrome).
+const base::Feature kSecondaryUiMd = {"SecondaryUiMd",
+                                      base::FEATURE_DISABLED_BY_DEFAULT};
+
 }  // namespace features
 
 namespace switches {
@@ -93,10 +98,6 @@ const char kTopChromeMDMaterialHybrid[] = "material-hybrid";
 
 // Classic, non-material, mode for the |kTopChromeMD| switch.
 const char kTopChromeMDNonMaterial[] = "non-material";
-
-// Applies the material design mode passed via --top-chrome-md to elements
-// throughout Chrome (not just top Chrome).
-const char kExtendMdToSecondaryUi[] = "secondary-ui-md";
 
 // Disable partial swap which is needed for some OpenGL drivers / emulators.
 const char kUIDisablePartialSwap[] = "ui-disable-partial-swap";
