@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13ec0f66_f77ec217",
+        "filename": "components/safe_browsing/db/v4_embedded_test_server_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-19T21:53:09Z",
+      "side": 1,
+      "message": "is this vector guaranteed to have at least 1 element?",
+      "range": {
+        "startLine": 41,
+        "startChar": 31,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "1b667e5d30cf17ca496fd889490d264f9074a560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37bf685f_d6afeb30",
+        "filename": "components/safe_browsing/db/v4_embedded_test_server_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-19T21:53:09Z",
+      "side": 1,
+      "message": "nit: size_t",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "1b667e5d30cf17ca496fd889490d264f9074a560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2cc3bfa_b8128396",
+        "filename": "components/safe_browsing/db/v4_embedded_test_server_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-19T21:53:09Z",
+      "side": 1,
+      "message": "I\u0027d prefer to use FullHashMatchesHashPrefix()\n\nhttps://cs.chromium.org/chromium/src/components/safe_browsing/db/v4_protocol_manager_util.h?l\u003d325\u0026rcl\u003d2bdaf0af5e6ab06707931b0c1f8a79635219c024",
+      "range": {
+        "startLine": 84,
+        "startChar": 10,
+        "endLine": 84,
+        "endChar": 75
+      },
+      "revId": "1b667e5d30cf17ca496fd889490d264f9074a560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6a375a_0bda5fde",
+        "filename": "components/safe_browsing/db/v4_embedded_test_server_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-19T21:53:09Z",
+      "side": 1,
+      "message": "nit: we can now use std::make_unique directly",
+      "range": {
+        "startLine": 94,
+        "startChar": 23,
+        "endLine": 94,
+        "endChar": 39
+      },
+      "revId": "1b667e5d30cf17ca496fd889490d264f9074a560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f553ff5c_c23945ba",
+        "filename": "components/safe_browsing/db/v4_embedded_test_server_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-19T21:53:09Z",
+      "side": 1,
+      "message": "can this be a const ref ?",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "1b667e5d30cf17ca496fd889490d264f9074a560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
