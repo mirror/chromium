@@ -81,11 +81,11 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDiscoverySession {
   // BluetoothAdapter::RemoveDiscoverySession has succeeded. Invokes
   // |deactivate_discovery_session| if the session object still
   // exists when this callback executes. Always invokes |success_callback|.
-  static void OnDiscoverySessionRemoved(
+  void OnDiscoverySessionRemoved(
       const base::Closure& deactivate_discovery_session,
       const base::Closure& success_callback);
 
-  static void OnDiscoverySessionRemovalFailed(
+  void OnDiscoverySessionRemovalFailed(
       const base::Closure& error_callback,
       UMABluetoothDiscoverySessionOutcome outcome);
 
@@ -100,6 +100,9 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDiscoverySession {
 
   // Whether or not this instance represents an active discovery session.
   bool active_;
+
+  // Whether or not this instance is in progress of Stop().
+  bool is_stop_in_progress_;
 
   // The adapter that created this instance.
   scoped_refptr<BluetoothAdapter> adapter_;
