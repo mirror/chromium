@@ -155,7 +155,7 @@ public abstract class InfoBar implements InfoBarView {
         }
         title = getAccessibilityMessage(title);
         // TODO(crbug/773717): Avoid string concatenation due to i18n.
-        return title + mContext.getString(R.string.bottom_bar_screen_position);
+        return title + " " + mContext.getString(R.string.bottom_bar_screen_position);
     }
 
     @Override

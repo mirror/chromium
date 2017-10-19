@@ -190,7 +190,7 @@ public class InfoBarTest {
                 infoBarWithMessage.getAccessibilityText());
         infoBarWithMessage.createView();
         Assert.assertEquals("Infobar should have accessibility message after createView()",
-                messsage
+                messsage + " "
                         + ContextUtils.getApplicationContext().getString(
                                   R.string.bottom_bar_screen_position),
                 infoBarWithMessage.getAccessibilityText());
@@ -215,7 +215,7 @@ public class InfoBarTest {
         infoBarWithAccessibilityMessage.createView();
         Assert.assertEquals(
                 "Infobar should have customized accessibility message after createView()",
-                customizedAccessibilityMessage
+                customizedAccessibilityMessage + " "
                         + ContextUtils.getApplicationContext().getString(
                                   R.string.bottom_bar_screen_position),
                 infoBarWithAccessibilityMessage.getAccessibilityText());
@@ -231,7 +231,7 @@ public class InfoBarTest {
         infoBarCompcatWithAccessibilityMessage.createView();
         Assert.assertEquals(
                 "Infobar should have customized accessibility message after createView()",
-                customizedAccessibilityMessage
+                customizedAccessibilityMessage + " "
                         + ContextUtils.getApplicationContext().getString(
                                   R.string.bottom_bar_screen_position),
                 infoBarCompcatWithAccessibilityMessage.getAccessibilityText());
