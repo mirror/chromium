@@ -650,9 +650,8 @@ IntSize VisualViewport::ContentsSize() const {
   if (!frame || !frame->View())
     return IntSize();
 
-  // TODO(bokan): This should be the layout viewport rather than main
-  // LocalFrameView.
-  return frame->View()->VisibleContentRect(kIncludeScrollbars).Size();
+  auto* scrollable_area = frame->View()->LayoutViewportScrollableArea();
+  return scrollable_area->VisibleContentRect(kIncludeScrollbars).Size();
 }
 
 IntRect VisualViewport::VisibleContentRect(
