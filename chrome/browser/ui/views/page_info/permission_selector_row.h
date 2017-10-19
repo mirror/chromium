@@ -43,11 +43,15 @@ class View;
 // hierarchy.
 class PermissionSelectorRow {
  public:
-  // The |PermissionSelectorRow|'s constituent views are added to |layout|.
+  static int MinHeightForPermissionRow();
+
+  // The |PermissionSelectorRow|'s constituent views are added to |layout| in
+  // the given |column_set_id|.
   PermissionSelectorRow(Profile* profile,
                         const GURL& url,
                         const PageInfoUI::PermissionInfo& permission,
-                        views::GridLayout* layout);
+                        views::GridLayout* layout,
+                        const int column_set_id);
   virtual ~PermissionSelectorRow();
 
   void AddObserver(PermissionSelectorRowObserver* observer);
