@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "301b1694_a555fb54",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-19T00:31:30Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure Display() should be passing a profile pointer and not a string, so this should go away soon. This dance seems completely unnecessary to me, but I\u0027m waiting to hear back if there\u0027s some non-obvious reason for it.",
+      "parentUuid": "744f1be8_4ca85486",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4839e28_5817dc2f",
         "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
         "patchSetId": 4
@@ -76,6 +94,24 @@
       "writtenOn": "2017-10-18T23:13:47Z",
       "side": 1,
       "message": "Currently we seem to rely on these never being removed. I know this code is in development, but I\u0027d prefer to either implement removal and not assume this will succeed immediately, or at least have a comment somewhere noting that these need to be removed and eventually this might return null.",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2e7cd8_811162ba",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-19T00:31:30Z",
+      "side": 1,
+      "message": "oh, yea, we should be removing from the map in HandleNotificationClosed().",
+      "parentUuid": "a4839e28_5817dc2f",
       "revId": "ad5cf5622874dc6f710837d5925049f805794208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
