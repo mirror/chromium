@@ -34,6 +34,24 @@
       "revId": "e1c84d994028d1b56a9d9cc414753f0c99b5ebdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a21f44_d4851386",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 30067,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T20:45:15Z",
+      "side": 0,
+      "message": "\u003e LevelDB.SharedCache.BytesUsed is only in Canary so I omitted that step. Still mark as obsolete?\n\nIt looks like it\u0027s made it to dev (I just checked the dashboard), and this is the kind of name that might be inadvertently reused.  Please mark it as obsolete.",
+      "parentUuid": "a76d498a_737acc23",
+      "revId": "e1c84d994028d1b56a9d9cc414753f0c99b5ebdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

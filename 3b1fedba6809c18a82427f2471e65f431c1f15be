@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6b7de8e_b62be003",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 30074,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T20:45:15Z",
+      "side": 1,
+      "message": "Uh, shouldn\u0027t this be \"kb\"",
+      "range": {
+        "startLine": 30074,
+        "startChar": 52,
+        "endLine": 30074,
+        "endChar": 57
+      },
+      "revId": "3b1fedba6809c18a82427f2471e65f431c1f15be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da05971_f44cbd22",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 30077,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T20:45:15Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 30077,
+        "startChar": 30,
+        "endLine": 30077,
+        "endChar": 31
+      },
+      "revId": "3b1fedba6809c18a82427f2471e65f431c1f15be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
