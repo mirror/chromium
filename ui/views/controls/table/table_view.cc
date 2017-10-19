@@ -850,11 +850,11 @@ void TableView::SelectByViewIndex(int view_index) {
 }
 
 void TableView::SetSelectionModel(const ui::ListSelectionModel& new_selection) {
-  if (new_selection.Equals(selection_model_))
+  if (new_selection == selection_model_)
     return;
 
   SchedulePaintForSelection();
-  selection_model_.Copy(new_selection);
+  selection_model_ = new_selection;
   SchedulePaintForSelection();
 
   // Scroll the group for the active item to visible.
@@ -907,7 +907,7 @@ void TableView::ConfigureSelectionModelForEvent(
     // shift: reset selection so that only rows between anchor and |view_index|
     // are selected.
     if (IsCmdOrCtrl(event) && event.IsShiftDown())
-      model->Copy(selection_model_);
+      *model = selection_model_;
     else
       model->set_anchor(selection_model_.anchor());
     for (int i = std::min(view_index, ModelToView(model->anchor())),
@@ -920,7 +920,7 @@ void TableView::ConfigureSelectionModelForEvent(
     DCHECK(IsCmdOrCtrl(event));
     // Toggle the selection state of |view_index| and set the anchor/active to
     // it and don't change the state of any other rows.
-    model->Copy(selection_model_);
+    *model = selection_model_;
     model->set_anchor(ViewToModel(view_index));
     model->set_active(ViewToModel(view_index));
     SelectRowsInRangeFrom(view_index,
