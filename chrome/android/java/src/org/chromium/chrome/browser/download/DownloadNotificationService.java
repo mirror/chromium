@@ -491,7 +491,7 @@ public class DownloadNotificationService extends Service {
             hideSummaryNotificationIfNecessary(-1);
         } else if (isDownloadOperationIntent(intent)) {
             handleDownloadOperation(intent);
-            DownloadResumptionScheduler.getDownloadResumptionScheduler(mContext).cancelTask();
+            DownloadResumptionScheduler.getDownloadResumptionScheduler(mContext).cancel();
             // Limit the number of auto resumption attempts in case Chrome falls into a vicious
             // cycle.
             if (ACTION_DOWNLOAD_RESUME_ALL.equals(intent.getAction())) {
@@ -563,29 +563,8 @@ public class DownloadNotificationService extends Service {
     }
 
     private void rescheduleDownloads() {
-        // Cancel any existing task.  If we have any downloads to resume we'll reschedule another
-        // one.
-        DownloadResumptionScheduler.getDownloadResumptionScheduler(mContext).cancelTask();
-        List<DownloadSharedPreferenceEntry> entries = mDownloadSharedPreferenceHelper.getEntries();
-        if (entries.isEmpty()) return;
-
-        boolean scheduleAutoResumption = false;
-        boolean allowMeteredConnection = false;
-        for (int i = 0; i < entries.size(); ++i) {
-            DownloadSharedPreferenceEntry entry = entries.get(i);
-            if (entry.isAutoResumable) {
-                scheduleAutoResumption = true;
-                if (entry.canDownloadWhileMetered) {
-                    allowMeteredConnection = true;
-                    break;
-                }
-            }
-        }
-
-        if (scheduleAutoResumption && mNumAutoResumptionAttemptLeft > 0) {
-            DownloadResumptionScheduler.getDownloadResumptionScheduler(mContext).schedule(
-                    allowMeteredConnection);
-        }
+        if (mNumAutoResumptionAttemptLeft <= 0) return;
+        DownloadResumptionScheduler.getDownloadResumptionScheduler(mContext).scheduleIfNecessary();
     }
 
     @VisibleForTesting
@@ -1186,7 +1165,8 @@ public class DownloadNotificationService extends Service {
         final DownloadSharedPreferenceEntry entry = getDownloadEntryFromIntent(intent);
         if (entry == null
                 && !(id != null && LegacyHelpers.isLegacyOfflinePage(id)
-                           && TextUtils.equals(intent.getAction(), ACTION_DOWNLOAD_OPEN))) {
+                           && TextUtils.equals(intent.getAction(), ACTION_DOWNLOAD_OPEN))
+                && !ACTION_DOWNLOAD_RESUME_ALL.equals(intent.getAction())) {
             handleDownloadOperationForMissingNotification(intent);
             hideSummaryNotificationIfNecessary(-1);
             return;
