@@ -751,11 +751,11 @@ TEST_F(BluetoothBlueZTest, StopDiscovery) {
   ASSERT_TRUE(discovery_sessions_[0]->IsActive());
 
   discovery_sessions_[0]->Stop(GetCallback(), GetErrorCallback());
-  discovery_sessions_.clear();
 
   base::RunLoop().Run();
   EXPECT_EQ(1, callback_count_);
   EXPECT_EQ(0, error_callback_count_);
+  discovery_sessions_.clear();
 }
 
 TEST_F(BluetoothBlueZTest, Discovery) {
