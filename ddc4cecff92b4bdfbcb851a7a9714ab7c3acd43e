@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c739d42b_c8af2936",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3106,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T18:26:06Z",
+      "side": 1,
+      "message": "Good point, I had kept the old one.\nMade it more generic.",
+      "parentUuid": "aa87bd76_455ae15f",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c709106_e3b6bba3",
         "filename": "chrome/services/chrome_file_util/public/cpp/BUILD.gn",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa371f3a_2b645bd2",
+        "filename": "chrome/services/chrome_file_util/public/cpp/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T18:26:06Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "9c709106_e3b6bba3",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c1f2cd31_0d8e84ab",
+        "filename": "chrome/services/chrome_file_util/public/cpp/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T18:26:06Z",
+      "side": 1,
+      "message": "Oops, copy/paste goof!\nNot sure why git gn check didn\u0027t complain about the include in zip_file_creator.h.",
+      "parentUuid": "36ca8c16_50418909",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc0fe5f4_d1b35d0f",
         "filename": "chrome/services/chrome_file_util/public/cpp/BUILD.gn",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37671e4_61945cac",
+        "filename": "chrome/services/chrome_file_util/public/cpp/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T18:26:06Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "bc0fe5f4_d1b35d0f",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6ed919f2_28a5f9af",
+        "filename": "chrome/services/chrome_file_util/public/cpp/zip_file_creator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T18:26:06Z",
+      "side": 1,
+      "message": "Ah, much simpler! Thanks.",
+      "parentUuid": "279de502_940cca50",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d86216f_7d46f50f",
         "filename": "chrome/services/chrome_file_util/public/cpp/zip_file_creator.cc",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c741ffe4_6456929f",
+        "filename": "chrome/services/chrome_file_util/public/cpp/zip_file_creator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T18:26:06Z",
+      "side": 1,
+      "message": "Shorter with nullptr and param comments as you suggested.",
+      "parentUuid": "9d86216f_7d46f50f",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "78fd546d_9602fa72",
+        "filename": "chrome/services/chrome_file_util/zip_file_creator_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T18:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8fff087_59d412f6",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c52aeb9a_7adc3345",
         "filename": "chrome/services/chrome_file_util/zip_file_creator_impl.cc",
         "patchSetId": 12
@@ -135,6 +261,24 @@
       "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9c1d71_83211fae",
+        "filename": "chrome/services/chrome_file_util/zip_file_creator_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T18:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c52aeb9a_7adc3345",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "5b635062_23954812",
+        "filename": "chrome/services/chrome_file_util/zip_file_creator_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T18:26:06Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "35dedbd3_f1147c1c",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "774423ff_901d9de4",
         "filename": "chrome/services/chrome_file_util/zip_file_creator_impl.cc",
         "patchSetId": 12
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "1f453813_962754a6",
+        "filename": "chrome/services/chrome_file_util/zip_file_creator_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T18:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "774423ff_901d9de4",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "556e53e4_2f93d225",
         "filename": "chrome/services/chrome_file_util/zip_file_creator_impl.cc",
         "patchSetId": 12
@@ -186,6 +366,24 @@
       "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be25c4d_be50b45c",
+        "filename": "chrome/services/chrome_file_util/zip_file_creator_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T18:26:06Z",
+      "side": 1,
+      "message": "Great suggestion, added a comment also for clarity.",
+      "parentUuid": "556e53e4_2f93d225",
+      "revId": "ddc4cecff92b4bdfbcb851a7a9714ab7c3acd43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
