@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "97a5f024_258353d0",
+        "filename": "ui/keyboard/container_full_width_behavior.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-19T08:38:56Z",
+      "side": 1,
+      "message": "OK. then how about renaming |workspace_bounds| to |display_bounds| or |root_window_bounds|?\nAFAIK workspace doesn\u0027t include the shelf.",
+      "parentUuid": "058248c5_04198b5d",
+      "range": {
+        "startLine": 68,
+        "startChar": 21,
+        "endLine": 68,
+        "endChar": 49
+      },
+      "revId": "752476e1d03949383d07d4f2768c7ebe3e508080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3867cd2d_a2330c66",
         "filename": "ui/keyboard/keyboard_controller.h",
         "patchSetId": 6
