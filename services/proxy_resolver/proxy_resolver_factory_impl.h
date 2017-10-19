@@ -43,6 +43,7 @@ class ProxyResolverFactoryImpl : public mojom::ProxyResolverFactory {
       const std::string& pac_script,
       mojom::ProxyResolverRequest request,
       mojom::ProxyResolverFactoryRequestClientPtr client) override;
+  void OnResolverDestroyed() override;
 
   void RemoveJob(Job* job);
 
