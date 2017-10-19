@@ -79,8 +79,7 @@
 #include "chromecast/app/android/crash_handler.h"
 #include "components/crash/content/browser/child_process_crash_observer_android.h"
 #include "components/crash/content/browser/crash_dump_observer_android.h"
-#include "net/android/network_change_notifier_factory_android.h"
-#else
+#elif !defined(OS_FUCHSIA)
 #include "chromecast/net/network_change_notifier_factory_cast.h"
 #endif
 
@@ -378,13 +377,10 @@ void CastBrowserMainParts::PreMainMessageLoopStart() {
   // Net/DNS metrics.
   metrics::PreregisterAllGroupedHistograms();
 
-#if defined(OS_ANDROID)
-  net::NetworkChangeNotifier::SetFactory(
-      new net::NetworkChangeNotifierFactoryAndroid());
-#elif !defined(OS_FUCHSIA)
+#if !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
   net::NetworkChangeNotifier::SetFactory(
       new NetworkChangeNotifierFactoryCast());
-#endif  // !defined(OS_FUCHSIA)
+#endif  // !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
 }
 
 void CastBrowserMainParts::PostMainMessageLoopStart() {

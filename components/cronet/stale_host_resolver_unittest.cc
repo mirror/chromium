@@ -27,10 +27,6 @@
 #include "net/url_request/url_request_context_builder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-#if defined(OS_ANDROID)
-#include "net/android/network_change_notifier_factory_android.h"
-#endif
-
 namespace cronet {
 
 namespace {
@@ -143,10 +139,6 @@ class StaleHostResolverTest : public testing::Test {
   }
 
   void CreateNetworkChangeNotifier() {
-#if defined(OS_ANDROID)
-    net::NetworkChangeNotifier::SetFactory(
-        new net::NetworkChangeNotifierFactoryAndroid());
-#endif
     net::NetworkChangeNotifier::Create();
   }
 

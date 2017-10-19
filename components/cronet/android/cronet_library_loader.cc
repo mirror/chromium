@@ -22,7 +22,6 @@
 #include "components/cronet/android/cronet_jni_registration.h"
 #include "components/cronet/version.h"
 #include "jni/CronetLibraryLoader_jni.h"
-#include "net/android/network_change_notifier_factory_android.h"
 #include "net/base/network_change_notifier.h"
 #include "url/url_features.h"
 #include "url/url_util.h"
@@ -95,8 +94,6 @@ void CronetInitOnInitThread(JNIEnv* env, const JavaParamRef<jclass>& jcaller) {
       new base::MessageLoop(base::MessageLoop::Type::TYPE_JAVA);
   static_cast<base::MessageLoopForUI*>(g_init_message_loop)->Start();
   DCHECK(!g_network_change_notifier);
-  net::NetworkChangeNotifier::SetFactory(
-      new net::NetworkChangeNotifierFactoryAndroid());
   g_network_change_notifier = net::NetworkChangeNotifier::Create();
 }
 
