@@ -117,7 +117,8 @@ enum AcceleratorAction {
   SHOW_KEYBOARD_OVERLAY,
   SHOW_STYLUS_TOOLS,
   SHOW_TASK_MANAGER,
-  START_VOICE_INTERACTION,
+  START_VOICE_INTERACTION_TEXT_COMMAND,  // Start assistant in typing mode.
+  START_VOICE_INTERACTION_VOICE_COMMAND,  // Start assistant in voice mode.
   SUSPEND,
   SWAP_PRIMARY_DISPLAY,
   SWITCH_IME,  // Switch to another IME depending on the accelerator.
