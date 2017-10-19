@@ -16,6 +16,24 @@
       "revId": "98356743c57335b4b67aad6f399afd3d1acfbd23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e197179_9ef8b999",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-10-19T16:39:51Z",
+      "side": 1,
+      "message": "Eventually yes, but not now. As we currently ban all base:: stuff in core/ and modules/, we need to bring AdoptRef() and WrapRefPtr() from base to WTF for a while.",
+      "parentUuid": "b127a4ef_cd9354be",
+      "revId": "98356743c57335b4b67aad6f399afd3d1acfbd23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
