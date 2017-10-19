@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07e3b5d1_1bcbcb8d",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-19T16:55:57Z",
+      "side": 1,
+      "message": "Note: I had a second test that covers the case of switching tabs (i.e. the main old trigger for capturing a thumbnail), but it\u0027s flaky, so I pulled it into a separate CL while I continue working on it.",
+      "range": {
+        "startLine": 113,
+        "startChar": 70,
+        "endLine": 113,
+        "endChar": 0
+      },
+      "revId": "a8d681ff3c7a717c095121765b8dae748b158d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "841dd01f_94f3df66",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-19T16:55:57Z",
+      "side": 1,
+      "message": "This is weird. I haven\u0027t gotten around to investigating more.",
+      "range": {
+        "startLine": 116,
+        "startChar": 59,
+        "endLine": 116,
+        "endChar": 0
+      },
+      "revId": "a8d681ff3c7a717c095121765b8dae748b158d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
