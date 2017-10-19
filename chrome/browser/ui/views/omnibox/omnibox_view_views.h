@@ -147,7 +147,8 @@ class OmniboxViewViews : public OmniboxView,
   void ApplyCaretVisibility() override;
   void OnTemporaryTextMaybeChanged(const base::string16& display_text,
                                    bool save_original_selection,
-                                   bool notify_text_changed) override;
+                                   bool notify_text_changed,
+                                   AutocompleteMatch::Type match_type) override;
   bool OnInlineAutocompleteTextMaybeChanged(const base::string16& display_text,
                                             size_t user_text_length) override;
   void OnInlineAutocompleteTextCleared() override;

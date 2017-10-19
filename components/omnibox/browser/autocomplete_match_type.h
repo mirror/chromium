@@ -6,6 +6,7 @@
 #define COMPONENTS_OMNIBOX_BROWSER_AUTOCOMPLETE_MATCH_TYPE_H_
 
 #include <string>
+#include "base/strings/string16.h"
 
 struct AutocompleteMatchType {
   // Type of AutocompleteMatch. Typedef'ed in autocomplete_match.h. Defined here
@@ -59,6 +60,9 @@ struct AutocompleteMatchType {
 
   // Converts |type| to a string representation. Used in logging.
   static std::string ToString(AutocompleteMatchType::Type type);
+
+  static base::string16 ToAccessibilityLabel(AutocompleteMatchType::Type type,
+                                             const base::string16& text);
 };
 
 #endif  // COMPONENTS_OMNIBOX_BROWSER_AUTOCOMPLETE_MATCH_TYPE_H_
