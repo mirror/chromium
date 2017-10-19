@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d634aaaa_1ee14976",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-19T02:18:06Z",
+      "side": 1,
+      "message": "Agreed. This is just a work around for local experiments and I forgot to remove this. We need a solution for the priority issue, but I don\u0027t intend to include this change.",
+      "parentUuid": "fb617326_aafa6f7f",
+      "range": {
+        "startLine": 283,
+        "startChar": 25,
+        "endLine": 283,
+        "endChar": 42
+      },
+      "revId": "aa4c0cb3e6f17ecc038fdd279f1af90a81584576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84cd74b4_3b3c6798",
         "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-18T19:32:02Z",
       "side": 1,
       "message": "I think there\u0027s a chrome idiom for doing this using Singleton template",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "aa4c0cb3e6f17ecc038fdd279f1af90a81584576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe2833e_a7b0e87b",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-19T02:18:06Z",
+      "side": 1,
+      "message": "Maybe base/memory/singleton.h?\n\nCouple months ago I was told that using static field is simpler than using singleton template.\nhttps://codereview.chromium.org/2824133002/diff/1/content/browser/memory/swap_metrics_observer_linux.cc#newcode19",
+      "parentUuid": "84cd74b4_3b3c6798",
       "range": {
         "startLine": 18,
         "startChar": 35,
@@ -131,6 +179,24 @@
       "side": 1,
       "message": "Ah, I was misunderstanding. I was thinking that event listeners are not checking Document::CanExecuteScripts...\n\nMaybe an easier fix would be to make Document::CanExecuteScripts check IsContextSuspended()?",
       "parentUuid": "21f3fa7d_bedb6d0d",
+      "revId": "aa4c0cb3e6f17ecc038fdd279f1af90a81584576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc2ef0c_3ef319de",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-19T02:18:06Z",
+      "side": 1,
+      "message": "Let me try to do that.",
+      "parentUuid": "6d318f15_127d3778",
       "revId": "aa4c0cb3e6f17ecc038fdd279f1af90a81584576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
