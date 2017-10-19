@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6cd1d5bf_e50947b1",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T16:53:13Z",
+      "side": 1,
+      "message": "Please add a comment that this may be hit during shutdown when the rootview is null.",
+      "parentUuid": "46836bc6_ba5e5f02",
+      "range": {
+        "startLine": 713,
+        "startChar": 9,
+        "endLine": 713,
+        "endChar": 35
+      },
+      "revId": "47a7c9d6cef6d7ccb1e00e9882c9c7b34e7334fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "982f1c40_7867d750",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 2
