@@ -22,6 +22,30 @@
       "revId": "6e746f056a1b0ee25b7f591dd159baa94e7dfebd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb535be_11c7091a",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T06:15:34Z",
+      "side": 1,
+      "message": "Yes, but it won\u0027t do that; the call returns the number of platform handles that comprised the fd.\n\nZX_OK isn\u0027t a valid result for these calls, really.",
+      "parentUuid": "6cfe2a48_269baae9",
+      "range": {
+        "startLine": 62,
+        "startChar": 13,
+        "endLine": 62,
+        "endChar": 17
+      },
+      "revId": "6e746f056a1b0ee25b7f591dd159baa94e7dfebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
