@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe7f01e1_07355cce",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "I thought that the variable initialization takes longer than assigning. I have searched that it is not true because compiler will optimize it. I will remove all the earlier declaration.",
+      "parentUuid": "7f489ef7_5a53e6a9",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c974d03_8f86c238",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5ab2ad_7f14df61",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "I don\u0027t think i need new or a pointer, i updated its type.",
+      "parentUuid": "7c974d03_8f86c238",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "18eb6840_babec0bd",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0373aa52_1cad50d0",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0db31b0b_fa145aaa",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a33cd8e0_907ef17b",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0db31b0b_fa145aaa",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3372ccf7_911ac10c",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44ed5af5_98878a6f",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc09d755_d8e9f0dc",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 7
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-17T20:06:54Z",
       "side": 1,
       "message": "These things would apply to the RenderPassDrawQuad using the pass, not to quads inside the pass? Inside a renderpass with a filter, we still can skip quads that overlap each other, though need to be careful about occlusion from things above but outside the renderpass.\n\nMaybe this is to be addressed, but the TODO reads as it is about applying the filters, which would be to the RenderPassDrawQuad",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322d47e1_94325747",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "As discussed, I have updated my comments.",
+      "parentUuid": "dc09d755_d8e9f0dc",
       "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "db490d65_f7f1f7ec",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "i believe the solution for this one and the one with draw occlusion inside the copy request will be similar. I will add a TODO for this one then.",
+      "parentUuid": "6cfdfad0_9e657ca4",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cda351a_6b091461",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 7
@@ -135,6 +261,24 @@
       "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26b2012_344597dc",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cda351a_6b091461",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "75b45fde_c188a35a",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "yes, sorry, i had another version with it removed. I forget to commit it. in the new version, i did the optimization i was talking about: skipping quads in a shared_quad_state if the shared_quad_state does not intersect with the occlusion rect.",
+      "parentUuid": "4cced7ad_5c7740b0",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9f2fb33_1e9fb5dc",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 7
@@ -169,6 +331,24 @@
       "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ef3e17_10ea5d26",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "After a deep research (and help with @wei), we have confirmed that flattenTo2d is not needed. Since we apply the transformer matrix to each corner and a plane doesn\u0027t contain a z-coordinate (z will always be 0), transformed plane will be the same with or without flattenTo2d applied. Yes, you are right, i can remove flatten here.",
+      "parentUuid": "d9f2fb33_1e9fb5dc",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "801e7e16_35c429c9",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "As we have discussed offline, i will use MathUtil::MapEnclosingClippedRect and MathUtil::MapEnclosedRectWith2dAxisAlignedTransform instead. I will also add a test case for perspective. Thanks.",
+      "parentUuid": "25ec3ff5_2e3b81a3",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ded5a23_01f2d786",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 7
@@ -203,6 +401,24 @@
       "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c40a2e1e_46db42c8",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ded5a23_01f2d786",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "2374d2be_b51ac8a0",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b341475_a51bd654",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49c9fcd4_f014205b",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 7
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "83b169c1_405e141a",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49c9fcd4_f014205b",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e272330d_39279528",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 7
@@ -251,6 +503,24 @@
       "writtenOn": "2017-10-17T20:10:49Z",
       "side": 1,
       "message": "Another perf case for you to consider: What is the algorithmic/io complexity of this function? What if we end up calling it many times, will our perf be bad? I think this was designed with overlay cases in mind, which are normally very few - though for mac it is more, so perf impacts may overlap.",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a5374a_ae5c7ef6",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "i think it takes O(n) time. I have some other ideas for perf testing too. I will work on this as soon as this base is landed.",
+      "parentUuid": "e272330d_39279528",
       "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "0fccc901_703701cc",
+        "filename": "components/viz/service/display/display.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "I will use RemoveOverdrawQuads. Thanks.",
+      "parentUuid": "7c510809_0994bd7d",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "138db057_41534de8",
         "filename": "components/viz/service/display/display_unittest.cc",
         "patchSetId": 7
@@ -288,6 +576,24 @@
       "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2462a86_d2759e5d",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "you are right, i don\u0027t need to count. thanks.",
+      "parentUuid": "138db057_41534de8",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "e3db0714_474058fe",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbf0c17e_02434068",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f35964f_7ce59419",
         "filename": "components/viz/service/display/display_unittest.cc",
         "patchSetId": 7
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "b2f87d8d_0a57821c",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f35964f_7ce59419",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d45edd83_29cd95f0",
         "filename": "components/viz/service/display/display_unittest.cc",
         "patchSetId": 7
@@ -339,6 +681,24 @@
       "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf29364_2b94dca3",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1544,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-19T18:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d45edd83_29cd95f0",
+      "revId": "fe9fc6fab3575924ec69cdca627f9efc239493bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
