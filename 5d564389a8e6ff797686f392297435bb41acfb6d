@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72ad329b_e9f4ab36",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevice.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-19T04:16:30Z",
+      "side": 1,
+      "message": "FrameProvider::Dispose is no-op. Why do we need to call it?",
+      "revId": "5d564389a8e6ff797686f392297435bb41acfb6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36fe1227_c0899151",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameRequestCallbackCollection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-19T04:16:30Z",
+      "side": 1,
+      "message": "This loop is O(N^2) since EraseAt is an O(N) operation. Is it intended?\n\nOr should we consider using HeapHashMap\u003cint, Member\u003cVRFrameRequestCallback\u003e\u003e?",
+      "revId": "5d564389a8e6ff797686f392297435bb41acfb6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af6d1a3_6a929ba7",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameRequestCallbackCollection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-19T04:16:30Z",
+      "side": 1,
+      "message": "\"requestFrame\" sounds a bit too generic...? \"VRRequestFrame\"?",
+      "revId": "5d564389a8e6ff797686f392297435bb41acfb6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43630f79_08ab3b50",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-19T04:16:30Z",
+      "side": 1,
+      "message": "Don\u0027t we need to add TRACE_WRAPPER for callback_collection_...?\n\n+bashi",
+      "revId": "5d564389a8e6ff797686f392297435bb41acfb6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
