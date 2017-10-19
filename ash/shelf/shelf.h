@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "ash/ash_export.h"
+#include "ash/login/login_metrics_recorder.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/shelf/shelf_layout_manager_observer.h"
 #include "ash/shelf/shelf_locking_manager.h"
@@ -118,6 +119,9 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
   // Activates the shelf item specified by the index in the list of shelf items
   // on the display identified by |display_id|.
   static void ActivateShelfItemOnDisplay(int item_index, int64_t display_id);
+
+  static void RecordUserClick(
+      LoginMetricsRecorder::LockScreenUserClickTarget target);
 
   // Handles a gesture |event| coming from a source outside the shelf widget
   // (e.g. the status area widget). Allows support for behaviors like toggling

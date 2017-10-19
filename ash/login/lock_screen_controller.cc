@@ -31,7 +31,10 @@ std::string CalculateHash(const std::string& password,
 
 }  // namespace
 
-LockScreenController::LockScreenController() = default;
+LockScreenController::LockScreenController() {
+  login_metrics_recorder_ = std::make_unique<LoginMetricsRecorder>();
+}
+
 LockScreenController::~LockScreenController() = default;
 
 // static
@@ -146,6 +149,9 @@ void LockScreenController::AttemptUnlock(const AccountId& account_id) {
   if (!lock_screen_client_)
     return;
   lock_screen_client_->AttemptUnlock(account_id);
+
+  login_metrics_recorder_->SetAuthMethod(
+      LoginMetricsRecorder::AuthMethod::kSmartlock);
 }
 
 void LockScreenController::HardlockPod(const AccountId& account_id) {
@@ -247,6 +253,9 @@ void LockScreenController::DoAuthenticateUser(
         account_id.GetUserEmail(), account_id.GetObjGuid(), password);
   }
 
+  login_metrics_recorder_->SetAuthMethod(
+      is_pin ? LoginMetricsRecorder::AuthMethod::kPin
+             : LoginMetricsRecorder::AuthMethod::kPassword);
   lock_screen_client_->AuthenticateUser(account_id, hashed_password, is_pin,
                                         std::move(callback));
 }

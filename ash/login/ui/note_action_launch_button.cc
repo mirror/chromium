@@ -6,6 +6,8 @@
 
 #include <memory>
 
+#include "ash/login/lock_screen_controller.h"
+#include "ash/login/ui/lock_screen.h"
 #include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shelf/shelf_constants.h"
@@ -270,6 +272,9 @@ class NoteActionLaunchButton::ActionButton : public views::ImageButton,
 
   // views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override {
+    LockScreen::RecordUserClick(
+        LoginMetricsRecorder::LockScreenUserClickTarget::
+            kLockScreenNoteActionButton);
     if (event.IsKeyEvent()) {
       Shell::Get()->tray_action()->RequestNewLockScreenNote(
           mojom::LockScreenNoteOrigin::kLockScreenButtonKeyboard);

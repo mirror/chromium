@@ -6,6 +6,8 @@
 
 #include <memory>
 
+#include "ash/login/lock_screen_controller.h"
+#include "ash/login/ui/lock_screen.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shelf_item_delegate.h"
 #include "ash/public/cpp/shelf_model.h"
@@ -258,6 +260,17 @@ void Shelf::ActivateShelfItemOnDisplay(int item_index, int64_t display_id) {
       ui::ET_KEY_RELEASED, ui::VKEY_UNKNOWN, ui::EF_NONE);
   item_delegate->ItemSelected(std::move(event), display_id, LAUNCH_FROM_UNKNOWN,
                               base::Bind(&NoopCallback));
+}
+
+// static
+void Shelf::RecordUserClick(
+    LoginMetricsRecorder::LockScreenUserClickTarget target) {
+  if (Shell::HasInstance() && LockScreen::IsShown()) {
+    Shell::Get()
+        ->lock_screen_controller()
+        ->metrics()
+        ->RecordUserClickEventOnLockScreen(target);
+  }
 }
 
 bool Shelf::ProcessGestureEvent(const ui::GestureEvent& event) {

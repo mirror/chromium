@@ -8,6 +8,7 @@
 #include <unordered_map>
 
 #include "ash/ash_export.h"
+#include "ash/login/login_metrics_recorder.h"
 #include "ash/session/session_observer.h"
 #include "ash/tray_action/tray_action_observer.h"
 #include "base/macros.h"
@@ -35,6 +36,9 @@ class LockScreen : public TrayActionObserver, public SessionObserver {
 
   // Check if the lock screen is currently shown.
   static bool IsShown();
+
+  static void RecordUserClick(
+      LoginMetricsRecorder::LockScreenUserClickTarget target);
 
   // Destroys an existing lock screen instance.
   void Destroy();
