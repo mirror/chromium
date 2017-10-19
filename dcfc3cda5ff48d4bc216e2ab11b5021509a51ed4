@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6252ccd8_92c6f545",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-10-19T23:27:54Z",
+      "side": 0,
+      "message": "We may want to check with people on the dev side to make sure we\u0027re okay with this. They may want to maintain iOS 9 coverage until the last minute, to ensure that it stays high quality for its last release.",
+      "revId": "dcfc3cda5ff48d4bc216e2ab11b5021509a51ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
