@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eec4917_f796131e",
+        "filename": "ui/aura/hit_test_data_provider_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-19T03:13:29Z",
+      "side": 1,
+      "message": "Add a comment here that looking at |layer| may not be correct, since the actual layer that embeds the surface may be a descendent of |layer|, instead of |layer| itself.",
+      "revId": "97eb7e2bf3bd4cd108724308c876a8fce262092c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6ef900_864a2010",
+        "filename": "ui/aura/hit_test_data_provider_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-19T03:13:29Z",
+      "side": 1,
+      "message": "Now that I read the code, you don\u0027t actually need to set |flags| here, right? You can set Mine vs ChildSurface in CreateHitTestRegion() instead?",
+      "revId": "97eb7e2bf3bd4cd108724308c876a8fce262092c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
