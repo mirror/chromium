@@ -362,6 +362,7 @@ void UpdateFieldValueAndPropertiesMaskMap(
     const base::string16* value,
     FieldPropertiesMask added_flags,
     FieldValueAndPropertiesMaskMap* field_value_and_properties_map) {
+  //  LOG(ERROR) << element.Value().Utf8() << " " << added_flags;
   FieldValueAndPropertiesMaskMap::iterator it =
       field_value_and_properties_map->find(element);
   if (it != field_value_and_properties_map->end()) {
@@ -1268,6 +1269,7 @@ void PasswordAutofillAgent::WillSubmitForm(const blink::WebFormElement& form) {
 
   std::unique_ptr<PasswordForm> submitted_form = CreatePasswordFormFromWebForm(
       form, &field_value_and_properties_map_, &form_predictions_);
+  LOG(ERROR) << "WillSumitForm " << submitted_form->only_for_fallback_saving;
 
   // If there is a provisionally saved password, copy over the previous
   // password value so we get the user's typed password, not the value that

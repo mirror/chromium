@@ -1236,7 +1236,8 @@ void FormStructure::EncodeFormForUpload(AutofillUploadContents* upload) const {
       // Add the same field elements as the query and a few more below.
       if (ShouldSkipField(*field))
         continue;
-
+      LOG(ERROR) << "type " << base::UTF16ToUTF8(field->name) << " "
+                 << field_type;
       AutofillUploadContents::Field* added_field = upload->add_field();
       added_field->set_autofill_type(field_type);
       if (field->generation_type()) {
