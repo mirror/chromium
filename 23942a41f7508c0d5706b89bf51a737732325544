@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "289e404e_5e42018e",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadEffectParameters.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-19T23:24:02Z",
+      "side": 1,
+      "message": "Then explain the situation and add a TODO?",
+      "parentUuid": "8834947e_b71cfea3",
+      "revId": "23942a41f7508c0d5706b89bf51a737732325544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "888f5295_469fae1e",
         "filename": "third_party/WebKit/Source/modules/gamepad/GamepadHapticActuator.idl",
         "patchSetId": 7
