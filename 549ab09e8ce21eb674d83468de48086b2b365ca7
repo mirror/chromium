@@ -22,6 +22,30 @@
       "revId": "549ab09e8ce21eb674d83468de48086b2b365ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f719e0_4b196198",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-19T21:44:28Z",
+      "side": 1,
+      "message": "I\u0027m not sure how to indicate that this transfers ownership then using the type system - ScopedHandle can\u0027t be passed by value (it explicitly removes some constructors/operators), rvalue indicates ownership transfer.\n\nI\u0027ll go back to just passing a HANDLE with a comment, unless you have other suggestions.",
+      "parentUuid": "5bd3aa71_7312cfe9",
+      "range": {
+        "startLine": 118,
+        "startChar": 18,
+        "endLine": 118,
+        "endChar": 50
+      },
+      "revId": "549ab09e8ce21eb674d83468de48086b2b365ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
