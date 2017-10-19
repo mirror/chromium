@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90193398_d345f365",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-19T00:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55caddc3_14f7fab5",
+      "range": {
+        "startLine": 66,
+        "startChar": 36,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "530def6838695c2d8813dac4c2b5c9d0e0c0f208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74c9537_166d76fb",
         "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "92cd6544_438c953f",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-19T00:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a74c9537_166d76fb",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 23
+      },
+      "revId": "530def6838695c2d8813dac4c2b5c9d0e0c0f208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "682d0cd5_62867fa8",
         "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-18T22:19:39Z",
       "side": 1,
       "message": "Optional nit: Mebbe name this \"Arc.OptInSilentAuthCode.Reauthorization\", so that it\u0027s sorted to be right next to its related histogram?  OTOH, if it\u0027s more useful to sort the \"Reauthorization\" histograms together, then the current name is fine.",
+      "range": {
+        "startLine": 106,
+        "startChar": 31,
+        "endLine": 106,
+        "endChar": 70
+      },
+      "revId": "530def6838695c2d8813dac4c2b5c9d0e0c0f208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c954488_7f5bb3c7",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-19T00:09:29Z",
+      "side": 1,
+      "message": "You point is valid. It is bit more convenient to have it named differently.",
+      "parentUuid": "682d0cd5_62867fa8",
       "range": {
         "startLine": 106,
         "startChar": 31,
@@ -91,6 +163,30 @@
       "revId": "530def6838695c2d8813dac4c2b5c9d0e0c0f208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87cee8a_276f144f",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-19T00:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97b0b6f0_246951b6",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 55
+      },
+      "revId": "530def6838695c2d8813dac4c2b5c9d0e0c0f208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
