@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c71c7aa7_e7c8020b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-19T20:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94dbe614_9a8a9fe4",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7594397f_bbd0d1cf",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a73c8a_e8a0e26a",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-19T20:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7594397f_bbd0d1cf",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "67d48163_00a71f6f",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-19T20:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dc1eebc_a8b47a58",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ee26dcb_a98317e6",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e9c355f3_5ec382ef",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-19T20:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ee26dcb_a98317e6",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2501a41a_f0acfec3",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-17T20:29:49Z",
       "side": 1,
       "message": "Is this special case needed?",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a392af76_f0e4bea8",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-19T20:58:37Z",
+      "side": 1,
+      "message": "Yes. Because label-\u003eAddStyleRange assumes for Range(x,y): x\u003cy, https://cs.chromium.org/chromium/src/ui/views/controls/styled_label.cc?rcl\u003d1e6957e609f2ee2cc8eedf5d70222194fee02c3c\u0026l\u003d131\n\nCharactor in position |bold_start| won\u0027t have any style applied, when bold_length\u003d\u003d0.",
+      "parentUuid": "2501a41a_f0acfec3",
       "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "9749d6b6_5e855163",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-19T20:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e27724e4_8039b929",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea937190_2f011932",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 1
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-17T20:29:49Z",
       "side": 1,
       "message": "Construct all of the styles together near the top of the function, and then apply them at the end.",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4675775d_0e3d41ee",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-19T20:58:37Z",
+      "side": 1,
+      "message": "This is not needed if bold_length\u003d\u003d0, so I create it after return case. I\u0027m fine with moving it to the top if this is desired.",
+      "parentUuid": "ea937190_2f011932",
       "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "b2939f74_9f94f3b1",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-19T20:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6def773b_10194e36",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b979977f_66987ab9",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 1
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "533de21a_5e92b029",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-19T20:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b979977f_66987ab9",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2aa83d2_38e2f9b6",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 1
@@ -169,6 +331,24 @@
       "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f92b46bd_1ea2d3d3",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-19T20:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2aa83d2_38e2f9b6",
+      "revId": "95f7f7f41955a041c13c91d9dce91d05a6c1f9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
