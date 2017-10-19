@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af97e3f3_a6c99005",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-19T16:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e475316_b7ea08f3",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "7a8f2891e989ee69849fd87e7069e5e7c083e243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "879de9cb_acc6767f",
         "filename": "ui/compositor/scoped_layer_animation_settings.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "7a8f2891e989ee69849fd87e7069e5e7c083e243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3914b78b_25b6b6ec",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-19T16:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "879de9cb_acc6767f",
+      "range": {
+        "startLine": 46,
+        "startChar": 21,
+        "endLine": 46,
+        "endChar": 44
+      },
+      "revId": "7a8f2891e989ee69849fd87e7069e5e7c083e243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
