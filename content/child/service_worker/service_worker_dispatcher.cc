@@ -227,12 +227,20 @@ ServiceWorkerDispatcher::GetOrCreateServiceWorker(
 scoped_refptr<WebServiceWorkerRegistrationImpl>
 ServiceWorkerDispatcher::GetOrCreateRegistrationForServiceWorkerGlobalScope(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
-    const ServiceWorkerVersionAttributes& attrs,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner) {
   RegistrationObjectMap::iterator found = registrations_.find(info->handle_id);
   if (found != registrations_.end())
     return found->second;
 
+  std::unique_ptr<ServiceWorkerHandleReference> installing_ref =
+      ServiceWorkerHandleReference::Create(std::move(info->installing),
+                                           thread_safe_sender_.get());
+  std::unique_ptr<ServiceWorkerHandleReference> waiting_ref =
+      ServiceWorkerHandleReference::Create(std::move(info->waiting),
+                                           thread_safe_sender_.get());
+  std::unique_ptr<ServiceWorkerHandleReference> active_ref =
+      ServiceWorkerHandleReference::Create(std::move(info->active),
+                                           thread_safe_sender_.get());
   // WebServiceWorkerRegistrationImpl constructor calls
   // AddServiceWorkerRegistration to add itself into |registrations_|.
   scoped_refptr<WebServiceWorkerRegistrationImpl> registration =
@@ -240,29 +248,24 @@ ServiceWorkerDispatcher::GetOrCreateRegistrationForServiceWorkerGlobalScope(
           std::move(info), std::move(io_task_runner));
 
   registration->SetInstalling(
-      GetOrCreateServiceWorker(ServiceWorkerHandleReference::Create(
-          attrs.installing, thread_safe_sender_.get())));
-  registration->SetWaiting(
-      GetOrCreateServiceWorker(ServiceWorkerHandleReference::Create(
-          attrs.waiting, thread_safe_sender_.get())));
-  registration->SetActive(
-      GetOrCreateServiceWorker(ServiceWorkerHandleReference::Create(
-          attrs.active, thread_safe_sender_.get())));
+      GetOrCreateServiceWorker(std::move(installing_ref)));
+  registration->SetWaiting(GetOrCreateServiceWorker(std::move(waiting_ref)));
+  registration->SetActive(GetOrCreateServiceWorker(std::move(active_ref)));
+
   return registration;
 }
 
 scoped_refptr<WebServiceWorkerRegistrationImpl>
 ServiceWorkerDispatcher::GetOrCreateRegistrationForServiceWorkerClient(
-    blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
-    const ServiceWorkerVersionAttributes& attrs) {
+    blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info) {
   int32_t registration_handle_id = info->handle_id;
 
   std::unique_ptr<ServiceWorkerHandleReference> installing_ref =
-      Adopt(attrs.installing);
+      Adopt(std::move(info->installing));
   std::unique_ptr<ServiceWorkerHandleReference> waiting_ref =
-      Adopt(attrs.waiting);
+      Adopt(std::move(info->waiting));
   std::unique_ptr<ServiceWorkerHandleReference> active_ref =
-      Adopt(attrs.active);
+      Adopt(std::move(info->active));
 
   RegistrationObjectMap::iterator found =
       registrations_.find(registration_handle_id);
@@ -432,9 +435,11 @@ void ServiceWorkerDispatcher::OnSetVersionAttributes(
   // Adopt the references sent from the browser process and pass it to the
   // registration if it exists.
   std::unique_ptr<ServiceWorkerHandleReference> installing =
-      Adopt(attrs.installing);
-  std::unique_ptr<ServiceWorkerHandleReference> waiting = Adopt(attrs.waiting);
-  std::unique_ptr<ServiceWorkerHandleReference> active = Adopt(attrs.active);
+      Adopt(attrs.installing.Clone());
+  std::unique_ptr<ServiceWorkerHandleReference> waiting =
+      Adopt(attrs.waiting.Clone());
+  std::unique_ptr<ServiceWorkerHandleReference> active =
+      Adopt(attrs.active.Clone());
 
   RegistrationObjectMap::iterator found =
       registrations_.find(registration_handle_id);
@@ -471,7 +476,7 @@ void ServiceWorkerDispatcher::OnSetControllerServiceWorker(
   // Adopt the reference sent from the browser process and pass it to the
   // provider context if it exists.
   std::unique_ptr<ServiceWorkerHandleReference> handle_ref =
-      Adopt(params.object_info);
+      Adopt(params.object_info.Clone());
   ProviderContextMap::iterator provider =
       provider_contexts_.find(params.provider_id);
   if (provider != provider_contexts_.end()) {
@@ -490,7 +495,7 @@ void ServiceWorkerDispatcher::OnSetControllerServiceWorker(
     // to populate the .controller field.
     scoped_refptr<WebServiceWorkerImpl> worker =
         GetOrCreateServiceWorker(ServiceWorkerHandleReference::Create(
-            params.object_info, thread_safe_sender_.get()));
+            params.object_info.Clone(), thread_safe_sender_.get()));
     found->second->SetController(WebServiceWorkerImpl::CreateHandle(worker),
                                  params.should_notify_controllerchange);
     // You must not access |found| after setController() because it may fire the
@@ -510,7 +515,7 @@ void ServiceWorkerDispatcher::OnPostMessage(
   // Adopt the reference sent from the browser process and get the corresponding
   // worker object.
   scoped_refptr<WebServiceWorkerImpl> worker =
-      GetOrCreateServiceWorker(Adopt(params.service_worker_info));
+      GetOrCreateServiceWorker(Adopt(params.service_worker_info.Clone()));
 
   ProviderClientMap::iterator found =
       provider_clients_.find(params.provider_id);
@@ -564,8 +569,9 @@ void ServiceWorkerDispatcher::RemoveServiceWorkerRegistration(
 }
 
 std::unique_ptr<ServiceWorkerHandleReference> ServiceWorkerDispatcher::Adopt(
-    const blink::mojom::ServiceWorkerObjectInfo& info) {
-  return ServiceWorkerHandleReference::Adopt(info, thread_safe_sender_.get());
+    blink::mojom::ServiceWorkerObjectInfoPtr info) {
+  return ServiceWorkerHandleReference::Adopt(std::move(info),
+                                             thread_safe_sender_.get());
 }
 
 }  // namespace content

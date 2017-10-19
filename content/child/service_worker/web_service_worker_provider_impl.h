@@ -26,8 +26,6 @@ class ServiceWorkerDispatcher;
 class ServiceWorkerProviderContext;
 class ThreadSafeSender;
 
-struct ServiceWorkerVersionAttributes;
-
 // This class corresponds to one ServiceWorkerContainer interface in
 // JS context (i.e. navigator.serviceWorker).
 class WebServiceWorkerProviderImpl : public blink::WebServiceWorkerProvider {
@@ -65,15 +63,13 @@ class WebServiceWorkerProviderImpl : public blink::WebServiceWorkerProvider {
       std::unique_ptr<WebServiceWorkerRegistrationCallbacks> callbacks,
       blink::mojom::ServiceWorkerErrorType error,
       const base::Optional<std::string>& error_msg,
-      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration,
-      const base::Optional<ServiceWorkerVersionAttributes>& attributes);
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration);
 
   void OnDidGetRegistration(
       std::unique_ptr<WebServiceWorkerGetRegistrationCallbacks> callbacks,
       blink::mojom::ServiceWorkerErrorType error,
       const base::Optional<std::string>& error_msg,
-      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration,
-      const base::Optional<ServiceWorkerVersionAttributes>& attributes);
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration);
 
   void OnDidGetRegistrations(
       std::unique_ptr<WebServiceWorkerGetRegistrationsCallbacks> callbacks,
@@ -81,14 +77,12 @@ class WebServiceWorkerProviderImpl : public blink::WebServiceWorkerProvider {
       const base::Optional<std::string>& error_msg,
       base::Optional<
           std::vector<blink::mojom::ServiceWorkerRegistrationObjectInfoPtr>>
-          infos,
-      const base::Optional<std::vector<ServiceWorkerVersionAttributes>>& attrs);
+          infos);
 
   void OnDidGetRegistrationForReady(
       std::unique_ptr<WebServiceWorkerGetRegistrationForReadyCallbacks>
           callbacks,
-      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration,
-      const base::Optional<ServiceWorkerVersionAttributes>& attributes);
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration);
 
   scoped_refptr<ThreadSafeSender> thread_safe_sender_;
   scoped_refptr<ServiceWorkerProviderContext> context_;

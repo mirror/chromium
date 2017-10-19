@@ -70,12 +70,19 @@ ServiceWorkerRegistrationHandle::~ServiceWorkerRegistrationHandle() {
 
 blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
 ServiceWorkerRegistrationHandle::CreateObjectInfo() {
+  DCHECK(provider_host_);
   auto info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
   info->handle_id = handle_id_;
   info->options = blink::mojom::ServiceWorkerRegistrationOptions::New(
       registration_->pattern());
   info->registration_id = registration_->id();
   bindings_.AddBinding(this, mojo::MakeRequest(&info->host_ptr_info));
+  info->installing = provider_host_->GetOrCreateServiceWorkerHandle(
+      registration_->installing_version());
+  info->waiting = provider_host_->GetOrCreateServiceWorkerHandle(
+      registration_->waiting_version());
+  info->active = provider_host_->GetOrCreateServiceWorkerHandle(
+      registration_->active_version());
   return info;
 }
 

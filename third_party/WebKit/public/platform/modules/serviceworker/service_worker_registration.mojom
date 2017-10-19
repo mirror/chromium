@@ -5,6 +5,7 @@
 module blink.mojom;
 
 import "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom";
+import "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom";
 import "url/mojo/url.mojom";
 
 const int32 kInvalidServiceWorkerRegistrationHandleId = -1;
@@ -42,6 +43,11 @@ struct ServiceWorkerRegistrationObjectInfo {
   // Holds one mojo connection to browser process, acts as a reference count to
   // control lifetime of ServiceWorkerRegistration on the browser process.
   associated ServiceWorkerRegistrationObjectHost? host_ptr_info;
+
+  // The service worker objects of this registration object.
+  ServiceWorkerObjectInfo installing;
+  ServiceWorkerObjectInfo waiting;
+  ServiceWorkerObjectInfo active;
 };
 
 // This interface lives on the browser process, it corresponds to one
