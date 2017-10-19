@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bf2ca8d7_cc774a27",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-19T19:36:16Z",
+      "side": 1,
+      "message": "This is probably due to not initializing the rects. I could not repro.",
+      "parentUuid": "a716e4a7_83fb0968",
+      "revId": "de4223d63154299ac71e6335798f76a80167d52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "480496b2_d8bacd35",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
         "patchSetId": 12
@@ -57,6 +75,30 @@
       "revId": "de4223d63154299ac71e6335798f76a80167d52f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b8413b_3f58f413",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-19T19:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "480496b2_d8bacd35",
+      "range": {
+        "startLine": 547,
+        "startChar": 0,
+        "endLine": 548,
+        "endChar": 70
+      },
+      "revId": "de4223d63154299ac71e6335798f76a80167d52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "60c02acb_3a3ed2fd",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-19T19:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9800bb8_a92b9732",
+      "revId": "de4223d63154299ac71e6335798f76a80167d52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7cc46e1_05ae2844",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
         "patchSetId": 12
@@ -130,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "36432464_28942c06",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-19T19:36:16Z",
+      "side": 1,
+      "message": "Log output from the new thin lines test. Every branch case gets hit at least once and in any given line we only ever set p1/start and p2/end once.\n\n[1:1:1019/140421.349267:INFO:GraphicsContext.cpp(555)] New line\n[1:1:1019/140421.349613:INFO:GraphicsContext.cpp(561)] Case 1 set p1\n[1:1:1019/140421.349837:INFO:GraphicsContext.cpp(562)] Case 1 set start_dot\n[1:1:1019/140421.352629:INFO:GraphicsContext.cpp(555)] New line\n[1:1:1019/140421.352754:INFO:GraphicsContext.cpp(561)] Case 1 set p1\n[1:1:1019/140421.352868:INFO:GraphicsContext.cpp(562)] Case 1 set start_dot\n[1:1:1019/140421.353006:INFO:GraphicsContext.cpp(603)] Case 6 set p2\n[1:1:1019/140421.353124:INFO:GraphicsContext.cpp(604)] Case 6 set end_dot\n[1:1:1019/140421.357521:INFO:GraphicsContext.cpp(555)] New line\n[1:1:1019/140421.357642:INFO:GraphicsContext.cpp(570)] Case 2 set p1\n[1:1:1019/140421.357750:INFO:GraphicsContext.cpp(571)] Case 2 set start_dot\n[1:1:1019/140421.359125:INFO:GraphicsContext.cpp(555)] New line\n[1:1:1019/140421.359266:INFO:GraphicsContext.cpp(587)] Case 4 set p1\n[1:1:1019/140421.359396:INFO:GraphicsContext.cpp(588)] Case 4 set start_dot\n[1:1:1019/140421.359525:INFO:GraphicsContext.cpp(596)] Case 5 set p2\n[1:1:1019/140421.359634:INFO:GraphicsContext.cpp(597)] Case 5 set end_dot\n[1:1:1019/140421.361613:INFO:GraphicsContext.cpp(555)] New line\n[1:1:1019/140421.361719:INFO:GraphicsContext.cpp(561)] Case 1 set p1\n[1:1:1019/140421.361815:INFO:GraphicsContext.cpp(562)] Case 1 set start_dot\n[1:1:1019/140421.363072:INFO:GraphicsContext.cpp(555)] New line\n[1:1:1019/140421.363173:INFO:GraphicsContext.cpp(570)] Case 2 set p1\n[1:1:1019/140421.363266:INFO:GraphicsContext.cpp(571)] Case 2 set start_dot\n[1:1:1019/140421.363420:INFO:GraphicsContext.cpp(578)] Case 3 set p2\n[1:1:1019/140421.363602:INFO:GraphicsContext.cpp(579)] Case 3 set end_dot\n[1:1:1019/140421.365698:INFO:GraphicsContext.cpp(555)] New line\n[1:1:1019/140421.365822:INFO:GraphicsContext.cpp(587)] Case 4 set p1\n[1:1:1019/140421.365938:INFO:GraphicsContext.cpp(588)] Case 4 set start_dot\n[1:1:1019/140421.368144:INFO:GraphicsContext.cpp(555)] New line\n[1:1:1019/140421.368263:INFO:GraphicsContext.cpp(587)] Case 4 set p1\n[1:1:1019/140421.368384:INFO:GraphicsContext.cpp(588)] Case 4 set start_dot\n[1:1:1019/140421.370635:INFO:GraphicsContext.cpp(555)] New line\n[1:1:1019/140421.370769:INFO:GraphicsContext.cpp(561)] Case 1 set p1\n[1:1:1019/140421.370888:INFO:GraphicsContext.cpp(562)] Case 1 set start_dot\n[1:1:1019/140421.372933:INFO:GraphicsContext.cpp(555)] New line\n[1:1:1019/140421.373051:INFO:GraphicsContext.cpp(570)] Case 2 set p1\n[1:1:1019/140421.373163:INFO:GraphicsContext.cpp(571)] Case 2 set start_dot\n[1:1:1019/140421.375348:INFO:GraphicsContext.cpp(555)] New line\n[1:1:1019/140421.375493:INFO:GraphicsContext.cpp(570)] Case 2 set p1\n[1:1:1019/140421.375606:INFO:GraphicsContext.cpp(571)] Case 2 set start_dot\n[1:1:1019/140421.376935:INFO:GraphicsContext.cpp(555)] New line\n[1:1:1019/140421.377051:INFO:GraphicsContext.cpp(570)] Case 2 set p1\n[1:1:1019/140421.377160:INFO:GraphicsContext.cpp(571)] Case 2 set start_dot\n[1:1:1019/140421.377274:INFO:GraphicsContext.cpp(578)] Case 3 set p2\n[1:1:1019/140421.377393:INFO:GraphicsContext.cpp(579)] Case 3 set end_dot",
+      "parentUuid": "e0b55f93_9aa4d884",
+      "revId": "de4223d63154299ac71e6335798f76a80167d52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91dc7cec_59f79155",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
         "patchSetId": 12
@@ -153,6 +231,30 @@
     },
     {
       "key": {
+        "uuid": "c8f8843f_b80fe960",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-19T19:36:16Z",
+      "side": 1,
+      "message": "This is probably worth doing. We always set the start dot and modify p1 together, and set the end dot and modify p2 together. The code to offset the rect in each branch is the same and could move to the end.",
+      "parentUuid": "91dc7cec_59f79155",
+      "range": {
+        "startLine": 587,
+        "startChar": 0,
+        "endLine": 589,
+        "endChar": 24
+      },
+      "revId": "de4223d63154299ac71e6335798f76a80167d52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c176d7b_c3b42b2d",
         "filename": "third_party/WebKit/Source/platform/graphics/StrokeData.cpp",
         "patchSetId": 12
@@ -164,6 +266,24 @@
       "writtenOn": "2017-10-19T14:34:06Z",
       "side": 1,
       "message": "Won\u0027t this fall out naturally from the conditional below?\n\n(if max_gap \u003c\u003d 0 and min_gap \u003e 0 and k \u003e 0, fabs(min_gap - k) \u003c fabs(max_gap - k) and we select the former)",
+      "revId": "de4223d63154299ac71e6335798f76a80167d52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba926d36_95de1e88",
+        "filename": "third_party/WebKit/Source/platform/graphics/StrokeData.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-19T19:36:16Z",
+      "side": 1,
+      "message": "Yes, changed it to be one conditional.",
+      "parentUuid": "0c176d7b_c3b42b2d",
       "revId": "de4223d63154299ac71e6335798f76a80167d52f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
