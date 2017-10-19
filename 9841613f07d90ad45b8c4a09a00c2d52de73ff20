@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "ba21c566_155ad7f2",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-19T19:56:09Z",
+      "side": 1,
+      "message": "Looking at the Google style guide...it allows protected fields, but only in test fixtures themselves.",
+      "parentUuid": "41c90c84_96b30a5f",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e9d3b9_cc47887d",
         "filename": "components/safe_browsing/browser/base_parallel_resource_throttle_unittest.cc",
         "patchSetId": 5
