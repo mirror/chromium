@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5386b576_47af102d",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T23:37:00Z",
+      "side": 1,
+      "message": "If these icons are windows specific, should they be moved to a windows only section?",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 30
+      },
+      "revId": "c8db0fc035c06d321f7e796c3ce56022e347071d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bce914e_c11a0de6",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T23:37:00Z",
+      "side": 1,
+      "message": "optional: use arrow rather than caret (arrow is consistent with bubbles). When I think of caret it\u0027s the cursor in a textfield (search for caret in ui/views/controls/textfield/textfield.h)",
+      "range": {
+        "startLine": 79,
+        "startChar": 15,
+        "endLine": 79,
+        "endChar": 20
+      },
+      "revId": "c8db0fc035c06d321f7e796c3ce56022e347071d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6fffb83_a31db07b",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T23:37:00Z",
+      "side": 1,
+      "message": "This is a LOT of code to put in the .cc. I would be inclined to move the context related calcualtes into their own .h/.cc.",
+      "range": {
+        "startLine": 209,
+        "startChar": 6,
+        "endLine": 209,
+        "endChar": 30
+      },
+      "revId": "c8db0fc035c06d321f7e796c3ce56022e347071d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34e3813_12b485f8",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T23:37:00Z",
+      "side": 1,
+      "message": "const \u0026",
+      "range": {
+        "startLine": 224,
+        "startChar": 53,
+        "endLine": 224,
+        "endChar": 62
+      },
+      "revId": "c8db0fc035c06d321f7e796c3ce56022e347071d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c91e57_3a9589a7",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T23:37:00Z",
+      "side": 1,
+      "message": "If this is always the primary display, please update the comment.",
+      "range": {
+        "startLine": 232,
+        "startChar": 5,
+        "endLine": 232,
+        "endChar": 79
+      },
+      "revId": "c8db0fc035c06d321f7e796c3ce56022e347071d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe9b1c8_19a74b2c",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T23:37:00Z",
+      "side": 1,
+      "message": "const \u0026",
+      "range": {
+        "startLine": 262,
+        "startChar": 36,
+        "endLine": 262,
+        "endChar": 45
+      },
+      "revId": "c8db0fc035c06d321f7e796c3ce56022e347071d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
