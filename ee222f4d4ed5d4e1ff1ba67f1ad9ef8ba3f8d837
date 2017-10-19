@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e01f80aa_d63f483f",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-19T23:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e43873be_1bda0a1d",
+      "revId": "ee222f4d4ed5d4e1ff1ba67f1ad9ef8ba3f8d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45328cf9_b3d85090",
         "filename": "chrome/browser/resources/interventions_internals/index.html",
         "patchSetId": 10
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "c02062eb_729a1a67",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-19T23:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45328cf9_b3d85090",
+      "range": {
+        "startLine": 60,
+        "startChar": 55,
+        "endLine": 60,
+        "endChar": 59
+      },
+      "revId": "ee222f4d4ed5d4e1ff1ba67f1ad9ef8ba3f8d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1232868_9dc46907",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 10
@@ -56,6 +98,24 @@
       "revId": "ee222f4d4ed5d4e1ff1ba67f1ad9ef8ba3f8d837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f18fdf0_6ad27a12",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-19T23:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1232868_9dc46907",
+      "revId": "ee222f4d4ed5d4e1ff1ba67f1ad9ef8ba3f8d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "e20d91ba_e4f0bbf2",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-19T23:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97a67318_0334bacb",
+      "revId": "ee222f4d4ed5d4e1ff1ba67f1ad9ef8ba3f8d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1df0465d_cdb3be4e",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 10
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "c1632ad4_9f281132",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-19T23:51:01Z",
+      "side": 1,
+      "message": "Good point! I have changed it so that the user blacklist status is now only on and off. At least for now. I will add more info on user blacklisted status as well as blacklisted host details on the next CL.",
+      "parentUuid": "1df0465d_cdb3be4e",
+      "revId": "ee222f4d4ed5d4e1ff1ba67f1ad9ef8ba3f8d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcb0d63a_65cf0086",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 10
@@ -107,6 +203,24 @@
       "revId": "ee222f4d4ed5d4e1ff1ba67f1ad9ef8ba3f8d837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e7abbcb_251db955",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-19T23:51:01Z",
+      "side": 1,
+      "message": "Thanks, I did\u0027t think of that. We actually don\u0027t need this line. Changed so that the user blacklisted state is refreshed from PreviewsBlackList code.",
+      "parentUuid": "fcb0d63a_65cf0086",
+      "revId": "ee222f4d4ed5d4e1ff1ba67f1ad9ef8ba3f8d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
