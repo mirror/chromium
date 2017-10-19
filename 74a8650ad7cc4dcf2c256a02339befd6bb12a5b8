@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b13ebe3_25c1c8fa",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_bypass_protocol.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-19T22:08:07Z",
+      "side": 1,
+      "message": "nit: IIRC, status.error() is always negative, right?  If so, you can just write \"-status.error()\" rather than using std::abs()",
+      "range": {
+        "startLine": 166,
+        "startChar": 6,
+        "endLine": 166,
+        "endChar": 14
+      },
+      "revId": "74a8650ad7cc4dcf2c256a02339befd6bb12a5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e78a695_0ce1e2c1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 12252,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-19T22:08:07Z",
+      "side": 1,
+      "message": "nit: \"Invalid\", i.e. don\u0027t capitalize the V",
+      "range": {
+        "startLine": 12252,
+        "startChar": 36,
+        "endLine": 12252,
+        "endChar": 43
+      },
+      "revId": "74a8650ad7cc4dcf2c256a02339befd6bb12a5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
