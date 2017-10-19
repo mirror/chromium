@@ -219,6 +219,7 @@ void MediaList::Reattach(RefPtr<MediaQuerySet> media_queries) {
 void MediaList::Trace(blink::Visitor* visitor) {
   visitor->Trace(parent_style_sheet_);
   visitor->Trace(parent_rule_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

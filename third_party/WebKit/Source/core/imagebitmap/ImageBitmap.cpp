@@ -957,6 +957,4 @@ FloatSize ImageBitmap::ElementSize(const FloatSize&) const {
   return FloatSize(width(), height());
 }
 
-void ImageBitmap::Trace(blink::Visitor* visitor) {}
-
 }  // namespace blink

@@ -52,11 +52,6 @@ void SVGTransformTearOff::Trace(blink::Visitor* visitor) {
   SVGPropertyTearOff<SVGTransform>::Trace(visitor);
 }
 
-DEFINE_TRACE_WRAPPERS(SVGTransformTearOff) {
-  SVGPropertyTearOff<SVGTransform>::TraceWrappers(visitor);
-  ScriptWrappable::TraceWrappers(visitor);
-}
-
 SVGTransformTearOff* SVGTransformTearOff::CreateDetached() {
   return Create(SVGTransform::Create(blink::kSvgTransformMatrix), nullptr,
                 kPropertyIsNotAnimVal, QualifiedName::Null());

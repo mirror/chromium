@@ -43,6 +43,8 @@ class SVGElement;
 // Inherits SVGAnimatedPropertyBase to enable XML attribute synchronization, but
 // this is never animated.
 class SVGStaticStringList final : public SVGAnimatedPropertyBase {
+  DEFINE_WRAPPERTYPEINFO_UNREACHABLE();
+
  public:
   static SVGStaticStringList* Create(SVGElement* context_element,
                                      const QualifiedName& attribute_name) {

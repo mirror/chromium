@@ -353,6 +353,7 @@ AudioParam* AudioParam::Create(BaseAudioContext& context,
 
 void AudioParam::Trace(blink::Visitor* visitor) {
   visitor->Trace(context_);
+  ScriptWrappable::Trace(visitor);
 }
 
 float AudioParam::value() const {

@@ -42,8 +42,7 @@ namespace blink {
 class ExceptionState;
 class SVGElement;
 
-class SVGAnimatedPropertyBase
-    : public GarbageCollectedFinalized<SVGAnimatedPropertyBase> {
+class SVGAnimatedPropertyBase : public GarbageCollectedMixin {
   WTF_MAKE_NONCOPYABLE(SVGAnimatedPropertyBase);
 
  public:
@@ -78,8 +77,6 @@ class SVGAnimatedPropertyBase
   }
 
   bool IsSpecified() const;
-
-  virtual void Trace(blink::Visitor* visitor) {}
 
   DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     visitor->TraceWrappersWithManualWriteBarrier(context_element_.Get());

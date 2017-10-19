@@ -35,12 +35,11 @@ namespace blink {
 
 class LocalFrame;
 
-class CORE_EXPORT Navigator final : public GarbageCollected<Navigator>,
+class CORE_EXPORT Navigator final : public ScriptWrappable,
                                     public NavigatorConcurrentHardware,
                                     public NavigatorID,
                                     public NavigatorLanguage,
                                     public NavigatorOnLine,
-                                    public ScriptWrappable,
                                     public DOMWindowClient,
                                     public Supplementable<Navigator> {
   DEFINE_WRAPPERTYPEINFO();
@@ -65,7 +64,7 @@ class CORE_EXPORT Navigator final : public GarbageCollected<Navigator>,
   // NavigatorLanguage
   Vector<String> languages() override;
 
-  virtual void Trace(blink::Visitor*);
+  void Trace(blink::Visitor*) override;
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:

@@ -25,8 +25,7 @@ class V8PerformanceObserverCallback;
 using PerformanceEntryVector = HeapVector<Member<PerformanceEntry>>;
 
 class CORE_EXPORT PerformanceObserver final
-    : public GarbageCollected<PerformanceObserver>,
-      public ScriptWrappable,
+    : public ScriptWrappable,
       public ActiveScriptWrappable<PerformanceObserver>,
       public ContextClient {
   DEFINE_WRAPPERTYPEINFO();
@@ -48,7 +47,7 @@ class CORE_EXPORT PerformanceObserver final
   // ScriptWrappable
   bool HasPendingActivity() const final;
 
-  void Trace(blink::Visitor*);
+  void Trace(blink::Visitor*) override;
   DECLARE_TRACE_WRAPPERS();
 
  private:
