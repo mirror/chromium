@@ -61,7 +61,8 @@ class BreakingNewsGCMAppHandler : public BreakingNewsListener,
 
   // BreakingNewsListener overrides.
   void StartListening(
-      OnNewRemoteSuggestionCallback on_new_remote_suggestion_callback) override;
+      OnNewRemoteSuggestionCallback on_new_remote_suggestion_callback,
+      OnRefreshRequestCallback on_refresh_request_callback) override;
   void StopListening() override;
   bool IsListening() const override;
 
@@ -108,6 +109,12 @@ class BreakingNewsGCMAppHandler : public BreakingNewsListener,
   // If the subscription is due, it may be scheduled immediately.
   void ScheduleNextForcedSubscription();
 
+  // Called from OnMessage if the received message is push-value message.
+  void OnPushValueMessage(const gcm::IncomingMessage& message);
+
+  // Called from OnMessage if the received message is push-to-refresh message.
+  void OnPushToRefreshMessage();
+
   // Called after successfully parsing the received suggestion JSON.
   void OnJsonSuccess(std::unique_ptr<base::Value> content);
 
@@ -122,9 +129,13 @@ class BreakingNewsGCMAppHandler : public BreakingNewsListener,
   const ParseJSONCallback parse_json_callback_;
   std::unique_ptr<base::Clock> clock_;
 
-  // Called after every time a new message is received in OnMessage() to notify
-  // the content provider.
+  // Called after every time a new message with payload is received in
+  // OnMessage() to notify the content provider.
   OnNewRemoteSuggestionCallback on_new_remote_suggestion_callback_;
+
+  // Called after every time a new push-to-refresh message is received in
+  // OnMessage() to notify the content provider.
+  OnRefreshRequestCallback on_refresh_request_callback_;
 
   std::unique_ptr<base::OneShotTimer> token_validation_timer_;
   std::unique_ptr<base::OneShotTimer> forced_subscription_timer_;

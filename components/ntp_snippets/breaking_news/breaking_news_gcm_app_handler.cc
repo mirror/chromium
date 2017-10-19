@@ -34,6 +34,16 @@ const char kBreakingNewsGCMSenderId[] = "667617379155";
 // Must match Java GoogleCloudMessaging.INSTANCE_ID_SCOPE.
 const char kGCMScope[] = "GCM";
 
+// Key of the action in the data in the pushed breaking news message.
+// Allowed values are: "push-to-refresh", "push-by-value"
+const char kPushedActionKey[] = "action";
+
+// push-to-refresh action name.
+const char kPushToRefreshAction[] = "push-to-refresh";
+
+// push-by-value action name.
+const char kPushValueAction[] = "push-by-value";
+
 // Key of the news json in the data in the pushed breaking news.
 const char kPushedNewsKey[] = "payload";
 
@@ -115,11 +125,16 @@ BreakingNewsGCMAppHandler::~BreakingNewsGCMAppHandler() {
 }
 
 void BreakingNewsGCMAppHandler::StartListening(
-    OnNewRemoteSuggestionCallback on_new_remote_suggestion_callback) {
+    OnNewRemoteSuggestionCallback on_new_remote_suggestion_callback,
+    OnRefreshRequestCallback on_refresh_request_callback) {
   DCHECK(!IsListening());
   DCHECK(!on_new_remote_suggestion_callback.is_null());
   on_new_remote_suggestion_callback_ =
       std::move(on_new_remote_suggestion_callback);
+
+  DCHECK(!on_refresh_request_callback.is_null());
+  on_refresh_request_callback_ = std::move(on_refresh_request_callback);
+
   Subscribe(/*force_token_retrieval=*/false);
   gcm_driver_->AddAppHandler(kBreakingNewsGCMAppID, this);
   if (IsTokenValidationEnabled()) {
@@ -303,10 +318,6 @@ void BreakingNewsGCMAppHandler::OnMessage(const std::string& app_id,
                                           const gcm::IncomingMessage& message) {
   DCHECK_EQ(app_id, kBreakingNewsGCMAppID);
 
-  gcm::MessageData::const_iterator it = message.data.find(kPushedNewsKey);
-  bool contains_pushed_news = (it != message.data.end());
-  metrics::OnMessageReceived(IsListening(), contains_pushed_news);
-
   if (!IsListening()) {
     // The content suggestions server may push a message right when the client
     // unsubscribes leading to a race condition. Ignore such messages.
@@ -314,19 +325,46 @@ void BreakingNewsGCMAppHandler::OnMessage(const std::string& app_id,
     return;
   }
 
-  if (contains_pushed_news) {
-    const std::string& news = it->second;
-    parse_json_callback_.Run(
-        news,
-        base::Bind(&BreakingNewsGCMAppHandler::OnJsonSuccess,
-                   weak_ptr_factory_.GetWeakPtr()),
-        base::Bind(&BreakingNewsGCMAppHandler::OnJsonError,
-                   weak_ptr_factory_.GetWeakPtr(), news));
+  gcm::MessageData::const_iterator it = message.data.find(kPushedActionKey);
+
+  bool contains_pushed_action = (it != message.data.end());
+  if (!contains_pushed_action) {
+    LOG(WARNING) << "Receiving pushed content failure: Action is missing.";
+    metrics::OnMessageReceived(metrics::ReceivedMessageAction::NO_ACTION);
+    return;
+  }
+  const std::string& action = it->second;
+
+  if (action == kPushToRefreshAction) {
+    metrics::OnMessageReceived(metrics::ReceivedMessageAction::PUSH_TO_REFRESH);
+    OnPushToRefreshMessage();
+  } else if (action == kPushValueAction) {
+    metrics::OnMessageReceived(metrics::ReceivedMessageAction::PUSH_BY_VALUE);
+    OnPushValueMessage(message);
   } else {
+    LOG(WARNING) << "Receiving pushed content failure: Invalid action.";
+    metrics::OnMessageReceived(metrics::ReceivedMessageAction::INVALID_ACTION);
+  }
+}
+
+void BreakingNewsGCMAppHandler::OnPushValueMessage(
+    const gcm::IncomingMessage& message) {
+  gcm::MessageData::const_iterator it = message.data.find(kPushedNewsKey);
+  bool contains_pushed_news = (it != message.data.end());
+  if (!contains_pushed_news) {
     LOG(WARNING)
         << "Receiving pushed content failure: Breaking News ID missing.";
   }
+
+  const std::string& news = it->second;
+  parse_json_callback_.Run(news,
+                           base::Bind(&BreakingNewsGCMAppHandler::OnJsonSuccess,
+                                      weak_ptr_factory_.GetWeakPtr()),
+                           base::Bind(&BreakingNewsGCMAppHandler::OnJsonError,
+                                      weak_ptr_factory_.GetWeakPtr(), news));
 }
+
+void BreakingNewsGCMAppHandler::OnPushToRefreshMessage() {}
 
 void BreakingNewsGCMAppHandler::OnMessagesDeleted(const std::string& app_id) {
   // Messages don't get deleted.

@@ -16,13 +16,15 @@ class BreakingNewsListener {
  public:
   using OnNewRemoteSuggestionCallback =
       base::Callback<void(std::unique_ptr<RemoteSuggestion> remote_suggestion)>;
+  using OnRefreshRequestCallback = base::Callback<void()>;
 
   virtual ~BreakingNewsListener() = default;
 
   // Subscribe to the breaking news service and start listening for pushed
   // breaking news. Must not be called if already listening.
   virtual void StartListening(
-      OnNewRemoteSuggestionCallback on_new_remote_suggestion_callback) = 0;
+      OnNewRemoteSuggestionCallback on_new_remote_suggestion_callback,
+      OnRefreshRequestCallback on_refresh_request_callback) = 0;
 
   // Stop listening for incoming breaking news. Any further pushed breaking news
   // will be ignored. Must be called while listening.
