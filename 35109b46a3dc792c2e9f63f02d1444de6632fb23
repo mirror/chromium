@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e969708_b390a853",
+        "filename": "chrome/browser/android/preferences/prefs_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-19T15:28:01Z",
+      "side": 1,
+      "message": "You don\u0027t strictly need a test fixture here, if you move GetPrefName() to an anonymous namespace and write the tests as TEST(Foo, Bar) instead of TEST_F.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 15
+      },
+      "revId": "35109b46a3dc792c2e9f63f02d1444de6632fb23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c227487a_80d6bf52",
+        "filename": "chrome/browser/android/preferences/prefs_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-19T15:28:01Z",
+      "side": 1,
+      "message": "Can you add a comment that if this test fails, you most likely forgot to update either the Pref enum or |kPrefsExposedToJava|? Better to repeat yourself with this stuff :)",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "35109b46a3dc792c2e9f63f02d1444de6632fb23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef6d3f42_7733c02e",
+        "filename": "chrome/browser/android/preferences/prefs_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-19T15:28:01Z",
+      "side": 1,
+      "message": "We have arraysize for this :)",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 70
+      },
+      "revId": "35109b46a3dc792c2e9f63f02d1444de6632fb23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
