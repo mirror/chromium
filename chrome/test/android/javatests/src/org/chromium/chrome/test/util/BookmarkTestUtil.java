@@ -4,14 +4,12 @@
 
 package org.chromium.chrome.test.util;
 
-import org.junit.Assert;
-
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.chrome.browser.bookmarks.BookmarkModel;
+import org.chromium.content.browser.test.util.Criteria;
+import org.chromium.content.browser.test.util.CriteriaHelper;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Utility functions for dealing with bookmarks in tests.
@@ -31,24 +29,12 @@ public class BookmarkTestUtil {
                     }
                 });
 
-        final CallbackHelper loadedCallback = new CallbackHelper();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+        CriteriaHelper.pollUiThread(new Criteria() {
             @Override
-            public void run() {
-                bookmarkModel.runAfterBookmarkModelLoaded(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadedCallback.notifyCalled();
-                    }
-                });
+            public boolean isSatisfied() {
+                return bookmarkModel.isBookmarkModelLoaded();
             }
         });
-
-        try {
-            loadedCallback.waitForCallback(0);
-        } catch (TimeoutException e) {
-            Assert.fail("Bookmark model did not load: Timeout.");
-        }
 
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
