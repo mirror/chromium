@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "277df687_eeac04c0",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-19T00:25:58Z",
+      "side": 1,
+      "message": "This apparently isn\u0027t true - at least I\u0027ve had a number of other reviewers claim this is still needed for pure abstract classes, due to them in fact being copy-able..",
+      "parentUuid": "ac82a60c_e0a28948",
+      "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0b45785_2d6a1db5",
         "filename": "content/public/common/network_connection_tracker.h",
         "patchSetId": 31
