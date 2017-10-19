@@ -139,6 +139,24 @@
       "revId": "08fa0089aca3bc81eaa75c2e4af3bac4b8e4acc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c5f2a6_4340366c",
+        "filename": "net/dns/host_resolver_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1838,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-19T14:50:43Z",
+      "side": 1,
+      "message": "Oh, good point. Moving one of the requests to start but not finish before the config change in this test should do it: https://cs.chromium.org/chromium/src/net/dns/host_resolver_impl_unittest.cc?l\u003d1999",
+      "parentUuid": "6aa5e239_09e012b6",
+      "revId": "08fa0089aca3bc81eaa75c2e4af3bac4b8e4acc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
