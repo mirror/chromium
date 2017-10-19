@@ -73,6 +73,7 @@ class PLATFORM_EXPORT ResourceFetcher
   DECLARE_VIRTUAL_TRACE();
 
   Resource* RequestResource(FetchParameters&,
+                            ResourceClient*,
                             const ResourceFactory&,
                             const SubstituteData& = SubstituteData());
 
@@ -185,6 +186,9 @@ class PLATFORM_EXPORT ResourceFetcher
 
   enum PrepareRequestResult { kAbort, kContinue, kBlock };
 
+  Resource* RequestResource(FetchParameters&,
+                            const ResourceFactory&,
+                            const SubstituteData&);
   PrepareRequestResult PrepareRequest(FetchParameters&,
                                       const ResourceFactory&,
                                       const SubstituteData&,

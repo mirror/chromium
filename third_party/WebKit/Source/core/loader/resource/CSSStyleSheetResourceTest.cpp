@@ -61,7 +61,7 @@ class CSSStyleSheetResourceTest : public ::testing::Test {
     KURL css_url(NullURL(), kUrl);
 
     CSSStyleSheetResource* css_resource =
-        CSSStyleSheetResource::CreateForTest(css_url, UTF8Encoding());
+        CSSStyleSheetResource::CreateForTest(css_url, UTF8Encoding(), nullptr);
     css_resource->ResponseReceived(
         ResourceResponse(css_url, "style/css", 0, g_null_atom), nullptr);
     css_resource->FinishForTest();
@@ -88,7 +88,7 @@ TEST_F(CSSStyleSheetResourceTest, DuplicateResourceNotCached) {
   ASSERT_TRUE(GetMemoryCache()->Contains(image_resource));
 
   CSSStyleSheetResource* css_resource =
-      CSSStyleSheetResource::CreateForTest(css_url, UTF8Encoding());
+      CSSStyleSheetResource::CreateForTest(css_url, UTF8Encoding(), nullptr);
   css_resource->ResponseReceived(
       ResourceResponse(css_url, "style/css", 0, g_null_atom), nullptr);
   css_resource->FinishForTest();

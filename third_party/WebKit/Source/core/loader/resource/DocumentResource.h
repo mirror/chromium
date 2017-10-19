@@ -40,7 +40,9 @@ class CORE_EXPORT DocumentResource final : public TextResource {
  public:
   using ClientType = ResourceClient;
 
-  static DocumentResource* FetchSVGDocument(FetchParameters&, ResourceFetcher*);
+  static DocumentResource* FetchSVGDocument(FetchParameters&,
+                                            ResourceFetcher*,
+                                            ResourceClient*);
   ~DocumentResource() override;
   DECLARE_VIRTUAL_TRACE();
 

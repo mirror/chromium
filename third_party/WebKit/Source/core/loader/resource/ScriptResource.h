@@ -55,7 +55,9 @@ class CORE_EXPORT ScriptResourceClient : public ResourceClient {
 class CORE_EXPORT ScriptResource final : public TextResource {
  public:
   using ClientType = ScriptResourceClient;
-  static ScriptResource* Fetch(FetchParameters&, ResourceFetcher*);
+  static ScriptResource* Fetch(FetchParameters&,
+                               ResourceFetcher*,
+                               ResourceClient*);
 
   // Public for testing
   static ScriptResource* CreateForTest(const KURL& url,

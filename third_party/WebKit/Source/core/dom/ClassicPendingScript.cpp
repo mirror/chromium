@@ -38,6 +38,11 @@ ClassicPendingScript::ClassicPendingScript(
       is_currently_streaming_(false) {
   CheckState();
   SetResource(resource);
+  if (resource) {
+    resource->AddClient(this, TaskRunnerHelper::Get(TaskType::kUnspecedLoading,
+                                                    &element->GetDocument())
+                                  .get());
+  }
   MemoryCoordinator::Instance().RegisterClient(this);
 }
 
@@ -60,7 +65,7 @@ void ClassicPendingScript::Prefinalize() {
 
 void ClassicPendingScript::DisposeInternal() {
   MemoryCoordinator::Instance().UnregisterClient(this);
-  SetResource(nullptr);
+  ClearResource();
   integrity_failure_ = false;
   CancelStreaming();
 }

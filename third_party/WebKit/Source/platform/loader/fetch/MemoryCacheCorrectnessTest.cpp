@@ -86,12 +86,12 @@ class MemoryCacheCorrectnessTest : public ::testing::Test {
     ResourceRequest resource_request(KURL(kParsedURLString, kResourceURL));
     resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
     FetchParameters fetch_params(resource_request);
-    return RawResource::Fetch(fetch_params, Fetcher());
+    return RawResource::Fetch(fetch_params, Fetcher(), nullptr);
   }
   MockResource* FetchMockResource() {
     FetchParameters fetch_params(
         ResourceRequest(KURL(kParsedURLString, kResourceURL)));
-    return MockResource::Fetch(fetch_params, Fetcher());
+    return MockResource::Fetch(fetch_params, Fetcher(), nullptr);
   }
   ResourceFetcher* Fetcher() const { return fetcher_.Get(); }
   void AdvanceClock(double seconds) { platform_->AdvanceClockSeconds(seconds); }
