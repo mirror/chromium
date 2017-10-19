@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb2107f1_5f93054d",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-19T22:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6fca2fc_b2b1461e",
+      "revId": "9976dac09c65836a72cb441f92d70edf89851401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e770252_7f96af28",
         "filename": "content/browser/gpu/gpu_process_host.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-19T22:33:01Z",
       "side": 1,
       "message": "android needs to crash here",
+      "revId": "9976dac09c65836a72cb441f92d70edf89851401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c864378c_ef4c3b5e",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-19T22:53:16Z",
+      "side": 1,
+      "message": "Done. And I added a comment for chromeos:\n\n#if defined(OS_ANDROID)\n        // Android can not fall back to software. If things are too unstable                      \n        // then we just crash chrome to reset everything. Sorry.                                  \n        CHECK(false);\n#elif defined(OS_CHROMEOS)\n        // ChromeOS also can not fall back to software. There we will just                        \n        // keep retrying to make the gpu process forever. Good luck.                              \n\tDLOG(ERROR) \u003c\u003c \"Gpu process is unstable and crashing repeatedly, if \"\n            \"you didn\u0027t notice already.\";\n#else\n        // The GPU process is too unstable to use. Disable it for current                         \n        // session.                                                                               \n        hardware_gpu_enabled_ \u003d false;\n        GpuDataManagerImpl::GetInstance()-\u003eDisableHardwareAcceleration();\n#endif\n\nI might be feeling a bit punchy today.\n\npiman@ pls verify this is good too. I could TODO if u have other thoughts.",
+      "parentUuid": "1e770252_7f96af28",
       "revId": "9976dac09c65836a72cb441f92d70edf89851401",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
