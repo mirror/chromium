@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1326b1d_cf61de18",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-10-19T16:09:14Z",
+      "side": 1,
+      "message": "Nit: provides",
+      "range": {
+        "startLine": 162,
+        "startChar": 66,
+        "endLine": 162,
+        "endChar": 73
+      },
+      "revId": "a373afc390e01b4230f08aed83f129adc57a9daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
