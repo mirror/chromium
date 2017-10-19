@@ -87,7 +87,7 @@ WorkerFetchContext::WorkerFetchContext(
       loading_task_runner_(
           TaskRunnerHelper::Get(TaskType::kUnspecedLoading, global_scope_)) {
   web_context_->InitializeOnWorkerThread(
-      loading_task_runner_->ToSingleThreadTaskRunner());
+      global_scope.Url(), loading_task_runner_->ToSingleThreadTaskRunner());
   std::unique_ptr<blink::WebDocumentSubresourceFilter> web_filter =
       web_context_->TakeSubresourceFilter();
   if (web_filter) {

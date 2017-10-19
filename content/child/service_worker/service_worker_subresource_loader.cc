@@ -344,6 +344,7 @@ void ServiceWorkerSubresourceLoader::StartResponse(
   if (!response.blob_uuid.empty()) {
     GURL blob_url =
         GURL("blob:" + controller_origin_.spec() + "/" + response.blob_uuid);
+    LOG(ERROR) << " blob_url " << blob_url;
     blob_registry_->data->RegisterURL(std::move(body_as_blob), blob_url,
                                       &blob_url_handle_);
     resource_request_.url = blob_url;

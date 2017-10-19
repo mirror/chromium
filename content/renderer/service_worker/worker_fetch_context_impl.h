@@ -12,6 +12,7 @@
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "ipc/ipc_message.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 #include "third_party/WebKit/public/platform/WebApplicationCacheHost.h"
 #include "third_party/WebKit/public/platform/WebWorkerFetchContext.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
@@ -40,11 +41,14 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
  public:
   WorkerFetchContextImpl(
       mojom::ServiceWorkerWorkerClientRequest service_worker_client_request,
+      mojom::ServiceWorkerContainerHostPtrInfo
+          service_worker_container_host_info,
       ChildURLLoaderFactoryGetter::Info url_loader_factory_getter_info);
   ~WorkerFetchContextImpl() override;
 
   // blink::WebWorkerFetchContext implementation:
   void InitializeOnWorkerThread(
+      const blink::WebURL& context_url,
       scoped_refptr<base::SingleThreadTaskRunner>) override;
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const blink::WebURLRequest& request,
@@ -68,6 +72,12 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   std::unique_ptr<blink::WebDocumentSubresourceFilter> TakeSubresourceFilter()
       override;
 
+  void MaybeInitializeSubresourceLoaderFactory();
+
+  std::unique_ptr<blink::WebURLLoader> CreateServiceWorkerURLLoader(
+      const blink::WebURLRequest& request,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+
   // mojom::ServiceWorkerWorkerClient implementation:
   void SetControllerServiceWorker(int64_t controller_version_id) override;
 
@@ -87,8 +97,12 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   mojo::Binding<mojom::ServiceWorkerWorkerClient> binding_;
 
   mojom::ServiceWorkerWorkerClientRequest service_worker_client_request_;
+  // Consumed on the worker thread to create |service_worker_container_host_|.
+  mojom::ServiceWorkerContainerHostPtrInfo service_worker_container_host_info_;
   // Consumed on the worker thread to create |url_loader_factory_getter_|.
   ChildURLLoaderFactoryGetter::Info url_loader_factory_getter_info_;
+  // Consumed on the worker thread to create |blob_registry_|.
+  storage::mojom::BlobRegistryPtrInfo blob_registry_ptr_info_;
 
   int service_worker_provider_id_ = kInvalidServiceWorkerProviderId;
   bool is_controlled_by_service_worker_ = false;
@@ -111,6 +125,11 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   GURL site_for_cookies_;
   bool is_secure_context_ = false;
   int appcache_host_id_ = blink::WebApplicationCacheHost::kAppCacheNoHostId;
+  mojom::ServiceWorkerContainerHostPtr service_worker_container_host_;
+  mojom::URLLoaderFactoryPtr subresource_loader_factory_;
+  scoped_refptr<base::RefCountedData<storage::mojom::BlobRegistryPtr>>
+      blob_registry_;
+  GURL context_url_;
 };
 
 }  // namespace content

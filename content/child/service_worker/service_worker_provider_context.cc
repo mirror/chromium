@@ -247,6 +247,15 @@ ServiceWorkerProviderContext::CreateWorkerClientRequest() {
   return request;
 }
 
+mojom::ServiceWorkerContainerHostPtrInfo
+ServiceWorkerProviderContext::CreateContainerHostCopy() {
+  DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(controllee_state_);
+  mojom::ServiceWorkerContainerHostPtrInfo container_host_copy;
+  container_host_->CloneForWorker(mojo::MakeRequest(&container_host_copy));
+  return container_host_copy;
+}
+
 void ServiceWorkerProviderContext::UnregisterWorkerFetchContext(
     mojom::ServiceWorkerWorkerClient* client) {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
