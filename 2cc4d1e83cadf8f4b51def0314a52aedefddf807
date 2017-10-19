@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06e2c34d_97906e7c",
+        "filename": "base/base64_encode_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-19T17:54:07Z",
+      "side": 1,
+      "message": "I believe you should be able to use a base::StringPiece here and still have the CHECK_EQ (due to operator\u003d\u003d + implicit conversion of std::string to base::StringPiece)",
+      "revId": "2cc4d1e83cadf8f4b51def0314a52aedefddf807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
