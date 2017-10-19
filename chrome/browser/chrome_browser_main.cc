@@ -1183,6 +1183,19 @@ void ChromeBrowserMainParts::ServiceManagerConnectionStarted(
 }
 
 void ChromeBrowserMainParts::PreMainMessageLoopRun() {
+#if !defined(NDEBUG)
+  // Put a task at the front of the message queue that will crash if this method
+  // hasn't finished. This detects whether any startup tasks attempt to run a
+  // nested message loop before MainMessageLoopRun.
+  struct CrashIfAlive : public base::SupportsWeakPtr<CrashIfAlive> {
+    CrashIfAlive() {
+      base::ThreadTaskRunnerHandle::Get()->PostTask(
+          FROM_HERE, base::BindOnce(&CrashIfAlive::Crash, AsWeakPtr()));
+    }
+    void Crash() { DCHECK(false) << "Not allowed to run tasks yet."; }
+  } crash_if_alive;
+#endif
+
 #if defined(USE_AURA)
   if (content::ServiceManagerConnection::GetForProcess() &&
       service_manager::ServiceManagerIsRemote()) {
