@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "7d7720cb_43cb6e88",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/ChromeWebApkHost.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-19T22:55:21Z",
+      "side": 1,
+      "message": "Agreed",
+      "parentUuid": "6e150c7b_cda8e5b8",
+      "range": {
+        "startLine": 27,
+        "startChar": 25,
+        "endLine": 27,
+        "endChar": 54
+      },
+      "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d3104e_44f4f365",
+        "filename": "chrome/android/webapk/libs/client/junit/src/org/chromium/webapk/lib/client/WebApkValidatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-19T22:55:21Z",
+      "side": 1,
+      "message": "return packageName.equals(MAPSLITE_PACKAGE_NAME);",
+      "range": {
+        "startLine": 77,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 25
+      },
+      "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4f2efac_ea3f9efd",
         "filename": "chrome/android/webapk/libs/client/junit/src/org/chromium/webapk/lib/client/WebApkValidatorTest.java",
         "patchSetId": 1
@@ -87,6 +134,53 @@
         "startChar": 21,
         "endLine": 54,
         "endChar": 41
+      },
+      "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a567367_2a7905a2",
+        "filename": "chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-19T22:55:21Z",
+      "side": 1,
+      "message": "Agreed",
+      "parentUuid": "a7ec9673_a591acff",
+      "range": {
+        "startLine": 54,
+        "startChar": 21,
+        "endLine": 54,
+        "endChar": 41
+      },
+      "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3afb05b_34c5d2b5",
+        "filename": "chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-19T22:55:21Z",
+      "side": 1,
+      "message": "In what case will this be null? Can this be called before WebApkValidator.init?",
+      "range": {
+        "startLine": 242,
+        "startChar": 1,
+        "endLine": 245,
+        "endChar": 9
       },
       "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
