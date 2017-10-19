@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42564256_d2e25a25",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-10-19T18:04:22Z",
+      "side": 1,
+      "message": "This still looks like a race condition. Callbacks can happen at any time after the launchContentShellWithUrl, yes? Then we could still get one between the first findNodeWithClassName and the first getCallCount. Or the callback could happen between waitForCallback and the subsequent getCallCount. In either case, we\u0027d be stuck waiting for the event after the one which created the node we want.\n\nWe could solve the first case by calling getCallCount before findNodeWithClasName. See the comments here, which recommend calling getCallCount before the callback you\u0027re looking for:\nhttps://cs.chromium.org/chromium/src/base/test/android/javatests/src/org/chromium/base/test/util/CallbackHelper.java?l\u003d80\u0026rcl\u003d1f173f128fbb5edcabd78fd27663fc067a18dede\n\nBut I don\u0027t think we can solve the second case, the way CallbackHelper is currently designed, because I don\u0027t see a way to atomically waitForCallback and then getCallCount without a callback potentially happening in between. If waitForCallback were to check mCallCount inside its synchronized block and then return that, then we wouldn\u0027t have to getCallCount ourselves.",
+      "revId": "2058dac55dd45c638a45d0b15ae182db1fcd5b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
