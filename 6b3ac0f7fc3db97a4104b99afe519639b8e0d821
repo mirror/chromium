@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac1792db_51492a5b",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-19T23:08:25Z",
+      "side": 1,
+      "message": "We bikeshed the name with Alex and Lukasz quite a bit. I opted for a more generic name to encourage future checks to be added to the same throttle. Naming it very specific will discourage that. As code is added, I imagine the conditions on which this throttle is attached is going to change to accommodate that.\nI don\u0027t feel super strongly that it should be generic, but wanted to incentivize adding code here instead of allocating a new throttle for similar checks in the future.",
+      "parentUuid": "0ebda111_49d808c3",
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c97c35b0_f12f2c3c",
         "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
         "patchSetId": 3
@@ -82,6 +100,24 @@
     },
     {
       "key": {
+        "uuid": "beddad4e_e0b313fa",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-19T23:08:25Z",
+      "side": 1,
+      "message": "If links want to open in new tabs, the NavigationThrottle will be associated with the frame making the request, so it will be a main frame and this rule will not apply to it. Similarly, if the target is the main frame, we should be navigating the main frame. I could add tests to ensure those two cases work.",
+      "parentUuid": "e1d90ce1_5e08946d",
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "359d1e53_b9c34e8c",
         "filename": "content/browser/frame_host/security_properties_navigation_throttle.h",
         "patchSetId": 3
@@ -93,6 +129,24 @@
       "writtenOn": "2017-10-19T21:47:04Z",
       "side": 1,
       "message": "This sounds wrong to me.  Navigations to web URLs can originate in a WebUI process as long as they commit in a different process.  (There are links like this in settings, for example.)\n\nMaybe this was more about the process the navigation is going to commit in, rather than where it originated?",
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded6943a_0ce0b3c2",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-19T23:08:25Z",
+      "side": 1,
+      "message": "Since this is targeted at subframes and we don\u0027t want subframes to be navigating to web content, I don\u0027t think it matters what process they commit in.\nI think my comment is not as clear as it can be.",
+      "parentUuid": "359d1e53_b9c34e8c",
       "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
