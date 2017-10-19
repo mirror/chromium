@@ -517,6 +517,30 @@
       "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53810adf_0a49ad5a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-19T00:04:25Z",
+      "side": 1,
+      "message": "The second activity should be created with chrome://newtab rather than the url of activity1. A change Dmitry made recently fixed this.\n\nIf you don\u0027t want to rely on the behavior of #createSecondChromeTabbedActivity(), I suggest getting the URL of the ChromeTabbedActivity2 tab after it\u0027s created, so that you can verify the right tabs were saved/restored after the merge.",
+      "parentUuid": "053a9d39_8a20f2f2",
+      "range": {
+        "startLine": 556,
+        "startChar": 8,
+        "endLine": 556,
+        "endChar": 67
+      },
+      "revId": "340bb201dc74d52a148c53bdc0eae17a28a5b743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

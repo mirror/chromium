@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e92493f6_3e649071",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-19T00:04:25Z",
+      "side": 1,
+      "message": "Deleting the file happens asynchronously on a background thread. We\u0027re technically not done with the merge until the file is deleted, which is why the code block was in #deleteFileAsync() previously.",
+      "range": {
+        "startLine": 1228,
+        "startChar": 20,
+        "endLine": 1228,
+        "endChar": 35
+      },
+      "revId": "cccaab567762f6e5cac51f3147ef7d7c3f97e6e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
