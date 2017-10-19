@@ -22,6 +22,30 @@
       "revId": "b1e35ad854b7aae4739294bd7784f93af1cbf1f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24f3ac0_093c9af9",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConfigHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-10-19T20:52:05Z",
+      "side": 1,
+      "message": "Not necessary, since we won\u0027t use the flag in production. But I didn\u0027t see any reason why not.",
+      "parentUuid": "27c6ca32_3b661958",
+      "range": {
+        "startLine": 67,
+        "startChar": 40,
+        "endLine": 67,
+        "endChar": 75
+      },
+      "revId": "b1e35ad854b7aae4739294bd7784f93af1cbf1f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
