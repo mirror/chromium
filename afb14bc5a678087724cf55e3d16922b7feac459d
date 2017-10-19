@@ -22,6 +22,30 @@
       "revId": "afb14bc5a678087724cf55e3d16922b7feac459d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27185a1e_83e9e337",
+        "filename": "media/blink/cdm_session_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-19T06:04:21Z",
+      "side": 1,
+      "message": "The idea is that if CDM creation failed, we don\u0027t set member variables, as seen on line 179,180 below. I agree for |key_system_uma_prefix_| it doesn\u0027t really matter, but I\u0027d like to be consistent.\n\nThat said, it seems I should move the string instead of copy it, which I did in PS2.",
+      "parentUuid": "426da626_7b39ab12",
+      "range": {
+        "startLine": 166,
+        "startChar": 7,
+        "endLine": 166,
+        "endChar": 28
+      },
+      "revId": "afb14bc5a678087724cf55e3d16922b7feac459d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
