@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3c95f1a_993de49a",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-19T22:13:44Z",
+      "side": 1,
+      "message": "This allocates 50 buckets, and only uses one of them.  Please use UMA_HISTOGRAM_BOOLEAN for this type of metric.\n\nThat said, I\u0027m curious how this data is used/interpreted – it\u0027s typically best to build in a baseline for any given metric, and I don\u0027t see an obvious baseline here.",
+      "range": {
+        "startLine": 1179,
+        "startChar": 2,
+        "endLine": 1179,
+        "endChar": 22
+      },
+      "revId": "f24d033722900be859f6bb28ac75b726b54ea3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
