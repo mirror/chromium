@@ -77,7 +77,8 @@ bool DisplayManager::SetDisplayConfiguration(
     const std::vector<display::Display>& displays,
     const std::vector<display::ViewportMetrics>& viewport_metrics,
     int64_t primary_display_id,
-    int64_t internal_display_id) {
+    int64_t internal_display_id,
+    const std::vector<display::Display>& software_mirroring_display_list) {
   if (window_server_->display_creation_config() !=
       DisplayCreationConfig::MANUAL) {
     LOG(ERROR) << "SetDisplayConfiguration is only valid when roots manually "
@@ -137,6 +138,12 @@ bool DisplayManager::SetDisplayConfiguration(
       display_list.AddOrUpdateDisplay(displays[i],
                                       display::DisplayList::Type::NOT_PRIMARY);
     }
+  }
+
+  // TODO(msw): How to deal with software_mirroring_display_list? 
+  LOG(ERROR) << "ui::ws::DisplayManager::SetDisplayConfiguration " << software_mirroring_display_list.size();
+  if (!software_mirroring_display_list.empty()) {
+    NOTIMPLEMENTED() << "TODO(crbug.com/764472): Support unified mode in Mus.";
   }
 
   std::set<int64_t> existing_display_ids;

@@ -1871,7 +1871,8 @@ TEST_F(WindowTreeManualDisplayTest,
   const gfx::Rect updated_bounds(1, 2, 3, 4);
   viewport_metrics[0].bounds_in_pixels = updated_bounds;
   ASSERT_TRUE(display_manager->SetDisplayConfiguration(
-      displays, viewport_metrics, display_id1, display::kInvalidDisplayId));
+      displays, viewport_metrics, display_id1, display::kInvalidDisplayId,
+      std::vector<display::Display>()));
   RunUntilIdle();
   EXPECT_EQ("OnDisplaysChanged " + std::to_string(display_id1) + " " +
                 std::to_string(display::kInvalidDisplayId),
@@ -1927,7 +1928,7 @@ TEST_F(WindowTreeManualDisplayTest,
   viewport_metrics.push_back(metrics1);
   viewport_metrics.push_back(metrics2);
   ASSERT_TRUE(display_manager->SetDisplayConfiguration(
-      displays, viewport_metrics, display_id2, display_id2));
+      displays, viewport_metrics, display_id2, display_id2, std::vector<display::Display>()));
   RunUntilIdle();
   EXPECT_EQ("OnDisplaysChanged " + std::to_string(display_id1) + " " +
                 std::to_string(display_id2) + " " + std::to_string(display_id2),
@@ -1955,7 +1956,7 @@ TEST_F(WindowTreeManualDisplayTest,
   viewport_metrics.clear();
   viewport_metrics.push_back(metrics1);
   ASSERT_TRUE(display_manager->SetDisplayConfiguration(
-      displays, viewport_metrics, display_id1, display_id1));
+      displays, viewport_metrics, display_id1, display_id1, std::vector<display::Display>()));
   RunUntilIdle();
   EXPECT_EQ("OnDisplaysChanged " + std::to_string(display_id1) + " " +
                 std::to_string(display_id1),
