@@ -253,3 +253,10 @@ declare_args() {
   # the native binary size by ~70Kb.
   enable_media_remoting_rpc = enable_media_remoting && !is_android
 }
+
+declare_args() {
+  # Enable Storage ID which is used by CDMs. This is only available on official
+  # builds, but may be overridden by other embedders.
+  enable_media_cdm_storage_id =
+      is_chrome_branded && (is_win || is_mac || is_chromeos)
+}
