@@ -38,7 +38,6 @@
 #include "platform/heap/HeapCompact.h"
 #include "platform/heap/PageMemory.h"
 #include "platform/heap/PagePool.h"
-#include "platform/heap/SafePoint.h"
 #include "platform/heap/ThreadState.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/instrumentation/tracing/web_memory_allocator_dump.h"
