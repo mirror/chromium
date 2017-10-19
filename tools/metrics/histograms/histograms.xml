@@ -16414,6 +16414,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The size of successfully completed downloads.</summary>
 </histogram>
 
+<histogram name="Download.DownloadSize.Parallelizable" units="KB">
+  <owner>xingliu@chromium.org</owner>
+  <summary>
+    The size of successfully completed parallelizable downloads.
+  </summary>
+</histogram>
+
 <histogram name="Download.DownloadWarningShown" enum="DownloadItem.DangerType">
   <owner>asanka@chromium.org</owner>
   <summary>
