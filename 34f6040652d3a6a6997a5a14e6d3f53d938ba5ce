@@ -379,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "b874b77b_9cac5acb",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-19T17:23:00Z",
+      "side": 1,
+      "message": "Post commit review: Was there a discussion I may have missed? Windows::Storage::* namespaced helpers aren\u0027t part of the Core WinRT and should be placed somewhere else.",
+      "parentUuid": "4a6235e5_69ee4783",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 36
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e02572c_ce16963c",
         "filename": "base/win/core_winrt_util.h",
         "patchSetId": 5
