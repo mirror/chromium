@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11c2ce26_e7a154e7",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-19T21:07:36Z",
+      "side": 1,
+      "message": "If you mean integration between those two controls still at the CookieManagerImpl level, yes.  See CookieManagerImplTest.DeleteByAll in cookie_manager_impl_unittest.cc.",
+      "parentUuid": "d1490ba2_42901a38",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 61
+      },
+      "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c1555a5_770d3ee9",
         "filename": "content/network/cookie_manager_impl.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-19T19:00:31Z",
       "side": 1,
       "message": "nit: Not my codebase, but... periods at the end of sentence pls :)",
+      "range": {
+        "startLine": 40,
+        "startChar": 55,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f9f5ba_5f124794",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-19T21:07:36Z",
+      "side": 1,
+      "message": "Sure :-}.  I did a scan through for this in this file; let me know if you notice it elsewhere.",
+      "parentUuid": "9c1555a5_770d3ee9",
       "range": {
         "startLine": 40,
         "startChar": 55,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "730eabae_3445cb87",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-19T21:07:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f904925_cd130caa",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 21
+      },
+      "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f3ef736_3baac003",
         "filename": "content/network/cookie_manager_impl_unittest.cc",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-19T19:00:31Z",
       "side": 1,
       "message": "Should we add tests that the cookie priority doesn\u0027t matter?",
+      "range": {
+        "startLine": 916,
+        "startChar": 52,
+        "endLine": 916,
+        "endChar": 74
+      },
+      "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b271fd_cecdbc86",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-19T21:07:36Z",
+      "side": 1,
+      "message": "Hmmm.  I\u0027m willing if you want (just ask again) but from my perspective the cookie priority is just one of many cookie attributes, and I\u0027m not sure why it should be privileged over expiration time, last access time, or same site flags, or value?  Or should we have tests to make sure none of those matter?",
+      "parentUuid": "7f3ef736_3baac003",
       "range": {
         "startLine": 916,
         "startChar": 52,
