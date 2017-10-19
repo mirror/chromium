@@ -541,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "0afe237e_f137ddf4",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Okay this was the case with previous implementation. removed the check.",
+      "parentUuid": "702eb2af_53a67860",
+      "range": {
+        "startLine": 621,
+        "startChar": 37,
+        "endLine": 621,
+        "endChar": 62
+      },
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebf0fc8e_614598b9",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 1

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "56bba5b5_6fbd26ac",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "I would like to make change for all Android devices since most of the users only have one renderer process (90% from UMA). This is not really true for other platforms. I have added IsLowEnd check for non-android.",
+      "parentUuid": "deff8f10_8752f006",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76677d8a_03d54990",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399b848d_54946993",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "not const anymore..",
+      "parentUuid": "76677d8a_03d54990",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5145c920_79fc173a",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "52341ffd_f3450a38",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62bbaac8_23d0c155",
         "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4a093a_095b01e6",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62bbaac8_23d0c155",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3b00a186_f82c8911",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "152b29f3_bb0a9e32",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fdcfb8b_f48b2c55",
         "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-17T20:09:04Z",
       "side": 1,
       "message": "not sure why you need this callback? GetAll is sync, so you should just be able to call the sync overload directly to get it to fill data. In which case you probably don\u0027t need to wait for GetAllCallback to get called anymore either.",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21185dda_ffcaf511",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "If I try to use the GetAll sync api, it hangs at mojo::SyncHandleRegistry::Wait() and never calls WrapperImpl::GetAll(). I assumed sync api is not supported in service_manager::test::ServiceTest. Do you know how to fix this? I did:\n\n    std::vector\u003ccontent::mojom::KeyValuePtr\u003e data;\n    leveldb::mojom::DatabaseError status;\n    wrapper-\u003eGetAll(GetAllCallback::CreateAndBind(base::Closure()),\n                    \u0026status, \u0026data);",
+      "parentUuid": "0fdcfb8b_f48b2c55",
       "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9ebddbbf_a05b7998",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3913a6d_fc927e8f",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67897db4_a446fc73",
         "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0a6804_88954c99",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67897db4_a446fc73",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "8f39fc5c_05a5955d",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "I thought we should continue inserting new item even if the old value was wrong. fixed.",
+      "parentUuid": "0776fd6b_965c9727",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd3a5970_38d81af4",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 2
@@ -169,6 +331,24 @@
       "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d345769_c917bcab",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd3a5970_38d81af4",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "94e8fbdb_d3120c62",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30d579ae_8338da7a",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26e8fb9a_423b062c",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 2
@@ -203,6 +401,24 @@
       "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05249687_c1e7ee20",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26e8fb9a_423b062c",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "34f4e502_65ff2a79",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22bad7e5_7c8071e0",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1224e5a4_ed66bcc6",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 2
@@ -234,6 +468,24 @@
       "writtenOn": "2017-10-17T20:09:04Z",
       "side": 1,
       "message": "no NOTREACHED, just calling the callback with false is enough (or reporting a bad message). Although if that really is the API we\u0027re going for we should just get rid of Get entirely.",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "664731ab_7d6f0163",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "I added a TODO to remove Get(). I will remove once Chris also agrees on the api.",
+      "parentUuid": "1224e5a4_ed66bcc6",
       "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "e5e0af18_3fb1c37f",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "renamed to UnloadMapIfPossible. I am not calling unload if we can still use keys_values_map, unless we need to purge. This is in anticipation that some other process can die and respan quickly and we don\u0027t cause reloads (in case in future we tried to purge when process dies, which is not currently the case). This function still supports this case So, the comment and check.",
+      "parentUuid": "68cb21f1_d2868695",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbe27c6f_fb0946ca",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 2
@@ -271,6 +541,24 @@
       "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53a9963_6a189043",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbe27c6f_fb0946ca",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "dc3fb2ff_a7d06d42",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0df9bc57_f78d3063",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09cbd5aa_869447a6",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 2
@@ -305,6 +611,24 @@
       "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc55f6e_97e50a43",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "renamed the function. I feel the condition here makes the code more readable.",
+      "parentUuid": "09cbd5aa_869447a6",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "fd7f0e03_0dde31a1",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "940a8c78_a17c38b4",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0614bbe6_2e68a586",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 2
@@ -336,6 +678,24 @@
       "writtenOn": "2017-10-17T20:09:04Z",
       "side": 1,
       "message": "nit: maybe add a DCHECK that at most one of keys_only_map_ and keys_values_map_ is non-null?",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d93e56_9c86e25b",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "no both can be null when load is not done, or unload is done, or purge was donw.",
+      "parentUuid": "0614bbe6_2e68a586",
       "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -359,6 +719,24 @@
     },
     {
       "key": {
+        "uuid": "1a587f2b_7b3920d8",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f64d0a5a_0c87d5bc",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b15dee49_9a5d95a2",
         "filename": "content/browser/leveldb_wrapper_impl.h",
         "patchSetId": 2
@@ -376,6 +754,24 @@
     },
     {
       "key": {
+        "uuid": "a993805c_c384c827",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b15dee49_9a5d95a2",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c286dcf8_5e895a6e",
         "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
         "patchSetId": 2
@@ -390,6 +786,24 @@
       "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bdf34a_97679bdd",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Oh I never realized there is mojo magic that makes GetAll sync. removed",
+      "parentUuid": "c286dcf8_5e895a6e",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -433,6 +847,48 @@
     },
     {
       "key": {
+        "uuid": "1576b64e_09050e15",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "The test would actually crash if they are not run synchronously since the test destroys the task runner. I am trying to check if no reload happens when trying to Put() since there is no database. It need not happen synchronously according to the documentation, but this just tests implementation detail. It\u0027s good to keep the behavior of synchronous replies on these calls instead of unnecessary post tasks.",
+      "parentUuid": "32e0f613_3bd3d6d6",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a127d8_093cd2fb",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df4c2d3f_49900ae1",
+      "range": {
+        "startLine": 634,
+        "startChar": 31,
+        "endLine": 634,
+        "endChar": 44
+      },
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c6111c8_1bfe5a95",
         "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
         "patchSetId": 2
@@ -450,6 +906,24 @@
     },
     {
       "key": {
+        "uuid": "7f3e35b3_97934ab6",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c6111c8_1bfe5a95",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39a71a58_abead58b",
         "filename": "content/common/leveldb_wrapper.mojom",
         "patchSetId": 2
@@ -461,6 +935,24 @@
       "writtenOn": "2017-10-17T20:09:04Z",
       "side": 1,
       "message": "I\u0027m not sure what I make of change Get to be essentially useless. Especially combined with the comment below for GetAll (\"Only used with small databases\") this doesn\u0027t really make sense anymore.\n\nMaybe we should give up on this being a generic key-value store interface (but then I\u0027d be in favor of renaming it to something like DOMStorageArea) or we should figure out a way to keep the interface sane for a generic key-value store while still providing the optimizations we want for DOMStorage (or another option would be to make the value-caching it does explicit in the interface, get rid of the Get method entirely, etc...). Adding cmumford@ since he has in the past expressed some thoughts about this interface as a generic key value store interface, and as such might have some opinions here too....",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a90848_671b5300",
+        "filename": "content/common/leveldb_wrapper.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-19T01:45:22Z",
+      "side": 1,
+      "message": "I did not understand why GetAll only for small databases. The local storage already can be big and we still use GetAll. I added a TODO here for now. Waiting for Chris\u0027 reply",
+      "parentUuid": "39a71a58_abead58b",
       "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
