@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "73781a00_aac4bdd6",
+        "filename": "third_party/WebKit/common/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-19T18:27:51Z",
+      "side": 1,
+      "message": "Tried to add some comments.",
+      "parentUuid": "f6ff9f35_0c642842",
+      "revId": "b94fcbb96442acf210e6f8038b1190eb30daa783",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b48bbb70_62de5ffc",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRequest.h",
         "patchSetId": 10
@@ -57,6 +75,30 @@
       "revId": "b94fcbb96442acf210e6f8038b1190eb30daa783",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3daf3b7_77ee7c36",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRequest.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-19T18:27:51Z",
+      "side": 1,
+      "message": "just checking if you\u0027re paying attention (well, this was more trying to remind myself to check if nogncheck was still needed, and then forgetting to actually check. As it turns out, unfortunately, yes it is still needed (the public:blink_headers target depends on public:generate_mojo_bindings which depends on public:mojo_bindings_blink__generator, and public:mojo_bindings depends on common:mojo_platform_bindings, but the __generator targets don\u0027t really work for transitive dependencies, and generate_mojo_bindings only has private deps anyway, so it wouldn\u0027t help with making any headers available for gn check anyway...)\n\nSo another fix would be to change public:generate_mojo_bindings to use public_deps rather than deps, and additionally add an explicit dependency on //third_party/WebKit/common:mojo_platform_bindings_blink__generator to public:generate_mojo_bindings.",
+      "parentUuid": "b48bbb70_62de5ffc",
+      "range": {
+        "startLine": 22,
+        "startChar": 65,
+        "endLine": 22,
+        "endChar": 70
+      },
+      "revId": "b94fcbb96442acf210e6f8038b1190eb30daa783",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
