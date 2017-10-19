@@ -217,7 +217,7 @@ SecurityOrigin* WorkerFetchContext::GetSecurityOrigin() const {
 
 std::unique_ptr<WebURLLoader> WorkerFetchContext::CreateURLLoader(
     const ResourceRequest& request,
-    RefPtr<WebTaskRunner> task_runner) {
+    scoped_refptr<WebTaskRunner> task_runner) {
   CountUsage(WebFeature::kOffMainThreadFetch);
   WrappedResourceRequest wrapped(request);
   return web_context_->CreateURLLoader(wrapped,
@@ -340,7 +340,7 @@ void WorkerFetchContext::SetFirstPartyCookieAndRequestorOrigin(
     out_request.SetRequestorOrigin(GetSecurityOrigin());
 }
 
-RefPtr<WebTaskRunner> WorkerFetchContext::GetLoadingTaskRunner() {
+scoped_refptr<WebTaskRunner> WorkerFetchContext::GetLoadingTaskRunner() {
   return loading_task_runner_;
 }
 
