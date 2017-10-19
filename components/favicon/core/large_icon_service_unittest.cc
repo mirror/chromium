@@ -36,6 +36,7 @@
 namespace favicon {
 namespace {
 
+using testing::ElementsAre;
 using testing::IsEmpty;
 using testing::IsNull;
 using testing::Eq;
@@ -91,6 +92,14 @@ favicon_base::FaviconRawBitmapResult CreateTestBitmapResult(int w,
   result.icon_url = GURL(kDummyIconUrl);
   result.icon_type = favicon_base::TOUCH_ICON;
   CHECK(result.is_valid());
+  return result;
+}
+
+favicon_base::FaviconRawBitmapResult CreateTestBitmapResultWithIconUrl(
+    const GURL& icon_url) {
+  favicon_base::FaviconRawBitmapResult result =
+      CreateTestBitmapResult(64, 64, kTestColor);
+  result.icon_url = icon_url;
   return result;
 }
 
@@ -539,6 +548,81 @@ TEST_P(LargeIconServiceGetterTest, FallbackSinceTooPicky) {
   EXPECT_TRUE(HasBackgroundColor(*returned_fallback_style_, kTestColor));
   histogram_tester_.ExpectUniqueSample("Favicons.LargeIconService.FallbackSize",
                                        24, /*expected_count=*/1);
+}
+
+TEST_P(LargeIconServiceGetterTest, ShouldRecordUrlMismatches) {
+  const std::string kUmaMetricName =
+      "Favicons.LargeIconService.BlacklistedURLMismatch";
+  const GURL kUnknownPageUrl1("http://www.foo.com/path");
+  const GURL kUnknownPageUrl2("http://www.bar.com/path");
+  const GURL kUnknownPageUrl3("http://com/path");
+  const GURL kKnownPageUrl1("http://www.google.com/path");
+  const GURL kKnownPageUrl2("http://www.google.de/path");
+  const GURL kKnownPageUrl3("http://www.youtube.com/path");
+  const GURL kUnknownIconUrl1("http://www.foo.com/favicon.ico");
+  const GURL kUnknownIconUrl2("http://www.bar.com/favicon.ico");
+  const GURL kUnknownIconUrl3("http://com/favicon.ico");
+  const GURL kKnownIconUrl1("http://www.google.com/favicon.ico");
+  const GURL kKnownIconUrl2 = kKnownIconUrl1;
+  const GURL kKnownIconUrl3("http://www.youtube.com/favicon.ico");
+
+  // Only URLs in the list of known organizations contribute to the histogram,
+  // so neither of the sites below should be logged.
+  InjectMockResult(kUnknownPageUrl1,
+                   CreateTestBitmapResultWithIconUrl(kUnknownIconUrl1));
+  InjectMockResult(kUnknownPageUrl2,
+                   CreateTestBitmapResultWithIconUrl(kUnknownIconUrl2));
+  InjectMockResult(kUnknownPageUrl3,
+                   CreateTestBitmapResultWithIconUrl(kUnknownIconUrl3));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kUnknownPageUrl1, 0, 0);
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kUnknownPageUrl2, 0, 0);
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kUnknownPageUrl3, 0, 0);
+  EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName), IsEmpty());
+
+  // Even if there is a mismatch, it's irrelevant if none of the URLs are known.
+  InjectMockResult(kUnknownPageUrl1,
+                   CreateTestBitmapResultWithIconUrl(kUnknownIconUrl2));
+  InjectMockResult(kUnknownPageUrl2,
+                   CreateTestBitmapResultWithIconUrl(kUnknownIconUrl1));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kUnknownPageUrl1, 0, 0);
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kUnknownPageUrl2, 0, 0);
+  EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName), IsEmpty());
+
+  // If a unknown site uses a known icon, it's still ignored.
+  InjectMockResult(kUnknownPageUrl1,
+                   CreateTestBitmapResultWithIconUrl(kKnownIconUrl1));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kUnknownPageUrl1, 0, 0);
+  EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName), IsEmpty());
+
+  // Mismatch between a known organization and an unknown one should contribute
+  // to bucket 0.
+  InjectMockResult(kKnownPageUrl1,
+                   CreateTestBitmapResultWithIconUrl(kUnknownIconUrl1));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kKnownPageUrl1, 0, 0);
+  EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName),
+              ElementsAre(base::Bucket(/*min=*/0, /*count=*/1)));
+
+  // Matching pairs within known organizations should contribute to bucket 0.
+  InjectMockResult(kKnownPageUrl1,
+                   CreateTestBitmapResultWithIconUrl(kKnownIconUrl1));
+  InjectMockResult(kKnownPageUrl2,
+                   CreateTestBitmapResultWithIconUrl(kKnownIconUrl2));
+  InjectMockResult(kKnownPageUrl3,
+                   CreateTestBitmapResultWithIconUrl(kKnownIconUrl3));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kKnownPageUrl1, 0, 0);
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kKnownPageUrl2, 0, 0);
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kKnownPageUrl3, 0, 0);
+  EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName),
+              ElementsAre(base::Bucket(/*min=*/0, /*count=*/4)));
+
+  // Mismatch between a known organization and another known  one should
+  // contribute to bucket 1.
+  InjectMockResult(kKnownPageUrl1,
+                   CreateTestBitmapResultWithIconUrl(kKnownIconUrl3));
+  GetLargeIconOrFallbackStyleAndWaitForCallback(kKnownPageUrl1, 0, 0);
+  EXPECT_THAT(histogram_tester_.GetAllSamples(kUmaMetricName),
+              ElementsAre(base::Bucket(/*min=*/0, /*count=*/4),
+                          base::Bucket(/*min=*/1, /*count=*/1)));
 }
 
 // Every test will appear with suffix /0 (param false) and /1 (param true), e.g.
