@@ -38,6 +38,7 @@ class ASH_EXPORT HighlighterController : public FastInkPointerController,
   void SetExitCallback(base::OnceClosure callback, bool require_success);
 
   // FastInkPointerController:
+  // mojom::HighlighterController:
   void SetEnabled(bool enabled) override;
 
   void BindRequest(mojom::HighlighterControllerRequest request);

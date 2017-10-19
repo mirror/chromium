@@ -261,9 +261,7 @@ void ArcVoiceInteractionFrameworkService::CaptureFullscreen(
 
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionRunning(
     bool running) {
-  ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(
-      running ? ash::VoiceInteractionState::RUNNING
-              : ash::VoiceInteractionState::STOPPED);
+  // TODO(xiaohuic): Deprecated, and to be removed.
 }
 
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
@@ -302,6 +300,13 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
          (prefs->GetBoolean(prefs::kVoiceInteractionContextEnabled) ||
           !prefs->GetUserPrefValue(prefs::kVoiceInteractionContextEnabled))));
   }
+
+  // If voice session stopped running, we also stop the assist layer session.
+  if (state_ == ash::VoiceInteractionState::RUNNING &&
+      highlighter_client_->is_enabled()) {
+    highlighter_client_->SetEnabled(false);
+  }
+
   state_ = state;
   ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(state);
 }

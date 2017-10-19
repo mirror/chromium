@@ -5,6 +5,7 @@
 #include "ash/highlighter/highlighter_controller.h"
 
 #include <memory>
+#include <utility>
 
 #include "ash/highlighter/highlighter_gesture_util.h"
 #include "ash/highlighter/highlighter_result_view.h"
@@ -80,6 +81,8 @@ void HighlighterController::SetEnabled(bool enabled) {
     // animating, and it will also delete itself when done animating.
     if (highlighter_view_ && !highlighter_view_->animating())
       DestroyPointerView();
+
+    CallExitCallback();
   }
   if (client_)
     client_->HandleEnabledStateChange(enabled);
