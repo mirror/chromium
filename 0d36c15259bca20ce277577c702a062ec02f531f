@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07223b8c_dac7d90d",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-19T18:26:33Z",
+      "side": 1,
+      "message": "Do you understand the purpose of this DCHECK? It doesn\u0027t appear that any of the calls here need this as a precondition but I may be missing something.",
+      "revId": "0d36c15259bca20ce277577c702a062ec02f531f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
