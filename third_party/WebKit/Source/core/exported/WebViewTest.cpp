@@ -4186,6 +4186,31 @@ TEST_P(WebViewTest, PreferredSizeDirtyLayout) {
   EXPECT_EQ(0, size.height);
 }
 
+TEST_P(WebViewTest, PreferredSizeWithGrid) {
+  WebViewImpl* web_view = web_view_helper_.Initialize();
+  WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
+  FrameTestHelpers::LoadHTMLString(web_view->MainFrameImpl(),
+                                   R"HTML(<!DOCTYPE html>
+    <style>
+      html { writing-mode:vertical-rl; }
+      body { margin:0px; }
+    </style>
+    <div style="width:100px;">
+      <div style="display:grid; width:100%;">
+        <div style="writing-mode:horizontal-tb; height:100px;"></div>
+      </div>
+    </div>
+                                   )HTML",
+                                   base_url);
+
+  // FIXME: While the main purpose of this test is to make sure that it doesn't
+  // crash, it would be nice to check the result from
+  // ContentsPreferredMinimumSize() as well.
+  WebSize size = web_view->ContentsPreferredMinimumSize();
+  EXPECT_EQ(100, size.width);
+  EXPECT_EQ(100, size.height);
+}
+
 class UnhandledTapWebViewClient : public FrameTestHelpers::TestWebViewClient {
  public:
   void ShowUnhandledTapUIIfNeeded(const WebTappedInfo& tapped_info) override {
