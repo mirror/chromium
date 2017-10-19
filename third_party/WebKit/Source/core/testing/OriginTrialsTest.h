@@ -48,7 +48,7 @@ class OriginTrialsTest : public GarbageCollectedFinalized<OriginTrialsTest>,
   bool secureMethod() { return true; }
   static bool secureStaticMethod() { return true; }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   OriginTrialsTest() = default;

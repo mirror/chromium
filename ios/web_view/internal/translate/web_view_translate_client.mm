@@ -130,7 +130,7 @@ void WebViewTranslateClient::ShowReportLanguageDetectionErrorUI(
   NOTREACHED();
 }
 
-void WebViewTranslateClient::WebStateDestroyed(web::WebState* web_state) {
+void WebViewTranslateClient::WebStateDestroyed() {
   // Translation process can be interrupted.
   // Destroying the TranslateManager now guarantees that it never has to deal
   // with nullptr WebState.

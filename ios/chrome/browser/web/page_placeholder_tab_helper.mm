@@ -44,7 +44,6 @@ void PagePlaceholderTabHelper::AddPlaceholderForNextNavigation() {
 }
 
 void PagePlaceholderTabHelper::DidStartNavigation(
-    web::WebState* web_state,
     web::NavigationContext* navigation_context) {
   if (add_placeholder_for_next_navigation_) {
     add_placeholder_for_next_navigation_ = false;
@@ -52,12 +51,11 @@ void PagePlaceholderTabHelper::DidStartNavigation(
   }
 }
 
-void PagePlaceholderTabHelper::PageLoaded(web::WebState* web_state,
-                                          web::PageLoadCompletionStatus) {
+void PagePlaceholderTabHelper::PageLoaded(web::PageLoadCompletionStatus) {
   RemovePlaceholder();
 }
 
-void PagePlaceholderTabHelper::WebStateDestroyed(web::WebState* web_state) {
+void PagePlaceholderTabHelper::WebStateDestroyed() {
   RemovePlaceholder();
 }
 

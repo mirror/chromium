@@ -47,7 +47,7 @@ class ShadowTreeStyleSheetCollection final
   void UpdateActiveStyleSheets(StyleEngine& master_engine);
   bool IsShadowTreeStyleSheetCollection() const final { return true; }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     TreeScopeStyleSheetCollection::Trace(visitor);
   }
 

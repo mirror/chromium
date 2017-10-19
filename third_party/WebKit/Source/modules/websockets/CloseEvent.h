@@ -68,7 +68,7 @@ class CloseEvent final : public Event {
     return EventNames::CloseEvent;
   }
 
-  virtual void Trace(blink::Visitor* visitor) { Event::Trace(visitor); }
+  DEFINE_INLINE_VIRTUAL_TRACE() { Event::Trace(visitor); }
 
  private:
   CloseEvent() : was_clean_(false), code_(0) {}

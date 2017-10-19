@@ -394,7 +394,7 @@ int InspectorDOMSnapshotAgent::GetStyleIndexForNode(Node* node) {
   return index;
 }
 
-void InspectorDOMSnapshotAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorDOMSnapshotAgent) {
   visitor->Trace(inspected_frames_);
   InspectorBaseAgent::Trace(visitor);
 }

@@ -415,7 +415,7 @@ public class ArticleSnippetsTest {
     private DisplayableProfileData getTestProfileData() {
         String accountId = "test@gmail.com";
         Drawable image = AppCompatResources.getDrawable(
-                InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                mActivityTestRule.getInstrumentation().getTargetContext(),
                 R.drawable.logo_avatar_anonymous);
         String fullName = "Test Account";
         String givenName = "Test";
@@ -444,8 +444,7 @@ public class ArticleSnippetsTest {
 
     private Bitmap getBitmap(@DrawableRes int resId) {
         return BitmapFactory.decodeResource(
-                InstrumentationRegistry.getInstrumentation().getTargetContext().getResources(),
-                resId);
+                mActivityTestRule.getInstrumentation().getTargetContext().getResources(), resId);
     }
 
     /**

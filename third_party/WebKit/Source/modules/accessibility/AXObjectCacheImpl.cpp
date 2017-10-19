@@ -1240,7 +1240,7 @@ void AXObjectCacheImpl::ContextDestroyed(ExecutionContext*) {
   permission_observer_binding_.Close();
 }
 
-void AXObjectCacheImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AXObjectCacheImpl) {
   visitor->Trace(document_);
   visitor->Trace(accessible_node_mapping_);
   visitor->Trace(node_object_mapping_);

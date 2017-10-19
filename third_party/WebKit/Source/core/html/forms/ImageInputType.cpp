@@ -183,11 +183,11 @@ unsigned ImageInputType::Height() const {
 
     // If the image is available, use its height.
     HTMLImageLoader* image_loader = GetElement().ImageLoader();
-    if (image_loader && image_loader->GetContent()) {
+    if (image_loader && image_loader->GetContent())
       return image_loader->GetContent()
-          ->IntrinsicSize(LayoutObject::ShouldRespectImageOrientation(nullptr))
-          .Height();
-    }
+          ->ImageSize(LayoutObject::ShouldRespectImageOrientation(nullptr), 1)
+          .Height()
+          .ToUnsigned();
   }
 
   GetElement().GetDocument().UpdateStyleAndLayout();
@@ -206,11 +206,11 @@ unsigned ImageInputType::Width() const {
 
     // If the image is available, use its width.
     HTMLImageLoader* image_loader = GetElement().ImageLoader();
-    if (image_loader && image_loader->GetContent()) {
+    if (image_loader && image_loader->GetContent())
       return image_loader->GetContent()
-          ->IntrinsicSize(LayoutObject::ShouldRespectImageOrientation(nullptr))
-          .Width();
-    }
+          ->ImageSize(LayoutObject::ShouldRespectImageOrientation(nullptr), 1)
+          .Width()
+          .ToUnsigned();
   }
 
   GetElement().GetDocument().UpdateStyleAndLayout();

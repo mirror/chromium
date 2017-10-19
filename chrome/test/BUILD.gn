@@ -127,7 +127,6 @@ static_library("test_support") {
     "//components/password_manager/core/browser:test_support",
     "//components/prefs:test_support",
     "//components/rappor:test_support",
-    "//components/safe_browsing/db:v4_test_util",
     "//components/search_engines:test_support",
     "//components/sessions:test_support",
     "//components/signin/core/browser:test_support",
@@ -447,7 +446,6 @@ if (!is_android) {
       "../browser/extensions/window_open_interactive_apitest.cc",
       "../browser/mouseleave_browsertest.cc",
       "../browser/notifications/message_center_notifications_browsertest.cc",
-      "../browser/notifications/platform_notification_service_interactive_uitest.cc",
       "../browser/password_manager/password_generation_interactive_uitest.cc",
       "../browser/password_manager/password_manager_interactive_uitest.cc",
       "../browser/renderer_context_menu/render_view_context_menu_browsertest_util.cc",
@@ -763,6 +761,7 @@ if (!is_android) {
         "../browser/notifications/notification_interactive_uitest_mac.mm",
         "../browser/notifications/notification_interactive_uitest_support.cc",
         "../browser/notifications/notification_interactive_uitest_support.h",
+        "../browser/notifications/platform_notification_service_interactive_uitest.cc",
       ]
     }
 
@@ -1418,7 +1417,6 @@ test("browser_tests") {
       "../browser/sessions/session_restore_observer_browsertest.cc",
       "../browser/sessions/tab_restore_browsertest.cc",
       "../browser/site_details_browsertest.cc",
-      "../browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
 
       # If this list is used on Android in the future, these browser/speech/*
       # files will probably not be applicable.
@@ -2316,8 +2314,6 @@ test("browser_tests") {
         "../browser/ui/ash/keyboard_end_to_end_browsertest.cc",
         "../browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
         "../browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
-        "../browser/ui/ash/launcher/chrome_launcher_controller_test_util.cc",
-        "../browser/ui/ash/launcher/chrome_launcher_controller_test_util.h",
         "../browser/ui/ash/multi_user/multi_user_window_manager_test.cc",
         "../browser/ui/ash/multi_user/multi_user_window_manager_test.h",
         "../browser/ui/ash/networking_config_delegate_chromeos_browsertest.cc",
@@ -2403,7 +2399,6 @@ test("browser_tests") {
         "../browser/safe_browsing/safe_browsing_blocking_page_test.cc",
         "../browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
         "../browser/safe_browsing/safe_browsing_service_browsertest.cc",
-        "../browser/safe_browsing/v4_get_hash_interceptor_browsertest.cc",
         "../renderer/safe_browsing/phishing_classifier_browsertest.cc",
         "../renderer/safe_browsing/phishing_classifier_delegate_browsertest.cc",
         "../renderer/safe_browsing/phishing_dom_feature_extractor_browsertest.cc",
@@ -3163,7 +3158,6 @@ test("unit_tests") {
     "../browser/engagement/site_engagement_helper_unittest.cc",
     "../browser/engagement/site_engagement_score_unittest.cc",
     "../browser/engagement/site_engagement_service_unittest.cc",
-    "../browser/engagement/top_sites/site_engagement_top_sites_provider_unittest.cc",
     "../browser/external_protocol/external_protocol_handler_unittest.cc",
     "../browser/file_select_helper_unittest.cc",
     "../browser/font_pref_change_notifier_unittest.cc",
@@ -3376,7 +3370,6 @@ test("unit_tests") {
     "../browser/ssl/chrome_expect_ct_reporter_unittest.cc",
     "../browser/ssl/insecure_sensitive_input_driver_unittest.cc",
     "../browser/ssl/security_state_tab_helper_unittest.cc",
-    "../browser/ssl/ssl_error_assistant_unittest.cc",
     "../browser/ssl/ssl_error_handler_unittest.cc",
     "../browser/status_icons/status_icon_menu_model_unittest.cc",
     "../browser/status_icons/status_icon_unittest.cc",
@@ -3476,6 +3469,7 @@ test("unit_tests") {
     "../renderer/plugins/plugin_uma_unittest.cc",
     "../renderer/prerender/prerender_dispatcher_unittest.cc",
     "../renderer/searchbox/search_bouncer_unittest.cc",
+    "../renderer/searchbox/searchbox_extension_unittest.cc",
     "../renderer/searchbox/searchbox_unittest.cc",
     "../renderer/web_apps_unittest.cc",
     "../test/base/chrome_render_view_test.cc",
@@ -3706,6 +3700,7 @@ test("unit_tests") {
       # Android does not use the Message Center notification system.
       "../browser/net/firefox_proxy_settings_unittest.cc",
       "../browser/notifications/message_center_notifications_unittest.cc",
+      "../browser/notifications/message_center_settings_controller_unittest.cc",
       "../browser/platform_util_unittest.cc",
       "../browser/policy/policy_path_parser_unittest.cc",
       "../browser/process_singleton_posix_unittest.cc",
@@ -3945,7 +3940,6 @@ test("unit_tests") {
     sources += [
       "../browser/component_updater/cros_component_installer_unittest.cc",
       "../browser/media/webrtc/desktop_media_list_ash_unittest.cc",
-      "../browser/notifications/message_center_settings_controller_chromeos_unittest.cc",
       "../browser/renderer_context_menu/mock_render_view_context_menu.cc",
       "../browser/renderer_context_menu/mock_render_view_context_menu.h",
       "../browser/signin/signin_error_notifier_ash_unittest.cc",

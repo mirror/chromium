@@ -57,7 +57,7 @@ class MODULES_EXPORT ServiceWorker final
                              std::unique_ptr<WebServiceWorker::Handle>);
 
   ~ServiceWorker() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   // Eager finalization needed to promptly release owned WebServiceWorker.
   EAGERLY_FINALIZE();

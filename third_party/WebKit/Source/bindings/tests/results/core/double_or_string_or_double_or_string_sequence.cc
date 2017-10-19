@@ -74,7 +74,7 @@ DoubleOrStringOrDoubleOrStringSequence::DoubleOrStringOrDoubleOrStringSequence(c
 DoubleOrStringOrDoubleOrStringSequence::~DoubleOrStringOrDoubleOrStringSequence() = default;
 DoubleOrStringOrDoubleOrStringSequence& DoubleOrStringOrDoubleOrStringSequence::operator=(const DoubleOrStringOrDoubleOrStringSequence&) = default;
 
-void DoubleOrStringOrDoubleOrStringSequence::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DoubleOrStringOrDoubleOrStringSequence) {
   visitor->Trace(double_or_string_sequence_);
 }
 

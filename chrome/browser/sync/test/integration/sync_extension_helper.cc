@@ -84,7 +84,7 @@ void SyncExtensionHelper::SetupIfNecessary(SyncTest* test) {
 
 std::string SyncExtensionHelper::InstallExtension(
     Profile* profile, const std::string& name, Manifest::Type type) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   scoped_refptr<Extension> extension = GetExtension(profile, name, type);
   if (!extension.get()) {
     NOTREACHED() << "Could not install extension " << name;

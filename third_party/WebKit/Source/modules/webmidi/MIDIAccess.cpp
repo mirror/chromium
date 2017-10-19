@@ -229,7 +229,7 @@ void MIDIAccess::ContextDestroyed(ExecutionContext*) {
   accessor_.reset();
 }
 
-void MIDIAccess::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MIDIAccess) {
   visitor->Trace(inputs_);
   visitor->Trace(outputs_);
   EventTargetWithInlineData::Trace(visitor);

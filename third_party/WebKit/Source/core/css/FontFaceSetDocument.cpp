@@ -64,7 +64,7 @@ class LoadFontPromiseResolver final
   void NotifyLoaded(FontFace*) override;
   void NotifyError(FontFace*) override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   LoadFontPromiseResolver(FontFaceArray faces, ScriptState* script_state)
@@ -106,7 +106,7 @@ void LoadFontPromiseResolver::NotifyError(FontFace* font_face) {
   }
 }
 
-void LoadFontPromiseResolver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LoadFontPromiseResolver) {
   visitor->Trace(font_faces_);
   visitor->Trace(resolver_);
   LoadFontCallback::Trace(visitor);
@@ -564,7 +564,7 @@ bool FontFaceSetDocument::IterationSource::Next(ScriptState*,
   return true;
 }
 
-void FontFaceSetDocument::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FontFaceSetDocument) {
   visitor->Trace(ready_);
   visitor->Trace(loading_fonts_);
   visitor->Trace(loaded_fonts_);

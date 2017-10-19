@@ -212,8 +212,6 @@ Polymer({
   /** @private */
   onCancelTap_: function() {
     this.close();
-    settings.CupsPrintersBrowserProxyImpl.getInstance().cancelPrinterSetUp(
-        this.activePrinter);
   },
 
   /** @private */

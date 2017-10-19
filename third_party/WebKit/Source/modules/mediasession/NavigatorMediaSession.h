@@ -24,7 +24,7 @@ class NavigatorMediaSession final
   static NavigatorMediaSession& From(Navigator&);
   static MediaSession* mediaSession(ScriptState*, Navigator&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit NavigatorMediaSession(Navigator&);

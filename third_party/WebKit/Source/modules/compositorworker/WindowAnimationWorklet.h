@@ -26,7 +26,7 @@ class MODULES_EXPORT WindowAnimationWorklet final
 
   void ContextDestroyed(ExecutionContext*) override;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   static WindowAnimationWorklet& From(LocalDOMWindow&);

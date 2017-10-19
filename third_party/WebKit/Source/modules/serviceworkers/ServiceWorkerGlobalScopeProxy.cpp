@@ -119,7 +119,7 @@ ServiceWorkerGlobalScopeProxy::~ServiceWorkerGlobalScopeProxy() {
   DCHECK(!embedded_worker_);
 }
 
-void ServiceWorkerGlobalScopeProxy::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ServiceWorkerGlobalScopeProxy) {
   visitor->Trace(parent_frame_task_runners_);
 }
 

@@ -307,7 +307,7 @@ double PaintWorkletGlobalScope::devicePixelRatio() const {
   return GetFrame()->DevicePixelRatio();
 }
 
-void PaintWorkletGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PaintWorkletGlobalScope) {
   visitor->Trace(paint_definitions_);
   visitor->Trace(pending_generator_registry_);
   MainThreadWorkletGlobalScope::Trace(visitor);

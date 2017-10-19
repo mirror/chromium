@@ -43,7 +43,7 @@ class IdTargetObserverRegistry final
 
  public:
   static IdTargetObserverRegistry* Create();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   void NotifyObservers(const AtomicString& id);
   bool HasObservers(const AtomicString& id) const;
 

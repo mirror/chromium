@@ -50,7 +50,7 @@ class CORE_EXPORT HTMLFormControlElement : public LabelableElement,
 
  public:
   ~HTMLFormControlElement() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   String formAction() const;
   void setFormAction(const AtomicString&);

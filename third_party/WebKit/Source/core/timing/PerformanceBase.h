@@ -142,7 +142,7 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
                                    const SecurityOrigin&,
                                    ExecutionContext*);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   static bool PassesTimingAllowCheck(const ResourceResponse&,

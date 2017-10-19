@@ -216,7 +216,7 @@ class CORE_EXPORT FrameLoader final {
 
   void DetachProvisionalDocumentLoader(DocumentLoader*);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   static void SetReferrerForFrameRequest(FrameLoadRequest&);
 

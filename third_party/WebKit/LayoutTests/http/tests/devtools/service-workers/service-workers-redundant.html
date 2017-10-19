@@ -6,13 +6,26 @@
 <script src="../../inspector/console-test.js"></script>
 <script>
 
+var iframe;
+
+function loadIframe(scope)
+{
+    iframe = document.createElement("iframe");
+    document.body.appendChild(iframe);
+    iframe.src = scope;
+}
+
+function unloadIframe()
+{
+    iframe.remove();
+}
+
 function test() {
-  const scriptURL = 'http://127.0.0.1:8000/devtools/service-workers/resources/changing-worker.php';
-  const scope = 'http://127.0.0.1:8000/devtools/service-workers/resources/service-worker-redundant-scope/';
-  const frameId = 'frame_id';
-  let step = 0;
-  let firstVersionId = -1;
-  let secondVersionId = -1;
+  var scriptURL = 'http://127.0.0.1:8000/devtools/service-workers/resources/changing-worker.php';
+  var scope = 'http://127.0.0.1:8000/devtools/service-workers/resources/service-worker-redundant-scope/';
+  var step = 0;
+  var firstVersionId = -1;
+  var secondVersionId = -1;
   Resources.ServiceWorkersView._noThrottle = true;
 
   TestRunner.evaluateInPage('frontendReopeningCount', function(result) {
@@ -21,7 +34,7 @@ function test() {
       function updateRegistration(registration) {
         if (registration.scopeURL != scope)
           return;
-        for (let version of registration.versions.values()) {
+        for (var version of registration.versions.values()) {
           if (step == 0 && version.isRunning() && version.isActivated()) {
             ++step;
             firstVersionId = version.id;
@@ -29,7 +42,7 @@ function test() {
             TestRunner.addResult('==== ServiceWorkersView ====');
             TestRunner.addResult(ApplicationTestRunner.dumpServiceWorkersView([scope]));
             TestRunner.addResult('============================');
-            TestRunner.addIframe(scope, {id: frameId});
+            TestRunner.evaluateInPage('loadIframe("' + scope + '");');
           } else if (step == 1 && version.isRunning() && version.isInstalled()) {
             ++step;
             secondVersionId = version.id;
@@ -37,13 +50,13 @@ function test() {
             TestRunner.addResult('==== ServiceWorkersView ====');
             TestRunner.addResult(ApplicationTestRunner.dumpServiceWorkersView([scope]));
             TestRunner.addResult('============================');
-            TestRunner.evaluateInPagePromise(`document.getElementById('${frameId}').remove();`);
+            TestRunner.evaluateInPage('unloadIframe();');
           }
         }
         if (step != 2)
           return;
-        const firstVersion = registration.versions.get(firstVersionId);
-        const secondVersion = registration.versions.get(secondVersionId);
+        var firstVersion = registration.versions.get(firstVersionId);
+        var secondVersion = registration.versions.get(secondVersionId);
         if ((!firstVersion || (firstVersion.isStopped() && firstVersion.isRedundant())) &&
             secondVersion.isActivated() && secondVersion.isRunning()) {
           ++step;

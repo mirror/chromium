@@ -24,7 +24,7 @@ const AtomicString& VRDeviceEvent::InterfaceName() const {
   return EventNames::VRDeviceEvent;
 }
 
-void VRDeviceEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(VRDeviceEvent) {
   visitor->Trace(device_);
   Event::Trace(visitor);
 }

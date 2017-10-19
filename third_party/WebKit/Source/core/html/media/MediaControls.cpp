@@ -15,7 +15,7 @@ HTMLMediaElement& MediaControls::MediaElement() const {
   return *media_element_;
 }
 
-void MediaControls::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControls) {
   visitor->Trace(media_element_);
 }
 

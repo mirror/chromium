@@ -43,7 +43,7 @@ class DynamicModuleResolverTestModulator final : public DummyModulator {
     pending_client_ = nullptr;
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   // Implements Modulator:
@@ -89,7 +89,7 @@ class DynamicModuleResolverTestModulator final : public DummyModulator {
   Member<ModuleTreeClient> pending_client_;
 };
 
-void DynamicModuleResolverTestModulator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DynamicModuleResolverTestModulator) {
   visitor->Trace(pending_client_);
   DummyModulator::Trace(visitor);
 }

@@ -74,7 +74,7 @@ class CORE_EXPORT TextAutosizer final
 
   bool PageNeedsAutosizing() const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   class LayoutScope {
     STACK_ALLOCATED();

@@ -246,7 +246,7 @@ class HandleContainer
   static HandleContainer* Create() { return new HandleContainer(); }
   virtual ~HandleContainer() {}
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
   DEFINE_INLINE_TRACE_WRAPPERS() {
     visitor->TraceWrappers(handle_.Cast<v8::Value>());
   }

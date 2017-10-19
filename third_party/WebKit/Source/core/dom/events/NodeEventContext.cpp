@@ -40,7 +40,7 @@ NodeEventContext::NodeEventContext(Node* node, EventTarget* current_target)
   DCHECK(node_);
 }
 
-void NodeEventContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NodeEventContext) {
   visitor->Trace(node_);
   visitor->Trace(current_target_);
   visitor->Trace(tree_scope_event_context_);
@@ -50,7 +50,13 @@ void NodeEventContext::HandleLocalEvents(Event& event) const {
   if (TouchEventContext* touch_context = GetTouchEventContext()) {
     touch_context->HandleLocalEvents(event);
   } else if (RelatedTarget()) {
-    event.SetRelatedTargetIfExists(RelatedTarget());
+    if (event.IsMouseEvent()) {
+      ToMouseEvent(event).SetRelatedTarget(RelatedTarget());
+    } else if (event.IsPointerEvent()) {
+      ToPointerEvent(event).SetRelatedTarget(RelatedTarget());
+    } else if (event.IsFocusEvent()) {
+      ToFocusEvent(event).SetRelatedTarget(RelatedTarget());
+    }
   }
   event.SetTarget(Target());
   event.SetCurrentTarget(current_target_.Get());

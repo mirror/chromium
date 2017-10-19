@@ -49,8 +49,7 @@ class CORE_EXPORT InspectorEmulationAgent final
   protocol::Response setCPUThrottlingRate(double) override;
   protocol::Response setVirtualTimePolicy(
       const String& policy,
-      protocol::Maybe<int> virtual_time_budget_ms,
-      protocol::Maybe<int> max_virtual_time_task_starvation_count) override;
+      protocol::Maybe<int> virtual_time_budget_ms) override;
   protocol::Response setNavigatorOverrides(const String& platform) override;
   protocol::Response setDefaultBackgroundColorOverride(
       protocol::Maybe<protocol::DOM::RGBA>) override;
@@ -63,7 +62,7 @@ class CORE_EXPORT InspectorEmulationAgent final
   void OnVirtualTimeAdvanced(WTF::TimeDelta virtual_time_offset) override;
   void OnVirtualTimePaused(WTF::TimeDelta virtual_time_offset) override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   InspectorEmulationAgent(WebLocalFrameImpl*, Client*);

@@ -21,8 +21,8 @@
 
 #include "core/svg/SVGFilterPrimitiveStandardAttributes.h"
 
+#include "core/layout/svg/LayoutSVGResourceContainer.h"
 #include "core/layout/svg/LayoutSVGResourceFilterPrimitive.h"
-#include "core/svg/SVGFilterElement.h"
 #include "core/svg/SVGLength.h"
 #include "core/svg/graphics/filters/SVGFilterBuilder.h"
 #include "core/svg_names.h"
@@ -67,7 +67,7 @@ SVGFilterPrimitiveStandardAttributes::SVGFilterPrimitiveStandardAttributes(
   AddToPropertyMap(result_);
 }
 
-void SVGFilterPrimitiveStandardAttributes::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGFilterPrimitiveStandardAttributes) {
   visitor->Trace(x_);
   visitor->Trace(y_);
   visitor->Trace(width_);
@@ -175,24 +175,32 @@ bool SVGFilterPrimitiveStandardAttributes::LayoutObjectIsNeeded(
 }
 
 void SVGFilterPrimitiveStandardAttributes::Invalidate() {
-  if (SVGFilterElement* filter = ToSVGFilterElementOrNull(parentElement()))
-    filter->InvalidateFilterChain();
+  if (LayoutObject* primitive_layout_object = GetLayoutObject())
+    MarkForLayoutAndParentResourceInvalidation(primitive_layout_object);
 }
 
 void SVGFilterPrimitiveStandardAttributes::PrimitiveAttributeChanged(
     const QualifiedName& attribute) {
-  if (SVGFilterElement* filter = ToSVGFilterElementOrNull(parentElement()))
-    filter->PrimitiveAttributeChanged(*this, attribute);
+  if (LayoutObject* primitive_layout_object = GetLayoutObject())
+    static_cast<LayoutSVGResourceFilterPrimitive*>(primitive_layout_object)
+        ->PrimitiveAttributeChanged(attribute);
 }
 
-void InvalidateFilterPrimitiveParent(SVGElement& element) {
-  Element* parent = element.parentElement();
-  if (!parent || !parent->IsSVGElement())
+void InvalidateFilterPrimitiveParent(SVGElement* element) {
+  if (!element)
     return;
-  SVGElement& svgparent = ToSVGElement(*parent);
-  if (!IsSVGFilterPrimitiveStandardAttributes(svgparent))
+
+  ContainerNode* parent = element->parentNode();
+
+  if (!parent)
     return;
-  ToSVGFilterPrimitiveStandardAttributes(svgparent).Invalidate();
+
+  LayoutObject* layout_object = parent->GetLayoutObject();
+  if (!layout_object || !layout_object->IsSVGResourceFilterPrimitive())
+    return;
+
+  LayoutSVGResourceContainer::MarkForLayoutAndParentResourceInvalidation(
+      layout_object, false);
 }
 
 }  // namespace blink

@@ -62,7 +62,7 @@ void SpeechSynthesisUtterance::setVoice(SpeechSynthesisVoice* voice) {
     platform_utterance_->SetVoice(voice->PlatformVoice());
 }
 
-void SpeechSynthesisUtterance::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SpeechSynthesisUtterance) {
   visitor->Trace(platform_utterance_);
   visitor->Trace(voice_);
   ContextClient::Trace(visitor);

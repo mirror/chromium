@@ -104,7 +104,7 @@ class USBDevice : public GarbageCollectedFinalized<USBDevice>,
   // ContextLifecycleObserver interface.
   void ContextDestroyed(ExecutionContext*) override;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   int FindConfigurationIndex(uint8_t configuration_value) const;

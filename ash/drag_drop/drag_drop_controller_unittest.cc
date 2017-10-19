@@ -14,7 +14,6 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "ui/aura/client/capture_client.h"
 #include "ui/aura/client/drag_drop_client_observer.h"
-#include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/aura/env.h"
 #include "ui/aura/test/test_window_delegate.h"
 #include "ui/aura/window_event_dispatcher.h"
@@ -33,6 +32,8 @@
 #include "ui/gfx/animation/linear_animation.h"
 #include "ui/gfx/image/image_skia_rep.h"
 #include "ui/views/view.h"
+#include "ui/views/widget/native_widget_aura.h"
+#include "ui/views/widget/native_widget_delegate.h"
 #include "ui/views/widget/widget.h"
 
 namespace ash {
@@ -194,6 +195,24 @@ class TestDragDropController : public DragDropController {
   DISALLOW_COPY_AND_ASSIGN(TestDragDropController);
 };
 
+class TestNativeWidgetAura : public views::NativeWidgetAura {
+ public:
+  explicit TestNativeWidgetAura(views::internal::NativeWidgetDelegate* delegate)
+      : NativeWidgetAura(delegate), check_if_capture_lost_(false) {}
+
+  void set_check_if_capture_lost(bool value) { check_if_capture_lost_ = value; }
+
+  void OnCaptureLost() override {
+    DCHECK(!check_if_capture_lost_);
+    views::NativeWidgetAura::OnCaptureLost();
+  }
+
+ private:
+  bool check_if_capture_lost_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestNativeWidgetAura);
+};
+
 class TestObserver : public aura::client::DragDropClientObserver {
  public:
   enum class State { kNotInvoked, kDragStartedInvoked, kDragEndedInvoked };
@@ -260,11 +279,25 @@ class EventTargetTestDelegate : public aura::client::DragDropDelegate {
   DISALLOW_COPY_AND_ASSIGN(EventTargetTestDelegate);
 };
 
-std::unique_ptr<views::Widget> CreateFramelessWidget() {
-  std::unique_ptr<views::Widget> widget = std::make_unique<views::Widget>();
+// TODO(sky): this is for debugging, remove when track down failure.
+void SetCheckIfCaptureLost(views::Widget* widget, bool value) {
+// On Windows, the DCHECK triggers when running on bot or locally through RDP,
+// but not when logged in locally.
+#if !defined(OS_WIN)
+  static_cast<TestNativeWidgetAura*>(widget->native_widget())
+      ->set_check_if_capture_lost(value);
+#endif
+}
+
+views::Widget* CreateNewWidget() {
+  views::Widget* widget = new views::Widget;
   views::Widget::InitParams params;
   params.type = views::Widget::InitParams::TYPE_WINDOW_FRAMELESS;
+  params.accept_events = true;
   params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
+  params.parent = Shell::GetPrimaryRootWindow();
+  params.child = true;
+  params.native_widget = new TestNativeWidgetAura(widget);
   widget->Init(params);
   widget->Show();
   return widget;
@@ -359,7 +392,7 @@ class DragDropControllerTest : public AshTestBase {
 };
 
 TEST_F(DragDropControllerTest, DragDropInSingleViewTest) {
-  std::unique_ptr<views::Widget> widget = CreateTestWidget();
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view);
   ui::OSExchangeData data;
@@ -369,6 +402,7 @@ TEST_F(DragDropControllerTest, DragDropInSingleViewTest) {
   generator.PressLeftButton();
 
   int num_drags = 17;
+  SetCheckIfCaptureLost(widget.get(), true);
   for (int i = 0; i < num_drags; ++i) {
     // Because we are not doing a blocking drag and drop, the original
     // OSDragExchangeData object is lost as soon as we return from the drag
@@ -376,6 +410,10 @@ TEST_F(DragDropControllerTest, DragDropInSingleViewTest) {
     // drag_data_ to a fake drag data object that we created.
     if (i > 0)
       UpdateDragData(&data);
+    // 7 comes from views::View::GetVerticalDragThreshold()).
+    if (i >= 7)
+      SetCheckIfCaptureLost(widget.get(), false);
+
     generator.MoveMouseBy(0, 1);
 
     // Execute any scheduled draws to process deferred mouse events.
@@ -400,7 +438,7 @@ TEST_F(DragDropControllerTest, DragDropInSingleViewTest) {
 }
 
 TEST_F(DragDropControllerTest, DragDropWithZeroDragUpdates) {
-  std::unique_ptr<views::Widget> widget = CreateTestWidget();
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view);
   ui::OSExchangeData data;
@@ -438,7 +476,7 @@ TEST_F(DragDropControllerTest, DragDropWithZeroDragUpdates) {
 }
 
 TEST_F(DragDropControllerTest, DragDropInMultipleViewsSingleWidgetTest) {
-  std::unique_ptr<views::Widget> widget = CreateFramelessWidget();
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view1 = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view1);
   DragTestView* drag_view2 = new DragTestView;
@@ -493,10 +531,10 @@ TEST_F(DragDropControllerTest, DragDropInMultipleViewsSingleWidgetTest) {
 }
 
 TEST_F(DragDropControllerTest, DragDropInMultipleViewsMultipleWidgetsTest) {
-  std::unique_ptr<views::Widget> widget1 = CreateFramelessWidget();
+  std::unique_ptr<views::Widget> widget1(CreateNewWidget());
   DragTestView* drag_view1 = new DragTestView;
   AddViewToWidgetAndResize(widget1.get(), drag_view1);
-  std::unique_ptr<views::Widget> widget2 = CreateFramelessWidget();
+  std::unique_ptr<views::Widget> widget2(CreateNewWidget());
   DragTestView* drag_view2 = new DragTestView;
   AddViewToWidgetAndResize(widget2.get(), drag_view2);
   gfx::Rect widget1_bounds = widget1->GetClientAreaBoundsInScreen();
@@ -553,7 +591,7 @@ TEST_F(DragDropControllerTest, DragDropInMultipleViewsMultipleWidgetsTest) {
 }
 
 TEST_F(DragDropControllerTest, ViewRemovedWhileInDragDropTest) {
-  std::unique_ptr<views::Widget> widget = CreateTestWidget();
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
   std::unique_ptr<DragTestView> drag_view(new DragTestView);
   AddViewToWidgetAndResize(widget.get(), drag_view.get());
   ui::OSExchangeData data;
@@ -616,7 +654,7 @@ TEST_F(DragDropControllerTest, DragLeavesClipboardAloneTest) {
   EXPECT_TRUE(cb->IsFormatAvailable(ui::Clipboard::GetPlainTextFormatType(),
                                     ui::CLIPBOARD_TYPE_COPY_PASTE));
 
-  std::unique_ptr<views::Widget> widget = CreateTestWidget();
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view);
 
@@ -644,7 +682,7 @@ TEST_F(DragDropControllerTest, DragLeavesClipboardAloneTest) {
 }
 
 TEST_F(DragDropControllerTest, WindowDestroyedDuringDragDrop) {
-  std::unique_ptr<views::Widget> widget = CreateTestWidget();
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view);
   aura::Window* window = widget->GetNativeView();
@@ -690,7 +728,7 @@ TEST_F(DragDropControllerTest, WindowDestroyedDuringDragDrop) {
 }
 
 TEST_F(DragDropControllerTest, SyntheticEventsDuringDragDrop) {
-  std::unique_ptr<views::Widget> widget = CreateTestWidget();
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view);
   ui::OSExchangeData data;
@@ -740,7 +778,7 @@ TEST_F(DragDropControllerTest, SyntheticEventsDuringDragDrop) {
 }
 
 TEST_F(DragDropControllerTest, PressingEscapeCancelsDragDrop) {
-  std::unique_ptr<views::Widget> widget = CreateTestWidget();
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view);
   ui::OSExchangeData data;
@@ -782,7 +820,7 @@ TEST_F(DragDropControllerTest, PressingEscapeCancelsDragDrop) {
 }
 
 TEST_F(DragDropControllerTest, CaptureLostCancelsDragDrop) {
-  std::unique_ptr<views::Widget> widget = CreateTestWidget();
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view);
   ui::OSExchangeData data;
@@ -832,10 +870,10 @@ TEST_F(DragDropControllerTest, CaptureLostCancelsDragDrop) {
 TEST_F(DragDropControllerTest, TouchDragDropInMultipleWindows) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kEnableTouchDragDrop);
-  std::unique_ptr<views::Widget> widget1 = CreateFramelessWidget();
+  std::unique_ptr<views::Widget> widget1(CreateNewWidget());
   DragTestView* drag_view1 = new DragTestView;
   AddViewToWidgetAndResize(widget1.get(), drag_view1);
-  std::unique_ptr<views::Widget> widget2 = CreateFramelessWidget();
+  std::unique_ptr<views::Widget> widget2(CreateNewWidget());
   DragTestView* drag_view2 = new DragTestView;
   AddViewToWidgetAndResize(widget2.get(), drag_view2);
   gfx::Rect widget1_bounds = widget1->GetClientAreaBoundsInScreen();
@@ -894,7 +932,7 @@ TEST_F(DragDropControllerTest, TouchDragDropInMultipleWindows) {
 TEST_F(DragDropControllerTest, TouchDragDropCancelsOnLongTap) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kEnableTouchDragDrop);
-  std::unique_ptr<views::Widget> widget = CreateTestWidget();
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view);
   ui::test::EventGenerator generator(Shell::GetPrimaryRootWindow(),
@@ -920,7 +958,7 @@ TEST_F(DragDropControllerTest, TouchDragDropCancelsOnLongTap) {
 TEST_F(DragDropControllerTest, TouchDragDropLongTapGestureIsForwarded) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kEnableTouchDragDrop);
-  std::unique_ptr<views::Widget> widget = CreateTestWidget();
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view);
   ui::test::EventGenerator generator(Shell::GetPrimaryRootWindow(),
@@ -971,7 +1009,7 @@ TEST_F(DragDropControllerTest, DragCancelAcrossDisplays) {
   ui::OSExchangeData data;
   data.SetString(base::UTF8ToUTF16("I am being dragged"));
   {
-    std::unique_ptr<views::Widget> widget = CreateTestWidget();
+    std::unique_ptr<views::Widget> widget(CreateNewWidget());
     aura::Window* window = widget->GetNativeWindow();
     drag_drop_controller_->StartDragAndDrop(
         data, window->GetRootWindow(), window, gfx::Point(5, 5),
@@ -1002,7 +1040,7 @@ TEST_F(DragDropControllerTest, DragCancelAcrossDisplays) {
   }
 
   {
-    std::unique_ptr<views::Widget> widget = CreateTestWidget();
+    std::unique_ptr<views::Widget> widget(CreateNewWidget());
     aura::Window* window = widget->GetNativeWindow();
     drag_drop_controller_->StartDragAndDrop(
         data, window->GetRootWindow(), window, gfx::Point(405, 405),
@@ -1045,7 +1083,7 @@ TEST_F(DragDropControllerTest, DragCancelOnDisplayDisconnect) {
 
   ui::OSExchangeData data;
   data.SetString(base::UTF8ToUTF16("I am being dragged"));
-  std::unique_ptr<views::Widget> widget = CreateTestWidget();
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
   aura::Window* window = widget->GetNativeWindow();
   drag_drop_controller_->StartDragAndDrop(
       data, window->GetRootWindow(), window, gfx::Point(5, 5),
@@ -1079,7 +1117,7 @@ TEST_F(DragDropControllerTest, TouchDragDropCompletesOnFling) {
       switches::kEnableTouchDragDrop);
   ui::GestureConfiguration::GetInstance()
       ->set_max_touch_move_in_pixels_for_click(1);
-  std::unique_ptr<views::Widget> widget = CreateTestWidget();
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view = new DragTestView;
   AddViewToWidgetAndResize(widget.get(), drag_view);
   ui::OSExchangeData data;
@@ -1136,7 +1174,7 @@ TEST_F(DragDropControllerTest, DragStartedAndEndedEvents) {
   ui::OSExchangeData data;
   data.SetString(base::UTF8ToUTF16("I am being dragged"));
   {
-    std::unique_ptr<views::Widget> widget = CreateTestWidget();
+    std::unique_ptr<views::Widget> widget(CreateNewWidget());
     aura::Window* window = widget->GetNativeWindow();
     drag_drop_controller_->StartDragAndDrop(
         data, window->GetRootWindow(), window, gfx::Point(5, 5),

@@ -39,7 +39,7 @@ class SVGStopElement final : public SVGElement {
 
   SVGAnimatedNumber* offset() const { return offset_.Get(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit SVGStopElement(Document&);

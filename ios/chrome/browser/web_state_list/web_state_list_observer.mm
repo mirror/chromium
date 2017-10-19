@@ -37,8 +37,7 @@ void WebStateListObserver::WebStateDetachedAt(WebStateList* web_state_list,
 
 void WebStateListObserver::WillCloseWebStateAt(WebStateList* web_state_list,
                                                web::WebState* web_state,
-                                               int index,
-                                               bool user_action) {}
+                                               int index) {}
 
 void WebStateListObserver::WebStateActivatedAt(WebStateList* web_state_list,
                                                web::WebState* old_web_state,

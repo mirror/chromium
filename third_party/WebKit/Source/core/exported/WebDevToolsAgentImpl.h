@@ -73,7 +73,7 @@ class CORE_EXPORT WebDevToolsAgentImpl final
   static WebDevToolsAgentImpl* Create(WebLocalFrameImpl*,
                                       WebDevToolsAgentClient*);
   ~WebDevToolsAgentImpl() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void WillBeDestroyed();
   WebDevToolsAgentClient* Client() { return client_; }

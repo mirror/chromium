@@ -40,7 +40,7 @@ class AXARIAGridRow final : public AXTableRow {
 
  private:
   AXARIAGridRow(LayoutObject*, AXObjectCacheImpl&);
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   AXObjectVector cells_;
 

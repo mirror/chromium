@@ -90,7 +90,7 @@ String USBEndpoint::type() const {
   return ConvertTypeToEnum(Info().type);
 }
 
-void USBEndpoint::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(USBEndpoint) {
   visitor->Trace(alternate_);
 }
 

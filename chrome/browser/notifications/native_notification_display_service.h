@@ -18,12 +18,9 @@
 #include "chrome/browser/notifications/notification_display_service.h"
 
 class MessageCenterDisplayService;
+class Notification;
 class NotificationPlatformBridge;
 class Profile;
-
-namespace message_center {
-class Notification;
-}
 
 // A class to display and interact with notifications in native notification
 // centers on platforms that support it.
@@ -37,7 +34,7 @@ class NativeNotificationDisplayService : public NotificationDisplayService {
   // NotificationDisplayService implementation.
   void Display(NotificationCommon::Type notification_type,
                const std::string& notification_id,
-               const message_center::Notification& notification,
+               const Notification& notification,
                std::unique_ptr<NotificationCommon::Metadata> metadata) override;
   void Close(NotificationCommon::Type notification_type,
              const std::string& notification_id) override;

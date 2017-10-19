@@ -123,7 +123,7 @@ void PerformanceObserver::Deliver() {
   callback_->call(this, entry_list, this);
 }
 
-void PerformanceObserver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PerformanceObserver) {
   ContextClient::Trace(visitor);
   visitor->Trace(execution_context_);
   visitor->Trace(callback_);

@@ -87,7 +87,7 @@ class CORE_EXPORT CSSImageValue : public CSSValue {
 
   void SetInitiator(const AtomicString& name) { initiator_name_ = name; }
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
   void RestoreCachedResourceIfNeeded(const Document&) const;
 
  private:

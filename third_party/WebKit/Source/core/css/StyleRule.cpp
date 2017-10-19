@@ -52,7 +52,7 @@ CSSRule* StyleRuleBase::CreateCSSOMWrapper(CSSRule* parent_rule) const {
   return CreateCSSOMWrapper(0, parent_rule);
 }
 
-void StyleRuleBase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StyleRuleBase) {
   switch (GetType()) {
     case kCharset:
       ToStyleRuleCharset(this)->TraceAfterDispatch(visitor);
@@ -234,7 +234,8 @@ StyleRule::StyleRule(const StyleRule& o)
     : StyleRuleBase(o),
       should_consider_for_matching_rules_(kConsiderIfNonEmpty),
       selector_list_(o.selector_list_.Copy()),
-      properties_(o.Properties().MutableCopy()) {}
+      properties_(o.ParsedProperties() ? o.ParsedProperties()->MutableCopy()
+                                       : nullptr) {}
 
 StyleRule::~StyleRule() {}
 
@@ -263,7 +264,7 @@ bool StyleRule::HasParsedProperties() const {
   return !lazy_property_parser_;
 }
 
-void StyleRule::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(StyleRule) {
   visitor->Trace(properties_);
   visitor->Trace(lazy_property_parser_);
   StyleRuleBase::TraceAfterDispatch(visitor);
@@ -288,7 +289,7 @@ MutableStylePropertySet& StyleRulePage::MutableProperties() {
   return *ToMutableStylePropertySet(properties_.Get());
 }
 
-void StyleRulePage::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(StyleRulePage) {
   visitor->Trace(properties_);
   StyleRuleBase::TraceAfterDispatch(visitor);
 }
@@ -308,7 +309,7 @@ MutableStylePropertySet& StyleRuleFontFace::MutableProperties() {
   return *ToMutableStylePropertySet(properties_);
 }
 
-void StyleRuleFontFace::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(StyleRuleFontFace) {
   visitor->Trace(properties_);
   StyleRuleBase::TraceAfterDispatch(visitor);
 }
@@ -333,7 +334,7 @@ void StyleRuleGroup::WrapperRemoveRule(unsigned index) {
   child_rules_.EraseAt(index);
 }
 
-void StyleRuleGroup::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(StyleRuleGroup) {
   visitor->Trace(child_rules_);
   StyleRuleBase::TraceAfterDispatch(visitor);
 }
@@ -370,7 +371,7 @@ StyleRuleSupports::StyleRuleSupports(
     : StyleRuleCondition(kSupports, condition_text, adopt_rules),
       condition_is_supported_(condition_is_supported) {}
 
-void StyleRuleMedia::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(StyleRuleMedia) {
   StyleRuleCondition::TraceAfterDispatch(visitor);
 }
 
@@ -393,7 +394,7 @@ MutableStylePropertySet& StyleRuleViewport::MutableProperties() {
   return *ToMutableStylePropertySet(properties_);
 }
 
-void StyleRuleViewport::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(StyleRuleViewport) {
   visitor->Trace(properties_);
   StyleRuleBase::TraceAfterDispatch(visitor);
 }

@@ -39,7 +39,7 @@ class DeathAwareScriptWrappable
     instance_ = instance;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(wrapped_dependency_);
     visitor->Trace(wrapped_vector_dependency_);
     visitor->Trace(wrapped_hash_map_dependency_);

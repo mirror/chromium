@@ -55,7 +55,7 @@ inline SVGForeignObjectElement::SVGForeignObjectElement(Document& document)
   UseCounter::Count(document, WebFeature::kSVGForeignObjectElement);
 }
 
-void SVGForeignObjectElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGForeignObjectElement) {
   visitor->Trace(x_);
   visitor->Trace(y_);
   visitor->Trace(width_);

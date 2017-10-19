@@ -365,7 +365,7 @@ DOMTokenList* HTMLLinkElement::sizes() const {
   return sizes_.Get();
 }
 
-void HTMLLinkElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLLinkElement) {
   visitor->Trace(link_);
   visitor->Trace(sizes_);
   visitor->Trace(link_loader_);

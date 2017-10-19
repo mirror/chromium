@@ -64,7 +64,7 @@ class CORE_EXPORT DataTransferItem final
   DataTransfer* GetDataTransfer() { return data_transfer_.Get(); }
   DataObjectItem* GetDataObjectItem() { return item_.Get(); }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:

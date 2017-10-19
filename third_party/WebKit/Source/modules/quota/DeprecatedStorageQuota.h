@@ -65,7 +65,7 @@ class DeprecatedStorageQuota final
                     StorageQuotaCallback*,
                     StorageErrorCallback*);
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit DeprecatedStorageQuota(Type);

@@ -33,7 +33,6 @@
 #include "content/public/network/network_service.h"
 #include "mojo/public/c/system/types.h"
 #include "mojo/public/cpp/bindings/binding.h"
-#include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "net/http/http_response_headers.h"
@@ -66,9 +65,8 @@ const char kTruncatedBody[] = "Truncated Body";
 // and check the result.
 class SimpleLoaderTestHelper {
  public:
-  // What the response should be downloaded to. Running all tests for all types
-  // is more than strictly needed, but simplest just to cover all cases.
-  enum class DownloadType { TO_STRING, TO_FILE, TO_TEMP_FILE };
+  // What the response should be downloaded to.
+  enum class DownloadType { TO_STRING, TO_FILE };
 
   explicit SimpleLoaderTestHelper(DownloadType download_type)
       : download_type_(download_type),
@@ -131,32 +129,7 @@ class SimpleLoaderTestHelper {
               dest_path_, max_body_size);
         }
         break;
-      case DownloadType::TO_TEMP_FILE:
-        if (max_body_size < 0) {
-          simple_url_loader_->DownloadToTempFile(
-              resource_request, url_loader_factory,
-              TRAFFIC_ANNOTATION_FOR_TESTS,
-              base::BindOnce(&SimpleLoaderTestHelper::DownloadedToFile,
-                             base::Unretained(this)));
-        } else {
-          simple_url_loader_->DownloadToTempFile(
-              resource_request, url_loader_factory,
-              TRAFFIC_ANNOTATION_FOR_TESTS,
-              base::BindOnce(&SimpleLoaderTestHelper::DownloadedToFile,
-                             base::Unretained(this)),
-              max_body_size);
-        }
-        break;
     }
-  }
-
-  // Same as StartRequest, but takes a URL instead of a ResourceRequest.
-  void StartRequestForURL(mojom::URLLoaderFactory* url_loader_factory,
-                          const GURL& url,
-                          int64_t max_body_size = -1) {
-    ResourceRequest resource_request;
-    resource_request.url = url;
-    StartRequest(url_loader_factory, resource_request, max_body_size);
   }
 
   // Runs a SimpleURLLoader using the provided ResourceRequest and waits for
@@ -250,33 +223,19 @@ class SimpleLoaderTestHelper {
   void DownloadedToFile(const base::FilePath& file_path) {
     DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
     EXPECT_FALSE(done_);
-    EXPECT_TRUE(download_type_ == DownloadType::TO_FILE ||
-                download_type_ == DownloadType::TO_TEMP_FILE);
+    EXPECT_EQ(DownloadType::TO_FILE, download_type_);
     EXPECT_FALSE(response_body_);
 
+    // Make sure the destination file exists if |file_path| is non-empty, or the
+    // file is expected to exist on error.
+    EXPECT_EQ(!file_path.empty() || expect_path_exists_on_error_,
+              base::PathExists(dest_path_));
+
     if (!file_path.empty()) {
-      EXPECT_TRUE(base::PathExists(file_path));
+      EXPECT_EQ(dest_path_, file_path);
       response_body_ = std::make_unique<std::string>();
-      EXPECT_TRUE(base::ReadFileToString(file_path, response_body_.get()));
+      EXPECT_TRUE(base::ReadFileToString(dest_path_, response_body_.get()));
     }
-
-    // Can do some additional checks in the TO_FILE case. Unfortunately, in the
-    // temp file case, can't check that temp files were cleaned up, since it's
-    // a shared directory.
-    if (download_type_ == DownloadType::TO_FILE) {
-      // Make sure the destination file exists if |file_path| is non-empty, or
-      // the file is expected to exist on error.
-      EXPECT_EQ(!file_path.empty() || expect_path_exists_on_error_,
-                base::PathExists(dest_path_));
-
-      if (!file_path.empty())
-        EXPECT_EQ(dest_path_, file_path);
-    }
-
-    // Clean up file, so tests don't leave around files in the temp directory.
-    // Only matters in the TO_TEMP_FILE case.
-    if (!file_path.empty())
-      base::DeleteFile(file_path, false);
 
     done_ = true;
     run_loop_.Quit();
@@ -453,95 +412,6 @@ TEST_P(SimpleURLLoaderTest, Redirect) {
   EXPECT_EQ(200, test_helper()->GetResponseCode());
   ASSERT_TRUE(test_helper()->response_body());
   EXPECT_EQ("Echo", *test_helper()->response_body());
-}
-
-// Make sure OnRedirectCallback is invoked on a redirect.
-TEST_P(SimpleURLLoaderTest, OnRedirectCallback) {
-  int num_redirects = 0;
-  net::RedirectInfo redirect_info;
-  ResourceResponseHead response_head;
-  test_helper()->simple_url_loader()->SetOnRedirectCallback(base::Bind(
-      [](int* num_redirects, net::RedirectInfo* redirect_info_ptr,
-         ResourceResponseHead* response_head_ptr,
-         const net::RedirectInfo& redirect_info,
-         const ResourceResponseHead& response_head) {
-        ++*num_redirects;
-        *redirect_info_ptr = redirect_info;
-        *response_head_ptr = response_head;
-      },
-      base::Unretained(&num_redirects), base::Unretained(&redirect_info),
-      base::Unretained(&response_head)));
-
-  test_helper()->RunRequestForURL(
-      url_loader_factory_.get(),
-      test_server_.GetURL("/server-redirect?" +
-                          test_server_.GetURL("/echo").spec()));
-  ASSERT_TRUE(test_helper()->response_body());
-  EXPECT_EQ("Echo", *test_helper()->response_body());
-
-  EXPECT_EQ(1, num_redirects);
-  EXPECT_EQ(test_server_.GetURL("/echo"), redirect_info.new_url);
-  ASSERT_TRUE(response_head.headers);
-  EXPECT_EQ(301, response_head.headers->response_code());
-}
-
-// Make sure OnRedirectCallback is invoked on each redirect.
-TEST_P(SimpleURLLoaderTest, OnRedirectCallbackTwoRedirects) {
-  int num_redirects = 0;
-  test_helper()->simple_url_loader()->SetOnRedirectCallback(base::Bind(
-      [](int* num_redirects, const net::RedirectInfo& redirect_info,
-         const ResourceResponseHead& response_head) { ++*num_redirects; },
-      base::Unretained(&num_redirects)));
-
-  test_helper()->RunRequestForURL(
-      url_loader_factory_.get(),
-      test_server_.GetURL(
-          "/server-redirect?" +
-          test_server_
-              .GetURL("/server-redirect?" + test_server_.GetURL("/echo").spec())
-              .spec()));
-  ASSERT_TRUE(test_helper()->response_body());
-  EXPECT_EQ("Echo", *test_helper()->response_body());
-
-  EXPECT_EQ(2, num_redirects);
-}
-
-TEST_P(SimpleURLLoaderTest, DeleteInOnRedirectCallback) {
-  std::unique_ptr<SimpleLoaderTestHelper> test_helper =
-      std::make_unique<SimpleLoaderTestHelper>(GetParam());
-
-  SimpleLoaderTestHelper* unowned_test_helper = test_helper.get();
-  base::RunLoop run_loop;
-  unowned_test_helper->simple_url_loader()->SetOnRedirectCallback(base::Bind(
-      [](std::unique_ptr<SimpleLoaderTestHelper> test_helper,
-         base::RunLoop* run_loop, const net::RedirectInfo& redirect_info,
-         const ResourceResponseHead& response_head) { run_loop->Quit(); },
-      base::Passed(std::move(test_helper)), &run_loop));
-
-  ResourceRequest resource_request;
-  resource_request.url = test_server_.GetURL(
-      "/server-redirect?" + test_server_.GetURL("/echo").spec());
-  unowned_test_helper->StartRequest(url_loader_factory_.get(),
-                                    resource_request);
-
-  run_loop.Run();
-}
-
-// Check the case where a URLLoaderFactory with a closed Mojo pipe was passed
-// in.
-TEST_P(SimpleURLLoaderTest, DisconnectedURLLoader) {
-  // Destroy the NetworkContext, and wait for the Mojo URLLoaderFactory proxy to
-  // be informed of the closed pipe.
-  network_context_.reset();
-  base::RunLoop().RunUntilIdle();
-
-  ResourceRequest resource_request;
-  resource_request.url = test_server_.GetURL("/echoheader?foo");
-  resource_request.headers.SetHeader("foo", "Expected Response");
-  test_helper()->RunRequest(url_loader_factory_.get(), resource_request);
-
-  EXPECT_EQ(net::ERR_FAILED, test_helper()->simple_url_loader()->NetError());
-  EXPECT_FALSE(test_helper()->simple_url_loader()->ResponseInfo());
 }
 
 // Check that no body is returned with an HTTP error response.
@@ -804,20 +674,13 @@ TEST_P(SimpleURLLoaderTest, DestroyServiceBeforeResponseStarts) {
 
 enum class TestLoaderEvent {
   kReceivedRedirect,
-  // Receive a response with a 200 status code.
   kReceivedResponse,
-  // Receive a response with a 401 status code.
-  kReceived401Response,
-  // Receive a response with a 501 status code.
-  kReceived501Response,
   kBodyBufferReceived,
   kBodyDataRead,
   // ResponseComplete indicates a success.
   kResponseComplete,
   // ResponseComplete is passed a network error (net::ERR_TIMED_OUT).
   kResponseCompleteFailed,
-  // ResponseComplete is passed net::ERR_NETWORK_CHANGED.
-  kResponseCompleteNetworkChanged,
   // Less body data is received than is expected.
   kResponseCompleteTruncated,
   // More body data is received than is expected.
@@ -870,26 +733,6 @@ class MockURLLoader : public mojom::URLLoader {
                                      base::Optional<net::SSLInfo>(), nullptr);
           break;
         }
-        case TestLoaderEvent::kReceived401Response: {
-          ResourceResponseHead response_info;
-          std::string headers("HTTP/1.0 401 Client Borkage");
-          response_info.headers =
-              new net::HttpResponseHeaders(net::HttpUtil::AssembleRawHeaders(
-                  headers.c_str(), headers.size()));
-          client_->OnReceiveResponse(response_info,
-                                     base::Optional<net::SSLInfo>(), nullptr);
-          break;
-        }
-        case TestLoaderEvent::kReceived501Response: {
-          ResourceResponseHead response_info;
-          std::string headers("HTTP/1.0 501 Server Borkage");
-          response_info.headers =
-              new net::HttpResponseHeaders(net::HttpUtil::AssembleRawHeaders(
-                  headers.c_str(), headers.size()));
-          client_->OnReceiveResponse(response_info,
-                                     base::Optional<net::SSLInfo>(), nullptr);
-          break;
-        }
         case TestLoaderEvent::kBodyBufferReceived: {
           mojo::DataPipe data_pipe(1024);
           body_stream_ = std::move(data_pipe.producer_handle);
@@ -919,13 +762,6 @@ class MockURLLoader : public mojom::URLLoader {
           // Use an error that SimpleURLLoader doesn't create itself, so clear
           // when this is the source of the error code.
           request_complete_data.error_code = net::ERR_TIMED_OUT;
-          request_complete_data.decoded_body_length = CountBytesToSend();
-          client_->OnComplete(request_complete_data);
-          break;
-        }
-        case TestLoaderEvent::kResponseCompleteNetworkChanged: {
-          ResourceRequestCompletionStatus request_complete_data;
-          request_complete_data.error_code = net::ERR_NETWORK_CHANGED;
           request_complete_data.decoded_body_length = CountBytesToSend();
           client_->OnComplete(request_complete_data);
           break;
@@ -962,7 +798,7 @@ class MockURLLoader : public mojom::URLLoader {
   ~MockURLLoader() override {}
 
   // mojom::URLLoader implementation:
-  void FollowRedirect() override {}
+  void FollowRedirect() override { NOTREACHED(); }
   void SetPriority(net::RequestPriority priority,
                    int32_t intra_priority_value) override {
     NOTREACHED();
@@ -1006,7 +842,6 @@ class MockURLLoaderFactory : public mojom::URLLoaderFactory {
   ~MockURLLoaderFactory() override {}
 
   // mojom::URLLoaderFactory implementation:
-
   void CreateLoaderAndStart(mojom::URLLoaderRequest url_loader_request,
                             int32_t routing_id,
                             int32_t request_id,
@@ -1015,78 +850,25 @@ class MockURLLoaderFactory : public mojom::URLLoaderFactory {
                             mojom::URLLoaderClientPtr client,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override {
-    ASSERT_FALSE(test_events_.empty());
-    requested_urls_.push_back(url_request.url);
-    url_loaders_.push_back(base::MakeUnique<MockURLLoader>(
+    EXPECT_FALSE(url_loader_);
+    url_loader_ = base::MakeUnique<MockURLLoader>(
         scoped_task_environment_, std::move(url_loader_request),
-        std::move(client), test_events_.front()));
-    test_events_.pop_front();
-
-    url_loader_queue_.push_back(url_loaders_.back().get());
+        std::move(client), std::move(test_events_));
+    url_loader_->RunTest();
   }
+  void Clone(mojom::URLLoaderFactoryRequest request) override { NOTREACHED(); }
 
-  void Clone(mojom::URLLoaderFactoryRequest request) override {
-    mojo::BindingId id = binding_set_.AddBinding(this, std::move(request));
-    if (close_new_binding_on_clone_)
-      binding_set_.RemoveBinding(id);
+  MockURLLoader* url_loader() const { return url_loader_.get(); }
+
+  void AddEvent(TestLoaderEvent test_event) {
+    DCHECK(!url_loader_);
+    test_events_.push_back(test_event);
   }
-
-  // Makes clone fail close the newly created binding after bining the request,
-  // Simulating the case where the network service goes away before the cloned
-  // interface is used.
-  void set_close_new_binding_on_clone(bool close_new_binding_on_clone) {
-    close_new_binding_on_clone_ = close_new_binding_on_clone;
-  }
-
-  // Adds a events that will be returned by a single MockURLLoader. Mutliple
-  // calls mean multiple MockURLLoaders are expected to be created. Each will
-  // run to completion before the next one is expected to be created.
-  void AddEvents(const std::vector<TestLoaderEvent> events) {
-    DCHECK(url_loaders_.empty());
-    test_events_.push_back(events);
-  }
-
-  // Runs all events for all created URLLoaders, in order.
-  void RunTest(SimpleLoaderTestHelper* test_helper,
-               const GURL& url,
-               bool wait_for_completion = true) {
-    mojom::URLLoaderFactoryPtr factory;
-    binding_set_.AddBinding(this, mojo::MakeRequest(&factory));
-
-    test_helper->StartRequestForURL(factory.get(), url);
-
-    // Wait for the first URLLoader to start receiving messages.
-    base::RunLoop().RunUntilIdle();
-
-    while (!url_loader_queue_.empty()) {
-      url_loader_queue_.front()->RunTest();
-      url_loader_queue_.pop_front();
-    }
-
-    if (wait_for_completion)
-      test_helper->Wait();
-
-    // All loads with added events should have been created and had their
-    // RunTest() methods called by the time the above loop completes.
-    EXPECT_TRUE(test_events_.empty());
-  }
-
-  const std::list<GURL>& requested_urls() const { return requested_urls_; }
 
  private:
   base::test::ScopedTaskEnvironment* scoped_task_environment_;
-  std::list<std::unique_ptr<MockURLLoader>> url_loaders_;
-  std::list<std::vector<TestLoaderEvent>> test_events_;
-
-  bool close_new_binding_on_clone_ = false;
-
-  // Queue of URLLoaders that have yet to had their RunTest method called.
-  // Separate list than |url_loaders_| so that old pipes aren't destroyed.
-  std::list<MockURLLoader*> url_loader_queue_;
-
-  std::list<GURL> requested_urls_;
-
-  mojo::BindingSet<mojom::URLLoaderFactory> binding_set_;
+  std::unique_ptr<MockURLLoader> url_loader_;
+  std::vector<TestLoaderEvent> test_events_;
 
   DISALLOW_COPY_AND_ASSIGN(MockURLLoaderFactory);
 };
@@ -1094,8 +876,8 @@ class MockURLLoaderFactory : public mojom::URLLoaderFactory {
 // Check that the request fails if OnComplete() is called before anything else.
 TEST_P(SimpleURLLoaderTest, ResponseCompleteBeforeReceivedResponse) {
   MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents({TestLoaderEvent::kResponseComplete});
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+  loader_factory.AddEvent(TestLoaderEvent::kResponseComplete);
+  test_helper()->RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
   EXPECT_EQ(net::ERR_UNEXPECTED,
             test_helper()->simple_url_loader()->NetError());
@@ -1107,9 +889,9 @@ TEST_P(SimpleURLLoaderTest, ResponseCompleteBeforeReceivedResponse) {
 // is received.
 TEST_P(SimpleURLLoaderTest, ResponseCompleteAfterReceivedResponse) {
   MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents(
-      {TestLoaderEvent::kReceivedResponse, TestLoaderEvent::kResponseComplete});
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+  loader_factory.AddEvent(TestLoaderEvent::kResponseComplete);
+  test_helper()->RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
   EXPECT_EQ(net::ERR_UNEXPECTED,
             test_helper()->simple_url_loader()->NetError());
@@ -1119,9 +901,9 @@ TEST_P(SimpleURLLoaderTest, ResponseCompleteAfterReceivedResponse) {
 
 TEST_P(SimpleURLLoaderTest, CloseClientPipeBeforeBodyStarts) {
   MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents(
-      {TestLoaderEvent::kReceivedResponse, TestLoaderEvent::kClientPipeClosed});
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+  loader_factory.AddEvent(TestLoaderEvent::kClientPipeClosed);
+  test_helper()->RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
   EXPECT_EQ(net::ERR_FAILED, test_helper()->simple_url_loader()->NetError());
   EXPECT_EQ(200, test_helper()->GetResponseCode());
@@ -1164,29 +946,27 @@ TEST_P(SimpleURLLoaderTest, CloseClientPipeOrder) {
             continue;
           }
           MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-          std::vector<TestLoaderEvent> events;
-          events.push_back(TestLoaderEvent::kReceivedResponse);
-          events.push_back(TestLoaderEvent::kBodyBufferReceived);
+          loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+          loader_factory.AddEvent(TestLoaderEvent::kBodyBufferReceived);
           if (close_client_order == ClientCloseOrder::kBeforeData)
-            events.push_back(close_client_event);
+            loader_factory.AddEvent(close_client_event);
 
           for (uint32_t i = 0; i < bytes_received; ++i) {
-            events.push_back(TestLoaderEvent::kBodyDataRead);
+            loader_factory.AddEvent(TestLoaderEvent::kBodyDataRead);
             if (i == 0 && close_client_order == ClientCloseOrder::kDuringData)
-              events.push_back(close_client_event);
+              loader_factory.AddEvent(close_client_event);
           }
 
           if (close_client_order == ClientCloseOrder::kAfterData)
-            events.push_back(close_client_event);
-          events.push_back(TestLoaderEvent::kBodyBufferClosed);
+            loader_factory.AddEvent(close_client_event);
+          loader_factory.AddEvent(TestLoaderEvent::kBodyBufferClosed);
           if (close_client_order == ClientCloseOrder::kAfterBufferClosed)
-            events.push_back(close_client_event);
-          loader_factory.AddEvents(events);
+            loader_factory.AddEvent(close_client_event);
 
           SimpleLoaderTestHelper test_helper(GetParam());
           test_helper.simple_url_loader()->SetAllowPartialResults(
               allow_partial_results);
-          loader_factory.RunTest(&test_helper, GURL("foo://bar/"));
+          test_helper.RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
           EXPECT_EQ(200, test_helper.GetResponseCode());
           if (close_client_event != TestLoaderEvent::kResponseComplete) {
@@ -1220,10 +1000,10 @@ TEST_P(SimpleURLLoaderTest, CloseClientPipeOrder) {
 // Make sure the close client pipe message doesn't cause any issues.
 TEST_P(SimpleURLLoaderTest, ErrorAndCloseClientPipeBeforeBodyStarts) {
   MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents({TestLoaderEvent::kReceivedResponse,
-                            TestLoaderEvent::kResponseCompleteFailed,
-                            TestLoaderEvent::kClientPipeClosed});
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+  loader_factory.AddEvent(TestLoaderEvent::kResponseCompleteFailed);
+  loader_factory.AddEvent(TestLoaderEvent::kClientPipeClosed);
+  test_helper()->RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
   EXPECT_EQ(net::ERR_TIMED_OUT, test_helper()->simple_url_loader()->NetError());
   EXPECT_EQ(200, test_helper()->GetResponseCode());
@@ -1233,11 +1013,13 @@ TEST_P(SimpleURLLoaderTest, ErrorAndCloseClientPipeBeforeBodyStarts) {
 // Make sure the close client pipe message doesn't cause any issues.
 TEST_P(SimpleURLLoaderTest, SuccessAndCloseClientPipeBeforeBodyComplete) {
   MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents(
-      {TestLoaderEvent::kReceivedResponse, TestLoaderEvent::kBodyBufferReceived,
-       TestLoaderEvent::kResponseComplete, TestLoaderEvent::kClientPipeClosed,
-       TestLoaderEvent::kBodyDataRead, TestLoaderEvent::kBodyBufferClosed});
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferReceived);
+  loader_factory.AddEvent(TestLoaderEvent::kResponseComplete);
+  loader_factory.AddEvent(TestLoaderEvent::kClientPipeClosed);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyDataRead);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferClosed);
+  test_helper()->RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
   EXPECT_EQ(net::OK, test_helper()->simple_url_loader()->NetError());
   EXPECT_EQ(200, test_helper()->GetResponseCode());
@@ -1248,11 +1030,13 @@ TEST_P(SimpleURLLoaderTest, SuccessAndCloseClientPipeBeforeBodyComplete) {
 // Make sure the close client pipe message doesn't cause any issues.
 TEST_P(SimpleURLLoaderTest, SuccessAndCloseClientPipeAfterBodyComplete) {
   MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents(
-      {TestLoaderEvent::kReceivedResponse, TestLoaderEvent::kBodyBufferReceived,
-       TestLoaderEvent::kBodyDataRead, TestLoaderEvent::kBodyBufferClosed,
-       TestLoaderEvent::kResponseComplete, TestLoaderEvent::kClientPipeClosed});
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferReceived);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyDataRead);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferClosed);
+  loader_factory.AddEvent(TestLoaderEvent::kResponseComplete);
+  loader_factory.AddEvent(TestLoaderEvent::kClientPipeClosed);
+  test_helper()->RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
   EXPECT_EQ(net::OK, test_helper()->simple_url_loader()->NetError());
   EXPECT_EQ(200, test_helper()->GetResponseCode());
@@ -1262,9 +1046,9 @@ TEST_P(SimpleURLLoaderTest, SuccessAndCloseClientPipeAfterBodyComplete) {
 
 TEST_P(SimpleURLLoaderTest, DoubleReceivedResponse) {
   MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents(
-      {TestLoaderEvent::kReceivedResponse, TestLoaderEvent::kReceivedResponse});
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+  test_helper()->RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
   EXPECT_EQ(net::ERR_UNEXPECTED,
             test_helper()->simple_url_loader()->NetError());
@@ -1274,9 +1058,9 @@ TEST_P(SimpleURLLoaderTest, DoubleReceivedResponse) {
 
 TEST_P(SimpleURLLoaderTest, RedirectAfterReseivedResponse) {
   MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents(
-      {TestLoaderEvent::kReceivedResponse, TestLoaderEvent::kReceivedRedirect});
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedRedirect);
+  test_helper()->RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
   EXPECT_EQ(net::ERR_UNEXPECTED,
             test_helper()->simple_url_loader()->NetError());
@@ -1286,8 +1070,8 @@ TEST_P(SimpleURLLoaderTest, RedirectAfterReseivedResponse) {
 
 TEST_P(SimpleURLLoaderTest, UnexpectedBodyBufferReceived) {
   MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents({TestLoaderEvent::kBodyBufferReceived});
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferReceived);
+  test_helper()->RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
   EXPECT_EQ(net::ERR_UNEXPECTED,
             test_helper()->simple_url_loader()->NetError());
@@ -1297,10 +1081,10 @@ TEST_P(SimpleURLLoaderTest, UnexpectedBodyBufferReceived) {
 
 TEST_P(SimpleURLLoaderTest, DoubleBodyBufferReceived) {
   MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents({TestLoaderEvent::kReceivedResponse,
-                            TestLoaderEvent::kBodyBufferReceived,
-                            TestLoaderEvent::kBodyBufferReceived});
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferReceived);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferReceived);
+  test_helper()->RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
   EXPECT_EQ(net::ERR_UNEXPECTED,
             test_helper()->simple_url_loader()->NetError());
@@ -1310,10 +1094,11 @@ TEST_P(SimpleURLLoaderTest, DoubleBodyBufferReceived) {
 
 TEST_P(SimpleURLLoaderTest, UnexpectedMessageAfterBodyStarts) {
   MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents(
-      {TestLoaderEvent::kReceivedResponse, TestLoaderEvent::kBodyBufferReceived,
-       TestLoaderEvent::kBodyDataRead, TestLoaderEvent::kReceivedRedirect});
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferReceived);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyDataRead);
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedRedirect);
+  test_helper()->RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
   EXPECT_EQ(net::ERR_UNEXPECTED,
             test_helper()->simple_url_loader()->NetError());
@@ -1323,10 +1108,11 @@ TEST_P(SimpleURLLoaderTest, UnexpectedMessageAfterBodyStarts) {
 
 TEST_P(SimpleURLLoaderTest, UnexpectedMessageAfterBodyStarts2) {
   MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents(
-      {TestLoaderEvent::kReceivedResponse, TestLoaderEvent::kBodyBufferReceived,
-       TestLoaderEvent::kBodyDataRead, TestLoaderEvent::kBodyBufferReceived});
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferReceived);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyDataRead);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferReceived);
+  test_helper()->RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
   EXPECT_EQ(net::ERR_UNEXPECTED,
             test_helper()->simple_url_loader()->NetError());
@@ -1336,11 +1122,12 @@ TEST_P(SimpleURLLoaderTest, UnexpectedMessageAfterBodyStarts2) {
 
 TEST_P(SimpleURLLoaderTest, UnexpectedMessageAfterBodyComplete) {
   MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents(
-      {TestLoaderEvent::kReceivedResponse, TestLoaderEvent::kBodyBufferReceived,
-       TestLoaderEvent::kBodyDataRead, TestLoaderEvent::kBodyBufferClosed,
-       TestLoaderEvent::kBodyBufferReceived});
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferReceived);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyDataRead);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferClosed);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferReceived);
+  test_helper()->RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
   EXPECT_EQ(net::ERR_UNEXPECTED,
             test_helper()->simple_url_loader()->NetError());
@@ -1350,12 +1137,13 @@ TEST_P(SimpleURLLoaderTest, UnexpectedMessageAfterBodyComplete) {
 
 TEST_P(SimpleURLLoaderTest, MoreDataThanExpected) {
   MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents(
-      {TestLoaderEvent::kReceivedResponse, TestLoaderEvent::kBodyBufferReceived,
-       TestLoaderEvent::kBodyDataRead, TestLoaderEvent::kBodyDataRead,
-       TestLoaderEvent::kBodyBufferClosed,
-       TestLoaderEvent::kResponseCompleteWithExtraData});
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
+  loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferReceived);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyDataRead);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyDataRead);
+  loader_factory.AddEvent(TestLoaderEvent::kBodyBufferClosed);
+  loader_factory.AddEvent(TestLoaderEvent::kResponseCompleteWithExtraData);
+  test_helper()->RunRequestForURL(&loader_factory, GURL("foo://bar/"));
 
   EXPECT_EQ(net::ERR_UNEXPECTED,
             test_helper()->simple_url_loader()->NetError());
@@ -1363,276 +1151,11 @@ TEST_P(SimpleURLLoaderTest, MoreDataThanExpected) {
   EXPECT_FALSE(test_helper()->response_body());
 }
 
-TEST_P(SimpleURLLoaderTest, RetryOn5xx) {
-  const GURL kInitialURL("foo://bar/initial");
-  struct TestCase {
-    // Parameters passed to SetRetryOptions.
-    int max_retries;
-    int retry_mode;
-
-    // Number of 5xx responses before a successful response.
-    int num_5xx;
-
-    // Whether the request is expected to succeed in the end.
-    bool expect_success;
-
-    // Expected times the url should be requested.
-    uint32_t expected_num_requests;
-  } const kTestCases[] = {
-      // No retry on 5xx when retries disabled.
-      {0, SimpleURLLoader::RETRY_NEVER, 1, false, 1},
-
-      // No retry on 5xx when retries enabled on network change.
-      {1, SimpleURLLoader::RETRY_ON_NETWORK_CHANGE, 1, false, 1},
-
-      // As many retries allowed as 5xx errors.
-      {1, SimpleURLLoader::RETRY_ON_5XX, 1, true, 2},
-      {1,
-       SimpleURLLoader::RETRY_ON_5XX | SimpleURLLoader::RETRY_ON_NETWORK_CHANGE,
-       1, true, 2},
-      {2, SimpleURLLoader::RETRY_ON_5XX, 2, true, 3},
-
-      // More retries than 5xx errors.
-      {2, SimpleURLLoader::RETRY_ON_5XX, 1, true, 2},
-
-      // Fewer retries than 5xx errors.
-      {1, SimpleURLLoader::RETRY_ON_5XX, 2, false, 2},
-  };
-
-  for (const auto& test_case : kTestCases) {
-    MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-    for (int i = 0; i < test_case.num_5xx; i++) {
-      loader_factory.AddEvents({TestLoaderEvent::kReceived501Response});
-    }
-
-    if (test_case.expect_success) {
-      // Valid response with a 1-byte body.
-      loader_factory.AddEvents({TestLoaderEvent::kReceivedResponse,
-                                TestLoaderEvent::kBodyBufferReceived,
-                                TestLoaderEvent::kBodyDataRead,
-                                TestLoaderEvent::kBodyBufferClosed,
-                                TestLoaderEvent::kResponseComplete});
-    }
-
-    SimpleLoaderTestHelper test_helper(GetParam());
-    test_helper.simple_url_loader()->SetRetryOptions(test_case.max_retries,
-                                                     test_case.retry_mode);
-    loader_factory.RunTest(&test_helper, GURL(kInitialURL));
-
-    if (test_case.expect_success) {
-      EXPECT_EQ(net::OK, test_helper.simple_url_loader()->NetError());
-      EXPECT_EQ(200, test_helper.GetResponseCode());
-      ASSERT_TRUE(test_helper.response_body());
-      EXPECT_EQ(1u, test_helper.response_body()->size());
-    } else {
-      EXPECT_EQ(501, test_helper.GetResponseCode());
-      EXPECT_FALSE(test_helper.response_body());
-    }
-
-    EXPECT_EQ(test_case.expected_num_requests,
-              loader_factory.requested_urls().size());
-    for (const auto& url : loader_factory.requested_urls()) {
-      EXPECT_EQ(kInitialURL, url);
-    }
-  }
-}
-
-// Test that when retrying on 5xx is enabled, there's no retry on a 4xx error.
-TEST_P(SimpleURLLoaderTest, NoRetryOn4xx) {
-  MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents({TestLoaderEvent::kReceived401Response});
-
-  test_helper()->simple_url_loader()->SetRetryOptions(
-      1, SimpleURLLoader::RETRY_ON_5XX);
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
-
-  EXPECT_EQ(401, test_helper()->GetResponseCode());
-  EXPECT_FALSE(test_helper()->response_body());
-  EXPECT_EQ(1u, loader_factory.requested_urls().size());
-}
-
-// Checks that retrying after a redirect works. The original URL should be
-// re-requested.
-TEST_P(SimpleURLLoaderTest, RetryAfterRedirect) {
-  const GURL kInitialURL("foo://bar/initial");
-  MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents({TestLoaderEvent::kReceivedRedirect,
-                            TestLoaderEvent::kReceived501Response});
-  loader_factory.AddEvents(
-      {TestLoaderEvent::kReceivedRedirect, TestLoaderEvent::kReceivedResponse,
-       TestLoaderEvent::kBodyBufferReceived, TestLoaderEvent::kBodyBufferClosed,
-       TestLoaderEvent::kResponseComplete});
-
-  int num_redirects = 0;
-
-  test_helper()->simple_url_loader()->SetRetryOptions(
-      1, SimpleURLLoader::RETRY_ON_5XX);
-  test_helper()->simple_url_loader()->SetOnRedirectCallback(base::Bind(
-      [](int* num_redirects, const net::RedirectInfo& redirect_info,
-         const ResourceResponseHead& response_head) { ++*num_redirects; },
-      base::Unretained(&num_redirects)));
-  loader_factory.RunTest(test_helper(), kInitialURL);
-
-  EXPECT_EQ(200, test_helper()->GetResponseCode());
-  EXPECT_TRUE(test_helper()->response_body());
-  EXPECT_EQ(2, num_redirects);
-
-  EXPECT_EQ(2u, loader_factory.requested_urls().size());
-  for (const auto& url : loader_factory.requested_urls()) {
-    EXPECT_EQ(kInitialURL, url);
-  }
-}
-
-TEST_P(SimpleURLLoaderTest, RetryOnNetworkChange) {
-  // TestLoaderEvents up to (and including) a network change. Since
-  // SimpleURLLoader always waits for the body buffer to be closed before
-  // retrying, everything that has a kBodyBufferReceived message must also have
-  // a kBodyBufferClosed message. Each test case will be tried against each of
-  // these event sequences.
-  const std::vector<std::vector<TestLoaderEvent>> kNetworkChangedEvents = {
-      {TestLoaderEvent::kResponseCompleteNetworkChanged},
-      {TestLoaderEvent::kReceivedResponse,
-       TestLoaderEvent::kResponseCompleteNetworkChanged},
-      {TestLoaderEvent::kReceivedResponse, TestLoaderEvent::kBodyBufferReceived,
-       TestLoaderEvent::kBodyBufferClosed,
-       TestLoaderEvent::kResponseCompleteNetworkChanged},
-      {TestLoaderEvent::kReceivedResponse, TestLoaderEvent::kBodyBufferReceived,
-       TestLoaderEvent::kResponseCompleteNetworkChanged,
-       TestLoaderEvent::kBodyBufferClosed},
-      {TestLoaderEvent::kReceivedResponse, TestLoaderEvent::kBodyBufferReceived,
-       TestLoaderEvent::kBodyDataRead, TestLoaderEvent::kBodyBufferClosed,
-       TestLoaderEvent::kResponseCompleteNetworkChanged},
-      {TestLoaderEvent::kReceivedResponse, TestLoaderEvent::kBodyBufferReceived,
-       TestLoaderEvent::kBodyDataRead,
-       TestLoaderEvent::kResponseCompleteNetworkChanged,
-       TestLoaderEvent::kBodyBufferClosed},
-      {TestLoaderEvent::kReceivedRedirect,
-       TestLoaderEvent::kResponseCompleteNetworkChanged},
-  };
-
-  const GURL kInitialURL("foo://bar/initial");
-
-  // Test cases in which to try each entry in kNetworkChangedEvents.
-  struct TestCase {
-    // Parameters passed to SetRetryOptions.
-    int max_retries;
-    int retry_mode;
-
-    // Number of network changes responses before a successful response.
-    // For each network change, the entire sequence of an entry in
-    // kNetworkChangedEvents is repeated.
-    int num_network_changes;
-
-    // Whether the request is expected to succeed in the end.
-    bool expect_success;
-
-    // Expected times the url should be requested.
-    uint32_t expected_num_requests;
-  } const kTestCases[] = {
-      // No retry on network change when retries disabled.
-      {0, SimpleURLLoader::RETRY_NEVER, 1, false, 1},
-
-      // No retry on network change when retries enabled on 5xx response.
-      {1, SimpleURLLoader::RETRY_ON_5XX, 1, false, 1},
-
-      // As many retries allowed as network changes.
-      {1, SimpleURLLoader::RETRY_ON_NETWORK_CHANGE, 1, true, 2},
-      {1,
-       SimpleURLLoader::RETRY_ON_NETWORK_CHANGE | SimpleURLLoader::RETRY_ON_5XX,
-       1, true, 2},
-      {2, SimpleURLLoader::RETRY_ON_NETWORK_CHANGE, 2, true, 3},
-
-      // More retries than network changes.
-      {2, SimpleURLLoader::RETRY_ON_NETWORK_CHANGE, 1, true, 2},
-
-      // Fewer retries than network changes.
-      {1, SimpleURLLoader::RETRY_ON_NETWORK_CHANGE, 2, false, 2},
-  };
-
-  for (const auto& network_events : kNetworkChangedEvents) {
-    for (const auto& test_case : kTestCases) {
-      MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-      for (int i = 0; i < test_case.num_network_changes; i++) {
-        loader_factory.AddEvents(network_events);
-      }
-
-      if (test_case.expect_success) {
-        // Valid response with a 1-byte body.
-        loader_factory.AddEvents({TestLoaderEvent::kReceivedResponse,
-                                  TestLoaderEvent::kBodyBufferReceived,
-                                  TestLoaderEvent::kBodyDataRead,
-                                  TestLoaderEvent::kBodyBufferClosed,
-                                  TestLoaderEvent::kResponseComplete});
-      }
-
-      SimpleLoaderTestHelper test_helper(GetParam());
-      test_helper.simple_url_loader()->SetRetryOptions(test_case.max_retries,
-                                                       test_case.retry_mode);
-      loader_factory.RunTest(&test_helper, GURL(kInitialURL));
-
-      if (test_case.expect_success) {
-        EXPECT_EQ(net::OK, test_helper.simple_url_loader()->NetError());
-        EXPECT_EQ(200, test_helper.GetResponseCode());
-        ASSERT_TRUE(test_helper.response_body());
-        EXPECT_EQ(1u, test_helper.response_body()->size());
-      } else {
-        EXPECT_EQ(net::ERR_NETWORK_CHANGED,
-                  test_helper.simple_url_loader()->NetError());
-        EXPECT_FALSE(test_helper.response_body());
-      }
-
-      EXPECT_EQ(test_case.expected_num_requests,
-                loader_factory.requested_urls().size());
-      for (const auto& url : loader_factory.requested_urls()) {
-        EXPECT_EQ(kInitialURL, url);
-      }
-    }
-  }
-
-  // Check that there's no retry for each entry in kNetworkChangedEvents when an
-  // error other than a network change is received.
-  for (const auto& network_events : kNetworkChangedEvents) {
-    std::vector<TestLoaderEvent> modifed_network_events = network_events;
-    for (auto& test_loader_event : modifed_network_events) {
-      if (test_loader_event == TestLoaderEvent::kResponseCompleteNetworkChanged)
-        test_loader_event = TestLoaderEvent::kResponseCompleteFailed;
-    }
-    MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-    loader_factory.AddEvents(modifed_network_events);
-
-    SimpleLoaderTestHelper test_helper(GetParam());
-    test_helper.simple_url_loader()->SetRetryOptions(
-        1, SimpleURLLoader::RETRY_ON_NETWORK_CHANGE);
-    loader_factory.RunTest(&test_helper, GURL(kInitialURL));
-
-    EXPECT_EQ(net::ERR_TIMED_OUT, test_helper.simple_url_loader()->NetError());
-    EXPECT_FALSE(test_helper.response_body());
-    EXPECT_EQ(1u, loader_factory.requested_urls().size());
-  }
-}
-
-// Check the case where the URLLoaderFactory has been disconnected before the
-// request is retried.
-TEST_P(SimpleURLLoaderTest, RetryWithUnboundFactory) {
-  MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-  loader_factory.AddEvents({TestLoaderEvent::kResponseCompleteNetworkChanged});
-  // Since clone fails asynchronously, this shouldn't be any different from
-  // the new URLLoaderFactory being disconnected in some other way.
-  loader_factory.set_close_new_binding_on_clone(true);
-
-  test_helper()->simple_url_loader()->SetRetryOptions(
-      1, SimpleURLLoader::RETRY_ON_NETWORK_CHANGE);
-  loader_factory.RunTest(test_helper(), GURL("foo://bar/"));
-  EXPECT_EQ(net::ERR_FAILED, test_helper()->simple_url_loader()->NetError());
-  EXPECT_FALSE(test_helper()->response_body());
-}
-
 INSTANTIATE_TEST_CASE_P(
     /* No prefix */,
     SimpleURLLoaderTest,
     testing::Values(SimpleLoaderTestHelper::DownloadType::TO_STRING,
-                    SimpleLoaderTestHelper::DownloadType::TO_FILE,
-                    SimpleLoaderTestHelper::DownloadType::TO_TEMP_FILE));
+                    SimpleLoaderTestHelper::DownloadType::TO_FILE));
 
 class SimpleURLLoaderFileTest : public SimpleURLLoaderTestBase,
                                 public testing::Test {
@@ -1693,16 +1216,14 @@ TEST_F(SimpleURLLoaderFileTest, DeleteLoaderDuringRequestDestroysFile) {
           continue;
 
         MockURLLoaderFactory loader_factory(&scoped_task_environment_);
-        std::vector<TestLoaderEvent> events;
-        events.push_back(TestLoaderEvent::kReceivedResponse);
-        events.push_back(TestLoaderEvent::kBodyBufferReceived);
+        loader_factory.AddEvent(TestLoaderEvent::kReceivedResponse);
+        loader_factory.AddEvent(TestLoaderEvent::kBodyBufferReceived);
         if (body_data_read)
-          events.push_back(TestLoaderEvent::kBodyDataRead);
+          loader_factory.AddEvent(TestLoaderEvent::kBodyDataRead);
         if (body_buffer_closed)
-          events.push_back(TestLoaderEvent::kBodyBufferClosed);
+          loader_factory.AddEvent(TestLoaderEvent::kBodyBufferClosed);
         if (client_pipe_closed)
-          events.push_back(TestLoaderEvent::kClientPipeClosed);
-        loader_factory.AddEvents(events);
+          loader_factory.AddEvent(TestLoaderEvent::kClientPipeClosed);
 
         // The request just hangs after receiving some body data.
         ResourceRequest resource_request;
@@ -1711,10 +1232,7 @@ TEST_F(SimpleURLLoaderFileTest, DeleteLoaderDuringRequestDestroysFile) {
         std::unique_ptr<SimpleLoaderTestHelper> test_helper =
             std::make_unique<SimpleLoaderTestHelper>(
                 SimpleLoaderTestHelper::DownloadType::TO_FILE);
-        // Run events without waiting for the request to complete, since the
-        // request will hang.
-        loader_factory.RunTest(test_helper.get(), GURL("foo://bar/"),
-                               false /* wait_for_completion */);
+        test_helper->StartRequest(&loader_factory, resource_request);
 
         // Wait for the request to advance as far as it's going to.
         scoped_task_environment_.RunUntilIdle();

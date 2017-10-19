@@ -205,7 +205,7 @@ bool VRFrameData::Update(const device::mojom::blink::VRPosePtr& pose,
   return true;
 }
 
-void VRFrameData::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(VRFrameData) {
   visitor->Trace(left_projection_matrix_);
   visitor->Trace(left_view_matrix_);
   visitor->Trace(right_projection_matrix_);

@@ -90,7 +90,7 @@ class CORE_EXPORT ScrollState final
 
   ScrollStateData* Data() const { return data_.get(); }
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(element_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(element_); }
 
  private:
   ScrollState();

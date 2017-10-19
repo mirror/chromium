@@ -248,7 +248,7 @@ Children:
   return 0;
 }
 
-void TreeWalker::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TreeWalker) {
   visitor->Trace(current_);
   NodeIteratorBase::Trace(visitor);
 }

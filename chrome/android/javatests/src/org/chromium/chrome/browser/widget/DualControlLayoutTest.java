@@ -56,7 +56,7 @@ public class DualControlLayoutTest {
 
     @Before
     public void setUp() throws Exception {
-        mContext = InstrumentationRegistry.getTargetContext();
+        mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         mContext.setTheme(R.style.MainTheme);
         mTinyControlWidth = INFOBAR_WIDTH / 4;
     }

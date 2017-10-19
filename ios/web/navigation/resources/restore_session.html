@@ -69,28 +69,28 @@
         return baseUrl + '?targetUrl=' + encodeURIComponent(targetUrl);
       }
 
-      var sessionHistoryObject = {};
+      var sessionHistory = [];
       try {
-        sessionHistoryObject = JSON.parse(sessionHistory);
+        sessionHistory = JSON.parse(sessionHistory);
 
-        if (sessionHistoryObject.urls.length < 1) {
+        if (sessionHistory.urls.length < 1) {
           handleError("sessionHistory is empty");
           return;
         }
 
         history.replaceState(
             null,  /* state */
-            sessionHistoryObject.titles[0] || "Untitled",
-            getRestoreURL(sessionHistoryObject.urls[0] || "about:blank"));
+            sessionHistory.titles[0] || "Untitled",
+            getRestoreURL(sessionHistory.urls[0] || "about:blank"));
 
-        for (var i = 1; i < sessionHistoryObject.urls.length; i++) {
+        for (var i = 1; i < sessionHistory.urls.length; i++) {
           history.pushState(
               null,  /* state */
-              sessionHistoryObject.titles[i] || "Untitled",
-              getRestoreURL(sessionHistoryObject.urls[i] || "about:blank"));
+              sessionHistory.titles[i] || "Untitled",
+              getRestoreURL(sessionHistory.urls[i] || "about:blank"));
         }
 
-        var currentItemOffset = parseInt(sessionHistoryObject.offset);
+        var currentItemOffset = parseInt(sessionHistory.offset);
         history.go(currentItemOffset);
       } catch (e) {
         handleError(e.name + ": " + e.message);

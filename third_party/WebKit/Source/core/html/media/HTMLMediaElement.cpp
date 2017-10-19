@@ -3850,7 +3850,7 @@ bool HTMLMediaElement::IsInteractiveContent() const {
   return FastHasAttribute(controlsAttr);
 }
 
-void HTMLMediaElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLMediaElement) {
   visitor->Trace(played_time_ranges_);
   visitor->Trace(async_event_queue_);
   visitor->Trace(error_);
@@ -4105,11 +4105,11 @@ void HTMLMediaElement::AudioClientImpl::SetFormat(size_t number_of_channels,
     client_->SetFormat(number_of_channels, sample_rate);
 }
 
-void HTMLMediaElement::AudioClientImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLMediaElement::AudioClientImpl) {
   visitor->Trace(client_);
 }
 
-void HTMLMediaElement::AudioSourceProviderImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLMediaElement::AudioSourceProviderImpl) {
   visitor->Trace(client_);
 }
 

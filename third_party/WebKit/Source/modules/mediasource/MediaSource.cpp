@@ -320,7 +320,7 @@ ExecutionContext* MediaSource::GetExecutionContext() const {
   return ContextLifecycleObserver::GetExecutionContext();
 }
 
-void MediaSource::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaSource) {
   visitor->Trace(async_event_queue_);
   visitor->Trace(attached_element_);
   visitor->Trace(source_buffers_);

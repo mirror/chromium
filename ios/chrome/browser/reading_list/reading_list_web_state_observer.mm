@@ -111,7 +111,7 @@ void ReadingListWebStateObserver::ReadingListModelLoaded(
     const ReadingListModel* model) {
   DCHECK(model == reading_list_model_);
   if (web_state()->IsLoading()) {
-    DidStartLoading(web_state());
+    DidStartLoading();
     return;
   }
   if (last_load_result_ == web::PageLoadCompletionStatus::SUCCESS ||
@@ -143,7 +143,7 @@ void ReadingListWebStateObserver::ReadingListModelBeingDeleted(
   local_web_state->RemoveUserData(kObserverKey);
 }
 
-void ReadingListWebStateObserver::DidStartLoading(web::WebState* web_state) {
+void ReadingListWebStateObserver::DidStartLoading() {
   StartCheckingLoading();
 }
 
@@ -202,13 +202,12 @@ void ReadingListWebStateObserver::StartCheckingLoading() {
 }
 
 void ReadingListWebStateObserver::PageLoaded(
-    web::WebState* web_state,
     web::PageLoadCompletionStatus load_completion_status) {
   DCHECK(reading_list_model_);
-  DCHECK(web_state);
+  DCHECK(web_state());
   last_load_result_ = load_completion_status;
   web::NavigationItem* item =
-      web_state->GetNavigationManager()->GetLastCommittedItem();
+      web_state()->GetNavigationManager()->GetLastCommittedItem();
   if (!item || !pending_url_.is_valid() ||
       !reading_list_model_->GetEntryByURL(pending_url_)) {
     StopCheckingProgress();
@@ -224,13 +223,13 @@ void ReadingListWebStateObserver::PageLoaded(
   StopCheckingProgress();
 }
 
-void ReadingListWebStateObserver::WebStateDestroyed(web::WebState* web_state) {
+void ReadingListWebStateObserver::WebStateDestroyed() {
   StopCheckingProgress();
   if (reading_list_model_) {
     reading_list_model_->RemoveObserver(this);
     reading_list_model_ = nullptr;
   }
-  web_state->RemoveUserData(kObserverKey);
+  web_state()->RemoveUserData(kObserverKey);
 }
 
 void ReadingListWebStateObserver::StopCheckingProgress() {

@@ -23,7 +23,7 @@ ShellApiTest::~ShellApiTest() {
 }
 
 const Extension* ShellApiTest::LoadExtension(const std::string& extension_dir) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::FilePath test_data_dir;
   PathService::Get(extensions::DIR_TEST_DATA, &test_data_dir);
   base::FilePath extension_path = test_data_dir.AppendASCII(extension_dir);
@@ -32,7 +32,7 @@ const Extension* ShellApiTest::LoadExtension(const std::string& extension_dir) {
 }
 
 const Extension* ShellApiTest::LoadApp(const std::string& app_dir) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::FilePath test_data_dir;
   PathService::Get(extensions::DIR_TEST_DATA, &test_data_dir);
   base::FilePath app_path = test_data_dir.AppendASCII(app_dir);

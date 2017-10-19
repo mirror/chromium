@@ -1200,21 +1200,7 @@ uploading your change for review.  These are checked by presubmit scripts.
 <enum name="AppListPlayStoreQueryState">
   <int value="0" label="SUCCESS"/>
   <int value="1" label="CANCELED"/>
-  <int value="2" label="ERROR_DEPRECATED"/>
-  <int value="3" label="PLAY_STORE_PROXY_NOT_AVAILABLE"/>
-  <int value="4" label="FAILED_TO_CALL_CANCEL"/>
-  <int value="5" label="FAILED_TO_CALL_FINDAPPS"/>
-  <int value="6" label="REQUEST_HAS_INVALID_PARAMS"/>
-  <int value="7" label="REQUEST_TIMEOUT"/>
-  <int value="8" label="PHONESKY_RESULT_REQUEST_CODE_UNMATCHED"/>
-  <int value="9" label="PHONESKY_RESULT_SESSION_ID_UNMATCHED"/>
-  <int value="10" label="PHONESKY_REQUEST_REQUEST_CODE_UNMATCHED"/>
-  <int value="11" label="PHONESKY_APP_DISCOVERY_NOT_AVAILABLE"/>
-  <int value="12" label="PHONESKY_VERSION_NOT_SUPPORTED"/>
-  <int value="13" label="PHONESKY_UNEXPECTED_EXCEPTION"/>
-  <int value="14" label="PHONESKY_MALFORMED_QUERY"/>
-  <int value="15" label="PHONESKY_INTERNAL_ERROR"/>
-  <int value="16" label="PHONESKY_RESULT_INVALID_DATA"/>
+  <int value="2" label="ERROR"/>
 </enum>
 
 <enum name="AppListSearchResult">
@@ -5804,35 +5790,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="Successful first layout"/>
 </enum>
 
-<enum name="CompileHeuristicsDecision">
-  <int value="0" label="NoCacheHandler">
-    No CachedMetadataHandler was provided, thus caching functionality is
-    disabled.
-  </int>
-  <int value="1" label="CachingDisabled">Caching is disabled by settings.</int>
-  <int value="2" label="CodeTooShortToCache">
-    The script is too short to benefit from caching, thus caching functionality
-    is disabled.
-  </int>
-  <int value="3" label="CacheTooCold">
-    The script is not loaded often enough to benefit from caching, thus not
-    producing cache.
-  </int>
-  <int value="4" label="ProduceParserCache">
-    Parser cache is produced for the script when compiled.
-  </int>
-  <int value="5" label="ConsumeParserCache">
-    Consume previously generated parser cache for the script.
-  </int>
-  <int value="6" label="ProduceCodeCache">
-    Code cache is produced for the script when compiled.
-  </int>
-  <int value="7" label="ConsumeCodeCache">
-    Consume previously generated code cache for the script.
-  </int>
-  <int value="8" label="StreamingCompile">Use streamed compilation result.</int>
-</enum>
-
 <enum name="ComponentUpdaterCalls">
   <int value="0" label="Install"/>
   <int value="1" label="Update"/>
@@ -8164,25 +8121,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="3" label="Redirection to the default search engine"/>
 </enum>
 
-<enum name="DetachableBasePairResult">
-  <int value="0" label="UnknownError"/>
-  <int value="1" label="ChallengePassed"/>
-  <int value="2" label="ChallengeFailed"/>
-  <int value="3" label="NeedInjectEntropy"/>
-</enum>
-
-<enum name="DetachableBaseROUpdateResult">
-  <int value="1" label="Succeeded"/>
-  <int value="2" label="TransferFailed"/>
-</enum>
-
-<enum name="DetachableBaseRWUpdateResult">
-  <int value="1" label="Succeeded"/>
-  <int value="2" label="TransferFailed"/>
-  <int value="3" label="InvalidKey"/>
-  <int value="4" label="RollbackDisallowed"/>
-</enum>
-
 <enum name="DeviceIdMismatch">
   <int value="0" label="BOTH_NONEMPTY"/>
   <int value="1" label="SYNC_EMPTY"/>
@@ -8412,7 +8350,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="77" label="Validation Message"/>
   <int value="78" label="Web Share Target Picker"/>
   <int value="79" label="Zoom"/>
-  <int value="80" label="Lock Screen Note App Toast"/>
 </enum>
 
 <enum name="DidNavigateToAd">
@@ -9378,33 +9315,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="6" label="USER_VALIDATED"/>
   <int value="7" label="DANGEROUS_HOST"/>
   <int value="8" label="POTENTIALLY_UNWANTED"/>
-</enum>
-
-<enum name="DownloadNotificationForegroundLifecycle">
-  <int value="0" label="START"/>
-  <int value="1" label="UPDATE"/>
-  <int value="2" label="STOP"/>
-</enum>
-
-<enum name="DownloadNotificationInteractions">
-  <int value="0" label="CLICKED"/>
-  <int value="1" label="OPEN"/>
-  <int value="2" label="CANCEL"/>
-  <int value="3" label="PAUSE"/>
-  <int value="4" label="RESUME"/>
-</enum>
-
-<enum name="DownloadNotificationLaunchType">
-  <int value="0" label="LAUNCH"/>
-  <int value="1" label="RELAUNCH"/>
-</enum>
-
-<enum name="DownloadNotificationServiceStopped">
-  <int value="0" label="STOPPED"/>
-  <int value="1" label="DESTROYED"/>
-  <int value="2" label="TASK_REMOVED"/>
-  <int value="3" label="LOW_MEMORY"/>
-  <int value="4" label="START_STICKY"/>
 </enum>
 
 <enum name="DownloadOpenMethod">
@@ -11696,7 +11606,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="390" label="DeviceTPMFirmwareUpdateSettings"/>
   <int value="391" label="RunAllFlashInAllowMode"/>
   <int value="392" label="AutoFillCreditCardEnabled"/>
-  <int value="393" label="NtlmV2Enabled"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">
@@ -19700,7 +19609,7 @@ uploading your change for review.  These are checked by presubmit scripts.
              AMD"/>
 </enum>
 
-<enum name="GpuImageUsageState">
+<enum name="GpuImageDecodeState">
   <int value="0" label="Wasted, once"/>
   <int value="1" label="Used, once"/>
   <int value="2" label="Wasted, relocked"/>
@@ -23671,7 +23580,6 @@ from previous Chrome versions.
   <int value="-1648216169" label="NewOmniboxAnswerTypes:disabled"/>
   <int value="-1634878515" label="ChromeHomeModernLayout:enabled"/>
   <int value="-1634154256" label="ZeroSuggestRedirectToChrome:enabled"/>
-  <int value="-1633586675" label="TabModalJsDialog:enabled"/>
   <int value="-1631329950" label="ssl-version-max"/>
   <int value="-1630419335" label="enable-download-notification"/>
   <int value="-1624854957" label="enable-es3-apis"/>
@@ -23737,7 +23645,6 @@ from previous Chrome versions.
   <int value="-1468126425" label="ResourceLoadScheduler:disabled"/>
   <int value="-1467332609" label="tab-management-experiment-type-anise"/>
   <int value="-1466990325" label="CrosCompUpdates:enabled"/>
-  <int value="-1466759286" label="TabModalJsDialog:disabled"/>
   <int value="-1463410070" label="IPH_DemoMode:enabled"/>
   <int value="-1461261930" label="OutOfBlinkCORS:disabled"/>
   <int value="-1460462432" label="disable-media-source"/>
@@ -23807,7 +23714,6 @@ from previous Chrome versions.
   <int value="-1262152606" label="disable-lock-screen-apps"/>
   <int value="-1254070521" label="enable-slimming-paint-invalidation"/>
   <int value="-1251411236" label="disable-new-md-input-view"/>
-  <int value="-1248478422" label="enable-zip-archiver-packer"/>
   <int value="-1246840031" label="OptInImeMenu:disabled"/>
   <int value="-1241747717" label="enable-android-password-link"/>
   <int value="-1235586511" label="enable-datasaver-prompt"/>
@@ -23886,7 +23792,6 @@ from previous Chrome versions.
   <int value="-1033738911" label="enable-mac-views-dialogs"/>
   <int value="-1029920490" label="IdleTimeSpellChecking:enabled"/>
   <int value="-1028733699" label="MacViewsWebUIDialogs:disabled"/>
-  <int value="-1027124889" label="NtlmV2Enabled:enabled"/>
   <int value="-1022971520" label="enable-search-button-in-omnibox-for-str"/>
   <int value="-1022165708" label="BreakingNewsPush:disabled"/>
   <int value="-1020450980" label="gesture-deletion"/>
@@ -24007,7 +23912,6 @@ from previous Chrome versions.
   <int value="-680787130" label="ExperimentalVRFeatures:disabled"/>
   <int value="-680589442" label="MacRTL:disabled"/>
   <int value="-671992446" label="TranslateRankerEnforcement:disabled"/>
-  <int value="-670188266" label="enable-zip-archiver-unpacker"/>
   <int value="-667517406" label="overscroll-history-navigation"/>
   <int value="-666508951" label="CrOSContainer:enabled"/>
   <int value="-663476391" label="enable-pixel-canvas-recording:enabled"/>
@@ -24459,7 +24363,6 @@ from previous Chrome versions.
   <int value="719267310"
       label="KeepAliveRendererForKeepaliveRequests:disabled"/>
   <int value="721225492" label="PolicyTool:enabled"/>
-  <int value="723619383" label="TopSitesFromSiteEngagement:enabled"/>
   <int value="724208771" label="TabsInCBD:enabled"/>
   <int value="730024226" label="enable-out-of-process-pdf"/>
   <int value="730750097" label="PermissionsBlacklist:disabled"/>
@@ -24502,7 +24405,6 @@ from previous Chrome versions.
   <int value="867512869" label="mark-non-secure-as"/>
   <int value="869531646" label="enable-session-crashed-bubble"/>
   <int value="871713352" label="ImprovedLanguageSettings:enabled"/>
-  <int value="878773995" label="ChromeHomeBottomNavLabels:disabled"/>
   <int value="879699575" label="disable-gesture-tap-highlight"/>
   <int value="879992337" label="disable-pull-to-refresh-effect"/>
   <int value="880510010" label="enable-permissions-bubbles"/>
@@ -24518,7 +24420,6 @@ from previous Chrome versions.
   <int value="908523940" label="PassiveEventListenersDueToFling:disabled"/>
   <int value="909439558" label="disable-device-discovery"/>
   <int value="916316159" label="disable-new-app-list-mixer"/>
-  <int value="918046854" label="NtlmV2Enabled:disabled"/>
   <int value="926852901" label="DataReductionProxyMainMenu:disabled"/>
   <int value="929462705" label="disable-link-disambiguation-popup"/>
   <int value="935655516" label="password-import-export:disabled"/>
@@ -24674,7 +24575,6 @@ from previous Chrome versions.
   <int value="1330029351" label="AutofillUpstreamShowGoogleLogo:disabled"/>
   <int value="1330264457" label="OmniboxUIExperimentVerticalLayout:disabled"/>
   <int value="1333847867" label="NoScriptPreviews:enabled"/>
-  <int value="1339426771" label="TopSitesFromSiteEngagement:disabled"/>
   <int value="1340690624" label="WebPaymentsMethodSectionOrderV2:disabled"/>
   <int value="1344833841" label="ImeThread:enabled"/>
   <int value="1351830811" label="do-not-ignore-autocomplete-off"/>
@@ -24853,7 +24753,6 @@ from previous Chrome versions.
   <int value="1851085023" label="PwaMinimalUi:enabled"/>
   <int value="1852630189" label="NTPBookmarkSuggestions:disabled"/>
   <int value="1855524566" label="allow-insecure-websocket-from-https-origin"/>
-  <int value="1858385315" label="ChromeHomeBottomNavLabels:enabled"/>
   <int value="1860597983" label="AndroidSpellChecker:disabled"/>
   <int value="1861251313"
       label="enable-message-center-always-scroll-up-upon-notification-removal"/>
@@ -26003,12 +25902,8 @@ from previous Chrome versions.
   <int value="2"
       label="Neutral with a verbose warning on sensitive fields (deprecated
              October 2017)"/>
-  <int value="3"
-      label="Neutral with a verbose warning after editing a form (deprecated
-             October 2017)"/>
-  <int value="4"
-      label="Neutral with a verbose warning in Incognito mode (deprecated
-             October 2017)"/>
+  <int value="3" label="Neutral with a verbose warning after editing a form"/>
+  <int value="4" label="Neutral with a verbose warning in Incognito mode"/>
   <int value="5"
       label="Neutral with a verbose warning after editing a form or in
              Incognito mode"/>

@@ -51,6 +51,7 @@
 #include "core/input_type_names.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTheme.h"
+#include "core/page/ChromeClient.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 
@@ -1351,7 +1352,7 @@ void InputMethodController::WillChangeFocus() {
   FinishComposingText(kKeepSelection);
 }
 
-void InputMethodController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InputMethodController) {
   visitor->Trace(frame_);
   visitor->Trace(composition_range_);
   DocumentShutdownObserver::Trace(visitor);

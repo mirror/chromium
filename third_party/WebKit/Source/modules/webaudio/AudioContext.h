@@ -31,7 +31,7 @@ class MODULES_EXPORT AudioContext : public BaseAudioContext {
                               ExceptionState&);
 
   ~AudioContext() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   ScriptPromise closeContext(ScriptState*);
   bool IsContextClosed() const final;

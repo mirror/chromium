@@ -35,6 +35,10 @@ ResultExpr SandboxBPFBasePolicy::InvalidSyscall() const {
   return baseline_policy_->InvalidSyscall();
 }
 
+bool SandboxBPFBasePolicy::PreSandboxHook() {
+  return true;
+}
+
 int SandboxBPFBasePolicy::GetFSDeniedErrno() {
   return kFSDeniedErrno;
 }

@@ -37,7 +37,7 @@ class SVGForeignObjectElement final : public SVGGraphicsElement {
   SVGAnimatedLength* width() const { return width_.Get(); }
   SVGAnimatedLength* height() const { return height_.Get(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit SVGForeignObjectElement(Document&);

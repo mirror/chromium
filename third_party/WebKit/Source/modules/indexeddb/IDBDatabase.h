@@ -69,7 +69,7 @@ class MODULES_EXPORT IDBDatabase final
                              IDBDatabaseCallbacks*,
                              v8::Isolate*);
   ~IDBDatabase() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   // Overwrites the database metadata, including object store and index

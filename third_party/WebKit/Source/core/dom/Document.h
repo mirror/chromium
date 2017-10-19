@@ -30,6 +30,7 @@
 #ifndef Document_h
 #define Document_h
 
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -1291,7 +1292,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void UpdateActiveStyle();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
@@ -1390,8 +1391,6 @@ class CORE_EXPORT Document : public ContainerNode,
 
   ukm::UkmRecorder* UkmRecorder();
   int64_t UkmSourceID() const;
-
-  void RecordUkmOutliveTimeAfterShutdown(int outlive_time_count);
 
  protected:
   Document(const DocumentInit&, DocumentClassFlags = kDefaultDocumentClass);

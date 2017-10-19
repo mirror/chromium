@@ -27,8 +27,6 @@ std::string GetLogName(SupportedSource source_type) {
       return "lspci";
     case SupportedSource::kIfconfig:
       return "ifconfig";
-    case SupportedSource::kUptime:
-      return "uptime";
   }
   NOTREACHED();
   return "";

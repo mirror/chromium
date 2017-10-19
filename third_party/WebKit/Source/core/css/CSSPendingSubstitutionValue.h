@@ -31,7 +31,7 @@ class CSSPendingSubstitutionValue : public CSSValue {
   }
   String CustomCSSText() const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSPendingSubstitutionValue(CSSPropertyID shorthand_property_id,

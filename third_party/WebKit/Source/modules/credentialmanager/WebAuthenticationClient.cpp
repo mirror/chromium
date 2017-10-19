@@ -286,7 +286,7 @@ void WebAuthenticationClient::OnAuthenticatorConnectionError() {
   Cleanup();
 }
 
-void WebAuthenticationClient::Trace(blink::Visitor* visitor) {}
+DEFINE_TRACE(WebAuthenticationClient) {}
 
 // Closes the Mojo connection.
 void WebAuthenticationClient::Cleanup() {

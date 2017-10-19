@@ -31,7 +31,6 @@
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/web/WebSharedWorker.h"
 #include "third_party/WebKit/public/web/WebSharedWorkerClient.h"
 #include "url/origin.h"
@@ -111,7 +110,7 @@ class WebServiceWorkerNetworkProviderForSharedWorker
   int64_t ControllerServiceWorkerID() override {
     if (provider_->context()->controller())
       return provider_->context()->controller()->version_id();
-    return blink::mojom::kInvalidServiceWorkerVersionId;
+    return kInvalidServiceWorkerVersionId;
   }
 
   ServiceWorkerNetworkProvider* provider() { return provider_.get(); }

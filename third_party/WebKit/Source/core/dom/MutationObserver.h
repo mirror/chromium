@@ -94,7 +94,7 @@ class CORE_EXPORT MutationObserver final
     virtual ExecutionContext* GetExecutionContext() const = 0;
     virtual void Deliver(const MutationRecordVector& records,
                          MutationObserver&) = 0;
-    virtual void Trace(blink::Visitor* visitor) {}
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
     DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {}
   };
 
@@ -123,7 +123,7 @@ class CORE_EXPORT MutationObserver final
 
   // Eagerly finalized as destructor accesses heap object members.
   EAGERLY_FINALIZE();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 

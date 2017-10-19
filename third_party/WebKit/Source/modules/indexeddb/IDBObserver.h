@@ -37,7 +37,7 @@ class MODULES_EXPORT IDBObserver final : public GarbageCollected<IDBObserver>,
                ExceptionState&);
   void unobserve(IDBDatabase*, ExceptionState&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
  private:

@@ -160,7 +160,7 @@ void ClassicPendingScript::NotifyAppendData(ScriptResource* resource) {
     streamer_->NotifyAppendData(resource);
 }
 
-void ClassicPendingScript::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ClassicPendingScript) {
   visitor->Trace(streamer_);
   ResourceOwner<ScriptResource>::Trace(visitor);
   MemoryCoordinatorClient::Trace(visitor);

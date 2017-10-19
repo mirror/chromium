@@ -50,7 +50,7 @@ class TextTrackContainer final : public HTMLDivElement {
   void UpdateDisplay(HTMLMediaElement&, ExposingControls);
   void UpdateDefaultFontSize(LayoutObject*);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   TextTrackContainer(Document&);

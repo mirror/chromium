@@ -84,7 +84,7 @@ class ScopedStyleResolver final
   CORE_EXPORT static bool HaveSameStyles(const ScopedStyleResolver*,
                                          const ScopedStyleResolver*);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit ScopedStyleResolver(TreeScope& scope) : scope_(scope) {}
@@ -119,7 +119,7 @@ class ScopedStyleResolver final
     unsigned parent_index_;
     Member<RuleSet> rule_set_;
 
-    void Trace(blink::Visitor*);
+    DECLARE_TRACE();
 
    private:
     RuleSubSet(CSSStyleSheet* sheet, unsigned index, RuleSet* rules)

@@ -60,7 +60,7 @@ class CORE_EXPORT MediaQueryMatcher final
   void ViewportChanged();
   bool Evaluate(const MediaQuerySet*);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit MediaQueryMatcher(Document&);

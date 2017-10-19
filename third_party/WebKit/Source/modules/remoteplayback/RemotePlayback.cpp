@@ -590,7 +590,7 @@ void RemotePlayback::MaybeStartListeningForAvailability() {
   is_listening_ = true;
 }
 
-void RemotePlayback::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RemotePlayback) {
   visitor->Trace(availability_callbacks_);
   visitor->Trace(prompt_promise_resolver_);
   visitor->Trace(media_element_);

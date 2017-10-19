@@ -536,12 +536,11 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
 
   // Overridden from GLES2Decoder.
   base::WeakPtr<GLES2Decoder> AsWeakPtr() override;
-  gpu::ContextResult Initialize(
-      const scoped_refptr<gl::GLSurface>& surface,
-      const scoped_refptr<gl::GLContext>& context,
-      bool offscreen,
-      const DisallowedFeatures& disallowed_features,
-      const ContextCreationAttribHelper& attrib_helper) override;
+  bool Initialize(const scoped_refptr<gl::GLSurface>& surface,
+                  const scoped_refptr<gl::GLContext>& context,
+                  bool offscreen,
+                  const DisallowedFeatures& disallowed_features,
+                  const ContextCreationAttribHelper& attrib_helper) override;
   void Destroy(bool have_context) override;
   void SetSurface(const scoped_refptr<gl::GLSurface>& surface) override;
   void ReleaseSurface() override;
@@ -2070,7 +2069,7 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   bool WasContextLost() const override;
   bool WasContextLostByRobustnessExtension() const override;
   void MarkContextLost(error::ContextLostReason reason) override;
-  bool CheckResetStatus() override;
+  bool CheckResetStatus();
 
   bool GetCompressedTexSizeInBytes(
       const char* function_name, GLsizei width, GLsizei height, GLsizei depth,
@@ -3189,7 +3188,7 @@ base::WeakPtr<GLES2Decoder> GLES2DecoderImpl::AsWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
-gpu::ContextResult GLES2DecoderImpl::Initialize(
+bool GLES2DecoderImpl::Initialize(
     const scoped_refptr<gl::GLSurface>& surface,
     const scoped_refptr<gl::GLContext>& context,
     bool offscreen,
@@ -3241,15 +3240,14 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
       feature_info_->feature_flags().is_swiftshader_for_webgl) {
     group_ = NULL;  // Must not destroy ContextGroup if it is not initialized.
     Destroy(true);
-    return gpu::ContextResult::kFatalFailure;
+    return false;
   }
 
-  auto result =
-      group_->Initialize(this, attrib_helper.context_type, disallowed_features);
-  if (result != gpu::ContextResult::kSuccess) {
+  if (!group_->Initialize(this, attrib_helper.context_type,
+                          disallowed_features)) {
     group_ = NULL;  // Must not destroy ContextGroup if it is not initialized.
     Destroy(true);
-    return result;
+    return false;
   }
   CHECK_GL_ERROR();
 
@@ -3276,7 +3274,7 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
 
     if (!supported) {
       Destroy(true);
-      return gpu::ContextResult::kFatalFailure;
+      return false;
     }
   }
 
@@ -3291,7 +3289,7 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
     if (!feature_info_->IsES3Capable()) {
       LOG(ERROR) << "ES3 is blacklisted/disabled/unsupported by driver.";
       Destroy(true);
-      return gpu::ContextResult::kFatalFailure;
+      return false;
     }
     feature_info_->EnableES3Validators();
 
@@ -3627,7 +3625,7 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
             gfx::Size(state_.viewport_width, state_.viewport_height))) {
       LOG(ERROR) << "Could not allocate offscreen buffer storage.";
       Destroy(true);
-      return gpu::ContextResult::kFatalFailure;
+      return false;
     }
     if (!offscreen_single_buffer_) {
       // Allocate the offscreen saved color texture.
@@ -3640,10 +3638,8 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
       if (offscreen_saved_frame_buffer_->CheckStatus() !=
           GL_FRAMEBUFFER_COMPLETE) {
         LOG(ERROR) << "Offscreen saved FBO was incomplete.";
-        bool was_lost = CheckResetStatus();
         Destroy(true);
-        return was_lost ? gpu::ContextResult::kTransientFailure
-                        : gpu::ContextResult::kFatalFailure;
+        return false;
       }
     }
   }
@@ -3709,7 +3705,7 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
     LOCAL_COPY_REAL_GL_ERRORS_TO_WRAPPER("glClearWorkaroundInit");
     clear_framebuffer_blit_.reset(new ClearFramebufferResourceManager(this));
     if (LOCAL_PEEK_GL_ERROR("glClearWorkaroundInit") != GL_NO_ERROR)
-      return gpu::ContextResult::kFatalFailure;
+      return false;
   }
 
   if (group_->gpu_preferences().enable_gpu_driver_debug_logging &&
@@ -3724,23 +3720,21 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
 
   if (attrib_helper.enable_oop_rasterization) {
     if (!features().chromium_raster_transport)
-      return gpu::ContextResult::kFatalFailure;
+      return false;
     sk_sp<const GrGLInterface> interface(
         CreateGrGLInterface(gl_version_info()));
     // TODO(enne): if this or gr_context creation below fails in practice for
     // different reasons than the ones the renderer would fail on for gpu
     // raster, expose this in gpu::Capabilities so the renderer can handle it.
     if (!interface)
-      return gpu::ContextResult::kFatalFailure;
+      return false;
 
     gr_context_ = sk_sp<GrContext>(
         GrContext::Create(kOpenGL_GrBackend,
                           reinterpret_cast<GrBackendContext>(interface.get())));
     if (!gr_context_) {
       LOG(ERROR) << "Could not create GrContext";
-      bool was_lost = CheckResetStatus();
-      return was_lost ? gpu::ContextResult::kTransientFailure
-                      : gpu::ContextResult::kFatalFailure;
+      return false;
     }
 
     // TODO(enne): this cache is for this decoder only and each decoder has
@@ -3754,7 +3748,7 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
                                         kMaxGaneshResourceCacheBytes);
   }
 
-  return gpu::ContextResult::kSuccess;
+  return true;
 }
 
 Capabilities GLES2DecoderImpl::GetCapabilities() {

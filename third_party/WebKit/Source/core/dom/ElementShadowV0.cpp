@@ -255,7 +255,7 @@ void ElementShadowV0::ClearDistribution() {
     root->SetShadowInsertionPointOfYoungerShadowRoot(nullptr);
 }
 
-void ElementShadowV0::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ElementShadowV0) {
   visitor->Trace(element_shadow_);
   visitor->Trace(node_to_insertion_points_);
 }

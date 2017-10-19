@@ -114,9 +114,7 @@ class PLATFORM_EXPORT ScrollAnimatorMac : public ScrollAnimatorBase {
 
   void SetVisibleScrollerThumbRect(const IntRect&);
 
-  virtual void Trace(blink::Visitor* visitor) {
-    ScrollAnimatorBase::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { ScrollAnimatorBase::Trace(visitor); }
 
  private:
   RetainPtr<id> scroll_animation_helper_;

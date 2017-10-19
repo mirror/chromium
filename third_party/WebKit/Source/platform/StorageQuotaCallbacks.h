@@ -46,7 +46,7 @@ class PLATFORM_EXPORT StorageQuotaCallbacks
  public:
   StorageQuotaCallbacks() {}
   virtual ~StorageQuotaCallbacks() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   virtual void DidQueryStorageUsageAndQuota(unsigned long long usage_in_bytes,
                                             unsigned long long quota_in_bytes) {

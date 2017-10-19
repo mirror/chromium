@@ -929,7 +929,7 @@ class InlineRunToApplyStyle {
     return start && end && start->isConnected() && end->isConnected();
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(start);
     visitor->Trace(end);
     visitor->Trace(past_end_node);
@@ -2055,7 +2055,7 @@ void ApplyStyleCommand::JoinChildTextNodes(ContainerNode* node,
   UpdateStartEnd(new_start, new_end);
 }
 
-void ApplyStyleCommand::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ApplyStyleCommand) {
   visitor->Trace(style_);
   visitor->Trace(start_);
   visitor->Trace(end_);

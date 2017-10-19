@@ -88,7 +88,7 @@ class WorkerWebSocketChannel final : public WebSocketChannel {
             std::unique_ptr<SourceLocation>) override;
   void Disconnect() override;  // Will suppress didClose().
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   class Bridge;
 
@@ -125,7 +125,7 @@ class WorkerWebSocketChannel final : public WebSocketChannel {
               std::unique_ptr<SourceLocation>);
     void Disconnect();
 
-    virtual void Trace(blink::Visitor*);
+    DECLARE_VIRTUAL_TRACE();
     // Promptly clear connection to bridge + loader proxy.
     EAGERLY_FINALIZE();
 
@@ -188,7 +188,7 @@ class WorkerWebSocketChannel final : public WebSocketChannel {
     // Returns null when |disconnect| has already been called.
     WebSocketChannelClient* Client() { return client_; }
 
-    void Trace(blink::Visitor*);
+    DECLARE_TRACE();
     // Promptly clear connection to peer + loader proxy.
     EAGERLY_FINALIZE();
 

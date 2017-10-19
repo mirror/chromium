@@ -21,12 +21,11 @@ DisableListModificationCheck::DisableListModificationCheck()
 DrawingRecorder::DrawingRecorder(GraphicsContext& context,
                                  const DisplayItemClient& display_item_client,
                                  DisplayItem::Type display_item_type,
-                                 const IntRect& bounds)
+                                 const FloatRect& float_cull_rect)
     : context_(context),
-      client_(display_item_client),
-      type_(display_item_type),
-      known_to_be_opaque_(false),
-      bounds_(bounds)
+      display_item_client_(display_item_client),
+      display_item_type_(display_item_type),
+      known_to_be_opaque_(false)
 #if DCHECK_IS_ON()
       ,
       initial_display_item_list_size_(
@@ -39,7 +38,8 @@ DrawingRecorder::DrawingRecorder(GraphicsContext& context,
   // Must check DrawingRecorder::useCachedDrawingIfPossible before creating the
   // DrawingRecorder.
   DCHECK(RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() ||
-         !UseCachedDrawingIfPossible(context_, client_, type_));
+         !UseCachedDrawingIfPossible(context_, display_item_client_,
+                                     display_item_type_));
 
   DCHECK(DisplayItem::IsDrawingType(display_item_type));
 
@@ -47,7 +47,12 @@ DrawingRecorder::DrawingRecorder(GraphicsContext& context,
   context.SetInDrawingRecorder(true);
 #endif
 
-  context.BeginRecording(bounds);
+  // Use the enclosing int rect, since pixel-snapping may be applied to the
+  // bounds of the object during painting. Potentially expanding the cull rect
+  // by a pixel or two also does not affect correctness, and is very unlikely to
+  // matter for performance.
+  recording_bounds_ = EnclosingIntRect(float_cull_rect);
+  context.BeginRecording(recording_bounds_);
 
 #if DCHECK_IS_ON()
   if (RuntimeEnabledFeatures::SlimmingPaintStrictCullRectClippingEnabled()) {
@@ -61,7 +66,7 @@ DrawingRecorder::DrawingRecorder(GraphicsContext& context,
     // TODO(schenney) This is not the best place to do this. Ideally, we would
     // expand by one pixel in device (pixel) space, but to do that we would need
     // to add the verification mode to Skia.
-    IntRect clip_rect = bounds;
+    IntRect clip_rect = recording_bounds_;
     clip_rect.Inflate(1);
     context.ClipRect(clip_rect, kNotAntiAliased, SkClipOp::kIntersect);
   }
@@ -89,13 +94,14 @@ DrawingRecorder::~DrawingRecorder() {
 #if DCHECK_IS_ON()
   if (!RuntimeEnabledFeatures::SlimmingPaintStrictCullRectClippingEnabled() &&
       !context_.GetPaintController().IsForPaintRecordBuilder() &&
-      client_.PaintedOutputOfObjectHasNoEffectRegardlessOfSize()) {
-    DCHECK_EQ(0u, picture->size()) << client_.DebugName();
+      display_item_client_.PaintedOutputOfObjectHasNoEffectRegardlessOfSize()) {
+    DCHECK_EQ(0u, picture->size()) << display_item_client_.DebugName();
   }
 #endif
 
   context_.GetPaintController().CreateAndAppend<DrawingDisplayItem>(
-      client_, type_, picture, bounds_, known_to_be_opaque_);
+      display_item_client_, display_item_type_, picture, recording_bounds_,
+      known_to_be_opaque_);
 }
 
 }  // namespace blink

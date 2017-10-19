@@ -135,7 +135,7 @@ void InstalledAppController::OnFilterInstalledApps(
       blink::WebVector<blink::WebRelatedApplication>(applications));
 }
 
-void InstalledAppController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InstalledAppController) {
   Supplement<LocalFrame>::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);
 }

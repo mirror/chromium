@@ -62,7 +62,6 @@ Below we outline concrete standards that aid in achieving the above goals.
   malevolent) client calling methods on a partially-constructed Foo. To be
   concrete:
 
-    ````
     // NO: Client will have access to partially-constructed Foo.
     interface Foo {
       SetClient(FooClient client);
@@ -74,7 +73,6 @@ Below we outline concrete standards that aid in achieving the above goals.
       GetFoo(Foo& request, FooClient client);
     };
     interface Foo { ... };
-    ````
 
 * In the absence of specific guidance, strive for consistency with surrounding
   interfaces and with interfaces in other services.
@@ -107,7 +105,7 @@ The responsibility for holding these standards is shared across
 * Individual service OWNERS are responsible for ensuring that their service
   adheres to these standards.
 * Service developers are responsible for ensuring that their CLs adhere to
-  these standards (and thus making life easier for the OWNERS that must review
+  these standards (and thus making life easier for the OWNERS that must review 
   these CLs :).
 
 We expect that these standards will evolve over time. If you encounter a tricky

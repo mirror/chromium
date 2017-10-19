@@ -279,8 +279,8 @@ void TabStrip::RemoveTabDelegate::AnimationCanceled(
 ///////////////////////////////////////////////////////////////////////////////
 // TabStrip, public:
 
-TabStrip::TabStrip(std::unique_ptr<TabStripController> controller)
-    : controller_(std::move(controller)),
+TabStrip::TabStrip(TabStripController* controller)
+    : controller_(controller),
       new_tab_button_(NULL),
       current_inactive_width_(Tab::GetStandardSize().width()),
       current_active_width_(Tab::GetStandardSize().width()),

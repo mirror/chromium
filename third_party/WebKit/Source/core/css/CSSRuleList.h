@@ -43,7 +43,7 @@ class CSSRuleList : public GarbageCollected<CSSRuleList>,
 
   virtual CSSStyleSheet* GetStyleSheet() const = 0;
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   CSSRuleList() {}
@@ -57,7 +57,7 @@ class StaticCSSRuleList final : public CSSRuleList {
 
   CSSStyleSheet* GetStyleSheet() const override { return 0; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   StaticCSSRuleList();
@@ -77,7 +77,7 @@ class LiveCSSRuleList final : public CSSRuleList {
     return new LiveCSSRuleList(rule);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(rule_);
     CSSRuleList::Trace(visitor);
   }

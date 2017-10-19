@@ -59,7 +59,7 @@ class CORE_EXPORT MemoryInfo final : public GarbageCollected<MemoryInfo>,
   size_t usedJSHeapSize() const { return info_.used_js_heap_size; }
   size_t jsHeapSizeLimit() const { return info_.js_heap_size_limit; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   MemoryInfo();

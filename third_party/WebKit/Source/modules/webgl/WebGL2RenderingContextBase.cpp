@@ -5495,7 +5495,7 @@ ScriptValue WebGL2RenderingContextBase::getFramebufferAttachmentParameter(
   return ScriptValue::CreateNull(script_state);
 }
 
-void WebGL2RenderingContextBase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGL2RenderingContextBase) {
   visitor->Trace(read_framebuffer_binding_);
   visitor->Trace(transform_feedback_binding_);
   visitor->Trace(default_transform_feedback_);

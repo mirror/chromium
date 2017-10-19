@@ -20,7 +20,7 @@ class PLATFORM_EXPORT CallbackFunctionBase
  public:
   virtual ~CallbackFunctionBase();
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   v8::Local<v8::Function> v8Value(v8::Isolate* isolate) {

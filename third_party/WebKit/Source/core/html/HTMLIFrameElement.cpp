@@ -46,7 +46,7 @@ inline HTMLIFrameElement::HTMLIFrameElement(Document& document)
 
 DEFINE_NODE_FACTORY(HTMLIFrameElement)
 
-void HTMLIFrameElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLIFrameElement) {
   visitor->Trace(sandbox_);
   HTMLFrameElementBase::Trace(visitor);
   Supplementable<HTMLIFrameElement>::Trace(visitor);

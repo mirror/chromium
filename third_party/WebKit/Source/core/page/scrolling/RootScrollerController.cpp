@@ -61,7 +61,7 @@ RootScrollerController::RootScrollerController(Document& document)
       effective_root_scroller_(&document),
       document_has_document_element_(false) {}
 
-void RootScrollerController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RootScrollerController) {
   visitor->Trace(document_);
   visitor->Trace(root_scroller_);
   visitor->Trace(effective_root_scroller_);

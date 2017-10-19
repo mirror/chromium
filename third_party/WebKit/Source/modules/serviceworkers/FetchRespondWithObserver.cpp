@@ -131,9 +131,7 @@ class FetchLoaderClient final
   void DidFetchDataLoadedDataPipe() override { handle_->Completed(); }
   void DidFetchDataLoadFailed() override { handle_->Aborted(); }
 
-  void Trace(blink::Visitor* visitor) {
-    FetchDataLoader::Client::Trace(visitor);
-  }
+  DEFINE_INLINE_TRACE() { FetchDataLoader::Client::Trace(visitor); }
 
  private:
   std::unique_ptr<WebServiceWorkerStreamHandle> handle_;
@@ -289,7 +287,7 @@ FetchRespondWithObserver::FetchRespondWithObserver(
       frame_type_(frame_type),
       request_context_(request_context) {}
 
-void FetchRespondWithObserver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FetchRespondWithObserver) {
   RespondWithObserver::Trace(visitor);
 }
 

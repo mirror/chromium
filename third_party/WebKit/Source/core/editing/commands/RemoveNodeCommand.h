@@ -40,7 +40,7 @@ class RemoveNodeCommand final : public SimpleEditCommand {
                                  should_assume_content_is_always_editable);
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit RemoveNodeCommand(Node*, ShouldAssumeContentIsAlwaysEditable);

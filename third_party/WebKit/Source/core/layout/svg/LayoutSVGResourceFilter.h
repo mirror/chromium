@@ -32,7 +32,6 @@ namespace blink {
 class FilterEffect;
 class SVGFilterElement;
 class SVGFilterGraphNodeMap;
-class SVGFilterPrimitiveStandardAttributes;
 
 class FilterData final : public GarbageCollected<FilterData> {
  public:
@@ -56,7 +55,7 @@ class FilterData final : public GarbageCollected<FilterData> {
 
   void Dispose();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   Member<FilterEffect> last_effect;
   Member<SVGFilterGraphNodeMap> node_map;
@@ -88,8 +87,7 @@ class LayoutSVGResourceFilter final : public LayoutSVGResourceContainer {
   SVGUnitTypes::SVGUnitType FilterUnits() const;
   SVGUnitTypes::SVGUnitType PrimitiveUnits() const;
 
-  void PrimitiveAttributeChanged(SVGFilterPrimitiveStandardAttributes&,
-                                 const QualifiedName&);
+  void PrimitiveAttributeChanged(LayoutObject*, const QualifiedName&);
 
   static const LayoutSVGResourceType kResourceType = kFilterResourceType;
   LayoutSVGResourceType ResourceType() const override { return kResourceType; }

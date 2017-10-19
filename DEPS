@@ -55,11 +55,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': '7ce549f32ec26b758b434d6e365c0b263891329d',
+  'skia_revision': '363dd988a55c2ed3fa92e2368c1c889101425734',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': 'f2f56bff4bbb71bbbd56a1a4ebcb5fde1892019e',
+  'v8_revision': '06d8821c31ed224da82e093056a117179ff103bf',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -67,7 +67,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling ANGLE
   # and whatever else without interference from each other.
-  'angle_revision': 'd042fba42d38294ec3545b71a36522253cb8f862',
+  'angle_revision': '2d88e9bc036a89479334e163306f7655576a5bfc',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling build tools
   # and whatever else without interference from each other.
@@ -79,7 +79,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': '68708e4344b9624fe677854321846a4c23b7e226',
+  'pdfium_revision': '90fffb31e2ec6cf66fe1b85b466cd2f12ee9c87f',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -111,7 +111,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': 'b9501ea73c6c39d4663455b32b2c8c06d252c6ef',
+  'catapult_revision': '733ecb1825d08c999a7fabb8a85383c5c87095b6',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -279,7 +279,7 @@ deps = {
   },
 
   'src/third_party/depot_tools':
-    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + '037f9b80bbd8b97f54accfcb795cf1241a05c996',
+    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + 'f424d357ecc424dde7c5abfd4f07c28c99397b8b',
 
   # DevTools node modules. Used on Linux buildbots only.
   'src/third_party/devtools-node-modules': {
@@ -590,7 +590,7 @@ deps = {
     Var('chromium_git') + '/external/khronosgroup/webgl.git' + '@' + '34842fa3c36988840c89f5bc6a68503175acf7d9',
 
   'src/third_party/webrtc':
-    Var('webrtc_git') + '/src.git' + '@' + '8a958528b2caa663de0b571e40fd62d34d503340', # commit position 20237
+    Var('webrtc_git') + '/src.git' + '@' + '1b4059e84f5f58c68844cb1b91ce23390c03348a', # commit position 20237
 
   'src/third_party/xdg-utils': {
       'url': Var('chromium_git') + '/chromium/deps/xdg-utils.git' + '@' + 'd80274d5869b17b8c9067a1022e4416ee7ed5e0d',
@@ -782,6 +782,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=win32',
                 '--no_auth',
                 '--bucket', 'chromium-gn',
                 '-s', 'src/buildtools/win/gn.exe.sha1',
@@ -794,6 +795,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=darwin',
                 '--no_auth',
                 '--bucket', 'chromium-gn',
                 '-s', 'src/buildtools/mac/gn.sha1',
@@ -806,6 +808,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=linux*',
                 '--no_auth',
                 '--bucket', 'chromium-gn',
                 '-s', 'src/buildtools/linux64/gn.sha1',
@@ -819,6 +822,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=win32',
                 '--no_auth',
                 '--bucket', 'chromium-clang-format',
                 '-s', 'src/buildtools/win/clang-format.exe.sha1',
@@ -831,6 +835,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=darwin',
                 '--no_auth',
                 '--bucket', 'chromium-clang-format',
                 '-s', 'src/buildtools/mac/clang-format.sha1',
@@ -843,6 +848,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=linux*',
                 '--no_auth',
                 '--bucket', 'chromium-clang-format',
                 '-s', 'src/buildtools/linux64/clang-format.sha1',
@@ -856,6 +862,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=win32',
                 '--no_auth',
                 '--bucket', 'chromium-browser-clang/orderfiles',
                 '-d', 'src/chrome/build',
@@ -869,6 +876,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=win32',
                 '--no_auth',
                 '--bucket', 'chromium-luci',
                 '-d', 'src/tools/luci-go/win64',
@@ -881,6 +889,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=darwin',
                 '--no_auth',
                 '--bucket', 'chromium-luci',
                 '-d', 'src/tools/luci-go/mac64',
@@ -893,6 +902,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=linux*',
                 '--no_auth',
                 '--bucket', 'chromium-luci',
                 '-d', 'src/tools/luci-go/linux64',
@@ -918,6 +928,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=win32',
                 '--directory',
                 '--recursive',
                 '--no_auth',
@@ -979,6 +990,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=linux*',
                 '--extract',
                 '--no_auth',
                 '--bucket', 'chromium-nodejs/6.9.4',
@@ -992,6 +1004,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=darwin',
                 '--extract',
                 '--no_auth',
                 '--bucket', 'chromium-nodejs/6.9.4',
@@ -1005,6 +1018,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=win32',
                 '--no_auth',
                 '--bucket', 'chromium-nodejs/6.9.4',
                 '-s', 'src/third_party/node/win/node.exe.sha1',
@@ -1045,6 +1059,7 @@ hooks = [
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
+                '--platform=linux*',
                 '--no_auth',
                 '--num_threads=4',
                 '--bucket', 'chromium-tools-traffic_annotation',
@@ -1320,6 +1335,7 @@ hooks = [
     'action': [   'python',
                   'src/third_party/depot_tools/download_from_google_storage.py',
                   '--no_resume',
+                  '--platform=linux*',
                   '--no_auth',
                   '--bucket', 'chromium-gvr-static-shim',
                   '-s', 'src/third_party/gvr-android-sdk/libgvr_shim_static_arm.a.sha1',
@@ -1332,6 +1348,7 @@ hooks = [
     'action': [   'python',
                   'src/third_party/depot_tools/download_from_google_storage.py',
                   '--no_resume',
+                  '--platform=linux*',
                   '--no_auth',
                   '--bucket', 'chromium-gvr-static-shim',
                   '-s', 'src/third_party/gvr-android-sdk/libgvr_shim_static_arm64.a.sha1',
@@ -1344,6 +1361,7 @@ hooks = [
     'action': [   'python',
                   'src/third_party/depot_tools/download_from_google_storage.py',
                   '--no_resume',
+                  '--platform=linux*',
                   '--no_auth',
                   '--bucket', 'chromium-gvr-static-shim/controller_test_api',
                   '-s', 'src/third_party/gvr-android-sdk/test-libraries/controller_test_api.aar.sha1',

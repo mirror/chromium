@@ -12,7 +12,6 @@
 
 #include "base/callback.h"
 #include "base/containers/circular_deque.h"
-#include "base/containers/flat_map.h"
 #include "base/containers/linked_list.h"
 #include "base/files/file.h"
 #include "base/files/file_path.h"
@@ -278,9 +277,6 @@ class LEVELDB_EXPORT DBTracker {
    public:
     // Name that OpenDatabase() was called with.
     virtual const std::string& name() const = 0;
-
-    // Options used when opening the database.
-    virtual SharedReadCacheUse block_cache_type() const = 0;
   };
 
   // Opens a database and starts tracking it. As long as the opened database
@@ -300,10 +296,14 @@ class LEVELDB_EXPORT DBTracker {
 
   friend class ChromiumEnvDBTrackerTest;
   FRIEND_TEST_ALL_PREFIXES(ChromiumEnvDBTrackerTest, IsTrackedDB);
-  FRIEND_TEST_ALL_PREFIXES(ChromiumEnvDBTrackerTest, MemoryDumpCreation);
+  FRIEND_TEST_ALL_PREFIXES(ChromiumEnvDBTrackerTest, GetOrCreateAllocatorDump);
 
   DBTracker();
   ~DBTracker();
+
+  static base::trace_event::MemoryAllocatorDump* GetOrCreateAllocatorDump(
+      base::trace_event::ProcessMemoryDump* pmd,
+      TrackedDB* db);
 
   // Calls |visitor| for each live database. The database is live from the
   // point it was returned from OpenDatabase() and up until its instance is
@@ -319,10 +319,12 @@ class LEVELDB_EXPORT DBTracker {
   void DatabaseOpened(TrackedDBImpl* database, SharedReadCacheUse cache_use);
   void DatabaseDestroyed(TrackedDBImpl* database, SharedReadCacheUse cache_use);
 
-  // Protect databases_ and mdp_ members.
+  std::unique_ptr<MemoryDumpProvider> mdp_;
+
+  // Protect databases_ and database_use_count_.
   mutable base::Lock databases_lock_;
   base::LinkedList<TrackedDBImpl> databases_;
-  std::unique_ptr<MemoryDumpProvider> mdp_;
+  int database_use_count_[SharedReadCacheUse_NumCacheUses] = {};
 
   DISALLOW_COPY_AND_ASSIGN(DBTracker);
 };

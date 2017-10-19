@@ -54,7 +54,7 @@ InspectorDatabaseResource::InspectorDatabaseResource(Database* database,
       name_(name),
       version_(version) {}
 
-void InspectorDatabaseResource::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorDatabaseResource) {
   visitor->Trace(database_);
 }
 

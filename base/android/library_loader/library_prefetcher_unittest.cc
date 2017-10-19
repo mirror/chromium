@@ -102,7 +102,7 @@ namespace {
 const size_t kPageSize = 4096;
 }  // namespace
 
-TEST(NativeLibraryPrefetcherTest, TestPercentageOfResidentCode) {
+TEST(NativeLibraryPrefetcherTest, DISABLED_TestPercentageOfResidentCode) {
   size_t length = 4 * kPageSize;
   base::SharedMemory shared_mem;
   ASSERT_TRUE(shared_mem.CreateAndMapAnonymous(length));
@@ -123,7 +123,8 @@ TEST(NativeLibraryPrefetcherTest, TestPercentageOfResidentCode) {
   munlock(address, length);
 }
 
-TEST(NativeLibraryPrefetcherTest, TestPercentageOfResidentCodeTwoRegions) {
+TEST(NativeLibraryPrefetcherTest,
+     DISABLED_TestPercentageOfResidentCodeTwoRegions) {
   size_t length = 4 * kPageSize;
   base::SharedMemory shared_mem;
   ASSERT_TRUE(shared_mem.CreateAndMapAnonymous(length));

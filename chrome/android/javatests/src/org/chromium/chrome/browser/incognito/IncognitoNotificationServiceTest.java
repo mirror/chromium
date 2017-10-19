@@ -128,7 +128,7 @@ public class IncognitoNotificationServiceTest {
     @MediumTest
     @RetryOnFailure
     public void testNoAliveProcess() throws Exception {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         final TestTabModelDirectory tabbedModeDirectory = new TestTabModelDirectory(
                 context, "tabs", String.valueOf(0));
 

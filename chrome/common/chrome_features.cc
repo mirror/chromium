@@ -14,9 +14,6 @@ namespace features {
 
 // All features in alphabetical order.
 
-// Enables Ads Metrics.
-const base::Feature kAdsFeature{"AdsMetrics", base::FEATURE_ENABLED_BY_DEFAULT};
-
 #if defined(OS_ANDROID)
 const base::Feature kAllowAutoplayUnmutedInWebappManifestScope{
     "AllowAutoplayUnmutedInWebappManifestScope",
@@ -125,18 +122,6 @@ const base::Feature kTabStripKeyboardFocus{"TabStripKeyboardFocus",
 
 // Enables Basic/Advanced tabs in ClearBrowsingData.
 const base::Feature kTabsInCbd{"TabsInCBD", base::FEATURE_ENABLED_BY_DEFAULT};
-
-// If enabled, we'll only take thumbnails of unknown URLs (i.e. URLs that are
-// not (yet) part of TopSites) if they have an interesting transition type, i.e.
-// one that qualifies for inclusion in TopSites.
-const base::Feature kCaptureThumbnailDependingOnTransitionType{
-    "CaptureThumbnailDependingOnTransitionType",
-    base::FEATURE_ENABLED_BY_DEFAULT};
-
-// Whether to capture page thumbnails when navigating away from the current page
-// (in addition to any other times this might happen).
-const base::Feature kCaptureThumbnailOnNavigatingAway{
-    "CaptureThumbnailOnNavigatingAway", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Whether to trigger app banner installability checks on page load.
 const base::Feature kCheckInstallabilityForBannerOnLoad{
@@ -263,7 +248,7 @@ const base::Feature kMaterialDesignExtensions{
 
 // Sets whether dismissing the new-tab-page override bubble counts as
 // acknowledgement.
-const base::Feature kAcknowledgeNtpOverrideOnDeactivate{
+extern const base::Feature kAcknowledgeNtpOverrideOnDeactivate{
     "AcknowledgeNtpOverrideOnDeactivate", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
@@ -321,12 +306,6 @@ const base::Feature kNativeNotifications{"NativeNotifications",
 const base::Feature kNetworkPrediction{"NetworkPrediction",
                                        base::FEATURE_ENABLED_BY_DEFAULT};
 
-#if defined(OS_POSIX)
-// Enables NTLMv2, which implicitly disables NTLMv1.
-const base::Feature kNtlmV2Enabled{"NtlmV2Enabled",
-                                   base::FEATURE_DISABLED_BY_DEFAULT};
-#endif
-
 // If enabled, the list of content suggestions on the New Tab page will contain
 // pages that the user downloaded for later use.
 // DO NOT check directly whether this feature is enabled (i.e. do not use
@@ -363,11 +342,6 @@ const base::Feature kDisablePostScriptPrinting{
 const base::Feature kPolicyTool{"PolicyTool",
                                 base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
-
-// Triggers the preconnector on renderer-initiated navigations. This captures
-// more navigations.
-const base::Feature kPreconnectMore{"PreconnectMore",
-                                    base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 // Prefer HTML content by hiding Flash from the list of plugins.
@@ -428,7 +402,7 @@ const base::Feature kSiteDetails{"SiteDetails",
 // Enables or disables the ability to use the sound content setting to mute a
 // website.
 const base::Feature kSoundContentSetting{"SoundContentSetting",
-                                         base::FEATURE_ENABLED_BY_DEFAULT};
+                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if !defined(OS_ANDROID)
 // Enables delaying the navigation of background tabs in order to improve
@@ -462,10 +436,6 @@ const base::Feature kSysInternals{"SysInternals",
 const base::Feature kSyzyasanDeferredFree{"SyzyasanDeferredFree",
                                           base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
-
-// Enable TopSites to source and sort its site data using site engagement.
-const base::Feature kTopSitesFromSiteEngagement{
-    "TopSitesFromSiteEngagement", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Enables using the local NTP if Google is the default search engine.
 const base::Feature kUseGoogleLocalNtp{"UseGoogleLocalNtp",

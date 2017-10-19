@@ -598,7 +598,7 @@ ScriptStreamer::ScriptStreamer(
 
 ScriptStreamer::~ScriptStreamer() {}
 
-void ScriptStreamer::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScriptStreamer) {
   visitor->Trace(pending_script_);
   visitor->Trace(resource_);
 }

@@ -53,7 +53,7 @@ class DocumentStyleSheetCollection final
                           DocumentStyleSheetCollector&);
   void CollectViewportRules(ViewportStyleResolver&);
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     TreeScopeStyleSheetCollection::Trace(visitor);
   }
 

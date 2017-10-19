@@ -53,7 +53,7 @@ class ScriptModuleTestModulator final : public DummyModulator {
   ScriptModuleTestModulator();
   virtual ~ScriptModuleTestModulator() {}
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   TestScriptModuleResolver* GetTestScriptModuleResolver() {
     return resolver_.Get();
@@ -72,7 +72,7 @@ class ScriptModuleTestModulator final : public DummyModulator {
 ScriptModuleTestModulator::ScriptModuleTestModulator()
     : resolver_(new TestScriptModuleResolver) {}
 
-void ScriptModuleTestModulator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScriptModuleTestModulator) {
   visitor->Trace(resolver_);
   DummyModulator::Trace(visitor);
 }

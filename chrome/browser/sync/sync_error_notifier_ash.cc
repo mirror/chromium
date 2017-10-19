@@ -6,10 +6,10 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
-#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/login/user_flow.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
+#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
@@ -26,8 +26,6 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/message_center/notification.h"
 #include "ui/message_center/notification_delegate.h"
-#include "ui/message_center/public/cpp/message_center_constants.h"
-#include "ui/message_center/public/cpp/message_center_switches.h"
 
 namespace {
 
@@ -41,6 +39,7 @@ class SyncNotificationDelegate : public message_center::NotificationDelegate {
 
   // NotificationDelegate:
   void Click() override;
+  void ButtonClick(int button_index) override;
 
  protected:
   ~SyncNotificationDelegate() override;
@@ -60,6 +59,10 @@ SyncNotificationDelegate::~SyncNotificationDelegate() {
 }
 
 void SyncNotificationDelegate::Click() {
+  ShowSyncSetup();
+}
+
+void SyncNotificationDelegate::ButtonClick(int button_index) {
   ShowSyncSetup();
 }
 
@@ -136,6 +139,11 @@ void SyncErrorNotifier::OnErrorChanged() {
              notification_id_, NotificationUIManager::GetProfileID(profile_)) ==
          nullptr);
 
+  // Add an accept button to launch the sync setup settings subpage.
+  message_center::RichNotificationData data;
+  data.buttons.push_back(message_center::ButtonInfo(
+      l10n_util::GetStringUTF16(IDS_SYNC_NOTIFICATION_ACCEPT)));
+
   message_center::NotifierId notifier_id(
       message_center::NotifierId::SYSTEM_COMPONENT, kProfileSyncNotificationId);
 
@@ -144,26 +152,16 @@ void SyncErrorNotifier::OnErrorChanged() {
       multi_user_util::GetAccountIdFromProfile(profile_).GetUserEmail();
 
   // Add a new notification.
-  message_center::Notification notification(
+  Notification notification(
       message_center::NOTIFICATION_TYPE_SIMPLE, notification_id_,
       l10n_util::GetStringUTF16(IDS_SYNC_ERROR_BUBBLE_VIEW_TITLE),
       l10n_util::GetStringUTF16(IDS_SYNC_PASSPHRASE_ERROR_BUBBLE_VIEW_MESSAGE),
-      message_center::IsNewStyleNotificationEnabled()
-          ? gfx::Image()
-          : ui::ResourceBundle::GetSharedInstance().GetImageNamed(
-                IDR_NOTIFICATION_ALERT),
-      l10n_util::GetStringUTF16(IDS_SIGNIN_ERROR_DISPLAY_SOURCE),
-      GURL(notification_id_), notifier_id,
-      message_center::RichNotificationData(),
+      ui::ResourceBundle::GetSharedInstance().GetImageNamed(
+          IDR_NOTIFICATION_ALERT),
+      notifier_id,
+      base::string16(),  // display_source
+      GURL(notification_id_), notification_id_, data,
       new SyncNotificationDelegate(profile_));
-  if (message_center::IsNewStyleNotificationEnabled()) {
-    notification.set_accent_color(
-        message_center::kSystemNotificationColorWarning);
-    notification.set_small_image(gfx::Image(gfx::CreateVectorIcon(
-        kNotificationWarningIcon, message_center::kSmallImageSizeMD,
-        message_center::kSystemNotificationColorWarning)));
-    notification.set_vector_small_image(kNotificationWarningIcon);
-  }
 
   notification_ui_manager->Add(notification, profile_);
   notification_displayed_ = true;

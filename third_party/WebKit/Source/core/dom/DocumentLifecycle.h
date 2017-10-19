@@ -71,14 +71,12 @@ class CORE_EXPORT DocumentLifecycle {
     kCompositingClean,
 
     // In InPrePaint step, any data needed by painting are prepared.
-    // Paint property trees are built and paint invalidations are issued.
-    // In SPv1, raster invalidations are also issued.
+    // When RuntimeEnabledFeatures::SlimmingPaintV2Enabled, paint property trees
+    // are built.
+    // Otherwise these steps are not applicable.
     kInPrePaint,
     kPrePaintClean,
 
-    // In InPaint step, paint artifacts are generated.
-    // In SPv1.75+, raster invalidations are issued.
-    // In SPv2, composited layers are generated/updated.
     kInPaint,
     kPaintClean,
 

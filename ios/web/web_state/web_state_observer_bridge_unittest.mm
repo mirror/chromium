@@ -45,7 +45,7 @@ class WebStateObserverBridgeTest : public PlatformTest {
 TEST_F(WebStateObserverBridgeTest, WasShown) {
   ASSERT_FALSE([observer_ wasShownInfo]);
 
-  bridge_->WasShown(&test_web_state_);
+  bridge_->WasShown();
   ASSERT_TRUE([observer_ wasShownInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ wasShownInfo]->web_state);
 }
@@ -54,7 +54,7 @@ TEST_F(WebStateObserverBridgeTest, WasShown) {
 TEST_F(WebStateObserverBridgeTest, WasHidden) {
   ASSERT_FALSE([observer_ wasHiddenInfo]);
 
-  bridge_->WasHidden(&test_web_state_);
+  bridge_->WasHidden();
   ASSERT_TRUE([observer_ wasHiddenInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ wasHiddenInfo]->web_state);
 }
@@ -63,7 +63,7 @@ TEST_F(WebStateObserverBridgeTest, WasHidden) {
 TEST_F(WebStateObserverBridgeTest, NavigationItemsPruned) {
   ASSERT_FALSE([observer_ navigationItemsPrunedInfo]);
 
-  bridge_->NavigationItemsPruned(&test_web_state_, 1);
+  bridge_->NavigationItemsPruned(1);
 
   ASSERT_TRUE([observer_ navigationItemsPrunedInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ navigationItemsPrunedInfo]->web_state);
@@ -79,7 +79,7 @@ TEST_F(WebStateObserverBridgeTest, DidStartNavigation) {
       web::NavigationContextImpl::CreateNavigationContext(
           &test_web_state_, url,
           ui::PageTransition::PAGE_TRANSITION_FORWARD_BACK, false);
-  bridge_->DidStartNavigation(&test_web_state_, context.get());
+  bridge_->DidStartNavigation(context.get());
 
   ASSERT_TRUE([observer_ didStartNavigationInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ didStartNavigationInfo]->web_state);
@@ -106,7 +106,7 @@ TEST_F(WebStateObserverBridgeTest, DidFinishNavigation) {
       web::NavigationContextImpl::CreateNavigationContext(
           &test_web_state_, url,
           ui::PageTransition::PAGE_TRANSITION_FROM_ADDRESS_BAR, false);
-  bridge_->DidFinishNavigation(&test_web_state_, context.get());
+  bridge_->DidFinishNavigation(context.get());
 
   ASSERT_TRUE([observer_ didFinishNavigationInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ didFinishNavigationInfo]->web_state);
@@ -134,7 +134,7 @@ TEST_F(WebStateObserverBridgeTest, NavigationItemCommitted) {
   load_details.previous_url = GURL("https://chromium.test/");
   load_details.is_in_page = true;
 
-  bridge_->NavigationItemCommitted(&test_web_state_, load_details);
+  bridge_->NavigationItemCommitted(load_details);
 
   ASSERT_TRUE([observer_ commitNavigationInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ commitNavigationInfo]->web_state);
@@ -153,13 +153,13 @@ TEST_F(WebStateObserverBridgeTest, PageLoaded) {
   ASSERT_FALSE([observer_ loadPageInfo]);
 
   // Forwarding PageLoadCompletionStatus::SUCCESS.
-  bridge_->PageLoaded(&test_web_state_, PageLoadCompletionStatus::SUCCESS);
+  bridge_->PageLoaded(PageLoadCompletionStatus::SUCCESS);
   ASSERT_TRUE([observer_ loadPageInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ loadPageInfo]->web_state);
   EXPECT_TRUE([observer_ loadPageInfo]->success);
 
   // Forwarding PageLoadCompletionStatus::FAILURE.
-  bridge_->PageLoaded(&test_web_state_, PageLoadCompletionStatus::FAILURE);
+  bridge_->PageLoaded(PageLoadCompletionStatus::FAILURE);
   ASSERT_TRUE([observer_ loadPageInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ loadPageInfo]->web_state);
   EXPECT_FALSE([observer_ loadPageInfo]->success);
@@ -169,7 +169,7 @@ TEST_F(WebStateObserverBridgeTest, PageLoaded) {
 TEST_F(WebStateObserverBridgeTest, InterstitialDismissed) {
   ASSERT_FALSE([observer_ dismissInterstitialInfo]);
 
-  bridge_->InterstitialDismissed(&test_web_state_);
+  bridge_->InterstitialDismissed();
   ASSERT_TRUE([observer_ dismissInterstitialInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ dismissInterstitialInfo]->web_state);
 }
@@ -179,7 +179,7 @@ TEST_F(WebStateObserverBridgeTest, LoadProgressChanged) {
   ASSERT_FALSE([observer_ changeLoadingProgressInfo]);
 
   const double kTestLoadProgress = 0.75;
-  bridge_->LoadProgressChanged(&test_web_state_, kTestLoadProgress);
+  bridge_->LoadProgressChanged(kTestLoadProgress);
   ASSERT_TRUE([observer_ changeLoadingProgressInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ changeLoadingProgressInfo]->web_state);
   EXPECT_EQ(kTestLoadProgress, [observer_ changeLoadingProgressInfo]->progress);
@@ -189,7 +189,7 @@ TEST_F(WebStateObserverBridgeTest, LoadProgressChanged) {
 TEST_F(WebStateObserverBridgeTest, TitleWasSet) {
   ASSERT_FALSE([observer_ titleWasSetInfo]);
 
-  bridge_->TitleWasSet(&test_web_state_);
+  bridge_->TitleWasSet();
   ASSERT_TRUE([observer_ titleWasSetInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ titleWasSetInfo]->web_state);
 }
@@ -198,7 +198,7 @@ TEST_F(WebStateObserverBridgeTest, TitleWasSet) {
 TEST_F(WebStateObserverBridgeTest, DidChangeVisibleSecurityState) {
   ASSERT_FALSE([observer_ didChangeVisibleSecurityStateInfo]);
 
-  bridge_->DidChangeVisibleSecurityState(&test_web_state_);
+  bridge_->DidChangeVisibleSecurityState();
   ASSERT_TRUE([observer_ didChangeVisibleSecurityStateInfo]);
   EXPECT_EQ(&test_web_state_,
             [observer_ didChangeVisibleSecurityStateInfo]->web_state);
@@ -208,7 +208,7 @@ TEST_F(WebStateObserverBridgeTest, DidChangeVisibleSecurityState) {
 TEST_F(WebStateObserverBridgeTest, DidSuppressDialog) {
   ASSERT_FALSE([observer_ didSuppressDialogInfo]);
 
-  bridge_->DidSuppressDialog(&test_web_state_);
+  bridge_->DidSuppressDialog();
   ASSERT_TRUE([observer_ didSuppressDialogInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ didSuppressDialogInfo]->web_state);
 }
@@ -219,7 +219,7 @@ TEST_F(WebStateObserverBridgeTest, DocumentSubmitted) {
 
   std::string kTestFormName("form-name");
   BOOL user_initiated = YES;
-  bridge_->DocumentSubmitted(&test_web_state_, kTestFormName, user_initiated);
+  bridge_->DocumentSubmitted(kTestFormName, user_initiated);
   ASSERT_TRUE([observer_ submitDocumentInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ submitDocumentInfo]->web_state);
   EXPECT_EQ(kTestFormName, [observer_ submitDocumentInfo]->form_name);
@@ -234,9 +234,8 @@ TEST_F(WebStateObserverBridgeTest, FormActivityRegistered) {
   std::string kTestFieldName("field-name");
   std::string kTestTypeType("type");
   std::string kTestValue("value");
-  bridge_->FormActivityRegistered(&test_web_state_, kTestFormName,
-                                  kTestFieldName, kTestTypeType, kTestValue,
-                                  true);
+  bridge_->FormActivityRegistered(kTestFormName, kTestFieldName, kTestTypeType,
+                                  kTestValue, true);
   ASSERT_TRUE([observer_ formActivityInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ formActivityInfo]->web_state);
   EXPECT_EQ(kTestFormName, [observer_ formActivityInfo]->form_name);
@@ -253,7 +252,7 @@ TEST_F(WebStateObserverBridgeTest, FaviconUrlUpdated) {
   web::FaviconURL url(GURL("https://chromium.test/"),
                       web::FaviconURL::TOUCH_ICON, {gfx::Size(5, 6)});
 
-  bridge_->FaviconUrlUpdated(&test_web_state_, {url});
+  bridge_->FaviconUrlUpdated({url});
   ASSERT_TRUE([observer_ updateFaviconUrlCandidatesInfo]);
   EXPECT_EQ(&test_web_state_,
             [observer_ updateFaviconUrlCandidatesInfo]->web_state);
@@ -271,7 +270,7 @@ TEST_F(WebStateObserverBridgeTest, FaviconUrlUpdated) {
 TEST_F(WebStateObserverBridgeTest, RenderProcessGone) {
   ASSERT_FALSE([observer_ renderProcessGoneInfo]);
 
-  bridge_->RenderProcessGone(&test_web_state_);
+  bridge_->RenderProcessGone();
   ASSERT_TRUE([observer_ renderProcessGoneInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ renderProcessGoneInfo]->web_state);
 }
@@ -280,7 +279,7 @@ TEST_F(WebStateObserverBridgeTest, RenderProcessGone) {
 TEST_F(WebStateObserverBridgeTest, WebStateDestroyed) {
   ASSERT_FALSE([observer_ webStateDestroyedInfo]);
 
-  bridge_->WebStateDestroyed(&test_web_state_);
+  bridge_->WebStateDestroyed();
   ASSERT_TRUE([observer_ webStateDestroyedInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ webStateDestroyedInfo]->web_state);
 }
@@ -289,7 +288,7 @@ TEST_F(WebStateObserverBridgeTest, WebStateDestroyed) {
 TEST_F(WebStateObserverBridgeTest, DidStopLoading) {
   ASSERT_FALSE([observer_ stopLoadingInfo]);
 
-  bridge_->DidStopLoading(&test_web_state_);
+  bridge_->DidStopLoading();
   ASSERT_TRUE([observer_ stopLoadingInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ stopLoadingInfo]->web_state);
 }
@@ -298,7 +297,7 @@ TEST_F(WebStateObserverBridgeTest, DidStopLoading) {
 TEST_F(WebStateObserverBridgeTest, DidStartLoading) {
   ASSERT_FALSE([observer_ startLoadingInfo]);
 
-  bridge_->DidStartLoading(&test_web_state_);
+  bridge_->DidStartLoading();
   ASSERT_TRUE([observer_ startLoadingInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ startLoadingInfo]->web_state);
 }

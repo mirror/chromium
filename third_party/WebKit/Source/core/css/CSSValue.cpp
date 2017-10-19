@@ -499,7 +499,7 @@ void CSSValue::FinalizeGarbageCollectedObject() {
   NOTREACHED();
 }
 
-void CSSValue::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSValue) {
   switch (GetClassType()) {
     case kBasicShapeCircleClass:
       ToCSSBasicShapeCircleValue(this)->TraceAfterDispatch(visitor);

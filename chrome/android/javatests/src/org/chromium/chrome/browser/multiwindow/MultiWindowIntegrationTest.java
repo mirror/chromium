@@ -58,7 +58,8 @@ public class MultiWindowIntegrationTest {
 
     @Before
     public void setUp() throws InterruptedException {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         mActivityTestRule.startMainActivityOnBlankPage();
     }
 

@@ -87,12 +87,6 @@ HTMLTableSectionElement* HTMLTableElement::tHead() const {
 
 void HTMLTableElement::setTHead(HTMLTableSectionElement* new_head,
                                 ExceptionState& exception_state) {
-  if (new_head && !new_head->HasTagName(theadTag)) {
-    exception_state.ThrowDOMException(kHierarchyRequestError,
-                                      "Not a thead element.");
-    return;
-  }
-
   deleteTHead();
   if (!new_head)
     return;
@@ -620,7 +614,7 @@ const AtomicString& HTMLTableElement::Summary() const {
   return getAttribute(summaryAttr);
 }
 
-void HTMLTableElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLTableElement) {
   visitor->Trace(shared_cell_style_);
   HTMLElement::Trace(visitor);
 }

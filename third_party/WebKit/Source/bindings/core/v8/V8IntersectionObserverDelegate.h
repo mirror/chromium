@@ -23,7 +23,7 @@ class V8IntersectionObserverDelegate final
                                              ScriptState*);
   ~V8IntersectionObserverDelegate() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   void Deliver(const HeapVector<Member<IntersectionObserverEntry>>&,

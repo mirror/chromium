@@ -38,7 +38,7 @@ class SVGTextPositioningElement : public SVGTextContentElement {
   SVGAnimatedLengthList* dy() { return dy_.Get(); }
   SVGAnimatedNumberList* rotate() { return rotate_.Get(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   SVGTextPositioningElement(const QualifiedName&, Document&);

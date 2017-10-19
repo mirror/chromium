@@ -81,7 +81,7 @@ class MODULES_EXPORT FetchEvent final
   // ScriptWrappable
   bool HasPendingActivity() const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   FetchEvent(ScriptState*,

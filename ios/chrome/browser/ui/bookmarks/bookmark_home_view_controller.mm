@@ -558,22 +558,14 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   bookmark_utils_ios::MoveBookmarksWithUndoToast(
       folderPicker.editedNodes, self.bookmarks, folder, self.browserState);
 
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    [self setTableViewEditing:NO];
-  } else {
-    [self setEditing:NO animated:NO];
-  }
+  [self setEditing:NO animated:NO];
   [self dismissViewControllerAnimated:YES completion:NULL];
   self.folderSelector.delegate = nil;
   self.folderSelector = nil;
 }
 
 - (void)folderPickerDidCancel:(BookmarkFolderViewController*)folderPicker {
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    [self setTableViewEditing:NO];
-  } else {
-    [self setEditing:NO animated:NO];
-  }
+  [self setEditing:NO animated:NO];
   [self dismissViewControllerAnimated:YES completion:NULL];
   self.folderSelector.delegate = nil;
   self.folderSelector = nil;
@@ -603,11 +595,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   self.folderEditor = nil;
 }
 
-- (void)bookmarkFolderEditorWillCommitTitleChange:
-    (BookmarkFolderEditorViewController*)controller {
-  [self setTableViewEditing:NO];
-}
-
 #pragma mark - BookmarkEditViewControllerDelegate
 
 - (BOOL)bookmarkEditor:(BookmarkEditViewController*)controller
@@ -624,11 +611,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   // edit button in edit mode. Either way, after it's dismissed, edit mode
   // should be off.
   [self setEditing:NO animated:NO];
-}
-
-- (void)bookmarkEditorWillCommitTitleOrUrlChange:
-    (BookmarkEditViewController*)controller {
-  [self setTableViewEditing:NO];
 }
 
 #pragma mark - Edit
@@ -1220,10 +1202,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 
 // Called when the leading button is clicked.
 - (void)leadingButtonClicked {
-  // Ignore the button tap if view controller presenting.
-  if ([self presentedViewController]) {
-    return;
-  }
   const std::set<const bookmarks::BookmarkNode*> nodes =
       [self.bookmarksTableView editNodes];
   switch (self.contextBarState) {
@@ -1252,10 +1230,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 
 // Called when the center button is clicked.
 - (void)centerButtonClicked {
-  // Ignore the button tap if view controller presenting.
-  if ([self presentedViewController]) {
-    return;
-  }
   const std::set<const bookmarks::BookmarkNode*> nodes =
       [self.bookmarksTableView editNodes];
   // Center button is shown and is clickable only when at least
@@ -1307,10 +1281,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 
 // Called when the trailing button, "Select" or "Cancel" is clicked.
 - (void)trailingButtonClicked {
-  // Ignore the button tap if view controller presenting.
-  if ([self presentedViewController]) {
-    return;
-  }
   // Toggle edit mode.
   [self setTableViewEditing:!self.bookmarksTableView.editing];
 }
@@ -1464,7 +1434,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
     UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
     std::string urlString = node->url().possibly_invalid_spec();
     pasteboard.string = base::SysUTF8ToNSString(urlString);
-    [self setTableViewEditing:NO];
   };
   UIAlertAction* copyAction = [UIAlertAction
       actionWithTitle:l10n_util::GetNSString(IDS_IOS_CONTENT_CONTEXT_COPY)

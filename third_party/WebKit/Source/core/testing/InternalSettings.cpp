@@ -371,7 +371,7 @@ void InternalSettings::setDefaultVideoPosterURL(
   GetSettings()->SetDefaultVideoPosterURL(url);
 }
 
-void InternalSettings::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InternalSettings) {
   InternalSettingsGenerated::Trace(visitor);
   Supplement<Page>::Trace(visitor);
 }

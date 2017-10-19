@@ -9,7 +9,6 @@
 #include <stdint.h>
 
 #include <algorithm>
-#include <limits>
 #include <memory>
 #include <set>
 
@@ -19,6 +18,7 @@
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
@@ -51,7 +51,6 @@
 #include "printing/pdf_transform.h"
 #include "printing/units.h"
 #include "third_party/pdfium/public/fpdf_annot.h"
-#include "third_party/pdfium/public/fpdf_attachment.h"
 #include "third_party/pdfium/public/fpdf_edit.h"
 #include "third_party/pdfium/public/fpdf_ext.h"
 #include "third_party/pdfium/public/fpdf_flatten.h"
@@ -453,11 +452,6 @@ void SetPageSizeAndContentRect(bool rotated,
   }
 }
 
-template <class S>
-bool IsAboveOrDirectlyLeftOf(const S& lhs, const S& rhs) {
-  return lhs.y() < rhs.y() || (lhs.y() == rhs.y() && lhs.x() < rhs.x());
-}
-
 // This formats a string with special 0xfffe end-of-line hyphens the same way
 // as Adobe Reader. When a hyphen is encountered, the next non-CR/LF whitespace
 // becomes CR+LF and the hyphen is erased. If there is no whitespace between
@@ -685,7 +679,7 @@ void ShutdownSDK() {
 }
 
 std::unique_ptr<PDFEngine> PDFEngine::Create(PDFEngine::Client* client) {
-  return std::make_unique<PDFiumEngine>(client);
+  return base::MakeUnique<PDFiumEngine>(client);
 }
 
 PDFiumEngine::PDFiumEngine(PDFEngine::Client* client)
@@ -1127,10 +1121,10 @@ bool PDFiumEngine::HandleDocumentLoad(const pp::URLLoader& loader) {
   password_tries_remaining_ = kMaxPasswordTries;
   process_when_pending_request_complete_ = true;
   auto loader_wrapper =
-      std::make_unique<URLLoaderWrapperImpl>(GetPluginInstance(), loader);
+      base::MakeUnique<URLLoaderWrapperImpl>(GetPluginInstance(), loader);
   loader_wrapper->SetResponseHeaders(headers_);
 
-  doc_loader_ = std::make_unique<DocumentLoader>(this);
+  doc_loader_ = base::MakeUnique<DocumentLoader>(this);
   if (doc_loader_->Init(std::move(loader_wrapper), url_)) {
     // request initial data.
     doc_loader_->RequestData(0, 1);
@@ -1144,7 +1138,7 @@ pp::Instance* PDFiumEngine::GetPluginInstance() {
 }
 
 std::unique_ptr<URLLoaderWrapper> PDFiumEngine::CreateURLLoader() {
-  return std::make_unique<URLLoaderWrapperImpl>(GetPluginInstance(),
+  return base::MakeUnique<URLLoaderWrapperImpl>(GetPluginInstance(),
                                                 client_->CreateURLLoader());
 }
 
@@ -1282,9 +1276,6 @@ void PDFiumEngine::FinishLoadingDocument() {
   if (doc_) {
     DocumentFeatures document_features;
     document_features.page_count = pages_.size();
-    document_features.has_attachments = (FPDFDoc_GetAttachmentCount(doc_) > 0);
-    document_features.is_linearized =
-        (FPDFAvail_IsLinearized(fpdf_availability_) == PDF_LINEARIZED);
     client_->DocumentLoadComplete(document_features);
   }
 }
@@ -1786,7 +1777,7 @@ bool PDFiumEngine::OnLeftMouseDown(const pp::MouseInputEvent& event) {
   SetMouseLeftButtonDown(true);
 
   auto selection_invalidator =
-      std::make_unique<SelectionChangeInvalidator>(this);
+      base::MakeUnique<SelectionChangeInvalidator>(this);
   selection_.clear();
 
   int page_index = -1;
@@ -2084,7 +2075,7 @@ bool PDFiumEngine::OnMouseMove(const pp::MouseInputEvent& event) {
 
 bool PDFiumEngine::ExtendSelection(int page_index, int char_index) {
   // Check if the user has decreased their selection area and we need to remove
-  // pages from |selection_|.
+  // pages from selection_.
   for (size_t i = 0; i < selection_.size(); ++i) {
     if (selection_[i].page_index() == page_index) {
       // There should be no other pages after this.
@@ -2095,42 +2086,40 @@ bool PDFiumEngine::ExtendSelection(int page_index, int char_index) {
   if (selection_.empty())
     return false;
 
-  PDFiumRange& last_selection = selection_.back();
-  const int last_page_index = last_selection.page_index();
-  const int last_char_index = last_selection.char_index();
-  if (last_page_index == page_index) {
+  int last = selection_.size() - 1;
+  if (selection_[last].page_index() == page_index) {
     // Selecting within a page.
-    int count = char_index - last_char_index;
-    if (count >= 0) {
+    int count;
+    if (char_index >= selection_[last].char_index()) {
       // Selecting forward.
-      ++count;
+      count = char_index - selection_[last].char_index() + 1;
     } else {
-      --count;
+      count = char_index - selection_[last].char_index() - 1;
     }
-    last_selection.SetCharCount(count);
-  } else if (last_page_index < page_index) {
+    selection_[last].SetCharCount(count);
+  } else if (selection_[last].page_index() < page_index) {
     // Selecting into the next page.
 
     // First make sure that there are no gaps in selection, i.e. if mousedown on
     // page one but we only get mousemove over page three, we want page two.
-    for (int i = last_page_index + 1; i < page_index; ++i) {
+    for (int i = selection_[last].page_index() + 1; i < page_index; ++i) {
       selection_.push_back(
           PDFiumRange(pages_[i].get(), 0, pages_[i]->GetCharCount()));
     }
 
-    int count = pages_[last_page_index]->GetCharCount();
-    last_selection.SetCharCount(count - last_char_index);
+    int count = pages_[selection_[last].page_index()]->GetCharCount();
+    selection_[last].SetCharCount(count - selection_[last].char_index());
     selection_.push_back(PDFiumRange(pages_[page_index].get(), 0, char_index));
   } else {
     // Selecting into the previous page.
     // The selection's char_index is 0-based, so the character count is one
     // more than the index. The character count needs to be negative to
     // indicate a backwards selection.
-    last_selection.SetCharCount(-last_char_index - 1);
+    selection_[last].SetCharCount(-(selection_[last].char_index() + 1));
 
     // First make sure that there are no gaps in selection, i.e. if mousedown on
     // page three but we only get mousemove over page one, we want page two.
-    for (int i = last_page_index - 1; i > page_index; --i) {
+    for (int i = selection_[last].page_index() - 1; i > page_index; --i) {
       selection_.push_back(
           PDFiumRange(pages_[i].get(), 0, pages_[i]->GetCharCount()));
     }
@@ -2505,15 +2494,15 @@ std::string PDFiumEngine::GetSelectedText() {
     return std::string();
 
   base::string16 result;
+  base::string16 new_line_char = base::UTF8ToUTF16("\n");
   for (size_t i = 0; i < selection_.size(); ++i) {
-    static constexpr base::char16 kNewLineChar = L'\n';
-    base::string16 current_selection_text = selection_[i].GetText();
-    if (i != 0) {
-      if (selection_[i - 1].page_index() > selection_[i].page_index())
-        std::swap(current_selection_text, result);
-      result.push_back(kNewLineChar);
+    if (i > 0 && selection_[i - 1].page_index() > selection_[i].page_index()) {
+      result = selection_[i].GetText() + new_line_char + result;
+    } else {
+      if (i > 0)
+        result.append(new_line_char);
+      result.append(selection_[i].GetText());
     }
-    result.append(current_selection_text);
   }
 
   FormatStringWithHyphens(&result);
@@ -2850,7 +2839,7 @@ void PDFiumEngine::AppendBlankPages(int num_pages) {
     double height_in_points =
         ConvertUnitDouble(page_rect.height(), kPixelsPerInch, kPointsPerInch);
     FPDFPage_New(doc_, i, width_in_points, height_in_points);
-    pages_.push_back(std::make_unique<PDFiumPage>(this, i, page_rect, true));
+    pages_.push_back(base::MakeUnique<PDFiumPage>(this, i, page_rect, true));
   }
 
   CalculateVisiblePages();
@@ -3021,7 +3010,7 @@ void PDFiumEngine::LoadPageInfo(bool reload) {
       // The page is marked as not being available even if |doc_complete| is
       // true because FPDFAvail_IsPageAvail() still has to be called for this
       // page, which will be done in FinishLoadingDocument().
-      pages_.push_back(std::make_unique<PDFiumPage>(this, i, page_rect, false));
+      pages_.push_back(base::MakeUnique<PDFiumPage>(this, i, page_rect, false));
     }
   }
 
@@ -3803,7 +3792,7 @@ void PDFiumEngine::DrawPageShadow(const pp::Rect& page_rc,
 
   // We need to check depth only to verify our copy of shadow matrix is correct.
   if (!page_shadow_.get() || page_shadow_->depth() != depth) {
-    page_shadow_ = std::make_unique<ShadowMatrix>(
+    page_shadow_ = base::MakeUnique<ShadowMatrix>(
         depth, factor, client_->GetBackgroundColor());
   }
 
@@ -3848,13 +3837,16 @@ void PDFiumEngine::OnSelectionChanged() {
                 std::numeric_limits<int32_t>::max(), 0, 0);
   pp::Rect right;
   for (auto& sel : selection_) {
-    std::vector<pp::Rect> screen_rects = sel.GetScreenRects(
-        GetVisibleRect().point(), current_zoom_, current_rotation_);
-    for (const auto& rect : screen_rects) {
-      if (IsAboveOrDirectlyLeftOf(rect, left))
+    for (const auto& rect : sel.GetScreenRects(
+             GetVisibleRect().point(), current_zoom_, current_rotation_)) {
+      if (rect.y() < left.y() ||
+          (rect.y() == left.y() && rect.x() < left.x())) {
         left = rect;
-      if (IsAboveOrDirectlyLeftOf(right, rect))
+      }
+      if (rect.y() > right.y() ||
+          (rect.y() == right.y() && rect.right() > right.right())) {
         right = rect;
+      }
     }
   }
   right.set_x(right.x() + right.width());
@@ -4275,9 +4267,12 @@ void PDFiumEngine::MoveRangeSelectionExtent(const pp::Point& extent) {
 void PDFiumEngine::SetSelectionBounds(const pp::Point& base,
                                       const pp::Point& extent) {
   range_selection_base_ = base;
-  range_selection_direction_ = IsAboveOrDirectlyLeftOf(base, extent)
-                                   ? RangeSelectionDirection::Left
-                                   : RangeSelectionDirection::Right;
+  if (base.y() < extent.y() ||
+      (base.y() == extent.y() && base.x() < extent.x())) {
+    range_selection_direction_ = RangeSelectionDirection::Left;
+  } else {
+    range_selection_direction_ = RangeSelectionDirection::Right;
+  }
 }
 
 ScopedUnsupportedFeature::ScopedUnsupportedFeature(PDFiumEngine* engine)

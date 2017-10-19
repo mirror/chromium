@@ -85,7 +85,7 @@ class MODULES_EXPORT PaymentRequest final
   void OnUpdatePaymentDetails(const ScriptValue& details_script_value) override;
   void OnUpdatePaymentDetailsFailure(const String& error) override;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void OnCompleteTimeoutForTesting();
 

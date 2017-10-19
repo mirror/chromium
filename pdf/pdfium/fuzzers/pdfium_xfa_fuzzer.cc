@@ -14,8 +14,8 @@ class PDFiumXFAFuzzer : public PDFiumFuzzerHelper {
   // Return false if XFA doesn't load as otherwise we're duplicating the work
   // done by the non-xfa fuzzer.
   bool OnFormFillEnvLoaded(FPDF_DOCUMENT doc) override {
-    int form_type = FPDF_GetFormType(doc);
-    if (form_type != FORMTYPE_XFA_FULL && form_type != FORMTYPE_XFA_FOREGROUND)
+    int doc_type = DOCTYPE_PDF;
+    if (!FPDF_HasXFAField(doc, &doc_type) || doc_type == DOCTYPE_PDF)
       return false;
     return FPDF_LoadXFA(doc);
   }

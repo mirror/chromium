@@ -35,7 +35,7 @@ class Geoposition;
 class PositionCallback : public GarbageCollectedFinalized<PositionCallback> {
  public:
   virtual ~PositionCallback() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
   virtual void handleEvent(Geoposition*) = 0;
 };
 

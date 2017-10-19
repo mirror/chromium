@@ -44,7 +44,7 @@ class VRFrameData final : public GarbageCollected<VRFrameData>,
               float depth_near,
               float depth_far);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE()
 
  private:
   Member<DOMFloat32Array> left_projection_matrix_;

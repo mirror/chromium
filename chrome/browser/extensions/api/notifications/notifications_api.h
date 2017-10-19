@@ -14,9 +14,7 @@
 #include "extensions/browser/extension_function.h"
 #include "ui/message_center/notification_types.h"
 
-namespace message_center {
 class Notification;
-}
 
 namespace extensions {
 
@@ -36,7 +34,7 @@ class NotificationsApiFunction : public ChromeAsyncExtensionFunction {
                           api::notifications::NotificationOptions* options);
   bool UpdateNotification(const std::string& id,
                           api::notifications::NotificationOptions* options,
-                          message_center::Notification* notification);
+                          Notification* notification);
 
   bool IsNotificationsApiEnabled() const;
 

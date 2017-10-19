@@ -44,7 +44,7 @@ Expression::Expression()
 
 Expression::~Expression() {}
 
-void Expression::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Expression) {
   visitor->Trace(sub_expressions_);
   ParseNode::Trace(visitor);
 }

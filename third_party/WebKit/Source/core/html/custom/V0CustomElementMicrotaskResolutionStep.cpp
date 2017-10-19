@@ -59,7 +59,7 @@ V0CustomElementMicrotaskResolutionStep::Process() {
   return V0CustomElementMicrotaskStep::kFinishedProcessing;
 }
 
-void V0CustomElementMicrotaskResolutionStep::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(V0CustomElementMicrotaskResolutionStep) {
   visitor->Trace(context_);
   visitor->Trace(element_);
   V0CustomElementMicrotaskStep::Trace(visitor);

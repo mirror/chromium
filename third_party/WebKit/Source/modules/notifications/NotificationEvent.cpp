@@ -34,7 +34,7 @@ const AtomicString& NotificationEvent::InterfaceName() const {
   return EventNames::NotificationEvent;
 }
 
-void NotificationEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NotificationEvent) {
   visitor->Trace(notification_);
   ExtendableEvent::Trace(visitor);
 }

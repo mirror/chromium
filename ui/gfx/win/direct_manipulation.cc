@@ -74,13 +74,13 @@ void DirectManipulationHelper::Initialize(HWND window) {
 }
 
 void DirectManipulationHelper::SetBounds(const gfx::Rect& bounds) {
-  Microsoft::WRL::ComPtr<IDirectManipulationPrimaryContent>
+  base::win::ScopedComPtr<IDirectManipulationPrimaryContent>
       primary_content_outer;
   HRESULT hr = view_port_outer_->GetPrimaryContent(
       IID_PPV_ARGS(primary_content_outer.GetAddressOf()));
   CHECK(SUCCEEDED(hr));
 
-  Microsoft::WRL::ComPtr<IDirectManipulationContent> content_outer;
+  base::win::ScopedComPtr<IDirectManipulationContent> content_outer;
   hr = primary_content_outer.CopyTo(content_outer.GetAddressOf());
   CHECK(SUCCEEDED(hr));
 

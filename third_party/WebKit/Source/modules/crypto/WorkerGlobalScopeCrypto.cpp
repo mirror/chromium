@@ -63,7 +63,7 @@ Crypto* WorkerGlobalScopeCrypto::crypto() const {
   return crypto_.Get();
 }
 
-void WorkerGlobalScopeCrypto::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkerGlobalScopeCrypto) {
   visitor->Trace(crypto_);
   Supplement<WorkerGlobalScope>::Trace(visitor);
 }

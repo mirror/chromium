@@ -32,7 +32,6 @@
     },
 
     'chromium.android': {
-      'Android ASAN (dbg)': 'android_clang_asan_errorprone_findbugs_debug_bot_minimal_symbols',
       'Android Cronet ARM64 Builder': 'android_cronet_release_bot_minimal_symbols_arm64',
       'Android Cronet ARM64 Builder (dbg)': 'android_cronet_debug_static_bot_arm64',
       'Android Cronet ARMv6 Builder': 'android_cronet_release_bot_minimal_symbols_armv6',
@@ -53,9 +52,6 @@
       'Android arm64 Builder (dbg)': 'android_debug_static_bot_arm64',
       'Android x64 Builder (dbg)': 'android_debug_static_bot_x64',
       'Android x86 Builder (dbg)': 'android_debug_static_bot_x86',
-      'Cast Android (dbg)': 'android_cast_debug_static_bot',
-      'KitKat Phone Tester (rel)': 'android_release_bot_minimal_symbols',
-      'Marshmallow Phone Tester (rel)': 'android_release_bot_minimal_symbols_arm64',
     },
 
     'chromium.android.fyi': {
@@ -128,7 +124,6 @@
       'ToTAndroidASan': 'android_clang_tot_asan',
       'ToTAndroid (dbg)': 'android_clang_tot_dbg',
       'ToTAndroid': 'android_clang_tot_release',
-      'ToTAndroidCFI': 'android_clang_tot_cfi_full_thin_lto_release_static_dcheck_always_on',
       'ToTAndroid64': 'android_clang_tot_release_arm64',
       'ToTAndroid x64': 'android_clang_tot_x64',
       'ToTLinux': 'clang_tot_linux_full_symbols_shared_release',
@@ -324,8 +319,7 @@
       'Linux Builder (dbg)(32)': 'debug_bot_x86',
       'Linux Builder': 'release_bot',
       'Deterministic Linux': 'release_bot',
-      'Fuchsia x64': 'release_bot_fuchsia',
-      'Fuchsia ARM64': 'release_bot_fuchsia_arm64',
+      'Fuchsia Compile': 'release_bot_fuchsia',
     },
 
     'chromium.lkgr': {
@@ -397,7 +391,7 @@
     'chromium.sandbox': {
       'Linux Builder SANDBOX': 'release_bot',
       'Deterministic Linux SANDBOX': 'release_bot',
-      'Fuchsia x64 SANDBOX': 'release_bot_fuchsia',
+      'Fuchsia Compile SANDBOX': 'release_bot_fuchsia',
     },
 
     'chromium.swarm': {
@@ -694,7 +688,7 @@
       'win10_chromium_x64_rel_ng': 'release_trybot',
       'win10_chromium_x64_rel_ng_exp': 'release_trybot',
       'win10_gce_x64_rel': 'release_bot_minimal_symbols',
-      'win_chromium_gn_upload': 'release_bot_x86_minimal_symbols',
+      'win8_chromium_gn_upload': 'release_bot_x86_minimal_symbols',
       'win_x64_archive': 'release_trybot',
       'win_archive': 'release_trybot_x86',
       'win_chromium_compile_dbg_ng': 'debug_trybot_x86_minimal_symbols',
@@ -754,11 +748,6 @@
     'android_clang_tot_asan': [
       'android_without_codecs', 'clang_tot', 'asan', 'shared', 'debug', 'minimal_symbols',
       'strip_debug_info',
-    ],
-
-    'android_clang_tot_cfi_full_thin_lto_release_static_dcheck_always_on': [
-      'android_without_codecs', 'clang_tot', 'cfi_full', 'thin_lto', 'release',
-      'static', 'dcheck_always_on',
     ],
 
     'android_clang_tot_dbg': [

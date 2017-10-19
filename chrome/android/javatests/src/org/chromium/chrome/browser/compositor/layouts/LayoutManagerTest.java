@@ -113,7 +113,8 @@ public class LayoutManagerTest implements MockTabModelDelegate {
 
     private void initializeLayoutManagerPhone(int standardTabCount, int incognitoTabCount,
             int standardIndexSelected, int incognitoIndexSelected, boolean incognitoSelected) {
-        Context context = new MockContextForLayout(InstrumentationRegistry.getContext());
+        Context context =
+                new MockContextForLayout(InstrumentationRegistry.getInstrumentation().getContext());
 
         mDpToPx = context.getResources().getDisplayMetrics().density;
 
@@ -506,7 +507,9 @@ public class LayoutManagerTest implements MockTabModelDelegate {
             @Override
             public void run() {
                 try {
-                    ChromeBrowserInitializer.getInstance(InstrumentationRegistry.getTargetContext())
+                    ChromeBrowserInitializer
+                            .getInstance(
+                                    InstrumentationRegistry.getInstrumentation().getTargetContext())
                             .handleSynchronousStartup();
                 } catch (ProcessInitException e) {
                     Assert.fail("Failed to load browser");

@@ -5,22 +5,26 @@
 <script src="../../inspector/resources-test.js"></script>
 <script>
 
-function test() {
-  const url = "http://localhost:8000/devtools/service-workers/resources/" +
-              "bypass-for-network-redirect.php";
-  const frameId = 'frame_id';
+function loadIframe()
+{
+    var frame = document.createElement('iframe');
+    frame.src = "http://localhost:8000/devtools/service-workers/resources/" +
+                "bypass-for-network-redirect.php"
+    document.body.appendChild(frame);
+}
 
+function test() {
   UI.inspectorView.showPanel('sources')
       .then(function() {
         Common.settings.settingForTest('bypassServiceWorker').set(true);
-        let callback;
-        const promise = new Promise((fulfill) => callback = fulfill);
+        var callback;
+        var promise = new Promise((fulfill) => callback = fulfill);
         ConsoleTestRunner.addConsoleSniffer(message => {
           if (message.messageText == 'getRegistration finished') {
             callback();
           }
         }, true);
-        TestRunner.addIframe(url, {id: frameId});
+        TestRunner.evaluateInPage('loadIframe()');
         return promise;
       })
       .then(function() {

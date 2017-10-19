@@ -27,7 +27,7 @@ class BluetoothUUID final : public GarbageCollected<BluetoothUUID>,
   static String canonicalUUID(unsigned alias);
 
   // Interface required by garbage collection.
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 };
 
 }  // namespace blink

@@ -42,7 +42,7 @@ SVGLength::SVGLength(SVGLengthMode mode)
 SVGLength::SVGLength(const SVGLength& o)
     : value_(o.value_), unit_mode_(o.unit_mode_) {}
 
-void SVGLength::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGLength) {
   visitor->Trace(value_);
   SVGPropertyBase::Trace(visitor);
 }

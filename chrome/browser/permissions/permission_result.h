@@ -30,9 +30,6 @@ enum class PermissionStatusSource {
   // This origin is insecure, thus its access to some permissions has been
   // restricted, such as camera, microphone, etc.
   INSECURE_ORIGIN,
-
-  // The feature has been blocked in the requesting frame by feature policy.
-  FEATURE_POLICY,
 };
 
 struct PermissionResult {

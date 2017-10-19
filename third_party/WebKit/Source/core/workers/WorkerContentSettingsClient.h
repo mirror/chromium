@@ -63,9 +63,7 @@ class CORE_EXPORT WorkerContentSettingsClient final
   static const char* SupplementName();
   static WorkerContentSettingsClient* From(ExecutionContext&);
 
-  virtual void Trace(blink::Visitor* visitor) {
-    Supplement<WorkerClients>::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { Supplement<WorkerClients>::Trace(visitor); }
 
  private:
   explicit WorkerContentSettingsClient(

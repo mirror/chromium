@@ -29,6 +29,7 @@
 #include "chrome/browser/gcm/gcm_profile_service_factory.h"
 #include "chrome/browser/gcm/instance_id/instance_id_profile_service.h"
 #include "chrome/browser/gcm/instance_id/instance_id_profile_service_factory.h"
+#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_display_service_tester.h"
 #include "chrome/browser/permissions/permission_request_manager.h"
 #include "chrome/browser/profiles/profile.h"
@@ -63,7 +64,6 @@
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "ui/base/window_open_disposition.h"
-#include "ui/message_center/notification.h"
 
 #if BUILDFLAG(ENABLE_BACKGROUND)
 #include "chrome/browser/background/background_mode_manager.h"
@@ -266,7 +266,7 @@ class PushMessagingBrowserTest : public InProcessBrowserTest {
   net::EmbeddedTestServer* https_server() const { return https_server_.get(); }
 
   // Returns a vector of the currently displayed Notification objects.
-  std::vector<message_center::Notification> GetDisplayedNotifications() {
+  std::vector<Notification> GetDisplayedNotifications() {
     return notification_tester_->GetDisplayedNotificationsForType(
         NotificationCommon::PERSISTENT);
   }
@@ -301,14 +301,6 @@ class PushMessagingBrowserTest : public InProcessBrowserTest {
         SiteEngagementService::Get(GetBrowser()->profile());
     service->ResetBaseScoreForURL(url, score);
     EXPECT_EQ(expected_score, service->GetScore(url));
-  }
-
-  // Matches |tag| against the notification's ID to see if the notification's
-  // js-provided tag could have been |tag|. This is not perfect as it might
-  // return true for a |tag| that is a substring of the original tag.
-  static bool TagEquals(const message_center::Notification& notification,
-                        const std::string& tag) {
-    return std::string::npos != notification.id().find(tag);
   }
 
  protected:
@@ -1360,7 +1352,7 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest,
   ASSERT_TRUE(RunScript("resultQueue.pop()", &script_result, web_contents));
   EXPECT_EQ("shownotification", script_result);
   EXPECT_EQ(1u, GetNotificationCount());
-  EXPECT_TRUE(TagEquals(GetDisplayedNotifications()[0], "push_test_tag"));
+  EXPECT_EQ("push_test_tag", GetDisplayedNotifications()[0].tag());
   RemoveAllNotifications();
 
   // If the Service Worker push event handler does not show a notification, we
@@ -1382,12 +1374,10 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest,
   EXPECT_EQ("testdata", script_result);
 
   {
-    std::vector<message_center::Notification> notifications =
-        GetDisplayedNotifications();
+    std::vector<Notification> notifications = GetDisplayedNotifications();
     ASSERT_EQ(notifications.size(), 1u);
 
-    EXPECT_TRUE(
-        TagEquals(notifications[0], kPushMessagingForcedNotificationTag));
+    EXPECT_EQ(kPushMessagingForcedNotificationTag, notifications[0].tag());
     EXPECT_TRUE(notifications[0].silent());
   }
 
@@ -1399,12 +1389,10 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest,
   EXPECT_EQ("shownotification", script_result);
 
   {
-    std::vector<message_center::Notification> notifications =
-        GetDisplayedNotifications();
+    std::vector<Notification> notifications = GetDisplayedNotifications();
     ASSERT_EQ(notifications.size(), 1u);
 
-    EXPECT_FALSE(
-        TagEquals(notifications[0], kPushMessagingForcedNotificationTag));
+    EXPECT_NE(kPushMessagingForcedNotificationTag, notifications[0].tag());
   }
 }
 
@@ -1463,12 +1451,10 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest,
   // Because the --allow-silent-push command line flag has not been passed,
   // this should have shown a default notification.
   {
-    std::vector<message_center::Notification> notifications =
-        GetDisplayedNotifications();
+    std::vector<Notification> notifications = GetDisplayedNotifications();
     ASSERT_EQ(notifications.size(), 1u);
 
-    EXPECT_TRUE(
-        TagEquals(notifications[0], kPushMessagingForcedNotificationTag));
+    EXPECT_EQ(kPushMessagingForcedNotificationTag, notifications[0].tag());
     EXPECT_TRUE(notifications[0].silent());
   }
 
@@ -1572,7 +1558,7 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest,
 
   EXPECT_TRUE(IsRegisteredKeepAliveEqualTo(false));
   ASSERT_EQ(1u, GetNotificationCount());
-  EXPECT_TRUE(TagEquals(GetDisplayedNotifications()[0], "push_test_tag"));
+  EXPECT_EQ("push_test_tag", GetDisplayedNotifications()[0].tag());
 
   // Verify that the renderer process hasn't crashed.
   ASSERT_TRUE(RunScript("permissionState()", &script_result));

@@ -1134,7 +1134,7 @@ Document& VTTCue::GetDocument() const {
   return cue_background_box_->GetDocument();
 }
 
-void VTTCue::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(VTTCue) {
   visitor->Trace(region_);
   visitor->Trace(vtt_node_tree_);
   visitor->Trace(cue_background_box_);

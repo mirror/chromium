@@ -19,7 +19,7 @@ NavigatorContentUtilsClient::NavigatorContentUtilsClient(
     WebLocalFrameImpl* web_frame)
     : web_frame_(web_frame) {}
 
-void NavigatorContentUtilsClient::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorContentUtilsClient) {
   visitor->Trace(web_frame_);
 }
 

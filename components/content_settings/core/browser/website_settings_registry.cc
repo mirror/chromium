@@ -8,7 +8,6 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "build/build_config.h"
 #include "components/content_settings/core/common/content_settings.h"
 
 namespace {
@@ -88,10 +87,6 @@ const WebsiteSettingsInfo* WebsiteSettingsRegistry::Register(
   // Don't sync settings to mobile platforms. The UI is different to desktop and
   // doesn't allow the settings to be managed in the same way. See
   // crbug.com/642184.
-  sync_status = WebsiteSettingsInfo::UNSYNCABLE;
-#elif defined(OS_FUCHSIA)
-  if (!(platform & PLATFORM_FUCHSIA))
-    return nullptr;
   sync_status = WebsiteSettingsInfo::UNSYNCABLE;
 #else
 #error "Unsupported platform"

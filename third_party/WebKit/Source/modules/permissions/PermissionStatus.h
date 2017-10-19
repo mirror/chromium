@@ -59,7 +59,7 @@ class PermissionStatus final : public EventTargetWithInlineData,
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(change);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   PermissionStatus(ExecutionContext*,

@@ -4,9 +4,6 @@
 
 #include "core/layout/ng/ng_physical_box_fragment.h"
 
-#include "core/layout/LayoutBox.h"
-#include "core/layout/LayoutObject.h"
-
 namespace blink {
 
 NGPhysicalBoxFragment::NGPhysicalBoxFragment(
@@ -16,7 +13,6 @@ NGPhysicalBoxFragment::NGPhysicalBoxFragment(
     const NGPhysicalOffsetRect& contents_visual_rect,
     Vector<RefPtr<NGPhysicalFragment>>& children,
     Vector<NGBaseline>& baselines,
-    NGBoxType box_type,
     unsigned border_edges,  // NGBorderEdges::Physical
     RefPtr<NGBreakToken> break_token)
     : NGPhysicalContainerFragment(layout_object,
@@ -28,7 +24,6 @@ NGPhysicalBoxFragment::NGPhysicalBoxFragment(
       contents_visual_rect_(contents_visual_rect),
       baselines_(std::move(baselines)) {
   DCHECK(baselines.IsEmpty());  // Ensure move semantics is used.
-  box_type_ = box_type;
   border_edge_ = border_edges;
 }
 
@@ -42,21 +37,7 @@ const NGBaseline* NGPhysicalBoxFragment::Baseline(
 }
 
 const NGPhysicalOffsetRect NGPhysicalBoxFragment::LocalVisualRect() const {
-  const ComputedStyle& style = Style();
-  if (!style.HasVisualOverflowingEffect())
-    return {{}, Size()};
-
-  LayoutObject* layout_object = GetLayoutObject();
-  if (layout_object->IsBox()) {
-    // TODO(kojii): Should move the logic to a common place.
-    LayoutRect visual_rect({}, Size().ToLayoutSize());
-    visual_rect.Expand(
-        ToLayoutBox(layout_object)->ComputeVisualEffectOverflowOutsets());
-    return NGPhysicalOffsetRect(visual_rect);
-  }
-
-  // TODO(kojii): Implement for inline boxes.
-  DCHECK(layout_object->IsLayoutInline());
+  // TODO(kojii): Add its own visual overflow (e.g., box-shadow)
   return {{}, Size()};
 }
 
@@ -66,7 +47,7 @@ RefPtr<NGPhysicalFragment> NGPhysicalBoxFragment::CloneWithoutOffset() const {
   RefPtr<NGPhysicalFragment> physical_fragment =
       WTF::AdoptRef(new NGPhysicalBoxFragment(
           layout_object_, Style(), size_, contents_visual_rect_, children_copy,
-          baselines_copy, BoxType(), border_edge_, break_token_));
+          baselines_copy, border_edge_, break_token_));
   return physical_fragment;
 }
 

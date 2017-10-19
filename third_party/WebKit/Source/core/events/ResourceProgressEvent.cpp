@@ -43,7 +43,7 @@ const AtomicString& ResourceProgressEvent::InterfaceName() const {
   return EventNames::ResourceProgressEvent;
 }
 
-void ResourceProgressEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ResourceProgressEvent) {
   ProgressEvent::Trace(visitor);
 }
 

@@ -58,7 +58,7 @@ class DocumentTiming final {
   double DomComplete() const { return dom_complete_; }
   double FirstLayout() const { return first_layout_; }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   LocalFrame* GetFrame() const;

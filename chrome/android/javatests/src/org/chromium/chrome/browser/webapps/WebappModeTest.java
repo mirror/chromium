@@ -78,13 +78,14 @@ public class WebappModeTest {
     private Intent createIntent(String id, String url, String title, String icon, boolean addMac) {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setPackage(InstrumentationRegistry.getTargetContext().getPackageName());
+        intent.setPackage(
+                InstrumentationRegistry.getInstrumentation().getTargetContext().getPackageName());
         intent.setAction(WebappLauncherActivity.ACTION_START_WEBAPP);
         if (addMac) {
             // Needed for security reasons.  If the MAC is excluded, the URL of the webapp is opened
             // in a browser window, instead.
-            String mac =
-                    ShortcutHelper.getEncodedMac(InstrumentationRegistry.getTargetContext(), url);
+            String mac = ShortcutHelper.getEncodedMac(
+                    InstrumentationRegistry.getInstrumentation().getTargetContext(), url);
             intent.putExtra(ShortcutHelper.EXTRA_MAC, mac);
         }
 
@@ -102,7 +103,7 @@ public class WebappModeTest {
             boolean addMac) {
         Intent intent = createIntent(id, url, title, icon, addMac);
 
-        InstrumentationRegistry.getTargetContext().startActivity(intent);
+        InstrumentationRegistry.getInstrumentation().getTargetContext().startActivity(intent);
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
         ApplicationTestUtils.waitUntilChromeInForeground();
     }
@@ -203,7 +204,7 @@ public class WebappModeTest {
         final int webappTabId = firstActivity.getActivityTab().getId();
 
         // Return home.
-        final Context context = InstrumentationRegistry.getTargetContext();
+        final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         ApplicationTestUtils.fireHomeScreenIntent(context);
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
 

@@ -39,7 +39,7 @@ inline SVGFEComponentTransferElement::SVGFEComponentTransferElement(
   AddToPropertyMap(in1_);
 }
 
-void SVGFEComponentTransferElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGFEComponentTransferElement) {
   visitor->Trace(in1_);
   SVGFilterPrimitiveStandardAttributes::Trace(visitor);
 }

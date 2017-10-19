@@ -47,7 +47,7 @@ class SVGViewSpec final : public GarbageCollectedFinalized<SVGViewSpec>,
   }
   SVGTransformList* Transform() { return transform_; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   SVGViewSpec();

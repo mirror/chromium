@@ -766,11 +766,11 @@ mojom("mojo_bindings") {
     "//chrome/common:mojo_bindings_blink",
     "//third_party/WebKit/Source/platform",
     "//third_party/WebKit/Source/platform/loader",
+    "//third_party/WebKit/Source/platform/network",
   ]
   sources = [
     "platform/address_space.mojom",
     "platform/content_security_policy.mojom",
-    "platform/dedicated_worker_factory.mojom",
     "platform/display_mode.mojom",
     "platform/media_download_in_product_help.mojom",
     "platform/media_engagement.mojom",
@@ -795,7 +795,6 @@ mojom("mojo_bindings") {
     "platform/modules/presentation/presentation.mojom",
     "platform/modules/serviceworker/service_worker_error_type.mojom",
     "platform/modules/serviceworker/service_worker_event_status.mojom",
-    "platform/modules/serviceworker/service_worker_object.mojom",
     "platform/modules/serviceworker/service_worker_registration.mojom",
     "platform/modules/serviceworker/service_worker_state.mojom",
     "platform/modules/serviceworker/service_worker_stream_handle.mojom",
@@ -818,7 +817,6 @@ mojom("mojo_bindings") {
     "//device/screen_orientation/public/interfaces",
     "//mojo/common:common_custom_types",
     "//services/network/public/interfaces:interfaces",
-    "//services/service_manager/public/interfaces",
     "//storage/public/interfaces",
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",

@@ -122,7 +122,7 @@ class FocusNavigation : public GarbageCollected<FocusNavigation> {
     return FindOwner(*root_);
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(root_);
     visitor->Trace(slot_);
   }
@@ -1522,7 +1522,7 @@ void FocusController::NotifyFocusChangedObservers() const {
     it->FocusedFrameChanged();
 }
 
-void FocusController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FocusController) {
   visitor->Trace(page_);
   visitor->Trace(focused_frame_);
   visitor->Trace(focus_changed_observers_);

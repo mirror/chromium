@@ -52,7 +52,7 @@ class ProgrammaticScrollAnimator : public ScrollAnimatorCompositorCoordinator {
   void LayerForCompositedScrollingDidChange(
       CompositorAnimationTimeline*) override;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit ProgrammaticScrollAnimator(ScrollableArea*);

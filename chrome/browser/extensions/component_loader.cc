@@ -326,10 +326,8 @@ void ComponentLoader::AddGalleryExtension() {
 void ComponentLoader::AddZipArchiverExtension() {
 #if defined(OS_CHROMEOS)
   base::FilePath resources_path;
-  if ((base::CommandLine::ForCurrentProcess()->HasSwitch(
-           chromeos::switches::kEnableZipArchiverPacker) ||
-       base::CommandLine::ForCurrentProcess()->HasSwitch(
-           chromeos::switches::kEnableZipArchiverUnpacker)) &&
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          chromeos::switches::kEnableZipArchiverOnFileManager) &&
       PathService::Get(chrome::DIR_RESOURCES, &resources_path)) {
     AddWithNameAndDescriptionFromDir(
         resources_path.Append(extension_misc::kZipArchiverExtensionPath),

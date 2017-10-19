@@ -40,7 +40,7 @@ const double kForcedInvocationDeadlineSeconds = 10;
 
 IdleSpellCheckCallback::~IdleSpellCheckCallback() {}
 
-void IdleSpellCheckCallback::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IdleSpellCheckCallback) {
   visitor->Trace(frame_);
   visitor->Trace(cold_mode_requester_);
   DocumentShutdownObserver::Trace(visitor);

@@ -29,7 +29,7 @@
 
 namespace blink {
 
-void FilterData::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FilterData) {
   visitor->Trace(last_effect);
   visitor->Trace(node_map);
 }
@@ -119,9 +119,10 @@ SVGUnitTypes::SVGUnitType LayoutSVGResourceFilter::PrimitiveUnits() const {
 }
 
 void LayoutSVGResourceFilter::PrimitiveAttributeChanged(
-    SVGFilterPrimitiveStandardAttributes& primitive,
+    LayoutObject* object,
     const QualifiedName& attribute) {
-  LayoutObject* object = primitive.GetLayoutObject();
+  SVGFilterPrimitiveStandardAttributes* primitive =
+      static_cast<SVGFilterPrimitiveStandardAttributes*>(object->GetNode());
 
   for (auto& filter : filter_) {
     FilterData* filter_data = filter.value.Get();
@@ -134,7 +135,7 @@ void LayoutSVGResourceFilter::PrimitiveAttributeChanged(
       continue;
     // Since all effects shares the same attribute value, all
     // or none of them will be changed.
-    if (!primitive.SetFilterEffectAttribute(effect, attribute))
+    if (!primitive->SetFilterEffectAttribute(effect, attribute))
       return;
     node_map->InvalidateDependentEffects(effect);
 

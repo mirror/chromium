@@ -13,6 +13,7 @@
 #include "ui/gfx/native_widget_types.h"
 
 namespace ui {
+class Compositor;
 class SurfaceOzoneCanvas;
 }
 
@@ -25,7 +26,7 @@ class CONTENT_EXPORT SoftwareOutputDeviceOzone
     : public viz::SoftwareOutputDevice {
  public:
   static std::unique_ptr<SoftwareOutputDeviceOzone> Create(
-      gfx::AcceleratedWidget widget);
+      ui::Compositor* compositor);
   ~SoftwareOutputDeviceOzone() override;
 
   void Resize(const gfx::Size& viewport_pixel_size,
@@ -34,7 +35,8 @@ class CONTENT_EXPORT SoftwareOutputDeviceOzone
   void EndPaint() override;
 
  private:
-  explicit SoftwareOutputDeviceOzone(gfx::AcceleratedWidget widget);
+  explicit SoftwareOutputDeviceOzone(ui::Compositor* compositor);
+  ui::Compositor* compositor_;
 
   std::unique_ptr<ui::SurfaceOzoneCanvas> surface_ozone_;
 

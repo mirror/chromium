@@ -240,8 +240,7 @@ void SVGTextLayoutAttributesBuilder::FillCharacterDataMap(
   }
 }
 
-void SVGTextLayoutAttributesBuilder::TextPosition::Trace(
-    blink::Visitor* visitor) {
+DEFINE_TRACE(SVGTextLayoutAttributesBuilder::TextPosition) {
   visitor->Trace(element);
 }
 

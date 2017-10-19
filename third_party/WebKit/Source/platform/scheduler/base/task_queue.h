@@ -238,7 +238,7 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   // blocked by it.
   void RemoveFence();
 
-  bool HasActiveFence();
+  bool HasFence() const;
 
   // Returns true if the queue has a fence which is blocking execution of tasks.
   bool BlockedByFence() const;

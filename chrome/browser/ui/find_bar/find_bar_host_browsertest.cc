@@ -434,7 +434,7 @@ IN_PROC_BROWSER_TEST_F(FindInPageControllerTest, FindLongString) {
       base::FilePath().AppendASCII("LongFind.txt"));
   std::string query;
   {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     base::ReadFileToString(path, &query);
   }
   EXPECT_EQ(1, FindInPage16(web_contents, base::UTF8ToUTF16(query),
@@ -498,7 +498,7 @@ IN_PROC_BROWSER_TEST_F(FindInPageControllerTest, FindWholeFileContent) {
 
   std::string query;
   {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     base::ReadFileToString(path, &query);
   }
   EXPECT_EQ(1, FindInPage16(web_contents, base::UTF8ToUTF16(query),

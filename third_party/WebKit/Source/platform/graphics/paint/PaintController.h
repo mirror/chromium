@@ -183,8 +183,7 @@ class PLATFORM_EXPORT PaintController {
 
   void AppendDebugDrawingAfterCommit(const DisplayItemClient&,
                                      sk_sp<const PaintRecord>,
-                                     const FloatRect& record_bounds,
-                                     const PropertyTreeState*);
+                                     const FloatRect& record_bounds);
 
   void ShowDebugData() const;
 #ifndef NDEBUG
@@ -200,6 +199,7 @@ class PLATFORM_EXPORT PaintController {
 #endif
 
   void SetTracksRasterInvalidations(bool);
+  void SetupRasterUnderInvalidationChecking();
 
   bool LastDisplayItemIsSubsequenceEnd() const;
 
@@ -293,7 +293,6 @@ class PLATFORM_EXPORT PaintController {
                                     PaintChunk&,
                                     const FloatRect&,
                                     PaintInvalidationReason);
-  void EnsureRasterInvalidationTracking();
   void TrackRasterInvalidation(const DisplayItemClient&,
                                PaintChunk&,
                                PaintInvalidationReason);

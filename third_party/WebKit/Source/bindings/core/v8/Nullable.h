@@ -68,9 +68,7 @@ class Nullable {
            (!is_null_ && !other.is_null_ && value_ == other.value_);
   }
 
-  void Trace(blink::Visitor* visitor) {
-    TraceIfNeeded<T>::Trace(visitor, value_);
-  }
+  DEFINE_INLINE_TRACE() { TraceIfNeeded<T>::Trace(visitor, value_); }
 
  private:
   T value_;

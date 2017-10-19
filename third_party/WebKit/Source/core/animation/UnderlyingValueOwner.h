@@ -6,7 +6,6 @@
 #define UnderlyingValueOwner_h
 
 #include <memory>
-#include "core/CoreExport.h"
 #include "core/animation/TypedInterpolationValue.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Noncopyable.h"
@@ -17,7 +16,7 @@ namespace blink {
 // Ensures we perform copy on write if we are not the owner of an underlying
 // InterpolationValue. This functions similar to a DataRef except on
 // std::unique_ptr'd objects.
-class CORE_EXPORT UnderlyingValueOwner {
+class UnderlyingValueOwner {
   WTF_MAKE_NONCOPYABLE(UnderlyingValueOwner);
   STACK_ALLOCATED();
 

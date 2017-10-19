@@ -142,7 +142,7 @@ void PlatformSpeechSynthesizerMock::Resume() {
   Client()->DidResumeSpeaking(current_utterance_);
 }
 
-void PlatformSpeechSynthesizerMock::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PlatformSpeechSynthesizerMock) {
   visitor->Trace(current_utterance_);
   visitor->Trace(queued_utterances_);
   PlatformSpeechSynthesizer::Trace(visitor);

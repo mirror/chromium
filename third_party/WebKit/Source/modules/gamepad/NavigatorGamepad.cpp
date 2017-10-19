@@ -98,7 +98,7 @@ GamepadList* NavigatorGamepad::Gamepads() {
   return gamepads_.Get();
 }
 
-void NavigatorGamepad::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorGamepad) {
   visitor->Trace(gamepads_);
   visitor->Trace(gamepads_back_);
   visitor->Trace(pending_events_);

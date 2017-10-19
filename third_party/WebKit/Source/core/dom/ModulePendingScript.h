@@ -32,7 +32,7 @@ class ModulePendingScriptTreeClient final : public ModuleTreeClient {
 
   ModuleScript* GetModuleScript() const { return module_script_; }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
  private:
@@ -64,7 +64,7 @@ class CORE_EXPORT ModulePendingScript : public PendingScript {
     return module_tree_client_->GetModuleScript();
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
  private:

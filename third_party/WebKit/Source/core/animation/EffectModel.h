@@ -62,7 +62,7 @@ class CORE_EXPORT EffectModel : public GarbageCollectedFinalized<EffectModel> {
   virtual bool IsTransformRelatedEffect() const { return false; }
   virtual bool IsKeyframeEffectModel() const { return false; }
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
 }  // namespace blink

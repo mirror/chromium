@@ -24,7 +24,7 @@ class NavigatorNFC final : public GarbageCollected<NavigatorNFC>,
 
   static NFC* nfc(Navigator&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit NavigatorNFC(Navigator&);

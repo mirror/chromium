@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.media.remote;
 
 import android.app.Dialog;
 import android.graphics.Rect;
-import android.support.test.InstrumentationRegistry;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -134,8 +133,7 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
 
     private void setUp() throws Exception {
         startMainActivityOnBlankPage();
-        mTestServer = EmbeddedTestServer.createAndStartServer(
-                InstrumentationRegistry.getInstrumentation().getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(getInstrumentation().getContext());
     }
 
     private void tearDown() throws Exception {
@@ -283,7 +281,7 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
 
         // Wait for the test device to appear in the device list.
         try {
-            UiUtils.settleDownUI(InstrumentationRegistry.getInstrumentation());
+            UiUtils.settleDownUI(getInstrumentation());
         } catch (InterruptedException e) {
             Assert.fail();
         }
@@ -292,8 +290,7 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
                 getActivity(), chromecastName, MAX_VIEW_TIME_MS, VIEW_RETRY_MS);
         Assert.assertNotNull("Test route not found", testRouteButton);
 
-        ClickUtils.mouseSingleClickView(
-                InstrumentationRegistry.getInstrumentation(), testRouteButton);
+        ClickUtils.mouseSingleClickView(getInstrumentation(), testRouteButton);
     }
 
     public void checkDisconnected() {
@@ -543,7 +540,6 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
                              ((float) (rect.top + rect.bottom)) / 2)
                 + core.getTopControlsHeightPix();
         // Click using a virtual mouse, since a touch may result in a disambiguation pop-up.
-        ClickUtils.mouseSingleClickView(
-                InstrumentationRegistry.getInstrumentation(), tab.getView(), clickX, clickY);
+        ClickUtils.mouseSingleClickView(getInstrumentation(), tab.getView(), clickX, clickY);
     }
 }

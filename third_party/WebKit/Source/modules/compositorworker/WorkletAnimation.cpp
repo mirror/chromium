@@ -153,7 +153,7 @@ void WorkletAnimation::Dispose() {
   compositor_player_ = nullptr;
 }
 
-void WorkletAnimation::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkletAnimation) {
   visitor->Trace(document_);
   visitor->Trace(effects_);
   visitor->Trace(timelines_);

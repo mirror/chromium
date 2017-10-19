@@ -140,7 +140,8 @@ public class InfoBarTest {
         mListener =  new InfoBarTestAnimationListener();
         container.addAnimationListener(mListener);
 
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
 
         // Using an AdvancedMockContext allows us to use a fresh in-memory SharedPreference.
         Context context = new AdvancedMockContext(InstrumentationRegistry.getInstrumentation()

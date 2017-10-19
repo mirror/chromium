@@ -678,7 +678,7 @@ void RenderThreadImpl::Init(
   blink_initialized_time_ = base::TimeTicks::Now();
 
   // In single process the single process is all there is.
-  webkit_shared_timer_suspended_ = false;
+  webkit_shared_timer_suspended_handle_ = nullptr;
   widget_count_ = 0;
   hidden_widget_count_ = 0;
   idle_notification_delay_in_ms_ = kInitialIdleHandlerDelayMs;
@@ -1358,7 +1358,7 @@ void RenderThreadImpl::IdleHandler() {
 
   // Continue the idle timer if the webkit shared timer is not suspended or
   // something is left to do.
-  bool continue_timer = !webkit_shared_timer_suspended_;
+  bool continue_timer = !webkit_shared_timer_suspended_handle_;
 
   // Schedule next invocation. When the tab is originally hidden, an invocation
   // is scheduled for kInitialIdleHandlerDelayMs in
@@ -1450,8 +1450,7 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
                              support_oop_rasterization,
                              ui::command_buffer_metrics::MEDIA_CONTEXT,
                              kGpuStreamIdDefault, kGpuStreamPriorityDefault);
-  auto result = media_context_provider->BindToCurrentThread();
-  if (result != gpu::ContextResult::kSuccess)
+  if (!media_context_provider->BindToCurrentThread())
     return nullptr;
 
   scoped_refptr<base::SingleThreadTaskRunner> media_task_runner =
@@ -1506,8 +1505,7 @@ RenderThreadImpl::SharedMainThreadContextProvider() {
       support_oop_rasterization,
       ui::command_buffer_metrics::RENDERER_MAINTHREAD_CONTEXT,
       kGpuStreamIdDefault, kGpuStreamPriorityDefault);
-  auto result = shared_main_thread_contexts_->BindToCurrentThread();
-  if (result != gpu::ContextResult::kSuccess)
+  if (!shared_main_thread_contexts_->BindToCurrentThread())
     shared_main_thread_contexts_ = nullptr;
   return shared_main_thread_contexts_;
 }
@@ -2224,11 +2222,11 @@ void RenderThreadImpl::OnNetworkQualityChanged(
 void RenderThreadImpl::SetWebKitSharedTimersSuspended(bool suspend) {
 #if defined(OS_ANDROID)
   if (suspend) {
-    renderer_scheduler_->PauseTimersForAndroidWebView();
+    webkit_shared_timer_suspended_handle_ =
+        renderer_scheduler_->PauseRenderer();
   } else {
-    renderer_scheduler_->ResumeTimersForAndroidWebView();
+    webkit_shared_timer_suspended_handle_.reset();
   }
-  webkit_shared_timer_suspended_ = suspend;
 #else
   NOTREACHED();
 #endif
@@ -2398,8 +2396,7 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
       support_oop_rasterization,
       ui::command_buffer_metrics::RENDER_WORKER_CONTEXT, stream_id,
       stream_priority);
-  auto result = shared_worker_context_provider_->BindToCurrentThread();
-  if (result != gpu::ContextResult::kSuccess)
+  if (!shared_worker_context_provider_->BindToCurrentThread())
     shared_worker_context_provider_ = nullptr;
   return shared_worker_context_provider_;
 }

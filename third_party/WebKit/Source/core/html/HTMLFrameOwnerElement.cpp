@@ -310,7 +310,7 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
   return true;
 }
 
-void HTMLFrameOwnerElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLFrameOwnerElement) {
   visitor->Trace(content_frame_);
   visitor->Trace(embedded_content_view_);
   HTMLElement::Trace(visitor);

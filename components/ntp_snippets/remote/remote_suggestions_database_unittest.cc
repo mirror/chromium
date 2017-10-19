@@ -4,19 +4,21 @@
 
 #include "components/ntp_snippets/remote/remote_suggestions_database.h"
 
-#include <map>
 #include <memory>
 
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/files/file_path.h"
+#include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
-#include "components/leveldb_proto/testing/fake_db.h"
+#include "base/memory/ptr_util.h"
+#include "base/run_loop.h"
+#include "base/test/scoped_task_environment.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "components/ntp_snippets/remote/proto/ntp_snippets.pb.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using leveldb_proto::test::FakeDB;
 using testing::ElementsAre;
 using testing::Eq;
 using testing::IsEmpty;
@@ -59,29 +61,27 @@ MATCHER_P(PointeeEq, ptr_to_expected, "") {
 
 class RemoteSuggestionsDatabaseTest : public testing::Test {
  public:
-  RemoteSuggestionsDatabaseTest()
-      : suggestion_db_(nullptr), image_db_(nullptr) {}
-
-  void CreateDatabase() {
-    // The FakeDBs are owned by |db_|, so clear our pointers before resetting
-    // |db_| itself.
-    suggestion_db_ = nullptr;
-    image_db_ = nullptr;
-    // Explicitly destroy any existing database before creating a new one.
-    db_.reset();
-
-    auto suggestion_db =
-        std::make_unique<FakeDB<SnippetProto>>(&suggestion_db_storage_);
-    auto image_db =
-        std::make_unique<FakeDB<SnippetImageProto>>(&image_db_storage_);
-    suggestion_db_ = suggestion_db.get();
-    image_db_ = image_db.get();
-    db_ = std::make_unique<RemoteSuggestionsDatabase>(
-        std::move(suggestion_db), std::move(image_db), base::FilePath());
+  RemoteSuggestionsDatabaseTest() {
+    EXPECT_TRUE(database_dir_.CreateUniqueTempDir());
   }
 
-  FakeDB<SnippetProto>* suggestion_db() { return suggestion_db_; }
-  FakeDB<SnippetImageProto>* image_db() { return image_db_; }
+  ~RemoteSuggestionsDatabaseTest() override {
+    // We need to run until idle after deleting the database, because
+    // ProtoDatabaseImpl deletes the actual LevelDB asynchronously on the task
+    // runner. Without this, we'd get reports of memory leaks.
+    db_.reset();
+    RunUntilIdle();
+  }
+
+  void CreateDatabase() {
+    // Explicitly destroy any existing database first, so it releases the lock
+    // on the file.
+    db_.reset();
+
+    db_.reset(new RemoteSuggestionsDatabase(database_dir_.GetPath()));
+  }
+
+  void RunUntilIdle() { scoped_task_environment_.RunUntilIdle(); }
 
   RemoteSuggestionsDatabase* db() { return db_.get(); }
 
@@ -96,14 +96,9 @@ class RemoteSuggestionsDatabaseTest : public testing::Test {
   MOCK_METHOD1(OnImageLoaded, void(std::string));
 
  private:
-  std::map<std::string, SnippetProto> suggestion_db_storage_;
-  std::map<std::string, SnippetImageProto> image_db_storage_;
-
-  // Owned by |db_|.
-  FakeDB<SnippetProto>* suggestion_db_;
-  FakeDB<SnippetImageProto>* image_db_;
-
+  base::ScopedTempDir database_dir_;
   std::unique_ptr<RemoteSuggestionsDatabase> db_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoteSuggestionsDatabaseTest);
 };
@@ -114,9 +109,7 @@ TEST_F(RemoteSuggestionsDatabaseTest, Init) {
   CreateDatabase();
   EXPECT_FALSE(db()->IsInitialized());
 
-  suggestion_db()->InitCallback(true);
-  image_db()->InitCallback(true);
-
+  RunUntilIdle();
   EXPECT_TRUE(db()->IsInitialized());
 }
 
@@ -132,19 +125,11 @@ TEST_F(RemoteSuggestionsDatabaseTest, LoadBeforeInit) {
                   base::Bind(&RemoteSuggestionsDatabaseTest::OnImageLoaded,
                              base::Unretained(this)));
 
-  suggestion_db()->InitCallback(true);
-  image_db()->InitCallback(true);
-  EXPECT_TRUE(db()->IsInitialized());
-
+  // They should be serviced once initialization finishes.
   EXPECT_CALL(*this, OnSnippetsLoadedImpl(_));
   EXPECT_CALL(*this, OnImageLoaded(_));
-  // Note: "Load" means "load everything in the DB" (which we do for
-  // suggestions), while "Get" means "load a single item from the DB" (which we
-  // do for images).
-  // Note 2: |suggestion_db| and |image_db| are fakes which pass the proper data
-  // back to the callback themselves.
-  suggestion_db()->LoadCallback(true);
-  image_db()->GetCallback(true);
+  RunUntilIdle();
+  EXPECT_TRUE(db()->IsInitialized());
 }
 
 TEST_F(RemoteSuggestionsDatabaseTest, LoadAfterInit) {
@@ -152,9 +137,7 @@ TEST_F(RemoteSuggestionsDatabaseTest, LoadAfterInit) {
   EXPECT_FALSE(db()->IsInitialized());
 
   EXPECT_CALL(*this, OnSnippetsLoadedImpl(_)).Times(0);
-
-  suggestion_db()->InitCallback(true);
-  image_db()->InitCallback(true);
+  RunUntilIdle();
   EXPECT_TRUE(db()->IsInitialized());
 
   Mock::VerifyAndClearExpectations(this);
@@ -163,19 +146,16 @@ TEST_F(RemoteSuggestionsDatabaseTest, LoadAfterInit) {
   db()->LoadSnippets(
       base::Bind(&RemoteSuggestionsDatabaseTest::OnSnippetsLoaded,
                  base::Unretained(this)));
-  suggestion_db()->LoadCallback(true);
-
   EXPECT_CALL(*this, OnImageLoaded(_));
   db()->LoadImage("id",
                   base::Bind(&RemoteSuggestionsDatabaseTest::OnImageLoaded,
                              base::Unretained(this)));
-  image_db()->GetCallback(true);
+  RunUntilIdle();
 }
 
 TEST_F(RemoteSuggestionsDatabaseTest, Save) {
   CreateDatabase();
-  suggestion_db()->InitCallback(true);
-  image_db()->InitCallback(true);
+  RunUntilIdle();
   ASSERT_TRUE(db()->IsInitialized());
 
   std::unique_ptr<RemoteSuggestion> snippet = CreateTestSuggestion();
@@ -184,8 +164,6 @@ TEST_F(RemoteSuggestionsDatabaseTest, Save) {
   // Store a snippet and an image.
   db()->SaveSnippet(*snippet);
   db()->SaveImage(snippet->id(), image_data);
-  suggestion_db()->UpdateCallback(true);
-  image_db()->UpdateCallback(true);
 
   // Make sure they're there.
   EXPECT_CALL(*this,
@@ -193,7 +171,7 @@ TEST_F(RemoteSuggestionsDatabaseTest, Save) {
   db()->LoadSnippets(
       base::Bind(&RemoteSuggestionsDatabaseTest::OnSnippetsLoaded,
                  base::Unretained(this)));
-  suggestion_db()->LoadCallback(true);
+  RunUntilIdle();
 
   Mock::VerifyAndClearExpectations(this);
 
@@ -201,13 +179,12 @@ TEST_F(RemoteSuggestionsDatabaseTest, Save) {
   db()->LoadImage(snippet->id(),
                   base::Bind(&RemoteSuggestionsDatabaseTest::OnImageLoaded,
                              base::Unretained(this)));
-  image_db()->GetCallback(true);
+  RunUntilIdle();
 }
 
-TEST_F(RemoteSuggestionsDatabaseTest, SavePersist) {
+TEST_F(RemoteSuggestionsDatabaseTest, DISABLED_SavePersist) {
   CreateDatabase();
-  suggestion_db()->InitCallback(true);
-  image_db()->InitCallback(true);
+  RunUntilIdle();
   ASSERT_TRUE(db()->IsInitialized());
 
   std::unique_ptr<RemoteSuggestion> snippet = CreateTestSuggestion();
@@ -216,45 +193,36 @@ TEST_F(RemoteSuggestionsDatabaseTest, SavePersist) {
   // Store a snippet and an image.
   db()->SaveSnippet(*snippet);
   db()->SaveImage(snippet->id(), image_data);
-  suggestion_db()->UpdateCallback(true);
-  image_db()->UpdateCallback(true);
+  RunUntilIdle();
 
   // They should still exist after recreating the database.
   CreateDatabase();
-  suggestion_db()->InitCallback(true);
-  image_db()->InitCallback(true);
-  ASSERT_TRUE(db()->IsInitialized());
 
   EXPECT_CALL(*this,
               OnSnippetsLoadedImpl(ElementsAre(PointeeEq(snippet.get()))));
   db()->LoadSnippets(
       base::Bind(&RemoteSuggestionsDatabaseTest::OnSnippetsLoaded,
                  base::Unretained(this)));
-  suggestion_db()->LoadCallback(true);
-
   EXPECT_CALL(*this, OnImageLoaded(image_data));
   db()->LoadImage(snippet->id(),
                   base::Bind(&RemoteSuggestionsDatabaseTest::OnImageLoaded,
                              base::Unretained(this)));
-  image_db()->GetCallback(true);
+  RunUntilIdle();
 }
 
 TEST_F(RemoteSuggestionsDatabaseTest, Update) {
   CreateDatabase();
-  suggestion_db()->InitCallback(true);
-  image_db()->InitCallback(true);
+  RunUntilIdle();
   ASSERT_TRUE(db()->IsInitialized());
 
   std::unique_ptr<RemoteSuggestion> snippet = CreateTestSuggestion();
 
   // Store a snippet.
   db()->SaveSnippet(*snippet);
-  suggestion_db()->UpdateCallback(true);
 
   // Change it.
   snippet->set_dismissed(true);
   db()->SaveSnippet(*snippet);
-  suggestion_db()->UpdateCallback(true);
 
   // Make sure we get the updated version.
   EXPECT_CALL(*this,
@@ -262,20 +230,18 @@ TEST_F(RemoteSuggestionsDatabaseTest, Update) {
   db()->LoadSnippets(
       base::Bind(&RemoteSuggestionsDatabaseTest::OnSnippetsLoaded,
                  base::Unretained(this)));
-  suggestion_db()->LoadCallback(true);
+  RunUntilIdle();
 }
 
 TEST_F(RemoteSuggestionsDatabaseTest, Delete) {
   CreateDatabase();
-  suggestion_db()->InitCallback(true);
-  image_db()->InitCallback(true);
+  RunUntilIdle();
   ASSERT_TRUE(db()->IsInitialized());
 
   std::unique_ptr<RemoteSuggestion> snippet = CreateTestSuggestion();
 
   // Store a snippet.
   db()->SaveSnippet(*snippet);
-  suggestion_db()->UpdateCallback(true);
 
   // Make sure it's there.
   EXPECT_CALL(*this,
@@ -283,26 +249,24 @@ TEST_F(RemoteSuggestionsDatabaseTest, Delete) {
   db()->LoadSnippets(
       base::Bind(&RemoteSuggestionsDatabaseTest::OnSnippetsLoaded,
                  base::Unretained(this)));
-  suggestion_db()->LoadCallback(true);
+  RunUntilIdle();
 
   Mock::VerifyAndClearExpectations(this);
 
   // Delete the snippet.
   db()->DeleteSnippet(snippet->id());
-  suggestion_db()->UpdateCallback(true);
 
   // Make sure it's gone.
   EXPECT_CALL(*this, OnSnippetsLoadedImpl(IsEmpty()));
   db()->LoadSnippets(
       base::Bind(&RemoteSuggestionsDatabaseTest::OnSnippetsLoaded,
                  base::Unretained(this)));
-  suggestion_db()->LoadCallback(true);
+  RunUntilIdle();
 }
 
 TEST_F(RemoteSuggestionsDatabaseTest, DeleteSnippetDoesNotDeleteImage) {
   CreateDatabase();
-  suggestion_db()->InitCallback(true);
-  image_db()->InitCallback(true);
+  RunUntilIdle();
   ASSERT_TRUE(db()->IsInitialized());
 
   std::unique_ptr<RemoteSuggestion> snippet = CreateTestSuggestion();
@@ -310,9 +274,8 @@ TEST_F(RemoteSuggestionsDatabaseTest, DeleteSnippetDoesNotDeleteImage) {
 
   // Store a snippet and image.
   db()->SaveSnippet(*snippet);
-  suggestion_db()->UpdateCallback(true);
   db()->SaveImage(snippet->id(), image_data);
-  image_db()->UpdateCallback(true);
+  RunUntilIdle();
 
   // Make sure they're there.
   EXPECT_CALL(*this,
@@ -320,32 +283,28 @@ TEST_F(RemoteSuggestionsDatabaseTest, DeleteSnippetDoesNotDeleteImage) {
   db()->LoadSnippets(
       base::Bind(&RemoteSuggestionsDatabaseTest::OnSnippetsLoaded,
                  base::Unretained(this)));
-  suggestion_db()->LoadCallback(true);
-
   EXPECT_CALL(*this, OnImageLoaded(image_data));
   db()->LoadImage(snippet->id(),
                   base::Bind(&RemoteSuggestionsDatabaseTest::OnImageLoaded,
                              base::Unretained(this)));
-  image_db()->GetCallback(true);
+  RunUntilIdle();
 
   Mock::VerifyAndClearExpectations(this);
 
   // Delete the snippet.
   db()->DeleteSnippet(snippet->id());
-  suggestion_db()->UpdateCallback(true);
 
   // Make sure the image is still there.
   EXPECT_CALL(*this, OnImageLoaded(image_data));
   db()->LoadImage(snippet->id(),
                   base::Bind(&RemoteSuggestionsDatabaseTest::OnImageLoaded,
                              base::Unretained(this)));
-  image_db()->GetCallback(true);
+  RunUntilIdle();
 }
 
 TEST_F(RemoteSuggestionsDatabaseTest, DeleteImage) {
   CreateDatabase();
-  suggestion_db()->InitCallback(true);
-  image_db()->InitCallback(true);
+  RunUntilIdle();
   ASSERT_TRUE(db()->IsInitialized());
 
   std::unique_ptr<RemoteSuggestion> snippet = CreateTestSuggestion();
@@ -353,82 +312,71 @@ TEST_F(RemoteSuggestionsDatabaseTest, DeleteImage) {
 
   // Store the image.
   db()->SaveImage(snippet->id(), image_data);
-  image_db()->UpdateCallback(true);
+  RunUntilIdle();
 
   // Make sure the image is there.
   EXPECT_CALL(*this, OnImageLoaded(image_data));
   db()->LoadImage(snippet->id(),
                   base::Bind(&RemoteSuggestionsDatabaseTest::OnImageLoaded,
                              base::Unretained(this)));
-  image_db()->GetCallback(true);
+  RunUntilIdle();
 
   Mock::VerifyAndClearExpectations(this);
 
   // Delete the snippet.
   db()->DeleteImage(snippet->id());
-  image_db()->UpdateCallback(true);
 
   // Make sure the image is gone.
   EXPECT_CALL(*this, OnImageLoaded(std::string()));
   db()->LoadImage(snippet->id(),
                   base::Bind(&RemoteSuggestionsDatabaseTest::OnImageLoaded,
                              base::Unretained(this)));
-  image_db()->GetCallback(true);
+  RunUntilIdle();
 }
+
+namespace {
+
+void LoadExpectedImage(RemoteSuggestionsDatabase* db,
+                       const std::string& id,
+                       const std::string& expected_data) {
+  base::RunLoop run_loop;
+  db->LoadImage(id, base::Bind(
+                        [](base::Closure signal, std::string expected_data,
+                           std::string actual_data) {
+                          EXPECT_THAT(actual_data, Eq(expected_data));
+                          signal.Run();
+                        },
+                        run_loop.QuitClosure(), expected_data));
+  run_loop.Run();
+}
+
+}  // namespace
 
 TEST_F(RemoteSuggestionsDatabaseTest, ShouldGarbageCollectImages) {
   CreateDatabase();
-  suggestion_db()->InitCallback(true);
-  image_db()->InitCallback(true);
+  RunUntilIdle();
   ASSERT_TRUE(db()->IsInitialized());
 
   // Store images.
   db()->SaveImage("snippet-id-1", "pretty-image-1");
-  image_db()->UpdateCallback(true);
   db()->SaveImage("snippet-id-2", "pretty-image-2");
-  image_db()->UpdateCallback(true);
   db()->SaveImage("snippet-id-3", "pretty-image-3");
-  image_db()->UpdateCallback(true);
+  RunUntilIdle();
 
   // Make sure the to-be-garbage collected images are there.
-  EXPECT_CALL(*this, OnImageLoaded("pretty-image-1"));
-  db()->LoadImage("snippet-id-1",
-                  base::Bind(&RemoteSuggestionsDatabaseTest::OnImageLoaded,
-                             base::Unretained(this)));
-  image_db()->GetCallback(true);
-
-  EXPECT_CALL(*this, OnImageLoaded("pretty-image-3"));
-  db()->LoadImage("snippet-id-3",
-                  base::Bind(&RemoteSuggestionsDatabaseTest::OnImageLoaded,
-                             base::Unretained(this)));
-  image_db()->GetCallback(true);
+  LoadExpectedImage(db(), "snippet-id-1", "pretty-image-1");
+  LoadExpectedImage(db(), "snippet-id-3", "pretty-image-3");
 
   // Garbage collect all except the second.
-  db()->GarbageCollectImages(std::make_unique<std::set<std::string>>(
+  db()->GarbageCollectImages(base::MakeUnique<std::set<std::string>>(
       std::set<std::string>({"snippet-id-2"})));
-  // This will first load all image IDs, then delete the not-referenced ones.
-  image_db()->LoadKeysCallback(true);
-  image_db()->UpdateCallback(true);
+  RunUntilIdle();
 
   // Make sure the images are gone.
-  EXPECT_CALL(*this, OnImageLoaded(std::string()));
-  db()->LoadImage("snippet-id-1",
-                  base::Bind(&RemoteSuggestionsDatabaseTest::OnImageLoaded,
-                             base::Unretained(this)));
-  image_db()->GetCallback(true);
-
-  EXPECT_CALL(*this, OnImageLoaded(std::string()));
-  db()->LoadImage("snippet-id-3",
-                  base::Bind(&RemoteSuggestionsDatabaseTest::OnImageLoaded,
-                             base::Unretained(this)));
-  image_db()->GetCallback(true);
-
+  LoadExpectedImage(db(), "snippet-id-1", "");
+  LoadExpectedImage(db(), "snippet-id-3", "");
   // Make sure the second still exists.
-  EXPECT_CALL(*this, OnImageLoaded("pretty-image-2"));
-  db()->LoadImage("snippet-id-2",
-                  base::Bind(&RemoteSuggestionsDatabaseTest::OnImageLoaded,
-                             base::Unretained(this)));
-  image_db()->GetCallback(true);
+  LoadExpectedImage(db(), "snippet-id-2", "pretty-image-2");
 }
 
 }  // namespace ntp_snippets

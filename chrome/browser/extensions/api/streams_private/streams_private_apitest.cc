@@ -152,7 +152,7 @@ class StreamsPrivateApiTest : public ExtensionApiTest {
   }
 
   void InitializeDownloadSettings() {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     ASSERT_TRUE(browser());
     ASSERT_TRUE(downloads_dir_.CreateUniqueTempDir());
 

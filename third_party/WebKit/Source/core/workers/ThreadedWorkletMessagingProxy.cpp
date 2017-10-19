@@ -60,7 +60,7 @@ void ThreadedWorkletMessagingProxy::Initialize() {
                          script_url);
 }
 
-void ThreadedWorkletMessagingProxy::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ThreadedWorkletMessagingProxy) {
   ThreadedMessagingProxyBase::Trace(visitor);
 }
 

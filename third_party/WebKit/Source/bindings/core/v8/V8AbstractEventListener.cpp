@@ -232,7 +232,7 @@ void V8AbstractEventListener::WrapperCleared(
   data.GetParameter()->ClearListenerObject();
 }
 
-void V8AbstractEventListener::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(V8AbstractEventListener) {
   visitor->Trace(worker_global_scope_);
   EventListener::Trace(visitor);
 }

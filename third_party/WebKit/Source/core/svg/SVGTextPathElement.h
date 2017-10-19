@@ -71,7 +71,7 @@ class SVGTextPathElement final : public SVGTextContentElement,
     return spacing_.Get();
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit SVGTextPathElement(Document&);

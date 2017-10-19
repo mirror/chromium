@@ -81,7 +81,7 @@ void ScrollAnimatorBase::NotifyOffsetChanged() {
   ScrollOffsetChanged(current_offset_, kUserScroll);
 }
 
-void ScrollAnimatorBase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScrollAnimatorBase) {
   visitor->Trace(scrollable_area_);
   ScrollAnimatorCompositorCoordinator::Trace(visitor);
 }

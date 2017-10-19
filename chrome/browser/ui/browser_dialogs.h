@@ -256,7 +256,6 @@ enum class DialogIdentifier {
   VALIDATION_MESSAGE = 77,
   WEB_SHARE_TARGET_PICKER = 78,
   ZOOM = 79,
-  LOCK_SCREEN_NOTE_APP_TOAST = 80,
   MAX_VALUE
 };
 

@@ -105,7 +105,7 @@ const AtomicString& StorageEvent::InterfaceName() const {
   return EventNames::StorageEvent;
 }
 
-void StorageEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StorageEvent) {
   visitor->Trace(storage_area_);
   Event::Trace(visitor);
 }

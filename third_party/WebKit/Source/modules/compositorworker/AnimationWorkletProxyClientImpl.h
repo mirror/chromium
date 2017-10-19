@@ -33,7 +33,7 @@ class MODULES_EXPORT AnimationWorkletProxyClientImpl final
 
  public:
   explicit AnimationWorkletProxyClientImpl(CompositorMutatorImpl*);
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   // AnimationWorkletProxyClient:
   void SetGlobalScope(WorkletGlobalScope*) override;
@@ -41,7 +41,7 @@ class MODULES_EXPORT AnimationWorkletProxyClientImpl final
 
   // CompositorAnimator:
   // This method is invoked in compositor thread
-  void Mutate(double monotonic_time_now) override;
+  bool Mutate(double monotonic_time_now) override;
 
   static AnimationWorkletProxyClientImpl* FromDocument(Document*);
 

@@ -141,7 +141,7 @@ const AtomicString& InputType::NormalizeTypeName(
 
 InputType::~InputType() {}
 
-void InputType::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InputType) {
   visitor->Trace(element_);
 }
 

@@ -1387,8 +1387,8 @@ void PaintLayer::RemoveOnlyThisLayerAfterStyleChange() {
 
   bool did_set_paint_invalidation = false;
   if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
-    // We need the current compositing status.
-    DisableCompositingQueryAsserts disabler;
+    DisableCompositingQueryAsserts
+        disabler;  // We need the current compositing status.
     if (IsPaintInvalidationContainer()) {
       // Our children will be reparented and contained by a new paint
       // invalidation container, so need paint invalidation. CompositingUpdate
@@ -1450,15 +1450,17 @@ void PaintLayer::InsertOnlyThisLayerAfterStyleChange() {
   // this object is stacked content, creating this layer may cause this object
   // and its descendants to change paint invalidation container.
   bool did_set_paint_invalidation = false;
-  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
       !GetLayoutObject().IsLayoutView() && GetLayoutObject().IsRooted() &&
       GetLayoutObject().StyleRef().IsStacked()) {
     const LayoutBoxModelObject& previous_paint_invalidation_container =
         GetLayoutObject().Parent()->ContainerForPaintInvalidation();
     if (!previous_paint_invalidation_container.StyleRef().IsStackingContext()) {
-      ObjectPaintInvalidator(GetLayoutObject())
-          .InvalidatePaintIncludingNonSelfPaintingLayerDescendants(
-              previous_paint_invalidation_container);
+      if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+        ObjectPaintInvalidator(GetLayoutObject())
+            .InvalidatePaintIncludingNonSelfPaintingLayerDescendants(
+                previous_paint_invalidation_container);
+      }
       // Set needsRepaint along the original compositingContainer chain.
       GetLayoutObject().Parent()->EnclosingLayer()->SetNeedsRepaint();
       did_set_paint_invalidation = true;
@@ -2875,12 +2877,9 @@ bool PaintLayer::HasCompositedClippingMask() const {
 
 bool PaintLayer::PaintsWithTransform(
     GlobalPaintFlags global_paint_flags) const {
-  return Transform() && !PaintsComposited(global_paint_flags);
-}
-
-bool PaintLayer::PaintsComposited(GlobalPaintFlags global_paint_flags) const {
-  return !(global_paint_flags & kGlobalPaintFlattenCompositingLayers) &&
-         GetCompositingState() == kPaintsIntoOwnBacking;
+  return Transform() &&
+         ((global_paint_flags & kGlobalPaintFlattenCompositingLayers) ||
+          GetCompositingState() != kPaintsIntoOwnBacking);
 }
 
 bool PaintLayer::SupportsSubsequenceCaching() const {

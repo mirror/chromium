@@ -61,8 +61,6 @@ class ASH_EXPORT ShelfButton : public views::Button {
   // Returns the bounds of the icon.
   gfx::Rect GetIconBounds() const;
 
-  views::InkDrop* GetInkDropForTesting();
-
   // Called when user started dragging the shelf button.
   void OnDragStarted(const ui::LocatedEvent* event);
 

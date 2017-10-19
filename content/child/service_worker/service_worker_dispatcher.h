@@ -22,7 +22,6 @@
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_state.mojom.h"
 
@@ -44,6 +43,7 @@ class ServiceWorkerProviderContext;
 class ThreadSafeSender;
 class WebServiceWorkerImpl;
 class WebServiceWorkerRegistrationImpl;
+struct ServiceWorkerObjectInfo;
 struct ServiceWorkerVersionAttributes;
 
 // This class manages communication with the browser process about
@@ -105,6 +105,8 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
                          blink::WebServiceWorkerProviderClient* client);
   void RemoveProviderClient(int provider_id);
 
+  blink::WebServiceWorkerProviderClient* GetProviderClient(int provider_id);
+
   // Returns the existing service worker or a newly created one with the given
   // handle reference. Returns nullptr if the given reference is invalid.
   scoped_refptr<WebServiceWorkerImpl> GetOrCreateServiceWorker(
@@ -135,6 +137,11 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   // Unlike GetOrCreateThreadSpecificInstance() this doesn't create a new
   // instance if thread-local instance doesn't exist.
   static ServiceWorkerDispatcher* GetThreadSpecificInstance();
+
+  // Assumes that the given object information retains an interprocess handle
+  // reference passed from the browser process, and adopts it.
+  std::unique_ptr<ServiceWorkerHandleReference> Adopt(
+      const ServiceWorkerObjectInfo& info);
 
   base::SingleThreadTaskRunner* main_thread_task_runner() {
     return main_thread_task_runner_.get();
@@ -216,11 +223,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
       WebServiceWorkerRegistrationImpl* registration);
   void RemoveServiceWorkerRegistration(
       int registration_handle_id);
-
-  // Assumes that the given object information retains an interprocess handle
-  // reference passed from the browser process, and adopts it.
-  std::unique_ptr<ServiceWorkerHandleReference> Adopt(
-      const blink::mojom::ServiceWorkerObjectInfo& info);
 
   UnregistrationCallbackMap pending_unregistration_callbacks_;
   EnableNavigationPreloadCallbackMap enable_navigation_preload_callbacks_;

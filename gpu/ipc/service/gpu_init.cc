@@ -99,9 +99,7 @@ GpuInit::~GpuInit() {
   gpu::StopForceDiscreteGPU();
 }
 
-bool GpuInit::InitializeAndStartSandbox(base::CommandLine* command_line,
-                                        const GpuPreferences& gpu_preferences) {
-  gpu_preferences_ = gpu_preferences;
+bool GpuInit::InitializeAndStartSandbox(base::CommandLine* command_line) {
 #if defined(OS_ANDROID)
   // Android doesn't have PCI vendor/device IDs, so collecting GL strings early
   // is necessary.
@@ -260,10 +258,8 @@ bool GpuInit::InitializeAndStartSandbox(base::CommandLine* command_line,
 }
 
 void GpuInit::InitializeInProcess(base::CommandLine* command_line,
-                                  const GpuPreferences& gpu_preferences,
-                                  const GPUInfo* gpu_info,
-                                  const GpuFeatureInfo* gpu_feature_info) {
-  gpu_preferences_ = gpu_preferences;
+                                  const gpu::GPUInfo* gpu_info,
+                                  const gpu::GpuFeatureInfo* gpu_feature_info) {
   init_successful_ = true;
 #if defined(USE_OZONE)
   ui::OzonePlatform::InitParams params;
@@ -282,10 +278,6 @@ void GpuInit::InitializeInProcess(base::CommandLine* command_line,
     gpu::GetGpuInfoFromCommandLine(*command_line, &gpu_info_);
 #endif
     gpu_feature_info_ = gpu::ComputeGpuFeatureInfo(gpu_info_, command_line);
-  }
-  if (gpu::SwitchableGPUsSupported(gpu_info_, *command_line)) {
-    gpu::InitializeSwitchableGPUs(
-        gpu_feature_info_.enabled_gpu_driver_bug_workarounds);
   }
 
   if (!gl::init::InitializeGLNoExtensionsOneOff()) {

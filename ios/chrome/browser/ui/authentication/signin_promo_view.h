@@ -12,8 +12,6 @@
 @class MDCFlatButton;
 @protocol SigninPromoViewDelegate;
 
-typedef void (^CloseButtonCallback)(void);
-
 typedef NS_ENUM(NSInteger, SigninPromoViewMode) {
   // No identity available on the device.
   SigninPromoViewModeColdState,
@@ -49,9 +47,6 @@ extern NSString* const kSigninPromoCloseButtonId;
 @property(nonatomic, readonly) MDCFlatButton* secondaryButton;
 // Hidden by default.
 @property(nonatomic, readonly) UIButton* closeButton;
-// Called when the user taps on the close button. If not set, the close button
-// is hidden.
-@property(nonatomic, copy) CloseButtonCallback closeButtonAction;
 
 // Horizontal padding used for |textLabel|, |primaryButton| and
 // |secondaryButton|. Used to compute the preferred max layout width of
@@ -64,9 +59,6 @@ extern NSString* const kSigninPromoCloseButtonId;
 // using CircularImageFromImage() (so if the image is not squared, it will be
 // cropped first). Must only be called in the "Warm State" mode.
 - (void)setProfileImage:(UIImage*)image;
-
-// Resets the view to be reused.
-- (void)prepareForReuse;
 
 @end
 

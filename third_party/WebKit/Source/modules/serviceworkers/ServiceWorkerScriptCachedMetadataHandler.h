@@ -26,7 +26,7 @@ class ServiceWorkerScriptCachedMetadataHandler : public CachedMetadataHandler {
                                                         script_url, meta_data);
   }
   ~ServiceWorkerScriptCachedMetadataHandler() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   void SetCachedMetadata(uint32_t data_type_id,
                          const char*,
                          size_t,

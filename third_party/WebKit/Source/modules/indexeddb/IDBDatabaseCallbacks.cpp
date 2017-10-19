@@ -38,7 +38,7 @@ IDBDatabaseCallbacks::IDBDatabaseCallbacks() : database_(nullptr) {}
 
 IDBDatabaseCallbacks::~IDBDatabaseCallbacks() {}
 
-void IDBDatabaseCallbacks::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IDBDatabaseCallbacks) {
   visitor->Trace(database_);
 }
 

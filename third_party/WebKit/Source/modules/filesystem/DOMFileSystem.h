@@ -90,7 +90,7 @@ class MODULES_EXPORT DOMFileSystem final
   static void ScheduleCallback(ExecutionContext* execution_context,
                                WTF::Closure task);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   DOMFileSystem(ExecutionContext*,

@@ -5,7 +5,6 @@
 #include "chrome/browser/win/taskbar_icon_finder.h"
 
 #include <windows.h>
-#include <wrl/client.h>
 
 #include <objbase.h>
 #include <oleauto.h>
@@ -21,6 +20,7 @@
 #include "base/sequenced_task_runner.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread.h"
+#include "base/win/scoped_comptr.h"
 #include "base/win/scoped_variant.h"
 #include "chrome/installer/util/install_util.h"
 #include "chrome/installer/util/shell_util.h"
@@ -158,25 +158,25 @@ void TaskbarIconFinder::FindRectOnPrimaryMonitor(
   icons->get_Length(&length);
 
   // Find each icon's nearest ancestor with an HWND.
-  Microsoft::WRL::ComPtr<IUIAutomationTreeWalker> tree_walker;
+  base::win::ScopedComPtr<IUIAutomationTreeWalker> tree_walker;
   HRESULT result = automation->get_RawViewWalker(tree_walker.GetAddressOf());
   if (FAILED(result) || !tree_walker)
     return;
-  Microsoft::WRL::ComPtr<IUIAutomationCacheRequest> cache_request;
+  base::win::ScopedComPtr<IUIAutomationCacheRequest> cache_request;
   result = automation->CreateCacheRequest(cache_request.GetAddressOf());
   if (FAILED(result) || !cache_request)
     return;
   cache_request->AddProperty(UIA_NativeWindowHandlePropertyId);
 
-  Microsoft::WRL::ComPtr<IUIAutomationElement> icon;
+  base::win::ScopedComPtr<IUIAutomationElement> icon;
   HWND hwnd = 0;
   for (int i = 0; i < length; ++i) {
     icons->GetElement(i, icon.GetAddressOf());
 
     // Walk up the tree to find the icon's first parent with an HWND.
-    Microsoft::WRL::ComPtr<IUIAutomationElement> search = icon;
+    base::win::ScopedComPtr<IUIAutomationElement> search = icon;
     while (true) {
-      Microsoft::WRL::ComPtr<IUIAutomationElement> parent;
+      base::win::ScopedComPtr<IUIAutomationElement> parent;
       result = tree_walker->GetParentElementBuildCache(
           search.Get(), cache_request.Get(), parent.GetAddressOf());
       if (FAILED(result) || !parent)
@@ -222,7 +222,7 @@ void TaskbarIconFinder::FindRectOnPrimaryMonitor(
 
 // static
 HRESULT TaskbarIconFinder::DoOnComThread(gfx::Rect* rect) {
-  Microsoft::WRL::ComPtr<IUIAutomation> automation;
+  base::win::ScopedComPtr<IUIAutomation> automation;
   HRESULT result =
       ::CoCreateInstance(CLSID_CUIAutomation, nullptr, CLSCTX_INPROC_SERVER,
                          IID_PPV_ARGS(&automation));
@@ -232,7 +232,7 @@ HRESULT TaskbarIconFinder::DoOnComThread(gfx::Rect* rect) {
   // Create a condition: automation_id=ap_user_model_id && type=button_type.
   base::win::ScopedVariant app_user_model_id(
       ShellUtil::GetBrowserModelId(InstallUtil::IsPerUserInstall()).c_str());
-  Microsoft::WRL::ComPtr<IUIAutomationCondition> id_condition;
+  base::win::ScopedComPtr<IUIAutomationCondition> id_condition;
   result = automation->CreatePropertyCondition(UIA_AutomationIdPropertyId,
                                                app_user_model_id,
                                                id_condition.GetAddressOf());
@@ -240,30 +240,30 @@ HRESULT TaskbarIconFinder::DoOnComThread(gfx::Rect* rect) {
     return result;
 
   base::win::ScopedVariant button_type(UIA_ButtonControlTypeId);
-  Microsoft::WRL::ComPtr<IUIAutomationCondition> type_condition;
+  base::win::ScopedComPtr<IUIAutomationCondition> type_condition;
   result = automation->CreatePropertyCondition(
       UIA_ControlTypePropertyId, button_type, type_condition.GetAddressOf());
   if (FAILED(result) || !type_condition)
     return result;
 
-  Microsoft::WRL::ComPtr<IUIAutomationCondition> condition;
+  base::win::ScopedComPtr<IUIAutomationCondition> condition;
   result = automation->CreateAndCondition(
       id_condition.Get(), type_condition.Get(), condition.GetAddressOf());
 
   // Cache the bounding rectangle of all found items.
-  Microsoft::WRL::ComPtr<IUIAutomationCacheRequest> cache_request;
+  base::win::ScopedComPtr<IUIAutomationCacheRequest> cache_request;
   result = automation->CreateCacheRequest(cache_request.GetAddressOf());
   if (FAILED(result) || !cache_request)
     return result;
   cache_request->AddProperty(UIA_BoundingRectanglePropertyId);
 
   // Search the desktop to find all buttons with the correct automation id.
-  Microsoft::WRL::ComPtr<IUIAutomationElement> desktop;
+  base::win::ScopedComPtr<IUIAutomationElement> desktop;
   result = automation->GetRootElement(desktop.GetAddressOf());
   if (FAILED(result) || !desktop)
     return result;
 
-  Microsoft::WRL::ComPtr<IUIAutomationElementArray> icons;
+  base::win::ScopedComPtr<IUIAutomationElementArray> icons;
   result =
       desktop->FindAllBuildCache(TreeScope_Subtree, condition.Get(),
                                  cache_request.Get(), icons.GetAddressOf());

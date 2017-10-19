@@ -290,7 +290,7 @@ void EventHandlerRegistry::NotifyDidAddOrRemoveEventHandlerTarget(
   }
 }
 
-void EventHandlerRegistry::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EventHandlerRegistry) {
   visitor->Trace(page_);
   visitor->template RegisterWeakMembers<
       EventHandlerRegistry, &EventHandlerRegistry::ClearWeakMembers>(this);

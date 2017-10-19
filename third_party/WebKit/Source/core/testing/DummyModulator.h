@@ -29,7 +29,7 @@ class DummyModulator : public Modulator {
  public:
   DummyModulator();
   virtual ~DummyModulator();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   ScriptModuleResolver* GetScriptModuleResolver() override;
   WebTaskRunner* TaskRunner() override;

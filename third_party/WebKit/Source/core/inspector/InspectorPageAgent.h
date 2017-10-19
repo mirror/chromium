@@ -186,7 +186,7 @@ class CORE_EXPORT InspectorPageAgent final
   void Restore() override;
   bool ScreencastEnabled();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   InspectorPageAgent(InspectedFrames*,

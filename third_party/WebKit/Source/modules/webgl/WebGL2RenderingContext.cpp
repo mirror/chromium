@@ -135,7 +135,7 @@ void WebGL2RenderingContext::RegisterContextExtensions() {
   RegisterExtension<WebGLLoseContext>(webgl_lose_context_);
 }
 
-void WebGL2RenderingContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGL2RenderingContext) {
   visitor->Trace(ext_color_buffer_float_);
   visitor->Trace(ext_disjoint_timer_query_web_gl2_);
   visitor->Trace(ext_texture_filter_anisotropic_);

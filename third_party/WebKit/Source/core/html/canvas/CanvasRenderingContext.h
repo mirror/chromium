@@ -192,12 +192,11 @@ class CORE_EXPORT CanvasRenderingContext
     return creation_attributes_;
   }
 
-  virtual void Trace(blink::Visitor*);
-  virtual void Stop() = 0;
-
  protected:
   CanvasRenderingContext(CanvasRenderingContextHost*,
                          const CanvasContextCreationAttributes&);
+  DECLARE_VIRTUAL_TRACE();
+  virtual void Stop() = 0;
 
  private:
   void Dispose();

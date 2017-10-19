@@ -111,7 +111,7 @@ void VRController::Dispose() {
   OnGetDisplays();
 }
 
-void VRController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(VRController) {
   visitor->Trace(navigator_vr_);
   visitor->Trace(displays_);
 

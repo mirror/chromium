@@ -107,7 +107,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   // Frame overrides:
   ~LocalFrame() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   void Navigate(Document& origin_document,
                 const KURL&,
                 bool replace_current_item,
@@ -251,7 +251,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
   void MaybeAllowImagePlaceholder(FetchParameters&) const;
 
   std::unique_ptr<WebURLLoader> CreateURLLoader(const ResourceRequest&,
-                                                RefPtr<WebTaskRunner>);
+                                                WebTaskRunner*);
 
   bool IsInert() const { return is_inert_; }
 

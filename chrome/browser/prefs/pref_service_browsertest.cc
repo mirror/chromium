@@ -90,7 +90,7 @@ IN_PROC_BROWSER_TEST_F(PreferenceServiceTest, Test) {
   JSONFileValueDeserializer deserializer(original_pref_file_);
   std::unique_ptr<base::Value> root;
   {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     root = deserializer.Deserialize(NULL, NULL);
   }
 

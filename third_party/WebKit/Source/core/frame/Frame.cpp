@@ -63,7 +63,7 @@ Frame::~Frame() {
   DCHECK_EQ(lifecycle_.GetState(), FrameLifecycle::kDetached);
 }
 
-void Frame::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Frame) {
   visitor->Trace(tree_node_);
   visitor->Trace(page_);
   visitor->Trace(owner_);

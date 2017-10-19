@@ -22,7 +22,7 @@ class NavigatorMediaCapabilities final
  public:
   static MediaCapabilities* mediaCapabilities(Navigator&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit NavigatorMediaCapabilities(Navigator&);

@@ -83,7 +83,7 @@ void ScriptPromiseResolver::ResolveOrRejectImmediately() {
   Detach();
 }
 
-void ScriptPromiseResolver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScriptPromiseResolver) {
   SuspendableObject::Trace(visitor);
 }
 

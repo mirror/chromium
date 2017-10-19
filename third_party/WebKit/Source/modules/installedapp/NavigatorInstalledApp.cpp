@@ -107,7 +107,7 @@ const char* NavigatorInstalledApp::SupplementName() {
   return "NavigatorInstalledApp";
 }
 
-void NavigatorInstalledApp::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorInstalledApp) {
   Supplement<Navigator>::Trace(visitor);
 }
 

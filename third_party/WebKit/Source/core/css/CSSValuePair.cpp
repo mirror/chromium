@@ -6,7 +6,7 @@
 
 namespace blink {
 
-void CSSValuePair::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(CSSValuePair) {
   visitor->Trace(first_);
   visitor->Trace(second_);
   CSSValue::TraceAfterDispatch(visitor);

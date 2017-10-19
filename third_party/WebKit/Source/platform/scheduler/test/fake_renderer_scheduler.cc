@@ -6,7 +6,6 @@
 
 #include "base/message_loop/message_loop.h"
 #include "base/single_thread_task_runner.h"
-#include "build/build_config.h"
 #include "public/platform/WebThread.h"
 
 namespace blink {
@@ -80,12 +79,6 @@ std::unique_ptr<FakeRendererScheduler::RendererPauseHandle>
 FakeRendererScheduler::PauseRenderer() {
   return nullptr;
 }
-
-#if defined(OS_ANDROID)
-void FakeRendererScheduler::PauseTimersForAndroidWebView() {}
-
-void FakeRendererScheduler::ResumeTimersForAndroidWebView() {}
-#endif
 
 void FakeRendererScheduler::AddPendingNavigation(NavigatingFrameType type) {}
 

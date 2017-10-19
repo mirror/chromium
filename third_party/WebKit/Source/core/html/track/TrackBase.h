@@ -53,7 +53,7 @@ class CORE_EXPORT TrackBase : public Supplementable<TrackBase> {
   }
   HTMLMediaElement* MediaElement() const { return media_element_; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   TrackBase(WebMediaPlayer::TrackType,

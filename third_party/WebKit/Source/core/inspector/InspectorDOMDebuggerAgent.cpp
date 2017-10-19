@@ -193,7 +193,7 @@ InspectorDOMDebuggerAgent::InspectorDOMDebuggerAgent(
 
 InspectorDOMDebuggerAgent::~InspectorDOMDebuggerAgent() {}
 
-void InspectorDOMDebuggerAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorDOMDebuggerAgent) {
   visitor->Trace(dom_agent_);
   visitor->Trace(dom_breakpoints_);
   InspectorBaseAgent::Trace(visitor);

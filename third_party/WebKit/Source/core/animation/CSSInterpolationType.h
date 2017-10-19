@@ -5,7 +5,6 @@
 #ifndef CSSInterpolationType_h
 #define CSSInterpolationType_h
 
-#include "core/CoreExport.h"
 #include "core/animation/CSSInterpolationEnvironment.h"
 #include "core/animation/InterpolationType.h"
 
@@ -17,7 +16,7 @@ class ComputedStyle;
 class PropertyRegistration;
 class StyleResolverState;
 
-class CORE_EXPORT CSSInterpolationType : public InterpolationType {
+class CSSInterpolationType : public InterpolationType {
  public:
   class CSSConversionChecker : public ConversionChecker {
    public:

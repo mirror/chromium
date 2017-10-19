@@ -100,7 +100,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::ServiceWorkerResponse)
   IPC_STRUCT_TRAITS_MEMBER(cors_exposed_header_names)
 IPC_STRUCT_TRAITS_END()
 
-IPC_STRUCT_TRAITS_BEGIN(blink::mojom::ServiceWorkerObjectInfo)
+IPC_STRUCT_TRAITS_BEGIN(content::ServiceWorkerObjectInfo)
   IPC_STRUCT_TRAITS_MEMBER(handle_id)
   IPC_STRUCT_TRAITS_MEMBER(url)
   IPC_STRUCT_TRAITS_MEMBER(state)
@@ -130,7 +130,7 @@ IPC_STRUCT_TRAITS_END()
 IPC_STRUCT_BEGIN(ServiceWorkerMsg_MessageToDocument_Params)
   IPC_STRUCT_MEMBER(int, thread_id)
   IPC_STRUCT_MEMBER(int, provider_id)
-  IPC_STRUCT_MEMBER(blink::mojom::ServiceWorkerObjectInfo, service_worker_info)
+  IPC_STRUCT_MEMBER(content::ServiceWorkerObjectInfo, service_worker_info)
   IPC_STRUCT_MEMBER(base::string16, message)
   IPC_STRUCT_MEMBER(std::vector<blink::MessagePortChannel>, message_ports)
 IPC_STRUCT_END()
@@ -139,17 +139,6 @@ IPC_STRUCT_TRAITS_BEGIN(content::PushEventPayload)
   IPC_STRUCT_TRAITS_MEMBER(data)
   IPC_STRUCT_TRAITS_MEMBER(is_null)
 IPC_STRUCT_TRAITS_END()
-
-IPC_STRUCT_BEGIN(ServiceWorkerMsg_SetControllerServiceWorker_Params)
-  IPC_STRUCT_MEMBER(int, thread_id)
-  IPC_STRUCT_MEMBER(int, provider_id)
-  IPC_STRUCT_MEMBER(blink::mojom::ServiceWorkerObjectInfo, object_info)
-  IPC_STRUCT_MEMBER(bool, should_notify_controllerchange)
-
-  // |used_features| is the set of features that the worker has used.
-  // The values must be from blink::UseCounter::Feature enum.
-  IPC_STRUCT_MEMBER(std::set<uint32_t>, used_features)
-IPC_STRUCT_END()
 
 //---------------------------------------------------------------------------
 // Messages sent from the child process to the browser.
@@ -302,11 +291,6 @@ IPC_MESSAGE_CONTROL4(ServiceWorkerMsg_SetVersionAttributes,
 IPC_MESSAGE_CONTROL2(ServiceWorkerMsg_UpdateFound,
                      int /* thread_id */,
                      int /* registration_handle_id */)
-
-// Tells the child process to set the controller ServiceWorker for the given
-// provider.
-IPC_MESSAGE_CONTROL1(ServiceWorkerMsg_SetControllerServiceWorker,
-                     ServiceWorkerMsg_SetControllerServiceWorker_Params)
 
 IPC_MESSAGE_CONTROL2(ServiceWorkerMsg_DidEnableNavigationPreload,
                      int /* thread_id */,

@@ -240,7 +240,7 @@ InspectorLayerTreeAgent::InspectorLayerTreeAgent(
 
 InspectorLayerTreeAgent::~InspectorLayerTreeAgent() {}
 
-void InspectorLayerTreeAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorLayerTreeAgent) {
   visitor->Trace(inspected_frames_);
   InspectorBaseAgent::Trace(visitor);
 }

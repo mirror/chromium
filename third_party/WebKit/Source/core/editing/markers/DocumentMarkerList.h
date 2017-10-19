@@ -61,7 +61,7 @@ class CORE_EXPORT DocumentMarkerList
                             unsigned old_length,
                             unsigned new_length) = 0;
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   DocumentMarkerList();

@@ -24,38 +24,43 @@ std::string GetDescriptionForPreviewsNavigation(PreviewsType type,
                             opt_out ? "True" : "False");
 }
 
-std::string GetReasonDescription(PreviewsEligibilityReason reason) {
-  switch (reason) {
-    case PreviewsEligibilityReason::ALLOWED:
-      return "Allowed";
-    case PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE:
-      return "Blacklist failed to be created";
-    case PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED:
-      return "Blacklist not loaded from disk yet";
-    case PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT:
-      return "User recently opted out";
-    case PreviewsEligibilityReason::USER_BLACKLISTED:
-      return "All previews are blacklisted";
-    case PreviewsEligibilityReason::HOST_BLACKLISTED:
-      return "All previews on this host are blacklisted";
-    case PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE:
-      return "Network quality unavailable";
-    case PreviewsEligibilityReason::NETWORK_NOT_SLOW:
-      return "Network not slow";
-    case PreviewsEligibilityReason::RELOAD_DISALLOWED:
-      return "Page reloads do not show previews for this preview type";
-    case PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER:
-      return "Host blacklisted by server rules";
-  }
-  NOTREACHED();
-  return "";
-}
-
 std::string GetDescriptionForPreviewsDecision(PreviewsEligibilityReason reason,
                                               PreviewsType type) {
+  std::string reason_str;
+  switch (reason) {
+    case PreviewsEligibilityReason::ALLOWED:
+      reason_str = "Allowed";
+    case PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE:
+      reason_str = "Blacklist failed to be created";
+      break;
+    case PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED:
+      reason_str = "Blacklist not loaded from disk yet";
+      break;
+    case PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT:
+      reason_str = "User recently opted out";
+      break;
+    case PreviewsEligibilityReason::USER_BLACKLISTED:
+      reason_str = "All previews are blacklisted";
+      break;
+    case PreviewsEligibilityReason::HOST_BLACKLISTED:
+      reason_str = "All previews on this host are blacklisted";
+      break;
+    case PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE:
+      reason_str = "Network quality unavailable";
+      break;
+    case PreviewsEligibilityReason::NETWORK_NOT_SLOW:
+      reason_str = "Network not slow";
+      break;
+    case PreviewsEligibilityReason::RELOAD_DISALLOWED:
+      reason_str = "Page reloads do not show previews for this preview type";
+      break;
+    case PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER:
+      reason_str = "Host blacklisted by server rules";
+      break;
+  }
   return base::StringPrintf("%s preview decision made - %s",
                             GetStringNameForType(type).c_str(),
-                            GetReasonDescription(reason).c_str());
+                            reason_str.c_str());
 }
 
 }  // namespace

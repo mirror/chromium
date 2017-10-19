@@ -292,7 +292,7 @@ bool CSSCrossfadeValue::Equals(const CSSCrossfadeValue& other) const {
          DataEquivalent(percentage_value_, other.percentage_value_);
 }
 
-void CSSCrossfadeValue::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(CSSCrossfadeValue) {
   visitor->Trace(from_value_);
   visitor->Trace(to_value_);
   visitor->Trace(percentage_value_);

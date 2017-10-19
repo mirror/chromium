@@ -35,7 +35,8 @@ public class SigninHelperTest {
 
     @Before
     public void setUp() {
-        mContext = new AdvancedMockContext(InstrumentationRegistry.getTargetContext());
+        mContext = new AdvancedMockContext(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
         mEventChecker = new MockChangeEventChecker();
 
         mAccountManager = new FakeAccountManagerDelegate(

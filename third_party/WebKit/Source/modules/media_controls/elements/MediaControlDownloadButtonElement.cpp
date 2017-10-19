@@ -85,7 +85,7 @@ bool MediaControlDownloadButtonElement::HasOverflowButton() const {
   return true;
 }
 
-void MediaControlDownloadButtonElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControlDownloadButtonElement) {
   visitor->Trace(anchor_);
   MediaControlInputElement::Trace(visitor);
 }

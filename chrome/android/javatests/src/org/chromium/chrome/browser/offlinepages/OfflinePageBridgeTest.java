@@ -105,7 +105,8 @@ public class OfflinePageBridgeTest {
 
         initializeBridgeForProfile(false);
 
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         mTestPage = mTestServer.getURL(TEST_PAGE);
     }
 

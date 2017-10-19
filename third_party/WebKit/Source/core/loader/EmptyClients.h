@@ -366,7 +366,7 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   TextCheckerClient& GetTextCheckerClient() const override;
   std::unique_ptr<WebURLLoader> CreateURLLoader(
       const ResourceRequest& request,
-      RefPtr<WebTaskRunner> task_runner) override {
+      WebTaskRunner* task_runner) override {
     // TODO(yhirano): Stop using Platform::CreateURLLoader() here.
     WrappedResourceRequest wrapped(request);
     return Platform::Current()->CreateURLLoader(

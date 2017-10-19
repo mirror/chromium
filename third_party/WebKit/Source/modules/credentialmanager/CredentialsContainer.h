@@ -35,7 +35,7 @@ class MODULES_EXPORT CredentialsContainer final
   ScriptPromise preventSilentAccess(ScriptState*);
   ScriptPromise requireUserMediation(ScriptState*);
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  private:
   CredentialsContainer();

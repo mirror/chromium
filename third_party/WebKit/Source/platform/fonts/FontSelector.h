@@ -35,7 +35,6 @@
 
 namespace blink {
 
-class ExecutionContext;
 class FontData;
 class FontDescription;
 class FontSelectorClient;
@@ -64,8 +63,6 @@ class PLATFORM_EXPORT FontSelector : public FontCacheClient {
   virtual void UnregisterForInvalidationCallbacks(FontSelectorClient*) = 0;
 
   virtual void FontFaceInvalidated(){};
-
-  virtual ExecutionContext* GetExecutionContext() const = 0;
 
  protected:
   static AtomicString FamilyNameFromSettings(

@@ -40,7 +40,7 @@ class CORE_EXPORT DocumentModuleScriptFetcher
   void NotifyFinished(Resource*) final;
   String DebugName() const final { return "DocumentModuleScriptFetcher"; }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   void Finalize(const WTF::Optional<ModuleScriptCreationParams>&,

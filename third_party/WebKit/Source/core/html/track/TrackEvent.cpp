@@ -77,7 +77,7 @@ void TrackEvent::track(VideoTrackOrAudioTrackOrTextTrack& return_value) {
   }
 }
 
-void TrackEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TrackEvent) {
   visitor->Trace(track_);
   Event::Trace(visitor);
 }

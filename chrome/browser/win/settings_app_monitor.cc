@@ -10,7 +10,6 @@
 #include <oleauto.h>
 #include <stdint.h>
 #include <uiautomation.h>
-#include <wrl/client.h>
 
 #include <algorithm>
 #include <iterator>
@@ -29,6 +28,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/threading/sequenced_task_runner_handle.h"
+#include "base/win/scoped_comptr.h"
 #include "base/win/scoped_variant.h"
 #include "ui/base/win/atl_module.h"
 
@@ -86,7 +86,7 @@ class SettingsAppMonitor::Context {
   // Handles a focus change event on |sender|. Dispatches OnAppFocused if
   // |sender| is the settings app.
   void HandleFocusChangedEvent(
-      Microsoft::WRL::ComPtr<IUIAutomationElement> sender);
+      base::win::ScopedComPtr<IUIAutomationElement> sender);
 
   // Handles the invocation of the element that opens the browser chooser.
   void HandleChooserInvoked();
@@ -98,13 +98,14 @@ class SettingsAppMonitor::Context {
   void HandlePromoChoiceMade(bool accept_promo);
 
   // Returns an event handler for all event types of interest.
-  Microsoft::WRL::ComPtr<IUnknown> GetEventHandler();
+  base::win::ScopedComPtr<IUnknown> GetEventHandler();
 
   // Returns a pointer to the event handler's generic interface.
-  Microsoft::WRL::ComPtr<IUIAutomationEventHandler> GetAutomationEventHandler();
+  base::win::ScopedComPtr<IUIAutomationEventHandler>
+  GetAutomationEventHandler();
 
   // Returns a pointer to the event handler's focus changed interface.
-  Microsoft::WRL::ComPtr<IUIAutomationFocusChangedEventHandler>
+  base::win::ScopedComPtr<IUIAutomationFocusChangedEventHandler>
   GetFocusChangedEventHandler();
 
   // Installs an event handler to observe events of interest.
@@ -120,10 +121,10 @@ class SettingsAppMonitor::Context {
   base::WeakPtr<SettingsAppMonitor> monitor_;
 
   // The automation client.
-  Microsoft::WRL::ComPtr<IUIAutomation> automation_;
+  base::win::ScopedComPtr<IUIAutomation> automation_;
 
   // The event handler.
-  Microsoft::WRL::ComPtr<IUnknown> event_handler_;
+  base::win::ScopedComPtr<IUnknown> event_handler_;
 
   // State to suppress duplicate "focus changed" events.
   ElementType last_focused_element_ = ElementType::UNKNOWN;
@@ -155,7 +156,7 @@ class SettingsAppMonitor::Context::EventHandler
   // |context_runner|.
   void Initialize(scoped_refptr<base::SingleThreadTaskRunner> context_runner,
                   const base::WeakPtr<SettingsAppMonitor::Context>& context,
-                  Microsoft::WRL::ComPtr<IUIAutomation> automation);
+                  base::win::ScopedComPtr<IUIAutomation> automation);
 
   // IUIAutomationEventHandler:
   STDMETHOD(HandleAutomationEvent)(IUIAutomationElement *sender,
@@ -171,7 +172,7 @@ class SettingsAppMonitor::Context::EventHandler
   // The monitor context that owns this event handler.
   base::WeakPtr<SettingsAppMonitor::Context> context_;
 
-  Microsoft::WRL::ComPtr<IUIAutomation> automation_;
+  base::win::ScopedComPtr<IUIAutomation> automation_;
 
   DISALLOW_COPY_AND_ASSIGN(EventHandler);
 };
@@ -220,19 +221,19 @@ base::string16 GetFlyoutParentAutomationId(IUIAutomation* automation,
   // Create a condition that will include only elements with the right class
   // name in the tree view.
   base::win::ScopedVariant class_name(L"Flyout");
-  Microsoft::WRL::ComPtr<IUIAutomationCondition> condition;
+  base::win::ScopedComPtr<IUIAutomationCondition> condition;
   HRESULT result = automation->CreatePropertyCondition(
       UIA_ClassNamePropertyId, class_name, condition.GetAddressOf());
   if (FAILED(result))
     return base::string16();
 
-  Microsoft::WRL::ComPtr<IUIAutomationTreeWalker> tree_walker;
+  base::win::ScopedComPtr<IUIAutomationTreeWalker> tree_walker;
   result =
       automation->CreateTreeWalker(condition.Get(), tree_walker.GetAddressOf());
   if (FAILED(result))
     return base::string16();
 
-  Microsoft::WRL::ComPtr<IUIAutomationCacheRequest> cache_request;
+  base::win::ScopedComPtr<IUIAutomationCacheRequest> cache_request;
   result = automation->CreateCacheRequest(cache_request.GetAddressOf());
   if (FAILED(result))
     return base::string16();
@@ -537,7 +538,7 @@ SettingsAppMonitor::Context::EventHandler::~EventHandler() = default;
 void SettingsAppMonitor::Context::EventHandler::Initialize(
     scoped_refptr<base::SingleThreadTaskRunner> context_runner,
     const base::WeakPtr<SettingsAppMonitor::Context>& context,
-    Microsoft::WRL::ComPtr<IUIAutomation> automation) {
+    base::win::ScopedComPtr<IUIAutomation> automation) {
   context_runner_ = std::move(context_runner);
   context_ = context;
   automation_ = automation;
@@ -618,7 +619,7 @@ HRESULT SettingsAppMonitor::Context::EventHandler::HandleFocusChangedEvent(
       FROM_HERE,
       base::Bind(&SettingsAppMonitor::Context::HandleFocusChangedEvent,
                  context_,
-                 Microsoft::WRL::ComPtr<IUIAutomationElement>(sender)));
+                 base::win::ScopedComPtr<IUIAutomationElement>(sender)));
 
   return S_OK;
 }
@@ -677,7 +678,7 @@ SettingsAppMonitor::Context::~Context() {
 }
 
 void SettingsAppMonitor::Context::HandleFocusChangedEvent(
-    Microsoft::WRL::ComPtr<IUIAutomationElement> sender) {
+    base::win::ScopedComPtr<IUIAutomationElement> sender) {
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   // Duplicate focus changed events are suppressed.
@@ -716,7 +717,7 @@ void SettingsAppMonitor::Context::HandlePromoChoiceMade(bool accept_promo) {
                             accept_promo));
 }
 
-Microsoft::WRL::ComPtr<IUnknown>
+base::win::ScopedComPtr<IUnknown>
 SettingsAppMonitor::Context::GetEventHandler() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   if (!event_handler_) {
@@ -731,18 +732,18 @@ SettingsAppMonitor::Context::GetEventHandler() {
   return event_handler_;
 }
 
-Microsoft::WRL::ComPtr<IUIAutomationEventHandler>
+base::win::ScopedComPtr<IUIAutomationEventHandler>
 SettingsAppMonitor::Context::GetAutomationEventHandler() {
   DCHECK(task_runner_->BelongsToCurrentThread());
-  Microsoft::WRL::ComPtr<IUIAutomationEventHandler> handler;
+  base::win::ScopedComPtr<IUIAutomationEventHandler> handler;
   GetEventHandler().CopyTo(handler.GetAddressOf());
   return handler;
 }
 
-Microsoft::WRL::ComPtr<IUIAutomationFocusChangedEventHandler>
+base::win::ScopedComPtr<IUIAutomationFocusChangedEventHandler>
 SettingsAppMonitor::Context::GetFocusChangedEventHandler() {
   DCHECK(task_runner_->BelongsToCurrentThread());
-  Microsoft::WRL::ComPtr<IUIAutomationFocusChangedEventHandler> handler;
+  base::win::ScopedComPtr<IUIAutomationFocusChangedEventHandler> handler;
   GetEventHandler().CopyTo(handler.GetAddressOf());
   return handler;
 }
@@ -753,7 +754,7 @@ HRESULT SettingsAppMonitor::Context::InstallObservers() {
 
   // Create a cache request so that elements received by way of events contain
   // all data needed for procesing.
-  Microsoft::WRL::ComPtr<IUIAutomationCacheRequest> cache_request;
+  base::win::ScopedComPtr<IUIAutomationCacheRequest> cache_request;
   HRESULT result =
       automation_->CreateCacheRequest(cache_request.GetAddressOf());
   if (FAILED(result))
@@ -767,7 +768,7 @@ HRESULT SettingsAppMonitor::Context::InstallObservers() {
     return result;
 
   // Observe invocations.
-  Microsoft::WRL::ComPtr<IUIAutomationElement> desktop;
+  base::win::ScopedComPtr<IUIAutomationElement> desktop;
   result = automation_->GetRootElement(desktop.GetAddressOf());
   if (desktop) {
     result = automation_->AddAutomationEventHandler(

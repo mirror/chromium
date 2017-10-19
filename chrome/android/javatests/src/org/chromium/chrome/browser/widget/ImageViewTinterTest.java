@@ -48,7 +48,7 @@ public class ImageViewTinterTest {
 
     @Before
     public void setUp() throws Exception {
-        mContext = InstrumentationRegistry.getTargetContext();
+        mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         mContext.setTheme(R.style.MainTheme);
     }
 

@@ -17,6 +17,7 @@
 #include <vector>
 
 #include "base/logging.h"
+#include "content/common/sandbox_init_gpu_linux.h"
 #include "sandbox/linux/bpf_dsl/bpf_dsl.h"
 #include "sandbox/linux/system_headers/linux_syscalls.h"
 
@@ -56,6 +57,10 @@ ResultExpr CrosAmdGpuProcessPolicy::EvaluateSyscall(int sysno) const {
       // Default to the generic GPU policy.
       return GpuProcessPolicy::EvaluateSyscall(sysno);
   }
+}
+
+bool CrosAmdGpuProcessPolicy::PreSandboxHook() {
+  return CrosAmdGpuPreSandboxHook(this);
 }
 
 CrosAmdGpuBrokerProcessPolicy ::CrosAmdGpuBrokerProcessPolicy() {}

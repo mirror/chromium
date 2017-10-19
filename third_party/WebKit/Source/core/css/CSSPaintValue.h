@@ -55,7 +55,7 @@ class CSSPaintValue : public CSSImageGeneratorValue {
     return generator_ ? &generator_->CustomInvalidationProperties() : nullptr;
   }
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   explicit CSSPaintValue(CSSCustomIdentValue* name);
@@ -69,7 +69,7 @@ class CSSPaintValue : public CSSImageGeneratorValue {
     explicit Observer(CSSPaintValue* owner_value) : owner_value_(owner_value) {}
 
     ~Observer() override {}
-    virtual void Trace(blink::Visitor* visitor) {
+    DEFINE_INLINE_VIRTUAL_TRACE() {
       visitor->Trace(owner_value_);
       CSSPaintImageGenerator::Observer::Trace(visitor);
     }

@@ -49,7 +49,8 @@ public class OMADownloadHandlerTest {
     private static final String INSTALL_NOTIFY_URI = "http://test/test";
 
     private Context getTestContext() {
-        return new AdvancedMockContext(InstrumentationRegistry.getTargetContext());
+        return new AdvancedMockContext(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
     }
 
     /**
@@ -183,7 +184,8 @@ public class OMADownloadHandlerTest {
     @SmallTest
     @Feature({"Download"})
     public void testGetOpennableType() {
-        PackageManager pm = InstrumentationRegistry.getContext().getPackageManager();
+        PackageManager pm =
+                InstrumentationRegistry.getInstrumentation().getContext().getPackageManager();
         OMADownloadHandler.OMAInfo info = new OMADownloadHandler.OMAInfo();
         Assert.assertEquals(OMADownloadHandler.getOpennableType(pm, info), null);
 
@@ -367,8 +369,8 @@ public class OMADownloadHandlerTest {
     @MediumTest
     @Feature({"Download"})
     public void testEnqueueOMADownloads() throws InterruptedException {
-        EmbeddedTestServer testServer =
-                EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        EmbeddedTestServer testServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         Context context = getTestContext();
 
         OMADownloadHandler.OMAInfo omaInfo = new OMAInfo();

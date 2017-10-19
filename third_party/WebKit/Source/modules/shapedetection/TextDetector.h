@@ -24,7 +24,7 @@ class MODULES_EXPORT TextDetector final : public ShapeDetector,
  public:
   static TextDetector* Create(ExecutionContext*);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit TextDetector(ExecutionContext*);

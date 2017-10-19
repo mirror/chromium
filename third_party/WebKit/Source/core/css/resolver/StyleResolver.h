@@ -145,7 +145,7 @@ class CORE_EXPORT StyleResolver final
 
   static bool HasAuthorBackground(const StyleResolverState&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit StyleResolver(Document&);

@@ -121,7 +121,7 @@ class MockScrollableAreaForAnimatorTest
     return Platform::Current()->CurrentThread()->Scheduler()->TimerTaskRunner();
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(animator);
     ScrollableArea::Trace(visitor);
   }

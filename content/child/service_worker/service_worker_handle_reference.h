@@ -26,29 +26,28 @@ class CONTENT_EXPORT ServiceWorkerHandleReference {
   // Creates a new ServiceWorkerHandleReference and increments ref-count. If
   // the handle id is kInvalidServiceWorkerHandleId, returns null instead.
   static std::unique_ptr<ServiceWorkerHandleReference> Create(
-      const blink::mojom::ServiceWorkerObjectInfo& info,
+      const ServiceWorkerObjectInfo& info,
       ThreadSafeSender* sender);
 
   // Creates a new ServiceWorkerHandleReference by adopting a ref-count. If
   // the handle id is kInvalidServiceWorkerHandleId, returns null instead.
   static std::unique_ptr<ServiceWorkerHandleReference> Adopt(
-      const blink::mojom::ServiceWorkerObjectInfo& info,
+      const ServiceWorkerObjectInfo& info,
       ThreadSafeSender* sender);
 
   ~ServiceWorkerHandleReference();
 
-  const blink::mojom::ServiceWorkerObjectInfo& info() const { return info_; }
+  const ServiceWorkerObjectInfo& info() const { return info_; }
   int handle_id() const { return info_.handle_id; }
   const GURL& url() const { return info_.url; }
   blink::mojom::ServiceWorkerState state() const { return info_.state; }
   int64_t version_id() const { return info_.version_id; }
 
  private:
-  ServiceWorkerHandleReference(
-      const blink::mojom::ServiceWorkerObjectInfo& info,
-      ThreadSafeSender* sender,
-      bool increment_ref_in_ctor);
-  blink::mojom::ServiceWorkerObjectInfo info_;
+  ServiceWorkerHandleReference(const ServiceWorkerObjectInfo& info,
+                               ThreadSafeSender* sender,
+                               bool increment_ref_in_ctor);
+  ServiceWorkerObjectInfo info_;
   scoped_refptr<ThreadSafeSender> sender_;
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerHandleReference);
 };

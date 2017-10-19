@@ -38,7 +38,9 @@ public class LocaleManagerTest {
             @Override
             public void run() {
                 try {
-                    ChromeBrowserInitializer.getInstance(InstrumentationRegistry.getTargetContext())
+                    ChromeBrowserInitializer
+                            .getInstance(
+                                    InstrumentationRegistry.getInstrumentation().getTargetContext())
                             .handleSynchronousStartup();
                 } catch (ProcessInitException e) {
                     Assert.fail("Failed to load browser");

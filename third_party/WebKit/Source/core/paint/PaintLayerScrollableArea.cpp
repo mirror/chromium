@@ -121,7 +121,6 @@ PaintLayerScrollableArea::PaintLayerScrollableArea(PaintLayer& layer)
       in_resize_mode_(false),
       scrolls_overflow_(false),
       in_overflow_relayout_(false),
-      allow_second_overflow_relayout_(false),
       needs_composited_scrolling_(false),
       rebuild_horizontal_scrollbar_layer_(false),
       rebuild_vertical_scrollbar_layer_(false),
@@ -217,7 +216,7 @@ void PaintLayerScrollableArea::Dispose() {
   has_been_disposed_ = true;
 }
 
-void PaintLayerScrollableArea::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PaintLayerScrollableArea) {
   visitor->Trace(scrollbar_manager_);
   visitor->Trace(scroll_anchor_);
   ScrollableArea::Trace(visitor);
@@ -831,10 +830,9 @@ void PaintLayerScrollableArea::SetScrollOffsetUnconditionally(
 }
 
 void PaintLayerScrollableArea::UpdateAfterLayout() {
+  bool relayout_is_prevented = PreventRelayoutScope::RelayoutIsPrevented();
   bool scrollbars_are_frozen =
-      (in_overflow_relayout_ && !allow_second_overflow_relayout_) ||
-      FreezeScrollbarsScope::ScrollbarsAreFrozen();
-  allow_second_overflow_relayout_ = false;
+      in_overflow_relayout_ || FreezeScrollbarsScope::ScrollbarsAreFrozen();
 
   if (NeedsScrollbarReconstruction()) {
     SetHasHorizontalScrollbar(false);
@@ -850,17 +848,6 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
   bool needs_vertical_scrollbar;
   ComputeScrollbarExistence(needs_horizontal_scrollbar,
                             needs_vertical_scrollbar);
-
-  // Removing auto scrollbars is a heuristic and can be incorrect if the content
-  // size depends on the scrollbar size (e.g., sized with percentages). Removing
-  // scrollbars can require two additional layout passes so this is only done on
-  // the first layout (!in_overflow_layout).
-  if (!in_overflow_relayout_ && !scrollbars_are_frozen &&
-      TryRemovingAutoScrollbars(needs_horizontal_scrollbar,
-                                needs_vertical_scrollbar)) {
-    needs_horizontal_scrollbar = needs_vertical_scrollbar = false;
-    allow_second_overflow_relayout_ = true;
-  }
 
   bool horizontal_scrollbar_should_change =
       needs_horizontal_scrollbar != had_horizontal_scrollbar;
@@ -894,7 +881,7 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
            !Box().IsHorizontalWritingMode())) {
         Box().SetPreferredLogicalWidthsDirty();
       }
-      if (PreventRelayoutScope::RelayoutIsPrevented()) {
+      if (relayout_is_prevented) {
         // We're not doing re-layout right now, but we still want to
         // add the scrollbar to the logical width now, to facilitate parent
         // layout.
@@ -1347,6 +1334,19 @@ void PaintLayerScrollableArea::ComputeScrollbarExistence(
     ScrollbarMode v_mode;
     ToLayoutView(Box()).CalculateScrollbarModes(h_mode, v_mode);
 
+    // Avoid adding auto scrollbars in the first layout pass if the content is
+    // entirely inside the scroll area. This prevents the situation where a
+    // horizontal scrollbar is added due to the initial vertical scrollbar.
+    IntSize visible_size_with_scrollbars =
+        VisibleContentRect(kIncludeScrollbars).Size();
+    bool attempt_to_remove_scrollbars =
+        !in_overflow_relayout_ &&
+        ScrollWidth() <= visible_size_with_scrollbars.Width() &&
+        ScrollHeight() <= visible_size_with_scrollbars.Height() &&
+        h_mode == kScrollbarAuto && v_mode == kScrollbarAuto;
+    if (attempt_to_remove_scrollbars)
+      needs_horizontal_scrollbar = needs_vertical_scrollbar = false;
+
     // Look for the scrollbarModes and reset the needs Horizontal & vertical
     // Scrollbar values based on scrollbarModes, as during force style change
     // StyleResolver::styleForDocument returns documentStyle with no overflow
@@ -1361,35 +1361,6 @@ void PaintLayerScrollableArea::ComputeScrollbarExistence(
     else if (v_mode == kScrollbarAlwaysOff)
       needs_vertical_scrollbar = false;
   }
-}
-
-bool PaintLayerScrollableArea::TryRemovingAutoScrollbars(
-    const bool& needs_horizontal_scrollbar,
-    const bool& needs_vertical_scrollbar) {
-  // If scrollbars are removed but the content size depends on the scrollbars,
-  // additional layouts will be required to size the content. Therefore, only
-  // remove auto scrollbars for the initial layout pass.
-  DCHECK(!in_overflow_relayout_);
-
-  // TODO(pdr): Extend this logic to work with all overflow boxes.
-  if (Box().IsLayoutView()) {
-    if (!needs_horizontal_scrollbar && !needs_vertical_scrollbar)
-      return false;
-
-    ScrollbarMode h_mode;
-    ScrollbarMode v_mode;
-    ToLayoutView(Box()).CalculateScrollbarModes(h_mode, v_mode);
-    if (h_mode != kScrollbarAuto || v_mode != kScrollbarAuto)
-      return false;
-
-    IntSize visible_size_with_scrollbars =
-        VisibleContentRect(kIncludeScrollbars).Size();
-    if (ScrollWidth() <= visible_size_with_scrollbars.Width() &&
-        ScrollHeight() <= visible_size_with_scrollbars.Height()) {
-      return true;
-    }
-  }
-  return false;
 }
 
 bool PaintLayerScrollableArea::SetHasHorizontalScrollbar(bool has_scrollbar) {

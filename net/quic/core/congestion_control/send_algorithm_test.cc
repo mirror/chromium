@@ -23,6 +23,9 @@
 #include "net/quic/test_tools/simulator/simulator.h"
 #include "net/quic/test_tools/simulator/switch.h"
 
+// TODO(vasilvv): make this tests not time out on Android.
+#if !defined(OS_ANDROID)
+
 using std::string;
 
 namespace net {
@@ -432,3 +435,5 @@ TEST_P(SendAlgorithmTest, LowRTTTransfer) {
 
 }  // namespace test
 }  // namespace net
+
+#endif  // !defined(OS_ANDROID)

@@ -92,7 +92,8 @@ void WebFont::DrawText(WebCanvas* canvas,
   GraphicsContext& context = builder.Context();
 
   {
-    DrawingRecorder recorder(context, builder, DisplayItem::kWebFont, int_rect);
+    DrawingRecorder drawing_recorder(context, builder, DisplayItem::kWebFont,
+                                     int_rect);
     context.Save();
     context.SetFillColor(color);
     context.Clip(text_clip_rect);

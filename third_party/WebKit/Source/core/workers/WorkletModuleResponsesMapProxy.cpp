@@ -47,7 +47,7 @@ class ClientAdapter final : public GarbageCollectedFinalized<ClientAdapter>,
         CrossThreadBind(&WorkletModuleResponsesMap::Client::OnFailed, client_));
   }
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  private:
   ClientAdapter(WorkletModuleResponsesMap::Client* client,
@@ -81,7 +81,7 @@ void WorkletModuleResponsesMapProxy::ReadEntry(
                       WrapCrossThreadPersistent(client)));
 }
 
-void WorkletModuleResponsesMapProxy::Trace(blink::Visitor* visitor) {}
+DEFINE_TRACE(WorkletModuleResponsesMapProxy) {}
 
 WorkletModuleResponsesMapProxy::WorkletModuleResponsesMapProxy(
     WorkletModuleResponsesMap* module_responses_map,

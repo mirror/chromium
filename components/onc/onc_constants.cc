@@ -361,7 +361,6 @@ const char kAuth[] = "Auth";
 const char kCipher[] = "Cipher";
 const char kCompLZO[] = "CompLZO";
 const char kCompNoAdapt[] = "CompNoAdapt";
-const char kExtraHosts[] = "ExtraHosts";
 const char kIgnoreDefaultRoute[] = "IgnoreDefaultRoute";
 const char kInteract[] = "interact";
 const char kKeyDirection[] = "KeyDirection";

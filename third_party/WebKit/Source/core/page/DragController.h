@@ -88,7 +88,7 @@ class CORE_EXPORT DragController final
   // Return the selection in the frame's coords, clipped to the visual viewport.
   static FloatRect ClippedSelection(const LocalFrame&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit DragController(Page*);

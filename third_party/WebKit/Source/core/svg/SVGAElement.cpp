@@ -57,7 +57,7 @@ inline SVGAElement::SVGAElement(Document& document)
   AddToPropertyMap(svg_target_);
 }
 
-void SVGAElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGAElement) {
   visitor->Trace(svg_target_);
   SVGGraphicsElement::Trace(visitor);
   SVGURIReference::Trace(visitor);

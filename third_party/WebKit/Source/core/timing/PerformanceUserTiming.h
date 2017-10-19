@@ -61,7 +61,7 @@ class UserTiming final : public GarbageCollected<UserTiming> {
   PerformanceEntryVector GetMarks(const String& name) const;
   PerformanceEntryVector GetMeasures(const String& name) const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit UserTiming(PerformanceBase&);

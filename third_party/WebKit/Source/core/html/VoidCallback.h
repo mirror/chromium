@@ -33,7 +33,7 @@ namespace blink {
 class VoidCallback : public GarbageCollectedFinalized<VoidCallback> {
  public:
   virtual ~VoidCallback() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
   virtual void handleEvent() = 0;
 };
 

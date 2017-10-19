@@ -54,15 +54,15 @@ CompositorMutatorImpl* CompositorMutatorImpl::Create() {
   return new CompositorMutatorImpl();
 }
 
-void CompositorMutatorImpl::Mutate(double monotonic_time_now) {
+bool CompositorMutatorImpl::Mutate(double monotonic_time_now) {
   TRACE_EVENT0("cc", "CompositorMutatorImpl::mutate");
+  bool need_to_reinvoke = false;
   for (CompositorAnimator* animator : animators_) {
-    animator->Mutate(monotonic_time_now);
+    if (animator->Mutate(monotonic_time_now))
+      need_to_reinvoke = true;
   }
-}
 
-bool CompositorMutatorImpl::HasAnimators() {
-  return !animators_.IsEmpty();
+  return need_to_reinvoke;
 }
 
 void CompositorMutatorImpl::RegisterCompositorAnimator(
@@ -71,12 +71,19 @@ void CompositorMutatorImpl::RegisterCompositorAnimator(
   TRACE_EVENT0("cc", "CompositorMutatorImpl::registerCompositorAnimator");
   DCHECK(!animators_.Contains(animator));
   animators_.insert(animator);
+  SetNeedsMutate();
 }
 
 void CompositorMutatorImpl::UnregisterCompositorAnimator(
     CompositorAnimator* animator) {
   DCHECK(animators_.Contains(animator));
   animators_.erase(animator);
+}
+
+void CompositorMutatorImpl::SetNeedsMutate() {
+  DCHECK(!IsMainThread());
+  TRACE_EVENT0("cc", "CompositorMutatorImpl::setNeedsMutate");
+  client_->SetNeedsMutate();
 }
 
 }  // namespace blink

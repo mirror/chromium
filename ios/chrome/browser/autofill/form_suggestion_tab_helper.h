@@ -35,7 +35,7 @@ class FormSuggestionTabHelper
                           NSArray<id<FormSuggestionProvider>>* providers);
 
   // web::WebStateObserver implementation.
-  void WebStateDestroyed(web::WebState* web_state) override;
+  void WebStateDestroyed() override;
 
   // The Objective-C password controller instance.
   __strong FormSuggestionController* controller_;

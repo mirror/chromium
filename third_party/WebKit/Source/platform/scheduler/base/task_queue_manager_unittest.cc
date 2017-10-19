@@ -838,11 +838,8 @@ TEST_F(TaskQueueManagerTest, DelayedFence_DelayedTasks) {
       base::TimeDelta::FromMilliseconds(300));
 
   runners_[0]->InsertFenceAt(Now() + base::TimeDelta::FromMilliseconds(250));
-  EXPECT_FALSE(runners_[0]->HasActiveFence());
-
   test_task_runner_->RunUntilIdle();
 
-  EXPECT_TRUE(runners_[0]->HasActiveFence());
   EXPECT_THAT(
       run_times,
       ElementsAre(base::TimeTicks() + base::TimeDelta::FromMilliseconds(101),
@@ -852,7 +849,6 @@ TEST_F(TaskQueueManagerTest, DelayedFence_DelayedTasks) {
   runners_[0]->RemoveFence();
   test_task_runner_->RunUntilIdle();
 
-  EXPECT_FALSE(runners_[0]->HasActiveFence());
   EXPECT_THAT(run_times, ElementsAre(base::TimeTicks() +
                                      base::TimeDelta::FromMilliseconds(301)));
 }
@@ -868,11 +864,6 @@ TEST_F(TaskQueueManagerTest, DelayedFence_ImmediateTasks) {
     runners_[0]->PostTask(
         FROM_HERE, base::Bind(&RecordTimeTask, &run_times, now_src_.get()));
     test_task_runner_->RunForPeriod(base::TimeDelta::FromMilliseconds(100));
-    if (i < 2) {
-      EXPECT_FALSE(runners_[0]->HasActiveFence());
-    } else {
-      EXPECT_TRUE(runners_[0]->HasActiveFence());
-    }
   }
 
   EXPECT_THAT(
@@ -901,18 +892,15 @@ TEST_F(TaskQueueManagerTest, DelayedFence_RemovedFenceDoesNotActivate) {
   for (int i = 0; i < 3; ++i) {
     runners_[0]->PostTask(
         FROM_HERE, base::Bind(&RecordTimeTask, &run_times, now_src_.get()));
-    EXPECT_FALSE(runners_[0]->HasActiveFence());
     test_task_runner_->RunForPeriod(base::TimeDelta::FromMilliseconds(100));
   }
 
-  EXPECT_TRUE(runners_[0]->HasActiveFence());
   runners_[0]->RemoveFence();
 
   for (int i = 0; i < 2; ++i) {
     runners_[0]->PostTask(
         FROM_HERE, base::Bind(&RecordTimeTask, &run_times, now_src_.get()));
     test_task_runner_->RunForPeriod(base::TimeDelta::FromMilliseconds(100));
-    EXPECT_FALSE(runners_[0]->HasActiveFence());
   }
 
   EXPECT_THAT(

@@ -52,7 +52,7 @@ class MediaControlSliderElement::MediaControlSliderElementResizeObserverDelegate
     element_->NotifyElementSizeChanged();
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(element_);
     ResizeObserver::Delegate::Trace(visitor);
   }
@@ -151,7 +151,7 @@ void MediaControlSliderElement::NotifyElementSizeChanged() {
                         Width(), ZoomFactor());
 }
 
-void MediaControlSliderElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControlSliderElement) {
   visitor->Trace(segment_highlight_before_);
   visitor->Trace(segment_highlight_after_);
   visitor->Trace(resize_observer_);

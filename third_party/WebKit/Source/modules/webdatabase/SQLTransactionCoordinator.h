@@ -48,7 +48,7 @@ class SQLTransactionCoordinator
 
  public:
   SQLTransactionCoordinator();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   void AcquireLock(SQLTransactionBackend*);
   void ReleaseLock(SQLTransactionBackend*);
   void Shutdown();

@@ -514,7 +514,7 @@
     },
     {
       name: "JSImageDecode",
-      status: "stable",
+      status: "test",
     },
     {
       name: "KeyboardLock",
@@ -943,6 +943,10 @@
     {
       name: "ShapeDetection",
       status: "experimental",
+    },
+    {
+      name: "SharedArrayBuffer",
+      status: "stable",
     },
     {
       name: "SharedWorker",

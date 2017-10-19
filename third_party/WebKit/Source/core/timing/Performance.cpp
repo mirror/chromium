@@ -182,7 +182,7 @@ ScriptValue Performance::toJSONForBinding(ScriptState* script_state) const {
   return result.GetScriptValue();
 }
 
-void Performance::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Performance) {
   visitor->Trace(navigation_);
   visitor->Trace(timing_);
   PerformanceBase::Trace(visitor);

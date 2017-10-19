@@ -103,7 +103,7 @@ void InspectorTraceEvents::Dispose() {
   instrumenting_agents_ = nullptr;
 }
 
-void InspectorTraceEvents::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorTraceEvents) {
   visitor->Trace(instrumenting_agents_);
   InspectorAgent::Trace(visitor);
 }

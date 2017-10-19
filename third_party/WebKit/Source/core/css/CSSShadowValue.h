@@ -53,7 +53,7 @@ class CORE_EXPORT CSSShadowValue : public CSSValue {
   Member<CSSIdentifierValue> style;
   Member<CSSValue> color;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSShadowValue(CSSPrimitiveValue* x,

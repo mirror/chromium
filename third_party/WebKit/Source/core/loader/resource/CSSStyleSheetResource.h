@@ -50,7 +50,7 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
                                               const WTF::TextEncoding&);
 
   ~CSSStyleSheetResource() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   const String SheetText(MIMETypeCheck = MIMETypeCheck::kStrict) const;
 

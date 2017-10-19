@@ -149,7 +149,7 @@ void ServiceWorkerRegistration::Dispose() {
   handle_.reset();
 }
 
-void ServiceWorkerRegistration::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ServiceWorkerRegistration) {
   visitor->Trace(installing_);
   visitor->Trace(waiting_);
   visitor->Trace(active_);

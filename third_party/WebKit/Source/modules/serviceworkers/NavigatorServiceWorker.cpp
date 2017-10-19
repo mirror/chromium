@@ -123,7 +123,7 @@ void NavigatorServiceWorker::ClearServiceWorker() {
   service_worker_ = nullptr;
 }
 
-void NavigatorServiceWorker::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorServiceWorker) {
   visitor->Trace(service_worker_);
   Supplement<Navigator>::Trace(visitor);
 }

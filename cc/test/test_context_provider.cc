@@ -106,8 +106,7 @@ scoped_refptr<TestContextProvider> TestContextProvider::CreateWorker() {
           std::make_unique<TestGLES2InterfaceForContextProvider>(),
           TestWebGraphicsContext3D::Create()));
   // Worker contexts are bound to the thread they are created on.
-  auto result = worker_context_provider->BindToCurrentThread();
-  if (result != gpu::ContextResult::kSuccess)
+  if (!worker_context_provider->BindToCurrentThread())
     return nullptr;
   return worker_context_provider;
 }
@@ -169,19 +168,23 @@ TestContextProvider::~TestContextProvider() {
          context_thread_checker_.CalledOnValidThread());
 }
 
-gpu::ContextResult TestContextProvider::BindToCurrentThread() {
+bool TestContextProvider::BindToCurrentThread() {
   // This is called on the thread the context will be used.
   DCHECK(context_thread_checker_.CalledOnValidThread());
 
-  if (!bound_) {
-    if (context_gl_->GetGraphicsResetStatusKHR() != GL_NO_ERROR)
-      return gpu::ContextResult::kTransientFailure;
+  if (bound_)
+    return true;
 
-    context3d_->set_context_lost_callback(base::Bind(
-        &TestContextProvider::OnLostContext, base::Unretained(this)));
+  if (context_gl_->GetGraphicsResetStatusKHR() != GL_NO_ERROR) {
+    return false;
   }
   bound_ = true;
-  return gpu::ContextResult::kSuccess;
+
+  context3d_->set_context_lost_callback(
+      base::Bind(&TestContextProvider::OnLostContext,
+                 base::Unretained(this)));
+
+  return true;
 }
 
 void TestContextProvider::DetachFromThread() {

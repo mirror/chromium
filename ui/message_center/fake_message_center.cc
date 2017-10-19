@@ -110,14 +110,17 @@ void FakeMessageCenter::MarkSinglePopupAsShown(const std::string& id,
                                                bool mark_notification_as_read) {
 }
 
-void FakeMessageCenter::DisplayedNotification(const std::string& id,
-                                              const DisplaySource source) {}
+void FakeMessageCenter::DisplayedNotification(
+    const std::string& id,
+    const DisplaySource source) {
+}
 
 void FakeMessageCenter::SetNotifierSettingsProvider(
-    std::unique_ptr<NotifierSettingsProvider> provider) {}
+    NotifierSettingsProvider* provider) {
+}
 
 NotifierSettingsProvider* FakeMessageCenter::GetNotifierSettingsProvider() {
-  return nullptr;
+  return NULL;
 }
 
 void FakeMessageCenter::SetQuietMode(bool in_quiet_mode) {

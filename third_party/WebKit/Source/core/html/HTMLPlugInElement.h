@@ -49,7 +49,7 @@ class CORE_EXPORT HTMLPlugInElement
 
  public:
   ~HTMLPlugInElement() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   bool HasPendingActivity() const final;
 

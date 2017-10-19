@@ -31,7 +31,7 @@ class PerformanceLongTaskTiming final : public PerformanceEntry {
 
   TaskAttributionVector attribution() const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   PerformanceLongTaskTiming(

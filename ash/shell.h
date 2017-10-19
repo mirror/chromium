@@ -509,12 +509,10 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   void SetLargeCursorSizeInDip(int large_cursor_size_in_dip);
 
-  // Updates cursor compositing on/off. Native cursor is disabled when cursor
+  // Toggles cursor compositing on/off. Native cursor is disabled when cursor
   // compositing is enabled, and vice versa.
-  void UpdateCursorCompositingEnabled();
-
-  // Force setting compositing on/off without checking dependency.
   void SetCursorCompositingEnabled(bool enabled);
+
 
   // Returns true if split view mode is active.
   bool IsSplitViewModeActive() const;

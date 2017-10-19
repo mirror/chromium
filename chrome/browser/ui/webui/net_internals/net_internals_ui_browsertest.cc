@@ -299,7 +299,7 @@ void NetInternalsTest::MessageHandler::CloseIncognitoBrowser(
 
 void NetInternalsTest::MessageHandler::GetNetLogFileContents(
     const base::ListValue* list_value) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
 
   std::unique_ptr<WriteNetLogState> state =
       base::MakeUnique<WriteNetLogState>();
@@ -343,7 +343,7 @@ void NetInternalsTest::MessageHandler::EnableDataReductionProxy(
 
 void NetInternalsTest::MessageHandler::OnFinishedWritingNetLog(
     std::unique_ptr<WriteNetLogState> state) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
 
   std::string log_contents;
   ASSERT_TRUE(base::ReadFileToString(state->log_path, &log_contents));

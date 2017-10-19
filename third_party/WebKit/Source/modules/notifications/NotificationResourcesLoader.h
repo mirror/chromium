@@ -52,7 +52,7 @@ class MODULES_EXPORT NotificationResourcesLoader final
   // pre-finalizer.
   void Stop();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   void LoadImage(ExecutionContext*,

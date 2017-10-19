@@ -73,7 +73,7 @@ InputType* FileInputType::Create(HTMLInputElement& element) {
   return new FileInputType(element);
 }
 
-void FileInputType::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FileInputType) {
   visitor->Trace(file_list_);
   KeyboardClickableInputTypeView::Trace(visitor);
   InputType::Trace(visitor);

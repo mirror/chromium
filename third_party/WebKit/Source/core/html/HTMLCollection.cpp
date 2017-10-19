@@ -525,7 +525,7 @@ void HTMLCollection::NamedItems(const AtomicString& name,
 
 HTMLCollection::NamedItemCache::NamedItemCache() {}
 
-void HTMLCollection::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLCollection) {
   visitor->Trace(named_item_cache_);
   visitor->Trace(collection_items_cache_);
   LiveNodeListBase::Trace(visitor);

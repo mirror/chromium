@@ -8,7 +8,6 @@
 #include <memory>
 #include <string>
 
-#include "base/callback.h"
 #include "base/files/scoped_file.h"
 #include "base/macros.h"
 #include "build/build_config.h"
@@ -23,17 +22,7 @@ namespace content {
 class SandboxSeccompBPF {
  public:
   struct Options {
-    Options();
-    Options(Options&& that);
-    ~Options();
-
-    bool use_amd_specific_policies = false;  // For ChromiumOS.
-
-    // Callers can provide this hook to run code right before the policy
-    // is passed to the BPF compiler and the sandbox is engaged. If
-    // pre_sandbox_hook() returns true, the sandbox will be engaged
-    // afterwards, otherwise the process is terminated.
-    base::OnceCallback<bool(sandbox::bpf_dsl::Policy*)> pre_sandbox_hook;
+    bool use_amd_specific_policies = false;  // For ChromiumOs.
   };
 
   // This is the API to enable a seccomp-bpf sandbox for content/
@@ -52,7 +41,7 @@ class SandboxSeccompBPF {
   // command line switches and options.
   static bool StartSandbox(service_manager::SandboxType sandbox_type,
                            base::ScopedFD proc_fd,
-                           Options options);
+                           const Options& options);
 #endif  // !defined(OS_NACL_NONSFI)
 
   // This is the API to enable a seccomp-bpf sandbox by using an

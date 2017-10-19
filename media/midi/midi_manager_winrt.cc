@@ -15,7 +15,6 @@
 #include <robuffer.h>
 #include <windows.devices.enumeration.h>
 #include <windows.devices.midi.h>
-#include <wrl/client.h>
 #include <wrl/event.h>
 
 #include <iomanip>
@@ -31,6 +30,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
 #include "base/win/core_winrt_util.h"
+#include "base/win/scoped_comptr.h"
 #include "base/win/scoped_hstring.h"
 #include "media/midi/midi_scheduler.h"
 
@@ -44,6 +44,7 @@ using namespace ABI::Windows::Devices::Midi;
 using namespace ABI::Windows::Foundation;
 using namespace ABI::Windows::Storage::Streams;
 
+using base::win::ScopedComPtr;
 using base::win::ScopedHString;
 using base::win::GetActivationFactory;
 using mojom::PortState;
@@ -98,7 +99,7 @@ std::string GetNameString(IDeviceInformation* info) {
 // Checks if given DeviceInformation represent a Microsoft GS Wavetable Synth
 // instance.
 bool IsMicrosoftSynthesizer(IDeviceInformation* info) {
-  WRL::ComPtr<IMidiSynthesizerStatics> midi_synthesizer_statics;
+  ScopedComPtr<IMidiSynthesizerStatics> midi_synthesizer_statics;
   HRESULT hr =
       GetActivationFactory<IMidiSynthesizerStatics,
                            RuntimeClass_Windows_Devices_Midi_MidiSynthesizer>(
@@ -196,7 +197,7 @@ struct MidiPort {
   MidiPort() = default;
 
   uint32_t index;
-  WRL::ComPtr<InterfaceType> handle;
+  ScopedComPtr<InterfaceType> handle;
   EventRegistrationToken token_MessageReceived;
 
  private:
@@ -235,7 +236,7 @@ class MidiManagerWinrt::MidiPortManager {
       return false;
     }
 
-    WRL::ComPtr<IDeviceInformationStatics> dev_info_statics;
+    ScopedComPtr<IDeviceInformationStatics> dev_info_statics;
     hr = GetActivationFactory<
         IDeviceInformationStatics,
         RuntimeClass_Windows_Devices_Enumeration_DeviceInformation>(
@@ -593,11 +594,11 @@ class MidiManagerWinrt::MidiPortManager {
   virtual base::WeakPtr<MidiPortManager> GetWeakPtrFromFactory() = 0;
 
   // Midi{In,Out}PortStatics instance.
-  WRL::ComPtr<StaticsInterfaceType> midi_port_statics_;
+  ScopedComPtr<StaticsInterfaceType> midi_port_statics_;
 
   // DeviceWatcher instance and event registration tokens for unsubscribing
   // events in destructor.
-  WRL::ComPtr<IDeviceWatcher> watcher_;
+  ScopedComPtr<IDeviceWatcher> watcher_;
   EventRegistrationToken token_Added_ = {kInvalidTokenValue},
                          token_EnumerationCompleted_ = {kInvalidTokenValue},
                          token_Removed_ = {kInvalidTokenValue},
@@ -653,14 +654,14 @@ class MidiManagerWinrt::MidiInPortManager final
 
               std::string dev_id = GetDeviceIdString(handle);
 
-              WRL::ComPtr<IMidiMessage> message;
+              ScopedComPtr<IMidiMessage> message;
               HRESULT hr = args->get_Message(message.GetAddressOf());
               if (FAILED(hr)) {
                 VLOG(1) << "get_Message failed: " << PrintHr(hr);
                 return hr;
               }
 
-              WRL::ComPtr<IBuffer> buffer;
+              ScopedComPtr<IBuffer> buffer;
               hr = message->get_RawData(buffer.GetAddressOf());
               if (FAILED(hr)) {
                 VLOG(1) << "get_RawData failed: " << PrintHr(hr);
@@ -867,7 +868,7 @@ void MidiManagerWinrt::SendOnComThread(uint32_t port_index,
     return;
   }
 
-  WRL::ComPtr<IBuffer> buffer;
+  ScopedComPtr<IBuffer> buffer;
   HRESULT hr = base::win::CreateIBufferFromData(
       data.data(), static_cast<UINT32>(data.size()), buffer.GetAddressOf());
   if (FAILED(hr)) {

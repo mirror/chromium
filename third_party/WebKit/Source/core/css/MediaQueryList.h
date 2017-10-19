@@ -74,7 +74,7 @@ class CORE_EXPORT MediaQueryList final
   bool MediaFeaturesChanged(
       HeapVector<Member<MediaQueryListListener>>* listeners_to_notify);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   // From ScriptWrappable
   bool HasPendingActivity() const final;

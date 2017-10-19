@@ -36,7 +36,7 @@ WebGLExtensionScopedContext::~WebGLExtensionScopedContext() {}
 WebGLExtension::WebGLExtension(WebGLRenderingContextBase* context)
     : context_(context) {}
 
-void WebGLExtension::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLExtension) {
   visitor->Trace(context_);
 }
 

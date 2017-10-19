@@ -3,11 +3,6 @@
 // found in the LICENSE file.
 
 window.chrome = {
-  commandLinePrivate: {
-    hasSwitch: function(name, callback) {
-      callback(false);
-    }
-  },
   fileManagerPrivate: {
     getFileTasks: function(entries, callback) {
       setTimeout(callback.bind(null, [

@@ -14,6 +14,9 @@ Console.ConsoleFilter = class {
     this.parsedFilters = parsedFilters;
     this.executionContext = executionContext;
     this.levelsMask = levelsMask || Console.ConsoleFilter.defaultLevelsFilterValue();
+    this.infoCount = 0;
+    this.warningCount = 0;
+    this.errorCount = 0;
   }
 
   /**
@@ -36,29 +39,21 @@ Console.ConsoleFilter = class {
   }
 
   /**
-   * @param {string} level
-   * @return {!Object<string, boolean>}
+   * @param {!Console.ConsoleViewMessage} viewMessage
+   * @return {boolean}
    */
-  static singleLevelMask(level) {
-    var result = {};
-    result[level] = true;
-    return result;
-  }
-
-  /**
-   * @return {!Console.ConsoleFilter}
-   */
-  clone() {
-    var parsedFilters = this.parsedFilters.map(TextUtils.FilterParser.cloneFilter);
-    var levelsMask = Object.assign({}, this.levelsMask);
-    return new Console.ConsoleFilter(this.name, parsedFilters, this.executionContext, levelsMask);
+  applyFilter(viewMessage) {
+    var visible = this._shouldBeVisible(viewMessage);
+    if (visible)
+      this._incrementCounters(viewMessage.consoleMessage().level);
+    return visible;
   }
 
   /**
    * @param {!Console.ConsoleViewMessage} viewMessage
    * @return {boolean}
    */
-  shouldBeVisible(viewMessage) {
+  _shouldBeVisible(viewMessage) {
     var message = viewMessage.consoleMessage();
     if (this.executionContext &&
         (this.executionContext.runtimeModel !== message.runtimeModel() ||
@@ -108,18 +103,37 @@ Console.ConsoleFilter = class {
      * @return {boolean}
      */
     function passesFilter(filter, value, exactMatch) {
-      if (!filter.text)
-        return !!value === filter.negative;
-      if (!value)
-        return !filter.text === !filter.negative;
-      var filterText = /** @type {string} */ (filter.text).toLowerCase();
-      var lowerCaseValue = value.toLowerCase();
-      if (exactMatch && (lowerCaseValue === filterText) === filter.negative)
+      if (!value && !filter.negative)
         return false;
-      if (!exactMatch && lowerCaseValue.includes(filterText) === filter.negative)
-        return false;
+      if (value) {
+        var filterText = /** @type {string} */ (filter.text).toLowerCase();
+        var lowerCaseValue = value.toLowerCase();
+        if (exactMatch && (lowerCaseValue === filterText) === filter.negative)
+          return false;
+        if (!exactMatch && lowerCaseValue.includes(filterText) === filter.negative)
+          return false;
+      }
       return true;
     }
+  }
+
+  /**
+   * @param {?ConsoleModel.ConsoleMessage.MessageLevel} level
+   */
+  _incrementCounters(level) {
+    if (level === ConsoleModel.ConsoleMessage.MessageLevel.Info ||
+        level === ConsoleModel.ConsoleMessage.MessageLevel.Verbose)
+      this.infoCount++;
+    else if (level === ConsoleModel.ConsoleMessage.MessageLevel.Warning)
+      this.warningCount++;
+    else if (level === ConsoleModel.ConsoleMessage.MessageLevel.Error)
+      this.errorCount++;
+  }
+
+  resetCounters() {
+    this.infoCount = 0;
+    this.warningCount = 0;
+    this.errorCount = 0;
   }
 };
 

@@ -56,7 +56,7 @@ CSSValuePool::CSSValuePool()
   number_value_cache_.resize(kMaximumCacheableIntegerValue + 1);
 }
 
-void CSSValuePool::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSValuePool) {
   visitor->Trace(inherited_value_);
   visitor->Trace(initial_value_);
   visitor->Trace(unset_value_);

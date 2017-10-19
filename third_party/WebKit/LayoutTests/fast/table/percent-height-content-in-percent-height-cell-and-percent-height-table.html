@@ -27,9 +27,10 @@
         </td>
     </tr>
 </table>
+<div id='console'></div>
 <script src="../../resources/testharness.js"></script>
 <script src="../../resources/testharnessreport.js"></script>
 <script src="../../resources/check-layout-th.js"></script>
 <script>
-    checkLayout("#test");
+    checkLayout("#test", document.getElementById('console'));
 </script>

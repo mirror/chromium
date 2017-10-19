@@ -45,7 +45,7 @@ SpeechRecognitionResult::SpeechRecognitionResult(
     bool final)
     : final_(final), alternatives_(alternatives) {}
 
-void SpeechRecognitionResult::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SpeechRecognitionResult) {
   visitor->Trace(alternatives_);
 }
 

@@ -72,7 +72,7 @@ class CORE_EXPORT SpinButtonElement final : public HTMLDivElement,
 
   void ForwardEvent(Event*);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   SpinButtonElement(Document&, SpinButtonOwner&);

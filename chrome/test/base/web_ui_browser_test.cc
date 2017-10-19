@@ -33,7 +33,6 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_ui_controller.h"
 #include "content/public/browser/web_ui_message_handler.h"
-#include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
@@ -372,14 +371,6 @@ base::LazyInstance<MockWebUIProvider>::DestructorAtExit mock_provider_ =
 
 }  // namespace
 
-void WebUIBrowserTest::SetUpCommandLine(base::CommandLine* command_line) {
-  JavaScriptBrowserTest::SetUpCommandLine(command_line);
-
-  // Enables the MojoJSTest bindings which are used for WebUI tests.
-  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kEnableBlinkFeatures, "MojoJSTest");
-}
-
 void WebUIBrowserTest::SetUpOnMainThread() {
   JavaScriptBrowserTest::SetUpOnMainThread();
 
@@ -503,7 +494,7 @@ void WebUIBrowserTest::SetupHandlers() {
 
 GURL WebUIBrowserTest::WebUITestDataPathToURL(
     const base::FilePath::StringType& path) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::FilePath dir_test_data;
   EXPECT_TRUE(PathService::Get(chrome::DIR_TEST_DATA, &dir_test_data));
   base::FilePath test_path(dir_test_data.Append(kWebUITestFolder).Append(path));

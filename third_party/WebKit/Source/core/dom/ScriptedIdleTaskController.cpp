@@ -83,7 +83,7 @@ ScriptedIdleTaskController::V8IdleTask::V8IdleTask(
     V8IdleRequestCallback* callback)
     : callback_(callback) {}
 
-void ScriptedIdleTaskController::V8IdleTask::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScriptedIdleTaskController::V8IdleTask) {
   visitor->Trace(callback_);
   ScriptedIdleTaskController::IdleTask::Trace(visitor);
 }
@@ -108,7 +108,7 @@ ScriptedIdleTaskController::ScriptedIdleTaskController(
 
 ScriptedIdleTaskController::~ScriptedIdleTaskController() {}
 
-void ScriptedIdleTaskController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScriptedIdleTaskController) {
   visitor->Trace(idle_tasks_);
   SuspendableObject::Trace(visitor);
 }

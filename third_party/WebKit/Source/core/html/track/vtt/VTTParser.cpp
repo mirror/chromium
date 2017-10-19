@@ -562,7 +562,7 @@ void VTTTreeBuilder::ConstructTreeFromToken(Document& document) {
   }
 }
 
-void VTTParser::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(VTTParser) {
   visitor->Trace(document_);
   visitor->Trace(client_);
   visitor->Trace(cue_list_);

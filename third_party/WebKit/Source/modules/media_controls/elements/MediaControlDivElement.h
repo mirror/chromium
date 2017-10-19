@@ -18,12 +18,11 @@ class MediaControlDivElement : public HTMLDivElement,
                                public MediaControlElementBase {
   USING_GARBAGE_COLLECTED_MIXIN(MediaControlDivElement);
 
- public:
   // Implements MediaControlElementBase.
   void SetOverflowElementIsWanted(bool) final;
   void MaybeRecordDisplayed() final;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   MediaControlDivElement(MediaControlsImpl&, MediaControlElementType);

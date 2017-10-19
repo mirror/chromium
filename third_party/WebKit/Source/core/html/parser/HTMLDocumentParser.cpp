@@ -168,7 +168,7 @@ void HTMLDocumentParser::Dispose() {
     StopBackgroundParser();
 }
 
-void HTMLDocumentParser::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLDocumentParser) {
   visitor->Trace(tree_builder_);
   visitor->Trace(parser_scheduler_);
   visitor->Trace(xss_auditor_delegate_);

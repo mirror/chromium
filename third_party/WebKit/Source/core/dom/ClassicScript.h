@@ -19,7 +19,7 @@ class CORE_EXPORT ClassicScript final : public Script {
     return new ClassicScript(script_source_code, fetch_options);
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   const ScriptSourceCode& GetScriptSourceCode() const {
     return script_source_code_;

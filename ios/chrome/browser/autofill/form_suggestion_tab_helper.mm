@@ -42,7 +42,7 @@ FormSuggestionTabHelper::FormSuggestionTabHelper(
   DCHECK(web::WebStateObserver::web_state());
 }
 
-void FormSuggestionTabHelper::WebStateDestroyed(web::WebState* web_state) {
+void FormSuggestionTabHelper::WebStateDestroyed() {
   [controller_ detachFromWebState];
   controller_ = nil;
 }

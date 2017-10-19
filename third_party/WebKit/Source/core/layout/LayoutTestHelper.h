@@ -27,7 +27,7 @@ class SingleChildLocalFrameClient final : public EmptyLocalFrameClient {
     return new SingleChildLocalFrameClient();
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(child_);
     EmptyLocalFrameClient::Trace(visitor);
   }
@@ -51,7 +51,7 @@ class LocalFrameClientWithParent final : public EmptyLocalFrameClient {
     return new LocalFrameClientWithParent(parent);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(parent_);
     EmptyLocalFrameClient::Trace(visitor);
   }
@@ -76,6 +76,12 @@ class RenderingTest : public PageTestBase {
   virtual ChromeClient& GetChromeClient() const;
 
   RenderingTest(LocalFrameClient* = nullptr);
+
+  // Load the 'Ahem' font to the LocalFrame.
+  // The 'Ahem' font is the only font whose font metrics is consistent across
+  // platforms, but it's not guaranteed to be available.
+  // See external/wpt/css/fonts/ahem/README for more about the 'Ahem' font.
+  static void LoadAhem(LocalFrame&);
 
  protected:
   void SetUp() override;
@@ -115,6 +121,8 @@ class RenderingTest : public PageTestBase {
     const auto* element = GetElementById(id);
     return element ? element->GetLayoutObject() : nullptr;
   }
+
+  void LoadAhem();
 
  private:
   Persistent<LocalFrameClient> local_frame_client_;

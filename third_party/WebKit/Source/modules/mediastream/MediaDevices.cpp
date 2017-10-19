@@ -35,7 +35,7 @@ class PromiseSuccessCallback final : public NavigatorUserMediaSuccessCallback {
 
   void handleEvent(MediaStream* stream) { resolver_->Resolve(stream); }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(resolver_);
     NavigatorUserMediaSuccessCallback::Trace(visitor);
   }
@@ -53,7 +53,7 @@ class PromiseErrorCallback final : public NavigatorUserMediaErrorCallback {
 
   void handleEvent(NavigatorUserMediaError* error) { resolver_->Reject(error); }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(resolver_);
     NavigatorUserMediaErrorCallback::Trace(visitor);
   }
@@ -250,7 +250,7 @@ void MediaDevices::Dispose() {
   StopObserving();
 }
 
-void MediaDevices::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaDevices) {
   visitor->Trace(dispatch_scheduled_event_runner_);
   visitor->Trace(scheduled_events_);
   EventTargetWithInlineData::Trace(visitor);

@@ -2102,11 +2102,6 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
       UMA_HISTOGRAM_TIMES("Toolbar.TabSwitcher.NewTabPresentationDuration",
                           base::TimeDelta::FromSecondsD(duration));
     }
-
-    // The following must come after logging metrics, because
-    // |clearInternalState| resets _activeCardSet.
-    _isActive = NO;
-    [self clearInternalState];
   };
 
   CGPoint origin = _lastTapPoint;

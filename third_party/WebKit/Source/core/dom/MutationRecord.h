@@ -77,7 +77,7 @@ class MutationRecord : public GarbageCollectedFinalized<MutationRecord>,
 
   virtual String oldValue() { return String(); }
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
 }  // namespace blink

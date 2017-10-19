@@ -67,7 +67,7 @@ class CORE_EXPORT PerformanceNavigation final
 
   ScriptValue toJSONForBinding(ScriptState*) const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit PerformanceNavigation(LocalFrame*);

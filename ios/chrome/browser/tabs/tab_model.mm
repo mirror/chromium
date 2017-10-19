@@ -469,8 +469,7 @@ void CleanCertificatePolicyCache(
 
 - (void)closeTabAtIndex:(NSUInteger)index {
   DCHECK_LE(index, static_cast<NSUInteger>(INT_MAX));
-  _webStateList->CloseWebStateAt(static_cast<int>(index),
-                                 WebStateList::CLOSE_USER_ACTION);
+  _webStateList->CloseWebStateAt(static_cast<int>(index));
 }
 
 - (void)closeTab:(Tab*)tab {
@@ -478,7 +477,7 @@ void CleanCertificatePolicyCache(
 }
 
 - (void)closeAllTabs {
-  _webStateList->CloseAllWebStates(WebStateList::CLOSE_USER_ACTION);
+  _webStateList->CloseAllWebStates();
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kTabModelAllTabsDidCloseNotification
                     object:self];
@@ -590,7 +589,7 @@ void CleanCertificatePolicyCache(
   // method, ensure they -autorelease introduced by ARC are processed before
   // the WebStateList destructor is called.
   @autoreleasepool {
-    _webStateList->CloseAllWebStates(WebStateList::CLOSE_NO_FLAGS);
+    [self closeAllTabs];
   }
 
   // Unregister all observers after closing all the tabs as some of them are

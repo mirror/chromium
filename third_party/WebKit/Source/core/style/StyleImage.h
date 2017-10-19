@@ -97,7 +97,7 @@ class CORE_EXPORT StyleImage : public GarbageCollectedFinalized<StyleImage> {
   // so that it can persist beyond a navigation.
   void FlagAsUserAgentResource();
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   StyleImage()

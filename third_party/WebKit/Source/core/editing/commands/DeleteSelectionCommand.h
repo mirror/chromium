@@ -61,7 +61,7 @@ class CORE_EXPORT DeleteSelectionCommand final : public CompositeEditCommand {
         expand_for_special_elements, sanitize_markup, input_type);
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   DeleteSelectionCommand(Document&,

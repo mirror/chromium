@@ -39,7 +39,7 @@
 
 namespace blink {
 
-void ChromeClient::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ChromeClient) {
   visitor->Trace(last_mouse_over_node_);
   PlatformChromeClient::Trace(visitor);
 }

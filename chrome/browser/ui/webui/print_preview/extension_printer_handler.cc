@@ -211,7 +211,7 @@ void ExtensionPrinterHandler::StartPrint(
 
   cloud_devices::CloudDeviceDescription ticket;
   if (!ticket.InitFromString(ticket_json)) {
-    WrapPrintCallback(callback, base::Value(kInvalidTicketPrintError));
+    WrapPrintCallback(callback, false, kInvalidTicketPrintError);
     return;
   }
 
@@ -277,7 +277,7 @@ void ExtensionPrinterHandler::DispatchPrintJob(
     const PrintCallback& callback,
     std::unique_ptr<extensions::PrinterProviderPrintJob> print_job) {
   if (print_job->document_path.empty() && !print_job->document_bytes) {
-    WrapPrintCallback(callback, base::Value(kInvalidDataPrintError));
+    WrapPrintCallback(callback, false, kInvalidDataPrintError);
     return;
   }
 
@@ -314,8 +314,9 @@ void ExtensionPrinterHandler::WrapGetCapabilityCallback(
 }
 
 void ExtensionPrinterHandler::WrapPrintCallback(const PrintCallback& callback,
-                                                const base::Value& status) {
-  callback.Run(status);
+                                                bool success,
+                                                const std::string& status) {
+  callback.Run(success, base::Value(status));
 }
 
 void ExtensionPrinterHandler::WrapGetPrinterInfoCallback(

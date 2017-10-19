@@ -111,7 +111,7 @@ class PLATFORM_EXPORT ScrollAnimatorBase
 
   virtual bool SetScrollbarsVisibleForTesting(bool) { return false; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   explicit ScrollAnimatorBase(ScrollableArea*);

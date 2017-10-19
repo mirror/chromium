@@ -32,7 +32,7 @@ class MODULES_EXPORT HTMLMediaElementRemotePlayback final
   static HTMLMediaElementRemotePlayback& From(HTMLMediaElement&);
   static RemotePlayback* remote(HTMLMediaElement&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   static const char* SupplementName();

@@ -98,7 +98,7 @@ class UkmBrowserTest : public SyncTest {
 
  private:
   ukm::UkmService* ukm_service() {
-    return g_browser_process->GetMetricsServicesManager()->GetUkmService();
+    return static_cast<ukm::UkmService*>(ukm::UkmRecorder::Get());
   }
   base::test::ScopedFeatureList scoped_feature_list_;
 };

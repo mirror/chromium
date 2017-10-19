@@ -22,7 +22,7 @@ enum class ColorSpaceGamut;
 class CORE_EXPORT MediaValues : public GarbageCollectedFinalized<MediaValues> {
  public:
   virtual ~MediaValues() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   static MediaValues* CreateDynamicIfFrameExists(LocalFrame*);
   virtual MediaValues* Copy() const = 0;

@@ -94,6 +94,7 @@ void LockActionHandlerLayoutManager::OnLockScreenNoteStateChanged(
       break;
     case mojom::TrayActionState::kLaunching:
     case mojom::TrayActionState::kActive:
+    case mojom::TrayActionState::kBackground:
       background_changed = action_background_controller_->ShowBackground();
       break;
   }

@@ -105,7 +105,7 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
   base::Optional<int> SelectionEnd() const;
   void OnDocumentShutdown();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   LayoutSelection(FrameSelection&);

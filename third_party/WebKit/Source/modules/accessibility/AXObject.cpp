@@ -2492,7 +2492,7 @@ std::ostream& operator<<(std::ostream& stream, const AXObject& obj) {
                 << obj.ComputedName();
 }
 
-void AXObject::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AXObject) {
   visitor->Trace(children_);
   visitor->Trace(parent_);
   visitor->Trace(cached_live_region_root_);

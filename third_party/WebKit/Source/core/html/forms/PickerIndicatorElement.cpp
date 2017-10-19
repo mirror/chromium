@@ -171,7 +171,7 @@ void PickerIndicatorElement::DidNotifySubtreeInsertionsToDocument() {
   setAttribute(roleAttr, "button");
 }
 
-void PickerIndicatorElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PickerIndicatorElement) {
   visitor->Trace(picker_indicator_owner_);
   visitor->Trace(chooser_);
   HTMLDivElement::Trace(visitor);

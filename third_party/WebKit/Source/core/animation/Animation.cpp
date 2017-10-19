@@ -1262,7 +1262,7 @@ void Animation::RejectAndResetPromiseMaybeAsync(AnimationPromise* promise) {
   }
 }
 
-void Animation::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Animation) {
   visitor->Trace(content_);
   visitor->Trace(timeline_);
   visitor->Trace(pending_finished_event_);

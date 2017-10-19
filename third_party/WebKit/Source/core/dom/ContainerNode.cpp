@@ -635,7 +635,7 @@ void ContainerNode::WillRemoveChildren() {
       ChildFrameDisconnector::kDescendantsOnly);
 }
 
-void ContainerNode::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ContainerNode) {
   visitor->Trace(first_child_);
   visitor->Trace(last_child_);
   Node::Trace(visitor);

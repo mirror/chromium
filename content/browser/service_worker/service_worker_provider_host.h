@@ -47,6 +47,7 @@ class ServiceWorkerContextCore;
 class ServiceWorkerDispatcherHost;
 class ServiceWorkerRequestHandler;
 class ServiceWorkerVersion;
+class BrowserSideControllerServiceWorker;
 class WebContents;
 
 // This class is the browser-process representation of a service worker
@@ -234,9 +235,9 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // Used to get a ServiceWorkerObjectInfo to send to the renderer. Finds an
   // existing ServiceWorkerHandle, and increments its reference count, or else
   // creates a new one (initialized to ref count 1). Returns the
-  // ServiceWorkerObjectInfo from the handle. The renderer is expected to use
+  // ServiceWorkerInfo from the handle. The renderer is expected to use
   // ServiceWorkerHandleReference::Adopt to balance out the ref count.
-  blink::mojom::ServiceWorkerObjectInfo GetOrCreateServiceWorkerHandle(
+  ServiceWorkerObjectInfo GetOrCreateServiceWorkerHandle(
       ServiceWorkerVersion* version);
 
   // Returns true if |registration| can be associated with this provider.
@@ -477,8 +478,10 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // 3. |*get_ready_callback_| is a null OnceCallback after the callback has
   //    been run.
   std::unique_ptr<GetRegistrationForReadyCallback> get_ready_callback_;
-
   scoped_refptr<ServiceWorkerVersion> controller_;
+  std::unique_ptr<BrowserSideControllerServiceWorker>
+      controller_service_worker_;
+
   scoped_refptr<ServiceWorkerVersion> running_hosted_version_;
   base::WeakPtr<ServiceWorkerContextCore> context_;
 

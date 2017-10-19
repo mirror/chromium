@@ -5,7 +5,6 @@
 #include "components/autofill/content/renderer/page_passwords_analyser.h"
 
 #include "chrome/test/base/chrome_render_view_test.h"
-#include "components/autofill/content/renderer/page_form_analyser_logger.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
@@ -16,21 +15,18 @@ namespace autofill {
 
 namespace {
 
-class MockPageFormAnalyserLogger : public PageFormAnalyserLogger {
+class MockPagePasswordsAnalyserLogger : public PagePasswordsAnalyserLogger {
  public:
-  MockPageFormAnalyserLogger() : PageFormAnalyserLogger(nullptr) {}
-
-  void Send(std::string message,
+  void Send(const std::string& message,
             ConsoleLevel level,
-            blink::WebNode node) override {
-    Send(std::move(message), level,
-         std::vector<blink::WebNode>{std::move(node)});
+            const blink::WebNode& node) override {
+    Send(message, level, std::vector<blink::WebNode>{node});
   }
 
   MOCK_METHOD3(Send,
-               void(std::string message,
+               void(const std::string& message,
                     ConsoleLevel level,
-                    std::vector<blink::WebNode> nodes));
+                    const std::vector<blink::WebNode>& nodes));
 
   MOCK_METHOD0(Flush, void());
 };
@@ -146,7 +142,7 @@ class PagePasswordsAnalyserTest : public ChromeRenderViewTest {
   }
 
   PagePasswordsAnalyser page_passwords_analyser;
-  MockPageFormAnalyserLogger mock_logger;
+  MockPagePasswordsAnalyserLogger mock_logger;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PagePasswordsAnalyserTest);
@@ -158,7 +154,7 @@ TEST_F(PagePasswordsAnalyserTest, PasswordFieldNotInForm) {
   LoadTestCase(kPasswordFieldNotInForm);
 
   Expect("Password field is not contained in a form:",
-         PageFormAnalyserLogger::kVerbose, {0});
+         PagePasswordsAnalyserLogger::kVerbose, {0});
 
   RunTestCase();
 }
@@ -169,7 +165,7 @@ TEST_F(PagePasswordsAnalyserTest, PasswordFormWithoutUsernameField) {
   Expect(
       "Password forms should have (optionally hidden) "
       "username fields for accessibility:",
-      PageFormAnalyserLogger::kVerbose, {0});
+      PagePasswordsAnalyserLogger::kVerbose, {0});
 
   RunTestCase();
 }
@@ -178,7 +174,7 @@ TEST_F(PagePasswordsAnalyserTest, ElementsWithDuplicateIds) {
   LoadTestCase(kElementsWithDuplicateIds);
 
   Expect("Found 2 elements with non-unique id #duplicate:",
-         PageFormAnalyserLogger::kError, {0, 1});
+         PagePasswordsAnalyserLogger::kError, {0, 1});
 
   RunTestCase();
 }
@@ -190,7 +186,7 @@ TEST_F(PagePasswordsAnalyserTest, PasswordFormTooComplex) {
       "Multiple forms should be contained in their own "
       "form elements; break up complex forms into ones that represent a "
       "single action:",
-      PageFormAnalyserLogger::kVerbose, {0});
+      PagePasswordsAnalyserLogger::kVerbose, {0});
 
   RunTestCase();
 }
@@ -203,25 +199,25 @@ TEST_F(PagePasswordsAnalyserTest, InferredPasswordAutocompleteAttributes) {
   element_index++;  // Skip form element.
   element_index++;  // Skip username field.
   Expect(AutocompleteSuggestionString("current-password"),
-         PageFormAnalyserLogger::kVerbose, {element_index++});
+         PagePasswordsAnalyserLogger::kVerbose, {element_index++});
 
   // Registration form.
   element_index++;  // Skip form element.
   element_index++;  // Skip username field.
   Expect(AutocompleteSuggestionString("new-password"),
-         PageFormAnalyserLogger::kVerbose, {element_index++});
+         PagePasswordsAnalyserLogger::kVerbose, {element_index++});
   Expect(AutocompleteSuggestionString("new-password"),
-         PageFormAnalyserLogger::kVerbose, {element_index++});
+         PagePasswordsAnalyserLogger::kVerbose, {element_index++});
 
   // Change password form.
   element_index++;  // Skip form element.
   element_index++;  // Skip username field.
   Expect(AutocompleteSuggestionString("current-password"),
-         PageFormAnalyserLogger::kVerbose, {element_index++});
+         PagePasswordsAnalyserLogger::kVerbose, {element_index++});
   Expect(AutocompleteSuggestionString("new-password"),
-         PageFormAnalyserLogger::kVerbose, {element_index++});
+         PagePasswordsAnalyserLogger::kVerbose, {element_index++});
   Expect(AutocompleteSuggestionString("new-password"),
-         PageFormAnalyserLogger::kVerbose, {element_index++});
+         PagePasswordsAnalyserLogger::kVerbose, {element_index++});
 
   RunTestCase();
 }
@@ -233,20 +229,20 @@ TEST_F(PagePasswordsAnalyserTest, InferredUsernameAutocompleteAttributes) {
   // Login form.
   element_index++;  // Skip form element.
   Expect(AutocompleteSuggestionString("username"),
-         PageFormAnalyserLogger::kVerbose, {element_index++});
+         PagePasswordsAnalyserLogger::kVerbose, {element_index++});
   element_index++;  // Skip already annotated password field.
 
   // Registration form.
   element_index++;  // Skip form element.
   Expect(AutocompleteSuggestionString("username"),
-         PageFormAnalyserLogger::kVerbose, {element_index++});
+         PagePasswordsAnalyserLogger::kVerbose, {element_index++});
   element_index++;  // Skip already annotated password field.
   element_index++;  // Skip already annotated password field.
 
   // Change password form with username.
   element_index++;  // Skip form element.
   Expect(AutocompleteSuggestionString("username"),
-         PageFormAnalyserLogger::kVerbose, {element_index++});
+         PagePasswordsAnalyserLogger::kVerbose, {element_index++});
   element_index++;  // Skip already annotated password field.
   element_index++;  // Skip already annotated password field.
   element_index++;  // Skip already annotated password field.

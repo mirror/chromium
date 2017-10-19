@@ -41,7 +41,7 @@ ColdModeSpellCheckRequester* ColdModeSpellCheckRequester::Create(
   return new ColdModeSpellCheckRequester(frame);
 }
 
-void ColdModeSpellCheckRequester::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ColdModeSpellCheckRequester) {
   visitor->Trace(frame_);
   visitor->Trace(next_node_);
   visitor->Trace(current_root_editable_);

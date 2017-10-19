@@ -109,11 +109,6 @@ void WebrtcVideoEncoderGpu::Encode(std::unique_ptr<webrtc::DesktopFrame> frame,
 
   callbacks_[video_frame->timestamp()] = std::move(done);
 
-  if (params.bitrate_kbps > 0) {
-    // TODO(zijiehe): Forward frame_rate from FrameParams.
-    video_encode_accelerator_->RequestEncodingParametersChange(
-        params.bitrate_kbps * 1024, 30);
-  }
   video_encode_accelerator_->Encode(video_frame, params.key_frame);
 }
 
@@ -231,10 +226,14 @@ void WebrtcVideoEncoderGpu::RunAnyPendingEncode() {
 std::unique_ptr<WebrtcVideoEncoderGpu> WebrtcVideoEncoderGpu::CreateForH264() {
   DVLOG(3) << __func__;
 
-  // HIGH profile requires Windows 8 or upper. Considering encoding latency,
-  // frame size and image quality, MAIN should be fine for us.
+  // MediaFoundationVideoEncodeAccelerator supports only baseline profile.
+  // TODO(zijiehe): H264 encoder on Windows supports more input formats and
+  // profiles than the limitation in MediaFoundationVideoEncodeAccelerator.
+  // https://msdn.microsoft.com/en-us/library/windows/desktop/dd797816(v=vs.85).aspx
+  // Loosen the limitation in MediaFoundationVideoEncodeAccelerator and use a
+  // profile with higher quality here.
   return base::WrapUnique(new WebrtcVideoEncoderGpu(
-      media::VideoCodecProfile::H264PROFILE_MAIN));
+      media::VideoCodecProfile::H264PROFILE_BASELINE));
 }
 
 }  // namespace remoting

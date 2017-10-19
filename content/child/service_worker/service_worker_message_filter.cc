@@ -11,7 +11,6 @@
 #include "content/common/service_worker/service_worker_messages.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "ipc/ipc_message_macros.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 
 namespace content {
 
@@ -22,7 +21,7 @@ namespace {
 void SendServiceWorkerObjectDestroyed(
     ThreadSafeSender* sender,
     int handle_id) {
-  if (handle_id == blink::mojom::kInvalidServiceWorkerHandleId)
+  if (handle_id == kInvalidServiceWorkerHandleId)
     return;
   sender->Send(
       new ServiceWorkerHostMsg_DecrementServiceWorkerRefCount(handle_id));
@@ -61,8 +60,6 @@ void ServiceWorkerMessageFilter::OnStaleMessageReceived(
   IPC_BEGIN_MESSAGE_MAP(ServiceWorkerMessageFilter, msg)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_SetVersionAttributes,
                         OnStaleSetVersionAttributes)
-    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_SetControllerServiceWorker,
-                        OnStaleSetControllerServiceWorker)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_MessageToDocument,
                         OnStaleMessageToDocument)
   IPC_END_MESSAGE_MAP()
@@ -81,12 +78,6 @@ void ServiceWorkerMessageFilter::OnStaleSetVersionAttributes(
                                    attrs.active.handle_id);
   // Don't have to decrement registration refcount because the sender of the
   // SetVersionAttributes message doesn't increment it.
-}
-
-void ServiceWorkerMessageFilter::OnStaleSetControllerServiceWorker(
-    const ServiceWorkerMsg_SetControllerServiceWorker_Params& params) {
-  SendServiceWorkerObjectDestroyed(thread_safe_sender(),
-                                   params.object_info.handle_id);
 }
 
 void ServiceWorkerMessageFilter::OnStaleMessageToDocument(

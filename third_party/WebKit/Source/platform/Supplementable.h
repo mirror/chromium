@@ -133,9 +133,7 @@ class Supplement : public GarbageCollectedMixin,
     return supplementable ? supplementable->RequireSupplement(key) : 0;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
-    visitor->Trace(supplementable_);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(supplementable_); }
 
  private:
   Member<T> supplementable_;
@@ -173,7 +171,7 @@ class Supplementable : public GarbageCollectedMixin {
 #endif
   }
 
-  virtual void Trace(blink::Visitor* visitor) { visitor->Trace(supplements_); }
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(supplements_); }
   DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     for (const auto& supplement : supplements_.Values())
       visitor->TraceWrappers(supplement);

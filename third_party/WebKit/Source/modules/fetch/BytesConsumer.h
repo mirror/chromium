@@ -165,7 +165,7 @@ class MODULES_EXPORT BytesConsumer
   // Returns a BytesConsumer whose state is Errored.
   static BytesConsumer* CreateErrored(const Error&);
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   // This InternalState directly corresponds to the states in the class

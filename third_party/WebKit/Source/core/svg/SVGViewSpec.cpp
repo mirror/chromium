@@ -33,7 +33,7 @@ SVGViewSpec::SVGViewSpec()
       preserve_aspect_ratio_(SVGPreserveAspectRatio::Create()),
       transform_(SVGTransformList::Create()) {}
 
-void SVGViewSpec::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGViewSpec) {
   visitor->Trace(view_box_);
   visitor->Trace(preserve_aspect_ratio_);
   visitor->Trace(transform_);

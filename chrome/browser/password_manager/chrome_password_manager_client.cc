@@ -480,7 +480,7 @@ void ChromePasswordManagerClient::LogPasswordReuseDetectedEvent() {
 #endif
 
 ukm::UkmRecorder* ChromePasswordManagerClient::GetUkmRecorder() {
-  return ukm::UkmRecorder::Get();
+  return g_browser_process->ukm_recorder();
 }
 
 ukm::SourceId ChromePasswordManagerClient::GetUkmSourceId() {

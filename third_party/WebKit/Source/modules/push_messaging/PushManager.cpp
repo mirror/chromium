@@ -125,7 +125,7 @@ ScriptPromise PushManager::permissionState(
   return promise;
 }
 
-void PushManager::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PushManager) {
   visitor->Trace(registration_);
 }
 

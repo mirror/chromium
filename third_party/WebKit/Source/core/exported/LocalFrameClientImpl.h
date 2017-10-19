@@ -53,7 +53,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   ~LocalFrameClientImpl() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   WebLocalFrameImpl* GetWebFrame() const override;
 
@@ -235,7 +235,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   TextCheckerClient& GetTextCheckerClient() const override;
 
   std::unique_ptr<WebURLLoader> CreateURLLoader(const ResourceRequest&,
-                                                RefPtr<WebTaskRunner>) override;
+                                                WebTaskRunner*) override;
 
   service_manager::InterfaceProvider* GetInterfaceProvider() override;
 

@@ -29,7 +29,7 @@ class CORE_EXPORT WorkletModuleResponsesMapProxy
 
   void ReadEntry(const FetchParameters&, Client*);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   WorkletModuleResponsesMapProxy(

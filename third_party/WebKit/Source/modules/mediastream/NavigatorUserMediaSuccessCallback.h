@@ -35,7 +35,7 @@ class NavigatorUserMediaSuccessCallback
     : public GarbageCollectedFinalized<NavigatorUserMediaSuccessCallback> {
  public:
   virtual ~NavigatorUserMediaSuccessCallback() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
   virtual void handleEvent(MediaStream*) = 0;
 };
 

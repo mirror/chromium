@@ -167,6 +167,8 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
                     float min,
                     float max);
 
+  void WarnIfOutsideRange(float value, float min_value, float max_value);
+
   // sampleAccurate corresponds to a-rate (audio rate) vs. k-rate in the Web
   // Audio specification.
   void CalculateFinalValues(float* values,
@@ -213,7 +215,7 @@ class AudioParam final : public GarbageCollectedFinalized<AudioParam>,
                             float min_value,
                             float max_value);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   // |handler| always returns a valid object.
   AudioParamHandler& Handler() const { return *handler_; }
   // |context| always returns a valid object.

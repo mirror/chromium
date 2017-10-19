@@ -48,7 +48,7 @@ class MODULES_EXPORT AudioWorkletProcessor
 
   const String& Name() const { return name_; }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
  private:

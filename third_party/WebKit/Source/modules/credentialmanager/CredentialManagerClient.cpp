@@ -18,7 +18,7 @@ CredentialManagerClient::CredentialManagerClient(
 
 CredentialManagerClient::~CredentialManagerClient() {}
 
-void CredentialManagerClient::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CredentialManagerClient) {
   visitor->Trace(authentication_client_);
   Supplement<Page>::Trace(visitor);
 }

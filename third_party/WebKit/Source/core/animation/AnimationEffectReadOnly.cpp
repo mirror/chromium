@@ -270,7 +270,7 @@ AnimationEffectTimingReadOnly* AnimationEffectReadOnly::timing() {
   return AnimationEffectTimingReadOnly::Create(this);
 }
 
-void AnimationEffectReadOnly::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AnimationEffectReadOnly) {
   visitor->Trace(animation_);
   visitor->Trace(event_delegate_);
 }

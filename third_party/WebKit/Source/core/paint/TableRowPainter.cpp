@@ -9,10 +9,10 @@
 #include "core/paint/BoxPainter.h"
 #include "core/paint/BoxPainterBase.h"
 #include "core/paint/CollapsedBorderPainter.h"
+#include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/ObjectPainter.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/TableCellPainter.h"
-#include "platform/graphics/paint/DrawingRecorder.h"
 
 namespace blink {
 
@@ -77,7 +77,7 @@ void TableRowPainter::PaintBoxDecorationBackground(
 
   HandleChangedPartialPaint(paint_info, dirtied_columns);
 
-  if (DrawingRecorder::UseCachedDrawingIfPossible(
+  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
           paint_info.context, layout_table_row_,
           DisplayItem::kBoxDecorationBackground))
     return;
@@ -87,8 +87,9 @@ void TableRowPainter::PaintBoxDecorationBackground(
   LayoutRect bounds =
       BoxPainter(layout_table_row_)
           .BoundsForDrawingRecorder(paint_info, adjusted_paint_offset);
-  DrawingRecorder recorder(paint_info.context, layout_table_row_,
-                           DisplayItem::kBoxDecorationBackground, bounds);
+  LayoutObjectDrawingRecorder recorder(paint_info.context, layout_table_row_,
+                                       DisplayItem::kBoxDecorationBackground,
+                                       bounds);
   LayoutRect paint_rect(adjusted_paint_offset, layout_table_row_.Size());
 
   if (has_box_shadow) {
@@ -132,7 +133,7 @@ void TableRowPainter::PaintBackgroundBehindCell(
 void TableRowPainter::PaintCollapsedBorders(const PaintInfo& paint_info,
                                             const LayoutPoint& paint_offset,
                                             const CellSpan& dirtied_columns) {
-  Optional<DrawingRecorder> recorder;
+  Optional<LayoutObjectDrawingRecorder> recorder;
 
   if (LIKELY(!layout_table_row_.Table()->ShouldPaintAllCollapsedBorders())) {
     HandleChangedPartialPaint(paint_info, dirtied_columns);

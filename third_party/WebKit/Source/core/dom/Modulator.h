@@ -39,7 +39,7 @@ class CORE_EXPORT SingleModuleClient
       public TraceWrapperBase {
  public:
   virtual ~SingleModuleClient() = default;
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   virtual void NotifyModuleLoadFinished(ModuleScript*) = 0;
 };
@@ -51,7 +51,7 @@ class CORE_EXPORT ModuleTreeClient
       public TraceWrapperBase {
  public:
   virtual ~ModuleTreeClient() = default;
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   virtual void NotifyModuleTreeLoadFinished(ModuleScript*) = 0;
 };
@@ -77,7 +77,7 @@ class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
   static void SetModulator(ScriptState*, Modulator*);
   static void ClearModulator(ScriptState*);
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   virtual ScriptModuleResolver* GetScriptModuleResolver() = 0;
   virtual WebTaskRunner* TaskRunner() = 0;

@@ -193,7 +193,7 @@ class AudioBufferSourceNode final : public AudioScheduledSourceNode {
   static AudioBufferSourceNode* Create(BaseAudioContext*,
                                        AudioBufferSourceOptions&,
                                        ExceptionState&);
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   AudioBufferSourceHandler& GetAudioBufferSourceHandler() const;
 
   AudioBuffer* buffer() const;

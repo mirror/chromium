@@ -72,7 +72,7 @@ class StubLocalFrameClientWithParent final : public EmptyLocalFrameClient {
     return new StubLocalFrameClientWithParent(parent);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(parent_);
     EmptyLocalFrameClient::Trace(visitor);
   }

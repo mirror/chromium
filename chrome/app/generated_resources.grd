@@ -2929,9 +2929,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
           <message name="IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN" desc="Task manager process memory column. This is the similar to the process 'working set' reported by the Windows Task Manager">
             Memory
           </message>
-          <message name="IDS_TASK_MANAGER_MEM_FOOTPRINT_COLUMN" desc="Task manager process memory footprint column. This is the amount of memory used by the process.">
-            Memory footprint
-          </message>
           <message name="IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN" desc="Task manager process private memory column. This is the allocated size that cannot be shared with other processes">
             Private memory
           </message>
@@ -3008,9 +3005,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
           </message>
           <message name="IDS_TASK_MANAGER_CPU_TIME_COLUMN" desc="The text of the CPU time column. This is the time that this process actually occupies the CPU.">
             CPU Time
-          </message>
-          <message name="IDS_TASK_MANAGER_MEM_FOOTPRINT_COLUMN" desc="Task manager process memory footprint column. This is the amount of memory used by the process.">
-            Memory Footprint
           </message>
           <message name="IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN" desc="Task manager process memory column. This is the similar to the process 'working set' reported by the Windows Task Manager">
             Memory
@@ -5904,11 +5898,6 @@ I don't think this site should be blocked!
         Turn on autoupdate
       </message>
 
-      <!-- Picture in Picture -->
-      <message name="IDS_PICTURE_IN_PICTURE_TITLE_TEXT" desc="Title of the picture in picture window. This appears in the system tray and window header.">
-        Picture in Picture
-      </message>
-
       <!-- Print -->
       <message name="IDS_DEFAULT_PRINT_DOCUMENT_TITLE" desc="Default title for a print document">
         Untitled Document
@@ -7537,6 +7526,15 @@ I don't think this site should be blocked!
       </message>
       <message name="IDS_PROFILES_ERROR_TUTORIAL_TITLE" desc="Title in the tutorial card for showing signin errors">
         Uh-oh!
+      </message>
+      <message name="IDS_PROFILES_NOT_YOU" desc="Title or link text in the avatar menu bubble for switching user">
+        Not <ph name="PROFILE_NAME">$1<ex>Claire</ex></ph>?
+      </message>
+      <message name="IDS_PROFILES_DISCONNECT_BUTTON" desc="Button in the avatar menu bubble for disconnecting the current profile">
+        Disconnect Google Account
+      </message>
+      <message name="IDS_PROFILES_ADD_PERSON_BUTTON" desc="Button in the avatar menu bubble for adding a new profile">
+        Add person
       </message>
       <message name="IDS_PROFILES_TUTORIAL_WHATS_NEW_BUTTON" desc="Button in the avatar menu tutorial card for seeing what is new with the new profile management UI">
         See what's new

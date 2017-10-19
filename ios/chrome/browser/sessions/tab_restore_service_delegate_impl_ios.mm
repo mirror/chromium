@@ -124,6 +124,5 @@ sessions::LiveTab* TabRestoreServiceDelegateImplIOS::ReplaceRestoredTab(
 
 void TabRestoreServiceDelegateImplIOS::CloseTab() {
   WebStateList* web_state_list = GetWebStateList();
-  web_state_list->CloseWebStateAt(web_state_list->active_index(),
-                                  WebStateList::CLOSE_USER_ACTION);
+  web_state_list->CloseWebStateAt(web_state_list->active_index());
 }

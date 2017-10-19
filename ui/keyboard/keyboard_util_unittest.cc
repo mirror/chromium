@@ -151,9 +151,8 @@ TEST_F(KeyboardUtilTest, IsOverscrollEnabled) {
   EXPECT_TRUE(keyboard::IsKeyboardOverscrollEnabled());
 
   // Set keyboard_locked() to true.
-  ui::DummyInputMethod input_method;
-  KeyboardController::ResetInstance(new KeyboardController(
-      std::make_unique<TestKeyboardUI>(&input_method), nullptr));
+  KeyboardController::ResetInstance(
+      new KeyboardController(std::make_unique<FakeKeyboardUI>(), nullptr));
   KeyboardController* controller = keyboard::KeyboardController::GetInstance();
   controller->set_keyboard_locked(true);
   EXPECT_TRUE(controller->keyboard_locked());

@@ -27,7 +27,7 @@ void AvailabilityCallbackWrapper::Run(RemotePlayback* remote_playback,
   bindings_cb_->call(remote_playback, new_availability);
 }
 
-void AvailabilityCallbackWrapper::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AvailabilityCallbackWrapper) {
   visitor->Trace(bindings_cb_);
 }
 

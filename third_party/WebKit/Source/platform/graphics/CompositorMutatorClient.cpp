@@ -15,7 +15,7 @@
 namespace blink {
 
 CompositorMutatorClient::CompositorMutatorClient(CompositorMutator* mutator)
-    : mutator_(mutator) {
+    : client_(nullptr), mutator_(mutator) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc"),
                "CompositorMutatorClient::CompositorMutatorClient");
 }
@@ -25,14 +25,22 @@ CompositorMutatorClient::~CompositorMutatorClient() {
                "CompositorMutatorClient::~CompositorMutatorClient");
 }
 
-void CompositorMutatorClient::Mutate(base::TimeTicks monotonic_time) {
+bool CompositorMutatorClient::Mutate(base::TimeTicks monotonic_time) {
   TRACE_EVENT0("cc", "CompositorMutatorClient::Mutate");
   double monotonic_time_now = (monotonic_time - base::TimeTicks()).InSecondsF();
-  mutator_->Mutate(monotonic_time_now);
+  bool should_reinvoke = mutator_->Mutate(monotonic_time_now);
+  return should_reinvoke;
 }
 
-bool CompositorMutatorClient::HasAnimators() {
-  return mutator_->HasAnimators();
+void CompositorMutatorClient::SetClient(cc::LayerTreeMutatorClient* client) {
+  TRACE_EVENT0("cc", "CompositorMutatorClient::SetClient");
+  client_ = client;
+  SetNeedsMutate();
+}
+
+void CompositorMutatorClient::SetNeedsMutate() {
+  TRACE_EVENT0("cc", "CompositorMutatorClient::setNeedsMutate");
+  client_->SetNeedsMutate();
 }
 
 }  // namespace blink

@@ -53,7 +53,7 @@ class CORE_EXPORT PagePopupSupplement final
   static void Uninstall(LocalFrame&);
 
   PagePopupController* GetPagePopupController() const;
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   PagePopupSupplement(LocalFrame&, PagePopup&, PagePopupClient*);

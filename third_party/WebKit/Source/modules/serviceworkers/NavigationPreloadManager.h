@@ -29,7 +29,7 @@ class NavigationPreloadManager final
   ScriptPromise setHeaderValue(ScriptState*, const String& value);
   ScriptPromise getState(ScriptState*);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit NavigationPreloadManager(ServiceWorkerRegistration*);

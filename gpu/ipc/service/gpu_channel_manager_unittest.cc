@@ -38,12 +38,12 @@ class GpuChannelManagerTest : public GpuChannelTestCommon {
     init_params.attribs = gles2::ContextCreationAttribHelper();
     init_params.attribs.context_type = type;
     init_params.active_url = GURL();
-    gpu::ContextResult result = gpu::ContextResult::kFatalFailure;
+    bool result = false;
     gpu::Capabilities capabilities;
     HandleMessage(channel, new GpuChannelMsg_CreateCommandBuffer(
                                init_params, kRouteId, GetSharedHandle(),
                                &result, &capabilities));
-    EXPECT_EQ(result, gpu::ContextResult::kSuccess);
+    EXPECT_TRUE(result);
 
     GpuCommandBufferStub* stub = channel->LookupCommandBuffer(kRouteId);
     EXPECT_TRUE(stub);

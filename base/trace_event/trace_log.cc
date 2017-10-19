@@ -1523,7 +1523,7 @@ void TraceLog::AddMetadataEventsWhileLocked() {
 }
 
 void TraceLog::DeleteForTesting() {
-  base::internal::DeleteTraceLogForTesting::Delete();
+  internal::DeleteTraceLogForTesting::Delete();
   CategoryRegistry::ResetForTesting();
 }
 

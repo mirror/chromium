@@ -22,7 +22,7 @@ class Frame;
 class CORE_EXPORT FrameOwner : public GarbageCollectedMixin {
  public:
   virtual ~FrameOwner() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   virtual bool IsLocal() const = 0;
   virtual bool IsRemote() const = 0;
@@ -64,7 +64,7 @@ class CORE_EXPORT DummyFrameOwner
  public:
   static DummyFrameOwner* Create() { return new DummyFrameOwner; }
 
-  virtual void Trace(blink::Visitor* visitor) { FrameOwner::Trace(visitor); }
+  DEFINE_INLINE_VIRTUAL_TRACE() { FrameOwner::Trace(visitor); }
 
   // FrameOwner overrides:
   Frame* ContentFrame() const override { return nullptr; }

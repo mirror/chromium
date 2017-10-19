@@ -26,7 +26,7 @@ class RTCOfferOptionsPlatform final
   bool VoiceActivityDetection() const { return voice_activity_detection_; }
   bool IceRestart() const { return ice_restart_; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   RTCOfferOptionsPlatform(int32_t offer_to_receive_video,

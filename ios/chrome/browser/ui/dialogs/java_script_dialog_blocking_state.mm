@@ -23,13 +23,11 @@ JavaScriptDialogBlockingState::~JavaScriptDialogBlockingState() {
 }
 
 void JavaScriptDialogBlockingState::NavigationItemCommitted(
-    web::WebState* web_state,
     const web::LoadCommittedDetails& load_details) {
   dialog_count_ = 0;
   blocked_ = false;
 }
 
-void JavaScriptDialogBlockingState::WebStateDestroyed(
-    web::WebState* web_state) {
+void JavaScriptDialogBlockingState::WebStateDestroyed() {
   Observe(nullptr);
 }

@@ -47,7 +47,7 @@ DOMRect* DOMRectList::item(unsigned index) {
   return list_[index].Get();
 }
 
-void DOMRectList::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DOMRectList) {
   visitor->Trace(list_);
 }
 

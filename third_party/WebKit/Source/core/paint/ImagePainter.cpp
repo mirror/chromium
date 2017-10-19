@@ -15,11 +15,11 @@
 #include "core/layout/TextRunConstructor.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
+#include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/PaintInfo.h"
 #include "platform/geometry/LayoutPoint.h"
 #include "platform/graphics/Path.h"
 #include "platform/graphics/paint/DisplayItemCacheSkipper.h"
-#include "platform/graphics/paint/DrawingRecorder.h"
 
 namespace blink {
 
@@ -66,14 +66,15 @@ void ImagePainter::PaintAreaElementFocusRing(const PaintInfo& paint_info,
   path.Translate(
       FloatSize(adjusted_paint_offset.X(), adjusted_paint_offset.Y()));
 
-  if (DrawingRecorder::UseCachedDrawingIfPossible(
+  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
           paint_info.context, layout_image_, DisplayItem::kImageAreaFocusRing))
     return;
 
   LayoutRect focus_rect = layout_image_.ContentBoxRect();
   focus_rect.MoveBy(adjusted_paint_offset);
-  DrawingRecorder recorder(paint_info.context, layout_image_,
-                           DisplayItem::kImageAreaFocusRing, focus_rect);
+  LayoutObjectDrawingRecorder drawing_recorder(
+      paint_info.context, layout_image_, DisplayItem::kImageAreaFocusRing,
+      focus_rect);
 
   // FIXME: Clip path instead of context when Skia pathops is ready.
   // https://crbug.com/251206
@@ -104,8 +105,8 @@ void ImagePainter::PaintReplaced(const PaintInfo& paint_info,
   }
 
   GraphicsContext& context = paint_info.context;
-  if (DrawingRecorder::UseCachedDrawingIfPossible(context, layout_image_,
-                                                  paint_info.phase))
+  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+          context, layout_image_, paint_info.phase))
     return;
 
   // Disable cache in under-invalidation checking mode for delayed-invalidation
@@ -124,8 +125,8 @@ void ImagePainter::PaintReplaced(const PaintInfo& paint_info,
                    paint_offset.Y() + layout_image_.BorderTop() +
                        layout_image_.PaddingTop(),
                    c_width, c_height));
-    DrawingRecorder recorder(context, layout_image_, paint_info.phase,
-                             paint_rect);
+    LayoutObjectDrawingRecorder drawing_recorder(context, layout_image_,
+                                                 paint_info.phase, paint_rect);
     context.SetStrokeStyle(kSolidStroke);
     context.SetStrokeColor(Color::kLightGray);
     context.SetFillColor(Color::kTransparent);
@@ -138,8 +139,8 @@ void ImagePainter::PaintReplaced(const PaintInfo& paint_info,
   LayoutRect paint_rect = layout_image_.ReplacedContentRect();
   paint_rect.MoveBy(paint_offset);
 
-  DrawingRecorder recorder(context, layout_image_, paint_info.phase,
-                           content_rect);
+  LayoutObjectDrawingRecorder drawing_recorder(context, layout_image_,
+                                               paint_info.phase, content_rect);
   PaintIntoRect(context, paint_rect, content_rect);
 }
 
@@ -187,10 +188,8 @@ void ImagePainter::PaintIntoRect(GraphicsContext& context,
 
   Node* node = layout_image_.GetNode();
   Image::ImageDecodingMode decode_mode =
-      IsHTMLImageElement(node)
-          ? ToHTMLImageElement(node)->GetDecodingModeForPainting(
-                image->paint_image_id())
-          : Image::kUnspecifiedDecode;
+      IsHTMLImageElement(node) ? ToHTMLImageElement(node)->GetDecodingMode()
+                               : Image::kUnspecifiedDecode;
   context.DrawImage(
       image.get(), decode_mode, pixel_snapped_dest_rect, &src_rect,
       SkBlendMode::kSrcOver,

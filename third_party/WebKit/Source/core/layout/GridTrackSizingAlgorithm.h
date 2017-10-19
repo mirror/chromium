@@ -84,7 +84,8 @@ class GridTrackSizingAlgorithm final {
   // the algorithm.
   void Setup(GridTrackSizingDirection,
              size_t num_tracks,
-             Optional<LayoutUnit> available_space);
+             Optional<LayoutUnit> available_space,
+             Optional<LayoutUnit> free_space);
   void Run();
   void Reset();
 

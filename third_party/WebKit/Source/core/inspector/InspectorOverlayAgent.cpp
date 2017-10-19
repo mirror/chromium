@@ -183,7 +183,7 @@ class InspectorOverlayAgent::InspectorOverlayChromeClient final
     return new InspectorOverlayChromeClient(client, overlay);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(client_);
     visitor->Trace(overlay_);
     EmptyChromeClient::Trace(visitor);
@@ -250,7 +250,7 @@ InspectorOverlayAgent::~InspectorOverlayAgent() {
   DCHECK(!overlay_page_);
 }
 
-void InspectorOverlayAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorOverlayAgent) {
   visitor->Trace(frame_impl_);
   visitor->Trace(inspected_frames_);
   visitor->Trace(highlight_node_);

@@ -56,7 +56,7 @@ class CORE_EXPORT ScriptSourceCode final {
   ScriptSourceCode(ScriptStreamer*, ScriptResource*);
 
   ~ScriptSourceCode();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // The null value represents a missing script, created by the nullary
   // constructor, and differs from the empty script.

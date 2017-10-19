@@ -401,7 +401,7 @@ class InspectorCSSAgent::SetStyleSheetTextAction final
     text_ = other->text_;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(style_sheet_);
     InspectorCSSAgent::StyleSheetAction::Trace(visitor);
   }
@@ -501,7 +501,7 @@ class InspectorCSSAgent::ModifyRuleAction final
     return nullptr;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(style_sheet_);
     visitor->Trace(css_rule_);
     InspectorCSSAgent::StyleSheetAction::Trace(visitor);
@@ -557,7 +557,7 @@ class InspectorCSSAgent::SetElementStyleAction final
     return style_sheet_->SetText(text_, exception_state);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(style_sheet_);
     InspectorCSSAgent::StyleSheetAction::Trace(visitor);
   }
@@ -619,7 +619,7 @@ class InspectorCSSAgent::AddRuleAction final
     return result;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(style_sheet_);
     visitor->Trace(css_rule_);
     InspectorCSSAgent::StyleSheetAction::Trace(visitor);
@@ -2394,7 +2394,7 @@ Response InspectorCSSAgent::takeCoverageDelta(
   return Response::OK();
 }
 
-void InspectorCSSAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorCSSAgent) {
   visitor->Trace(dom_agent_);
   visitor->Trace(inspected_frames_);
   visitor->Trace(network_agent_);

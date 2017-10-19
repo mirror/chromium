@@ -62,7 +62,7 @@ class MODULES_EXPORT Path2D final : public GarbageCollectedFinalized<Path2D>,
   }
 
   ~Path2D() override {}
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   Path2D() : CanvasPath() {}

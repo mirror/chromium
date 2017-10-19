@@ -81,7 +81,7 @@ class SVGPropertyBase : public GarbageCollectedFinalized<SVGPropertyBase> {
     owner_list_ = owner_list;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   SVGPropertyBase() : owner_list_(nullptr) {}

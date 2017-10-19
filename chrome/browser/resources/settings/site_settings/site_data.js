@@ -40,7 +40,7 @@ Polymer({
 
   behaviors: [
     I18nBehavior,
-    settings.GlobalScrollTargetBehavior,
+    settings.RouteObserverBehavior,
     WebUIListenerBehavior,
   ],
 
@@ -60,23 +60,12 @@ Polymer({
       observer: 'focusConfigChanged_',
     },
 
-    isLoading_: Boolean,
-
     /** @type {!Array<!LocalDataItem>} */
     sites: {
       type: Array,
       value: function() {
         return [];
       },
-    },
-
-    /**
-     * settings.GlobalScrollTargetBehavior
-     * @override
-     */
-    subpageRoute: {
-      type: Object,
-      value: settings.routes.SITE_SETTINGS_SITE_DATA,
     },
   },
 
@@ -98,10 +87,7 @@ Polymer({
    * @protected
    */
   currentRouteChanged: function(currentRoute) {
-    settings.GlobalScrollTargetBehaviorImpl.currentRouteChanged.call(
-        this, currentRoute);
     if (currentRoute == settings.routes.SITE_SETTINGS_SITE_DATA) {
-      this.isLoading_ = true;
       this.browserProxy_.reloadCookies().then(this.updateSiteList_.bind(this));
     }
   },
@@ -141,12 +127,12 @@ Polymer({
    * @private
    */
   updateSiteList_: function() {
-    this.isLoading_ = true;
-    this.browserProxy_.getDisplayList(this.filter).then((listInfo) => {
-      this.sites = listInfo.items;
-      this.isLoading_ = false;
-      this.fire('site-data-list-complete');
-    });
+    this.browserProxy_
+        .getDisplayList(this.filter, 0 /* start */, -1 /* count */)
+        .then((listInfo) => {
+          this.sites = listInfo.items;
+          this.fire('site-data-list-complete');
+        });
   },
 
   /**

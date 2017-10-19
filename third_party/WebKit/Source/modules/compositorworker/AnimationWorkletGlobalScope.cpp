@@ -50,7 +50,7 @@ AnimationWorkletGlobalScope::AnimationWorkletGlobalScope(
 
 AnimationWorkletGlobalScope::~AnimationWorkletGlobalScope() {}
 
-void AnimationWorkletGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AnimationWorkletGlobalScope) {
   visitor->Trace(animator_definitions_);
   visitor->Trace(animators_);
   ThreadedWorkletGlobalScope::Trace(visitor);

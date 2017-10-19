@@ -46,7 +46,7 @@ inline SVGLineElement::SVGLineElement(Document& document)
   AddToPropertyMap(y2_);
 }
 
-void SVGLineElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGLineElement) {
   visitor->Trace(x1_);
   visitor->Trace(y1_);
   visitor->Trace(x2_);

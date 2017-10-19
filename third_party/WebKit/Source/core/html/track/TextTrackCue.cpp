@@ -135,7 +135,7 @@ const AtomicString& TextTrackCue::InterfaceName() const {
   return EventTargetNames::TextTrackCue;
 }
 
-void TextTrackCue::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TextTrackCue) {
   visitor->Trace(track_);
   EventTargetWithInlineData::Trace(visitor);
 }

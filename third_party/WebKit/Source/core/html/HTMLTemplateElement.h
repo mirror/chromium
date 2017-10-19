@@ -45,7 +45,7 @@ class CORE_EXPORT HTMLTemplateElement final : public HTMLElement {
  public:
   DECLARE_NODE_FACTORY(HTMLTemplateElement);
   ~HTMLTemplateElement() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   DocumentFragment* content() const;
 

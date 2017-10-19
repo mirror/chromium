@@ -77,7 +77,7 @@ class HTMLImageElement::ViewportChangeListener final
       element_->NotifyViewportChanged();
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(element_);
     MediaQueryListListener::Trace(visitor);
   }
@@ -94,6 +94,7 @@ HTMLImageElement::HTMLImageElement(Document& document, bool created_by_parser)
       image_device_pixel_ratio_(1.0f),
       source_(nullptr),
       layout_disposition_(LayoutDisposition::kPrimaryContent),
+      decoding_mode_(Image::kUnspecifiedDecode),
       form_was_set_by_parser_(false),
       element_created_by_parser_(created_by_parser),
       is_fallback_image_(false),
@@ -112,7 +113,7 @@ HTMLImageElement* HTMLImageElement::Create(Document& document,
 
 HTMLImageElement::~HTMLImageElement() {}
 
-void HTMLImageElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLImageElement) {
   visitor->Trace(image_loader_);
   visitor->Trace(listener_);
   visitor->Trace(form_);
@@ -450,8 +451,10 @@ unsigned HTMLImageElement::width() {
     // if the image is available, use its width
     if (ImageResourceContent* image_content = GetImageLoader().GetContent()) {
       return image_content
-          ->IntrinsicSize(LayoutObject::ShouldRespectImageOrientation(nullptr))
-          .Width();
+          ->ImageSize(LayoutObject::ShouldRespectImageOrientation(nullptr),
+                      1.0f)
+          .Width()
+          .ToUnsigned();
     }
   }
 
@@ -471,8 +474,10 @@ unsigned HTMLImageElement::height() {
     // if the image is available, use its height
     if (ImageResourceContent* image_content = GetImageLoader().GetContent()) {
       return image_content
-          ->IntrinsicSize(LayoutObject::ShouldRespectImageOrientation(nullptr))
-          .Height();
+          ->ImageSize(LayoutObject::ShouldRespectImageOrientation(nullptr),
+                      1.0f)
+          .Height()
+          .ToUnsigned();
     }
   }
 
@@ -490,8 +495,8 @@ LayoutSize HTMLImageElement::DensityCorrectedIntrinsicDimensions() const {
 
   RespectImageOrientationEnum respect_image_orientation =
       LayoutObject::ShouldRespectImageOrientation(GetLayoutObject());
-  LayoutSize natural_size(
-      image_resource->IntrinsicSize(respect_image_orientation));
+  LayoutSize natural_size =
+      image_resource->ImageSize(respect_image_orientation, 1);
   natural_size.Scale(pixel_density);
   return natural_size;
 }
@@ -647,8 +652,9 @@ FloatSize HTMLImageElement::DefaultDestinationSize(
     return ToSVGImage(CachedImage()->GetImage())
         ->ConcreteObjectSize(default_object_size);
 
-  LayoutSize size(image->IntrinsicSize(
-      LayoutObject::ShouldRespectImageOrientation(GetLayoutObject())));
+  LayoutSize size;
+  size = image->ImageSize(
+      LayoutObject::ShouldRespectImageOrientation(GetLayoutObject()), 1.0f);
   if (GetLayoutObject() && GetLayoutObject()->IsLayoutImage() &&
       image->GetImage() && !image->GetImage()->HasRelativeSize())
     size.Scale(ToLayoutImage(GetLayoutObject())->ImageDevicePixelRatio());

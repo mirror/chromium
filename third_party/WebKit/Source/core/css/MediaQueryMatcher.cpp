@@ -130,7 +130,7 @@ void MediaQueryMatcher::ViewportChanged() {
   document_->EnqueueMediaQueryChangeListeners(listeners_to_notify);
 }
 
-void MediaQueryMatcher::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaQueryMatcher) {
   visitor->Trace(document_);
   visitor->Trace(evaluator_);
   visitor->Trace(media_lists_);

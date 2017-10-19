@@ -74,7 +74,7 @@ class BrowsingDataRemoverBrowserTest : public InProcessBrowserTest {
   }
 
   void DownloadAnItem() {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     base::ScopedTempDir downloads_directory;
     ASSERT_TRUE(downloads_directory.CreateUniqueTempDir());
     browser()->profile()->GetPrefs()->SetFilePath(
