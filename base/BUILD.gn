@@ -2833,3 +2833,12 @@ fuzzer_test("base_json_correctness_fuzzer") {
     ":base",
   ]
 }
+
+fuzzer_test("md5_fuzzer") {
+  sources = [
+    "md5_fuzzer.cc",
+  ]
+  deps = [
+    "//base",
+  ]
+}
