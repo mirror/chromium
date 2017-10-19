@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cff8439c_8b55e0d4",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-19T18:35:21Z",
+      "side": 1,
+      "message": "Alternatives considered:\n- Array of strings and use iteration index to get enum. Too opaque IMO\n- Dictionary or STL map: too heavyweight, given the count\n\nSo pretty open to arguments if you think this is gross",
+      "range": {
+        "startLine": 78,
+        "startChar": 78,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "642d5b6580cdf715b06e0ad225718d922caf69ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
