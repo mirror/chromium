@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "564dfd5b_5b90a1d3",
+        "filename": "third_party/WebKit/LayoutTests/animations/responsive/animations-responsive-offsetRotate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-19T23:38:23Z",
+      "side": 1,
+      "message": "Yes, same problem.\n\nCommented out so as to test the rest of the assertions after it. We could use console.log.\n\nThere is no non-fatal assertion in resources/testharness.js",
+      "parentUuid": "a66b4c33_682ac408",
+      "revId": "c0d6f7e53baa7f8748928b98bcf1e3347cb224c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66dabefe_04d964d7",
         "filename": "third_party/WebKit/LayoutTests/animations/responsive/animations-responsive-offsetRotate.html",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "c0d6f7e53baa7f8748928b98bcf1e3347cb224c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d6bfc2_d5e5701b",
+        "filename": "third_party/WebKit/LayoutTests/animations/responsive/animations-responsive-offsetRotate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-19T23:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66dabefe_04d964d7",
+      "revId": "c0d6f7e53baa7f8748928b98bcf1e3347cb224c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
