@@ -1675,13 +1675,6 @@ public class BottomSheet
     }
 
     /**
-     * @return Whether the Google 'G' logo should be shown in the location bar.
-     */
-    public boolean shouldShowGoogleGInLocationBar() {
-        return mNtpController.shouldShowGoogleGInLocationBar();
-    }
-
-    /**
      * @return Whether a tall bottom navigation bar should be used.
      */
     public boolean useTallBottomNav() {
