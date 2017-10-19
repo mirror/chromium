@@ -839,11 +839,11 @@ bool WebContentsImpl::OnMessageReceived(RenderFrameHostImpl* render_frame_host,
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidLoadResourceFromMemoryCache,
                         OnDidLoadResourceFromMemoryCache)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidDisplayInsecureContent,
-                        OnDidDisplayInsecureContent)
+                        OnDidDisplayMixedContent)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidContainInsecureFormAction,
                         OnDidContainInsecureFormAction)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidRunInsecureContent,
-                        OnDidRunInsecureContent)
+                        OnDidRunMixedContent)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidDisplayContentWithCertificateErrors,
                         OnDidDisplayContentWithCertificateErrors)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidRunContentWithCertificateErrors,
@@ -3906,13 +3906,13 @@ void WebContentsImpl::OnDidLoadResourceFromMemoryCache(
   }
 }
 
-void WebContentsImpl::OnDidDisplayInsecureContent(RenderFrameHostImpl* source) {
+void WebContentsImpl::OnDidDisplayMixedContent(RenderFrameHostImpl* source) {
   // Any frame can trigger display of insecure content, so we don't check
   // |source| here.
-  DidDisplayInsecureContent();
+  DidDisplayMixedContent();
 }
 
-void WebContentsImpl::DidDisplayInsecureContent() {
+void WebContentsImpl::DidDisplayMixedContent() {
   controller_.ssl_manager()->DidDisplayMixedContent();
 }
 
@@ -3921,17 +3921,17 @@ void WebContentsImpl::OnDidContainInsecureFormAction(
   controller_.ssl_manager()->DidContainInsecureFormAction();
 }
 
-void WebContentsImpl::OnDidRunInsecureContent(RenderFrameHostImpl* source,
-                                              const GURL& security_origin,
-                                              const GURL& target_url) {
+void WebContentsImpl::OnDidRunMixedContent(RenderFrameHostImpl* source,
+                                           const GURL& security_origin,
+                                           const GURL& target_url) {
   // TODO(nick, estark): Should we call FilterURL using |source|'s process on
   // these parameters? |target_url| seems unused, except for a log message. And
   // |security_origin| might be replaceable with the origin of the main frame.
-  DidRunInsecureContent(security_origin, target_url);
+  DidRunMixedContent(security_origin, target_url);
 }
 
-void WebContentsImpl::DidRunInsecureContent(const GURL& security_origin,
-                                            const GURL& target_url) {
+void WebContentsImpl::DidRunMixedContent(const GURL& security_origin,
+                                         const GURL& target_url) {
   LOG(WARNING) << security_origin << " ran insecure content from "
                << target_url.possibly_invalid_spec();
   RecordAction(base::UserMetricsAction("SSL.RanInsecureContent"));

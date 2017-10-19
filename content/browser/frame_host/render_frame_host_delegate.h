@@ -311,9 +311,9 @@ class CONTENT_EXPORT RenderFrameHostDelegate {
                                  bool user_gesture) {}
 
   // Notifies that mixed content was displayed or ran.
-  virtual void DidDisplayInsecureContent() {}
-  virtual void DidRunInsecureContent(const GURL& security_origin,
-                                     const GURL& target_url) {}
+  virtual void DidDisplayMixedContent() {}
+  virtual void DidRunMixedContent(const GURL& security_origin,
+                                  const GURL& target_url) {}
 
   // Reports that passive mixed content was found at the specified url.
   virtual void PassiveInsecureContentFound(const GURL& resource_url) {}
