@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "048585d5_5b67a97d",
+        "filename": "third_party/WebKit/Source/core/input/TouchEventManagerTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-19T20:38:31Z",
+      "side": 1,
+      "message": "Get rid of this variable... have the bool variable in CheckEventListenerCallback not be a bool* but a bool.. And add an accessor on CheckEventListenerCallback to return the value.",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 21
+      },
+      "revId": "9bcac46c049f19e7cae31dc5e456231637f1970a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
