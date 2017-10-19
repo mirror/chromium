@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f6b5a53_4bbc611e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-19T17:11:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a098a736_a6f750c2",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 177,
+        "endChar": 13
+      },
+      "revId": "172a24694152829091257493734ac4fc9d59f499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f317c9d_9623eac6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarControlLayout.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-18T21:01:52Z",
       "side": 1,
       "message": "Why does this need to be in the InfoBarControlLayout?\n\nAlso maybe rename to createSingleLineUrlView or add an optional click listener param?",
+      "range": {
+        "startLine": 419,
+        "startChar": 16,
+        "endLine": 419,
+        "endChar": 32
+      },
+      "revId": "172a24694152829091257493734ac4fc9d59f499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa38528_99457275",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarControlLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-19T17:11:09Z",
+      "side": 1,
+      "message": "As we have methods to add simple links, descriptions, button rows etc, I thought it made sense to have that too. Also, ControlLayoutParams#mMustBeFullWidth is private, so I\u0027d have to open it up if the method should be moved somewhere else.",
+      "parentUuid": "5f317c9d_9623eac6",
       "range": {
         "startLine": 419,
         "startChar": 16,
