@@ -40,10 +40,12 @@ class MediaControlsMediaEventListener;
 class MediaControlsOrientationLockDelegate;
 class MediaControlsRotateToFullscreenDelegate;
 class MediaControlsWindowEventListener;
+class MediaControlButtonPanelElement;
 class MediaControlCastButtonElement;
 class MediaControlCurrentTimeDisplayElement;
 class MediaControlDownloadButtonElement;
 class MediaControlFullscreenButtonElement;
+class MediaControlModernPlayButtonElement;
 class MediaControlMuteButtonElement;
 class MediaControlOverflowMenuButtonElement;
 class MediaControlOverflowMenuListElement;
@@ -270,7 +272,8 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   Member<MediaControlTextTrackListElement> text_track_list_;
   Member<MediaControlOverflowMenuButtonElement> overflow_menu_;
   Member<MediaControlOverflowMenuListElement> overflow_list_;
-  Member<HTMLDivElement> media_button_panel_;
+  Member<MediaControlButtonPanelElement> media_button_panel_;
+  Member<MediaControlModernPlayButtonElement> modern_play_button_;
 
   Member<MediaControlCastButtonElement> cast_button_;
   Member<MediaControlFullscreenButtonElement> fullscreen_button_;
