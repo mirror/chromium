@@ -24,7 +24,7 @@ class WebClipboardImplTest : public ContentBrowserTest {
 IN_PROC_BROWSER_TEST_F(WebClipboardImplTest, PasteRTF) {
   BrowserTestClipboardScope clipboard;
 
-  const std::string rtf_content = "{\\rtf1\\ansi Hello, {\\b world.}}";
+  const std::string rtf_content = R"({\rtf1\ansi Hello, {\b world.}})";
   clipboard.SetRtf(rtf_content);
 
   // paste_listener.html takes RTF from the clipboard and sets the title.

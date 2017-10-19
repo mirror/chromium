@@ -72,7 +72,7 @@ const GURL ManifestParserTest::default_manifest_url(
 
 TEST_F(ManifestParserTest, CrashTest) {
   // Passing temporary variables should not crash.
-  const base::StringPiece json = "{\"start_url\": \"/\"}";
+  const base::StringPiece json = R"({"start_url": "/"})";
   GURL url("http://example.com");
   ManifestParser parser(json, url, url);
   parser.Parse();
@@ -153,7 +153,7 @@ TEST_F(ManifestParserTest, MultipleErrorsReporting) {
 TEST_F(ManifestParserTest, NameParseRules) {
   // Smoke test.
   {
-    Manifest manifest = ParseManifest("{ \"name\": \"foo\" }");
+    Manifest manifest = ParseManifest(R"({ "name": "foo" })");
     ASSERT_TRUE(base::EqualsASCII(manifest.name.string(), "foo"));
     ASSERT_FALSE(manifest.IsEmpty());
     EXPECT_EQ(0u, GetErrorCount());
@@ -161,7 +161,7 @@ TEST_F(ManifestParserTest, NameParseRules) {
 
   // Trim whitespaces.
   {
-    Manifest manifest = ParseManifest("{ \"name\": \"  foo  \" }");
+    Manifest manifest = ParseManifest(R"({ "name": "  foo  " })");
     ASSERT_TRUE(base::EqualsASCII(manifest.name.string(), "foo"));
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -188,7 +188,7 @@ TEST_F(ManifestParserTest, NameParseRules) {
 TEST_F(ManifestParserTest, ShortNameParseRules) {
   // Smoke test.
   {
-    Manifest manifest = ParseManifest("{ \"short_name\": \"foo\" }");
+    Manifest manifest = ParseManifest(R"({ "short_name": "foo" })");
     ASSERT_TRUE(base::EqualsASCII(manifest.short_name.string(), "foo"));
     ASSERT_FALSE(manifest.IsEmpty());
     EXPECT_EQ(0u, GetErrorCount());
@@ -196,7 +196,7 @@ TEST_F(ManifestParserTest, ShortNameParseRules) {
 
   // Trim whitespaces.
   {
-    Manifest manifest = ParseManifest("{ \"short_name\": \"  foo  \" }");
+    Manifest manifest = ParseManifest(R"({ "short_name": "  foo  " })");
     ASSERT_TRUE(base::EqualsASCII(manifest.short_name.string(), "foo"));
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -223,7 +223,7 @@ TEST_F(ManifestParserTest, ShortNameParseRules) {
 TEST_F(ManifestParserTest, StartURLParseRules) {
   // Smoke test.
   {
-    Manifest manifest = ParseManifest("{ \"start_url\": \"land.html\" }");
+    Manifest manifest = ParseManifest(R"({ "start_url": "land.html" })");
     ASSERT_EQ(manifest.start_url.spec(),
               default_document_url.Resolve("land.html").spec());
     ASSERT_FALSE(manifest.IsEmpty());
@@ -232,7 +232,7 @@ TEST_F(ManifestParserTest, StartURLParseRules) {
 
   // Whitespaces.
   {
-    Manifest manifest = ParseManifest("{ \"start_url\": \"  land.html  \" }");
+    Manifest manifest = ParseManifest(R"({ "start_url": "  land.html  " })");
     ASSERT_EQ(manifest.start_url.spec(),
               default_document_url.Resolve("land.html").spec());
     EXPECT_EQ(0u, GetErrorCount());
@@ -258,7 +258,8 @@ TEST_F(ManifestParserTest, StartURLParseRules) {
 
   // Don't parse if property isn't a valid URL.
   {
-    Manifest manifest = ParseManifest("{ \"start_url\": \"http://www.google.ca:a\" }");
+    Manifest manifest =
+        ParseManifest(R"({ "start_url": "http://www.google.ca:a" })");
     ASSERT_TRUE(manifest.start_url.is_empty());
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("property 'start_url' ignored, URL is invalid.", errors()[0]);
@@ -267,7 +268,7 @@ TEST_F(ManifestParserTest, StartURLParseRules) {
   // Absolute start_url, same origin with document.
   {
     Manifest manifest =
-        ParseManifestWithURLs("{ \"start_url\": \"http://foo.com/land.html\" }",
+        ParseManifestWithURLs(R"({ "start_url": "http://foo.com/land.html" })",
                               GURL("http://foo.com/manifest.json"),
                               GURL("http://foo.com/index.html"));
     ASSERT_EQ(manifest.start_url.spec(), "http://foo.com/land.html");
@@ -277,7 +278,7 @@ TEST_F(ManifestParserTest, StartURLParseRules) {
   // Absolute start_url, cross origin with document.
   {
     Manifest manifest =
-        ParseManifestWithURLs("{ \"start_url\": \"http://bar.com/land.html\" }",
+        ParseManifestWithURLs(R"({ "start_url": "http://bar.com/land.html" })",
                               GURL("http://foo.com/manifest.json"),
                               GURL("http://foo.com/index.html"));
     ASSERT_TRUE(manifest.start_url.is_empty());
@@ -290,7 +291,7 @@ TEST_F(ManifestParserTest, StartURLParseRules) {
   // Resolving has to happen based on the manifest_url.
   {
     Manifest manifest =
-        ParseManifestWithURLs("{ \"start_url\": \"land.html\" }",
+        ParseManifestWithURLs(R"({ "start_url": "land.html" })",
                               GURL("http://foo.com/landing/manifest.json"),
                               GURL("http://foo.com/index.html"));
     ASSERT_EQ(manifest.start_url.spec(), "http://foo.com/landing/land.html");
@@ -302,7 +303,7 @@ TEST_F(ManifestParserTest, ScopeParseRules) {
   // Smoke test.
   {
     Manifest manifest = ParseManifest(
-        "{ \"scope\": \"land\", \"start_url\": \"land/landing.html\" }");
+        R"({ "scope": "land", "start_url": "land/landing.html" })");
     ASSERT_EQ(manifest.scope.spec(),
               default_document_url.Resolve("land").spec());
     ASSERT_FALSE(manifest.IsEmpty());
@@ -312,7 +313,7 @@ TEST_F(ManifestParserTest, ScopeParseRules) {
   // Whitespaces.
   {
     Manifest manifest = ParseManifest(
-        "{ \"scope\": \"  land  \", \"start_url\": \"land/landing.html\" }");
+        R"({ "scope": "  land  ", "start_url": "land/landing.html" })");
     ASSERT_EQ(manifest.scope.spec(),
               default_document_url.Resolve("land").spec());
     EXPECT_EQ(0u, GetErrorCount());
@@ -394,18 +395,20 @@ TEST_F(ManifestParserTest, ScopeParseRules) {
 
   // No start URL. Document URL is in scope.
   {
-    Manifest manifest = ParseManifestWithURLs("{ \"scope\": \"http://foo.com/land\" }",
-                                              GURL("http://foo.com/manifest.json"),
-                                              GURL("http://foo.com/land/index.html"));
+    Manifest manifest =
+        ParseManifestWithURLs(R"({ "scope": "http://foo.com/land" })",
+                              GURL("http://foo.com/manifest.json"),
+                              GURL("http://foo.com/land/index.html"));
     ASSERT_EQ(manifest.scope.spec(), "http://foo.com/land");
     ASSERT_EQ(0u, GetErrorCount());
   }
 
   // No start URL. Document is out of scope.
   {
-    Manifest manifest = ParseManifestWithURLs("{ \"scope\": \"http://foo.com/land\" }",
-                                              GURL("http://foo.com/manifest.json"),
-                                              GURL("http://foo.com/index.html"));
+    Manifest manifest =
+        ParseManifestWithURLs(R"({ "scope": "http://foo.com/land" })",
+                              GURL("http://foo.com/manifest.json"),
+                              GURL("http://foo.com/index.html"));
     ASSERT_EQ(1u, GetErrorCount());
     EXPECT_EQ("property 'scope' ignored. Start url should be within scope "
               "of scope URL.",
@@ -415,8 +418,7 @@ TEST_F(ManifestParserTest, ScopeParseRules) {
   // Resolving has to happen based on the manifest_url.
   {
     Manifest manifest = ParseManifestWithURLs(
-        "{ \"scope\": \"treasure\" }",
-        GURL("http://foo.com/map/manifest.json"),
+        R"({ "scope": "treasure" })", GURL("http://foo.com/map/manifest.json"),
         GURL("http://foo.com/map/treasure/island/index.html"));
     ASSERT_EQ(manifest.scope.spec(), "http://foo.com/map/treasure");
     EXPECT_EQ(0u, GetErrorCount());
@@ -424,20 +426,18 @@ TEST_F(ManifestParserTest, ScopeParseRules) {
 
   // Scope is parent directory.
   {
-    Manifest manifest =
-        ParseManifestWithURLs("{ \"scope\": \"..\" }",
-                              GURL("http://foo.com/map/manifest.json"),
-                              GURL("http://foo.com/index.html"));
+    Manifest manifest = ParseManifestWithURLs(
+        R"({ "scope": ".." })", GURL("http://foo.com/map/manifest.json"),
+        GURL("http://foo.com/index.html"));
     ASSERT_EQ(manifest.scope.spec(), "http://foo.com/");
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Scope tries to go up past domain.
   {
-    Manifest manifest =
-        ParseManifestWithURLs("{ \"scope\": \"../..\" }",
-                              GURL("http://foo.com/map/manifest.json"),
-                              GURL("http://foo.com/index.html"));
+    Manifest manifest = ParseManifestWithURLs(
+        R"({ "scope": "../.." })", GURL("http://foo.com/map/manifest.json"),
+        GURL("http://foo.com/index.html"));
     ASSERT_EQ(manifest.scope.spec(), "http://foo.com/");
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -446,7 +446,7 @@ TEST_F(ManifestParserTest, ScopeParseRules) {
 TEST_F(ManifestParserTest, DisplayParserRules) {
   // Smoke test.
   {
-    Manifest manifest = ParseManifest("{ \"display\": \"browser\" }");
+    Manifest manifest = ParseManifest(R"({ "display": "browser" })");
     EXPECT_EQ(manifest.display, blink::kWebDisplayModeBrowser);
     EXPECT_FALSE(manifest.IsEmpty());
     EXPECT_EQ(0u, GetErrorCount());
@@ -454,7 +454,7 @@ TEST_F(ManifestParserTest, DisplayParserRules) {
 
   // Trim whitespaces.
   {
-    Manifest manifest = ParseManifest("{ \"display\": \"  browser  \" }");
+    Manifest manifest = ParseManifest(R"({ "display": "  browser  " })");
     EXPECT_EQ(manifest.display, blink::kWebDisplayModeBrowser);
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -481,7 +481,7 @@ TEST_F(ManifestParserTest, DisplayParserRules) {
 
   // Parse fails if string isn't known.
   {
-    Manifest manifest = ParseManifest("{ \"display\": \"browser_something\" }");
+    Manifest manifest = ParseManifest(R"({ "display": "browser_something" })");
     EXPECT_EQ(manifest.display, blink::kWebDisplayModeUndefined);
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("unknown 'display' value ignored.",
@@ -490,35 +490,35 @@ TEST_F(ManifestParserTest, DisplayParserRules) {
 
   // Accept 'fullscreen'.
   {
-    Manifest manifest = ParseManifest("{ \"display\": \"fullscreen\" }");
+    Manifest manifest = ParseManifest(R"({ "display": "fullscreen" })");
     EXPECT_EQ(manifest.display, blink::kWebDisplayModeFullscreen);
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Accept 'fullscreen'.
   {
-    Manifest manifest = ParseManifest("{ \"display\": \"standalone\" }");
+    Manifest manifest = ParseManifest(R"({ "display": "standalone" })");
     EXPECT_EQ(manifest.display, blink::kWebDisplayModeStandalone);
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Accept 'minimal-ui'.
   {
-    Manifest manifest = ParseManifest("{ \"display\": \"minimal-ui\" }");
+    Manifest manifest = ParseManifest(R"({ "display": "minimal-ui" })");
     EXPECT_EQ(manifest.display, blink::kWebDisplayModeMinimalUi);
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Accept 'browser'.
   {
-    Manifest manifest = ParseManifest("{ \"display\": \"browser\" }");
+    Manifest manifest = ParseManifest(R"({ "display": "browser" })");
     EXPECT_EQ(manifest.display, blink::kWebDisplayModeBrowser);
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Case insensitive.
   {
-    Manifest manifest = ParseManifest("{ \"display\": \"BROWSER\" }");
+    Manifest manifest = ParseManifest(R"({ "display": "BROWSER" })");
     EXPECT_EQ(manifest.display, blink::kWebDisplayModeBrowser);
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -527,7 +527,7 @@ TEST_F(ManifestParserTest, DisplayParserRules) {
 TEST_F(ManifestParserTest, OrientationParserRules) {
   // Smoke test.
   {
-    Manifest manifest = ParseManifest("{ \"orientation\": \"natural\" }");
+    Manifest manifest = ParseManifest(R"({ "orientation": "natural" })");
     EXPECT_EQ(manifest.orientation, blink::kWebScreenOrientationLockNatural);
     EXPECT_FALSE(manifest.IsEmpty());
     EXPECT_EQ(0u, GetErrorCount());
@@ -535,7 +535,7 @@ TEST_F(ManifestParserTest, OrientationParserRules) {
 
   // Trim whitespaces.
   {
-    Manifest manifest = ParseManifest("{ \"orientation\": \"natural\" }");
+    Manifest manifest = ParseManifest(R"({ "orientation": "natural" })");
     EXPECT_EQ(manifest.orientation, blink::kWebScreenOrientationLockNatural);
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -560,7 +560,7 @@ TEST_F(ManifestParserTest, OrientationParserRules) {
 
   // Parse fails if string isn't known.
   {
-    Manifest manifest = ParseManifest("{ \"orientation\": \"naturalish\" }");
+    Manifest manifest = ParseManifest(R"({ "orientation": "naturalish" })");
     EXPECT_EQ(manifest.orientation, blink::kWebScreenOrientationLockDefault);
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("unknown 'orientation' value ignored.",
@@ -569,21 +569,21 @@ TEST_F(ManifestParserTest, OrientationParserRules) {
 
   // Accept 'any'.
   {
-    Manifest manifest = ParseManifest("{ \"orientation\": \"any\" }");
+    Manifest manifest = ParseManifest(R"({ "orientation": "any" })");
     EXPECT_EQ(manifest.orientation, blink::kWebScreenOrientationLockAny);
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Accept 'natural'.
   {
-    Manifest manifest = ParseManifest("{ \"orientation\": \"natural\" }");
+    Manifest manifest = ParseManifest(R"({ "orientation": "natural" })");
     EXPECT_EQ(manifest.orientation, blink::kWebScreenOrientationLockNatural);
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Accept 'landscape'.
   {
-    Manifest manifest = ParseManifest("{ \"orientation\": \"landscape\" }");
+    Manifest manifest = ParseManifest(R"({ "orientation": "landscape" })");
     EXPECT_EQ(manifest.orientation, blink::kWebScreenOrientationLockLandscape);
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -591,7 +591,7 @@ TEST_F(ManifestParserTest, OrientationParserRules) {
   // Accept 'landscape-primary'.
   {
     Manifest manifest =
-        ParseManifest("{ \"orientation\": \"landscape-primary\" }");
+        ParseManifest(R"({ "orientation": "landscape-primary" })");
     EXPECT_EQ(manifest.orientation,
               blink::kWebScreenOrientationLockLandscapePrimary);
     EXPECT_EQ(0u, GetErrorCount());
@@ -600,7 +600,7 @@ TEST_F(ManifestParserTest, OrientationParserRules) {
   // Accept 'landscape-secondary'.
   {
     Manifest manifest =
-        ParseManifest("{ \"orientation\": \"landscape-secondary\" }");
+        ParseManifest(R"({ "orientation": "landscape-secondary" })");
     EXPECT_EQ(manifest.orientation,
               blink::kWebScreenOrientationLockLandscapeSecondary);
     EXPECT_EQ(0u, GetErrorCount());
@@ -608,7 +608,7 @@ TEST_F(ManifestParserTest, OrientationParserRules) {
 
   // Accept 'portrait'.
   {
-    Manifest manifest = ParseManifest("{ \"orientation\": \"portrait\" }");
+    Manifest manifest = ParseManifest(R"({ "orientation": "portrait" })");
     EXPECT_EQ(manifest.orientation, blink::kWebScreenOrientationLockPortrait);
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -616,7 +616,7 @@ TEST_F(ManifestParserTest, OrientationParserRules) {
   // Accept 'portrait-primary'.
   {
     Manifest manifest =
-      ParseManifest("{ \"orientation\": \"portrait-primary\" }");
+        ParseManifest(R"({ "orientation": "portrait-primary" })");
     EXPECT_EQ(manifest.orientation,
               blink::kWebScreenOrientationLockPortraitPrimary);
     EXPECT_EQ(0u, GetErrorCount());
@@ -625,7 +625,7 @@ TEST_F(ManifestParserTest, OrientationParserRules) {
   // Accept 'portrait-secondary'.
   {
     Manifest manifest =
-        ParseManifest("{ \"orientation\": \"portrait-secondary\" }");
+        ParseManifest(R"({ "orientation": "portrait-secondary" })");
     EXPECT_EQ(manifest.orientation,
               blink::kWebScreenOrientationLockPortraitSecondary);
     EXPECT_EQ(0u, GetErrorCount());
@@ -633,7 +633,7 @@ TEST_F(ManifestParserTest, OrientationParserRules) {
 
   // Case insensitive.
   {
-    Manifest manifest = ParseManifest("{ \"orientation\": \"LANDSCAPE\" }");
+    Manifest manifest = ParseManifest(R"({ "orientation": "LANDSCAPE" })");
     EXPECT_EQ(manifest.orientation, blink::kWebScreenOrientationLockLandscape);
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -658,7 +658,7 @@ TEST_F(ManifestParserTest, IconsParseRules) {
 
   // Smoke test: icon with invalid src, empty list.
   {
-    Manifest manifest = ParseManifest("{ \"icons\": [ { \"icons\": [] } ] }");
+    Manifest manifest = ParseManifest(R"({ "icons": [ { "icons": [] } ] })");
     EXPECT_EQ(manifest.icons.size(), 0u);
     EXPECT_TRUE(manifest.IsEmpty());
     EXPECT_EQ(0u, GetErrorCount());
@@ -666,7 +666,7 @@ TEST_F(ManifestParserTest, IconsParseRules) {
 
   // Smoke test: if icon with empty src, it will be present in the list.
   {
-    Manifest manifest = ParseManifest("{ \"icons\": [ { \"src\": \"\" } ] }");
+    Manifest manifest = ParseManifest(R"({ "icons": [ { "src": "" } ] })");
     EXPECT_EQ(manifest.icons.size(), 1u);
     EXPECT_EQ(manifest.icons[0].src.spec(), "http://foo.com/manifest.json");
     EXPECT_FALSE(manifest.IsEmpty());
@@ -675,8 +675,7 @@ TEST_F(ManifestParserTest, IconsParseRules) {
 
   // Smoke test: if one icons with valid src, it will be present in the list.
   {
-    Manifest manifest =
-        ParseManifest("{ \"icons\": [{ \"src\": \"foo.jpg\" }] }");
+    Manifest manifest = ParseManifest(R"({ "icons": [{ "src": "foo.jpg" }] })");
     EXPECT_EQ(manifest.icons.size(), 1u);
     EXPECT_EQ(manifest.icons[0].src.spec(), "http://foo.com/foo.jpg");
     EXPECT_FALSE(manifest.IsEmpty());
@@ -688,7 +687,7 @@ TEST_F(ManifestParserTest, IconSrcParseRules) {
   // Smoke test.
   {
     Manifest manifest =
-        ParseManifest("{ \"icons\": [ {\"src\": \"foo.png\" } ] }");
+        ParseManifest(R"({ "icons": [ {"src": "foo.png" } ] })");
     EXPECT_EQ(manifest.icons[0].src.spec(),
               default_document_url.Resolve("foo.png").spec());
     EXPECT_EQ(0u, GetErrorCount());
@@ -697,7 +696,7 @@ TEST_F(ManifestParserTest, IconSrcParseRules) {
   // Whitespaces.
   {
     Manifest manifest =
-        ParseManifest("{ \"icons\": [ {\"src\": \"   foo.png   \" } ] }");
+        ParseManifest(R"({ "icons": [ {"src": "   foo.png   " } ] })");
     EXPECT_EQ(manifest.icons[0].src.spec(),
               default_document_url.Resolve("foo.png").spec());
     EXPECT_EQ(0u, GetErrorCount());
@@ -705,7 +704,7 @@ TEST_F(ManifestParserTest, IconSrcParseRules) {
 
   // Don't parse if property isn't a string.
   {
-    Manifest manifest = ParseManifest("{ \"icons\": [ {\"src\": {} } ] }");
+    Manifest manifest = ParseManifest(R"({ "icons": [ {"src": {} } ] })");
     EXPECT_TRUE(manifest.icons.empty());
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("property 'src' ignored, type string expected.",
@@ -714,7 +713,7 @@ TEST_F(ManifestParserTest, IconSrcParseRules) {
 
   // Don't parse if property isn't a string.
   {
-    Manifest manifest = ParseManifest("{ \"icons\": [ {\"src\": 42 } ] }");
+    Manifest manifest = ParseManifest(R"({ "icons": [ {"src": 42 } ] })");
     EXPECT_TRUE(manifest.icons.empty());
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("property 'src' ignored, type string expected.",
@@ -724,9 +723,8 @@ TEST_F(ManifestParserTest, IconSrcParseRules) {
   // Resolving has to happen based on the document_url.
   {
     Manifest manifest = ParseManifestWithURLs(
-        "{ \"icons\": [ {\"src\": \"icons/foo.png\" } ] }",
-        GURL("http://foo.com/landing/index.html"),
-        default_manifest_url);
+        R"({ "icons": [ {"src": "icons/foo.png" } ] })",
+        GURL("http://foo.com/landing/index.html"), default_manifest_url);
     EXPECT_EQ(manifest.icons[0].src.spec(),
               "http://foo.com/landing/icons/foo.png");
     EXPECT_EQ(0u, GetErrorCount());
@@ -737,7 +735,7 @@ TEST_F(ManifestParserTest, IconTypeParseRules) {
   // Smoke test.
   {
     Manifest manifest =
-        ParseManifest("{ \"icons\": [ {\"src\": \"\", \"type\": \"foo\" } ] }");
+        ParseManifest(R"({ "icons": [ {"src": "", "type": "foo" } ] })");
     EXPECT_TRUE(base::EqualsASCII(manifest.icons[0].type, "foo"));
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -753,7 +751,7 @@ TEST_F(ManifestParserTest, IconTypeParseRules) {
   // Don't parse if property isn't a string.
   {
     Manifest manifest =
-        ParseManifest("{ \"icons\": [ {\"src\": \"\", \"type\": {} } ] }");
+        ParseManifest(R"({ "icons": [ {"src": "", "type": {} } ] })");
     EXPECT_TRUE(manifest.icons[0].type.empty());
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("property 'type' ignored, type string expected.",
@@ -763,7 +761,7 @@ TEST_F(ManifestParserTest, IconTypeParseRules) {
   // Don't parse if property isn't a string.
   {
     Manifest manifest =
-        ParseManifest("{ \"icons\": [ {\"src\": \"\", \"type\": 42 } ] }");
+        ParseManifest(R"({ "icons": [ {"src": "", "type": 42 } ] })");
     EXPECT_TRUE(manifest.icons[0].type.empty());
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("property 'type' ignored, type string expected.",
@@ -904,7 +902,7 @@ TEST_F(ManifestParserTest, IconPurposeParseRules) {
 
   // 'any' is added when property isn't present.
   {
-    Manifest manifest = ParseManifest("{ \"icons\": [ {\"src\": \"\" } ] }");
+    Manifest manifest = ParseManifest(R"({ "icons": [ {"src": "" } ] })");
     EXPECT_EQ(manifest.icons[0].purpose.size(), 1u);
     EXPECT_EQ(manifest.icons[0].purpose[0], Manifest::Icon::IconPurpose::ANY);
     EXPECT_EQ(0u, GetErrorCount());
@@ -995,7 +993,7 @@ TEST_F(ManifestParserTest, ShareTargetParseRules) {
   // Key in share_target that isn't valid.
   {
     Manifest manifest = ParseManifest(
-        "{ \"share_target\": {\"incorrect_key\": \"some_value\" } }");
+        R"({ "share_target": {"incorrect_key": "some_value" } })");
     ASSERT_FALSE(manifest.share_target.has_value());
     EXPECT_TRUE(manifest.IsEmpty());
     EXPECT_EQ(0u, GetErrorCount());
@@ -1006,7 +1004,7 @@ TEST_F(ManifestParserTest, ShareTargetUrlTemplateParseRules) {
   // Contains share_target and url_template, but url_template is empty.
   {
     Manifest manifest =
-        ParseManifest("{ \"share_target\": { \"url_template\": \"\" } }");
+        ParseManifest(R"({ "share_target": { "url_template": "" } })");
     ASSERT_TRUE(manifest.share_target.has_value());
     EXPECT_TRUE(base::EqualsASCII(
         manifest.share_target.value().url_template.string(), ""));
@@ -1017,7 +1015,7 @@ TEST_F(ManifestParserTest, ShareTargetUrlTemplateParseRules) {
   // Don't parse if property isn't a string.
   {
     Manifest manifest =
-        ParseManifest("{ \"share_target\": { \"url_template\": {} } }");
+        ParseManifest(R"({ "share_target": { "url_template": {} } })");
     EXPECT_FALSE(manifest.share_target.has_value());
     EXPECT_TRUE(manifest.IsEmpty());
     EXPECT_EQ(1u, GetErrorCount());
@@ -1028,7 +1026,7 @@ TEST_F(ManifestParserTest, ShareTargetUrlTemplateParseRules) {
   // Don't parse if property isn't a string.
   {
     Manifest manifest =
-        ParseManifest("{ \"share_target\": { \"url_template\": 42 } }");
+        ParseManifest(R"({ "share_target": { "url_template": 42 } })");
     EXPECT_FALSE(manifest.share_target.has_value());
     EXPECT_TRUE(manifest.IsEmpty());
     EXPECT_EQ(1u, GetErrorCount());
@@ -1040,7 +1038,7 @@ TEST_F(ManifestParserTest, ShareTargetUrlTemplateParseRules) {
   // valid template.
   {
     Manifest manifest = ParseManifest(
-        "{ \"share_target\": {\"url_template\": \"share/?title={title}\" } }");
+        R"({ "share_target": {"url_template": "share/?title={title}" } })");
     ASSERT_TRUE(manifest.share_target.has_value());
     EXPECT_TRUE(
         base::EqualsASCII(manifest.share_target.value().url_template.string(),
@@ -1053,7 +1051,7 @@ TEST_F(ManifestParserTest, ShareTargetUrlTemplateParseRules) {
   // invalid template.
   {
     Manifest manifest = ParseManifest(
-        "{ \"share_target\": {\"url_template\": \"share/?title={title\" } }");
+        R"({ "share_target": {"url_template": "share/?title={title" } })");
     ASSERT_TRUE(manifest.share_target.has_value());
     EXPECT_TRUE(
         base::EqualsASCII(manifest.share_target.value().url_template.string(),
@@ -1087,7 +1085,7 @@ TEST_F(ManifestParserTest, RelatedApplicationsParseRules) {
   // If invalid platform, application is ignored.
   {
     Manifest manifest = ParseManifest(
-        "{ \"related_applications\": [{\"platform\": 123}]}");
+        R"({ "related_applications": [{"platform": 123}]})");
     EXPECT_EQ(manifest.related_applications.size(), 0u);
     EXPECT_TRUE(manifest.IsEmpty());
     EXPECT_EQ(2u, GetErrorCount());
@@ -1102,7 +1100,7 @@ TEST_F(ManifestParserTest, RelatedApplicationsParseRules) {
   // If missing platform, application is ignored.
   {
     Manifest manifest = ParseManifest(
-        "{ \"related_applications\": [{\"id\": \"foo\"}]}");
+        R"({ "related_applications": [{"id": "foo"}]})");
     EXPECT_EQ(manifest.related_applications.size(), 0u);
     EXPECT_TRUE(manifest.IsEmpty());
     EXPECT_EQ(1u, GetErrorCount());
@@ -1113,7 +1111,7 @@ TEST_F(ManifestParserTest, RelatedApplicationsParseRules) {
   // If missing id and url, application is ignored.
   {
     Manifest manifest = ParseManifest(
-        "{ \"related_applications\": [{\"platform\": \"play\"}]}");
+        R"({ "related_applications": [{"platform": "play"}]})");
     EXPECT_EQ(manifest.related_applications.size(), 0u);
     EXPECT_TRUE(manifest.IsEmpty());
     EXPECT_EQ(1u, GetErrorCount());
@@ -1217,7 +1215,7 @@ TEST_F(ManifestParserTest, ParsePreferRelatedApplicationsParseRules) {
   }
   {
     Manifest manifest = ParseManifest(
-        "{ \"prefer_related_applications\": \"true\" }");
+        R"({ "prefer_related_applications": "true" })");
     EXPECT_FALSE(manifest.prefer_related_applications);
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ(
@@ -1247,7 +1245,7 @@ TEST_F(ManifestParserTest, ParsePreferRelatedApplicationsParseRules) {
 TEST_F(ManifestParserTest, ThemeColorParserRules) {
   // Smoke test.
   {
-    Manifest manifest = ParseManifest("{ \"theme_color\": \"#FF0000\" }");
+    Manifest manifest = ParseManifest(R"({ "theme_color": "#FF0000" })");
     EXPECT_EQ(ExtractColor(manifest.theme_color), 0xFFFF0000u);
     EXPECT_FALSE(manifest.IsEmpty());
     EXPECT_EQ(0u, GetErrorCount());
@@ -1255,7 +1253,7 @@ TEST_F(ManifestParserTest, ThemeColorParserRules) {
 
   // Trim whitespaces.
   {
-    Manifest manifest = ParseManifest("{ \"theme_color\": \"  blue   \" }");
+    Manifest manifest = ParseManifest(R"({ "theme_color": "  blue   " })");
     EXPECT_EQ(ExtractColor(manifest.theme_color), 0xFF0000FFu);
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -1317,7 +1315,7 @@ TEST_F(ManifestParserTest, ThemeColorParserRules) {
 
   // Parse fails if string is not in a known format.
   {
-    Manifest manifest = ParseManifest("{ \"theme_color\": \"bleu\" }");
+    Manifest manifest = ParseManifest(R"({ "theme_color": "bleu" })");
     EXPECT_EQ(manifest.theme_color, Manifest::kInvalidOrMissingColor);
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("property 'theme_color' ignored, 'bleu' is not a valid color.",
@@ -1326,7 +1324,7 @@ TEST_F(ManifestParserTest, ThemeColorParserRules) {
 
   // Parse fails if string is not in a known format.
   {
-    Manifest manifest = ParseManifest("{ \"theme_color\": \"FF00FF\" }");
+    Manifest manifest = ParseManifest(R"({ "theme_color": "FF00FF" })");
     EXPECT_EQ(manifest.theme_color, Manifest::kInvalidOrMissingColor);
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("property 'theme_color' ignored, 'FF00FF'"
@@ -1336,7 +1334,7 @@ TEST_F(ManifestParserTest, ThemeColorParserRules) {
 
   // Parse fails if multiple values for theme_color are given.
   {
-    Manifest manifest = ParseManifest("{ \"theme_color\": \"#ABC #DEF\" }");
+    Manifest manifest = ParseManifest(R"({ "theme_color": "#ABC #DEF" })");
     EXPECT_EQ(manifest.theme_color, Manifest::kInvalidOrMissingColor);
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("property 'theme_color' ignored, "
@@ -1347,7 +1345,7 @@ TEST_F(ManifestParserTest, ThemeColorParserRules) {
   // Parse fails if multiple values for theme_color are given.
   {
     Manifest manifest = ParseManifest(
-        "{ \"theme_color\": \"#AABBCC #DDEEFF\" }");
+        R"({ "theme_color": "#AABBCC #DDEEFF" })");
     EXPECT_EQ(manifest.theme_color, Manifest::kInvalidOrMissingColor);
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("property 'theme_color' ignored, "
@@ -1357,35 +1355,35 @@ TEST_F(ManifestParserTest, ThemeColorParserRules) {
 
   // Accept CSS color keyword format.
   {
-    Manifest manifest = ParseManifest("{ \"theme_color\": \"blue\" }");
+    Manifest manifest = ParseManifest(R"({ "theme_color": "blue" })");
     EXPECT_EQ(ExtractColor(manifest.theme_color), 0xFF0000FFu);
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Accept CSS color keyword format.
   {
-    Manifest manifest = ParseManifest("{ \"theme_color\": \"chartreuse\" }");
+    Manifest manifest = ParseManifest(R"({ "theme_color": "chartreuse" })");
     EXPECT_EQ(ExtractColor(manifest.theme_color), 0xFF7FFF00u);
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Accept CSS RGB format.
   {
-    Manifest manifest = ParseManifest("{ \"theme_color\": \"#FFF\" }");
+    Manifest manifest = ParseManifest(R"({ "theme_color": "#FFF" })");
     EXPECT_EQ(ExtractColor(manifest.theme_color), 0xFFFFFFFFu);
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Accept CSS RGB format.
   {
-    Manifest manifest = ParseManifest("{ \"theme_color\": \"#ABC\" }");
+    Manifest manifest = ParseManifest(R"({ "theme_color": "#ABC" })");
     EXPECT_EQ(ExtractColor(manifest.theme_color), 0xFFAABBCCu);
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Accept CSS RRGGBB format.
   {
-    Manifest manifest = ParseManifest("{ \"theme_color\": \"#FF0000\" }");
+    Manifest manifest = ParseManifest(R"({ "theme_color": "#FF0000" })");
     EXPECT_EQ(ExtractColor(manifest.theme_color), 0xFFFF0000u);
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -1409,7 +1407,7 @@ TEST_F(ManifestParserTest, ThemeColorParserRules) {
 TEST_F(ManifestParserTest, BackgroundColorParserRules) {
   // Smoke test.
   {
-    Manifest manifest = ParseManifest("{ \"background_color\": \"#FF0000\" }");
+    Manifest manifest = ParseManifest(R"({ "background_color": "#FF0000" })");
     EXPECT_EQ(ExtractColor(manifest.background_color), 0xFFFF0000u);
     EXPECT_FALSE(manifest.IsEmpty());
     EXPECT_EQ(0u, GetErrorCount());
@@ -1418,7 +1416,7 @@ TEST_F(ManifestParserTest, BackgroundColorParserRules) {
   // Trim whitespaces.
   {
     Manifest manifest = ParseManifest(
-        "{ \"background_color\": \"  blue   \" }");
+        R"({ "background_color": "  blue   " })");
     EXPECT_EQ(ExtractColor(manifest.background_color), 0xFF0000FFu);
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -1480,7 +1478,7 @@ TEST_F(ManifestParserTest, BackgroundColorParserRules) {
 
   // Parse fails if string is not in a known format.
   {
-    Manifest manifest = ParseManifest("{ \"background_color\": \"bleu\" }");
+    Manifest manifest = ParseManifest(R"({ "background_color": "bleu" })");
     EXPECT_EQ(manifest.background_color, Manifest::kInvalidOrMissingColor);
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("property 'background_color' ignored,"
@@ -1490,7 +1488,7 @@ TEST_F(ManifestParserTest, BackgroundColorParserRules) {
 
   // Parse fails if string is not in a known format.
   {
-    Manifest manifest = ParseManifest("{ \"background_color\": \"FF00FF\" }");
+    Manifest manifest = ParseManifest(R"({ "background_color": "FF00FF" })");
     EXPECT_EQ(manifest.background_color, Manifest::kInvalidOrMissingColor);
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("property 'background_color' ignored,"
@@ -1501,7 +1499,7 @@ TEST_F(ManifestParserTest, BackgroundColorParserRules) {
   // Parse fails if multiple values for background_color are given.
   {
     Manifest manifest = ParseManifest(
-        "{ \"background_color\": \"#ABC #DEF\" }");
+        R"({ "background_color": "#ABC #DEF" })");
     EXPECT_EQ(manifest.background_color, Manifest::kInvalidOrMissingColor);
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("property 'background_color' ignored, "
@@ -1512,7 +1510,7 @@ TEST_F(ManifestParserTest, BackgroundColorParserRules) {
   // Parse fails if multiple values for background_color are given.
   {
     Manifest manifest = ParseManifest(
-        "{ \"background_color\": \"#AABBCC #DDEEFF\" }");
+        R"({ "background_color": "#AABBCC #DDEEFF" })");
     EXPECT_EQ(manifest.background_color, Manifest::kInvalidOrMissingColor);
     EXPECT_EQ(1u, GetErrorCount());
     EXPECT_EQ("property 'background_color' ignored, "
@@ -1522,7 +1520,7 @@ TEST_F(ManifestParserTest, BackgroundColorParserRules) {
 
   // Accept CSS color keyword format.
   {
-    Manifest manifest = ParseManifest("{ \"background_color\": \"blue\" }");
+    Manifest manifest = ParseManifest(R"({ "background_color": "blue" })");
     EXPECT_EQ(ExtractColor(manifest.background_color), 0xFF0000FFu);
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -1530,28 +1528,28 @@ TEST_F(ManifestParserTest, BackgroundColorParserRules) {
   // Accept CSS color keyword format.
   {
     Manifest manifest = ParseManifest(
-        "{ \"background_color\": \"chartreuse\" }");
+        R"({ "background_color": "chartreuse" })");
     EXPECT_EQ(ExtractColor(manifest.background_color), 0xFF7FFF00u);
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Accept CSS RGB format.
   {
-    Manifest manifest = ParseManifest("{ \"background_color\": \"#FFF\" }");
+    Manifest manifest = ParseManifest(R"({ "background_color": "#FFF" })");
     EXPECT_EQ(ExtractColor(manifest.background_color), 0xFFFFFFFFu);
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Accept CSS RGB format.
   {
-    Manifest manifest = ParseManifest("{ \"background_color\": \"#ABC\" }");
+    Manifest manifest = ParseManifest(R"({ "background_color": "#ABC" })");
     EXPECT_EQ(ExtractColor(manifest.background_color), 0xFFAABBCCu);
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Accept CSS RRGGBB format.
   {
-    Manifest manifest = ParseManifest("{ \"background_color\": \"#FF0000\" }");
+    Manifest manifest = ParseManifest(R"({ "background_color": "#FF0000" })");
     EXPECT_EQ(ExtractColor(manifest.background_color), 0xFFFF0000u);
     EXPECT_EQ(0u, GetErrorCount());
   }
@@ -1576,14 +1574,14 @@ TEST_F(ManifestParserTest, BackgroundColorParserRules) {
 TEST_F(ManifestParserTest, GCMSenderIDParseRules) {
   // Smoke test.
   {
-    Manifest manifest = ParseManifest("{ \"gcm_sender_id\": \"foo\" }");
+    Manifest manifest = ParseManifest(R"({ "gcm_sender_id": "foo" })");
     EXPECT_TRUE(base::EqualsASCII(manifest.gcm_sender_id.string(), "foo"));
     EXPECT_EQ(0u, GetErrorCount());
   }
 
   // Trim whitespaces.
   {
-    Manifest manifest = ParseManifest("{ \"gcm_sender_id\": \"  foo  \" }");
+    Manifest manifest = ParseManifest(R"({ "gcm_sender_id": "  foo  " })");
     EXPECT_TRUE(base::EqualsASCII(manifest.gcm_sender_id.string(), "foo"));
     EXPECT_EQ(0u, GetErrorCount());
   }

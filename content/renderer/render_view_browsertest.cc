@@ -466,7 +466,7 @@ class DevToolsAgentTest : public RenderViewImplTest {
             FROM_HERE,
             base::BindOnce(&DevToolsAgentTest::DispatchDevToolsMessage,
                            base::Unretained(this), "Debugger.resume",
-                           "{\"id\":100,\"method\":\"Debugger.resume\"}"));
+                           R"({"id":100,"method":"Debugger.resume"})"));
       }
     }
   }
@@ -580,7 +580,7 @@ TEST_F(RenderViewImplTest, RenderFrameClearedAfterClose) {
 // Test that we get form state change notifications when input fields change.
 TEST_F(RenderViewImplTest, OnNavStateChanged) {
   view()->set_send_content_state_immediately(true);
-  LoadHTML("<input type=\"text\" id=\"elt_text\"></input>");
+  LoadHTML(R"(<input type="text" id="elt_text"></input>)");
 
   // We should NOT have gotten a form state change notification yet.
   EXPECT_FALSE(render_thread_->sink().GetFirstMessageMatching(
@@ -1584,7 +1584,7 @@ TEST_F(RenderViewImplTest, TestBackForward) {
 
 #if defined(OS_MACOSX) || defined(USE_AURA)
 TEST_F(RenderViewImplTest, GetCompositionCharacterBoundsTest) {
-  LoadHTML("<textarea id=\"test\" cols=\"100\"></textarea>");
+  LoadHTML(R"(<textarea id="test" cols="100"></textarea>)");
   ExecuteJavaScriptForTests("document.getElementById('test').focus();");
 
   const base::string16 empty_string;
@@ -1606,7 +1606,7 @@ TEST_F(RenderViewImplTest, GetCompositionCharacterBoundsTest) {
 
   // Non surrogate pair unicode character.
   const base::string16 unicode_composition = base::UTF8ToUTF16(
-      "\xE3\x81\x82\xE3\x81\x84\xE3\x81\x86\xE3\x81\x88\xE3\x81\x8A");
+      R"(あいうえお)");
   view()->OnImeSetComposition(unicode_composition, empty_ime_text_span,
                               gfx::Range::InvalidRange(), 0, 0);
   view()->GetCompositionCharacterBounds(&bounds);
@@ -1617,8 +1617,7 @@ TEST_F(RenderViewImplTest, GetCompositionCharacterBoundsTest) {
                           gfx::Range::InvalidRange(), 0);
 
   // Surrogate pair character.
-  const base::string16 surrogate_pair_char =
-      base::UTF8ToUTF16("\xF0\xA0\xAE\x9F");
+  const base::string16 surrogate_pair_char = base::UTF8ToUTF16(R"(𠮟)");
   view()->OnImeSetComposition(surrogate_pair_char, empty_ime_text_span,
                               gfx::Range::InvalidRange(), 0, 0);
   view()->GetCompositionCharacterBounds(&bounds);
@@ -1630,8 +1629,8 @@ TEST_F(RenderViewImplTest, GetCompositionCharacterBoundsTest) {
 
   // Mixed string.
   const base::string16 surrogate_pair_mixed_composition =
-      surrogate_pair_char + base::UTF8ToUTF16("\xE3\x81\x82") +
-      surrogate_pair_char + base::UTF8ToUTF16("b") + surrogate_pair_char;
+      surrogate_pair_char + base::UTF8ToUTF16(R"(あ)") + surrogate_pair_char +
+      base::UTF8ToUTF16("b") + surrogate_pair_char;
   const size_t utf16_length = 8UL;
   const bool is_surrogate_pair_empty_rect[8] = {
     false, true, false, false, true, false, false, true };
@@ -1757,7 +1756,7 @@ TEST_F(RenderViewImplTest, OnDeleteSurroundingTextInCodePoints) {
   // Load an HTML page consisting of an input field.
   LoadHTML(
       // "ab" + trophy + space + "cdef" + trophy + space + "gh".
-      "<input id=\"test1\" value=\"ab&#x1f3c6; cdef&#x1f3c6; gh\">");
+      R"(<input id="test1" value="ab&#x1f3c6; cdef&#x1f3c6; gh">)");
   ExecuteJavaScriptForTests("document.getElementById('test1').focus();");
 
   frame()->SetEditableSelectionOffsets(4, 4);
@@ -2603,7 +2602,7 @@ TEST_F(DevToolsAgentTest, DevToolsResumeOnClose) {
   Attach();
   EXPECT_FALSE(IsPaused());
   DispatchDevToolsMessage("Debugger.enable",
-                          "{\"id\":1,\"method\":\"Debugger.enable\"}");
+                          R"({"id":1,"method":"Debugger.enable"})");
 
   // Executing javascript will pause the thread and create nested run loop.
   // Posting task simulates message coming from browser.
@@ -2621,14 +2620,14 @@ TEST_F(DevToolsAgentTest, RuntimeEnableForcesContexts) {
   LoadHTML("<body>page<iframe></iframe></body>");
   Attach();
   DispatchDevToolsMessage("Runtime.enable",
-                          "{\"id\":1,\"method\":\"Runtime.enable\"}");
+                          R"({"id":1,"method":"Runtime.enable"})");
   EXPECT_EQ(2, CountNotifications("Runtime.executionContextCreated"));
 }
 
 TEST_F(DevToolsAgentTest, RuntimeEnableForcesContextsAfterNavigation) {
   Attach();
   DispatchDevToolsMessage("Runtime.enable",
-                          "{\"id\":1,\"method\":\"Runtime.enable\"}");
+                          R"({"id":1,"method":"Runtime.enable"})");
   EXPECT_EQ(0, CountNotifications("Runtime.executionContextCreated"));
   LoadHTML("<body>page<iframe></iframe></body>");
   EXPECT_EQ(2, CountNotifications("Runtime.executionContextCreated"));
@@ -2638,7 +2637,7 @@ TEST_F(DevToolsAgentTest, RuntimeEvaluateRunMicrotasks) {
   LoadHTML("<body>page</body>");
   Attach();
   DispatchDevToolsMessage("Runtime.enable",
-                          "{\"id\":1,\"method\":\"Runtime.enable\"}");
+                          R"({"id":1,"method":"Runtime.enable"})");
   DispatchDevToolsMessage("Runtime.evaluate",
                           "{\"id\":2,"
                           "\"method\":\"Runtime.evaluate\","
@@ -2654,7 +2653,7 @@ TEST_F(DevToolsAgentTest, RuntimeCallFunctionOnRunMicrotasks) {
   LoadHTML("<body>page</body>");
   Attach();
   DispatchDevToolsMessage("Runtime.enable",
-                          "{\"id\":1,\"method\":\"Runtime.enable\"}");
+                          R"({"id":1,"method":"Runtime.enable"})");
   DispatchDevToolsMessage("Runtime.evaluate",
                           "{\"id\":2,"
                           "\"method\":\"Runtime.evaluate\","
@@ -2692,7 +2691,7 @@ TEST_F(DevToolsAgentTest, CallFramesInIsolatedWorld) {
 
   Attach();
   DispatchDevToolsMessage("Debugger.enable",
-                          "{\"id\":1,\"method\":\"Debugger.enable\"}");
+                          R"({"id":1,"method":"Debugger.enable"})");
 
   ExpectPauseAndResume(3);
   blink::WebScriptSource source2(
