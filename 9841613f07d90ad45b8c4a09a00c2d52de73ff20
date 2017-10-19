@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "81c0ec07_26856ee3",
+        "filename": "components/safe_browsing/base_resource_throttle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-19T19:52:45Z",
+      "side": 1,
+      "message": "Agreed!",
+      "parentUuid": "1e5d7f6f_29af6af3",
+      "range": {
+        "startLine": 99,
+        "startChar": 48,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9eb108c_d28a23e4",
         "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-17T16:17:36Z",
       "side": 1,
       "message": "Once set to true, this will never be reset to false. Is that intended? Just making sure.\nIn my limited understanding of throttles, the can get reused for a different request.",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 187,
+        "endChar": 34
+      },
+      "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ef71bd_5a522af0",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-19T19:52:45Z",
+      "side": 1,
+      "message": "Yes. I intentionally doesn\u0027t set it back to false. It is unlikely that we will receive more notifications after we call Cancel on the underlying ResourceLoader, but leaving this flag as \"true\" makes sure we always do an early return if that happens.\n\nWe don\u0027t reuse a throttle for a different request. (Otherwise it won\u0027t make sense to pass URLRequest as a constructor parameter.)",
+      "parentUuid": "c9eb108c_d28a23e4",
       "range": {
         "startLine": 187,
         "startChar": 4,
@@ -68,6 +116,30 @@
       "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f4610a_5a0d4883",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-19T19:52:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4410ff5d_025400be",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 24
+      },
+      "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "41c90c84_96b30a5f",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-19T19:52:45Z",
+      "side": 1,
+      "message": "I think the common practice is that only structs expose fields directly.\n\nNow that both sides have supporters and it doesn\u0027t seem to be an important problem, I will leave it as it is. Thanks!",
+      "parentUuid": "d79511ec_40da7952",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e9d3b9_cc47887d",
         "filename": "components/safe_browsing/browser/base_parallel_resource_throttle_unittest.cc",
         "patchSetId": 5
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "ecb95b41_305c3a69",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-19T19:52:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e9d3b9_cc47887d",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 9
+      },
+      "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1ad328b_102364f4",
         "filename": "components/safe_browsing/browser/base_parallel_resource_throttle_unittest.cc",
         "patchSetId": 5
@@ -161,6 +281,30 @@
       "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c683945c_cbcae51f",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-19T19:52:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1ad328b_102364f4",
+      "range": {
+        "startLine": 36,
+        "startChar": 14,
+        "endLine": 36,
+        "endChar": 15
+      },
+      "revId": "9841613f07d90ad45b8c4a09a00c2d52de73ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
