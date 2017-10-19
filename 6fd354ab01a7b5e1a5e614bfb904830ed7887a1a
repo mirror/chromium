@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfd9052c_e2ee2b60",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-19T23:47:28Z",
+      "side": 1,
+      "message": "Should this block get reworked with isOpenAction?  It looks like the logic changes but just checking.",
+      "range": {
+        "startLine": 1166,
+        "startChar": 8,
+        "endLine": 1173,
+        "endChar": 9
+      },
+      "revId": "6fd354ab01a7b5e1a5e614bfb904830ed7887a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32bc2e08_9748078e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-19T23:47:28Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this if we\u0027re starting the service now?",
+      "range": {
+        "startLine": 1284,
+        "startChar": 8,
+        "endLine": 1284,
+        "endChar": 93
+      },
+      "revId": "6fd354ab01a7b5e1a5e614bfb904830ed7887a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
