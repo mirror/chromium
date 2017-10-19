@@ -16,6 +16,24 @@
       "revId": "722134fac7047fee4ee7218c7b66ba7cd5744172",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49cf7f3_00bdb6a4",
+        "filename": "chrome/browser/chromeos/arc/arc_migration_guide_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-19T01:50:32Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "da1b9fe2_27f07865",
+      "revId": "722134fac7047fee4ee7218c7b66ba7cd5744172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
