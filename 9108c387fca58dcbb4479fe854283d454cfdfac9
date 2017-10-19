@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffa94d9e_9821f223",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-19T14:31:54Z",
+      "side": 1,
+      "message": "nit: s/ChromeOS/Chrome/ here too.\n\n(Ditto for the CL title - if you\u0027re allowed to change it now.)",
+      "range": {
+        "startLine": 7,
+        "startChar": 27,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9035295_292e1008",
+        "filename": "components/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-19T14:31:54Z",
+      "side": 1,
+      "message": "As per our offline discussion, I got your intention to have the message named in a more generic fashion in order to leave a room for possible future extensions of the requirements.\n\nAfter thinking more in this direction, I\u0027d suggest making the name less concrete - now it\u0027s narrowed down to the restrictions of the \"\u003e\u003d\" kind, while it\u0027s easy to imagine some other types of restrictions.\n\nIt seems that the key point here is that this setting is constraining \"the version that is allowed to sign in / stay in session\". Therefore what about a name like \"AllowedVersionInUseRequirementsProto\"? And the field would be called \"minimum_chrome_version\" then.",
+      "range": {
+        "startLine": 905,
+        "startChar": 8,
+        "endLine": 905,
+        "endChar": 35
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95525483_9596c75a",
+        "filename": "components/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-19T14:31:54Z",
+      "side": 1,
+      "message": "Have you thought about making this not a specific version, but rather a prefix?\nThis is how it\u0027s working for the \"DeviceTargetVersionPrefix\" policy (see the AutoUpdateSettingsProto.target_version_prefix field in this file).\n\nThe benefit is making the configuration slightly easier for the admins that don\u0027t care about concrete versions, but rather a bigger milestones.",
+      "range": {
+        "startLine": 906,
+        "startChar": 42,
+        "endLine": 906,
+        "endChar": 55
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ccad35_674cb115",
+        "filename": "components/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-19T14:31:54Z",
+      "side": 1,
+      "message": "nit: Please make the field name closer to the name of the message - otherwise this just increases inconsistency in the code...",
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5425b320_72ba6ea6",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9798,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-19T14:31:54Z",
+      "side": 1,
+      "message": "nit: In some parts of the CL the word \"required\" is used, in others - \"allowed\". Please stick to one term, for the sake of consistency.",
+      "range": {
+        "startLine": 9798,
+        "startChar": 22,
+        "endLine": 9798,
+        "endChar": 29
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d5d261_e2481831",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9809,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-19T14:31:54Z",
+      "side": 1,
+      "message": "nit: s/minimal/the minimum/ ?",
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e46851_9211dcfa",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9811,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-19T14:31:54Z",
+      "side": 1,
+      "message": "nit: Either \"sign-in\" or \"to sign in\".",
+      "range": {
+        "startLine": 9811,
+        "startChar": 182,
+        "endLine": 9811,
+        "endChar": 189
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4e44a5_e8f1e8f0",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9811,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-19T14:31:54Z",
+      "side": 1,
+      "message": "nit: This sentence is a bit hard to understand. Given that the next sentence explains how the restriction works, maybe just change this to:\n\n  Configures the requirement of the minimum allowed version of Chrome.\n\n?",
+      "range": {
+        "startLine": 9811,
+        "startChar": 17,
+        "endLine": 9811,
+        "endChar": 104
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e73aa59_f7acf7ba",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9811,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-19T14:31:54Z",
+      "side": 1,
+      "message": "nit: What is the implication of the policy for the already signed in users? Please document this.",
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
