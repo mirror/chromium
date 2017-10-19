@@ -17,6 +17,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "content/browser/devtools/devtools_session.h"
+#include "content/browser/devtools/devtools_target_registry.h"
 #include "content/browser/devtools/devtools_url_interceptor_request_job.h"
 #include "content/browser/devtools/protocol/page.h"
 #include "content/browser/devtools/protocol/security.h"
@@ -1072,8 +1073,10 @@ DispatchResponse NetworkHandler::SetRequestInterceptionEnabled(
       new_patterns.push_back("*");
     }
   }
+  bool was_enabled = interception_enabled_;
   interception_enabled_ = new_patterns.size();
-
+  if (interception_enabled_ && !was_enabled)
+    DevToolsTargetRegistry::AddWebContents(web_contents);
   base::flat_set<ResourceType> intercepted_resource_types;
   if (resource_types.isJust()) {
     for (size_t i = 0; i < resource_types.fromJust()->length(); i++) {
@@ -1085,13 +1088,15 @@ DispatchResponse NetworkHandler::SetRequestInterceptionEnabled(
     }
   }
 
+  base::UnguessableToken host_id =
+      host_->frame_tree_node()->devtools_frame_token();
   if (interception_enabled_) {
     devtools_url_request_interceptor->state()->StartInterceptingRequests(
-        web_contents, weak_factory_.GetWeakPtr(), std::move(new_patterns),
+        host_id, weak_factory_.GetWeakPtr(), std::move(new_patterns),
         std::move(intercepted_resource_types));
   } else {
     devtools_url_request_interceptor->state()->StopInterceptingRequests(
-        web_contents);
+        host_id);
     navigation_requests_.clear();
     canceled_navigation_requests_.clear();
   }
