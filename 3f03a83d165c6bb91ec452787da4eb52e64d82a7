@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f123ce9d_231914b4",
+        "filename": "net/spdy/core/spdy_alt_svc_wire_format.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-19T17:54:06Z",
+      "side": 1,
+      "message": "This is a good change, but since it\u0027s to shared code, it would be better to land this internally and let it be merged out to chromium.",
+      "range": {
+        "startLine": 81,
+        "startChar": 59,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "3f03a83d165c6bb91ec452787da4eb52e64d82a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

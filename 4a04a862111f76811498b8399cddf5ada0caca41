@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "b3c18b19_2dca44a5",
+        "filename": "net/http/http_stream_factory.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-19T17:54:06Z",
+      "side": 1,
+      "message": "nit: no {} for one-line if bodies in chromium code.",
+      "revId": "4a04a862111f76811498b8399cddf5ada0caca41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e54ed05b_ca11404b",
         "filename": "net/quic/chromium/quic_http_utils.cc",
         "patchSetId": 30
