@@ -16,6 +16,24 @@
       "revId": "5c24b12ecf46dce5bdfb7051e679c2d25744dce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189858bd_9c93a70c",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-19T13:56:38Z",
+      "side": 1,
+      "message": "Done.\nIf there is no response headers I think we should add it. It is the case here (navigation-\u003eGetResponseHeaders() is false, so is404Page is false, so we add it).",
+      "parentUuid": "88f3179a_69ddd56c",
+      "revId": "5c24b12ecf46dce5bdfb7051e679c2d25744dce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
