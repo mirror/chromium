@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea61a25c_cebb0cdc",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1270,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-10-19T13:18:25Z",
+      "side": 1,
+      "message": "I should probably have the same protection here. I will wait for your comments on the initial CL before I make additional changes, though.",
+      "revId": "2562a90f795680e6cef8dbd20ef2063af199d75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
