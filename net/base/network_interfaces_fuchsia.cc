@@ -34,8 +34,9 @@ bool GetNetworkList(NetworkInterfaceList* networks, int policy) {
 
     // Skip loopback addresses.
     if (internal::IsLoopbackOrUnspecifiedAddress(
-            reinterpret_cast<sockaddr*>(&(interface->addr))))
+            reinterpret_cast<sockaddr*>(&(interface->addr)))) {
       continue;
+    }
 
     IPEndPoint address;
     if (!address.FromSockAddr(reinterpret_cast<sockaddr*>(&(interface->addr)),
@@ -51,13 +52,20 @@ bool GetNetworkList(NetworkInterfaceList* networks, int policy) {
       prefix_length = MaskPrefixLength(netmask.address());
     }
 
+    // On all platforms except Fuchsia interface index cannot be 0.
+    // Some APIs rely on this behavior, UDPSocket::SetMulticastInterface()
+    // in particular treats index=0 as a special case. ioctl_netc_get_if_info()
+    // may return index=0. Increment index by 1 to make GetNetworkList() usable
+    // with UDPSocket::SetMulticastInterface().
+    int index = interface->index + 1;
+
     // TODO(sergeyu): attributes field is used to return address state for IPv6
     // addresses. Currently ioctl_netc_get_if_info doesn't provide this
     // information.
     int attributes = 0;
 
     networks->push_back(
-        NetworkInterface(interface->name, interface->name, interface->index,
+        NetworkInterface(interface->name, interface->name, index,
                          NetworkChangeNotifier::CONNECTION_UNKNOWN,
                          address.address(), prefix_length, attributes));
   }
