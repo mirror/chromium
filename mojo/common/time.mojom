@@ -4,12 +4,14 @@
 
 module mojo.common.mojom;
 
-[Native]
-struct Time;
+struct Time {
+  int64 internal_value;
+};
 
 struct TimeDelta {
   int64 microseconds;
 };
 
-[Native]
-struct TimeTicks;
+struct TimeTicks {
+  int64 internal_value;
+};
