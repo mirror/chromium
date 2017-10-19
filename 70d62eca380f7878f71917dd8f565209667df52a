@@ -34,6 +34,24 @@
       "revId": "70d62eca380f7878f71917dd8f565209667df52a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f970c46_a05be538",
+        "filename": "chrome/browser/extensions/api/developer_private/extension_info_generator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-19T22:42:48Z",
+      "side": 1,
+      "message": "Just for the record, discussed with Devlin offline and we\u0027re keeping the outer loop the same since it\u0027s a list and can\u0027t be accessed via [i].",
+      "parentUuid": "efaee90c_3cf5efdf",
+      "revId": "70d62eca380f7878f71917dd8f565209667df52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
