@@ -157,8 +157,16 @@
     font-weight: bold;
 }
 
+.console-browser-group-wrapper .console-group-title {
+    font-weight: normal;
+}
+
 .console-group-title:not(.repeated-message) {
     margin-left: 12px;
+}
+
+.console-browser-group-wrapper .message-level-icon {
+    display: none;
 }
 
 .expand-group-icon {

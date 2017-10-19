@@ -1260,9 +1260,8 @@ Console.ConsoleViewMessage = class {
    */
   static _linkifyWithCustomLinkifier(string, linkifier) {
     var container = createDocumentFragment();
-    var linkStringRegEx =
-        /(?:[a-zA-Z][a-zA-Z0-9+.-]{2,}:\/\/|data:|www\.)[\w$\-_+*'=\|\/\\(){}[\]^%@&#~,:;.!?]{2,}[\w$\-_+*=\|\/\\({^%@&#~]/;
-    var pathLineRegex = /(?:\/[\w\.-]*)+\:[\d]+/;
+    var linkStringRegEx = Console.ConsoleViewMessage.LinkStringRegEx;
+    var pathLineRegex = Console.ConsoleViewMessage.PathLineRegex;
 
     while (string && string.length < Components.Linkifier.MaxLengthToIgnoreLinkifier) {
       var linkString = linkStringRegEx.exec(string) || pathLineRegex.exec(string);
@@ -1358,3 +1357,16 @@ Console.ConsoleGroupViewMessage = class extends Console.ConsoleViewMessage {
  * @type {number}
  */
 Console.ConsoleViewMessage.MaxLengthForLinks = 40;
+
+/**
+ * @const
+ * @type {!RegExp}
+ */
+Console.ConsoleViewMessage.LinkStringRegEx =
+    /(?:[a-zA-Z][a-zA-Z0-9+.-]{2,}:\/\/|data:|www\.)[\w$\-_+*'=\|\/\\(){}[\]^%@&#~,:;.!?]{2,}[\w$\-_+*=\|\/\\({^%@&#~]/;
+
+/**
+ * @const
+ * @type {!RegExp}
+ */
+Console.ConsoleViewMessage.PathLineRegex = /(?:\/[\w\.-]*)+\:[\d]+/;
