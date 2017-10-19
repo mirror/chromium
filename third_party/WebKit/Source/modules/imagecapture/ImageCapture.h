@@ -96,8 +96,7 @@ class MODULES_EXPORT ImageCapture final
   void ResolveWithNothing(ScriptPromiseResolver*);
   void ResolveWithPhotoSettings(ScriptPromiseResolver*);
   void ResolveWithPhotoCapabilities(ScriptPromiseResolver*);
-  void ResolveWithMediaTrackConstraints(ScriptValue constraints,
-                                        ScriptPromiseResolver*);
+  void Resolve(ScriptPromiseResolver*);
 
   Member<MediaStreamTrack> stream_track_;
   std::unique_ptr<WebImageCaptureFrameGrabber> frame_grabber_;
