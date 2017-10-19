@@ -82,6 +82,23 @@
     },
     {
       "key": {
+        "uuid": "ac60b684_45e3f5eb",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-19T15:57:34Z",
+      "side": 1,
+      "message": "Probably makes sense to add the comment here too:\n// Unique worker token used by DevTools to attribute different instrumentation\n  // to the same worker.",
+      "revId": "b8edb0630536c65419e60ac5534514fd076cdf70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f707b529_7404c58a",
         "filename": "third_party/WebKit/public/web/WebSharedWorker.h",
         "patchSetId": 5
