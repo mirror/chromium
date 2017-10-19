@@ -37,6 +37,17 @@ Polymer({
       type: Boolean,
       value: false,
     },
+
+    // <if expr="is_win">
+    /** @private */
+    userInitiatedCleanupsEnabled_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.valueExists('userInitiatedCleanupsEnabled') &&
+            loadTimeData.getBoolean('userInitiatedCleanupsEnabled');
+      },
+    },
+    // </if>
   },
 
   /**
