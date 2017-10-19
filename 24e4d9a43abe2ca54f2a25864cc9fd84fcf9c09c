@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "2658870c_92461b89",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-19T18:29:46Z",
+      "side": 1,
+      "message": "In this case your urlPath should be just a file name, right?",
+      "revId": "24e4d9a43abe2ca54f2a25864cc9fd84fcf9c09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6acdc538_cec9b88b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-19T18:29:46Z",
+      "side": 1,
+      "message": "And you should not get here with the anchor.",
+      "revId": "24e4d9a43abe2ca54f2a25864cc9fd84fcf9c09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a08cac4d_33532108",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
         "patchSetId": 1
@@ -13,6 +47,40 @@
       "writtenOn": "2017-10-19T18:12:47Z",
       "side": 1,
       "message": "In my view of the world, we should not need this. Why do we ever map back?",
+      "revId": "24e4d9a43abe2ca54f2a25864cc9fd84fcf9c09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb58338_4f7561fc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-19T18:29:46Z",
+      "side": 1,
+      "message": "How is this the opposite to _encodeUrlPathToLocalPath ?",
+      "revId": "24e4d9a43abe2ca54f2a25864cc9fd84fcf9c09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2df78d7_bb54da77",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-19T18:29:46Z",
+      "side": 1,
+      "message": "Use ParsedURL for this. In fact, you could expose it on UISourceCode, we already parse it there.",
       "revId": "24e4d9a43abe2ca54f2a25864cc9fd84fcf9c09c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
