@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fb0a9ee_9d394837",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8964,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-19T22:19:33Z",
+      "side": 0,
+      "message": "Please mark each of these as \u003cobsolete\u003e, with a pointer to the new name.",
+      "range": {
+        "startLine": 8948,
+        "startChar": 0,
+        "endLine": 8964,
+        "endChar": 12
+      },
+      "revId": "19520e253ab006915cf699cb777eb95f8556498a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
