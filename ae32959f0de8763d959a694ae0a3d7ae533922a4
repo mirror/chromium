@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be47729e_5f9e7044",
+        "filename": "chromeos/components/tether/asynchronous_shutdown_object_container.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-19T18:17:05Z",
+      "side": 1,
+      "message": "I would prefer \"require\" over \"have\" here, however.",
+      "range": {
+        "startLine": 20,
+        "startChar": 61,
+        "endLine": 20,
+        "endChar": 65
+      },
+      "revId": "ae32959f0de8763d959a694ae0a3d7ae533922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d5348f_5ef7a664",
+        "filename": "chromeos/components/tether/asynchronous_shutdown_object_container.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-19T18:17:05Z",
+      "side": 1,
+      "message": "synchronous* :)\n\n\"Require\" also be too strong here, maybe \"Objects which can simply be shutdown synchronously...\"",
+      "range": {
+        "startLine": 22,
+        "startChar": 54,
+        "endLine": 22,
+        "endChar": 66
+      },
+      "revId": "ae32959f0de8763d959a694ae0a3d7ae533922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8fee81_21cdab07",
+        "filename": "chromeos/components/tether/asynchronous_shutdown_object_container_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-19T18:17:05Z",
+      "side": 1,
+      "message": "Does ble_advertiser not need to be mentioned?",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 130,
+        "endChar": 18
+      },
+      "revId": "ae32959f0de8763d959a694ae0a3d7ae533922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75d0d26_4cd3c1d9",
+        "filename": "chromeos/components/tether/fake_asynchronous_shutdown_object_container.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-19T18:17:05Z",
+      "side": 1,
+      "message": "Why not place these in the header?",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "ae32959f0de8763d959a694ae0a3d7ae533922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd8d3306_f543d317",
+        "filename": "chromeos/components/tether/tether_component_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-19T18:17:05Z",
+      "side": 1,
+      "message": "\"as well\"*",
+      "range": {
+        "startLine": 186,
+        "startChar": 72,
+        "endLine": 186,
+        "endChar": 73
+      },
+      "revId": "ae32959f0de8763d959a694ae0a3d7ae533922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34aea548_e677dade",
+        "filename": "chromeos/components/tether/tether_component_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-19T18:17:05Z",
+      "side": 1,
+      "message": "Why not inject theses all at the same time in the constructor? I\u0027m not seeing a need to consistently change these properties\u0027 values.",
+      "range": {
+        "startLine": 128,
+        "startChar": 33,
+        "endLine": 128,
+        "endChar": 48
+      },
+      "revId": "ae32959f0de8763d959a694ae0a3d7ae533922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
