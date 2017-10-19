@@ -87,6 +87,7 @@ GpuVideoDecodeAcceleratorFactory::GetDecoderCapabilities(
 // profile (instead of calculating a superset).
 // TODO(posciak,henryhsu): improve this so that we choose a superset of
 // resolutions and other supported profile parameters.
+  DVLOG(1) << "Get Supported profiles";
 #if defined(OS_WIN)
   capabilities.supported_profiles =
       DXVAVideoDecodeAccelerator::GetSupportedProfiles(gpu_preferences,

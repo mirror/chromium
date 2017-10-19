@@ -24,6 +24,14 @@ if (is_mac) {
   import("//build/config/mac/mac_sdk.gni")
 }
 
+if (is_desktop_linux && use_vaapi) {
+  import("//build/config/linux/pkg_config.gni")
+
+  pkg_config("libva_config") {
+    packages = [ "libva" ]
+  }
+}
+
 if (use_vaapi) {
   action("libva_generate_stubs") {
     extra_header = "va_stub_header.fragment"
@@ -333,6 +341,9 @@ component("gpu") {
         "vaapi_drm_picture.cc",
         "vaapi_drm_picture.h",
       ]
+    }
+    if (is_desktop_linux) {
+      public_configs = [ ":libva_config" ]
     }
   }
 

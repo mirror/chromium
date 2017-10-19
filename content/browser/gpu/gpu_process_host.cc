@@ -111,7 +111,11 @@ namespace {
 
 // Command-line switches to propagate to the GPU process.
 static const char* const kSwitchNames[] = {
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS) && !defined(OS_ANDROID)
+    switches::kEnableAcceleratedVideo,
+#else
     switches::kDisableAcceleratedVideoDecode,
+#endif
     switches::kDisableBreakpad,
     switches::kDisableGpuRasterization,
     switches::kDisableGpuSandbox,
@@ -120,7 +124,7 @@ static const char* const kSwitchNames[] = {
     switches::kDisableLogging,
     switches::kDisableSeccompFilterSandbox,
     switches::kDisableShaderNameHashing,
-#if BUILDFLAG(ENABLE_WEBRTC)
+#if BUILDFLAG(ENABLE_WEBRTC) && !defined(OS_LINUX)
     switches::kDisableWebRtcHWEncoding,
 #endif
 #if defined(OS_WIN)

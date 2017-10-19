@@ -254,7 +254,7 @@ int GpuMain(const MainFunctionParams& parameters) {
   // Initializes StatisticsRecorder which tracks UMA histograms.
   base::StatisticsRecorder::Initialize();
 
-#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
+#if defined(OS_LINUX)
   // Set thread priority before sandbox initialization.
   base::PlatformThread::SetCurrentThreadPriority(base::ThreadPriority::DISPLAY);
 #endif
@@ -283,7 +283,7 @@ int GpuMain(const MainFunctionParams& parameters) {
   GetContentClient()->SetGpuInfo(gpu_init->gpu_info());
 
   base::ThreadPriority io_thread_priority = base::ThreadPriority::NORMAL;
-#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
+#if defined(OS_LINUX)
   io_thread_priority = base::ThreadPriority::DISPLAY;
 #endif
 
