@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99a85155_5bc89ead",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T23:57:29Z",
+      "side": 1,
+      "message": "Given the name I expected no bool. How about SetTabNeedsAttentionAt? SetTabNeedsAttentionAt is also consistent with the names used in views.",
+      "range": {
+        "startLine": 251,
+        "startChar": 7,
+        "endLine": 251,
+        "endChar": 26
+      },
+      "revId": "b3ce9f649ef82ba00cde4d80866ca252013e826f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b8cc79_e68307b5",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T23:57:29Z",
+      "side": 1,
+      "message": "The one caller to this functions calls SchedulePaint() already. So, this is unnecessary.",
+      "range": {
+        "startLine": 1067,
+        "startChar": 2,
+        "endLine": 1067,
+        "endChar": 15
+      },
+      "revId": "b3ce9f649ef82ba00cde4d80866ca252013e826f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
