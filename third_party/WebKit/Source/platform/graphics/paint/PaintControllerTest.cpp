@@ -1895,7 +1895,7 @@ void DrawPath(GraphicsContext& context,
   if (DrawingRecorder::UseCachedDrawingIfPossible(context, client, type))
     return;
 
-  DrawingRecorder recorder(context, client, type, FloatRect(0, 0, 100, 100));
+  DrawingRecorder recorder(context, client, type);
   SkPath path;
   path.moveTo(0, 0);
   path.lineTo(0, 100);

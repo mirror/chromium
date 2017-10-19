@@ -95,7 +95,7 @@ void EmbeddedContentPainter::Paint(const PaintInfo& paint_info,
     rect.MoveBy(adjusted_paint_offset);
     IntRect selection_rect = PixelSnappedIntRect(rect);
     DrawingRecorder recorder(paint_info.context, layout_embedded_content_,
-                             paint_info.phase, selection_rect);
+                             paint_info.phase);
     Color selection_bg = SelectionPaintingUtils::SelectionBackgroundColor(
         layout_embedded_content_.GetDocument(),
         layout_embedded_content_.StyleRef(),

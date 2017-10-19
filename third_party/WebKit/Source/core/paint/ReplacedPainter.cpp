@@ -170,8 +170,7 @@ void ReplacedPainter::Paint(const PaintInfo& paint_info,
         PixelSnappedIntRect(selection_painting_rect);
 
     DrawingRecorder recorder(paint_info.context, layout_replaced_,
-                             DisplayItem::kSelectionTint,
-                             selection_painting_int_rect);
+                             DisplayItem::kSelectionTint);
     Color selection_bg = SelectionPaintingUtils::SelectionBackgroundColor(
         layout_replaced_.GetDocument(), layout_replaced_.StyleRef(),
         layout_replaced_.GetNode());
