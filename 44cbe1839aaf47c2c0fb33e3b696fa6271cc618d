@@ -412,6 +412,24 @@
     },
     {
       "key": {
+        "uuid": "6bb94387_937b4254",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-19T23:22:06Z",
+      "side": 1,
+      "message": "Deleted net/test dependency. But the alternative approach would be to use FRIEND_TEST_ALL_PREFIXES macro in cbor_writer.h file to test the private static member function. Please let me know if this is fine!",
+      "parentUuid": "7dfae252_a1dae0d3",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bd29dcf_4d7e8afa",
         "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
         "patchSetId": 4
