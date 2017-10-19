@@ -334,6 +334,24 @@
       "revId": "93610dbee75bfcb413934eac3a24f21d570905d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3393b5c_f483421a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 90704,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-19T17:54:15Z",
+      "side": 1,
+      "message": "We don\u0027t expect the denominator to be that small, but without measurements, we don\u0027t really know.  We\u0027re adding these individual counts for the number of calls to the setter and for the number of times it conflicts with an automation.  Then we\u0027ll know.",
+      "parentUuid": "538098e5_50c76de1",
+      "revId": "93610dbee75bfcb413934eac3a24f21d570905d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
