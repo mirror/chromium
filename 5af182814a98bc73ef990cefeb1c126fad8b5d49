@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "39eaffd0_8b8f025d",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-19T18:28:43Z",
+      "side": 1,
+      "message": "Reverted this change, it wasn\u0027t necessary after all.",
+      "parentUuid": "fef9c62d_ad91175e",
+      "range": {
+        "startLine": 547,
+        "startChar": 0,
+        "endLine": 548,
+        "endChar": 11
+      },
+      "revId": "5af182814a98bc73ef990cefeb1c126fad8b5d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03773e6f_73c0d745",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 16
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-16T23:19:29Z",
       "side": 1,
       "message": "What do you think about naming the new flag |starting_sandbox_flags| and making it a blink::WebSandboxFlags?   Then we can unify these two blocks, and only do the SetPendingSandboxFlags()/CommitPendingFramePolicy() once using that flag.  I.e., would the following work?\n\n1. Move the opener/inherit_flag logic to WebContentsImpl::CreateNewWindow, and use it to set |starting_sandbox_flags| when we create the CreateParams there.  \n\n2. OffscreenTab::Start would just set |starting_sandbox_flags| directly on its CreateParams.\n\n3. Also, it\u0027d be nice to not check kForcePresentationReceiverForTesting here if it\u0027s a layout-test-only flag (is it?).  Perhaps that can be done by setting starting_sandbox_flags, if needed, in CreateParams in Shell::CreateNewWindow?  Or does the use you care about not go through that?\n\n4. We just always do new_root-\u003eSetPendingSandboxFlags(params.starting_sandbox_flags); new_root-\u003eCommitPendingFramePolicy() here.",
+      "range": {
+        "startLine": 693,
+        "startChar": 1,
+        "endLine": 711,
+        "endChar": 3
+      },
+      "revId": "5af182814a98bc73ef990cefeb1c126fad8b5d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8e4009_5b806649",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-19T18:28:43Z",
+      "side": 1,
+      "message": "1,2,4: That was my original design but violates layering: OffscreenTab in chrome/ can\u0027t use WebSandboxFlags from Blink.\n\n3: Done.",
+      "parentUuid": "03773e6f_73c0d745",
       "range": {
         "startLine": 693,
         "startChar": 1,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dfadfc8c_46ae7c1c",
+        "filename": "content/public/browser/web_contents.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-19T18:28:43Z",
+      "side": 1,
+      "message": "See comments above.",
+      "parentUuid": "ca831e21_8d94cf82",
+      "range": {
+        "startLine": 177,
+        "startChar": 9,
+        "endLine": 177,
+        "endChar": 33
+      },
+      "revId": "5af182814a98bc73ef990cefeb1c126fad8b5d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbc3b7ff_e25307fe",
         "filename": "third_party/WebKit/public/web/WebSandboxFlags.h",
         "patchSetId": 16
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-16T21:21:53Z",
       "side": 1,
       "message": "Assuming these are no longer needed (I see no references), please revert.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "5af182814a98bc73ef990cefeb1c126fad8b5d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17660378_ef93ddfa",
+        "filename": "third_party/WebKit/public/web/WebSandboxFlags.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-19T18:28:43Z",
+      "side": 1,
+      "message": "These are to keep WebSandboxFlags.h in sync with SandboxFlags.h in core/dom:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/SandboxFlags.h\n\nIf you don\u0027t think this is necessary I can revert it.",
+      "parentUuid": "bbc3b7ff_e25307fe",
       "range": {
         "startLine": 30,
         "startChar": 0,
