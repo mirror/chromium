@@ -83,7 +83,7 @@ class PepperPlatformAudioOutputDev
 
   friend class base::RefCountedThreadSafe<PepperPlatformAudioOutputDev>;
 
-  PepperPlatformAudioOutputDev();
+  PepperPlatformAudioOutputDev() = delete;
   PepperPlatformAudioOutputDev(int render_frame_id,
                                const std::string& device_id,
                                const GURL& document_url,
