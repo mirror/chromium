@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ebda111_49d808c3",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-19T21:47:04Z",
+      "side": 1,
+      "message": "Ah, the class name doesn\u0027t line up with this behavior-- I was thinking it would be a generic throttle we could put other checks in, but this depends on only creating the throttle for WebUI pages.\n\nI was going to bikeshed on the name anyway, but this might make it easy.  Maybe it should be WebUINavigationThrottle instead?",
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97c35b0_f12f2c3c",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-19T21:47:04Z",
+      "side": 1,
+      "message": "nit: a process",
+      "range": {
+        "startLine": 48,
+        "startChar": 47,
+        "endLine": 48,
+        "endChar": 55
+      },
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f43beb_e7b16dd9",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-19T21:47:04Z",
+      "side": 1,
+      "message": "nit: at a",
+      "range": {
+        "startLine": 49,
+        "startChar": 43,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d90ce1_5e08946d",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-19T21:47:04Z",
+      "side": 1,
+      "message": "I\u0027m concerned about breaking links here.  If a WebUI page had a link in a subframe which was intended to open in a new tab or in the main frame in a new process, we should allow that, right?\n\nWe may have that in some of the WebUI pages already, and I\u0027m sure tests wouldn\u0027t catch a regression there.  Maybe there\u0027s a way we can handle that in the throttle?",
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359d1e53_b9c34e8c",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-19T21:47:04Z",
+      "side": 1,
+      "message": "This sounds wrong to me.  Navigations to web URLs can originate in a WebUI process as long as they commit in a different process.  (There are links like this in settings, for example.)\n\nMaybe this was more about the process the navigation is going to commit in, rather than where it originated?",
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
