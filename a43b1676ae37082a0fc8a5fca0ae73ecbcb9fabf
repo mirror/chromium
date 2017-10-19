@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "034f5560_b57e2368",
+        "filename": "ash/system/tray/system_tray.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T16:49:43Z",
+      "side": 1,
+      "message": "nit: make_unique?",
+      "revId": "a43b1676ae37082a0fc8a5fca0ae73ecbcb9fabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99922747_943effb2",
+        "filename": "ash/system/tray/system_tray.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T16:49:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 472,
+        "startChar": 12,
+        "endLine": 472,
+        "endChar": 28
+      },
+      "revId": "a43b1676ae37082a0fc8a5fca0ae73ecbcb9fabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f767548d_2fd3bbe8",
+        "filename": "ash/system/tray/system_tray_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T16:49:43Z",
+      "side": 1,
+      "message": "nit: range based loop?",
+      "revId": "a43b1676ae37082a0fc8a5fca0ae73ecbcb9fabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c818df0_be2b1048",
+        "filename": "ash/system/tray/system_tray_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T16:49:43Z",
+      "side": 1,
+      "message": "nit: nuke {} \n\nyou may inline focused but i\u0027m fine as is.",
+      "revId": "a43b1676ae37082a0fc8a5fca0ae73ecbcb9fabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5230fa0f_9e168400",
+        "filename": "ash/system/tray/system_tray_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T16:49:43Z",
+      "side": 1,
+      "message": "nit: will range based loop work?",
+      "range": {
+        "startLine": 70,
+        "startChar": 29,
+        "endLine": 70,
+        "endChar": 30
+      },
+      "revId": "a43b1676ae37082a0fc8a5fca0ae73ecbcb9fabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9badab_c6a2a676",
+        "filename": "ash/system/tray/system_tray_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T16:49:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 97,
+        "startChar": 28,
+        "endLine": 97,
+        "endChar": 29
+      },
+      "revId": "a43b1676ae37082a0fc8a5fca0ae73ecbcb9fabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
