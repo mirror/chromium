@@ -227,4 +227,11 @@ public class BrowserActionsTabModelSelector
             TabModelUtils.setIndex(chromeNormalTabModel, chromeNormalTabModel.getCount() - 1);
         }
     }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        mTabSaver.destroy();
+        sInstance = null;
+    }
 }
