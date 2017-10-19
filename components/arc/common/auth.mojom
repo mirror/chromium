@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next MinVersion: 11
+// Next MinVersion: 12
 
 module arc.mojom;
 
@@ -154,16 +154,29 @@ struct AccountInfo {
   bool is_managed@2;
 };
 
-// Next Method ID: 10.
+// Next Method ID: 13.
 interface AuthHost {
+  // Notifies Chrome that the device is already provisioned.
+  [MinVersion=11] OnProvisioned@10();
+
+  // Notifies Chrome that the reauthorization flow is completed successfully.
+  [MinVersion=11] OnReauthorizationComplete@11();
+
+  // Notifies Chrome that the reauthorization flow fails to complete and
+  // provides failure reason.
+  [MinVersion=11] OnReauthorizationFailed@12(ArcSignInStatus reason);
+
   // Notifies Chrome that the sign-in is completed successfully.
   [MinVersion=2] OnSignInComplete@2();
+
   // Notifies Chrome that the sign-in fails to complete and provides failure
   // reason.
   [MinVersion=2] OnSignInFailed@3(ArcSignInStatus reason);
+
   // Asynchronously requests an authorization code, as well as the account
-  // information.
-  [MinVersion=5] RequestAccountInfo@7();
+  // information. If |initial_signin| is true then that means request is for
+  // initial signin flow. Otherwise it is used for reauthorization flow.
+  [MinVersion=5] RequestAccountInfo@7([MinVersion=11] bool initial_signin);
 
   // Reports metrics to Chrome to be recorded in UMA.
   [MinVersion=7] ReportMetrics@8(MetricsType metrics_type, int32 value);
