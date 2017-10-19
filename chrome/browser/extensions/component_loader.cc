@@ -493,8 +493,9 @@ void ComponentLoader::AddDefaultComponentExtensions(
           base::FilePath(FILE_PATH_LITERAL("bookmark_manager")));
     }
 
-    Add(IDR_CROSH_BUILTIN_MANIFEST, base::FilePath(FILE_PATH_LITERAL(
-        "/usr/share/chromeos-assets/crosh_builtin")));
+    Add(IDR_CROSH_BUILTIN_MANIFEST,
+        base::FilePath(
+            FILE_PATH_LITERAL("/usr/share/chromeos-assets/crosh_builtin")));
   }
 #else  // defined(OS_CHROMEOS)
   DCHECK(!skip_session_components);
@@ -622,6 +623,9 @@ void ComponentLoader::AddDefaultComponentExtensionsWithBackgroundPages(
 
     Add(IDR_ARC_SUPPORT_MANIFEST,
         base::FilePath(FILE_PATH_LITERAL("chromeos/arc_support")));
+
+    Add(IDR_USER_AGENT_CUSTOMIZATION_MANIFEST,
+        base::FilePath(FILE_PATH_LITERAL("chromeos/user_agent_customization")));
   }
 #endif  // defined(OS_CHROMEOS)
 

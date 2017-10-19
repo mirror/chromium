@@ -1,0 +1,22 @@
+{
+  // chrome-extension://iedbcelleopkkdhdbjdhiidblinnfhko
+  "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8pGXFsB/5k3zkbUGSfy83rH72vjfC5z6cW8W/LmheaJc1rAkdsNTD9KGykk/z96EdoQ4zHQ1AqpCHCJ0lXAn+tZ4F45JbfJrMGcJ722ky8LSE5qy8r3l+rfL4iCPLrEpsZtv3ck5QuTN9IcrEfj5fdWstyt7MFuhJ7931O2LuhQIDAQAB",
+  "name": "User-Agent customization",
+  "description": "Extension to customize User-Agent for ARC++",
+  "version": "1.0",
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": ["*://*.microsoft.com/*"],
+      "js": ["script.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "debugger"
+  ]
+}

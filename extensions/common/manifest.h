@@ -112,6 +112,12 @@ class Manifest {
     return location == COMPONENT || location == EXTERNAL_COMPONENT;
   }
 
+  // Whether the |location| is an pre-installed extension intended to be an
+  // internal part of Chrome.
+  static inline bool IsInternalComponentLocation(Location location) {
+    return location == COMPONENT;
+  }
+
   static inline bool IsValidLocation(Location location) {
     return location > INVALID_LOCATION && location < NUM_LOCATIONS;
   }
