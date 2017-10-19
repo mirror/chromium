@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "84eebcfa_e556ad2c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1998,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-19T05:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b92d9096_49b85a6b",
+      "revId": "136283aa79e9c24156e19be5e65b5a53be5cf379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3b3fbc0_1e229066",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "136283aa79e9c24156e19be5e65b5a53be5cf379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c6f6b4_561d2596",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1999,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-19T05:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3b3fbc0_1e229066",
+      "revId": "136283aa79e9c24156e19be5e65b5a53be5cf379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a16e1f3b_1cafb144",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-19T05:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41404b44_9818ec94",
+      "revId": "136283aa79e9c24156e19be5e65b5a53be5cf379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dd46564_51ffd452",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "cf4e2be4_69a5cd84",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-19T05:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dd46564_51ffd452",
+      "revId": "136283aa79e9c24156e19be5e65b5a53be5cf379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5540aa74_05cc1e53",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "136283aa79e9c24156e19be5e65b5a53be5cf379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2078a1fb_2ba4fb53",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-19T05:35:41Z",
+      "side": 1,
+      "message": "Good catch. We should use Optional\u003c\u003e instead of magic numbers.\n\nSame for the other methods in NGOffsetMappingResult.",
+      "parentUuid": "5540aa74_05cc1e53",
+      "revId": "136283aa79e9c24156e19be5e65b5a53be5cf379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
