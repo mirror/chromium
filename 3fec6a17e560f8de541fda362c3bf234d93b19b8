@@ -1,0 +1,487 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebb81cc8_78f11153",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "Simplify by rephrasing, e.g.:\n\nThe action key in pushed GCM message.",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 69
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5215d3_e3b15cd1",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "delete.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 57
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d370d36_e0ba3a7a",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "delete (this just duplicates constant name). Rather write: \"Allowed message actions:\".",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358de8b9_d4a1b057",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "I don\u0027t see any pattern when you use \"-by-\" and when don\u0027t. Why not using it always?",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 45,
+        "endChar": 21
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e5c183_18d6fba0",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "nit: requested",
+      "range": {
+        "startLine": 129,
+        "startChar": 40,
+        "endLine": 129,
+        "endChar": 47
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e6ee64_4f80ebae",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "just return and don\u0027t use else.",
+      "range": {
+        "startLine": 340,
+        "startChar": 28,
+        "endLine": 340,
+        "endChar": 29
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb06b59_631a6462",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "If you plan to implement this later in a separate CL, you should fix this CLs description.",
+      "range": {
+        "startLine": 367,
+        "startChar": 57,
+        "endLine": 367,
+        "endChar": 59
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a0609b_2ef2e86b",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "I like push-by-value more :)\n\nIt feels more consistent with push-to-refresh.\n\nFeel free to ignore if your disagree.",
+      "range": {
+        "startLine": 112,
+        "startChar": 54,
+        "endLine": 112,
+        "endChar": 64
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5804ede6_4e7336f7",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "nit: delete.\n\nProbably it works both ways, but I feel like without \"after\" it sounds more English.",
+      "range": {
+        "startLine": 132,
+        "startChar": 12,
+        "endLine": 132,
+        "endChar": 17
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333a1bf9_cc3671f8",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "a push-value message",
+      "range": {
+        "startLine": 132,
+        "startChar": 29,
+        "endLine": 132,
+        "endChar": 55
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78198fa7_7018fe93",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "the observer.",
+      "range": {
+        "startLine": 133,
+        "startChar": 27,
+        "endLine": 133,
+        "endChar": 47
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e66798d_41e7b33b",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 136,
+        "startChar": 31,
+        "endLine": 136,
+        "endChar": 34
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477ebbad_5736a85a",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 136,
+        "startChar": 71,
+        "endLine": 137,
+        "endChar": 16
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea237de6_d5af29ab",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "This looks funny.",
+      "range": {
+        "startLine": 318,
+        "startChar": 17,
+        "endLine": 318,
+        "endChar": 24
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15e1e03a_d65d12a2",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "This must be a named constant shared between tests.",
+      "range": {
+        "startLine": 866,
+        "startChar": 15,
+        "endLine": 866,
+        "endChar": 23
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14746741_6b0e20aa",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "Test for push-to-refresh would be nice (i.e. that the callback is actually called), assuming that you are going to implement it in this CL. But I don\u0027t expect it to be huge :) however, for wiring with the provider you may want a separate CL.\n\nUPD: you did provider wiring already :) then you need a test!",
+      "range": {
+        "startLine": 871,
+        "startChar": 36,
+        "endLine": 871,
+        "endChar": 37
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4c32e3_81c8ffdb",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "this is not needed anymore.",
+      "range": {
+        "startLine": 19,
+        "startChar": 27,
+        "endLine": 19,
+        "endChar": 69
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01be062_a014de1e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "I don\u0027t think you need a separate method now. Instead just use RefetchInTheBackground as a callback.",
+      "range": {
+        "startLine": 312,
+        "startChar": 1,
+        "endLine": 313,
+        "endChar": 52
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d69825_ae0fd85b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 48839,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "I am not sure whether this is needed.",
+      "range": {
+        "startLine": 48837,
+        "startChar": 49,
+        "endLine": 48839,
+        "endChar": 58
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244b3c1e_c48e81aa",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 48855,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "\"their actions.\"",
+      "range": {
+        "startLine": 48855,
+        "startChar": 45,
+        "endLine": 48855,
+        "endChar": 75
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b46d202_19301780",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 48857,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T16:47:55Z",
+      "side": 1,
+      "message": "Missing action key or invalid action value are recorded as well.",
+      "range": {
+        "startLine": 48856,
+        "startChar": 59,
+        "endLine": 48857,
+        "endChar": 51
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
