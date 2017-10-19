@@ -19,6 +19,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import org.chromium.base.StrictModeContext;
 import org.chromium.base.annotations.SuppressFBWarnings;
 
 import java.io.IOException;
@@ -132,8 +133,11 @@ public class WebApkValidator {
             selector.addCategory(Intent.CATEGORY_BROWSABLE);
             selector.setComponent(null);
         }
-        return context.getPackageManager().queryIntentActivities(
-                intent, PackageManager.GET_RESOLVED_FILTER);
+
+        try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
+            return context.getPackageManager().queryIntentActivities(
+                    intent, PackageManager.GET_RESOLVED_FILTER);
+        }
     }
 
     /**
