@@ -47,7 +47,7 @@ source_set("unit_tests") {
   ]
   deps = [
     ":fuchsia_cma_backend",
-    "//chromecast/media/cma/backend:test_support",
+    "//chromecast/media/cma:test_support",
     "//testing/gtest",
   ]
 }
