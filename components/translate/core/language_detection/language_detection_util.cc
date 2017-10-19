@@ -57,14 +57,6 @@ int GetSimilarLanguageGroupCode(const std::string& language) {
   return 0;
 }
 
-// Well-known languages which often have wrong server configuration of
-// Content-Language: en.
-// TODO(toyoshim): Remove these static tables and caller functions to
-// translate/common, and implement them as std::set<>.
-const char* kWellKnownCodesOnWrongConfiguration[] = {
-  "es", "pt", "ja", "ru", "de", "zh-CN", "zh-TW", "ar", "id", "fr", "it", "th"
-};
-
 // Applies a series of language code modification in proper order.
 void ApplyLanguageCodeCorrection(std::string* code) {
   // Correct well-known format errors.
@@ -431,6 +423,19 @@ bool IsSameOrSimilarLanguages(const std::string& page_language,
   return match;
 }
 
+bool IsServerWrongConfigurationLanguage(const std::string& language_code) {
+  // Well-known languages which often have wrong server configuration of
+  // Content-Language: en. The list must be sorted alphabatically so
+  // they can be binary searched.
+  static const char* const kWrongLanguageCodes[] = {
+      "ar", "de", "es", "fr", "id",    "it",
+      "ja", "pt", "ru", "th", "zh-CN", "zh-TW"};
+
+  return binary_search(kWrongLanguageCodes,
+                       kWrongLanguageCodes + arraysize(kWrongLanguageCodes),
+                       language_code);
+}
+
 bool MaybeServerWrongConfiguration(const std::string& page_language,
                                    const std::string& cld_language) {
   // If |page_language| is not "en-*", respect it and just return false here.
@@ -443,11 +448,7 @@ bool MaybeServerWrongConfiguration(const std::string& page_language,
   // Let's trust |cld_language| if the determined language is not difficult to
   // distinguish from English, and the language is one of well-known languages
   // which often provide "en-*" meta information mistakenly.
-  for (size_t i = 0; i < arraysize(kWellKnownCodesOnWrongConfiguration); ++i) {
-    if (cld_language == kWellKnownCodesOnWrongConfiguration[i])
-      return true;
-  }
-  return false;
+  return IsServerWrongConfigurationLanguage(cld_language);
 }
 
 }  // namespace translate
