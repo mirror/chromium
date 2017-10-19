@@ -49,6 +49,7 @@ aggregate_vector_icons("chrome_vector_icons") {
     "horizontal_menu.1x.icon",
     "horizontal_menu.icon",
     "image.icon",
+    "inactive_toast_caret.icon",
     "inactive_toast_close.icon",
     "inactive_toast_logo.icon",
     "incognito.1x.icon",
