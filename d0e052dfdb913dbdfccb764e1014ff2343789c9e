@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0bce648_86bb18da",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-19T15:48:53Z",
+      "side": 1,
+      "message": "OnSignInComplete is called when provisioning flow was started only.",
+      "parentUuid": "65e8839f_c196bbbf",
+      "revId": "d0e052dfdb913dbdfccb764e1014ff2343789c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "200b0df2_5dad2384",
         "filename": "components/arc/common/auth.mojom",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "506c220f_70e585c0",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-19T15:48:53Z",
+      "side": 1,
+      "message": "Added ALREADY_PROVISIONED status",
+      "parentUuid": "200b0df2_5dad2384",
+      "range": {
+        "startLine": 160,
+        "startChar": 18,
+        "endLine": 160,
+        "endChar": 31
+      },
+      "revId": "d0e052dfdb913dbdfccb764e1014ff2343789c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee4be589_ad88ee8b",
         "filename": "components/arc/common/auth.mojom",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-19T07:43:51Z",
       "side": 1,
       "message": "Instead of adding may methods, how about;\n- Deprecating OnSignInComplete() and OnSignInFailed().\n- Introduce OnAuthorizationCompleted(ArcSignInStatus status, bool is_reauthorized);\n\nI think you can remove several if conditions and dupped code can be cleaned in both side.\nNote that now ArcSignInStatus can take SUCCESS, so you don\u0027t need to have two methods, I think.\n\nWDYT?",
+      "revId": "d0e052dfdb913dbdfccb764e1014ff2343789c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58781d8c_310978f8",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-19T15:48:53Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "ee4be589_ad88ee8b",
       "revId": "d0e052dfdb913dbdfccb764e1014ff2343789c9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
