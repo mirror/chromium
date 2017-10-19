@@ -13,42 +13,48 @@ namespace content {
 
 std::unique_ptr<ServiceWorkerHandleReference>
 ServiceWorkerHandleReference::Create(
-    const blink::mojom::ServiceWorkerObjectInfo& info,
+    blink::mojom::ServiceWorkerObjectInfoPtr info,
     ThreadSafeSender* sender) {
   DCHECK(sender);
-  if (info.handle_id == blink::mojom::kInvalidServiceWorkerHandleId)
+  if (info->handle_id == blink::mojom::kInvalidServiceWorkerHandleId)
     return nullptr;
-  return base::WrapUnique(new ServiceWorkerHandleReference(info, sender, true));
+  return base::WrapUnique(
+      new ServiceWorkerHandleReference(std::move(info), sender, true));
 }
 
 std::unique_ptr<ServiceWorkerHandleReference>
 ServiceWorkerHandleReference::Adopt(
-    const blink::mojom::ServiceWorkerObjectInfo& info,
+    blink::mojom::ServiceWorkerObjectInfoPtr info,
     ThreadSafeSender* sender) {
   DCHECK(sender);
-  if (info.handle_id == blink::mojom::kInvalidServiceWorkerHandleId)
+  if (info->handle_id == blink::mojom::kInvalidServiceWorkerHandleId)
     return nullptr;
   return base::WrapUnique(
-      new ServiceWorkerHandleReference(info, sender, false));
+      new ServiceWorkerHandleReference(std::move(info), sender, false));
 }
 
 ServiceWorkerHandleReference::ServiceWorkerHandleReference(
-    const blink::mojom::ServiceWorkerObjectInfo& info,
+    blink::mojom::ServiceWorkerObjectInfoPtr info,
     ThreadSafeSender* sender,
     bool increment_ref_in_ctor)
-    : info_(info), sender_(sender) {
-  DCHECK_NE(info.handle_id, blink::mojom::kInvalidServiceWorkerHandleId);
+    : info_(std::move(info)), sender_(sender) {
+  DCHECK_NE(info_->handle_id, blink::mojom::kInvalidServiceWorkerHandleId);
   if (increment_ref_in_ctor) {
-    sender_->Send(
-        new ServiceWorkerHostMsg_IncrementServiceWorkerRefCount(
-            info_.handle_id));
+    sender_->Send(new ServiceWorkerHostMsg_IncrementServiceWorkerRefCount(
+        info_->handle_id));
   }
 }
 
 ServiceWorkerHandleReference::~ServiceWorkerHandleReference() {
-  DCHECK_NE(info_.handle_id, blink::mojom::kInvalidServiceWorkerHandleId);
-  sender_->Send(
-      new ServiceWorkerHostMsg_DecrementServiceWorkerRefCount(info_.handle_id));
+  DCHECK_NE(info_->handle_id, blink::mojom::kInvalidServiceWorkerHandleId);
+  sender_->Send(new ServiceWorkerHostMsg_DecrementServiceWorkerRefCount(
+      info_->handle_id));
+}
+
+blink::mojom::ServiceWorkerObjectInfoPtr ServiceWorkerHandleReference::GetInfo()
+    const {
+  return blink::mojom::ServiceWorkerObjectInfo::New(
+      info_->handle_id, info_->version_id, info_->state, info_->url);
 }
 
 }  // namespace content

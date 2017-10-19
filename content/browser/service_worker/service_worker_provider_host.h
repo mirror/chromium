@@ -236,7 +236,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // creates a new one (initialized to ref count 1). Returns the
   // ServiceWorkerObjectInfo from the handle. The renderer is expected to use
   // ServiceWorkerHandleReference::Adopt to balance out the ref count.
-  blink::mojom::ServiceWorkerObjectInfo GetOrCreateServiceWorkerHandle(
+  blink::mojom::ServiceWorkerObjectInfoPtr GetOrCreateServiceWorkerHandle(
       ServiceWorkerVersion* version);
 
   // Returns true if |registration| can be associated with this provider.

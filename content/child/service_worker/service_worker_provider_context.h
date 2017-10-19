@@ -88,17 +88,14 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // TakeRegistrationForServiceWorkerGlobalScope().
   void SetRegistrationForServiceWorkerGlobalScope(
       blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration,
-      std::unique_ptr<ServiceWorkerHandleReference> installing,
-      std::unique_ptr<ServiceWorkerHandleReference> waiting,
-      std::unique_ptr<ServiceWorkerHandleReference> active);
+      ThreadSafeSender* sender);
 
   // For service worker execution contexts. Used for initializing
   // ServiceWorkerGlobalScope#registration. Called on the worker thread.
   // This takes ServiceWorkerRegistrationObjectHost ptr info from
   // ControllerState::registration.
-  void TakeRegistrationForServiceWorkerGlobalScope(
-      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr* info,
-      ServiceWorkerVersionAttributes* attrs);
+  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
+  TakeRegistrationForServiceWorkerGlobalScope();
 
   // For service worker clients. The controller for
   // ServiceWorkerContainer#controller.
