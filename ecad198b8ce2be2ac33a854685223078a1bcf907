@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66a00c52_47b7bb72",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-19T00:51:02Z",
+      "side": 1,
+      "message": "Nit: put a newline before the Bug line, and remove the Bug: 776097 from the CL title",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 11
+      },
+      "revId": "ecad198b8ce2be2ac33a854685223078a1bcf907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe92c900_00fb2f9a",
+        "filename": "chrome/android/webapk/libs/client/junit/src/org/chromium/webapk/lib/client/WebApkValidatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-19T00:51:02Z",
+      "side": 1,
+      "message": "If this is going to be merged to a branch (M62? M63?), I would advise splitting the test into a separate CL. We can review both at the same time, but you land the fix first and merge only that (it reduces the merge risk by minimising the amount of code that\u0027s being cherry picked).\n\nPrior to merge you\u0027ll still need to have this on Canary and waterfall so it won\u0027t adversely affect coverage.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 6
+      },
+      "revId": "ecad198b8ce2be2ac33a854685223078a1bcf907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de6f8bdd_7de03e8e",
+        "filename": "chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-19T00:51:02Z",
+      "side": 1,
+      "message": "It would be nice if we verified that the prefix is followed by ? or \"\", but it\u0027s probably not necessary.",
+      "range": {
+        "startLine": 227,
+        "startChar": 41,
+        "endLine": 227,
+        "endChar": 51
+      },
+      "revId": "ecad198b8ce2be2ac33a854685223078a1bcf907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
