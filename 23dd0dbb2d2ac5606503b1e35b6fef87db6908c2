@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a25383a0_213bfa2d",
+        "filename": "build/toolchain/win/rc/upload_rc_binaries.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-19T17:29:02Z",
+      "side": 1,
+      "message": "(I think it\u0027s kind of cool that I can build binaries for all 3 platforms on one platform; https://github.com/nico/hack/blob/master/res/distrib.py does the actual building. I haven\u0027t actually tried the non-mac binaries yet, though.)",
+      "revId": "23dd0dbb2d2ac5606503b1e35b6fef87db6908c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
