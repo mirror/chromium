@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b32307b4_4a8734e3",
+        "filename": "components/previews/content/previews_content_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-19T17:16:33Z",
+      "side": 1,
+      "message": "Thanks, added check. Perhaps we can improve later if/when we make this handle both client and server bits.",
+      "parentUuid": "89f1d862_37e32e6d",
+      "revId": "6cd9b1d01ee81367167ed297cb110b820908d0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a977271_c2a27f36",
         "filename": "components/previews/content/previews_content_util_unittest.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-18T23:36:09Z",
       "side": 1,
       "message": "might as well be private unless its used in the test below.",
+      "revId": "6cd9b1d01ee81367167ed297cb110b820908d0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb05b29_f61f5424",
+        "filename": "components/previews/content/previews_content_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-19T17:16:33Z",
+      "side": 1,
+      "message": "Doesn\u0027t work as private - doesn\u0027t have viz to override default loop I expect.",
+      "parentUuid": "3a977271_c2a27f36",
       "revId": "6cd9b1d01ee81367167ed297cb110b820908d0db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
