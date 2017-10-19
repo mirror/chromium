@@ -173,18 +173,21 @@
     "navigation:dedicated_worker": {
       "provides": {
         "renderer": [
+          "blink::mojom::PermissionService"
         ]
       }
     },
     "navigation:service_worker": {
       "provides": {
         "renderer": [
+          "blink::mojom::PermissionService"
         ]
       }
     },
     "navigation:shared_worker": {
       "provides": {
         "renderer": [
+          "blink::mojom::PermissionService"
         ]
       }
     }
