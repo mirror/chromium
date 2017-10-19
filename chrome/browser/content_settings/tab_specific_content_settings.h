@@ -377,6 +377,7 @@ class TabSpecificContentSettings
       content::NavigationHandle* navigation_handle) override;
   void AppCacheAccessed(const GURL& manifest_url,
                         bool blocked_by_policy) override;
+  void DidUpdateAudioState(bool is_audible) override;
 
   // content_settings::Observer implementation.
   void OnContentSettingChanged(const ContentSettingsPattern& primary_pattern,
@@ -398,6 +399,12 @@ class TabSpecificContentSettings
 
   // Updates MIDI settings on navigation.
   void MidiDidNavigate(content::NavigationHandle* navigation_handle);
+
+  // Checks whether sound has been blocked when the sound setting is updated.
+  void OnSoundContentSettingUpdated();
+
+  // Gets the current sound setting state.
+  ContentSetting GetSoundContentSetting();
 
   // All currently registered |SiteDataObserver|s.
   base::ObserverList<SiteDataObserver> observer_list_;
