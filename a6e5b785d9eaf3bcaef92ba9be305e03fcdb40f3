@@ -475,6 +475,30 @@
     },
     {
       "key": {
+        "uuid": "ce568674_3292cfa4",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-19T17:12:16Z",
+      "side": 1,
+      "message": "Actually, turns out this makes things noticeably slower (tries with .format()). Going to stick with decimal.",
+      "parentUuid": "09dbc253_c21dd6f7",
+      "range": {
+        "startLine": 436,
+        "startChar": 12,
+        "endLine": 436,
+        "endChar": 48
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aceba564_3d7fb923",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 10
