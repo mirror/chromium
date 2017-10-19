@@ -2259,8 +2259,6 @@ void Document::UpdateStyle() {
   ClearChildNeedsStyleRecalc();
   ClearChildNeedsReattachLayoutTree();
 
-  GetStyleEngine().UpdateGlobalRuleSet();
-
   DCHECK(!NeedsStyleRecalc());
   DCHECK(!ChildNeedsStyleRecalc());
   DCHECK(!NeedsReattachLayoutTree());
