@@ -16,6 +16,24 @@
       "revId": "6dc5c55bd1e6c639f41d42e95c095bbbffa12681",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f874c198_c12ba0fa",
+        "filename": "ash/system/power/power_button_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-19T21:28:46Z",
+      "side": 1,
+      "message": "done, also updated the comments on |force_clamshell_power_button_|.",
+      "parentUuid": "6d8bdeea_cb01451e",
+      "revId": "6dc5c55bd1e6c639f41d42e95c095bbbffa12681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
