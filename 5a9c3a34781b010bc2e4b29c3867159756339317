@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e80e0342_06591128",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T23:36:52Z",
+      "side": 0,
+      "message": "Do you want to keep a default: case that keep the LOG(ERROR)?",
+      "revId": "5a9c3a34781b010bc2e4b29c3867159756339317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
