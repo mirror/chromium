@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "2035ef5d_526e13ce",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-19T00:44:24Z",
+      "side": 1,
+      "message": "While we\u0027re making changes, should we integrate this into the algorithm as in https://github.com/w3c/encrypted-media/pull/432/files?\nThis could be a separate PR to keep the logic change clear here.",
+      "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9da6e8b6_8c54cef0",
         "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
         "patchSetId": 1
@@ -82,6 +99,23 @@
         "endLine": 298,
         "endChar": 59
       },
+      "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3172992_b712f214",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-19T00:44:24Z",
+      "side": 1,
+      "message": "xhwang: On a related note, this should probably be in current step 6 where we check Key System availability. We might need to move this before we can move the Feature Policy check per my above comment.",
       "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
