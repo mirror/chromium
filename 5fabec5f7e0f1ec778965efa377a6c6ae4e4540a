@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "72258484_bce034f4",
+        "filename": "base/memory/swap_thrashing_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T04:06:45Z",
+      "side": 1,
+      "message": "Nit: enum class",
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef425d2_d070363c",
+        "filename": "base/memory/swap_thrashing_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T04:06:45Z",
+      "side": 1,
+      "message": "Then just call these kNone, etc. At that point, it may make more sense to just make this a top-level enum to avoid having to qualify with the class and enum name.",
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15249b82_d1869dba",
         "filename": "base/memory/swap_thrashing_delegate.h",
         "patchSetId": 16
@@ -142,6 +176,23 @@
     },
     {
       "key": {
+        "uuid": "f112a372_6bb72e1f",
+        "filename": "base/memory/swap_thrashing_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T04:06:45Z",
+      "side": 1,
+      "message": "Nit: make these constexpr base::TimeDelta please",
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cb64a6a_f4eb1893",
         "filename": "base/memory/swap_thrashing_monitor.cc",
         "patchSetId": 16
@@ -153,6 +204,29 @@
       "writtenOn": "2017-10-19T00:57:52Z",
       "side": 1,
       "message": "Could you put this in a method of the form:\n\nbool IsValidTransition(old_level, new_level)\n\nso you can then just write:\n\nif (IsValidTransition(...))\n  level \u003d new_level\nelse\n  level \u003d invalid\n\nAlthough presumably we just shouldn\u0027t have the Delegate emitting an invalid level-transition in the first place?  This ties in to a comment I made on the Delegate, as to where the \"sampling window\" logic belongs; should the Delegate return a \"recent level\" or some \"raw\" value that the Monitor then samples to generate a level?",
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b16bcb2_9c5bcc7d",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T04:06:45Z",
+      "side": 1,
+      "message": "May as well go all out with the Unicode box drawing characters! \u003d)",
+      "range": {
+        "startLine": 18,
+        "startChar": 33,
+        "endLine": 18,
+        "endChar": 34
+      },
       "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
