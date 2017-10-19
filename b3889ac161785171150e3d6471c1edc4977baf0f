@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1490ba2_42901a38",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-19T19:00:31Z",
+      "side": 1,
+      "message": "Do we have integration tests for when both begin/end params AND domain whitelists/blacklists are used?",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 61
+      },
+      "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1555a5_770d3ee9",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-19T19:00:31Z",
+      "side": 1,
+      "message": "nit: Not my codebase, but... periods at the end of sentence pls :)",
+      "range": {
+        "startLine": 40,
+        "startChar": 55,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f904925_cd130caa",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-19T19:00:31Z",
+      "side": 1,
+      "message": "nit: |match_domains|",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 21
+      },
+      "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3ef736_3baac003",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-19T19:00:31Z",
+      "side": 1,
+      "message": "Should we add tests that the cookie priority doesn\u0027t matter?",
+      "range": {
+        "startLine": 916,
+        "startChar": 52,
+        "endLine": 916,
+        "endChar": 74
+      },
+      "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
