@@ -1628,6 +1628,8 @@ void AppsGridView::ExtractDragLocation(const gfx::Point& root_location,
       GetWidget()->GetNativeWindow()->GetRootWindow(),
       GetWidget()->GetNativeWindow(), drag_point);
   views::View::ConvertPointFromWidget(this, drag_point);
+  // Ensure that |drag_point| is correct if RTL.
+  drag_point->set_x(GetMirroredXInView(drag_point->x()));
 }
 
 void AppsGridView::CalculateDropTarget() {
@@ -1635,6 +1637,8 @@ void AppsGridView::CalculateDropTarget() {
 
   gfx::Point point = drag_view_->icon()->bounds().CenterPoint();
   views::View::ConvertPointToTarget(drag_view_, this, &point);
+  // Ensure that the drop target location is correct if RTL.
+  point.set_x(GetMirroredXInView(point.x()));
   if (!IsPointWithinDragBuffer(point)) {
     // Reset the reorder target to the original position if the cursor is
     // outside the drag buffer.
