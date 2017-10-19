@@ -91,6 +91,40 @@
       "revId": "8d220bcf76f9e9edf274fede4f90205a72c56a29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c103dff1_a1adc87d",
+        "filename": "components/safe_browsing/db/v4_local_database_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-19T22:44:28Z",
+      "side": 1,
+      "message": "What is this used for?  Why would we requests full hashes for a list that didn\u0027t have a prefix match?  Maybe explain how/why it\u0027s used.",
+      "revId": "8d220bcf76f9e9edf274fede4f90205a72c56a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7d6f7e_8c9dcd07",
+        "filename": "components/safe_browsing/db/v4_protocol_manager_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-19T22:44:28Z",
+      "side": 1,
+      "message": "nit: Could you just return the vector\u003cstring\u003e?  I think the compiler would do the right thing with temporaries, so it\u0027d be nearly equiv, but wouldn\u0027t require a named temp variable in the calling code.  I\u0027m ok with either.",
+      "revId": "8d220bcf76f9e9edf274fede4f90205a72c56a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
