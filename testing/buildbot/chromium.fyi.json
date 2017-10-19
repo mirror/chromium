@@ -14590,6 +14590,8 @@
         "args": [
           "--additional-driver-flag",
           "--site-per-process",
+          "--additional-driver-flag",
+          "--isolate-origins=www.web-platform.test,www1.web-platform.test,www2.web-platform.test,xn--n8j6ds53lwwkrqhv28a.web-platform.test,xn--lve-6lad.web-platform.test",
           "--additional-expectations",
           "src/third_party/WebKit/LayoutTests/FlagExpectations/site-per-process"
         ],
