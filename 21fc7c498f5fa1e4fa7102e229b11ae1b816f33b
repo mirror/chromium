@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "071a4f27_d666fe78",
+        "filename": "base/threading/platform_thread_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-19T04:52:45Z",
+      "side": 1,
+      "message": "Chrome has a tendency to long names, is this going to DCHECK if name.size() \u003e ZX_MAX_NAME_LEN?",
+      "revId": "21fc7c498f5fa1e4fa7102e229b11ae1b816f33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19174cf4_eb54a24f",
+        "filename": "base/threading/platform_thread_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-19T04:52:45Z",
+      "side": 1,
+      "message": "Remove this while you\u0027re here to make them match.",
+      "range": {
+        "startLine": 57,
+        "startChar": 46,
+        "endLine": 57,
+        "endChar": 62
+      },
+      "revId": "21fc7c498f5fa1e4fa7102e229b11ae1b816f33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
